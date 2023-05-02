@@ -11,9 +11,7 @@ https://openchat-review.me/
 このジョブは20分に一度呼び出され、一度のジョブで最大200件までのレコードのクローリングと更新を行います。  
 1URL毎のアクセス間隔は3秒です。
 
-* Cronジョブクラス  
-https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Cron.php
-* アップデートのサービスクラス  
+* レコードの更新をするクラス  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/UpdateOpenChat.php
 * クローラー本体のクラス  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatCrawler.php
