@@ -1,5 +1,5 @@
 # Open-Chat-Graph
-https://openchat-review.me/
+https://openchat-review.me
 
 ## プロジェクトの概要
 サイトの目的は、各オープンチャットのメンバー数を収集し、グラフとしてサイト上で表示することです。  
