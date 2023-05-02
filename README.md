@@ -11,7 +11,7 @@ https://openchat-review.me
 ジョブは、20分ごとに呼び出され、最大200件のレコードを一度に処理します。  
 各URLへのアクセス間隔は3秒で設定されています。  
 
-* バックグラウンドジョブのクラス
+* バックグラウンドジョブのクラス  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Cron.php
 * レコードの更新をするクラス  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/UpdateOpenChat.php
