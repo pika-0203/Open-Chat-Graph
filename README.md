@@ -9,7 +9,13 @@ https://openchat-review.me/
 ## クローリングのアルゴリズム
 バックグランドジョブでは、最終更新日が8時間以上前のレコードを取得して更新するジョブが実行されます。  
 このジョブは20分に一度呼び出され、一度のジョブで最大200件までのレコードのクローリングと更新を行います。  
-1URL毎のクローリングのインターバルは3秒です。
+1URL毎のアクセス間隔は3秒です。
 
+* Cronジョブクラス  
+https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Cron.php
 * アップデートのサービスクラス  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/UpdateOpenChat.php
+* クローラー本体のクラス  
+https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatCrawler.php
+* Symfony Crawlerラッパークラス
+https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/CrawlerFactory.php
