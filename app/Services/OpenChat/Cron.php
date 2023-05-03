@@ -61,7 +61,10 @@ class Cron
         if (!$result) {
             // 404の場合
             return;
-        } elseif ($result['updatedData']['member'] === null) {
+        }
+        
+        // メンバー数の統計テーブルにレコードを追加する
+        if ($result['updatedData']['member'] === null) {
             // メンバー数に変化がない場合
             $this->statisticsRepository->addStatisticsRecord($open_chat_id, $result['databaseData']['member']);
         } else {
