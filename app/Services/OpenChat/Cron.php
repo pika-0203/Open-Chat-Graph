@@ -29,8 +29,8 @@ class Cron
     }
 
     /**
-     * @param int $interval `updated_at`の間隔を秒数で指定する  8時間で設定済み
-     * @param int $limit    一度の処理で何件更新するか  200件で設定済み
+     * @param int $interval `updated_at`の更新間隔を秒数で指定する  8時間で設定済み
+     * @param int $limit    一度の処理で何件更新するか 　           200件で設定済み
      */
     function handle(int $interval, int $limit): ?array
     {
@@ -42,7 +42,7 @@ class Cron
 
         foreach ($idArray as $key => $id) {
             $this->update($id);
-            // 次のクローリングまでの間隔を空ける
+            // 次のクローリングまでの間隔を空ける (3秒)
             sleep(3);
         }
         return $idArray;
