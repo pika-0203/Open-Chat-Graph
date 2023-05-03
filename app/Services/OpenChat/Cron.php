@@ -64,10 +64,9 @@ class Cron
         } elseif ($result['updatedData']['member'] === null) {
             // メンバー数に変化がない場合
             $this->statistics->addStatisticsRecord($open_chat_id, $result['databaseData']['member']);
-            return;
+        } else {
+            // メンバー数が更新されていた場合
+            $this->statistics->addStatisticsRecord($open_chat_id, $result['updatedData']['member']);
         }
-
-        // メンバー数が更新されていた場合
-        $this->statistics->addStatisticsRecord($open_chat_id, $result['updatedData']['member']);
     }
 }
