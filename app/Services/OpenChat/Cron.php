@@ -11,18 +11,18 @@ use App\Services\OpenChat\UpdateOpenChat;
 
 class Cron
 {
-    private StatisticsRepositoryInterface $statistics;
+    private StatisticsRepositoryInterface $statisticsRepository;
     private UpdateOpenChatRepositoryInterface $updateRepository;
     private LogRepositoryInterface $logRepository;
     private UpdateOpenChat $updater;
 
     function __construct(
-        StatisticsRepositoryInterface $statistics,
+        StatisticsRepositoryInterface $statisticsRepository,
         UpdateOpenChatRepositoryInterface $updateRepository,
         LogRepositoryInterface $logRepository,
         UpdateOpenChat $updater,
     ) {
-        $this->statistics = $statistics;
+        $this->statisticsRepository = $statisticsRepository;
         $this->updateRepository = $updateRepository;
         $this->logRepository = $logRepository;
         $this->updater = $updater;
@@ -63,10 +63,10 @@ class Cron
             return;
         } elseif ($result['updatedData']['member'] === null) {
             // メンバー数に変化がない場合
-            $this->statistics->addStatisticsRecord($open_chat_id, $result['databaseData']['member']);
+            $this->statisticsRepository->addStatisticsRecord($open_chat_id, $result['databaseData']['member']);
         } else {
             // メンバー数が更新されていた場合
-            $this->statistics->addStatisticsRecord($open_chat_id, $result['updatedData']['member']);
+            $this->statisticsRepository->addStatisticsRecord($open_chat_id, $result['updatedData']['member']);
         }
     }
 }
