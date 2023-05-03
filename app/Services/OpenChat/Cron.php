@@ -36,6 +36,9 @@ class Cron
     /**
      * @param int $interval `updated_at`の更新間隔を秒数で指定する  8時間で設定済み
      * @param int $limit    一度の処理で何件更新するか 　           200件で設定済み
+     * 
+     * @return array|null        array: 更新対象となったID, null: 更新対象のレコードがない場合
+     * @throws \RuntimeException 断続的なエラーが発生した場合
      */
     function handle(int $interval, int $limit): ?array
     {
