@@ -24,7 +24,7 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
         /**
          *  メンバー１０人以上のオープンチャットが対象 
          *  直近１週間の低いメンバー数と、現在のメンバー数の差を比較して、増減%と差分の人数を取得する。
-         *  差分の人数 + (増減% / 10) を指数 `index1` として並び順を降順にソートする。
+         *  差分の人数 + (増減% / 10) を `index1` として昇順にソートする。
          */
         DB::execute(
             'INSERT INTO
