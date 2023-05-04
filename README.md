@@ -7,10 +7,15 @@ https://openchat-review.me
 これにより、オープンチャットの成長傾向を把握し、比較することができ、トークルームの運営に役立ちます。　　
 
 ## ランキング表示のアルゴリズム
-トップページには、登録されているオープンチャットのメンバー数上昇率ランキングが表示されます。  
+トップページには、登録されているオープンチャットのメンバー数上昇ランキングが表示されます。  
+メンバー数が10人以上のオープンチャットが対象となります。  
+バックグラウンドジョブでランク付けの点数を算出し、順位の更新を行います。    
+ランキングの並び順はランク付けの点数が高い順となります。  
 * **ランキングの順位を決める計算式**  
 過去7日間の増加数: `(現在のメンバー数 - 過去7日間で最小のメンバー数)`  
-
+ランク付けの点数: `過去7日間の増加数 + (過去7日間の増加数 / 過去7日間で最小のメンバー数) * 10`  
+* ランキング更新処理のクラス
+https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/StatisticsRankingUpdaterRepository.php
 
 ## クローリングのアルゴリズム
 バックグラウンドジョブでは、データベース内の最終更新日時から8時間以上経過したレコードを更新します。  
@@ -19,7 +24,7 @@ https://openchat-review.me
 
 * バックグラウンドジョブクラス  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Cron.php
-* レコードの更新をするクラス  
+* レコード更新処理のクラス  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/UpdateOpenChat.php
 * クローラー本体のクラス  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatCrawler.php
