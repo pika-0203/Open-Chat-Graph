@@ -23,7 +23,7 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
 
         /**
          *  メンバー１０人以上のオープンチャットが対象 
-         *  直近１週間で最小のメンバー数と、現在のメンバー数の差を比較して、増減%と差を取得する。
+         *  直近１週間で最小のメンバー数と、現在のメンバー数を比較して、増減%と差を取得する。
          *  差 + (増減% / 10) を `index1` として昇順にソートする。
          */
         DB::execute(
