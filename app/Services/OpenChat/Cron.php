@@ -11,8 +11,8 @@ use App\Services\OpenChat\UpdateOpenChat;
 
 class Cron
 {
-    // 断続エラーの許容回数
-    private const MAX_CONSECUTIVE_ERRORS_COUNT = 3;
+    // 連続エラーの許容回数
+    private const MAX_CONTINUOUS_ERRORS_COUNT = 3;
     // クローリングの間隔 (秒)
     private const CRAWLING_INTERVAL = 3;
 
@@ -38,7 +38,7 @@ class Cron
      * @param int $limit    一度の処理で何件更新するか 　           200件で設定済み
      * 
      * @return array|null        array: 更新対象となったID, null: 更新対象のレコードがない場合
-     * @throws \RuntimeException 断続的なエラーが発生した場合
+     * @throws \RuntimeException 連続エラー回数が上限を超えた場合
      */
     function handle(int $interval, int $limit): ?array
     {
@@ -48,20 +48,20 @@ class Cron
             return null;
         }
 
-        // 断続エラーのカウンター
-        $consecutiveErrorsCount = 0;
+        // 連続エラーのカウンター
+        $continuousErrorsCount = 0;
 
         foreach ($idArray as $id) {
             $result = $this->update($id);
             if ($result === false) {
                 // エラーが発生した場合
-                $consecutiveErrorsCount++;
+                $continuousErrorsCount++;
             } else {
-                $consecutiveErrorsCount = 0;
+                $continuousErrorsCount = 0;
             }
 
-            if ($consecutiveErrorsCount >= self::MAX_CONSECUTIVE_ERRORS_COUNT) {
-                throw new \RuntimeException('断続的なエラーが発生しました。');
+            if ($continuousErrorsCount > self::MAX_CONTINUOUS_ERRORS_COUNT) {
+                throw new \RuntimeException('連続エラー回数が上限を超えました。');
             }
 
             // 次のクローリングまでの間隔を空ける
