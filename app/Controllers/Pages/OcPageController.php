@@ -8,14 +8,14 @@ class OcPageController
     function index(
         OpenChatRepositoryInterface $openChatRepository,
         StatisticsService $statistics,
-        $open_chat_id
+        int $open_chat_id
     ) {
         $oc = $openChatRepository->getOpenChatById($open_chat_id);
         if (!$oc) {
             return false;
         }
 
-        $statisticsData = $statistics->getStatisticsData($open_chat_id, strtotime('-7 day'), time());
+        $statisticsData = $statistics->getStatisticsData($open_chat_id);
 
         $name = $oc['name'];
         $desc = "オープンチャット「{$name}」のメンバー数推移をグラフで表示します。人気度や活性度を視覚的にチェック出来ます！";

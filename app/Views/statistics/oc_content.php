@@ -1,6 +1,12 @@
+<?php
+
+use App\Config\AppConfig;
+?>
+
+<!-- 固定ヘッダー -->
 <header class="site_header">
     <div class="header_inner">
-        <a class="left_btn_area" href="/" aria-label="トップページに戻る" ontouchstart="">
+        <a id="left_btn_area" href="<?php echo url() ?>" aria-label="トップページに戻る" ontouchstart="">
             <div class="left_btn">
                 <div class="return_btn"></div>
             </div>
@@ -14,14 +20,15 @@
                 <span>オープンチャット グラフ</span>
             </div>
         </div>
-        <a class="right_btn_area" href="<?php echo \App\Config\AppConfig::LINE_OPEN_URL . $oc['url'] ?>" ontouchstart="">
+        <a class="right_btn_area" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['url'] ?>" ontouchstart="">
             LINEで開く
         </a>
     </div>
 </header>
+<!-- オープンチャット表示ヘッダー -->
 <div class="openchat-header description-close" id="openchat-header">
     <div class="talkroom_banner_img_area" oncontextmenu="return false;" onmousedown="return false;">
-        <img class="talkroom_banner_img" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo url(\App\Config\AppConfig::OPENCHAT_IMG_PATH . $oc['img_url'] . '.webp') ?>">
+        <img class="talkroom_banner_img" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo url(AppConfig::OPENCHAT_IMG_PATH . $oc['img_url'] . '.webp') ?>">
     </div>
     <header class="talkroom_header">
         <article class="talkroom_detail">
@@ -42,7 +49,9 @@
         </article>
     </header>
 </div>
+<!-- メインエリア -->
 <main>
+    <!-- グラフセクション -->
     <section class="chart-canvas-section">
         <canvas id="openchat-statistics" aria-label="全期間のメンバー数の折れ線グラフ" role="img"></canvas>
         <hr>
@@ -50,22 +59,35 @@
         <hr>
     </section>
 </main>
-<script>    
+<!-- テンプレートのJS -->
+<script>
     const readMoreBtn = document.getElementById('read_more_btn');
     const talkroomDesc = document.getElementById('talkroom-description');
 
     // 説明文のもっと見るボタンの表示・非表示処理
     if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
-        // もっと見るボタンを非表示にする場合
+        // 非表示にする場合
         readMoreBtn.style.display = "none";
     } else {
-        // もっと見るボタンのイベントリスナー
+        // ボタンのイベント
         readMoreBtn.addEventListener('click', (e) => {
             document.getElementById('openchat-header').classList.toggle('description-close');
             window.scrollTo(0, 0);
         });
     }
+
+    // 戻るボタンの処理
+    document.getElementById("left_btn_area").addEventListener("click", (e) => {
+        e.preventDefault();
+        // リファラーが自サイトの場合は履歴から戻る
+        if (document.referrer.indexOf(e.currentTarget.href) !== -1) {
+            history.back();
+        } else {
+            window.location.href = e.currentTarget.href;
+        }
+    });
 </script>
+<!-- グラフのJS -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>

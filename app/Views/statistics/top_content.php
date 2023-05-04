@@ -1,3 +1,9 @@
+<?php
+
+use App\Config\AppConfig;
+?>
+
+<!-- 固定ヘッダー -->
 <header class="site_header">
     <div class="header_inner">
         <div class="header_site_title">
@@ -7,6 +13,7 @@
     </div>
 </header>
 <main>
+    <!-- メインヘッダー -->
     <header>
         <h1>OPENCHAT GRAPH</h1>
         <p>メンバー数の変化をグラフでチェック！</p>
@@ -21,11 +28,11 @@
             <p>トークルームの運営に必須のツールです！</p>
             <p>どなたでもオープンチャットのリンクを貼り付けて登録することが出来ます。</p>
             <p><small>こちらは個人的に開発したLINE非公式サービスです。<br>
-            ご不明な事がありましたら、<a href="line://ti/g2/rLT0p-Tz19W7jxHvDDm9ECGNsyymhLQTHmmTkg">こちらのオープンチャット</a>からお尋ねください。</small></p>
+                    ご不明な事がありましたら、<a href="line://ti/g2/rLT0p-Tz19W7jxHvDDm9ECGNsyymhLQTHmmTkg">こちらのオープンチャット</a>からお尋ねください。</small></p>
         </details>
     </article>
+    <!-- オープンチャット登録フォーム -->
     <section>
-        <!-- オープンチャット登録フォーム -->
         <form id="add-openchat-form" action="/oc" method="POST">
             <div class="form-inner">
                 <label for="add-openchat-input-url">登録はURLを貼り付けるだけ✨</label>
@@ -38,7 +45,7 @@
                     <div class="openchat-item add-openchat-form-item">
                         <a href="<?php echo url('/oc/' . $requestOpenChat['id']) ?>">
                             <div class="openchat-item-img">
-                                <img src="<?php echo url(\App\Config\AppConfig::OPENCHAT_IMG_PREVIEW_PATH . $requestOpenChat['img_url'] . \App\Config\AppConfig::LINE_IMG_PREVIEW_SUFFIX . '.webp') ?>" alt="オープンチャットのメイン画像" />
+                                <img src="<?php echo url(AppConfig::OPENCHAT_IMG_PREVIEW_PATH . $requestOpenChat['img_url'] . AppConfig::LINE_IMG_PREVIEW_SUFFIX . '.webp') ?>" alt="オープンチャットのメイン画像" />
                             </div>
                             <div class="openchat-item-info">
                                 <span class="openchat-item-title"><?php echo $requestOpenChat['name'] ?></span>
@@ -71,7 +78,7 @@
             <aside class="openchat-item">
                 <a href="<?php echo url('/oc/' . $oc['id']) ?>">
                     <div class="openchat-item-img">
-                        <img src="<?php echo url(\App\Config\AppConfig::OPENCHAT_IMG_PREVIEW_PATH . $oc['img_url'] . \App\Config\AppConfig::LINE_IMG_PREVIEW_SUFFIX . '.webp') ?>" alt="オープンチャット「<?php echo $oc['name'] ?>」" />
+                        <img src="<?php echo url(AppConfig::OPENCHAT_IMG_PREVIEW_PATH . $oc['img_url'] . AppConfig::LINE_IMG_PREVIEW_SUFFIX . '.webp') ?>" alt="オープンチャット「<?php echo $oc['name'] ?>」" />
                     </div>
                     <div class="openchat-item-info">
                         <span class="openchat-item-title"><?php echo $oc['name'] ?></span>
@@ -85,6 +92,7 @@
         </section>
     <?php endforeach; ?>
 </main>
+<!-- テンプレートのJS -->
 <script>
     class OpenChatUrlValidator {
         #urlPattern = /((https?:\/\/line.me\/ti\/g2\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+)(.*)(?=\?)|(https?:\/\/line.me\/ti\/g2\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g

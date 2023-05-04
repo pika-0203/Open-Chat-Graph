@@ -5,8 +5,16 @@ namespace App\Views;
 class Metadata
 {
     private string $title = 'LINE オープンチャットグラフ';
-    private string $description = 'LINE OpenChatで作られたトークルームのメンバー数推移をグラフで表示するサービスです。トークルームのメンバー数がどのように変化しているかを視覚的に確認することができます！オプチャの成長傾向を振り返ったり、他のオプチャとの比較が出来ることで、管理者の方にとっても運営の手助けになります！';
-    private string $ogpDescription = 'オプチャのメンバー数遷移をグラフで視覚的に確認することができます。オプチャの成長傾向を振り返ったり、他のオプチャとの比較が出来ることで、管理者の方にとっても運営の手助けになります！';
+
+    private string $description =
+    'LINE OpenChatで作られたトークルームのメンバー数推移をグラフで表示するサービスです。
+    トークルームのメンバー数がどのように変化しているかを視覚的に確認することができます！
+    オプチャの成長傾向を振り返ったり、他のオプチャとの比較が出来ることで、管理者の方にとっても運営の手助けになります！';
+
+    private string $ogpDescription =
+    'オプチャのメンバー数遷移をグラフで視覚的に確認することができます。
+    オプチャの成長傾向を振り返ったり、他のオプチャとの比較が出来ることで、管理者の方にとっても運営の手助けになります！';
+
     private string $image_url = 'https://openchat-review.me/assets/ogp.png';
     public string $site_name = 'LINE オープンチャットグラフ';
     public string $site_url = 'https://openchat-review.me';

@@ -7,7 +7,7 @@ class IndexPageController
 {
     function index(OpenChatListRepositoryInterface $openChatListRepository)
     {
-        $openChatList = $openChatListRepository->findOrderByIdAsc(0, AppConfig::OPEN_CHAT_RANKING_LIMIT);
+        $openChatList = $openChatListRepository->findMemberStatsRanking(0, AppConfig::OPEN_CHAT_RANKING_LIMIT);
 
         $requestOpenChat = null;
         if (session()->has('id')) {

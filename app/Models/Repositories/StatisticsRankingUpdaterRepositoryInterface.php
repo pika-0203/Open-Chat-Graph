@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Models\Repositories;
+
+interface StatisticsRankingUpdaterRepositoryInterface
+{
+    /**
+     *　統計ランキングのテーブルを最新データで書き換える
+     *
+     * @param int テーブルのレコード数
+     */
+    public function updateCreateRankingTable(int $numberRecords): void;
+}

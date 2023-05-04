@@ -72,14 +72,14 @@ class Cron
     }
 
     /**
-     * オープンチャットのレコードを更新して、メンバー数の統計レコードを追加する
+     * オープンチャットのレコードを更新する
      * 
      * @return null|bool true: 正常に処理が完了した場合, false: 404以外のエラーが発生した場合, null: 404の場合
      */
     private function update(int $open_chat_id): ?bool
     {
         try {
-            // オープンチャットのページからデータを取得する
+            // オープンチャットのページからデータを取得して、オープンチャットテーブルを更新する
             $result = $this->updater->update($open_chat_id);
         } catch (\RuntimeException $e) {
             $this->logRepository->logUpdateOpenChatError(0, $open_chat_id, 'null', 'null', $e->getMessage());
@@ -91,13 +91,13 @@ class Cron
             return null;
         }
 
-        // メンバー数の統計テーブルにレコードを追加する
+        // メンバー数統計テーブルを更新する
         if ($result['updatedData']['member'] === null) {
             // メンバー数に変化がない場合
-            $this->statisticsRepository->addStatisticsRecord($open_chat_id, $result['databaseData']['member']);
+            $this->statisticsRepository->insertUpdateDailyStatistics($open_chat_id, $result['databaseData']['member']);
         } else {
             // メンバー数が更新されていた場合
-            $this->statisticsRepository->addStatisticsRecord($open_chat_id, $result['updatedData']['member']);
+            $this->statisticsRepository->insertUpdateDailyStatistics($open_chat_id, $result['updatedData']['member']);
         }
 
         return true;

@@ -139,7 +139,7 @@ class AddOpenChat
     private function exitingOpenChatMessage(int $id): array
     {
         return [
-            'message' => 'オープンチャットが既に登録されていました',
+            'message' => 'オープンチャットが既に登録されています',
             'id' => $id
         ];
     }
