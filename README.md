@@ -13,8 +13,8 @@ https://openchat-review.me
 
 * ランキングの順位を決める計算式  
 増加数: `現在のメンバー数 - 過去7日間で最小のメンバー数`  
-増加指数: `増加数 / 過去7日間で最小のメンバー数`  
-ランク付け点数: `増加数 + 増加指数 × 10`  
+増加率: `増加数 / 過去7日間で最小のメンバー数`  
+ランク付け点数: `増加数 + 増加率 × 10`  
 
 * ランキング更新処理のクラス  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/StatisticsRankingUpdaterRepository.php
