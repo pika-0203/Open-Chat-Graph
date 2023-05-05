@@ -24,7 +24,7 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
          *  直近１週間で最小のメンバー数と、現在のメンバー数を比較して、増減%と差を取得する。
          *  差 + (増減% / 10) を`index1`カラムに挿入して、降順にソートする。
          */
-        $rowCount = DB::execute(
+        DB::$pdo->exec(
             'INSERT INTO
                 statistics_ranking (
                     id,
@@ -78,13 +78,13 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
                 ) t2 ON t1.open_chat_id = t2.open_chat_id
             ORDER BY
                 index1 DESC;'
-        )->rowCount();
+        );
 
         DB::$pdo->exec(
             'SET @row_number := 0;'
         );
 
-        DB::$pdo->exec(
+        return DB::execute(
             'UPDATE
                 statistics_ranking
                 JOIN (
@@ -98,8 +98,6 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
                 ) subquery ON statistics_ranking.id = subquery.id
             SET
                 statistics_ranking.id = subquery.new_id;'
-        );
-
-        return $rowCount;
+        )->rowCount();
     }
 }
