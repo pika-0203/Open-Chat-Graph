@@ -17,7 +17,7 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
     {
         // テーブルを初期化
         DB::$pdo->exec(
-            'DELETE FROM statistics_ranking'
+            'DELETE FROM statistics_ranking;'
         );
 
         /**
