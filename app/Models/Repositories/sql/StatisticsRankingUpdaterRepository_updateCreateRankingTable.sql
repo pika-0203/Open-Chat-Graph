@@ -68,6 +68,9 @@ FROM
 ORDER BY
     index1 DESC;
 
+/*
+ * `index1`カラムを降順でソートして、その順番でidを振り直す。
+ */
 SET
     @row_number := 0;
 
