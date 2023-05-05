@@ -64,9 +64,7 @@ FROM
             AND member >= 10
         GROUP BY
             open_chat_id
-    ) t2 ON t1.open_chat_id = t2.open_chat_id
-ORDER BY
-    index1 DESC;
+    ) t2 ON t1.open_chat_id = t2.open_chat_id;
 
 /*
  * `index1`カラムを降順でソートして、その順番でidを振り直す。
