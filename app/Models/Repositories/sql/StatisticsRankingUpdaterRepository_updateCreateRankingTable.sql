@@ -1,21 +1,16 @@
-DELETE FROM
-    statistics_ranking;
-
 /*
  * 昨日〜7日前の最小メンバー数と、最新メンバー数を比較して、差と増減%をランキングテーブルに挿入する。
  * 差 + (増減% / 10) を`index1`カラムに挿入する。
  * メンバー１０人以上のオープンチャットが対象
  */
 INSERT INTO
-    statistics_ranking (
-        id,
+    statistics_ranking_temp (
         open_chat_id,
         diff_member,
         percent_increase,
         index1
     )
 SELECT
-    t1.open_chat_id,
     t1.open_chat_id,
     t1.member - t2.member AS diff_member,
     ((t1.member - t2.member) / t2.member) * 100 AS percent_increase,
@@ -67,21 +62,29 @@ FROM
     ) t2 ON t1.open_chat_id = t2.open_chat_id;
 
 /*
- * `index1`カラムを降順でソートして、その順番でidを振り直す。
+ * `index1`カラムを降順でソートして、statistics_rankingに挿入する。
  */
+DELETE FROM
+    statistics_ranking;
+
 SET
     @row_number := 0;
 
-UPDATE
-    statistics_ranking
-    JOIN (
-        SELECT
-            id,
-            (@row_number := @row_number + 1) AS new_id
-        FROM
-            statistics_ranking
-        ORDER BY
-            index1 DESC
-    ) subquery ON statistics_ranking.id = subquery.id
-SET
-    statistics_ranking.id = subquery.new_id;
+INSERT INTO
+    statistics_ranking (
+        id,
+        open_chat_id,
+        diff_member,
+        percent_increase,
+        index1
+    )
+SELECT
+    (@row_number := @row_number + 1),
+    statistics_ranking_temp.*
+FROM
+    statistics_ranking_temp
+ORDER BY
+    index1 DESC;
+
+DELETE FROM
+    statistics_ranking_temp;
