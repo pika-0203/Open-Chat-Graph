@@ -73,7 +73,7 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
                         statistics
                     WHERE
                         date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-                        AND date < DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                        AND date <= DATE_SUB(CURDATE(), INTERVAL 1 DAY)
                         AND member >= 10
                     GROUP BY
                         open_chat_id
