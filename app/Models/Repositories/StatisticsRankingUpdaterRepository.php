@@ -17,11 +17,11 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
     {
         // テーブルを初期化
         DB::$pdo->exec(
-            'DELETE FROM statistics_ranking;'
+            'DELETE FROM statistics_ranking'
         );
 
         /**
-         * 直近7日間の最小メンバー数と、最新メンバー数を比較して、差と増減%をランキングテーブルに挿入する。
+         * 直近7日間の平均メンバー数と、最新メンバー数を比較して、差と増減%をランキングテーブルに挿入する。
          * 差 + (増減% / 10) を`index1`カラムに挿入する。
          * メンバー１０人以上のオープンチャットが対象
          */
@@ -68,11 +68,12 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
                 LEFT JOIN (
                     SELECT
                         open_chat_id,
-                        MIN(member) as member
+                        AVG(member) as member
                     FROM
                         statistics
                     WHERE
                         date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+                        AND date < DATE_SUB(CURDATE(), INTERVAL 1 DAY)
                         AND member >= 10
                     GROUP BY
                         open_chat_id
