@@ -21,7 +21,7 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
         );
 
         /**
-         * 昨日〜7日前の平均メンバー数と、最新メンバー数を比較して、差と増減%をランキングテーブルに挿入する。
+         * 昨日〜7日前の最小メンバー数と、最新メンバー数を比較して、差と増減%をランキングテーブルに挿入する。
          * 差 + (増減% / 10) を`index1`カラムに挿入する。
          * メンバー１０人以上のオープンチャットが対象
          */
@@ -68,7 +68,7 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
                 LEFT JOIN (
                     SELECT
                         open_chat_id,
-                        AVG(member) as member
+                        MIN(member) as member
                     FROM
                         statistics
                     WHERE
