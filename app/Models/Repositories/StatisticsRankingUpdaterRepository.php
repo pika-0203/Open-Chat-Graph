@@ -8,14 +8,12 @@ use Shadow\DB;
 
 class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepositoryInterface
 {
-    public function updateCreateRankingTable(int $numberRecords): void
+    public function updateCreateRankingTable(): int
     {
-        DB::transaction(function () use ($numberRecords) {
-            $this->updateCreate($numberRecords);
-        });
+        return DB::transaction($this->executeUpdateCreate(...));
     }
 
-    private function updateCreate(int $numberRecords): void
+    private function executeUpdateCreate(): int
     {
         DB::$pdo->exec(
             'DELETE FROM statistics_ranking'
@@ -23,10 +21,10 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
 
         /**
          *  メンバー１０人以上のオープンチャットが対象 
-         *  直近１週間で最小のメンバー数と、現在のメンバー数を比較して、増加%と差を取得する。
-         *  差 + 増加率 * 10 を `index1` として降順にソートする。
+         *  直近１週間で最小のメンバー数と、現在のメンバー数を比較して、増減%と差を取得する。
+         *  差 + (増減% / 10) を`index1`カラムに挿入して、降順にソートする。
          */
-        DB::execute(
+        $rowCount = DB::execute(
             'INSERT INTO
                 statistics_ranking (
                     id,
@@ -79,11 +77,8 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
                         open_chat_id
                 ) t2 ON t1.open_chat_id = t2.open_chat_id
             ORDER BY
-                index1 DESC
-            LIMIT
-                :numberRecords;',
-            ['numberRecords' => $numberRecords]
-        );
+                index1 DESC;'
+        )->rowCount();
 
         DB::$pdo->exec(
             'SET @row_number := 0;'
@@ -104,5 +99,7 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
             SET
                 statistics_ranking.id = subquery.new_id;'
         );
+
+        return $rowCount;
     }
 }
