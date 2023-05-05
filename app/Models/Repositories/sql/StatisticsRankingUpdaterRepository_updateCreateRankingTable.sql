@@ -17,11 +17,11 @@ INSERT INTO
 SELECT
     t1.open_chat_id,
     t1.open_chat_id,
-    t1.member - t2.member as diff_member,
-    ((t1.member - t2.member) / t2.member) * 100 as percent_increase,
+    t1.member - t2.member AS diff_member,
+    ((t1.member - t2.member) / t2.member) * 100 AS percent_increase,
     (
         (t1.member - t2.member) + (((t1.member - t2.member) / t2.member) * 10)
-    ) as index1
+    ) AS index1
 FROM
     (
         SELECT
@@ -39,7 +39,7 @@ FROM
                     1
             ) AS member
         FROM
-            statistics as st
+            statistics AS st
         WHERE
             st.member >= 10
         GROUP BY
@@ -48,7 +48,7 @@ FROM
     LEFT JOIN (
         SELECT
             open_chat_id,
-            MIN(member) as member
+            MIN(member) AS member
         FROM
             statistics
         WHERE
