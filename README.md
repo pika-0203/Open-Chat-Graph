@@ -16,8 +16,8 @@ https://openchat-review.me
 増加率: `増加数 / 昨日〜7日前の最小メンバー数`  
 ランク付け点数: `増加数 + 増加率 × 10`  
 
-* ランキング更新処理のクラス  
-https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/StatisticsRankingUpdaterRepository.php
+* ランキング更新処理  
+https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/sql/StatisticsRankingUpdaterRepository_updateCreateRankingTable.sql
 
 ## クローリングのアルゴリズム
 バックグラウンドジョブでは、データベース内の最終更新日時から8時間以上経過したレコードを更新します。  
