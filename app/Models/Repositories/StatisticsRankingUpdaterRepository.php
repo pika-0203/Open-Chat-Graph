@@ -15,14 +15,15 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
 
     private function executeUpdateCreate(): int
     {
+        // テーブルを初期化
         DB::$pdo->exec(
             'DELETE FROM statistics_ranking'
         );
 
         /**
-         *  メンバー１０人以上のオープンチャットが対象 
-         *  直近１週間で最小のメンバー数と、現在のメンバー数を比較して、増減%と差を取得する。
-         *  差 + (増減% / 10) を`index1`カラムに挿入して、降順にソートする。
+         * 直近7日間の最小メンバー数と、最新メンバー数を比較して、差と増減%をランキングテーブルに挿入する。
+         * 差 + (増減% / 10) を`index1`カラムに挿入する。
+         * メンバー１０人以上のオープンチャットが対象
          */
         DB::$pdo->exec(
             'INSERT INTO
@@ -80,10 +81,10 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
                 index1 DESC;'
         );
 
+        // `index1`カラムを降順でソートして、idをその順番で振る
         DB::$pdo->exec(
             'SET @row_number := 0;'
         );
-
         return DB::execute(
             'UPDATE
                 statistics_ranking
