@@ -54,7 +54,7 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
                             WHERE
                                 open_chat_id = st.open_chat_id
                             ORDER BY
-                                date DESC
+                                `date` DESC
                             LIMIT
                                 1
                         ) AS member
@@ -72,8 +72,15 @@ class StatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepo
                     FROM
                         statistics
                     WHERE
-                        date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-                        AND date <= DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                        `date` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+                        AND `date` <= (
+                            SELECT
+                                DATE_SUB(MAX(`date`), INTERVAL 1 DAY)
+                            FROM
+                                statistics
+                            WHERE
+                                open_chat_id = statistics.open_chat_id
+                        )
                         AND member >= 10
                     GROUP BY
                         open_chat_id
