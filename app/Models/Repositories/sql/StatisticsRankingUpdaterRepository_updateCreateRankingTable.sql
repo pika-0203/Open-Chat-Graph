@@ -42,23 +42,23 @@ FROM
     ) t1
     LEFT JOIN (
         SELECT
-            open_chat_id,
-            MIN(member) AS member
+            st3.open_chat_id,
+            MIN(st3.member) AS member
         FROM
-            statistics
+            statistics AS st3
         WHERE
             `date` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
             AND `date` <= (
                 SELECT
-                    DATE_SUB(MAX(st3.date), INTERVAL 1 DAY)
+                    DATE_SUB(MAX(st4.date), INTERVAL 1 DAY)
                 FROM
-                    statistics AS st3
+                    statistics AS st4
                 WHERE
-                    st3.open_chat_id = statistics.open_chat_id
+                    st4.open_chat_id = st3.open_chat_id
             )
-            AND member >= 10
+            AND st3.member >= 10
         GROUP BY
-            open_chat_id
+            st3.open_chat_id
     ) t2 ON t1.open_chat_id = t2.open_chat_id;
 
 /*
