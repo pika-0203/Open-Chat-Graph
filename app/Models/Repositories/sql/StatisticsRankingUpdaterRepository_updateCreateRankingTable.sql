@@ -23,11 +23,11 @@ FROM
             st.open_chat_id,
             (
                 SELECT
-                    member
+                    st2.member
                 FROM
-                    statistics
+                    statistics AS st2
                 WHERE
-                    open_chat_id = st.open_chat_id
+                    st2.open_chat_id = st.open_chat_id
                 ORDER BY
                     `date` DESC
                 LIMIT
@@ -50,11 +50,11 @@ FROM
             `date` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
             AND `date` <= (
                 SELECT
-                    DATE_SUB(MAX(`date`), INTERVAL 1 DAY)
+                    DATE_SUB(MAX(st3.date), INTERVAL 1 DAY)
                 FROM
-                    statistics
+                    statistics AS st3
                 WHERE
-                    open_chat_id = statistics.open_chat_id
+                    st3.open_chat_id = statistics.open_chat_id
             )
             AND member >= 10
         GROUP BY
