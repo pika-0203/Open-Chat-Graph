@@ -10,54 +10,45 @@ class StatisticsRepository implements StatisticsRepositoryInterface
 {
     public function insertUpdateDailyStatistics(int $open_chat_id, int $member): void
     {
-        // 今日の日付のレコードがあるかどうかをチェック
-        $row = DB::fetch(
-            'SELECT
-                id
-            FROM
-                statistics
-            WHERE
-                open_chat_id = :open_chat_id
-                AND date = CURDATE()',
-            ['open_chat_id' => $open_chat_id]
-        );
+        $query =
+            'INSERT INTO
+                statistics (open_chat_id, member, date)
+            VALUES
+                (:open_chat_id, :member, CURDATE()) ON DUPLICATE KEY
+            UPDATE
+                member = :member';
 
-        if ($row !== false) {
-            // 今日の日付のレコードがある場合は更新
-            $updateInsertQuery =
-                'UPDATE
-                    statistics
-                SET
-                    -- 今日の最大値を記録する
-                    member = GREATEST(member, :member)
-                WHERE
-                    open_chat_id = :open_chat_id
-                    AND date = CURDATE()';
-        } else {
-            // 今日の日付のレコードがない場合は追加
-            $updateInsertQuery =
-                'INSERT INTO
-                    statistics (open_chat_id, member, date)
-                VALUES
-                    (:open_chat_id, :member, CURDATE())';
-        }
-
-        DB::execute($updateInsertQuery, compact('open_chat_id', 'member'));
+        DB::execute($query, compact('open_chat_id', 'member'));
     }
 
     public function getDailyStatisticsByPeriod(int $open_chat_id, int $start_time, int $end_time): array
     {
+        // `Y-m-d`から`Y/m/d`に変換する。`Y`が今年の場合は、`Y/`を省略して`m/d`にする。
         $query =
-            'SELECT
-                member,
-                date
+            "SELECT
+                DATE_FORMAT(
+                    `date`,
+                    IF(
+                        YEAR(CURDATE()) = YEAR(`date`),
+                        '%m/%d',
+                        '%Y/%m/%d'
+                    )
+                ) AS `date`,
+                member
             FROM
                 statistics
             WHERE
                 open_chat_id = :open_chat_id
-                AND date BETWEEN DATE(FROM_UNIXTIME(:start_time))
-                AND DATE(FROM_UNIXTIME(:end_time))';
+                AND `date` BETWEEN DATE(FROM_UNIXTIME(:start_time))
+                AND DATE(FROM_UNIXTIME(:end_time))
+            ORDER BY 
+                `date` ASC";
 
-        return DB::fetchAll($query, compact('open_chat_id', 'start_time', 'end_time'));
+        $result = DB::fetchAll($query, compact('open_chat_id', 'start_time', 'end_time'));
+
+        return [
+            'date' => array_column($result, 'date'),
+            'member' => array_column($result, 'member')
+        ];
     }
 }

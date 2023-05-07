@@ -37,9 +37,7 @@ use App\Config\AppConfig;
                 <div class="talkroom_rating">
                     <span class="number_of_members">メンバー <?php echo $oc['member'] ?></span>
                 </div>
-                <p id="talkroom-description" class="talkroom_description" oncontextmenu="return false;">
-                    <?php echo nl2br($oc['description']) ?>
-                </p>
+                <p id="talkroom-description" class="talkroom_description" oncontextmenu="return false;"><?php echo nl2brReplace($oc['description']) ?></p>
                 <div class="detail_bottom">
                     <button aria-label="続きを読む" id="read_more_btn">
                         <div class="read_more_btn_icon"></div>
@@ -52,11 +50,9 @@ use App\Config\AppConfig;
 <!-- メインエリア -->
 <main>
     <!-- グラフセクション -->
+    <h2>メンバー数推移</h2>
     <section class="chart-canvas-section">
         <canvas id="openchat-statistics" aria-label="全期間のメンバー数の折れ線グラフ" role="img"></canvas>
-        <hr>
-        <canvas id="openchat-statistics2" aria-label="過去３ヶ月のメンバー数の棒グラフ" role="img"></canvas>
-        <hr>
     </section>
 </main>
 <!-- テンプレートのJS -->
@@ -90,13 +86,9 @@ use App\Config\AppConfig;
 <!-- グラフのJS -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
 <script>
-    const date = <?php echo json_encode($allStatistics['date']) ?>;
-    const member = <?php echo json_encode($allStatistics['member']) ?>;
-    const date2 = <?php echo json_encode($weeklyStatistics['date']) ?>;
-    const member2 = <?php echo json_encode($weeklyStatistics['member']) ?>;
+    const date = <?php echo json_encode($statisticsData['date']) ?>;
+    const member = <?php echo json_encode($statisticsData['member']) ?>;
 
     const openChatChartConfig = {
         type: 'line',
@@ -106,9 +98,7 @@ use App\Config\AppConfig;
                 label: 'メンバー',
                 data: member,
                 pointRadius: 0,
-                borderColor: '#6de67b',
-                backgroundColor: '#f9f9f9',
-                tension: 0.3,
+                borderColor: '#11d77b',
                 fill: true,
                 borderWidth: 2,
                 datalabels: {
@@ -121,7 +111,6 @@ use App\Config\AppConfig;
             aspectRatio: 2 / 1,
             scales: {
                 x: {
-
                     ticks: {
                         autoSkip: true,
                     },
@@ -132,99 +121,20 @@ use App\Config\AppConfig;
                         beginAtZero: true,
                         stepSize: 1,
                     },
-
                 },
-            },
-            layout: {
-                padding: {
-                    right: 12,
-                    left: 12
-                }
             },
             plugins: {
                 legend: {
                     display: false,
                 },
-                tooltip: {
-                    mode: 'index',
-                    intersect: false,
-                },
                 datalabels: {
-                    display: false,
-                },
-                zoom: {
-                    pan: {
-                        enabled: true,
-                        mode: 'x',
-                    },
-                    zoom: {
-                        wheel: {
-                            enabled: true,
-                        },
-                        pinch: {
-                            enabled: true
-                        },
-                        mode: 'x',
-                    },
-                },
-            },
-        },
-    };
-
-    const openChatChartConfig2 = {
-        type: 'bar',
-        data: {
-            labels: date2,
-            datasets: [{
-                label: 'メンバー数',
-                data: member2,
-                backgroundColor: '#11d77b',
-                datalabels: {
-                    align: 'center',
-                    anchor: 'center',
-                },
-            }],
-        },
-        options: {
-            scales: {
-                x: {
-                    ticks: {
-                        stepSize: 1,
-                    },
-                },
-            },
-            y: {
-                max: 6,
-                ticks: {
-                    autoSkip: false,
-                },
-            },
-            indexAxis: 'y',
-            layout: {
-                padding: 0,
-            },
-            plugins: {
-                tooltip: {
-                    enabled: false
-                },
-                legend: {
-                    display: false,
-                },
-                datalabels: {
-                    clip: true,
+                    clip: false,
                     borderRadius: 4,
                     color: 'white',
+                    backgroundColor: '#11d77b',
                     font: {
                         size: 11,
                         weight: 'bold',
-                    },
-                    formatter: Math.round,
-                    padding: 3,
-                },
-                zoom: {
-                    pan: {
-                        enabled: true,
-                        mode: 'y',
                     },
                 },
             },
@@ -237,11 +147,4 @@ use App\Config\AppConfig;
         document.getElementById('openchat-statistics'),
         openChatChartConfig
     );
-    const chart2 = new Chart(
-        document.getElementById('openchat-statistics2'),
-        openChatChartConfig2
-    );
-
-    chart.data.datasets.reverse();
-    chart.update();
 </script>

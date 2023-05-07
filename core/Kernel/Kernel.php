@@ -10,6 +10,8 @@ use Shadow\Kernel\Dispatcher\RequestParser;
 use Shadow\Kernel\Dispatcher\Routing;
 use Shadow\Kernel\Dispatcher\ControllerInvoker;
 use Shadow\Kernel\Dispatcher\MiddlewareInvoker;
+use Shadow\Kernel\Dispatcher\RouteCallbackInvoker;
+use Shadow\Exceptions\NotFoundException;
 
 /**
  * @author mimimiku778 <0203.sub@gmail.com>
@@ -26,6 +28,7 @@ class Kernel
         $this->routing();
         $this->validateRequest();
         $this->callMiddleware();
+        $this->callRouteCallback();
         $this->callController();
         $this->handleResponse();
     }
@@ -48,8 +51,21 @@ class Kernel
     {
         $routing = new Routing;
         $routing->setRouteDto($this->routeDto);
-        $routing->validatePath();
-        $routing->resolveController();
+
+        try {
+            $routing->resolveController();
+        } catch (NotFoundException $e) {
+            if (!$this->routeDto->isDefinedRoute()) {
+                throw $e;
+            }
+
+            $routing->validateAllowedMethods();
+            $this->validateRequest();
+            $this->callMiddleware();
+            $this->callRouteCallback();
+            exit;
+        }
+
         $routing->validateAllowedMethods();
     }
 
@@ -76,6 +92,17 @@ class Kernel
 
         $middleware = new MiddlewareInvoker;
         $middleware->invoke($this->routeDto);
+    }
+
+    private function callRouteCallback()
+    {
+        $routeCallback = $this->routeDto->getRouteCallback();
+        if ($routeCallback instanceof \Closure) {
+            $routeCallbackInvoker = new RouteCallbackInvoker;
+            $routeCallbackInvoker->invoke($this->routeDto, $routeCallback);
+        } elseif ($routeCallback instanceof \Shadow\Kernel\ResponseInterface) {
+            $routeCallback->send();
+        }
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * 昨日〜7日前の最小メンバー数と、最新メンバー数を比較して、差と増減%をランキングテーブルに挿入する。
+ * 昨日〜7日前の平均メンバー数と、最新メンバー数を比較して、差と増減%をランキングテーブルに挿入する。
  * 差 + (増減% / 10) を`index1`カラムに挿入する。
  * メンバー１０人以上のオープンチャットが対象
  */
@@ -43,7 +43,7 @@ FROM
     LEFT JOIN (
         SELECT
             st3.open_chat_id,
-            MIN(st3.member) AS member
+            AVG(st3.member) AS member
         FROM
             statistics AS st3
         WHERE

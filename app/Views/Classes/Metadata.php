@@ -4,7 +4,7 @@ namespace App\Views;
 
 class Metadata
 {
-    private string $title = 'LINE オープンチャットグラフ';
+    public static string $title = 'LINEオープンチャット グラフ';
 
     private string $description =
     'LINE OpenChatで作られたトークルームのメンバー数推移をグラフで表示するサービスです。
@@ -16,7 +16,7 @@ class Metadata
     オプチャの成長傾向を振り返ったり、他のオプチャとの比較が出来ることで、管理者の方にとっても運営の手助けになります！';
 
     private string $image_url = 'https://openchat-review.me/assets/ogp.png';
-    public string $site_name = 'LINE オープンチャットグラフ';
+    public string $site_name = 'LINEオープンチャット グラフ';
     public string $site_url = 'https://openchat-review.me';
     public string $locale = 'ja_JP';
     public string $og_type = 'website';
@@ -24,7 +24,7 @@ class Metadata
 
     public function setTitle(string $title)
     {
-        $this->title = $this->h($title) . ' | ' . $this->title;
+        self::$title = $this->h($title) . ' | ' . self::$title;
         return $this;
     }
 
@@ -49,7 +49,7 @@ class Metadata
     public function generateTags(): string
     {
         $tags = '';
-        $tags .= '<title>' . $this->title . '</title>' . "\n";
+        $tags .= '<title>' . self::$title . '</title>' . "\n";
         $tags .= '<meta name="description" content="' . $this->description . '" />' . "\n";
         $tags .= '<meta property="og:description" content="' . $this->ogpDescription . '">' . "\n";
         $tags .= '<meta property="og:image" content="' . $this->image_url . '" />' . "\n";

@@ -21,7 +21,7 @@ class OpenChatRepository implements OpenChatRepositoryInterface
         return DB::fetch($query, ['id' => $id]);
     }
 
-    public function getOpenChatIdByImgUrl(string $img_url): int|false
+    public function findDuplicateOpenChat(string $name, string $description, string $img_url): int|false
     {
         $query =
             'SELECT
@@ -29,9 +29,12 @@ class OpenChatRepository implements OpenChatRepositoryInterface
             FROM
                 open_chat
             WHERE
-                img_url = :img_url';
+                name = :name
+                AND description = :description
+                AND img_url = :img_url
+            LIMIT 1';
 
-        return DB::execute($query, ['img_url' => $img_url])->fetchColumn();
+        return DB::execute($query, compact('name', 'description', 'img_url'))->fetchColumn();
     }
 
     public function getOpenChatIdByUrl(string $url): int|false

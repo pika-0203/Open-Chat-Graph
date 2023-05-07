@@ -12,7 +12,7 @@ interface OpenChatRepositoryInterface
      */
     public function getOpenChatById(int $id): array|false;
 
-    public function getOpenChatIdByImgUrl(string $img_url): int|false;
+    public function findDuplicateOpenChat(string $name, string $description, string $img_url): int|false;
 
     public function getOpenChatIdByUrl(string $url): int|false;
 

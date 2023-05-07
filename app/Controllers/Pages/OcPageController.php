@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace App\Controllers\Pages;
+
 use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Services\Statistics\StatisticsService;
 
@@ -22,10 +26,10 @@ class OcPageController
         $ogpDesc = 'グラフ化されたメンバー数推移から人気度や活性度を視覚的にチェック出来ます！';
 
         $_meta = meta()->setTitle($name)->setDescription($desc)->setOgpDescription($ogpDesc);
-        $_css = ['room_page', 'site_header'];
+        $_css = ['room_page', 'site_header', 'site_footer'];
 
         return view('statistics/header', compact('_meta', '_css'))
-            ->make('statistics/oc_content', compact('oc') + $statisticsData)
+            ->make('statistics/oc_content', compact('oc', 'statisticsData'))
             ->make('statistics/footer');
     }
 }

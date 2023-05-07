@@ -50,8 +50,6 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                         *
                     FROM
                         statistics_ranking
-                    ORDER BY
-                        id ASC
                     LIMIT
                         :offset, :limit
                 ) AS ranking ON oc.id = ranking.open_chat_id
@@ -106,5 +104,11 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
     {
         $result = DB::fetchAll($this->getMemberStatsRankingQuery(), compact('offset', 'limit'));
         return $result;
+    }
+
+    public function getRankingRecordCount(): int
+    {
+        return (int)DB::execute('SELECT COUNT(id) FROM statistics_ranking')
+            ->fetchColumn();
     }
 }

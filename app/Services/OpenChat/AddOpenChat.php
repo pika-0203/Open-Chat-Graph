@@ -59,9 +59,9 @@ class AddOpenChat
         // URL、画像URLに含まれる識別子のみを抽出して上書きする
         $openChat = $this->prepareOpenChatData($openChat, $openChatIdentifier);
 
-        $existingOpenChatId = $this->openChatRepository->getOpenChatIdByImgUrl($openChat['img_url']);
+        $existingOpenChatId = $this->openChatRepository->findDuplicateOpenChat($openChat['name'], $openChat['description'], $openChat['img_url']);
         if ($existingOpenChatId !== false) {
-            // 同じ画像URLのオープンチャットが登録済み場合（いずれかがサブトークルーム）
+            // 同じ情報のオープンチャットが登録済み場合（いずれかがサブトークルームの可能性）
             $this->logRepository->logAddOpenChatDuplicationError(Auth::id(), $existingOpenChatId, $openChatIdentifier, getIP(), getUA());
             return $this->exitingOpenChatMessage($existingOpenChatId);
         }

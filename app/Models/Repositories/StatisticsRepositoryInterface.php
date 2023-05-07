@@ -19,8 +19,8 @@ interface StatisticsRepositoryInterface
      * 
      * @param int $end_time   どの時点まで取得するかをunixtimeで指定する
      *            * **Example:** `time()`
-     * 
-     * @return array `[['data' => 'Y-m-d', 'member' => 'string']]`
+     *
+     * @return array `['date' => ['Y-m-d'], 'member' => [int]]` チャート向けにラベルとデータの配列が別けられている連想配列
      */
     public function getDailyStatisticsByPeriod(int $open_chat_id, int $start_time, int $end_time): array;
 }

@@ -40,4 +40,9 @@ interface OpenChatListRepositoryInterface
      * @return array `[['id' => int, 'name' => string, 'url' => string, 'description' => string, 'img_url' => string, 'member' => int, 'updated_at' => int, 'is_alive' => bool, 'review_count' => int, 'crying_rating_count' => int, 'laughing_rating_count' => int, 'angry_rating_count' => int, 'last_posted_at' => int, 'ranking_id' => int, 'diff_member' => int, percent_increase => float]]`
      */
     public function findMemberStatsRanking(int $offset, int $limit): array;
+
+    /**
+     * ランキングのレコード数を取得する
+     */
+    public function getRankingRecordCount(): int;
 }

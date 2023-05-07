@@ -237,107 +237,94 @@ try {
 // Get the domain and http host of the current page using the static method getDomainAndHttpHost() of ErrorPage class.
 $siteUrl = ErrorPage::getDomainAndHttpHost();
 
+$_meta = meta()->setTitle("{$httpCode} {$httpStatusMessage}")
+    ->setDescription('お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。')
+    ->setOgpDescription('お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。');
+
+$_css = ['room_list', 'site_header', 'site_footer'];
+
+include __DIR__ . '/../statistics/header.php'
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<style>
+    /* Increase size of the main heading */
+    h1 {
+        font-size: 5rem;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/assets/favicon.png">
-    <link rel="stylesheet" href="/assets/mvp.css">
-    <title><?php echo "{$httpCode} {$httpStatusMessage}" ?></title>
-</head>
+    /* Center and adjust the margin of the main section */
+    main {
+        margin: -3rem auto;
+        margin-top: -5rem;
+    }
 
-<body>
-    <style>
-        /* Increase size of the main heading */
-        h1 {
-            font-size: 5rem;
-        }
+    /* Break long lines in the code section */
+    code {
+        word-wrap: break-word;
+    }
 
-        /* Center and adjust the margin of the main section */
-        main {
-            margin: -3rem auto;
-            margin-top: -5rem;
-        }
+    /* Set width, center, and add padding to the ordered list */
+    ol {
+        width: fit-content;
+        margin: 0 auto;
+        margin-top: 1.5rem;
+        padding: 0 1rem;
+    }
 
-        /* Break long lines in the code section */
-        code {
-            word-wrap: break-word;
-        }
-
-        /* Set width, center, and add padding to the ordered list */
-        ol {
-            width: fit-content;
-            margin: 0 auto;
-            margin-top: 1.5rem;
-            padding: 0 1rem;
-        }
-
-        /* Break URLs to fit in the list */
-        a {
-            word-break: break-all;
-        }
-    </style>
-
-    <header>
-        <nav>
-            <a href="<?php echo $siteUrl ?>"><?php echo $siteUrl ?></a>
-        </nav>
-        <h1><?php echo $httpCode ?></h1>
-        <h2><?php echo $httpStatusMessage ?></h2>
-        <br>
-        <p>The page you are looking for may be temporarily unavailable or may have been moved or deleted..!</p>
-        <hr>
-    </header>
-    <main>
-        <?php if ($detailsMessage) : ?>
-            <!-- Display error message if it exists -->
-            <section>
-                <pre><code><?php echo $errorMessage ?></code></pre>
-            </section>
-            <?php if ($errorLineUrl || $thrownLineUrl || $linesUrl) : ?>
-                <!-- Display links to relevant lines on GitHub if available -->
-                <ol>
-                    <!-- Error line -->
-                    <?php if ($errorLineUrl) : ?>
-                        <li style="list-style-type: none">
-                            <small>
-                                <a href="<?php echo $errorLineUrl ?>"><?php echo $errorLineUrl ?></a>
-                            </small>
-                        </li>
-                    <?php endif ?>
-                    <!-- Line -->
-                    <?php if ($thrownLineUrl) : ?>
-                        <li style="list-style-type: none">
-                            <small>
-                                <a href="<?php echo $thrownLineUrl ?>"><?php echo $thrownLineUrl ?></a>
-                            </small>
-                        </li>
-                    <?php endif ?>
-                    <!-- Stack Trace -->
-                    <?php foreach ($linesUrl as $key => $url) : ?>
-                        <li value="<?php echo $key ?>">
-                            <small>
-                                <a href="<?php echo $url ?>"><?php echo $url ?></a>
-                            </small>
-                        </li>
-                    <?php endforeach ?>
-                </ol>
-            <?php endif ?>
-        <?php else : ?>
-            <!-- Display empty paragraph if error message does not exist -->
-            <p></p>
-        <?php endif ?>
-    </main>
-
-    <footer>
-        <a href="<?php echo $link ?? '' ?>">
-            <?php echo $link ?? '' ?>
+    /* Break URLs to fit in the list */
+    a {
+        word-break: break-all;
+    }
+</style>
+<!-- 固定ヘッダー -->
+<header class="site_header">
+    <div class="header_inner">
+        <a class="unset header_site_title" href="<?php echo url() ?>">
+            <img src="<?php echo url('assets/icon-192x192.webp') ?>" alt="">
+            <h1>LINEオープンチャット グラフ</h1>
         </a>
-    </footer>
+    </div>
+</header>
+<header>
+    <h1><?php echo $httpCode ?></h1>
+    <h2><?php echo $httpStatusMessage ?></h2>
+    <br>
+    <p>お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。</p>
+</header>
+<main>
+    <?php if ($errorLineUrl || $thrownLineUrl || $linesUrl) : ?>
+        <!-- Display error message if it exists -->
+        <section>
+            <pre><code><?php echo $errorMessage ?></code></pre>
+        </section>
+        <!-- Display links to relevant lines on GitHub if available -->
+        <ol>
+            <!-- Error line -->
+            <?php if ($errorLineUrl) : ?>
+                <li style="list-style-type: none">
+                    <small>
+                        <a href="<?php echo $errorLineUrl ?>"><?php echo $errorLineUrl ?></a>
+                    </small>
+                </li>
+            <?php endif ?>
+            <!-- Line -->
+            <?php if ($thrownLineUrl) : ?>
+                <li style="list-style-type: none">
+                    <small>
+                        <a href="<?php echo $thrownLineUrl ?>"><?php echo $thrownLineUrl ?></a>
+                    </small>
+                </li>
+            <?php endif ?>
+            <!-- Stack Trace -->
+            <?php foreach ($linesUrl as $key => $url) : ?>
+                <li value="<?php echo $key ?>">
+                    <small>
+                        <a href="<?php echo $url ?>"><?php echo $url ?></a>
+                    </small>
+                </li>
+            <?php endforeach ?>
+        </ol>
+    <?php endif ?>
+</main>
 </body>
 
 </html>
