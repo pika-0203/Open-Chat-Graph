@@ -10,13 +10,12 @@ interface RoutingInterface
     const DEFAULT_CONTROLLER_METHOD_NAME = 'index';
 
     const API_CONTROLLER_SUFFIX = 'ApiController';
-    const API_CONTROLLER_DIR = __DIR__ . '/../../../app/Controllers/Api';
+    const API_CONTROLLER_DIR = "\\App\\Controllers\\Api\\";
 
     const PAGE_CONTROLLER_SUFFIX = 'PageController';
-    const PAGE_CONTROLLER_DIR = __DIR__ . '/../../../app/Controllers/Pages';
+    const PAGE_CONTROLLER_DIR = "\\App\\Controllers\\Pages\\";
 
     public function setRouteDto(RouteDTO $routeDto);
-    public function validatePath();
     public function resolveController();
     public function validateAllowedMethods();
 }

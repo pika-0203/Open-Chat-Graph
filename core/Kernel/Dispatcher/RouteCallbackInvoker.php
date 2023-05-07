@@ -8,9 +8,7 @@ use Shadow\Kernel\Reception;
 use Shadow\Kernel\ResponseHandler;
 use Shadow\Kernel\ResponseHandlerInterface;
 use Shadow\Kernel\RouteClasses\RouteDTO;
-use Shadow\Exceptions\ValidationException;
-use Shadow\Exceptions\NotFoundException;
-use Shadow\Exceptions\BadRequestException;
+use Shadow\Exceptions\FailException;
 
 class RouteCallbackInvoker extends AbstractInvoker implements RouteCallbackInvokerInterface
 {
@@ -24,41 +22,30 @@ class RouteCallbackInvoker extends AbstractInvoker implements RouteCallbackInvok
         $this->responseHandler = $responseHandler ?? new ResponseHandler;
     }
 
-    public function invoke(RouteDTO $routeDto, \Closure $routeCallback): array
+    public function invoke(RouteDTO $routeDto, \Closure $routeCallback)
     {
         $this->routeFails = $routeDto->getFailsResponse();
-
-        $callbackValidatedArray = $this->routeCallbackValidator($routeCallback);
-        if (empty($callbackValidatedArray)) {
-            return [];
-        }
-
-        return $callbackValidatedArray;
+        $this->routeCallbackValidator($routeCallback);
     }
 
-    /**
-     * Validate the incoming request using the given route callback and return the validated input data.
-     */
-    private function routeCallbackValidator(\Closure $routeCallback): array
+    private function routeCallbackValidator(\Closure $routeCallback)
     {
-        [$closureArgs, $validatedArray] = $this->getClosureArgs($routeCallback);
+        $closureArgs = $this->getClosureArgs($routeCallback);
 
         try {
-            $result = $this->responseHandler->handleResponse($routeCallback(...$closureArgs));
-        } catch (ValidationException | NotFoundException | BadRequestException $e) {
+            $response = $this->responseHandler->handleResponse($routeCallback(...$closureArgs));
+        } catch (FailException $e) {
             $this->errorResponse([
                 ['key' => 'match', 'code' => $e->getCode(), 'message' => $e->getMessage()]
             ]);
         }
 
-        if ($result === true) {
-            return Reception::$inputData;
-        } elseif ($result === false) {
+        if ($response === false) {
             $this->errorResponse([['key' => 'match']]);
-        } elseif (is_array($result)) {
-            return $result;
         }
 
-        return $validatedArray;
+        if (is_array($response)) {
+            Reception::$inputData = array_merge(Reception::$inputData, $response);
+        }
     }
 }

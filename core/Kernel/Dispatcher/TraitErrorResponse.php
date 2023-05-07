@@ -29,6 +29,7 @@ trait TraitErrorResponse
             }
 
             $this->routeFails->send();
+            exit;
         }
 
         $message = $errorArray[0]['message'] ?? 'Request validation failed.';

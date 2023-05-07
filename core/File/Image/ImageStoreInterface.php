@@ -24,7 +24,7 @@ interface ImageStoreInterface
         \GdImage $image,
         string $destPath,
         string $fileName,
-        \ImageType $imageType = \ImageType::WEBP,
+        \ImageType|string $imageType = \ImageType::WEBP,
         $quality = 80
     ): string;
 }

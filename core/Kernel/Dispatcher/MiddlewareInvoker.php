@@ -8,6 +8,7 @@ use Shadow\Kernel\Reception;
 use Shadow\Kernel\ResponseHandler;
 use Shadow\Kernel\ResponseHandlerInterface;
 use Shadow\Kernel\RouteClasses\RouteDTO;
+use Shadow\Exceptions\FailException;
 
 class MiddlewareInvoker extends AbstractInvoker implements ClassInvokerInterface
 {
@@ -40,7 +41,17 @@ class MiddlewareInvoker extends AbstractInvoker implements ClassInvokerInterface
             $instance = $this->ci->constructorInjection($className);
             $middlewareResponse = $instance->handle(...$methodArgs);
 
-            $response = $this->responseHandler->handleResponse($middlewareResponse);
+            try {
+                $response = $this->responseHandler->handleResponse($middlewareResponse);
+            } catch (FailException $e) {
+                $this->errorResponse([
+                    ['key' => 'className', 'code' => $e->getCode(), 'message' => $e->getMessage()]
+                ]);
+            }
+
+            if ($response === false) {
+                $this->errorResponse([['key' => 'match']]);
+            }
 
             if (is_array($response)) {
                 Reception::$inputData = array_merge(Reception::$inputData, $response);

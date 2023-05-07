@@ -24,37 +24,14 @@ class Routing implements RoutingInterface
     /**
      * @throws NotFoundException
      */
-    public function validatePath()
-    {
-        $paths = $this->routeDto->parsedPathArray;
-
-        // If there is a 3rd path, return 404 error
-        if (count($paths) > 2) {
-            throw new NotFoundException('Three or more Paths are not supported without parametars.');
-        }
-
-        if ($paths[0] !== '' && preg_grep('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $paths) === []) {
-            throw new NotFoundException(
-                "Invalid path: It must starts with letter or underscore, followed by any number of letters, numbers, or underscores."
-            );
-        }
-    }
-
-    /**
-     * @throws NotFoundException
-     */
     public function resolveController()
     {
         $explicitController = $this->routeDto->getExplicitControllerArray();
-
         if (!$explicitController) {
+            $this->validatePath();
             $this->getDynamicControllerName();
         } else {
             $this->getExplicitControllerName($explicitController);
-        }
-
-        if (!method_exists($this->routeDto->controllerClassName, $this->routeDto->methodName)) {
-            throw new NotFoundException('Could not find controller method.');
         }
     }
 
@@ -62,6 +39,22 @@ class Routing implements RoutingInterface
     {
         $this->routeDto->controllerClassName = $explicitController[0];
         $this->routeDto->methodName = $explicitController[1];
+    }
+
+    private function validatePath()
+    {
+        $paths = $this->routeDto->parsedPathArray;
+
+        if ($paths[0] !== '' && preg_grep('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $paths) === []) {
+            throw new NotFoundException(
+                "Invalid path: It must starts with letter or underscore, followed by any number of letters, numbers, or underscores."
+            );
+        }
+
+        // If there is a 3rd path, return 404 error
+        if (count($paths) > 2) {
+            throw new NotFoundException('Three or more Paths are not supported without parametars.');
+        }
     }
 
     private function getDynamicControllerName()
@@ -78,9 +71,9 @@ class Routing implements RoutingInterface
         // Resolve controller name
         if ($this->routeDto->parsedPathArray[0] !== '') {
             $controllerPrefix = ucfirst($this->routeDto->parsedPathArray[0]);
-            $this->routeDto->controllerClassName = $controllerPrefix . $controllerSuffix;
+            $this->routeDto->controllerClassName = $controllerDir . $controllerPrefix . $controllerSuffix;
         } else {
-            $this->routeDto->controllerClassName = RoutingInterface::DEFAULT_CONTROLLER_CLASS_NAME . $controllerSuffix;
+            $this->routeDto->controllerClassName = $controllerDir . RoutingInterface::DEFAULT_CONTROLLER_CLASS_NAME . $controllerSuffix;
         }
 
         // Resolve method name
@@ -90,13 +83,13 @@ class Routing implements RoutingInterface
             $this->routeDto->methodName = RoutingInterface::DEFAULT_CONTROLLER_METHOD_NAME;
         }
 
-        $controllerFilePath = "{$controllerDir}/{$this->routeDto->controllerClassName}.php";
-
-        if (!file_exists("{$controllerDir}/{$this->routeDto->controllerClassName}.php")) {
+        if (class_exists($this->routeDto->controllerClassName)) {
+            if (!method_exists($this->routeDto->controllerClassName, $this->routeDto->methodName)) {
+                throw new NotFoundException('Could not find controller method.');
+            }
+        } else {
             throw new NotFoundException('Could not find controller file');
         }
-
-        require_once $controllerFilePath;
     }
 
     /**

@@ -17,12 +17,6 @@ class ReceptionInitializer implements ReceptionInitializerInterface
     use TraitErrorResponse;
 
     private RouteDTO $routeDto;
-    private RouteCallbackInvokerInterface $routeCallbackInvoker;
-
-    public function __construct(?RouteCallbackInvokerInterface $routeCallbackInvoker = null)
-    {
-        $this->routeCallbackInvoker = $routeCallbackInvoker ?? new RouteCallbackInvoker;
-    }
 
     public function init(RouteDTO $routeDto)
     {
@@ -114,47 +108,10 @@ class ReceptionInitializer implements ReceptionInitializerInterface
     public function callRequestValidator()
     {
         $builtinValidators = $this->routeDto->getValidater();
-        $routeCallback = $this->routeDto->getRouteCallback();
-
-        if ($builtinValidators === false) {
-            if ($routeCallback === false) {
-                Reception::$inputData = [];
-                return;
-            }
-
-            $validatedArray = $this->routeCallbackInvoker->invoke($this->routeDto, $routeCallback);
-        } else {
-            $validatedArray = $this->validateUsingBuiltinValidators($builtinValidators);
-
-            if ($routeCallback !== false) {
-                $callbackValidatedArray = $this->routeCallbackInvoker->invoke($this->routeDto, $routeCallback);
-
-                if (!empty($callbackValidatedArray)) {
-                    $validatedArray = array_merge($validatedArray, $callbackValidatedArray);
-                }
-            }
+        if ($builtinValidators !== false) {
+            $validatedArray = $this->callBuiltinValidator($builtinValidators);
+            Reception::$inputData = array_merge(Reception::$inputData, $validatedArray);
         }
-
-        Reception::$inputData = $validatedArray;
-    }
-
-    /**
-     * Validate the incoming request using the built-in validators and return the validated input data.
-     */
-    private function validateUsingBuiltinValidators($validators)
-    {
-        $validatedArray = $this->callBuiltinValidator($validators);
-        $routeCallback = $this->routeDto->getRouteCallback();
-        if ($routeCallback === false) {
-            return $validatedArray;
-        }
-
-        $callbackValidatedArray = $this->routeCallbackInvoker->invoke($this->routeDto, $routeCallback);
-        if (empty($callbackValidatedArray)) {
-            return $validatedArray;
-        }
-
-        return array_merge($validatedArray, $callbackValidatedArray);
     }
 
     private function callBuiltinValidator(array $validators): array

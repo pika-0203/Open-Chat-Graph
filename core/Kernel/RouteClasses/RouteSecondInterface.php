@@ -18,12 +18,12 @@ interface RouteSecondInterface
      * 
      * * **Example:** `Route::path('home/{pageId}')->match(fn (string $pageId): bool => ctype_digit($pageId));`
      * 
-     * @param \Closure $validator     The validator to be added.
-     * @param string   $requestMethod [optional] Specify the request method to validate.
+     * @param \Closure|ResponseInterface $validator     The validator to be added.
+     * @param string                     $requestMethod [optional] Specify the request method to validate.
      * 
      * @return static The instance of the Route class.
      */
-    public function match(\Closure $callback, ?string $requestMethod = null): static;
+    public function match(\Closure|ResponseInterface $callback, ?string $requestMethod = null): static;
 
     /**
      * Adds a string validator to the route validator array.

@@ -9,5 +9,5 @@ interface RouteCallbackInvokerInterface
     /**
      * Call the class method.
      */
-    public function invoke(RouteDTO $routeDto, \Closure $routeCallback): array;
+    public function invoke(RouteDTO $routeDto, \Closure $routeCallback);
 }

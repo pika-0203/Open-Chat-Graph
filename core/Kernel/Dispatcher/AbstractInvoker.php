@@ -55,13 +55,11 @@ abstract class AbstractInvoker
         $reflection = new \ReflectionFunction($closure);
 
         $closureArgs = [];
-        $validArray = [];
         foreach ($reflection->getParameters() as $param) {
             $paramType = $param->getType();
 
             if ($paramType === null || $paramType->isBuiltin()) {
                 $closureArgs[] = Reception::$inputData[$param->name] ?? null;
-                $validArray[$param->name] = Reception::$inputData[$param->name] ?? null;;
                 continue;
             }
 
@@ -73,6 +71,6 @@ abstract class AbstractInvoker
             $closureArgs[] = $this->ci->constructorInjection($paramClassName);
         }
 
-        return [$closureArgs, $validArray];
+        return $closureArgs;
     }
 }

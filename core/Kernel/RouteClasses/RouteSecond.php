@@ -17,7 +17,7 @@ class RouteSecond extends AbstractRoute implements RouteSecondInterface
         $this->routeDto = $routeDto;
     }
 
-    public function match(\Closure $callback, ?string $requestMethod = null): static
+    public function match(\Closure|ResponseInterface $callback, ?string $requestMethod = null): static
     {
         [$key, $requestMethod] = $this->createArrayKey($requestMethod);
         $this->routeDto->routeCallbackArray[$key][$requestMethod] = $callback;
@@ -33,7 +33,7 @@ class RouteSecond extends AbstractRoute implements RouteSecondInterface
         bool $emptyAble = false
     ): static {
         [$key, $requestMethod] = $this->createArrayKey($requestMethod);
-        
+
         $validator = $this->createValidationObject($maxLen, $regex, $emptyAble, \Shadow\Exceptions\ValidationException::class);
 
         $this->routeDto->routeValidatorArray[$key][$requestMethod][$parametaName] = $validator->str(...);
@@ -50,9 +50,9 @@ class RouteSecond extends AbstractRoute implements RouteSecondInterface
         bool $emptyAble = false,
     ): static {
         [$key, $requestMethod] = $this->createArrayKey($requestMethod);
-        
+
         $validator = $this->createValidationObject($max, $min, $exactMatch, $emptyAble, \Shadow\Exceptions\ValidationException::class);
-        
+
         $this->routeDto->routeValidatorArray[$key][$requestMethod][$parametaName] = $validator->num(...);
 
         return $this;

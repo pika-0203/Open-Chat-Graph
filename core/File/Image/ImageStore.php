@@ -10,7 +10,7 @@ class ImageStore implements ImageStoreInterface
         \GdImage $image,
         string $destPath,
         string $fileName,
-        \ImageType $imageType = \ImageType::WEBP,
+        \ImageType|string $imageType = \ImageType::WEBP,
         $quality = 80
     ): string {
         $destPath = "/" . ltrim(rtrim($destPath, "/"), "/") . "/";
@@ -23,7 +23,14 @@ class ImageStore implements ImageStoreInterface
             throw new \InvalidArgumentException('Invalid image quality. Quality must be between 0 and 100.');
         }
 
-        $type = $imageType->value;
+        if (is_string($imageType)) {
+            $type = $imageType;
+            if (!function_exists("image{$type}")) {
+                throw new \InvalidArgumentException('"image{$type}" is not a function.');
+            }
+        } else {
+            $type = $imageType->value;
+        }
 
         if ($type === 'png') {
             $quality = $this->convertToSingleDigitWithBias($quality);
