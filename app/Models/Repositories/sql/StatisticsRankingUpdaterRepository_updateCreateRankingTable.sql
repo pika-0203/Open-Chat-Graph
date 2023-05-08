@@ -40,7 +40,7 @@ FROM
         GROUP BY
             st.open_chat_id
     ) t1
-    LEFT JOIN (
+    JOIN (
         SELECT
             st3.open_chat_id,
             AVG(st3.member) AS member
