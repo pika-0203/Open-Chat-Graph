@@ -6,158 +6,129 @@ namespace App\Services\OpenChat;
 
 use App\Config\AppConfig;
 use App\Config\OpenChatCrawlerConfig;
+use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Models\Repositories\OpenChatRepositoryInterface;
-use App\Models\Repositories\LogRepositoryInterface;
 use App\Services\OpenChat\Crawler\OpenChatCrawler;
 use App\Services\OpenChat\Crawler\OpenChatImgDownloader;
-use App\Services\Auth;
 
-class AddOpenChat
+class UpdateOpenChat
 {
+    private UpdateOpenChatRepositoryInterface $updateRepository;
     private OpenChatRepositoryInterface $openChatRepository;
-    private LogRepositoryInterface $logRepository;
     private OpenChatCrawler $crawler;
     private OpenChatImgDownloader $imgDownloader;
 
     function __construct(
+        UpdateOpenChatRepositoryInterface $updateRepository,
         OpenChatRepositoryInterface $openChatRepository,
-        LogRepositoryInterface $logRepository,
         OpenChatCrawler $crawler,
         OpenChatImgDownloader $imgDownloader
     ) {
+        $this->updateRepository = $updateRepository;
         $this->openChatRepository = $openChatRepository;
-        $this->logRepository = $logRepository;
         $this->crawler = $crawler;
         $this->imgDownloader = $imgDownloader;
     }
 
     /**
-     * DBにオープンチャットを登録する
+     * オープンチャットを更新する
      * 
-     * @return array `['message' => string, 'id' => int|null]`
+     * @return false|array 404の場合はfalse 
+     *         `['updatedData' => ['name' => string|null, 'img_url' => string|null, 'description' => string|null, 'member' => int|null], 'databaseData' => ['name' => string, 'img_url' => string, 'description' => string, 'member' => int], 'isUpdated' => bool]`
      * 
-     * @throws \LogicException URLのパターンがマッチしない場合
+     * @throws \RuntimeException 取得時にエラーが発生した場合
      */
-    function add(string $url): array
+    function update(int $open_chat_id): false|array
     {
-        // オープンチャットのURLから識別子を抽出する
-        $openChatIdentifier = $this->parseOpenChatIdentifierFromUrl($url);
-
-        $existingOpenChatId = $this->openChatRepository->getOpenChatIdByUrl($openChatIdentifier);
-        if ($existingOpenChatId !== false) {
-            // オープンチャットが登録済みの場合
-            return $this->exitingOpenChatMessage($existingOpenChatId);
+        // DBからオープンチャットを取得する
+        $existingOpenChat = $this->openChatRepository->getOpenChatById($open_chat_id);
+        if ($existingOpenChat === false) {
+            throw new \RuntimeException('DBにオープンチャットがありません。');
         }
 
         // オープンチャットのページからデータを取得
-        $openChat = $this->fetchOpenChat(AppConfig::LINE_URL . $openChatIdentifier);
+        $openChat = $this->crawler->getOpenChat(AppConfig::LINE_URL . $existingOpenChat['url']);
         if ($openChat === false) {
-            // 404の場合
-            $this->logAddOpenChatError('404 Not found: ' . $openChatIdentifier);
-            return $this->failMessage();
+            // 404の場合は'is_alive'カラムをfalseに更新する
+            $this->updateRepository->updateOpenChat($open_chat_id, false);
+            return false;
         }
 
-        // URL、画像URLに含まれる識別子のみを抽出して上書きする
-        $openChat = $this->prepareOpenChatData($openChat, $openChatIdentifier);
+        $databaseData = [
+            'name' => $existingOpenChat['name'],
+            'img_url' => $existingOpenChat['img_url'],
+            'description' => $existingOpenChat['description'],
+            'member' => $existingOpenChat['member']
+        ];
 
-        $existingOpenChatId = $this->openChatRepository->findDuplicateOpenChat($openChat['name'], $openChat['description'], $openChat['img_url']);
-        if ($existingOpenChatId !== false) {
-            // 同じ情報のオープンチャットが登録済み場合（いずれかがサブトークルームの可能性）
-            $this->logRepository->logAddOpenChatDuplicationError(Auth::id(), $existingOpenChatId, $openChatIdentifier, getIP(), getUA());
-            return $this->exitingOpenChatMessage($existingOpenChatId);
+        // DBのデータと、ページから取得したデータの差分を抽出
+        $updatedData = $this->compareArrays(
+            $this->prepareOpenChatData($openChat),
+            $databaseData
+        );
+
+        if (empty(array_filter($updatedData, fn ($value) => !is_null($value)))) {
+            // 差分がない場合
+            $this->updateRepository->updateOpenChat($open_chat_id);
+            return compact('updatedData', 'databaseData') + ['isUpdated' => false];
         }
 
-        // オープンチャットの画像をダウンロードする
-        if (!$this->downloadImg($openChat['img_url'])) {
-            return $this->failMessage();
+        // 画像が更新されている場合はダウンロードする
+        if ($updatedData['img_url'] !== null) {
+            $this->updateImg($existingOpenChat['img_url'], $updatedData['img_url']);
         }
 
-        // オープンチャットを登録する
-        $openChatId = $this->openChatRepository->addOpenChat(...$openChat);
-        $this->logRepository->logAddOpenChat(Auth::id(), $openChatId, getIP(), getUA());
-
-        return $this->successMessage($openChatId);
-    }
-
-    private function parseOpenChatIdentifierFromUrl(string $url): string
-    {
-        if (!preg_match(OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN, $url, $match)) {
-            throw new \LogicException('URLのパターンがマッチしませんでした。');
-        }
-        return $match[0];
+        // DBを更新する
+        $this->updateRepository->updateOpenChat($open_chat_id, true, ...$updatedData);
+        return compact('updatedData', 'databaseData') + ['isUpdated' => true];
     }
 
     /**
-     * @return array|false `['name' => string, 'img_url' => string, 'description' => string, 'member' => int]`
-     * 
-     * @throws \RuntimeException
+     * 画像URLから識別子のみを抽出して置き換える
      */
-    private function fetchOpenChat(string $url): array|false
+    private function prepareOpenChatData(array $openChat): array
     {
-        // オープンチャットを取得する
-        try {
-            return $this->crawler->getOpenChat($url);
-        } catch (\RuntimeException $e) {
-            $this->logAddOpenChatError($e->getMessage());
-            return false;
-        }
-    }
-
-    private function logAddOpenChatError(string $message)
-    {
-        $this->logRepository->logAddOpenChatError(Auth::id(), getIP(), getUA(), $message);
-    }
-
-    private function prepareOpenChatData(array $openChat, string $openChatIdentifier): array
-    {
-        // URL、画像URLに含まれる識別子のみを抽出して上書きする
-        $openChat['url'] = $openChatIdentifier;
         $openChat['img_url'] = str_replace(OpenChatCrawlerConfig::LINE_IMG_URL, '', $openChat['img_url']);
         return $openChat;
     }
 
-    private function downloadImg(string $openChatImgIdentifier): bool
+    /**
+     * @throws \RuntimeException サーバーエラーなどの場合
+     */
+    private function updateImg(string $openChatImgIdentifier, string $newOpenChatImgIdentifier)
     {
-        if (file_exists(OpenChatCrawlerConfig::SOTRE_IMG_DEST_PATH . '/' . $openChatImgIdentifier . '.webp')) {
-            // 同じ画像が存在する場合 (デフォルトのカバー画像)
-            return true;
-        }
-
         // オープンチャットの画像を保存する
-        try {
-            $result = $this->imgDownloader->storeOpenChatImg($openChatImgIdentifier);
-            if ($result) {
-                return true;
-            }
-            $this->logAddOpenChatError('img not found: ' . $openChatImgIdentifier);
-            return false;
-        } catch (\RuntimeException $e) {
-            $this->logAddOpenChatError($e->getMessage());
-            return false;
+        $result = $this->imgDownloader->storeOpenChatImg($newOpenChatImgIdentifier);
+        if ($result) {
+            deleteFile(OpenChatCrawlerConfig::SOTRE_IMG_DEST_PATH . '/' . $openChatImgIdentifier . '.' . \ImageType::WEBP->value);
+            deleteFile(OpenChatCrawlerConfig::SOTRE_IMG_PREVIEW_DEST_PATH . '/' . $openChatImgIdentifier . '.' . \ImageType::WEBP->value);
+        } else {
+            throw new \RuntimeException('img not found: ' . $newOpenChatImgIdentifier);
         }
     }
 
-    private function exitingOpenChatMessage(int $id): array
+    /**
+     * 配列を比較して、array1の要素から差分の値のみを残して返す  
+     * 同じ値で重複しているキーは、値がnullになる  
+     */
+    private function compareArrays(array $array1, array $array2): ?array
     {
-        return [
-            'message' => 'オープンチャットが既に登録されています',
-            'id' => $id
-        ];
-    }
+        $result = [];
 
-    private function failMessage(): array
-    {
-        return [
-            'message' => '無効なURLです。',
-            'id' => null
-        ];
-    }
+        foreach ($array1 as $key => $value) {
+            if (isset($array2[$key]) && $array2[$key] === $value) {
+                $result[$key] = null;
+            } elseif (!isset($array2[$key]) || $array2[$key] !== $value) {
+                $result[$key] = $value;
+            }
+        }
 
-    private function successMessage(int $id): array
-    {
-        return [
-            'message' => 'オープンチャットを登録しました',
-            'id' => $id
-        ];
+        foreach ($array2 as $key => $value) {
+            if (!isset($array1[$key])) {
+                $result[$key] = $value;
+            }
+        }
+
+        return $result;
     }
 }
