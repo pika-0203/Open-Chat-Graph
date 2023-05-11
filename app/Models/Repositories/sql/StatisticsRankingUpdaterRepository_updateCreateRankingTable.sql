@@ -84,7 +84,15 @@ SELECT
 FROM
     statistics_ranking_temp
 ORDER BY
-    index1 DESC;
+    CASE
+        WHEN index1 > 0 THEN 1 -- index1が0より上のグループ
+        WHEN index1 = 0 THEN 2 -- index1が0のグループ
+        ELSE 3 -- index1が0未満のグループ
+    END,
+    CASE
+        WHEN index1 = 0 THEN open_chat_id -- index1が0のグループでopen_chat_idで降順ソート
+        ELSE index1
+    END DESC;
 
 DELETE FROM
     statistics_ranking_temp;
