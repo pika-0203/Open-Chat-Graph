@@ -99,31 +99,18 @@ class UpdateOpenChat
      */
     private function updateImg(int $open_chat_id, string $openChatImgIdentifier, string $newOpenChatImgIdentifier)
     {
-        if (file_exists(OpenChatCrawlerConfig::SOTRE_IMG_DEST_PATH . '/' . $newOpenChatImgIdentifier . '.webp')) {
-            // 同じ画像が存在する場合 (デフォルトのカバー画像)
-            $this->deleteExistingImg($open_chat_id, $openChatImgIdentifier);
-            return;
-        }
-
         // 画像をダウンロードする
-        if ($this->imgDownloader->storeOpenChatImg($newOpenChatImgIdentifier)) {
-            $this->deleteExistingImg($open_chat_id, $openChatImgIdentifier);
-        } else {
+        if (!$this->imgDownloader->storeOpenChatImg($newOpenChatImgIdentifier)) {
             // 画像が404の場合
             throw new \RuntimeException('img not found: ' . $newOpenChatImgIdentifier);
         }
-    }
 
-    /**
-     * 不要になった画像を削除する
-     */
-    private function deleteExistingImg(int $open_chat_id, string $openChatImgIdentifier)
-    {
         if ($this->updateRepository->existsRecordByImgUrlExcludingId($open_chat_id, $openChatImgIdentifier)) {
-            // 同じ画像を使用するオープンチャットが存在する場合 (デフォルトのカバー画像)
+            // 削除対象の画像が別のオープンチャットで使用されている場合 (デフォルトのカバー画像)
             return;
         }
 
+        // 不要になった画像を削除する
         deleteFile(OpenChatCrawlerConfig::SOTRE_IMG_PREVIEW_DEST_PATH . '/' . $openChatImgIdentifier . '.webp');
         deleteFile(OpenChatCrawlerConfig::SOTRE_IMG_DEST_PATH . '/' . $openChatImgIdentifier . '.webp');
     }

@@ -69,7 +69,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             LIMIT
                 1';
 
-        return DB::fetch($query, compact('open_chat_id', 'img_url')) !== false;
+        return DB::fetch($query, compact('open_chat_id', 'img_url'))!== false;
     }
 
     public function deleteOpenChat(int $id): bool
