@@ -53,6 +53,7 @@ class AddOpenChat
         $openChat = $this->fetchOpenChat(AppConfig::LINE_URL . $openChatIdentifier);
         if ($openChat === false) {
             // 404の場合
+            $this->logAddOpenChatError('404 Not found: ' . $openChatIdentifier);
             return $this->failMessage();
         }
 
@@ -95,12 +96,7 @@ class AddOpenChat
     {
         // オープンチャットを取得する
         try {
-            $response = $this->crawler->getOpenChat($url);
-            if ($response === false) {
-                $this->logAddOpenChatError('404 Not found');
-                return false;
-            }
-            return $response;
+            return $this->crawler->getOpenChat($url);
         } catch (\RuntimeException $e) {
             $this->logAddOpenChatError($e->getMessage());
             return false;
@@ -120,15 +116,20 @@ class AddOpenChat
         return $openChat;
     }
 
-    private function downloadImg(string $openChatImdIdentifier): bool
+    private function downloadImg(string $openChatImgIdentifier): bool
     {
+        if (file_exists(OpenChatCrawlerConfig::SOTRE_IMG_DEST_PATH . '/' . $openChatImgIdentifier . '.webp')) {
+            // 同じ画像が存在する場合 (デフォルトのカバー画像)
+            return true;
+        }
+
         // オープンチャットの画像を保存する
         try {
-            $result = $this->imgDownloader->storeOpenChatImg($openChatImdIdentifier);
+            $result = $this->imgDownloader->storeOpenChatImg($openChatImgIdentifier);
             if ($result) {
                 return true;
             }
-            $this->logAddOpenChatError('img not found: ' . $openChatImdIdentifier);
+            $this->logAddOpenChatError('img not found: ' . $openChatImgIdentifier);
             return false;
         } catch (\RuntimeException $e) {
             $this->logAddOpenChatError($e->getMessage());

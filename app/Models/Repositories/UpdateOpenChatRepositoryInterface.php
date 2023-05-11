@@ -23,5 +23,10 @@ interface UpdateOpenChatRepositoryInterface
      */
     public function getOpenChatIdByPeriod(int $before_at, int $limit): array;
 
+    /**
+     * 同じ画像を使用する他のオープンチャットがあるかを調べる
+     */
+    public function existsRecordByImgUrlExcludingId(int $open_chat_id, string $img_url): bool;
+
     public function deleteOpenChat(int $id): bool;
 }

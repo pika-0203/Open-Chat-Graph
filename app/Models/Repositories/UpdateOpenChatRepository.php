@@ -47,11 +47,29 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             WHERE
                 updated_at < FROM_UNIXTIME(:before_at)
                 AND is_alive = 1
+            ORDER BY
+                updated_at ASC
             LIMIT
                 :limit';
 
         return DB::execute($query, compact('before_at', 'limit'))
             ->fetchAll(\PDO::FETCH_COLUMN, 0);
+    }
+
+    public function existsRecordByImgUrlExcludingId(int $open_chat_id, string $img_url): bool
+    {
+        $query =
+            'SELECT 
+                id
+            FROM
+                open_chat
+            WHERE
+                img_url = :img_url
+                AND NOT id = :open_chat_id
+            LIMIT
+                1';
+
+        return DB::fetch($query, compact('open_chat_id', 'img_url')) !== false;
     }
 
     public function deleteOpenChat(int $id): bool

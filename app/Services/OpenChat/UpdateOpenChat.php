@@ -75,7 +75,7 @@ class UpdateOpenChat
 
         // 画像が更新されている場合はダウンロードする
         if ($updatedData['img_url'] !== null) {
-            $this->updateImg($existingOpenChat['img_url'], $updatedData['img_url']);
+            $this->updateImg($open_chat_id, $existingOpenChat['img_url'], $updatedData['img_url']);
         }
 
         // DBを更新する
@@ -93,18 +93,39 @@ class UpdateOpenChat
     }
 
     /**
+     * 画像を更新する
+     * 
      * @throws \RuntimeException サーバーエラーなどの場合
      */
-    private function updateImg(string $openChatImgIdentifier, string $newOpenChatImgIdentifier)
+    private function updateImg(int $open_chat_id, string $openChatImgIdentifier, string $newOpenChatImgIdentifier)
     {
-        // オープンチャットの画像を保存する
-        $result = $this->imgDownloader->storeOpenChatImg($newOpenChatImgIdentifier);
-        if ($result) {
-            deleteFile(OpenChatCrawlerConfig::SOTRE_IMG_DEST_PATH . '/' . $openChatImgIdentifier . '.' . \ImageType::WEBP->value);
-            deleteFile(OpenChatCrawlerConfig::SOTRE_IMG_PREVIEW_DEST_PATH . '/' . $openChatImgIdentifier . '.' . \ImageType::WEBP->value);
+        if (file_exists(OpenChatCrawlerConfig::SOTRE_IMG_DEST_PATH . '/' . $newOpenChatImgIdentifier . '.webp')) {
+            // 同じ画像が存在する場合 (デフォルトのカバー画像)
+            $this->deleteExistingImg($open_chat_id, $openChatImgIdentifier);
+            return;
+        }
+
+        // 画像をダウンロードする
+        if ($this->imgDownloader->storeOpenChatImg($newOpenChatImgIdentifier)) {
+            $this->deleteExistingImg($open_chat_id, $openChatImgIdentifier);
         } else {
+            // 画像が404の場合
             throw new \RuntimeException('img not found: ' . $newOpenChatImgIdentifier);
         }
+    }
+
+    /**
+     * 不要になった画像を削除する
+     */
+    private function deleteExistingImg(int $open_chat_id, string $openChatImgIdentifier)
+    {
+        if ($this->updateRepository->existsRecordByImgUrlExcludingId($open_chat_id, $openChatImgIdentifier)) {
+            // 同じ画像を使用するオープンチャットがある場合 (デフォルトのカバー画像)
+            return;
+        }
+
+        deleteFile(OpenChatCrawlerConfig::SOTRE_IMG_PREVIEW_DEST_PATH . '/' . $openChatImgIdentifier . '.webp');
+        deleteFile(OpenChatCrawlerConfig::SOTRE_IMG_DEST_PATH . '/' . $openChatImgIdentifier . '.webp');
     }
 
     /**

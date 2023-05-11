@@ -28,7 +28,7 @@ class OpenChatStatisticsRanking
         $pageNumber = $pageNumber;
         $maxPageNumber = $this->calcMaxPages(
             $this->openChatListRepository->getRankingRecordCount(),
-            AppConfig::OPEN_CHAT_RANKING_LIMIT
+            AppConfig::OPEN_CHAT_LIST_LIMIT
         );
 
         if ($pageNumber > $maxPageNumber) {
@@ -38,8 +38,8 @@ class OpenChatStatisticsRanking
 
         // ランキングを取得する
         $openChatList = $this->openChatListRepository->findMemberStatsRanking(
-            $this->calcOffset($pageNumber, AppConfig::OPEN_CHAT_RANKING_LIMIT),
-            AppConfig::OPEN_CHAT_RANKING_LIMIT
+            $this->calcOffset($pageNumber, AppConfig::OPEN_CHAT_LIST_LIMIT),
+            AppConfig::OPEN_CHAT_LIST_LIMIT * $pageNumber
         );
 
         return compact('pageNumber', 'maxPageNumber', 'openChatList');
