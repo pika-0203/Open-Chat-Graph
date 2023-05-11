@@ -120,7 +120,7 @@ class UpdateOpenChat
     private function deleteExistingImg(int $open_chat_id, string $openChatImgIdentifier)
     {
         if ($this->updateRepository->existsRecordByImgUrlExcludingId($open_chat_id, $openChatImgIdentifier)) {
-            // 同じ画像を使用するオープンチャットがある場合 (デフォルトのカバー画像)
+            // 同じ画像を使用するオープンチャットが存在する場合 (デフォルトのカバー画像)
             return;
         }
 
