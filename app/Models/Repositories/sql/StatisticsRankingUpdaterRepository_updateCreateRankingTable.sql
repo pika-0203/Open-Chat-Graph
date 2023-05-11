@@ -90,7 +90,7 @@ ORDER BY
         ELSE 3 -- index1が0未満のグループ
     END,
     CASE
-        WHEN index1 = 0 THEN open_chat_id -- index1が0のグループでopen_chat_idで降順ソート
+        WHEN index1 = 0 THEN open_chat_id -- index1が0のグループはopen_chat_idで降順ソート
         ELSE index1
     END DESC;
 
