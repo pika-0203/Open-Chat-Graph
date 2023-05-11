@@ -97,7 +97,7 @@ class UpdateOpenChat
      * 
      * @throws \RuntimeException サーバーエラーなどの場合
      */
-    private function updateImg(int $open_chat_id, string $openChatImgIdentifier, string $newOpenChatImgIdentifier)
+    private function updateImg(int $open_chat_id, string $oldOpenChatImgIdentifier, string $newOpenChatImgIdentifier)
     {
         // 画像をダウンロードする
         if (!$this->imgDownloader->storeOpenChatImg($newOpenChatImgIdentifier)) {
@@ -105,14 +105,14 @@ class UpdateOpenChat
             throw new \RuntimeException('img not found: ' . $newOpenChatImgIdentifier);
         }
 
-        if ($this->updateRepository->existsRecordByImgUrlExcludingId($open_chat_id, $openChatImgIdentifier)) {
+        if ($this->updateRepository->existsRecordByImgUrlExcludingId($open_chat_id, $oldOpenChatImgIdentifier)) {
             // 削除対象の画像が別のオープンチャットで使用されている場合 (デフォルトのカバー画像)
             return;
         }
 
         // 不要になった画像を削除する
-        deleteFile(OpenChatCrawlerConfig::SOTRE_IMG_PREVIEW_DEST_PATH . '/' . $openChatImgIdentifier . '.webp');
-        deleteFile(OpenChatCrawlerConfig::SOTRE_IMG_DEST_PATH . '/' . $openChatImgIdentifier . '.webp');
+        deleteFile(OpenChatCrawlerConfig::SOTRE_IMG_PREVIEW_DEST_PATH . '/' . $oldOpenChatImgIdentifier . '.webp');
+        deleteFile(OpenChatCrawlerConfig::SOTRE_IMG_DEST_PATH . '/' . $oldOpenChatImgIdentifier . '.webp');
     }
 
     /**
