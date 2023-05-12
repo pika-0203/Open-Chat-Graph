@@ -42,6 +42,11 @@ class OpenChatStatisticsRanking
             AppConfig::OPEN_CHAT_LIST_LIMIT * $pageNumber
         );
 
+        // 説明文を半角140文字以内にする
+        foreach ($openChatList as &$oc) {
+            $oc['description'] = mb_strimwidth($oc['description'], 0, 140, '…',);
+        }
+
         return compact('pageNumber', 'maxPageNumber', 'openChatList');
     }
 }

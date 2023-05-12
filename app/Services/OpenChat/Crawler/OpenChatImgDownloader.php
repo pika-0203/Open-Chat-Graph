@@ -7,7 +7,7 @@ namespace App\Services\OpenChat\Crawler;
 use App\Config\AppConfig;
 use App\Config\OpenChatCrawlerConfig;
 use App\Services\Crawler\FileDownloader;
-use App\Services\Crawler\TraitRandomUserAgent;
+use App\Services\Crawler\TraitUserAgent;
 use Shadow\File\FileValidatorInterface;
 use Shadow\File\Image\GdImageFactoryInterface;
 use Shadow\File\Image\ImageStoreInterface;
@@ -15,7 +15,7 @@ use Shadow\Exceptions\ValidationException;
 
 class OpenChatImgDownloader
 {
-    use TraitRandomUserAgent;
+    use TraitUserAgent;
 
     private FileDownloader $file;
     private FileValidatorInterface $validator;
@@ -74,7 +74,7 @@ class OpenChatImgDownloader
 
     private function download(string $url): string|false
     {
-        $ua = $this->getRandomAndroidUserAgent();
+        $ua = 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://openchat-review.me)';
 
         $downloadData = $this->file->downloadFile($url, $ua);
         if (!$downloadData) {

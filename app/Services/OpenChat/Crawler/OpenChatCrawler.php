@@ -6,12 +6,12 @@ namespace App\Services\OpenChat\Crawler;
 
 use App\Config\OpenChatCrawlerConfig;
 use App\Services\Crawler\CrawlerFactory;
-use App\Services\Crawler\TraitRandomUserAgent;
+use App\Services\Crawler\TraitUserAgent;
 use Shadow\Kernel\Validator;
 
 class OpenChatCrawler
 {
-    use TraitRandomUserAgent;
+    use TraitUserAgent;
 
     private CrawlerFactory $crawlerFactory;
 
@@ -29,7 +29,7 @@ class OpenChatCrawler
      */
     function getOpenChat(string $url): array|false
     {
-        $ua = $this->getRandomAndroidUserAgent();
+        $ua = 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://openchat-review.me)';
         
         // クローラーを初期化
         $crawler = $this->crawlerFactory->createCrawler($url, $ua);
