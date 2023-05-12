@@ -74,7 +74,7 @@ class OpenChatImgDownloader
 
     private function download(string $url): string|false
     {
-        $ua = 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://openchat-review.me)';
+        $ua = 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)';
 
         $downloadData = $this->file->downloadFile($url, $ua);
         if (!$downloadData) {

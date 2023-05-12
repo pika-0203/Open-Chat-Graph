@@ -29,7 +29,7 @@ class OpenChatCrawler
      */
     function getOpenChat(string $url): array|false
     {
-        $ua = 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://openchat-review.me)';
+        $ua = 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)';
         
         // クローラーを初期化
         $crawler = $this->crawlerFactory->createCrawler($url, $ua);
