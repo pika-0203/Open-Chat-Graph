@@ -48,3 +48,10 @@ function statisticsComponent(string $string, ?array $var = null): void
     }
     include __DIR__ . '/../Views/statistics/components/' . $string . '.php';
 }
+
+function searchPager(string $keyword, int $pageNumber, string $nameQ = 'q', string $nameP = 'p', string $path = 'search'): string
+{
+    $query = http_build_query([$nameQ => $keyword]);
+    $page = ($pageNumber > 1) ? '&' . http_build_query([$nameP => $pageNumber]) : '';
+    return \Shadow\Kernel\Dispatcher\ReceptionInitializer::getDomainAndHttpHost() . "/{$path}?{$query}{$page}";
+}

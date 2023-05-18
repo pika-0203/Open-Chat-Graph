@@ -66,8 +66,8 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
             -- ocs.laughing_rating_count,
             -- ocs.angry_rating_count,
             -- UNIX_TIMESTAMP(ocs.last_posted_at) AS last_posted_at,
-            COALESCE(ranking.diff_member, 0) AS diff_member,
-            COALESCE(ranking.percent_increase, 0) AS percent_increase
+            ranking.diff_member AS diff_member,
+            ranking.percent_increase AS percent_increase
         FROM
             open_chat AS oc
             -- JOIN open_chat_stats AS ocs ON oc.id = ocs.open_chat_id

@@ -12,18 +12,15 @@ class RankingPageController
     {
         $rankingList = $openChatStatsRanking->get($pageNumber ?? 1);
         if (!$rankingList) {
+            // 最大ページ数を超えてる場合は404
             return false;
         }
-
-        $_css = ['room_list', 'site_header', 'site_footer'];
-        $_meta = meta();
-
+        
         $name = '急上昇ランキング';
-
+        
         $_meta = meta()->setTitle($name);
+        $_css = ['room_list_12', 'site_header_10', 'site_footer_6'];
 
-        return view('statistics/header', compact('_meta', '_css'))
-            ->make('statistics/ranking_content', $rankingList)
-            ->make('statistics/footer');
+        return view('statistics/ranking_content', compact('_meta', '_css') + $rankingList);
     }
 }

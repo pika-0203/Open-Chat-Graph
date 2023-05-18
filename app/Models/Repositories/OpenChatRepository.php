@@ -12,11 +12,20 @@ class OpenChatRepository implements OpenChatRepositoryInterface
     {
         $query =
             'SELECT
-                *
+                oc.id,
+                oc.name,
+                oc.url,
+                oc.img_url,
+                oc.description,
+                oc.member,
+                oc.is_alive,
+                ranking.diff_member AS diff_member,
+                ranking.percent_increase AS percent_increase
             FROM
-                open_chat
+                open_chat AS oc
+                LEFT JOIN statistics_ranking AS ranking ON ranking.open_chat_id = oc.id
             WHERE
-                id = :id';
+                oc.id = :id';
 
         return DB::fetch($query, ['id' => $id]);
     }

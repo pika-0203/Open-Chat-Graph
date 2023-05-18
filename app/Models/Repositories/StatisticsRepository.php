@@ -51,4 +51,20 @@ class StatisticsRepository implements StatisticsRepositoryInterface
             'member' => array_column($result, 'member')
         ];
     }
+
+    public function getDailyStatisticsAll(int $open_chat_id): array
+    {
+        $query =
+            "SELECT
+                DATE_FORMAT(`date`, '%Y/%m/%d') AS `date`,
+                member
+            FROM
+                statistics
+            WHERE
+                open_chat_id = :open_chat_id
+            ORDER BY
+                `date` ASC";
+
+        return DB::fetchAll($query, compact('open_chat_id'));
+    }
 }

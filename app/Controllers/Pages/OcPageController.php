@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Models\Repositories\OpenChatRepositoryInterface;
-use App\Services\Statistics\StatisticsService;
 
 class OcPageController
 {
     function index(
         OpenChatRepositoryInterface $openChatRepository,
-        StatisticsService $statistics,
+        \App\Services\Statistics\StatisticsService $statistics,
         int $open_chat_id
     ) {
         $oc = $openChatRepository->getOpenChatById($open_chat_id);
@@ -22,14 +21,25 @@ class OcPageController
         $statisticsData = $statistics->getStatisticsData($open_chat_id);
 
         $name = $oc['name'];
-        $desc = "オープンチャット「{$name}」のメンバー数推移をグラフで表示します。人気度や活性度を視覚的にチェック出来ます！";
-        $ogpDesc = 'グラフ化されたメンバー数推移から人気度や活性度を視覚的にチェック出来ます！';
+        $desc = "オープンチャット「{$name}」の人数推移をグラフで表示します。オプチャの人気度や活性度がチェック出来ます！";
+        $ogpDesc = 'オプチャの人数推移をグラフで表示します。人気度や活性度がチェック出来ます！';
 
         $_meta = meta()->setTitle($name)->setDescription($desc)->setOgpDescription($ogpDesc);
-        $_css = ['room_page', 'site_header', 'site_footer'];
+        $_css = ['room_page_12', 'site_header_10', 'site_footer_6'];
 
-        return view('statistics/header', compact('_meta', '_css'))
-            ->make('statistics/oc_content', compact('oc', 'statisticsData'))
-            ->make('statistics/footer');
+        return view('statistics/oc_content', compact('_meta', '_css', 'oc', 'statisticsData'));
+    }
+
+    function csv(
+        OpenChatRepositoryInterface $openChatRepository,
+        \App\Services\Statistics\DownloadCsvService $csvService,
+        int $open_chat_id
+    ) {
+        $oc = $openChatRepository->getOpenChatById($open_chat_id);
+        if (!$oc) {
+            return false;
+        }
+
+        $csvService->sendCsv($open_chat_id, $oc['name']);
     }
 }

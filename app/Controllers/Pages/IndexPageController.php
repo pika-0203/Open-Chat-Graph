@@ -18,11 +18,9 @@ class IndexPageController
             $rankingList['requestOpenChat'] = $openChatRepository->getOpenChatById(session('id'));
         }
 
-        $_css = ['room_list', 'site_header', 'site_footer'];
-        $_meta = meta();
+        $_css = ['room_list_12', 'site_header_10', 'site_footer_6'];
+        $_meta = meta()->isTopPage();
 
-        return view('statistics/header', compact('_meta', '_css'))
-            ->make('statistics/top_content', $rankingList)
-            ->make('statistics/footer');
+        return view('statistics/top_content', compact('_meta', '_css') + $rankingList);
     }
 }

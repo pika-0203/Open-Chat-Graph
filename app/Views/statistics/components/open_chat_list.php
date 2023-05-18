@@ -1,25 +1,20 @@
 <!-- @param array $openChatList -->
 <?php foreach ($openChatList as $oc) : ?>
-    <section>
-        <div class="openchat-item">
-            <a href="<?php echo url('/oc/' . $oc['id']) ?>">
-                <div class="openchat-item-img">
-                    <img src="<?php echo url(\App\Config\AppConfig::OPENCHAT_IMG_PREVIEW_PATH . $oc['img_url'] . \App\Config\AppConfig::LINE_IMG_PREVIEW_SUFFIX . '.webp') ?>" alt="オープンチャット「<?php echo $oc['name'] ?>」" />
-                </div>
-                <div class="openchat-item-info">
-                    <span class="openchat-item-title"><?php echo $oc['name'] ?></span>
-                    <span class="openchat-item-desc"><?php echo $oc['description'] ?></span>
-                    <div class="openchat-item-lower">
-                        <span>メンバー<?php echo $oc['member'] ?></span>
-                        <?php if ($oc['diff_member'] !== 0) : ?>
-                            <div class="openchat-item-stats <?php echo $oc['diff_member'] > 0 ? 'positive' : 'negative' ?>">
-                                <span><?php echo signedNum($oc['diff_member']) ?></span>
-                                <span>(<?php echo signedNum(singnedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
-                            </div>
-                        <?php endif ?>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </section>
+    <article class="openchat-item">
+        <a class="link-overlay unset" href="<?php echo url('/oc/' . $oc['id']) ?>" tabindex="-1" aria-hidden="true"></a>
+        <img alt="オープンチャット「<?php echo $oc['name'] ?>」のアイコン" class="openchat-item-img" loading="lazy" src="<?php echo url(\App\Config\AppConfig::OPENCHAT_IMG_PREVIEW_PATH . $oc['img_url'] . \App\Config\AppConfig::LINE_IMG_PREVIEW_SUFFIX . '.webp') ?>">
+        <h2 class="unset">
+            <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $oc['id']) ?>"><?php echo $oc['name'] ?></a>
+        </h2>
+        <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
+        <footer class="openchat-item-lower unset <?php echo $oc['diff_member'] > 0 ? 'positive' : 'negative' ?>">
+            <span>メンバー <?php echo $oc['member'] ?></span>
+            <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
+                <span class="openchat-item-stats"><?php echo signedNum($oc['diff_member']) ?></span>
+                <span class="openchat-item-stats">(<?php echo signedNum(singnedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
+            <?php elseif ($oc['diff_member'] === 0) : ?>
+                <span>±0</span>
+            <?php endif ?>
+        </footer>
+    </article>
 <?php endforeach; ?>

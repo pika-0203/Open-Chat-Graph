@@ -21,7 +21,7 @@ interface OpenChatListRepositoryInterface
     /**
      * キーワードでタイトルと説明文から検索する
      * 
-     * @return array `['count' => int, 'result' => [['id' => int, 'name' => string, 'url' => string, 'description' => string, 'img_url' => string, 'member' => int, 'diff_member' => int, percent_increase => float, 'count' => int]]]`
+     * @return array `['count' => int, 'result' => [['id' => int, 'name' => string, 'url' => string, 'description' => string, 'img_url' => string, 'member' => int, 'diff_member' => int|null, percent_increase => float|null, 'count' => int]]]`
      */
     public function findByKeyword(string $keyword, int $offset, int $limit): array;
 

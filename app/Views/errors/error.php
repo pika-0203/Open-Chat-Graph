@@ -241,20 +241,16 @@ $_meta = meta()->setTitle("{$httpCode} {$httpStatusMessage}")
     ->setDescription('お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。')
     ->setOgpDescription('お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。');
 
-$_css = ['room_list', 'site_header', 'site_footer'];
+$_css = ['room_list_12', 'site_header_10', 'site_footer_6'];
 
-include __DIR__ . '/../statistics/header.php'
 ?>
+<!DOCTYPE html>
+<html lang="ja">
+<?php statisticsComponent('head', compact('_css', '_meta')) ?>
 <style>
     /* Increase size of the main heading */
     h1 {
         font-size: 5rem;
-    }
-
-    /* Center and adjust the margin of the main section */
-    main {
-        margin: -3rem auto;
-        margin-top: -5rem;
     }
 
     /* Break long lines in the code section */
@@ -275,56 +271,53 @@ include __DIR__ . '/../statistics/header.php'
         word-break: break-all;
     }
 </style>
-<!-- 固定ヘッダー -->
-<header class="site_header">
-    <div class="header_inner">
-        <a class="unset header_site_title" href="<?php echo url() ?>">
-            <img src="<?php echo url('assets/icon-192x192.webp') ?>" alt="">
-            <h1>LINEオープンチャット グラフ</h1>
-        </a>
-    </div>
-</header>
-<header>
-    <h1><?php echo $httpCode ?></h1>
-    <h2><?php echo $httpStatusMessage ?></h2>
-    <br>
-    <p>お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。</p>
-</header>
-<main>
-    <?php if ($errorLineUrl || $thrownLineUrl || $linesUrl) : ?>
-        <!-- Display error message if it exists -->
-        <section>
-            <pre><code><?php echo $errorMessage ?></code></pre>
-        </section>
-        <!-- Display links to relevant lines on GitHub if available -->
-        <ol>
-            <!-- Error line -->
-            <?php if ($errorLineUrl) : ?>
-                <li style="list-style-type: none">
-                    <small>
-                        <a href="<?php echo $errorLineUrl ?>"><?php echo $errorLineUrl ?></a>
-                    </small>
-                </li>
-            <?php endif ?>
-            <!-- Line -->
-            <?php if ($thrownLineUrl) : ?>
-                <li style="list-style-type: none">
-                    <small>
-                        <a href="<?php echo $thrownLineUrl ?>"><?php echo $thrownLineUrl ?></a>
-                    </small>
-                </li>
-            <?php endif ?>
-            <!-- Stack Trace -->
-            <?php foreach ($linesUrl as $key => $url) : ?>
-                <li value="<?php echo $key ?>">
-                    <small>
-                        <a href="<?php echo $url ?>"><?php echo $url ?></a>
-                    </small>
-                </li>
-            <?php endforeach ?>
-        </ol>
-    <?php endif ?>
-</main>
+
+<body>
+    <!-- 固定ヘッダー -->
+    <?php statisticsComponent('site_header') ?>
+    <main>
+        <header>
+            <h1><?php echo $httpCode ?></h1>
+            <h2><?php echo $httpStatusMessage ?></h2>
+            <br>
+            <p>お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。</p>
+        </header>
+        <?php if ($errorLineUrl || $thrownLineUrl || $linesUrl) : ?>
+            <!-- Display error message if it exists -->
+            <section>
+                <pre><code><?php echo $errorMessage ?></code></pre>
+            </section>
+            <!-- Display links to relevant lines on GitHub if available -->
+            <ol>
+                <!-- Error line -->
+                <?php if ($errorLineUrl) : ?>
+                    <li style="list-style-type: none">
+                        <small>
+                            <a href="<?php echo $errorLineUrl ?>"><?php echo $errorLineUrl ?></a>
+                        </small>
+                    </li>
+                <?php endif ?>
+                <!-- Line -->
+                <?php if ($thrownLineUrl) : ?>
+                    <li style="list-style-type: none">
+                        <small>
+                            <a href="<?php echo $thrownLineUrl ?>"><?php echo $thrownLineUrl ?></a>
+                        </small>
+                    </li>
+                <?php endif ?>
+                <!-- Stack Trace -->
+                <?php foreach ($linesUrl as $key => $url) : ?>
+                    <li value="<?php echo $key ?>">
+                        <small>
+                            <a href="<?php echo $url ?>"><?php echo $url ?></a>
+                        </small>
+                    </li>
+                <?php endforeach ?>
+            </ol>
+        <?php endif ?>
+    </main>
+    <?php statisticsComponent('footer') ?>
+    <script defer src="/js/site_header_footer_3.js"></script>
 </body>
 
 </html>

@@ -4,45 +4,58 @@ namespace App\Views;
 
 class Metadata
 {
-    public static string $title = 'LINEオープンチャット グラフ';
+    public static string $title = 'オプチャグラフ';
 
     private string $description =
-    'LINE OpenChatで作られたトークルームのメンバー数推移をグラフで表示するサービスです。
-    トークルームのメンバー数がどのように変化しているかを視覚的に確認することができます！
-    オプチャの成長傾向を振り返ったり、他のオプチャとの比較が出来ることで、管理者の方にとっても運営の手助けになります！';
+    'LINEオープンチャットで作られたトークルームのメンバー数推移をグラフで表示するサービスです。 トークルームの人数変化を視覚的に確認することができます！ 統計から成長傾向を振り返ったり、他のオプチャとの比較が出来ることで、管理者の方にとっても運営の手助けになります！';
 
     private string $ogpDescription =
-    'オプチャのメンバー数遷移をグラフで視覚的に確認することができます。
-    オプチャの成長傾向を振り返ったり、他のオプチャとの比較が出来ることで、管理者の方にとっても運営の手助けになります！';
+    'オプチャのメンバー数遷移をグラフで確認できます。 統計から成長傾向を振り返ったり、他のオプチャとの比較が出来ることで、管理者の方にとっても運営の手助けになります！';
 
+    private bool $isTopPageFlag = false;
     private string $image_url = 'https://openchat-review.me/assets/ogp.png';
-    public string $site_name = 'LINEオープンチャット グラフ';
+    public string $site_name = 'オプチャグラフ';
     public string $site_url = 'https://openchat-review.me';
     public string $locale = 'ja_JP';
-    public string $og_type = 'website';
-    public string $ld_type = 'Organization';
+    public string $og_type;
+    public string $ld_type = 'WebSite';
 
-    public function setTitle(string $title)
+    public function __construct()
+    {
+        if ($_SERVER["REQUEST_URI"] === '/') {
+            $this->og_type = 'website';
+        } else {
+            $this->og_type = 'article';
+        }
+    }
+
+    public function setTitle(string $title): static
     {
         self::$title = $this->h($title) . ' | ' . self::$title;
         return $this;
     }
 
-    public function setDescription(string $description)
+    public function setDescription(string $description): static
     {
         $this->description = $this->h($description);
         return $this;
     }
 
-    public function setOgpDescription(string $ogpDescription)
+    public function setOgpDescription(string $ogpDescription): static
     {
         $this->ogpDescription = $this->h($ogpDescription);
         return $this;
     }
 
-    public function setImageUrl(string $image_url)
+    public function setImageUrl(string $image_url): static
     {
         $this->image_url = $this->h($image_url);
+        return $this;
+    }
+
+    public function isTopPage(): static
+    {
+        $this->isTopPageFlag = true;
         return $this;
     }
 
@@ -50,28 +63,38 @@ class Metadata
     {
         $tags = '';
         $tags .= '<title>' . self::$title . '</title>' . "\n";
-        $tags .= '<meta name="description" content="' . $this->description . '" />' . "\n";
+        $tags .= '<meta name="description" content="' . $this->description . '">' . "\n";
+        $tags .= '<meta property="og:locale" content="' . $this->locale . '">' . "\n";
+        $tags .= '<meta property="og:url" content="' . url($_SERVER['REQUEST_URI'] ?? '') . '">' . "\n";
+        $tags .= '<meta property="og:type" content="' . $this->og_type . '">' . "\n";
+        $tags .= '<meta property="og:title" content="' . self::$title . '">' . "\n";
         $tags .= '<meta property="og:description" content="' . $this->ogpDescription . '">' . "\n";
-        $tags .= '<meta property="og:image" content="' . $this->image_url . '" />' . "\n";
-        $tags .= '<meta property="og:site_name" content="' . $this->site_name . '" />' . "\n";
-        $tags .= '<meta property="og:url" content="' . url($_SERVER['REQUEST_URI'] ?? '') . '" />' . "\n";
-        $tags .= '<meta property="og:locale" content="' . $this->locale . '" />' . "\n";
-        $tags .= '<meta property="og:type" content="' . $this->og_type . '" />' . "\n";
+        $tags .= '<meta property="og:image" content="' . $this->image_url . '">' . "\n";
+        $tags .= '<meta property="og:site_name" content="' . $this->site_name . '">' . "\n";
+        $tags .= '<meta name="twitter:card"  content="summary_large_image">' . "\n";
+
+        if (!$this->isTopPageFlag) {
+            return $tags;
+        }
+
         $tags .=
             '<script type="application/ld+json">
-                {
-                    "@context": "http://schema.org",
-                    "@type": "' . $this->ld_type . '",
-                    "name": "' . $this->site_name . '",
-                    "url": "' . $this->site_url . '",
-                    "description": "' . $this->description . '",
-                    "image": "' . $this->image_url . '",
-                    "potentialAction": {
-                        "@type": "SearchAction",
-                        "target": "' . $this->site_url . '/{search_term_string}",
-                        "query-input": "required name=search_term_string"
-                    }
-                }
+            {
+              "@context": "http://schema.org",
+              "@type": "' . $this->ld_type . '",
+              "name": "' . $this->site_name . '",
+              "url": "' . $this->site_url . '",
+              "description": "' . $this->description . '",
+              "image": "' . $this->image_url . '",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "' . $this->site_url . '/search?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            }
             </script>' . "\n";
 
         return $tags;

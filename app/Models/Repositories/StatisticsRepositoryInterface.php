@@ -23,4 +23,9 @@ interface StatisticsRepositoryInterface
      * @return array `['date' => ['Y-m-d'], 'member' => [int]]` チャート向けにラベルとデータの配列が別けられている連想配列
      */
     public function getDailyStatisticsByPeriod(int $open_chat_id, int $start_time, int $end_time): array;
+
+    /**
+     * @return array `[['date' => 'Y-m-d', 'member' => int]]`
+     */
+    public function getDailyStatisticsAll(int $open_chat_id): array;
 }

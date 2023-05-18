@@ -35,7 +35,7 @@ class LogRepository implements LogRepositoryInterface
 
     public function logAddOpenChat(int $user_id, int $open_chat_id, string $ip, string $ua): void
     {
-        $this->insertLog('AddOpenChat', $user_id, $ip, $ua, "id: {$open_chat_id}");
+        $this->insertLog('AddOpenChat', $user_id, $ip, $ua, (string)$open_chat_id);
     }
 
     public function logUpdateOpenChatError(int $user_id, int $open_chat_id, string $ip, string $ua, string $message): void
@@ -55,7 +55,7 @@ class LogRepository implements LogRepositoryInterface
 
     public function logAddReview(int $user_id, int $open_chat_id, string $ip, string $ua): void
     {
-        $this->insertLog('AddReview', $user_id, $ip, $ua, "id: {$open_chat_id}");
+        $this->insertLog('AddReview', $user_id, $ip, $ua, (string)$open_chat_id);
     }
 
     public function logAddReviewError(int $user_id, string $ip, string $ua, string $message): void
