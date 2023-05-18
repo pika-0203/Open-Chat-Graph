@@ -14,14 +14,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Shadow\Kernel\Route;
 use Shadow\Kernel\Validator;
 
-Route::middlewareGroup(\App\Middleware\CronAuth::class)
-    ->path('cron@put@options')
-
-    ->path('cron/rank@put@options')
-
-    ->path('cron/addoc@put@options')
-    ->matchStr('url', 'put');
-
 Route::middlewareGroup(
     \App\Middleware\VerifyCsrfToken::class,
     \App\Middleware\AutoUserLoginMiddleware::class,
