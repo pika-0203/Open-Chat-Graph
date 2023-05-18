@@ -7,8 +7,6 @@
  * @license https://github.com/mimimiku778/MimimalCMS/blob/master/LICENSE.md
  */
 
-define('APP_START_TIME', microtime(true));
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Shadow\Kernel\Route;
