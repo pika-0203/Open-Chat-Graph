@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services\Statistics;
 
 use App\Models\Repositories\OpenChatListRepositoryInterface;
-use App\Config\AppConfig;
 use App\Services\Traits\TraitPaginationRecordsCalculator;
 
 class OpenChatStatisticsRanking
@@ -20,16 +19,13 @@ class OpenChatStatisticsRanking
     }
 
     /**
-     * @return array `['pageNumber' => int, 'maxPageNumber' => int, 'openChatList' => array]`
+     * @return array `['pageNumber' => int, 'maxPageNumber' => int, 'openChatList' => array, 'totalRecords' => int]`
      */
-    function get(int $pageNumber)
+    function get(int $pageNumber, int $limit)
     {
         // ページの最大数を取得する
-        $pageNumber = $pageNumber;
-        $maxPageNumber = $this->calcMaxPages(
-            $this->openChatListRepository->getRankingRecordCount(),
-            AppConfig::OPEN_CHAT_LIST_LIMIT
-        );
+        $totalRecords = $this->openChatListRepository->getRankingRecordCount();
+        $maxPageNumber = $this->calcMaxPages($totalRecords, $limit);
 
         if ($pageNumber > $maxPageNumber) {
             // 現在のページ番号が最大ページ番号を超えている場合
@@ -38,8 +34,8 @@ class OpenChatStatisticsRanking
 
         // ランキングを取得する
         $openChatList = $this->openChatListRepository->findMemberStatsRanking(
-            $this->calcOffset($pageNumber, AppConfig::OPEN_CHAT_LIST_LIMIT),
-            AppConfig::OPEN_CHAT_LIST_LIMIT * $pageNumber
+            $this->calcOffset($pageNumber, $limit),
+            $limit * $pageNumber
         );
 
         // 説明文を半角140文字以内にする
@@ -47,6 +43,6 @@ class OpenChatStatisticsRanking
             $oc['description'] = mb_strimwidth($oc['description'], 0, 140, '…',);
         }
 
-        return compact('pageNumber', 'maxPageNumber', 'openChatList');
+        return compact('pageNumber', 'maxPageNumber', 'openChatList', 'totalRecords');
     }
 }

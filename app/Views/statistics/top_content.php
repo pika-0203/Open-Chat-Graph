@@ -5,39 +5,12 @@
 <body>
     <?php statisticsComponent('site_header') ?>
     <main>
-        <details>
-            <summary>オプチャグラフとは？</summary>
-            <div class="site-details-inner">
-                <p>オープンチャットの人数を日ごとに記録して、グラフで視覚的に表示します。</p>
-                <p>このツールを使えば、成長傾向を把握したり、他のオプチャと比較することが簡単になります。</p>
-                <p>トークルームの運営には必須のツールです！</p>
-                <p>誰でもオプチャのリンクを貼り付けて登録できます。</p>
-                <p>
-                    <small>ご不明な事がありましたら、<a href="https://line.me/ti/g2/rLT0p-Tz19W7jxHvDDm9ECGNsyymhLQTHmmTkg">こちらのオープンチャット</a>からお問い合わせください。</small>
-                </p>
-                <p>
-                    <small>
-                        <a href="https://github.com/pika-0203/Open-Chat-Graph" target="_blank">技術仕様 - GitHub</a>
-                    </small>
-                </p>
-                <p>
-                    <small>
-                        <a href="<?php echo url('privacy') ?>">プライバシーポリシー</a>
-                    </small>
-                </p>
-                <p>
-                    <small>
-                        <a href="<?php echo url('terms') ?>">利用規約</a>
-                    </small>
-                </p>
-            </div>
-        </details>
         <header>
             <span class="main-header-title">OPENCHAT GRAPH</span>
-            <span class="main-header-title-desc">メンバー数の変化をグラフでチェック！</span>
+            <span class="main-header-title-desc">メンバー数の統計をグラフで分析</span>
         </header>
-        <form id="add-openchat-form" action="/oc" method="POST">
-            <label for="add-openchat-input-url">登録はURLを貼り付けるだけ✨</label>
+        <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">
+            <label for="add-openchat-input-url">オープンチャットを登録する</label>
             <input name="url" id="add-openchat-input-url" placeholder="オープンチャットのURL" spellcheck="false" type="text" aria-describedby="add-openchat-describedby" autocomplete="off">
             <span class="add-openchat-message" id="add-openchat-describedby">正しいURLを入力してください</span>
             <!-- 送信後のレスポンス -->
@@ -63,14 +36,23 @@
                 <!-- その他エラーメッセージ -->
                 <div class="add-openchat-message false" id="add-openchat-describedby"><?php echo h($error['message']) ?></div>
             <?php endforeach ?>
-            <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>登録する</button>
+            <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>統計を始める</button>
         </form>
         <hr>
-        <p class="openchat-list-title">急上昇ランキング<small style="font-weight: normal; margin-left: 0.5rem;">(過去１週間)</small></p>
-        <!-- オープンチャット一覧 -->
-        <?php statisticsComponent('open_chat_list', compact('openChatList')) ?>
-        <!-- 次のページ・前のページボタン -->
-        <?php statisticsComponent('pager_nav', compact('pageNumber', 'maxPageNumber') + ['path' => '/ranking']) ?>
+        <article class="top-ranking">
+            <header class="openchat-list-title-area unset">
+                <h2 class="unset">
+                    <span class="openchat-list-title">参加人数の急上昇ランキング</span>
+                    <span class="openchat-list-subtitle">(毎日更新)</span>
+                </h2>
+                <div class="openchat-list-date">
+                    <div class="refresh-icon"></div>
+                    <time datetime="<?php echo dateTimeAttr($updatedAt) ?>"><?php echo getDailyRankingDateTime($updatedAt) ?></time>
+                </div>
+            </header>
+            <?php statisticsComponent('open_chat_list', compact('openChatList')) ?>
+            <a class="top-ranking-readMore" href="<?php echo url('ranking') ?>">ランキングをすべて見る</a>
+        </article>
     </main>
     <?php statisticsComponent('footer') ?>
     <!-- フォームのJS -->
@@ -85,7 +67,7 @@
         // 古いSafariの対策
         addOpenChatForm.addEventListener('submit', e => e.target.elements['submit'].disabled && e.preventDefault())
     </script>
-    <script defer src="/js/site_header_footer_3.js"></script>
+    <script defer src="/js/site_header_footer_4.js"></script>
 </body>
 
 </html>

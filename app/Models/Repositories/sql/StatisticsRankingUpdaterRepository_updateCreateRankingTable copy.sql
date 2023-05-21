@@ -47,7 +47,15 @@ FROM
         FROM
             statistics AS st3
         WHERE
-            `date` = DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+            `date` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+            AND `date` <= (
+                SELECT
+                    DATE_SUB(MAX(st4.date), INTERVAL 1 DAY)
+                FROM
+                    statistics AS st4
+                WHERE
+                    st4.open_chat_id = st3.open_chat_id
+            )
             AND st3.member >= 10
         GROUP BY
             st3.open_chat_id

@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Services\Statistics\OpenChatStatisticsSearch;
+use App\Views\SelectElementPagination;
 
 class SearchPageController
 {
-    function index(OpenChatStatisticsSearch $openChatStatsSearch, string $q, int $p)
-    {
+    function index(
+        OpenChatStatisticsSearch $openChatStatsSearch,
+        string $q,
+        int $p
+    ) {
         // キーワードが空の場合
         if ($q === '') {
             return redirect(responseCode: 301);
@@ -27,7 +31,7 @@ class SearchPageController
         $name = "「{$q}」の検索結果";
 
         $_meta = meta()->setTitle($name);
-        $_css = ['room_list_12', 'site_header_10', 'site_footer_6', 'search_form_3'];
+        $_css = ['room_list_14', 'site_header_13', 'site_footer_7', 'search_form_4'];
 
         return view('statistics/search_content', compact('_meta', '_css', 'q') + ($list ?? []));
     }

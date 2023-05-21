@@ -14,7 +14,9 @@
                 <input type="text" id="q-page" name="q" placeholder="オープンチャットを検索" maxlength="40" autocomplete="off" value="<?php echo $q ?>" required>
             </form>
         </div>
-        <p class="openchat-list-title">「<?php echo $q ?>」の検索結果</p>
+        <header class="openchat-list-title-result-area unset" style="display: inline-block;">
+            <h2 class="openchat-list-title-result">「<?php echo $q ?>」の検索結果</h2>
+        </header>
         <?php if (isset($openChatList)) : ?>
             <!-- 検索結果が見つかった場合 -->
             <?php if ($maxPageNumber === 1) : ?>
@@ -42,7 +44,7 @@
         <?php endif ?>
     </main>
     <?php statisticsComponent('footer') ?>
-    <script defer src="/js/site_header_footer_3.js"></script>
+    <script defer src="/js/site_header_footer_4.js"></script>
 </body>
 
 </html>

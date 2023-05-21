@@ -8,13 +8,14 @@ use App\Models\Repositories\StatisticsRepositoryInterface;
 use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Models\Repositories\LogRepositoryInterface;
 use App\Services\OpenChat\UpdateOpenChat;
+use App\Config\AppConfig;
 
 class Cron
 {
     // 連続エラーの許容回数
     private const MAX_CONTINUOUS_ERRORS_COUNT = 3;
     // クローリングの間隔 (秒)
-    private const CRAWLING_INTERVAL = 3;
+    private const CRAWLING_INTERVAL = 1;
 
     private StatisticsRepositoryInterface $statisticsRepository;
     private UpdateOpenChatRepositoryInterface $updateRepository;
@@ -34,16 +35,13 @@ class Cron
     }
 
     /**
-     * @param int $interval `updated_at`の更新間隔を秒数で指定する  8時間で設定済み
-     * @param int $limit    一度の処理で何件更新するか 　           200件で設定済み
-     * 
      * @return array|null        array: 更新対象となったID, null: 更新対象のレコードがない場合
      * @throws \RuntimeException 連続エラー回数が上限を超えた場合
      */
-    function handle(int $interval, int $limit): ?array
+    function handle(): ?array
     {
         // DBから更新対象のレコードを取得する
-        $idArray = $this->updateRepository->getOpenChatIdByPeriod(time() - $interval, $limit);
+        $idArray = $this->updateRepository->getOpenChatIdByPeriod(time(), AppConfig::CRON_EXECUTE_COUNT);
         if (empty($idArray)) {
             return null;
         }

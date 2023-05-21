@@ -172,7 +172,7 @@
         </article>
     </main>
     <?php statisticsComponent('footer') ?>
-    <script defer src="/js/site_header_footer_3.js"></script>
+    <script defer src="/js/site_header_footer_4.js"></script>
 </body>
 
 </html>

@@ -25,7 +25,7 @@ class OcPageController
         $ogpDesc = 'オプチャの人数推移をグラフで表示します。人気度や活性度がチェック出来ます！';
 
         $_meta = meta()->setTitle($name)->setDescription($desc)->setOgpDescription($ogpDesc);
-        $_css = ['room_page_12', 'site_header_10', 'site_footer_6'];
+        $_css = ['room_page_14', 'site_header_13', 'site_footer_7'];
 
         return view('statistics/oc_content', compact('_meta', '_css', 'oc', 'statisticsData'));
     }

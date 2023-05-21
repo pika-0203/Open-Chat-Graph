@@ -4,7 +4,7 @@ namespace App\Views;
 
 class Metadata
 {
-    public static string $title = 'オプチャグラフ';
+    public string $title = 'オプチャグラフ';
 
     private string $description =
     'LINEオープンチャットで作られたトークルームのメンバー数推移をグラフで表示するサービスです。 トークルームの人数変化を視覚的に確認することができます！ 統計から成長傾向を振り返ったり、他のオプチャとの比較が出来ることで、管理者の方にとっても運営の手助けになります！';
@@ -31,7 +31,7 @@ class Metadata
 
     public function setTitle(string $title): static
     {
-        self::$title = $this->h($title) . ' | ' . self::$title;
+        $this->title = $this->h($title) . ' | ' . $this->title;
         return $this;
     }
 
@@ -62,12 +62,12 @@ class Metadata
     public function generateTags(): string
     {
         $tags = '';
-        $tags .= '<title>' . self::$title . '</title>' . "\n";
+        $tags .= '<title>' . $this->title . '</title>' . "\n";
         $tags .= '<meta name="description" content="' . $this->description . '">' . "\n";
         $tags .= '<meta property="og:locale" content="' . $this->locale . '">' . "\n";
-        $tags .= '<meta property="og:url" content="' . url($_SERVER['REQUEST_URI'] ?? '') . '">' . "\n";
+        $tags .= '<meta property="og:url" content="' . url(path()) . '">' . "\n";
         $tags .= '<meta property="og:type" content="' . $this->og_type . '">' . "\n";
-        $tags .= '<meta property="og:title" content="' . self::$title . '">' . "\n";
+        $tags .= '<meta property="og:title" content="' . $this->title . '">' . "\n";
         $tags .= '<meta property="og:description" content="' . $this->ogpDescription . '">' . "\n";
         $tags .= '<meta property="og:image" content="' . $this->image_url . '">' . "\n";
         $tags .= '<meta property="og:site_name" content="' . $this->site_name . '">' . "\n";

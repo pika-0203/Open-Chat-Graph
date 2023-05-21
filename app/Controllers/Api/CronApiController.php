@@ -4,28 +4,41 @@ declare(strict_types=1);
 
 namespace App\Controllers\Api;
 
-use App\Config\AppConfig;
-
 class CronApiController
 {
-    function index(\App\Services\OpenChat\Cron $statisticsCron)
-    {
+    function index(
+        \App\Services\OpenChat\Cron $statisticsCron,
+        \App\Models\Repositories\StatisticsRankingUpdaterRepositoryInterface $rankingUpdater,
+        \App\Services\Statistics\OpenChatStatisticsRanking $openChatStatsRanking
+    ) {
         response(['cron' => 'executed'])->send();
 
         fastcgi_finish_request();
 
-        $statisticsCron->handle(
-            AppConfig::CRON_UPDATE_OPENCHAT_INTERVAL,
-            AppConfig::CRON_EXECUTE_COUNT
-        );
+        $statisticsCron->handle();
+
+        $rankingUpdater->updateCreateRankingTable();
+
+        $rankingList = $openChatStatsRanking->get(1, 10);
+        saveArrayToFile(\App\Config\AppConfig::FILEPATH_TOP_RANKINGLIST, $rankingList + ['updatedAt' => time()]);
 
         exit;
     }
 
-    function rank(\App\Models\Repositories\StatisticsRankingUpdaterRepositoryInterface $rankingUpdater)
+    function ocrowcount(\App\Models\Repositories\UpdateOpenChatRepositoryInterface $updateRepository)
     {
+        $idArray = $updateRepository->getOpenChatIdByPeriod(time(), \App\Config\AppConfig::CRON_EXECUTE_COUNT);
+        return response(['openChatRowCount' => count($idArray)]);
+    }
+
+    function rank(
+        \App\Models\Repositories\StatisticsRankingUpdaterRepositoryInterface $rankingUpdater,
+        \App\Services\Statistics\OpenChatStatisticsRanking $openChatStatsRanking
+    ) {
         $resultRowCount = $rankingUpdater->updateCreateRankingTable();
-        return response(['rankingUpdaterCron' => 'rowCount: ' . $resultRowCount]);
+        $rankingList = $openChatStatsRanking->get(1, 10);
+        saveArrayToFile(\App\Config\AppConfig::FILEPATH_TOP_RANKINGLIST, $rankingList + ['updatedAt' => time()]);
+        return response(['rankingUpdaterResultCount' => $resultRowCount]);
     }
 
     function addoc(\App\Services\OpenChat\AddOpenChat $openChat, string $url)

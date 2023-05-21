@@ -241,7 +241,7 @@ $_meta = meta()->setTitle("{$httpCode} {$httpStatusMessage}")
     ->setDescription('お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。')
     ->setOgpDescription('お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。');
 
-$_css = ['room_list_12', 'site_header_10', 'site_footer_6'];
+$_css = ['room_list_14', 'site_header_13', 'site_footer_7'];
 
 ?>
 <!DOCTYPE html>
@@ -317,7 +317,7 @@ $_css = ['room_list_12', 'site_header_10', 'site_footer_6'];
         <?php endif ?>
     </main>
     <?php statisticsComponent('footer') ?>
-    <script defer src="/js/site_header_footer_3.js"></script>
+    <script defer src="/js/site_header_footer_4.js"></script>
 </body>
 
 </html>

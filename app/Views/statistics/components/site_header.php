@@ -1,38 +1,45 @@
-<header class="site_header" id="site_header">
-    <a class="header_site_title unset" href="<?php echo url() ?>">
-        <img src="<?php echo url('assets/icon-192x192.webp') ?>" alt="">
-        <p>オプチャグラフ</p>
-    </a>
-    <nav class="header-nav unset">
-        <button class="header-button" id="search_button" aria-label="検索">
-            <span class="search-button-icon"></span>
-        </button>
-        <?php if (\App\Services\Auth::check()) : ?>
-            <button class="header-button" id="menu_button" aria-label="メニュー">
-                <span class="menu-button-icon" aria-hidden="true"></span>
+<header class="site_header_outer" id="site_header">
+    <div class="site_header">
+        <a class="header_site_title unset" href="<?php echo url() ?>">
+            <img src="<?php echo url('assets/icon-192x192.webp') ?>" alt="">
+            <?php if (strpos(path(), '/oc') === false) : ?>
+                <h1>オプチャグラフ</h1>
+            <?php else : ?>
+                <p>オプチャグラフ</p>
+            <?php endif ?>
+        </a>
+        <nav class="header-nav unset">
+            <button class="header-button" id="search_button" aria-label="検索">
+                <span class="search-button-icon"></span>
             </button>
-            <div class="user-menu">
-                <div class="user-menu-inner" id="user_menu">
-                    <span class="user-menu-item user-menu-header">
-                        <span class="user-menu-status">LINEでログイン済み</span>
-                        <span class="user-menu-id">ID: <?php echo \App\Services\Auth::id() ?></span>
-                    </span>
-                    <form class="user-menu-item unset border" method="post" action="<?php echo url('auth/logout') ?>">
-                        <button class="unset" type="submit">ログアウト</button>
-                    </form>
-                </div>
-                <div class="backdrop" id="user-menu-item-backdrop" role="button" aria-label="閉じる"></div>
-            </div>
-        <?php endif ?>
-    </nav>
-    <div class="search-form">
+            <?php if (\App\Services\Auth::check()) : ?>
+                <button class="header-button" id="menu_button" aria-label="メニュー">
+                    <span class="menu-button-icon" aria-hidden="true"></span>
+                </button>
+            <?php endif ?>
+        </nav>
+    </div>
+    <div class="backdrop" id="backdrop" role="button" aria-label="閉じる"></div>
+    <div class="search-form site_header">
         <form class="search-form-inner" method="GET" action="<?php echo url('search') ?>">
             <label for="q">
             </label>
             <input type="text" id="q" name="q" placeholder="オープンチャットを検索" maxlength="40" autocomplete="off" required>
         </form>
-        <div class="backdrop" id="serch_form_backdrop" role="button" aria-label="検索バーを閉じる"></div>
     </div>
+    <?php if (\App\Services\Auth::check()) : ?>
+        <div class="user-menu">
+            <div class="user-menu-inner" id="user_menu">
+                <span class="user-menu-item user-menu-header">
+                    <span class="user-menu-status">LINEでログイン済み</span>
+                    <span class="user-menu-id">ID: <?php echo \App\Services\Auth::id() ?></span>
+                </span>
+                <form class="user-menu-item unset border" method="post" action="<?php echo url('auth/logout') ?>">
+                    <button class="unset" type="submit">ログアウト</button>
+                </form>
+            </div>
+        </div>
+    <?php endif ?>
 </header>
 <?php if (\App\Services\Auth::check() === false) : ?>
     <div class="login-modal backdrop" id="login-modal" role="button" aria-label="閉じる">
@@ -51,7 +58,7 @@
                 <button class="line-login-btn unset" aria-label="LINEでログイン">
                     <img src="<?php echo url('assets/btn_linelogin.webp') ?>" alt="">
                 </button>
-                <input type="hidden" name="return_to" value="<?php echo $_SERVER['REQUEST_URI'] ?>" />
+                <input type="hidden" name="return_to" value="<?php echo path() ?>" />
             </form>
             <div class="modal-login-footer">表示名・IDなどLINEアカウントの情報は取得しません。<br>LINEとのデータ連携は行いません。<br><a class="unset" href="<?php echo url('terms') ?>">利用規約</a>、<a class="unset" href="<?php echo url('privacy') ?>">プライバシーポリシー</a>に同意したうえでログインしてください。</div>
         </div>

@@ -55,3 +55,30 @@ function searchPager(string $keyword, int $pageNumber, string $nameQ = 'q', stri
     $page = ($pageNumber > 1) ? '&' . http_build_query([$nameP => $pageNumber]) : '';
     return \Shadow\Kernel\Dispatcher\ReceptionInitializer::getDomainAndHttpHost() . "/{$path}?{$query}{$page}";
 }
+
+function path(): string
+{
+    return $_SERVER['REQUEST_URI'] ?? '';
+}
+
+function dateTimeAttr(int $timestamp): string
+{
+    return date('Y-m-d\TH:i:sO', $timestamp);
+}
+
+function getDailyRankingDateTime(int $timestamp): string
+{
+    return date('Y.m.d H:i', $timestamp);
+}
+
+function saveArrayToFile(string $filename, array $array)
+{
+    $json = json_encode($array);
+    file_put_contents(__DIR__ . '/../../strage/' . $filename, $json);
+}
+
+function getArrayFromFile(string $filename)
+{
+    $json = file_get_contents(__DIR__ . '/../../strage/' . $filename);
+    return json_decode($json, true);
+}

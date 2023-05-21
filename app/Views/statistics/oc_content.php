@@ -2,8 +2,6 @@
 <html lang="ja">
 <?php statisticsComponent('head', compact('_css', '_meta')) ?>
 
-<!-- TODO:CSV出力 -->
-
 <body>
     <!-- 固定ヘッダー -->
     <?php statisticsComponent('site_header') ?>
@@ -39,7 +37,7 @@
         </header>
         <!-- グラフセクション -->
         <div class="graph-title">
-            <h2>メンバー数推移</h2>
+            <h2>メンバー数の推移</h2>
             <nav class="chart-footer-nav unset" id="chart-footer-nav">
                 <button class="chart-btn unset" id="csv-dl">
                     <span>CSVファイルをダウンロード</span>
@@ -84,7 +82,7 @@
                 member: <?php echo json_encode($statisticsData['member']) ?>,
             },
             document.getElementById('openchat-statistics'),
-            (document.getElementById('site_header').clientWidth - 70) / 2
+            (document.body.clientWidth - 70) / 2
         );
 
         const buttons = document.getElementById('chart-btn-nav').querySelectorAll('.chart-btn');
@@ -104,18 +102,17 @@
             e.target.disabled = true;
         }));
 
-        const isLoggedIn = '<?php echo \App\Services\Auth::id() ?>' !== '0';
         document.getElementById('csv-dl').addEventListener('click', () => {
-            if (!isLoggedIn) {
+            <?php if (!\App\Services\Auth::check()) : ?>
                 const modal = document.getElementById('login-modal');
                 document.getElementById('login-modal').classList.add('is-login-modal-open');
                 document.getElementById('login-modal-close-btn').focus();
-            } else {
+            <?php else : ?>
                 location.href = '<?php echo url('/oc/' . $oc['id'] . '/csv') ?>';
-            }
+            <?php endif ?>
         })
     </script>
-    <script src="/js/site_header_footer_3.js"></script>
+    <script src="/js/site_header_footer_4.js"></script>
 </body>
 
 </html>
