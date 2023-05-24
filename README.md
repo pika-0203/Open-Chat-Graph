@@ -15,7 +15,8 @@ https://openchat-review.me
 増加数: `現在のメンバー数 - 昨日のメンバー数`  
 増加率: `増加数 / 昨日のメンバー数`  
 ランク付け点数: `増加数 + 増加率 × 5`
- ** ただし、一日でメンバーが1.75倍以上になった場合は `増加数 + 増加率 × 7.5`となります。
+ 
+**ただし、一日でメンバーが1.75倍以上になった場合は `増加数 + 増加率 × 7.5`となります。**
 
 * ランキング更新処理  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/sql/StatisticsRankingUpdaterRepository_updateCreateRankingTable.sql
