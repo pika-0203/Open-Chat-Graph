@@ -1,7 +1,10 @@
 /*
  * 昨日のメンバー数と、最新メンバー数を比較して、差と増減%をランキングテーブルに挿入する。
- * 差 + (増減% / 10) を`index1`カラムに挿入する。
+ * 差 + (増減% * 5) を`index1`カラムに挿入する。
  * メンバー１０人以上のオープンチャットが対象
+ * 増加率の重みを下げ、大規模なOCの上位表示を重視しました。
+ * 急な増加(増加率 >= 1.75)には重み(増加率 * 7.5)が付きます。
+ *　これによって、ランキングが不安定な物になるのを防ぎ、小規模のOCでも上位に上がれるように調整しました。
  */
 INSERT INTO
     statistics_ranking_temp (
@@ -15,7 +18,11 @@ SELECT
     t1.member - t2.member AS diff_member,
     ((t1.member - t2.member) / t2.member) * 100 AS percent_increase,
     (
-        (t1.member - t2.member) + (((t1.member - t2.member) / t2.member) * 10)
+        (t1.member - t2.member) + (
+            CASE WHEN ((t1.member - t2.member) / t2.member) > 1.75 THEN (((t1.member - t2.member) / t2.member) * 7.5)
+                 ELSE (((t1.member - t2.member) / t2.member) * 5)
+            END
+        )
     ) AS index1
 FROM
     (
