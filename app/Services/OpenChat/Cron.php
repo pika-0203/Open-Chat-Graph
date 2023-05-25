@@ -38,10 +38,10 @@ class Cron
      * @return array|null        array: 更新対象となったID, null: 更新対象のレコードがない場合
      * @throws \RuntimeException 連続エラー回数が上限を超えた場合
      */
-    function handle(): ?array
+    function handle(int $before_at): ?array
     {
         // DBから更新対象のレコードを取得する
-        $idArray = $this->updateRepository->getOpenChatIdByPeriod(time(), AppConfig::CRON_EXECUTE_COUNT);
+        $idArray = $this->updateRepository->getOpenChatIdByPeriod($before_at, AppConfig::CRON_EXECUTE_COUNT);
         if (empty($idArray)) {
             return null;
         }
@@ -90,14 +90,22 @@ class Cron
         }
 
         // メンバー数統計テーブルを更新する
-        if ($result['updatedData']['member'] === null) {
-            // メンバー数に変化がない場合
-            $this->statisticsRepository->insertUpdateDailyStatistics($open_chat_id, $result['databaseData']['member']);
-        } else {
+        if ($result['updatedData']['member'] !== null) {
             // メンバー数が更新されていた場合
             $this->statisticsRepository->insertUpdateDailyStatistics($open_chat_id, $result['updatedData']['member']);
+            $this->updateRepository->updateNextUpdate($open_chat_id, strtotime('1 day'));
+            return true;
         }
 
+        // メンバー数に変化がない場合
+        $this->statisticsRepository->insertUpdateDailyStatistics($open_chat_id, $result['databaseData']['member']);
+        if ($this->updateRepository->getMemberChangeWithinLastWeek($open_chat_id)) {
+            // 過去一週間でメンバー数に動きがある場合
+            $this->updateRepository->updateNextUpdate($open_chat_id, strtotime('1 day'));
+        } else {
+            // 過去一週間でメンバー数に動きがない場合
+            $this->updateRepository->updateNextUpdate($open_chat_id, strtotime('7 day'));
+        }
         return true;
     }
 }
