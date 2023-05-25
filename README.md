@@ -29,5 +29,5 @@ https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Cro
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/UpdateOpenChat.php
 * クローラー本体のクラス  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatCrawler.php
-* Symfony Crawlerラッパークラス
+* Symfony Crawlerラッパークラス  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/CrawlerFactory.php
