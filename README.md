@@ -23,6 +23,8 @@ https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/s
 バックグラウンドジョブでは、データベース内のレコードを毎日12時頃に更新します。  
 各URLへのアクセス間隔は1秒で設定されています。  
 
+過去1週間メンバー数に動きがない場合、次の更新は1週間後になります。
+
 * バックグラウンドジョブクラス  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Cron.php
 * レコード更新処理のクラス  
