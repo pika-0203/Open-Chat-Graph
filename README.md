@@ -34,5 +34,5 @@ https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Cra
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/CrawlerFactory.php
 
 ### Contact us
-[E-mail](<mailto:support@openchat-review.me>)
+[E-mail](<mailto:support@openchat-review.me>)  
 [OPEN CHAT](<https://line.me/ti/g2/rLT0p-Tz19W7jxHvDDm9ECGNsyymhLQTHmmTkg>)
