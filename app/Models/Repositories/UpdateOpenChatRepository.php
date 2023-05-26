@@ -37,23 +37,19 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         }
     }
 
-    public function getOpenChatIdByPeriod(int $before_at, int $limit): array
+    public function updateNextUpdate(int $id, int $next_update)
     {
         $query =
-            'SELECT
-                id
-            FROM
+            'UPDATE
                 open_chat
+            SET
+                next_update = DATE(FROM_UNIXTIME(:next_update))
             WHERE
-                updated_at < FROM_UNIXTIME(:before_at)
-                AND is_alive = 1
-            ORDER BY
-                updated_at ASC
-            LIMIT
-                :limit';
+                id = :id';
 
-        return DB::execute($query, compact('before_at', 'limit'))
-            ->fetchAll(\PDO::FETCH_COLUMN, 0);
+        if (DB::execute($query, compact('id', 'next_update'))->rowCount() === 0) {
+            throw new \RuntimeException('next_updateを更新出来ませんでした。');
+        }
     }
 
     public function existsRecordByImgUrlExcludingId(int $open_chat_id, string $img_url): bool
@@ -69,7 +65,49 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             LIMIT
                 1';
 
-        return DB::fetch($query, compact('open_chat_id', 'img_url'))!== false;
+        return DB::fetch($query, compact('open_chat_id', 'img_url')) !== false;
+    }
+
+    public function getOpenChatIdByPeriod(int $limit): array
+    {
+        $query =
+            'SELECT
+                id
+            FROM
+                open_chat
+            WHERE
+                is_alive = 1
+                AND next_update = CURDATE()
+            ORDER BY
+                updated_at ASC
+            LIMIT
+                :limit';
+
+        return DB::execute($query, compact('limit'))
+            ->fetchAll(\PDO::FETCH_COLUMN, 0);
+    }
+
+    public function getMemberChangeWithinLastWeek(int $open_chat_id): bool
+    {
+        $query =
+            'SELECT
+                CASE
+                    WHEN COUNT(DISTINCT member) < 1 THEN 1
+                    ELSE 0
+                END AS member_change
+            FROM
+                (
+                    SELECT
+                        member
+                    FROM
+                        statistics
+                    WHERE
+                        open_chat_id = :open_chat_id
+                        AND `date` BETWEEN DATE_SUB(CURDATE(), INTERVAL 8 DAY)
+                        AND CURDATE()
+                ) AS subquery';
+
+        return DB::fetch($query, compact('open_chat_id')) !== 0;
     }
 
     public function deleteOpenChat(int $id): bool

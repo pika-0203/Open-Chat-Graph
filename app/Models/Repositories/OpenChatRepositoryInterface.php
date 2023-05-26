@@ -8,7 +8,7 @@ interface OpenChatRepositoryInterface
 {
     /**
      * @return array|false
-     * `['id' => int, 'name' => string, 'url' => string, 'description' => string, 'img_url' => string, 'member' => int, 'is_alive' => int, 'diff_member' => int|null, percent_increase => float|null]`
+     * `['id' => int, 'name' => string, 'url' => string, 'description' => string, 'img_url' => string, 'member' => int, 'is_alive' => int, 'created_at' => int, 'updated_at' => int, 'diff_member' => int|null, percent_increase => float|null]`
      */
     public function getOpenChatById(int $id): array|false;
 

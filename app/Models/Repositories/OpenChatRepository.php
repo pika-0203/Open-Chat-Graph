@@ -18,6 +18,8 @@ class OpenChatRepository implements OpenChatRepositoryInterface
                 oc.img_url,
                 oc.description,
                 oc.member,
+                UNIX_TIMESTAMP(oc.created_at) AS created_at,
+                UNIX_TIMESTAMP(oc.updated_at) AS updated_at,
                 oc.is_alive,
                 ranking.diff_member AS diff_member,
                 ranking.percent_increase AS percent_increase

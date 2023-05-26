@@ -1,5 +1,5 @@
 /*
- * 昨日のメンバー数と、最新メンバー数を比較して、差と増減%をランキングテーブルに挿入する。
+ * 昨日〜7日前の平均メンバー数と、最新メンバー数を比較して、差と増減%をランキングテーブルに挿入する。
  * 差 + (増減% / 10) を`index1`カラムに挿入する。
  * メンバー１０人以上のオープンチャットが対象
  */
@@ -15,7 +15,7 @@ SELECT
     t1.member - t2.member AS diff_member,
     ((t1.member - t2.member) / t2.member) * 100 AS percent_increase,
     (
-        (t1.member - t2.member) + (((t1.member - t2.member) / t2.member) * 10)
+        (t1.member - t2.member) + (((t1.member - t2.member) / t2.member) * 20)
     ) AS index1
 FROM
     (

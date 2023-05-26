@@ -8,6 +8,13 @@ use Shadow\DB;
 
 class OpenChatListRepository implements OpenChatListRepositoryInterface
 {
+    public function getAliveOpenChatIdAll(): array
+    {
+        return DB::fetchAll(
+            'SELECT id, DATE(updated_at) AS updated_at FROM open_chat WHERE is_alive = 1'
+        );
+    }
+
     public function getRankingRecordCount(): int
     {
         return (int)DB::execute(
