@@ -15,7 +15,7 @@ https://openchat-review.me
 増加数: `現在のメンバー数 - 昨日のメンバー数`  
 増加率: `増加数 / 昨日のメンバー数`  
 ランク付け点数: `増加数 + 増加率 × 20`  
-* 2023.05.27 試験的にランク付け点数を`増加数 + 増加率 × 30`にしました。
+*2023.05.27 試験的にランク付け点数を`増加数 + 増加率 × 30`にしました。*
 
 * ランキング更新処理  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/sql/StatisticsRankingUpdaterRepository_updateCreateRankingTable.sql
