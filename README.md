@@ -35,3 +35,4 @@ https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/Craw
 
 ### Contact us
 [E-mail](<mailto:support@openchat-review.me>)
+[OPEN CHAT](<https://line.me/ti/g2/rLT0p-Tz19W7jxHvDDm9ECGNsyymhLQTHmmTkg>)
