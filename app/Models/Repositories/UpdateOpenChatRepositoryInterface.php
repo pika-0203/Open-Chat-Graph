@@ -28,7 +28,7 @@ interface UpdateOpenChatRepositoryInterface
     /**
      * 指定したunixtime以前に更新されたIDを取得する
      */
-    public function getOpenChatIdByPeriod(int $limit): array;
+    public function getUpdateTargetOpenChatId(?int $limit = null): array;
 
     /**
      * 同じ画像を使用する別のオープンチャットがあるかを調べる

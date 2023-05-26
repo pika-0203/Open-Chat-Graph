@@ -41,7 +41,7 @@ class CronApiController
      */
     function ocrowcount(UpdateOpenChatRepositoryInterface $updateRepository)
     {
-        $idArray = $updateRepository->getOpenChatIdByPeriod(9999999);
+        $idArray = $updateRepository->getUpdateTargetOpenChatId(9999999);
         return response(['openChatRowCount' => count($idArray)]);
     }
 

@@ -68,7 +68,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         return DB::fetch($query, compact('open_chat_id', 'img_url')) !== false;
     }
 
-    public function getOpenChatIdByPeriod(int $limit): array
+    public function getUpdateTargetOpenChatId(?int $limit = null): array
     {
         $query =
             'SELECT
@@ -79,11 +79,14 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
                 is_alive = 1
                 AND next_update = CURDATE()
             ORDER BY
-                updated_at ASC
-            LIMIT
-                :limit';
+                updated_at ASC';
 
-        return DB::execute($query, compact('limit'))
+        if ($limit !== null) {
+            $query .= ' LIMIT :limit';
+            $limit = ['limit' => $limit];
+        }
+
+        return DB::execute($query, $limit ?? null)
             ->fetchAll(\PDO::FETCH_COLUMN, 0);
     }
 
@@ -92,22 +95,18 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         $query =
             'SELECT
                 CASE
-                    WHEN COUNT(DISTINCT member) < 1 THEN 1
+                    WHEN COUNT(DISTINCT member) > 1 THEN 1
                     ELSE 0
                 END AS member_change
             FROM
-                (
-                    SELECT
-                        member
-                    FROM
-                        statistics
-                    WHERE
-                        open_chat_id = :open_chat_id
-                        AND `date` BETWEEN DATE_SUB(CURDATE(), INTERVAL 8 DAY)
-                        AND CURDATE()
-                ) AS subquery';
+                statistics
+            WHERE
+                open_chat_id = :open_chat_id
+                AND `date` BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+                AND CURDATE()';
 
-        return DB::fetch($query, compact('open_chat_id')) !== 0;
+        return DB::execute($query, compact('open_chat_id'))
+            ->fetchColumn() !== 0;
     }
 
     public function deleteOpenChat(int $id): bool
