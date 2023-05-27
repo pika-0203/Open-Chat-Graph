@@ -1,32 +1,29 @@
 <hr style="margin: 3rem 0">
-<nav class="share-nav">
-    <?php if (uaSmt()) : ?>
-        <!-- Android, iOSの場合 -->
-        <button class="copy-btn unset" id="copy-btn">
-            <div class="copy-btn-inner">
-                <span class="copy-btn-icon copy-icon"></span>
-                <span class="copy-btn-text" id="copy-btn-text">このページのURLをコピーする</span>
-            </div>
-        </button>
-    <?php else : ?>
-        <!-- PCの場合 -->
-        <div class="share-menu">
-            <h3>シェアする</h3>
-            <div class="share-menu-inner">
-                <?php $url = urlencode(url(path())) ?>
-                <a class="share-menu-item unset" href="https://twitter.com/intent/tweet?url=<?php echo $url ?>&text=<?php echo urlencode($title) ?>" rel="nofollow noopener" target="_blank" title="Twitterでシェア">
-                    <span class="share-menu-icon-twitter share-menu-icon"></span>
-                </a>
-                <a class="share-menu-item unset" href="https://www.facebook.com/share.php?u=<?php echo $url ?>" rel="nofollow noopener" target="_blank" title="Facebookでシェア">
-                    <span class="share-menu-icon-facebook share-menu-icon"></span>
-                </a>
-                <a class="share-menu-item unset" href="https://b.hatena.ne.jp/entry/s/<?php echo getHostAndUri() ?>" rel="nofollow noopener" target="_blank" title="はてなブックマークでブックマーク">
-                    <span class="share-menu-icon-hatena share-menu-icon"></span>
-                </a>
-                <a class="share-menu-item unset" href="https://social-plugins.line.me/lineit/share?url=<?php echo $url ?>" rel="nofollow noopener" target="_blank" title="LINEでシェア">
-                    <span class="share-menu-icon-line share-menu-icon"></span>
-                </a>
-            </div>
+<nav class="share-nav unset">
+    <h3>シェアする</h3>
+    <div class="share-nav-inner">
+        <div class="share-menu-outer">
+            <?php $url = urlencode(url(path())) ?>
+            <a class="share-menu-item unset" href="https://twitter.com/intent/tweet?url=<?php echo $url ?>&text=<?php echo urlencode($title) ?>" rel="nofollow noopener" target="_blank" title="Twitterでシェア">
+                <span class="share-menu-icon-twitter share-menu-icon"></span>
+            </a>
+            <a class="share-menu-item unset" href="https://www.facebook.com/share.php?u=<?php echo $url ?>" rel="nofollow noopener" target="_blank" title="Facebookでシェア">
+                <span class="share-menu-icon-facebook share-menu-icon"></span>
+            </a>
+            <a class="share-menu-item unset" href="https://b.hatena.ne.jp/entry/s/<?php echo getHostAndUri() ?>" rel="nofollow noopener" target="_blank" title="はてなブックマークでブックマーク">
+                <span class="share-menu-icon-hatena share-menu-icon"></span>
+            </a>
+            <a class="share-menu-item unset" href="https://social-plugins.line.me/lineit/share?url=<?php echo $url ?>" rel="nofollow noopener" target="_blank" title="LINEでシェア">
+                <span class="share-menu-icon-line share-menu-icon"></span>
+            </a>
         </div>
-    <?php endif ?>
+        <div class="copy-btn-outer">
+            <button class="copy-btn unset" id="copy-btn">
+                <div class="copy-btn-inner">
+                    <span class="copy-btn-icon copy-icon"></span>
+                    <span class="copy-btn-text" id="copy-btn-text">このページのURLをコピーする</span>
+                </div>
+            </button>
+        </div>
+    </div>
 </nav>
