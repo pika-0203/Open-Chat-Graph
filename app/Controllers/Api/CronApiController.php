@@ -17,7 +17,7 @@ use App\Models\Repositories\LogRepositoryInterface;
 class CronApiController
 {
     /**
-     * オープンチャット更新のAPI (500件ずつ処理)
+     * オープンチャット更新のAPI(500件ずつ処理)
      */
     function index(
         Cron $statisticsCron,
@@ -41,7 +41,7 @@ class CronApiController
      */
     function ocrowcount(UpdateOpenChatRepositoryInterface $updateRepository)
     {
-        $idArray = $updateRepository->getUpdateTargetOpenChatId(9999999);
+        $idArray = $updateRepository->getUpdateTargetOpenChatId();
         return response(['openChatRowCount' => count($idArray)]);
     }
 
