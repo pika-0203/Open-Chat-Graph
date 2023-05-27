@@ -54,7 +54,10 @@
             <a class="top-ranking-readMore" href="<?php echo url('ranking') ?>">ランキングをすべて見る</a>
         </article>
     </main>
-    <?php statisticsComponent('footer') ?>
+    <footer>
+        <?php statisticsComponent('footer_share_nav', ['title' => $_meta->title]) ?>
+        <?php statisticsComponent('footer_inner') ?>
+    </footer>
     <!-- フォームのJS -->
     <script type="module">
         import {
@@ -67,7 +70,7 @@
         // 古いSafariの対策
         addOpenChatForm.addEventListener('submit', e => e.target.elements['submit'].disabled && e.preventDefault())
     </script>
-    <script defer src="/js/site_header_footer_4.js"></script>
+    <script defer src="/js/site_header_footer_5.js"></script>
 </body>
 
 </html>

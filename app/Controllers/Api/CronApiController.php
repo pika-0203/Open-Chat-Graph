@@ -17,7 +17,7 @@ use App\Models\Repositories\LogRepositoryInterface;
 class CronApiController
 {
     /**
-     * オープンチャット更新のAPI(500件ずつ処理)
+     * オープンチャット更新のAPI (500件ずつ処理)
      */
     function index(
         Cron $statisticsCron,

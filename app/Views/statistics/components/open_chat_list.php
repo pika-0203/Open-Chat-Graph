@@ -11,8 +11,10 @@
             <footer class="openchat-item-lower unset <?php echo $oc['diff_member'] > 0 ? 'positive' : 'negative' ?>">
                 <span>メンバー <?php echo $oc['member'] ?></span>
                 <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
-                    <span class="openchat-item-stats"><?php echo signedNum($oc['diff_member']) ?></span>
-                    <span class="openchat-item-stats">(<?php echo signedNum(singnedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
+                    <span>
+                        <span class="openchat-item-stats"><?php echo signedNum($oc['diff_member']) ?></span>
+                        <span class="openchat-item-stats">(<?php echo signedNum(singnedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
+                    </span>
                 <?php elseif ($oc['diff_member'] === 0) : ?>
                     <span>±0</span>
                 <?php endif ?>

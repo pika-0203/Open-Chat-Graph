@@ -33,7 +33,7 @@ class RankingPageController
 
         $subTitle = $pageNumber === 1 ? '' : "({$pageNumber}ページ目)";
         $_meta = meta()->setTitle('【毎日更新】人数急上昇のオープンチャットランキング' . $subTitle);
-        $_css = ['room_list_16', 'site_header_14', 'site_footer_9'];
+        $_css = ['room_list_17', 'site_header_14', 'site_footer_10'];
 
         return view(
             'statistics/ranking_content',

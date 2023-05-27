@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-<?php statisticsComponent('head', compact('_css', '_meta')) ?>
+<?php statisticsComponent('head', compact('_css', '_meta', '_schema')) ?>
 
 <body>
     <!-- 固定ヘッダー -->
@@ -18,9 +18,11 @@
                 <span class="number_of_members">メンバー <?php echo $oc['member'] ?></span>
                 <span>
                     <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
+                        <span class="openchat-itme-stats-title">前日比</span>
                         <span class="openchat-item-stats"><?php echo signedNum($oc['diff_member']) ?></span>
                         <span class="openchat-item-stats">(<?php echo signedNum(singnedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
                     <?php elseif ($oc['diff_member'] === 0) : ?>
+                        <span class="openchat-itme-stats-title">前日比</span>
                         <span class="zero-stats">±0</span>
                     <?php endif ?>
                 </span>
@@ -36,24 +38,31 @@
             </div>
         </header>
         <!-- グラフセクション -->
-        <div class="graph-title">
+        <div class="graph-title" id="chart-footer-nav">
             <h2>メンバー数の推移</h2>
-            <nav class="chart-footer-nav unset" id="chart-footer-nav">
+            <div class="openchat-list-date">
+                <div class="refresh-icon"></div>
+                <time datetime="<?php echo dateTimeAttr($oc['updated_at']) ?>"><?php echo getDailyRankingDateTime($oc['updated_at']) ?></time>
+            </div>
+            <nav class="chart-footer-nav unset">
                 <button class="chart-btn unset" id="csv-dl">
                     <span>CSVファイルをダウンロード</span>
                 </button>
             </nav>
         </div>
-        <section class="chart-canvas-section">
+        <div class="chart-canvas-section">
             <canvas id="openchat-statistics" aria-label="全期間のメンバー数の折れ線グラフ" role="img"></canvas>
-        </section>
+        </div>
         <nav class="chart-btn-nav" id="chart-btn-nav">
             <button class="chart-btn unset" id="btn-week" disabled>1 週間</button>
             <button class="chart-btn unset" id="btn-month">1 ヶ月</button>
             <button class="chart-btn unset" id="btn-all">全期間</button>
         </nav>
     </article>
-    <?php statisticsComponent('footer') ?>
+    <footer>
+        <?php statisticsComponent('footer_share_nav', ['title' => $_meta->title]) ?>
+        <?php statisticsComponent('footer_inner') ?>
+    </footer>
     <script>
         const readMoreBtn = document.getElementById('read_more_btn');
         const talkroomDesc = document.getElementById('talkroom-description');
@@ -112,7 +121,8 @@
             <?php endif ?>
         })
     </script>
-    <script src="/js/site_header_footer_4.js"></script>
+    <script src="/js/site_header_footer_5.js"></script>
+    <?php echo $_schema ?? '' ?>
 </body>
 
 </html>

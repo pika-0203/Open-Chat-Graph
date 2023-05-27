@@ -9,7 +9,7 @@
             <?php endif ?>
         </a>
         <nav class="header-nav unset">
-            <button class="header-button" id="search_button" aria-label="検索">
+            <button class="header-button unset" id="search_button" aria-label="検索">
                 <span class="search-button-icon"></span>
             </button>
             <?php if (\App\Services\Auth::check()) : ?>
@@ -52,7 +52,7 @@
                     <img src="<?php echo url('assets/icon-192x192.webp') ?>" alt="">
                     <p>オプチャグラフ</p>
                 </div>
-                <div class="modal-site-desc">オプチャグラフにログインすると、サイト上で便利な機能が利用出来ます。</div>
+                <div class="modal-site-desc">オプチャグラフにログインすると便利な機能が利用出来ます。</div>
             </header>
             <form class="unset" method="post" action="<?php echo url('auth/login') ?>">
                 <button class="line-login-btn unset" aria-label="LINEでログイン">
