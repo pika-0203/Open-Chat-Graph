@@ -122,7 +122,7 @@
         })
     </script>
     <script src="/js/site_header_footer_5.js"></script>
-    <?php echo $_schema ?? '' ?>
+    <?php echo $_schema ?>
 </body>
 
 </html>

@@ -19,9 +19,9 @@ class IndexPageController
             $rankingList['requestOpenChat'] = $openChatRepository->getOpenChatById(session('id'));
         }
 
-        $_css = ['room_list_17', 'site_header_14', 'site_footer_10'];
-        $_meta = meta()->isTopPage();
-        $_meta->title = $_meta->title . ' | ' . 'オープンチャットの人数統計とグラフ分析';
+        $_css = ['room_list_17', 'site_header_14', 'site_footer_11'];
+        $_meta = meta();
+        $_meta->title = "{$_meta->title} | オープンチャットの人数統計とグラフ分析";
 
         return view('statistics/top_content', compact('_meta', '_css') + $rankingList);
     }

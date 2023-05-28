@@ -31,8 +31,7 @@
             <?php statisticsComponent('pager_nav', compact('pageNumber', 'maxPageNumber') + ['path' => '/ranking']) ?>
         </article>
     </main>
-    <footer>
-        <?php statisticsComponent('footer_share_nav', ['title' => $_meta->title]) ?>
+    <footer style="margin-top: 3rem;">
         <?php statisticsComponent('footer_inner') ?>
     </footer>
     <script defer src="/js/site_header_footer_5.js"></script>
@@ -45,25 +44,7 @@
             })
         })(document.getElementById('page-selector'));
     </script>
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [{
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Top",
-                    "item": "https://openchat-review.me"
-                },
-                {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "急上昇ランキング",
-                    "item": "https://openchat-review.me/ranking"
-                }
-            ]
-        }
-    </script>
+    <?php echo $_schema ?>
 </body>
 
 </html>

@@ -71,6 +71,7 @@
         addOpenChatForm.addEventListener('submit', e => e.target.elements['submit'].disabled && e.preventDefault())
     </script>
     <script defer src="/js/site_header_footer_5.js"></script>
+    <?php echo $_meta->generateTopPageSchema() ?>
 </body>
 
 </html>

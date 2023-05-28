@@ -7,12 +7,14 @@ namespace App\Controllers\Pages;
 use App\Services\Statistics\OpenChatStatisticsRanking;
 use App\Config\AppConfig;
 use App\Views\SelectElementPagination;
+use App\Views\Schema\OcPageBreadcrumbsListSchema;
 
 class RankingPageController
 {
     function index(
         OpenChatStatisticsRanking $openChatStatsRanking,
         SelectElementPagination $pagination,
+        OcPageBreadcrumbsListSchema $schema,
         ?int $pageNumber
     ) {
         $rankingInfo = getArrayFromFile(AppConfig::FILEPATH_TOP_RANKINGLIST);
@@ -33,11 +35,12 @@ class RankingPageController
 
         $subTitle = $pageNumber === 1 ? '' : "({$pageNumber}ページ目)";
         $_meta = meta()->setTitle('【毎日更新】人数急上昇のオープンチャットランキング' . $subTitle);
-        $_css = ['room_list_17', 'site_header_14', 'site_footer_10'];
+        $_css = ['room_list_17', 'site_header_14', 'site_footer_11'];
+        $_schema = $schema->datasetSchemaMarkup($pageNumber);
 
         return view(
             'statistics/ranking_content',
-            compact('_meta', '_css', '_select', '_label') + $rankingList + ['updatedAt' => $rankingInfo['updatedAt']]
+            compact('_meta', '_css', '_select', '_label', '_schema') + $rankingList + ['updatedAt' => $rankingInfo['updatedAt']]
         );
     }
 }

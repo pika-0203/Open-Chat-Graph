@@ -76,7 +76,7 @@
             <p>E-mail: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>
         </article>
     </main>
-    <footer>
+    <footer style="margin-top: 3rem;">
         <?php statisticsComponent('footer_inner') ?>
     </footer>
     <script defer src="/js/site_header_footer_5.js"></script>

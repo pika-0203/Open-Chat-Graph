@@ -171,7 +171,7 @@
             <p>以上</p>
         </article>
     </main>
-    <footer>
+    <footer style="margin-top: 3rem;">
         <?php statisticsComponent('footer_inner') ?>
     </footer>
     <script defer src="/js/site_header_footer_5.js"></script>

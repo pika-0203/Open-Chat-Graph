@@ -13,7 +13,7 @@
                 <span class="search-button-icon"></span>
             </button>
             <?php if (\App\Services\Auth::check()) : ?>
-                <button class="header-button" id="menu_button" aria-label="メニュー">
+                <button class="header-button unset" id="menu_button" aria-label="メニュー">
                     <span class="menu-button-icon" aria-hidden="true"></span>
                 </button>
             <?php endif ?>

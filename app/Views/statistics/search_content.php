@@ -43,8 +43,7 @@
             <span class="button01label" style="display: inline-block;">0 件</span>
         <?php endif ?>
     </main>
-    <footer>
-        <?php statisticsComponent('footer_share_nav', ['title' => $_meta->title]) ?>
+    <footer style="margin-top: 3rem;">
         <?php statisticsComponent('footer_inner') ?>
     </footer>
     <script defer src="/js/site_header_footer_5.js"></script>
