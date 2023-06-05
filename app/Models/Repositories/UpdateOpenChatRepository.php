@@ -96,6 +96,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             'SELECT
                 CASE
                     WHEN COUNT(DISTINCT member) > 1 THEN 1
+                    WHEN MIN(`date`) > DATE_SUB(CURDATE(), INTERVAL 7 DAY) THEN 1
                     ELSE 0
                 END AS member_change
             FROM
