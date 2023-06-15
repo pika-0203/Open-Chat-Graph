@@ -19,7 +19,7 @@ https://openchat-review.me
 ***2023.05.27 試験的にランク付け点数を`増加数 + 増加率 × 30`にしました。***
 
 * ランキング更新処理  
-https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/sql/StatisticsRankingUpdaterRepository_updateCreateRankingTable.sql
+https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/sql/StatisticsRankingUpdaterRepository_updateCreateDailyRankingTable.sql
 
 ## クローリングのアルゴリズム
 サイトに登録されているオープンチャットを毎日12時頃に更新します。  
