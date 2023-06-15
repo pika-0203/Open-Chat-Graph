@@ -39,6 +39,6 @@ https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/Craw
 MimimalCMS  
 https://github.com/mimimiku778/MimimalCMS
 
-## Contact us
+## 連絡先
 [E-MAIL](<mailto:support@openchat-review.me>)  
 [OPENCHAT](<https://line.me/ti/g2/rLT0p-Tz19W7jxHvDDm9ECGNsyymhLQTHmmTkg>)
