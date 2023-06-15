@@ -28,9 +28,6 @@ Route::middlewareGroup(
 )
     ->path('/')
 
-    ->path('trending/{pageNumber}')
-    ->matchNum('pageNumber', min: 1)
-
     ->path('ranking/{pageNumber}')
     ->matchNum('pageNumber', min: 1)
 
