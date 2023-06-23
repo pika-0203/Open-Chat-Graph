@@ -2,7 +2,6 @@ User-agent: Googlebot
 
 User-agent: *
 disallow: /oc/*/csv
-disallow: /assets/btn_linelogin.webp
 disallow: /oc-img
 
 Sitemap: https://openchat-review.me/sitemap.xml
