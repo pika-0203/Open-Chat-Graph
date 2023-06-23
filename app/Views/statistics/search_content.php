@@ -46,7 +46,7 @@
     <footer>
         <?php statisticsComponent('footer_inner') ?>
     </footer>
-    <script defer src="/js/site_header_footer_5.js"></script>
+    <script defer src="/js/site_header_footer_6.js"></script>
 </body>
 
 </html>

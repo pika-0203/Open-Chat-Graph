@@ -30,7 +30,7 @@ class SearchPageController
         $name = "「{$q}」の検索結果";
 
         $_meta = meta()->setTitle($name);
-        $_css = ['room_list_21', 'site_header_17', 'site_footer_15', 'search_form_4'];
+        $_css = ['room_list_23', 'site_header_18', 'site_footer_18', 'search_form_4'];
 
         return view('statistics/search_content', compact('_meta', '_css', 'q') + ($list ?? []));
     }

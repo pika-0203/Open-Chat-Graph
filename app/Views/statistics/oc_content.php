@@ -82,16 +82,15 @@
             });
         }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    <script src="/js/oc_page_7.js"></script>
+    <script src="/js/oc_page_12.js"></script>
     <script>
         const openChatChart = new OpenChatChartFactory({
                 date: <?php echo json_encode($statisticsData['date']) ?>,
                 member: <?php echo json_encode($statisticsData['member']) ?>,
             },
             document.getElementById('openchat-statistics'),
-            (document.body.clientWidth - 70) / 2
         );
 
         const buttons = document.getElementById('chart-btn-nav').querySelectorAll('.chart-btn');
@@ -115,7 +114,7 @@
             location.href = '<?php echo url('/oc/' . $oc['id'] . '/csv') ?>';
         })
     </script>
-    <script src="/js/site_header_footer_5.js"></script>
+    <script src="/js/site_header_footer_6.js"></script>
     <?php echo $_schema ?>
 </body>
 

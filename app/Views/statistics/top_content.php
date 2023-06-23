@@ -71,12 +71,14 @@
             <div id="list-weekly" class="disabledList">
                 <?php statisticsComponent('open_chat_list', ['openChatList' => $pastWeekOpenChatList, 'isDaily' => false]) ?>
             </div>
+
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-                <span class="ranking-readMore">すべて見る</span>
+                <span class="ranking-readMore">詳しく見る</span>
             </a>
         </article>
     </main>
     <footer>
+        <?php statisticsComponent('footer_share_nav', ['title' => $_meta->title]) ?>
         <?php statisticsComponent('footer_inner') ?>
     </footer>
     <!-- フォームのJS -->
@@ -98,15 +100,14 @@
         const listDaily = document.getElementById('list-daily')
         const listWeekly = document.getElementById('list-weekly')
         const dis = 'disabledList'
-        const rankingUrl = '<?php echo url('ranking') ?>';
-        const rankingUrlToggle = (url) => document.querySelectorAll('.ranking-url').forEach(el => el.setAttribute('href', url));
+        const rankingUrlToggle = (q = '') => document.querySelectorAll('.ranking-url').forEach(el => el.setAttribute('href', '<?php echo url('ranking') ?>' + q));
 
         btnDaily.addEventListener('click', e => {
             listDaily.classList.remove(dis)
             listWeekly.classList.add(dis)
             btnDaily.disabled = true
             btnWeekly.disabled = false
-            rankingUrlToggle(rankingUrl)
+            rankingUrlToggle()
         });
 
         btnWeekly.addEventListener('click', e => {
@@ -114,10 +115,10 @@
             listWeekly.classList.remove(dis)
             btnDaily.disabled = false
             btnWeekly.disabled = true
-            rankingUrlToggle(rankingUrl + '?l=w')
+            rankingUrlToggle('?l=w')
         });
     </script>
-    <script defer src="/js/site_header_footer_5.js"></script>
+    <script defer src="/js/site_header_footer_6.js"></script>
     <?php echo $_meta->generateTopPageSchema() ?>
 </body>
 

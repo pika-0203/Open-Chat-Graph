@@ -24,6 +24,9 @@ class RankingPageController
         if ($reception->input('l') === 'w') {
             $rankingList = $openChatStatsRanking->getPastWeekRanking($pageNumber, AppConfig::OPEN_CHAT_LIST_LIMIT);
             $disabledBtns['weekly'] = true;
+        } elseif ($reception->input('l') === 'm') {
+            $rankingList = $openChatStatsRanking->getMemberRanking($pageNumber, AppConfig::OPEN_CHAT_LIST_LIMIT);
+            $disabledBtns['member'] = true;
         } else {
             $rankingList = $openChatStatsRanking->getDailyRanking($pageNumber, AppConfig::OPEN_CHAT_LIST_LIMIT);
             $disabledBtns['daily'] = true;
@@ -45,6 +48,8 @@ class RankingPageController
         if ($reception->input('l') === 'w') {
             $_queryString .= '?l=w';
             $isDaily = false;
+        } elseif ($reception->input('l') === 'm') {
+            $_queryString .= '?l=m';
         }
 
         // ページネーションのselect要素
@@ -60,7 +65,7 @@ class RankingPageController
         // メタタグ、構造化データ
         $subTitle = $pageNumber === 1 ? '' : "({$pageNumber}ページ目)";
         $_meta = meta()->setTitle('【毎日更新】参加人数のランキング' . $subTitle);
-        $_css = ['room_list_21', 'site_header_17', 'site_footer_15'];
+        $_css = ['room_list_23', 'site_header_18', 'site_footer_18'];
         $_schema = $pageNumber === 1 ? (new \App\Views\Schema\OcPageBreadcrumbsListSchema)->generateSchema() : '';
 
         return view(

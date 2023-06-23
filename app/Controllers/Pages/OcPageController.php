@@ -26,7 +26,7 @@ class OcPageController
         $statisticsData = $statistics->getStatisticsData($open_chat_id);
 
         $_meta = $meta->generateMetadata($oc);
-        $_css = ['room_page_22', 'site_header_17', 'site_footer_15'];
+        $_css = ['room_page_23', 'site_header_18', 'site_footer_18'];
         $_schema = $schema->generateSchema($open_chat_id, $oc['name'], $oc['created_at'], $oc['updated_at']);
 
         return view('statistics/oc_content', compact('_meta', '_css', '_schema', 'oc', 'statisticsData'));

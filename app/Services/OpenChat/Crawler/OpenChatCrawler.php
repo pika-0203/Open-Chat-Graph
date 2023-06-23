@@ -6,7 +6,7 @@ namespace App\Services\OpenChat\Crawler;
 
 use App\Config\OpenChatCrawlerConfig;
 use App\Services\Crawler\CrawlerFactory;
-use App\Services\Crawler\TraitUserAgent;
+use App\Exceptions\NologOpenChatException;
 use Shadow\Kernel\Validator;
 
 class OpenChatCrawler
@@ -24,6 +24,7 @@ class OpenChatCrawler
      * @return array|false `['name' => string, 'img_url' => string, 'description' => string, 'member' => int]`
      * 
      * @throws \RuntimeException
+     * @throws NologOpenChatException 説明文に「#nolog」が含まれている場合
      */
     function getOpenChat(string $url): array|false
     {
@@ -62,6 +63,10 @@ class OpenChatCrawler
         $member = str_replace(',', '', str_replace('Members ', '', $member));
         if (Validator::num($member) === false) {
             throw new \RuntimeException('memberの値が無効です。');
+        }
+
+        if (strpos($description, '#nolog') !== false) {
+            throw new NologOpenChatException('説明文に「#nolog」が含まれています。');
         }
 
         return [

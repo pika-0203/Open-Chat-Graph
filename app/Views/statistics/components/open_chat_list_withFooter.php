@@ -15,6 +15,8 @@
                     <span>
                         <span class="openchat-item-stats"><?php echo signedNum($oc['diff_member']) ?></span>
                         <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
+                        <span class="openchat-item-stats"><?php echo signedNum($oc['diff_member']) ?></span>
+                        <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
                     </span>
                 <?php elseif (($oc['diff_member'] ?? 1) === 0) : ?>
                     <span class="<?php echo ($isDaily ?? true) ? '' : 'openchat-item-stats-weekly-zero' ?>">±0</span>

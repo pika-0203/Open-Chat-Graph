@@ -14,6 +14,11 @@ interface OpenChatListRepositoryInterface
     public function getAliveOpenChatIdAll(): array;
 
     /**
+     * メンバー数ランキングのレコード数を取得する
+     */
+    public function getMemberRankingRecordCount(): int;
+
+    /**
      * 日次ランキングのレコード数を取得する
      */
     public function getDailyRankingRecordCount(): int;
@@ -22,6 +27,16 @@ interface OpenChatListRepositoryInterface
      * 過去1週間ランキングのレコード数を取得する
      */
     public function getPastWeekRankingRecordCount(): int;
+
+    /**
+     * メンバー数ランキングを取得する
+     * 
+     * @return array `[['id' => int, 'name' => string, 'url' => string, 'description' => string, 'img_url' => string, 'member' => int]]`
+     */
+    public function findMemberRanking(
+        int $startId,
+        int $endId,
+    ): array;
 
     /**
      * 日次ランキングを取得する

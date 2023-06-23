@@ -9,6 +9,7 @@ use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Models\Repositories\LogRepositoryInterface;
 use App\Services\OpenChat\UpdateOpenChat;
 use App\Config\AppConfig;
+use App\Exceptions\NologOpenChatException;
 
 class Cron
 {
@@ -83,6 +84,11 @@ class Cron
         } catch (\RuntimeException $e) {
             $this->logRepository->logUpdateOpenChatError($open_chat_id, 'null', 'null', $e->getMessage());
             return false;
+        } catch (NologOpenChatException $e) {
+            // 収集拒否しているオープンチャットの場合
+            $this->updateRepository->updateOpenChat($open_chat_id, false);
+            $this->logRepository->logUpdateOpenChatError($open_chat_id, 'null', 'null', $e->getMessage());
+            return null;
         }
 
         if (!$result) {
@@ -91,22 +97,18 @@ class Cron
         }
 
         // メンバー数統計テーブルを更新する
-        if ($result['updatedData']['member'] !== null) {
-            // メンバー数が更新されていた場合
-            $this->statisticsRepository->insertUpdateDailyStatistics($open_chat_id, $result['updatedData']['member']);
-            $this->updateRepository->updateNextUpdate($open_chat_id, strtotime('1 day'));
-            return true;
-        }
-
-        // メンバー数に変化がない場合
-        $this->statisticsRepository->insertUpdateDailyStatistics($open_chat_id, $result['databaseData']['member']);
-        if ($this->updateRepository->getMemberChangeWithinLastWeek($open_chat_id)) {
-            // 過去一週間でメンバー数に動きがある場合
+        $this->statisticsRepository->insertUpdateDailyStatistics($open_chat_id, $result['updatedData']['member']);
+        if (
+            $result['updatedData']['member'] !== null
+            || $this->updateRepository->getMemberChangeWithinLastWeek($open_chat_id)
+        ) {
+            // メンバー数に動きがある場合
             $this->updateRepository->updateNextUpdate($open_chat_id, strtotime('1 day'));
         } else {
             // 過去一週間でメンバー数に動きがない場合
             $this->updateRepository->updateNextUpdate($open_chat_id, strtotime('7 day'));
         }
+
         return true;
     }
 }

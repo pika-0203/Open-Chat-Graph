@@ -15,6 +15,13 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
         );
     }
 
+    public function getMemberRankingRecordCount(): int
+    {
+        return (int)DB::execute(
+            'SELECT COUNT(id) FROM open_chat WHERE is_alive = 1'
+        )->fetchColumn();
+    }
+
     public function getDailyRankingRecordCount(): int
     {
         return (int)DB::execute(
@@ -27,6 +34,31 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
         return (int)DB::execute(
             'SELECT COUNT(id) FROM statistics_ranking2'
         )->fetchColumn();
+    }
+
+    public function findMemberRanking(
+        int $startId,
+        int $endId,
+    ): array {
+        $query =
+            'SELECT
+                oc.id,
+                oc.name,
+                oc.url,
+                oc.img_url,
+                oc.description,
+                oc.member
+            FROM
+                open_chat AS oc
+            WHERE
+                is_alive = 1
+            ORDER BY
+                oc.member DESC
+            LIMIT
+                :startId, :limit';
+
+        $limit = $endId - $startId;
+        return DB::fetchAll($query, compact('startId', 'limit'));
     }
 
     public function findMemberStatsDailyRanking(
@@ -90,7 +122,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
         FROM
             open_chat AS oc
             LEFT JOIN statistics_ranking AS ranking ON oc.id = ranking.open_chat_id
-        {$where}
+        {$where} AND is_alive = 1
         ORDER BY
             CASE
                 WHEN oc.name LIKE :keyword0 AND ranking.id IS NOT NULL THEN 0

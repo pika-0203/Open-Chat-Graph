@@ -10,6 +10,7 @@ use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Services\OpenChat\Crawler\OpenChatCrawler;
 use App\Services\OpenChat\Crawler\OpenChatImgDownloader;
+use App\Exceptions\NologOpenChatException;
 
 class UpdateOpenChat
 {
@@ -48,6 +49,7 @@ class UpdateOpenChat
 
         // オープンチャットのページからデータを取得
         $openChat = $this->crawler->getOpenChat(AppConfig::LINE_URL . $existingOpenChat['url']);
+
         if ($openChat === false) {
             // 404の場合は'is_alive'カラムをfalseに更新する
             $this->updateRepository->updateOpenChat($open_chat_id, false);

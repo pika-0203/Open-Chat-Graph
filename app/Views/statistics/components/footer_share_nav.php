@@ -16,13 +16,22 @@
                 <span class="share-menu-icon-line share-menu-icon"></span>
             </a>
         </div>
-        <div class="copy-btn-outer">
+        <div class="copy-btn-outer" id="copy-btn-outer">
             <button class="copy-btn unset" id="copy-btn">
                 <div class="copy-btn-inner">
-                    <span class="copy-btn-icon copy-icon"></span>
-                    <span class="copy-btn-text" id="copy-btn-text">URLをコピーする</span>
+                    <span class="copy-btn-icon link-icon"></span>
+                    <span class="copy-btn-text">このページのタイトルとURLをコピーする</span>
                 </div>
             </button>
+            <div class="description1" id="copy-description">
+                <div class="copy-btn-inner">
+                    <span class="copy-btn-icon copy-icon"></span>
+                    <span>コピーしました</span>
+                </div>
+                <hr style="margin: 0.25rem 0 0.45rem 0;">
+                <div class="copy-btn-text" id="copy-btn-title"></div>
+                <div class="copy-btn-text" id="copy-btn-url"></div>
+            </div>
         </div>
     </div>
 </nav>

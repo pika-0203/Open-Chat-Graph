@@ -10,6 +10,7 @@ use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Models\Repositories\LogRepositoryInterface;
 use App\Services\OpenChat\Crawler\OpenChatCrawler;
 use App\Services\OpenChat\Crawler\OpenChatImgDownloader;
+use App\Exceptions\NologOpenChatException;
 
 class AddOpenChat
 {
@@ -48,8 +49,15 @@ class AddOpenChat
             return $this->exitingOpenChatMessage($existingOpenChatId);
         }
 
-        // オープンチャットのページからデータを取得
-        $openChat = $this->fetchOpenChat(AppConfig::LINE_URL . $openChatIdentifier);
+        try {
+            // オープンチャットのページからデータを取得
+            $openChat = $this->fetchOpenChat(AppConfig::LINE_URL . $openChatIdentifier);
+        } catch (NologOpenChatException $e) {
+            // 収集拒否しているオープンチャットの場合
+            $this->logAddOpenChatError('収集拒否: ' . $openChatIdentifier);
+            return $this->nologMessage();
+        }
+
         if ($openChat === false) {
             // 404の場合
             $this->logAddOpenChatError('404 Not found: ' . $openChatIdentifier);
@@ -148,6 +156,14 @@ class AddOpenChat
     {
         return [
             'message' => '無効なURLです。',
+            'id' => null
+        ];
+    }
+
+    private function nologMessage(): array
+    {
+        return [
+            'message' => '拒否: 説明文に「#nolog」が含まれています',
             'id' => null
         ];
     }

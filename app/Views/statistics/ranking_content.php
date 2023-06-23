@@ -31,6 +31,12 @@
                     </div>
                     <div class="btn-buttom"></div>
                 </button>
+                <button class="chart-btn unset" id="btn-member" <?php $_isDisabledBtn('member') ?>>
+                    <div class="btn-text">
+                        <span>メンバー数</span>
+                    </div>
+                    <div class="btn-buttom"></div>
+                </button>
             </nav>
             <!-- select要素ページネーション -->
             <nav class="page-select unset">
@@ -49,7 +55,7 @@
     <footer>
         <?php statisticsComponent('footer_inner') ?>
     </footer>
-    <script defer src="/js/site_header_footer_5.js"></script>
+    <script defer src="/js/site_header_footer_6.js"></script>
     <script>
         ((el) => {
             if (!el) return
@@ -60,21 +66,18 @@
         })(document.getElementById('page-selector'));
     </script>
     <script>
-        const btnDaily = document.getElementById('btn-daily')
-        const btnWeekly = document.getElementById('btn-weekly')
-        const rankingUrl = '<?php echo url('ranking') ?>';
+        const pageMove = (q = '') => location.href = '<?php echo url('ranking') ?>' + q;
+        const buttons = document.getElementById('chart-btn-nav').querySelectorAll('.chart-btn');
 
-        btnDaily.addEventListener('click', e => {
-            btnDaily.disabled = true
-            btnWeekly.disabled = false
-            location.href = rankingUrl
-        });
-
-        btnWeekly.addEventListener('click', e => {
-            btnDaily.disabled = false
-            btnWeekly.disabled = true
-            location.href = (rankingUrl + '?l=w')
-        });
+        buttons.forEach(el => el.addEventListener('click', e => {
+            if (e.target.closest("#btn-daily")) {
+                pageMove()
+            } else if (e.target.closest("#btn-weekly")) {
+                pageMove('?l=w')
+            } else if (e.target.closest("#btn-member")) {
+                pageMove('?l=m')
+            }
+        }));
     </script>
     <?php echo $_schema ?>
 </body>

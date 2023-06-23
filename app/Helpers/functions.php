@@ -92,3 +92,8 @@ function getQueryString(string $separater = '?'): string
 {
     return $_SERVER['QUERY_STRING'] ? $separater . $_SERVER['QUERY_STRING'] : '';
 }
+
+function cache()
+{
+    header('Cache-Control: public, max-age=3600');
+}
