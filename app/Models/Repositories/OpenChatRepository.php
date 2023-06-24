@@ -44,6 +44,7 @@ class OpenChatRepository implements OpenChatRepositoryInterface
                 name = :name
                 AND description = :description
                 AND img_url = :img_url
+                AND is_alive = 1
             LIMIT 1';
 
         return DB::execute($query, compact('name', 'description', 'img_url'))->fetchColumn();
@@ -57,7 +58,8 @@ class OpenChatRepository implements OpenChatRepositoryInterface
             FROM
                 open_chat
             WHERE
-                url = :url';
+                url = :url
+                AND is_alive = 1';
 
         return DB::execute($query, ['url' => $url])->fetchColumn();
     }

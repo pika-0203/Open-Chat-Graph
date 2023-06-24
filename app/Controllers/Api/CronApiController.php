@@ -8,6 +8,7 @@ use App\Services\OpenChat\Cron;
 use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Models\Repositories\StatisticsRankingUpdaterRepositoryInterface;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
+use App\Models\Repositories\LogRepositoryInterface;
 use App\Config\AppConfig;
 use App\Config\OpenChatCrawlerConfig;
 use App\Services\OpenChat\AddOpenChat;
@@ -16,13 +17,23 @@ use App\Services\Sitemap;
 
 class CronApiController
 {
+    private LogRepositoryInterface $logRepository;
+
+    function __construct(LogRepositoryInterface $logRepository)
+    {
+        $this->logRepository = $logRepository;
+    }
+
     /**
      * オープンチャット更新のAPI (500件ずつ処理)
      */
-    function index(Cron $statisticsCron)
+    function index(Cron $statisticsCron, UpdateOpenChatRepositoryInterface $updateRepository)
     {
+        $this->setExceptionHandler();
+        
         // レスポンスを返して切断する
-        response(['updateOpenChatCron' => 'executed'])->send();
+        $idArray = $updateRepository->getUpdateTargetOpenChatId();
+        response(['updateOpenChatCron' => count($idArray)])->send();
         fastcgi_finish_request();
 
         $statisticsCron->handle();
@@ -97,5 +108,48 @@ class CronApiController
         // オープンチャットを追加
         $result = $openChat->add($url);
         return response($result);
+    }
+
+    private function setExceptionHandler()
+    {
+        $handler = $this->exceptionHandler(...);
+
+        set_exception_handler($handler);
+
+        /**
+         * Sets the error reporting level to include all errors.
+         */
+        error_reporting(E_ALL);
+
+        /**
+         * Registers a custom error handler that throws exceptions for all errors.
+         */
+        set_error_handler(function ($no, $msg, $file, $line) {
+            if (error_reporting() !== 0) {
+                throw new \ErrorException($msg, 0, $no, $file, $line);
+            }
+        });
+
+        /**
+         * Registers a shutdown function that checks for fatal errors and
+         * passes them to ExceptionHandler::handleException().
+         */
+        register_shutdown_function(function () use ($handler) {
+            $last = error_get_last();
+            if (
+                isset($last['type'])
+                && boolval($last['type'] & (E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR))
+            ) {
+                $handler(
+                    new \ErrorException($last['message'], 0, $last['type'], $last['file'], $last['line'])
+                );
+            }
+        });
+    }
+
+    private function exceptionHandler(\Throwable $e)
+    {
+        $this->logRepository->logUpdateOpenChatError(0, 'null', 'null', $e->getMessage());
+        exit;
     }
 }
