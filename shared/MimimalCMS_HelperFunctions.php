@@ -273,6 +273,7 @@ function csrfField()
  * Verify CSRF token from the session and the request in `$_POST['_csrf']` or `$_SERVER["HTTP_X_CSRF_TOKEN"]` or `$_COOKIE['CSRF-Token']`.
  *
  * @param bool $removeTokenFromSession [option]
+ * @throws \Shadow\Exceptions\BadRequestException         If CSRF token is not found on the request parameter.
  * @throws \Shadow\Exceptions\ValidationException         If CSRF token in the request does not matche the token in the session.
  * @throws \Shadow\Exceptions\SessionTimeoutException     If CSRF token for the session is not found.
  * @throws \LogicException              If CSRF token for the session is not string.
@@ -287,7 +288,7 @@ function verifyCsrfToken(bool $removeTokenFromSession = false)
     } elseif (isset($_COOKIE['CSRF-Token'])) {
         $token = $_COOKIE['CSRF-Token'];
     } else {
-        throw new \Shadow\Exceptions\ValidationException('CSRF token was not found on the request parameter.');
+        throw new \Shadow\Exceptions\BadRequestException('CSRF token was not found on the request parameter.');
     }
 
     // Check if CSRF token is set in the session.
@@ -313,16 +314,18 @@ function verifyCsrfToken(bool $removeTokenFromSession = false)
 }
 
 /**
- * Outputs a string or number after HTML-escaping it.
+ * Returns a string or number after HTML-escaping it.
  *
- * @param mixed $string The string or number to output.
- *                      Note: If the argument is not a string or number, it will not be outputted.
- * @return void
+ * @param mixed $string The string or number to return.
+ * 
+ * @return string
  */
-function h(mixed $string): void
+function h(mixed $string): string
 {
     if (is_string($string) || is_int($string) || is_float($string)) {
-        echo htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+        return htmlspecialchars((string)$string, ENT_QUOTES, 'UTF-8');
+    } else {
+        '';
     }
 }
 
@@ -358,11 +361,29 @@ function sanitizeString(string $string): string
  */
 function nl2p(string $string): string
 {
+    $search = ["\r\n", "\r"];
+    $replace = ["\n", "\n"];
+    $string = str_replace($search, $replace, $string);
+
     $lines = explode("\n", $string);
     $result = '';
     foreach ($lines as $line) {
         $result .= '<p>' . $line . '</p>';
     }
+    return $result;
+}
+
+/**
+ * Inserts HTML line breaks before all newlines in a string
+ */
+function nl2brReplace(string $string): string
+{
+    $search = ["\r\n", "\r"];
+    $replace = ["\n", "\n"];
+    $string = str_replace($search, $replace, $string);
+
+    $lines = explode("\n", $string);
+    $result = implode("<br>", $lines);
     return $result;
 }
 
