@@ -243,7 +243,7 @@ $_meta = meta()->setTitle("{$httpCode} {$httpStatusMessage}")
     ->setDescription('お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。')
     ->setOgpDescription('お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。');
 
-$_css = ['room_list_23', 'site_header_18', 'site_footer_18'];
+$_css = ['room_list_26', 'site_header_21', 'site_footer_18'];
 
 ?>
 <!DOCTYPE html>

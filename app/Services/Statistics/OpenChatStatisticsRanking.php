@@ -82,7 +82,7 @@ class OpenChatStatisticsRanking
     static function trimDescriptions(array &$openChatList)
     {
         foreach ($openChatList as &$oc) {
-            $oc['description'] = mb_strimwidth($oc['description'], 0, 140, '…');
+            $oc['description'] = mb_strimwidth($oc['description'], 0, 170, '…');
         }
     }
 }

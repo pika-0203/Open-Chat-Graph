@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-<?php statisticsComponent('head', compact('_css', '_meta', '_schema')) ?>
+<?php statisticsComponent('head', compact('_css', '_meta')) ?>
 
 <body>
     <!-- 固定ヘッダー -->
@@ -14,41 +14,53 @@
                 </div>
                 <h1 class="talkroom_link_h1 unset"><?php echo $oc['name'] ?><span class="line-link-icon"></span></h1>
             </a>
-            <div class="talkroom_number_of_members <?php echo $oc['diff_member'] > 0 ? 'positive' : 'negative' ?>">
+            <div class="talkroom_number_of_members">
                 <span class="number_of_members">メンバー <?php echo $oc['member'] ?></span>
-                <span>
-                    <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
-                        <span class="openchat-itme-stats-title">前日比</span>
-                        <span class="openchat-item-stats"><?php echo signedNum($oc['diff_member']) ?></span>
-                        <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
-                    <?php elseif ($oc['diff_member'] === 0) : ?>
-                        <span class="openchat-itme-stats-title">前日比</span>
-                        <span class="zero-stats">±0</span>
-                    <?php endif ?>
-                </span>
             </div>
             <div class="talkroom_description_box">
                 <p id="talkroom-description" class="talkroom_description"><?php echo nl2brReplace($oc['description']) ?></p>
             </div>
-            <div class="detail_bottom">
+            <div class="detail_bottom" id="chart-footer-nav">
                 <button id="read_more_btn" class="unset">
                     <div class="read_more_btn_icon"></div>
                     <span class="read_more_btn_text">続きを読む</span>
                 </button>
+                <nav class="chart-footer-nav unset">
+                    <a href="<?php echo url('/oc/' . $oc['id'] . '/csv') ?>" download class="chart-btn unset">
+                        <span>CSVダウンロード</span>
+                    </a>
+                </nav>
+                <div class="talkroom_number_of_stats">
+                    <div class="openchat-list-date">
+                        <div class="refresh-icon"></div>
+                        <time datetime="<?php echo dateTimeAttr($oc['updated_at']) ?>"><?php echo getDailyRankingDateTime($oc['updated_at']) ?></time>
+                    </div>
+                    <div class="<?php echo $oc['diff_member'] > 0 ? 'positive' : 'negative' ?>">
+                        <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
+                            <span class="openchat-itme-stats-title">前日比</span>
+                            <span class="openchat-item-stats"><?php echo signedNum($oc['diff_member']) ?></span>
+                            <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
+                        <?php elseif ($oc['diff_member'] === 0) : ?>
+                            <span class="openchat-itme-stats-title">前日比</span>
+                            <span class="zero-stats">±0</span>
+                        <?php endif ?>
+                    </div>
+                    <div class="weekly <?php echo $oc['diff_member2'] > 0 ? 'positive' : 'negative' ?>">
+                        <?php if ($oc['diff_member2'] ?? 0 !== 0) : ?>
+                            <span class="openchat-itme-stats-title">前週比</span>
+                            <span class="openchat-item-stats"><?php echo signedNum($oc['diff_member2']) ?></span>
+                            <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
+                        <?php elseif ($oc['diff_member2'] === 0) : ?>
+                            <span class="openchat-itme-stats-title">前週比</span>
+                            <span class="zero-stats">±0</span>
+                        <?php endif ?>
+                    </div>
+                </div>
             </div>
         </header>
         <!-- グラフセクション -->
-        <div class="graph-title" id="chart-footer-nav">
+        <div class="graph-title">
             <h2>メンバー数の推移</h2>
-            <div class="openchat-list-date">
-                <div class="refresh-icon"></div>
-                <time datetime="<?php echo dateTimeAttr($oc['updated_at']) ?>"><?php echo getDailyRankingDateTime($oc['updated_at']) ?></time>
-            </div>
-            <nav class="chart-footer-nav unset">
-                <button class="chart-btn unset" id="csv-dl">
-                    <span>CSVファイルをダウンロード</span>
-                </button>
-            </nav>
         </div>
         <div class="chart-canvas-section">
             <canvas id="openchat-statistics" aria-label="全期間のメンバー数の折れ線グラフ" role="img"></canvas>
@@ -69,7 +81,6 @@
 
         if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
             readMoreBtn.style.visibility = "hidden";
-            readMoreBtn.style.minHeight = "32px";
         } else {
             const openChatHeader = document.getElementById('openchat-header');
             readMoreBtn.addEventListener('click', () => {
@@ -84,7 +95,7 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    <script src="/js/oc_page_12.js"></script>
+    <script src="/js/oc_page_17.js"></script>
     <script>
         const openChatChart = new OpenChatChartFactory({
                 date: <?php echo json_encode($statisticsData['date']) ?>,
@@ -109,10 +120,6 @@
             buttons.forEach(btn => btn.disabled = false);
             e.target.disabled = true;
         }));
-
-        document.getElementById('csv-dl').addEventListener('click', () => {
-            location.href = '<?php echo url('/oc/' . $oc['id'] . '/csv') ?>';
-        })
     </script>
     <script src="/js/site_header_footer_6.js"></script>
     <?php echo $_schema ?>

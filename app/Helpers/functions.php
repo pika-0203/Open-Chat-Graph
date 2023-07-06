@@ -95,5 +95,5 @@ function getQueryString(string $separater = '?'): string
 
 function cache()
 {
-    header('Cache-Control: public, max-age=3600');
+    header('Cache-Control: private');
 }

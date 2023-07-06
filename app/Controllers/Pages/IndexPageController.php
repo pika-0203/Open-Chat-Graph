@@ -19,7 +19,7 @@ class IndexPageController
             $rankingList['requestOpenChat'] = $openChatRepository->getOpenChatById(session('id'));
         }
 
-        $_css = ['room_list_23', 'site_header_18', 'site_footer_18'];
+        $_css = ['room_list_26', 'site_header_21', 'site_footer_18'];
         $_meta = meta();
         $_meta->title = "{$_meta->title} | オープンチャットの人数統計とグラフ分析";
 

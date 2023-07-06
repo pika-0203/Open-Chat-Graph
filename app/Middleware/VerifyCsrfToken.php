@@ -6,6 +6,7 @@ namespace App\Middleware;
 
 use Shadow\Kernel\Reception;
 use Shadow\Kernel\Cookie;
+use Shadow\Exceptions\BadRequestException;
 
 class VerifyCsrfToken
 {
@@ -13,8 +14,19 @@ class VerifyCsrfToken
     {
         if ($reception->isMethod('GET')) {
             Cookie::csrfToken();
-        } else {
+            return;
+        } 
+
+        $this->verifyCsrfToken();
+    }
+
+    public function verifyCsrfToken()
+    {
+        try {
             verifyCsrfToken();
+        } catch (BadRequestException $e) {
+            view('errors/invalid_cookie')->render();
+            exit;
         }
     }
 }

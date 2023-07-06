@@ -22,10 +22,13 @@ class OpenChatRepository implements OpenChatRepositoryInterface
                 UNIX_TIMESTAMP(oc.updated_at) AS updated_at,
                 oc.is_alive,
                 ranking.diff_member AS diff_member,
-                ranking.percent_increase AS percent_increase
+                ranking.percent_increase AS percent_increase,
+                ranking2.diff_member AS diff_member2,
+                ranking2.percent_increase AS percent_increase2
             FROM
                 open_chat AS oc
                 LEFT JOIN statistics_ranking AS ranking ON ranking.open_chat_id = oc.id
+                LEFT JOIN statistics_ranking2 AS ranking2 ON ranking2.open_chat_id = oc.id
             WHERE
                 oc.id = :id
                 AND is_alive = 1';

@@ -65,7 +65,7 @@ class RankingPageController
         // メタタグ、構造化データ
         $subTitle = $pageNumber === 1 ? '' : "({$pageNumber}ページ目)";
         $_meta = meta()->setTitle('【毎日更新】参加人数のランキング' . $subTitle);
-        $_css = ['room_list_23', 'site_header_18', 'site_footer_18'];
+        $_css = ['room_list_26', 'site_header_21', 'site_footer_18'];
         $_schema = $pageNumber === 1 ? (new \App\Views\Schema\OcPageBreadcrumbsListSchema)->generateSchema() : '';
 
         return view(

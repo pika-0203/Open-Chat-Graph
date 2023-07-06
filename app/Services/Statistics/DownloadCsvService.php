@@ -21,7 +21,7 @@ class DownloadCsvService
 
         $filename = '[OC_Graph]' . $this->sanitizeFileName($name);
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="' . $filename . '.csv"');
+        header("Content-Disposition: attachment; filename*=UTF-8''" . $filename);
 
         $output = fopen('php://output', 'w');
         fputcsv($output, ['date', 'member']);
@@ -38,7 +38,7 @@ class DownloadCsvService
         $replacedString = preg_replace('/[^\p{L}\p{N}\s\-_]/u', '', $name);
         $replacedString = preg_replace('/[<>:"\/\\|?*\x00-\x1F]/', '', $name);
 
-        $filename = mb_convert_encoding($replacedString, 'UTF-8', 'auto');
+        $filename = rawurlencode($replacedString);
 
         return $filename;
     }

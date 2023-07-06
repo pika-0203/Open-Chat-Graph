@@ -26,7 +26,7 @@ class OcPageController
         $statisticsData = $statistics->getStatisticsData($open_chat_id);
 
         $_meta = $meta->generateMetadata($oc);
-        $_css = ['room_page_23', 'site_header_18', 'site_footer_18'];
+        $_css = ['site_header_21', 'site_footer_18', 'room_page_28'];
         $_schema = $schema->generateSchema($open_chat_id, $oc['name'], $oc['created_at'], $oc['updated_at']);
 
         return view('statistics/oc_content', compact('_meta', '_css', '_schema', 'oc', 'statisticsData'));
@@ -35,9 +35,10 @@ class OcPageController
     function csv(
         OpenChatRepositoryInterface $openChatRepository,
         \App\Services\Statistics\DownloadCsvService $csvService,
+        \App\Middleware\VerifyCsrfToken $token,
         int $open_chat_id
     ) {
-        verifyCsrfToken();
+        $token->verifyCsrfToken();
         
         $oc = $openChatRepository->getOpenChatById($open_chat_id);
         if (!$oc) {

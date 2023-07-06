@@ -13,9 +13,10 @@
             <p>・ユーザーがオープンチャットを見つけて参加する機会を作る</p>
             <h2>コンテンツの権利</h2>
             <p>当サイトにおける投稿コンテンツに対して有する権利はオープンチャットの作成者及びLINE株式会社が従前どおり保持し、当サイトがかかる権利を取得することはありません。</p>
+            <p>オープンチャットが削除された場合、データ更新時に当サイトからも削除されます。</p>
             <p>LINEの詳細は<a href="https://terms.line.me/line_terms?lang=ja" rel="noopener noreferrer" target="_blank">LINE利用規約</a>や<a href="https://terms.line.me/line_Square_TOU_JP?lang=ja" rel="noopener noreferrer" target="_blank">LINEオープンチャット利用規約</a>をご覧ください。</p>
             <p>オープンチャットが当サイトに登録されないようにするには、オープンチャットの説明文に #nolog を含めます。</p>
-            <p>既に登録済みのオープンチャットは、更新時に #nolog を検出すると削除されます。</p>
+            <p>既に登録済みのオープンチャットは、データ更新時に #nolog を検出すると削除されます。</p>
             <h2>Cookie</h2>
             <p>Googleアナリティクスのデータ収集を行うためCookieを使用しています。<br>このデータは匿名で収集されており、個人を特定するものではありません。</p>
             <p>詳細は<a href="https://marketingplatform.google.com/about/analytics/terms/jp/" rel="noopener noreferrer" target="_blank">Googleアナリティクスサービス利用規約</a>や<a href="https://policies.google.com/technologies/ads?hl=ja" rel="noopener noreferrer" target="_blank">Googleポリシーと規約</a>をご覧ください。</p>
