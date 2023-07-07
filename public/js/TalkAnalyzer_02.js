@@ -45,6 +45,10 @@ class TalkAnalyzer {
   }
 
   getOpenChatName(line) {
+    if (!line.match(this.OPENCHAT_NAME_PATTERN)) {
+      throw new Error('トーク履歴のファイルではありません');
+    }
+
     this.result.openChatName = line.match(this.OPENCHAT_NAME_PATTERN)[1];
   }
 
