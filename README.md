@@ -19,7 +19,7 @@ https://openchat-review.me
 
 * ランキングの掲載条件  
 ・過去1週間でメンバー数に変動があること  
-・現在のメンバー数と、前日 or 前週のメンバー数が10人以上であること   
+・現在のメンバー数と前日 or 前週のメンバー数が10人以上であること   
   
 * ランキング更新処理  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/sql/StatisticsRankingUpdaterRepository_updateCreateDailyRankingTable.sql
