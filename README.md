@@ -20,7 +20,7 @@ https://openchat-review.me
 増加率: `増加数 / 前日 or 前週のメンバー数`  
 ランク付け点数: `増加数 + 増加率 × 30`  
   
-* ソースコード - MySQL  
+* 処理の内容 - MySQL  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/sql/StatisticsRankingUpdaterRepository_updateCreateDailyRankingTable.sql
 
 ## クローリングのアルゴリズム
