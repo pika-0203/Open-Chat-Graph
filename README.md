@@ -17,10 +17,10 @@ https://openchat-review.me
 ランク付け点数: `増加数 + 増加率 × 20`  
 ***2023.05.27 試験的にランク付け点数を`増加数 + 増加率 × 30`にしました。***
 
-* ランキング掲載条件
-過去1週間でメンバー数に変動がある
+* ランキング掲載条件  
+過去1週間でメンバー数に変動がある  
 メンバー数が10人以上のオープンチャット  
-
+  
 * ランキング更新処理  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/sql/StatisticsRankingUpdaterRepository_updateCreateDailyRankingTable.sql
 
