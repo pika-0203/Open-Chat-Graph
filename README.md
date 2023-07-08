@@ -11,7 +11,7 @@ https://openchat-review.me
 毎日12時頃にデータを更新して、ランク付け点数が高い順に表示されます。  
 元々のメンバー数が少ないオープンチャットであるほど増加率が高くなり、上位に上がりやすくなります。  
 
-* ランキングの順位を決める計算式  
+* ランク付け点数の計算式  
 増加数: `現在のメンバー数 - 前日 or 前週のメンバー数`  
 増加率: `増加数 / 前日 or 前週のメンバー数`  
 ランク付け点数: `増加数 + 増加率 × 30`  
@@ -20,7 +20,7 @@ https://openchat-review.me
 ・過去1週間でメンバー数に変動があること  
 ・現在のメンバー数と前日 or 前週のメンバー数が10人以上であること   
   
-* ランキング更新処理  
+* ソースコード - MySQL  
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/sql/StatisticsRankingUpdaterRepository_updateCreateDailyRankingTable.sql
 
 ## クローリングのアルゴリズム
