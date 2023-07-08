@@ -24,7 +24,7 @@ https://openchat-review.me
 https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Models/Repositories/sql/StatisticsRankingUpdaterRepository_updateCreateDailyRankingTable.sql
 
 ## クローリングのアルゴリズム
-サイトに登録されているオープンチャットを毎日12時頃に更新します。  
+データベースに登録されているオープンチャットを毎日更新します。  
 メンバー数の統計、オープンチャットのタイトル・説明文・画像が最新の状態になります。  
 過去1週間メンバー数に動きがない場合、次の更新は1週間後になります。  
 
