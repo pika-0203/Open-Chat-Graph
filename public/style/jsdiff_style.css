@@ -1,0 +1,93 @@
+table,
+tbody,
+tr,
+td {
+  height: 100%;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+table tr td:first-child {
+  text-align: center;
+}
+
+table thead th:first-child,
+table tr td:first-child {
+  text-align: center;
+}
+
+table td {
+  width: 33%;
+  padding: 0.4rem 0.4rem;
+  border: 1px solid rgb(207, 217, 222);
+  vertical-align: top;
+  font: 1em monospace;
+  text-align: center;
+  white-space: break-spaces;
+  font-size: 12px;
+}
+
+del {
+  text-decoration: none;
+  color: #b30000;
+  background: #fadad7;
+}
+
+ins {
+  background: #eaf2c2;
+  color: #406619;
+  text-decoration: none;
+}
+
+#result-td {
+  display: contents;
+}
+
+#result {
+  margin: 0;
+  padding: 0.4rem 0.4rem;
+  white-space: break-spaces;
+}
+
+#settings {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  right: 5px;
+  height: 2em;
+  line-height: 2em;
+}
+
+#settings label {
+  margin-left: 1em;
+}
+
+.source {
+  position: absolute;
+  right: 1%;
+  top: 0.2em;
+}
+
+[contentEditable] {
+  background: #f9f9f9;
+  border-color: #bbb #d9d9d9 #ddd;
+  border-radius: 4px;
+  -webkit-user-modify: read-write-plaintext-only;
+  outline: none;
+}
+
+[contentEditable]:focus {
+  background: #fff;
+  border-color: #6699cc;
+  box-shadow: 0 0 4px #2175c9;
+}
+
+@-moz-document url-prefix() {
+  body {
+    height: 99%;
+    /* Hide scroll bar in Firefox */
+  }
+}
