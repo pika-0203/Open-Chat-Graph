@@ -44,8 +44,8 @@ $risingPosition = app(RisingPositionCrawling::class);
 try {
     $cron->migrate(false);
     $risingPosition->risingPositionCrawling();
-    
-    unset(DB::$pdo);
+
+    DB::$pdo = null;
     DB::connect();
     
     $cron->finalizeMigrate();
