@@ -15,13 +15,13 @@ class SQLiteStatistics extends DB implements DBInterface
     /**
      * @throws \PDOException
      */
-    public static function connect(string $dbfile = ''): \PDO
+    public static function connect(string $mode = '?mode=rwc'): \PDO
     {
         if (static::$pdo !== null) {
             return static::$pdo;
         }
 
-        static::$pdo = new \PDO('sqlite:file:' . static::$dbfile . '?mode=rwc');
+        static::$pdo = new \PDO('sqlite:file:' . static::$dbfile . $mode);
 
         return static::$pdo;
     }

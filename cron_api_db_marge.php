@@ -7,7 +7,7 @@ use App\Services\CronJson\SyncOpenChatState;
 use App\Services\OpenChat\OpenChatCrawlingFromApi;
 use App\Services\OpenChat\OpenChatCrawlingFromPage;
 use App\Services\Admin\AdminTool;
-use App\Services\OpenChat\RisingPositionCrawling;
+use App\Services\RankingPosition\RisingPositionCrawling;
 use App\Services\OpenChat\SubCategory\OpenChatSubCategorySynchronizer;
 
 set_time_limit(3600 * 4);

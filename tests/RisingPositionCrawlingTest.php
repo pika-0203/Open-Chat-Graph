@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use App\Services\OpenChat\RisingPositionCrawling;
+use App\Services\RankingPosition\RisingPositionCrawling;
 
 class RisingPositionCrawlingTest extends TestCase
 {

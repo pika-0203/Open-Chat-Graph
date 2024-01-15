@@ -5,7 +5,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 use App\Controllers\Cron\SyncOpenChat;
 use App\Services\CronJson\SyncOpenChatState;
 use App\Services\Admin\AdminTool;
-use App\Services\OpenChat\RisingPositionCrawling;
+use App\Services\RankingPosition\RisingPositionCrawling;
 use Shadow\DB;
 
 set_time_limit(3600 * 4);

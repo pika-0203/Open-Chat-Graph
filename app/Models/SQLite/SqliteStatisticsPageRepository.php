@@ -29,7 +29,10 @@ class SqliteStatisticsPageRepository implements StatisticsPageRepositoryInterfac
                 `realdate` ASC";
 
         $date = date('Y-m-d');
+
+        SQLiteStatistics::connect('?mode=ro&nolock=1');
         $result = SQLiteStatistics::fetchAll($query, compact('open_chat_id', 'date'));
+        SQLiteStatistics::$pdo = null;
 
         return [
             'date' => array_column($result, 'date'),
@@ -50,6 +53,10 @@ class SqliteStatisticsPageRepository implements StatisticsPageRepositoryInterfac
             ORDER BY
                 `date` ASC";
 
-        return SQLiteStatistics::fetchAll($query, compact('open_chat_id'));
+        SQLiteStatistics::connect('?mode=ro&nolock=1');
+        $result = SQLiteStatistics::fetchAll($query, compact('open_chat_id'));
+        SQLiteStatistics::$pdo = null;
+
+        return $result;
     }
 }

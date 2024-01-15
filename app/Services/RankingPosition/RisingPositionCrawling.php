@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Services\OpenChat;
+namespace App\Services\RankingPosition;
 
 use App\Config\AppConfig;
 use App\Services\OpenChat\Crawler\OpenChatApiRankingDownloader;
 use App\Services\OpenChat\Crawler\OpenChatApiRisingDownloaderProcess;
-use App\Services\OpenChat\RankingPosition\OpenChatRankingPositionStore;
+use App\Services\RankingPosition\OpenChatRankingPositionStore;
 
 class RisingPositionCrawling
 {

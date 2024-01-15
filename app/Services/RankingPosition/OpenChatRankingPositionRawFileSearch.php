@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\OpenChat\RankingPosition;
+namespace App\Services\RankingPosition;
 
 use App\Config\AppConfig;
 

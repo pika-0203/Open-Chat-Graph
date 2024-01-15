@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use App\Services\OpenChat\Crawler\OpenChatApiRankingDownloader;
-use App\Services\OpenChat\RankingPosition\OpenChatRankingPositionStore;
+use App\Services\RankingPosition\OpenChatRankingPositionStore;
 use App\Config\AppConfig;
 use App\Services\OpenChat\Crawler\OpenChatApiRankingDownloaderProcess;
 use App\Services\OpenChat\Crawler\OpenChatApiRisingDownloaderProcess;
