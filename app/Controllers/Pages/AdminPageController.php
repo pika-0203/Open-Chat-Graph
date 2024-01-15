@@ -42,9 +42,23 @@ class AdminPageController
         }
     }
 
-    function index()
+    private function recoveryyesterdaystats()
     {
-        echo 'hi';
+        $exeption = [];
+
+        $ranking = DB::fetchAll('SELECT * FROM statistics_ranking_day');
+        foreach ($ranking as $oc) {
+            $yesterday = SQLiteStatistics::fetchColumn("SELECT member FROM statistics WHERE date = '2024-01-14' AND open_chat_id = " . $oc['open_chat_id']);
+            if (!$yesterday) {
+                $exeption[] = $oc;
+                continue;
+            };
+
+            $member = $yesterday + $oc['diff_member'];
+            SQLiteStatistics::execute("UPDATE statistics SET member = {$member} WHERE date = '2024-01-15' AND open_chat_id = " . $oc['open_chat_id']);
+        }
+
+        var_dump($exeption);
     }
 
     private function gcelatest(GceDifferenceUpdater $gce, DuplicateOpenChatMeger $dupMeger)
