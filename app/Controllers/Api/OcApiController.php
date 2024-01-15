@@ -8,7 +8,7 @@ use App\Config\AppConfig;
 use App\Services\OpenChat\Registration\OpenChatFromCrawlerRegistration;
 use App\Models\GCE\GceDbRecordSynchronizer;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
-use App\Services\OpenChat\RankingPosition\OpenChatRankingPositionRawFileSearch;
+use App\Services\RankingPosition\OpenChatRankingPositionRawFileSearch;
 
 class OcApiController
 {

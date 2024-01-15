@@ -32,6 +32,7 @@ class OcPageController
         }
 
         $statisticsData = $statisticsRepo->getDailyStatisticsByPeriod($open_chat_id);
+
         $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($statisticsData);
 
         $_css = ['site_header', 'site_footer', 'room_page'];

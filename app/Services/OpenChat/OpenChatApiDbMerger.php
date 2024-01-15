@@ -9,7 +9,7 @@ use App\Services\OpenChat\Crawler\OpenChatApiRankingDownloaderProcess;
 use App\Services\OpenChat\Dto\OpenChatApiDtoFactory;
 use App\Services\OpenChat\Updater\Process\OpenChatApiDbMergerProcess;
 use App\Models\Repositories\LogRepositoryInterface;
-use App\Services\OpenChat\RankingPosition\OpenChatRankingPositionStore;
+use App\Services\RankingPosition\OpenChatRankingPositionStore;
 use App\Config\AppConfig;
 use App\Exceptions\ApplicationException;
 
