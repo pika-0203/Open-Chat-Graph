@@ -55,4 +55,4 @@ try {
     AdminTool::sendLineNofity($cron->getMessage());
 }
 
-error_log($cron->getMessage() . "\n", 3, __DIR__ . '/logs/cron.log');
+addCronLog($cron->getMessage());
