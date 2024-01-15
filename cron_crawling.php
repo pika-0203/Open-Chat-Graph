@@ -43,11 +43,10 @@ $risingPosition = app(RisingPositionCrawling::class);
 
 try {
     $cron->migrate(false);
+    DB::$pdo = null;
+
     $risingPosition->risingPositionCrawling();
 
-    DB::$pdo = null;
-    DB::connect();
-    
     $cron->finalizeMigrate();
     $cron->finalizeUpdate();
 } catch (\Throwable $e) {
