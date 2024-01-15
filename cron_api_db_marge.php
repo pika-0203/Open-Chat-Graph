@@ -17,7 +17,7 @@ set_time_limit(3600 * 4);
  */
 $state = app(SyncOpenChatState::class);
 if ($state->isActive) {
-    AdminTool::sendLineNofity('SyncOpenChat: 二重起動');
+    AdminTool::sendLineNofity('SyncOpenChat: state is active');
     exit;
 }
 
@@ -54,4 +54,4 @@ try {
     AdminTool::sendLineNofity($cron->getMessage());
 }
 
-error_log($cron->getMessage() . "\n", 3, __DIR__ . '/logs/cron.log');
+addCronLog($cron->getMessage());
