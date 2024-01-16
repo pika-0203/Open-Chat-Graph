@@ -6,19 +6,10 @@ use App\Controllers\Cron\SyncOpenChat;
 use App\Services\CronJson\SyncOpenChatState;
 use App\Services\Admin\AdminTool;
 use App\Services\RankingPosition\RisingPositionCrawling;
-use Shadow\DB;
 
 set_time_limit(3600 * 4);
 
-function isUpdateTime()
-{
-    $currentTime = new DateTime;
-    $updateTime = (new DateTime)->setTime(11, 30, 0);
-    $updateTimeRange = (new DateTime)->setTime(12, 30, 0);
-    return ($currentTime > $updateTime) && ($currentTime < $updateTimeRange);
-}
-
-if (isUpdateTime()) {
+if (excludeTime()) {
     exit;
 }
 
@@ -43,7 +34,6 @@ $risingPosition = app(RisingPositionCrawling::class);
 
 try {
     $cron->migrate(false);
-    DB::$pdo = null;
 
     $risingPosition->risingPositionCrawling();
 
