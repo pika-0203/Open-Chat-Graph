@@ -26,7 +26,7 @@ class Kernel
         $this->routeDto = $routeDto;
         $this->parseRequest();
 
-        if($this->routing()) {
+        if ($this->routing()) {
             $this->validateRequest();
             $this->callMiddleware();
             $this->callRouteCallback();
@@ -65,13 +65,13 @@ class Kernel
         } catch (NotFoundException $e) {
             if ($this->routeDto->isDefinedRoute()) {
                 $result = false;
+            } else {
+                throw $e;
             }
-
-            throw $e;
         }
 
         $routing->validateAllowedMethods();
-        
+
         return $result;
     }
 
