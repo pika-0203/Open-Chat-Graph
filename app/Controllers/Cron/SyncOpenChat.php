@@ -16,6 +16,7 @@ use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
 use App\Models\Repositories\LogRepositoryInterface;
 use App\Models\Repositories\OpenChatRepository;
 use App\Services\SitemapGenerator;
+use Shadow\DB;
 
 class SyncOpenChat
 {
@@ -45,7 +46,7 @@ class SyncOpenChat
         $this->log = $log;
         $this->sitemap = $sitemap;
 
-        
+
         $this->state->isActive = true;
         $this->state->update();
     }
@@ -95,6 +96,7 @@ class SyncOpenChat
 
         $this->addMessage("done migrate total: {$totalResult}, insert: {$totalInsert}");
         OpenChatDataForUpdaterWithCacheRepository::clearCache();
+        DB::$pdo = null;
     }
 
     function update(OpenChatCrawlingFromApi|OpenChatCrawlingFromPage $openChatCrawling): void

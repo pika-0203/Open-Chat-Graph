@@ -37,6 +37,7 @@ class OpenChatRankingPositionStore
         $result = [];
         foreach ($apiDataArray as $apiData) {
             $squares = $apiData['squaresByCategory'][0]['squares'];
+            
             foreach ($squares as $square) {
                 $result[] = $validate ? Validator::str($square['square']['emid'], e: \RuntimeException::class) : $square['square']['emid'];
             }

@@ -227,3 +227,11 @@ function addCronLog(string $string)
 {
     error_log(date('Y-m-d H:i:s') . ' ' . $string . "\n", 3, __DIR__ . '/../../logs/cron.log');
 }
+
+function excludeTime(array $start = [11, 30, 0], array $end = [12, 30, 0]): bool
+{
+    $currentTime = new DateTime;
+    $updateTime = (new DateTime)->setTime(...$start);
+    $updateTimeRange = (new DateTime)->setTime(...$end);
+    return ($currentTime > $updateTime) && ($currentTime < $updateTimeRange);
+}
