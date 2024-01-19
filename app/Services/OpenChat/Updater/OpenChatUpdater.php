@@ -8,7 +8,7 @@ use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatUpdaterDtoFactory;
 use App\Services\OpenChat\Updater\Finalizer\OpenChatUpdaterDtoFinalizer;
 use App\Services\OpenChat\Updater\Process\OpenChatUpdaterProcess;
-use App\Models\Repositories\LogRepositoryInterface;
+use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 

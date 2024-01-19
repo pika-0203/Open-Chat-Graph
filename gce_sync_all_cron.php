@@ -32,6 +32,7 @@ function gcesyncall(GceDbTableSynchronizer $sql, GceRankingUpdater $gce)
     DBGce::execute("TRUNCATE TABLE user_registration_open_chat");
     $result = $sql->syncUserRegistrationOpenChat();
     $message .= 'syncUserRegistrationOpenChat: ' . $result . "\nend: " . date('Y-m-d H:i:s');
+    
     $gce->updateRanking();
 
     AdminTool::sendLineNofity($message);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Repositories;
 
-use App\Models\Repositories\StatisticsRepositoryInterface;
+use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use Shadow\DB;
 

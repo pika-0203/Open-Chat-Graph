@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Models\SQLite;
+namespace App\Models\SQLite\Repositories\Statistics;
 
-use App\Models\Repositories\StatisticsPageRepositoryInterface;
+use App\Models\Repositories\Statistics\StatisticsPageRepositoryInterface;
 use App\Models\SQLite\SQLiteStatistics;
 
 class SqliteStatisticsPageRepository implements StatisticsPageRepositoryInterface

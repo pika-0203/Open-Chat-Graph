@@ -42,6 +42,11 @@ class AdminPageController
         }
     }
 
+    function index()
+    {
+        throw new \Exception('test');
+    }
+
     private function recoveryyesterdaystats()
     {
         $exeption = [];
@@ -92,7 +97,7 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'GCE SQL 同期完了', 'message' => $message]);
     }
 
-    private function gcegenerank(GceRankingUpdater $gce)
+    function gcegenerank(GceRankingUpdater $gce)
     {
         $gce->updateRanking();
         echo 'done';

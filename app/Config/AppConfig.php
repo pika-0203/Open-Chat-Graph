@@ -21,6 +21,10 @@ class AppConfig
 
     const CRON_EXECUTE_COUNT = 500;
 
+    const CRON_START_MINUTE = 30;
+    const CRON_MERGER_HOUR_RANGE_START = 11;
+    const CRON_MERGER_HOUR_RANGE_END = 12;
+
     const LINE_OPEN_URL = 'https://line.me/ti/g2/';
 
     const SITEMAP_DIR = __DIR__ . '/../../public/sitemap.xml';
@@ -96,6 +100,5 @@ class AppConfig
     const OPEN_CHAT_SUB_CATEGORIES_FILE_PATH = __DIR__ . '/../../storage/open_chat_sub_categories/subcategories.json';
 
     const OPEN_CHAT_RANKING_POSITION_DIR = __DIR__ . '/../../storage/ranking_position/ranking';
-
     const OPEN_CHAT_RISING_POSITION_DIR = __DIR__ . '/../../storage/ranking_position/rising';
 }

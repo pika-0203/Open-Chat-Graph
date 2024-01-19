@@ -27,7 +27,7 @@ class RedirectLineWebBrowser
         /** @var string ユーザエージェント文字列 */
         $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
         /** @var bool Lineという文字列が含まれているかを判定 */
-        $isLineWebOpen = preg_match('/Line/i', $userAgent);
+        $isLineWebOpen = false !== strpos($userAgent, ' Line/');
 
         return (bool) $isLineWebOpen;
     }

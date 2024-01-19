@@ -6,7 +6,7 @@ namespace App\Services;
 
 use App\Config\AppConfig;
 use App\Services\StaticData\StaticTopPageDataGenerator;
-use App\Models\Repositories\StatisticsRankingUpdaterRepositoryInterface;
+use App\Models\Repositories\Statistics\StatisticsRankingUpdaterRepositoryInterface;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
 
 class UpdateRankingService

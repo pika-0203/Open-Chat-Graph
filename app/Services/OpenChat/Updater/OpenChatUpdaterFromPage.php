@@ -6,7 +6,7 @@ namespace App\Services\OpenChat\Updater;
 
 use App\Services\OpenChat\Crawler\OpenChatDtoFetcherInterface;
 use App\Services\OpenChat\Crawler\OpenChatCrawler;
-use App\Models\Repositories\LogRepositoryInterface;
+use App\Models\Repositories\Log\LogRepositoryInterface;
 
 class OpenChatUpdaterFromPage implements OpenChatUpdaterWithFetchInterface
 {

@@ -6,24 +6,21 @@ namespace App\Services\OpenChat\Dto;
 
 class OpenChatDto
 {
-    public int $regestered_created_at;
-
-    public string $name;
-    public string $desc;
-    public string $profileImageObsHash;
-    public int $memberCount;
-
-    public ?string $emid = null;
-    public ?int $createdAt = null;
-    public ?int $category = null;
-    public ?int $emblem = null;
-    public ?string $invitationTicket = null;
-
-    public int $regestered_open_chat_id;
+    public string $name;                     // ranking-api data, oc-page data
+    public string $desc;                     // ranking-api data, oc-page data
+    public string $profileImageObsHash;      // ranking-api data, oc-page data
+    public int $memberCount;                 // ranking-api data, oc-page data
+    public ?string $emid = null;             // ranking-api data
+    public ?int $createdAt = null;           // ranking-api data
+    public ?int $category = null;            // ranking-api data
+    public ?int $emblem = null;              // ranking-api data
+    public ?string $invitationTicket = null; // oc-api data
+    public int $registered_created_at;       // construct value
+    public int $registered_open_chat_id;     // DB registered
 
     function __construct()
     {
-        $this->regestered_created_at = time();
+        $this->registered_created_at = time();
     }
 
     function setOpenChatApiFromEmidDtoElement(array $ocApiElement)
@@ -33,18 +30,18 @@ class OpenChatDto
 
     function getNextUpdate(): string
     {
-        return date('Y-m-d', strtotime('1 day', $this->regestered_created_at));
+        return date('Y-m-d', strtotime('1 day', $this->registered_created_at));
     }
 
     /**
      * @return array `['open_chat_id' => int, 'member' => int, 'date' => string]`
      */
-    function getStatisticsParams():array
+    function getStatisticsParams(): array
     {
         return [
-            'open_chat_id' => $this->regestered_open_chat_id,
+            'open_chat_id' => $this->registered_open_chat_id,
             'member' => $this->memberCount,
-            'date' => date('Y-m-d', $this->regestered_created_at),
+            'date' => date('Y-m-d', $this->registered_created_at),
         ];
     }
 }

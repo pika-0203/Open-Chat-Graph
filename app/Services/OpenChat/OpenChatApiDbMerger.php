@@ -8,10 +8,12 @@ use App\Services\OpenChat\Crawler\OpenChatApiRankingDownloader;
 use App\Services\OpenChat\Crawler\OpenChatApiRankingDownloaderProcess;
 use App\Services\OpenChat\Dto\OpenChatApiDtoFactory;
 use App\Services\OpenChat\Updater\Process\OpenChatApiDbMergerProcess;
-use App\Models\Repositories\LogRepositoryInterface;
-use App\Services\RankingPosition\OpenChatRankingPositionStore;
+use App\Models\Repositories\Log\LogRepositoryInterface;
+use App\Services\RankingPosition\Store\RankingPositionStore;
 use App\Config\AppConfig;
 use App\Exceptions\ApplicationException;
+use App\Services\OpenChat\Dto\OpenChatDto;
+use Shadow\DB;
 
 class OpenChatApiDbMerger
 {
@@ -19,22 +21,20 @@ class OpenChatApiDbMerger
     private OpenChatApiDtoFactory $openChatApiDtoFactory;
     private OpenChatApiDbMergerProcess $openChatApiDbMergerProcess;
     private LogRepositoryInterface $logRepository;
-    private OpenChatRankingPositionStore $openChatRankingPositionStore;
+    private RankingPositionStore $rankingPositionStore;
 
     function __construct(
         OpenChatApiRankingDownloaderProcess $openChatApiRankingDownloaderProcess,
         OpenChatApiDtoFactory $openChatApiDtoFactory,
         OpenChatApiDbMergerProcess $openChatApiDbMergerProcess,
         LogRepositoryInterface $logRepository,
-        OpenChatRankingPositionStore $openChatRankingPositionStore,
+        RankingPositionStore $RankingPositionStore,
     ) {
         $this->openChatApiRankingDataDownloader = app(OpenChatApiRankingDownloader::class, compact('openChatApiRankingDownloaderProcess'));
         $this->openChatApiDtoFactory = $openChatApiDtoFactory;
         $this->openChatApiDbMergerProcess = $openChatApiDbMergerProcess;
         $this->logRepository = $logRepository;
-        $this->openChatRankingPositionStore = $openChatRankingPositionStore;
-        
-        deleteStorageFileAll(AppConfig::OPEN_CHAT_RANKING_POSITION_DIR, true);
+        $this->rankingPositionStore = $RankingPositionStore;
     }
 
     function countMaxExecuteNum(int $limit): int
@@ -47,32 +47,49 @@ class OpenChatApiDbMerger
         try {
             $count = $this->fetchOpenChatApiRankingAllProcess($limit, $ExecuteNum, $updateFlag);
         } catch (\RuntimeException $e) {
+            // 再接続
+            if (!$updateFlag) {
+                DB::$pdo = null;
+            }
+
             $this->logRepository->logUpdateOpenChatError(0, $e->__toString());
 
             return false;
         }
 
-        $this->openChatRankingPositionStore->saveClearApiDataCache(AppConfig::OPEN_CHAT_RANKING_POSITION_DIR);
         return $count;
     }
 
-    /**
-     * API URL一件ずつの処理
-     */
     private function fetchOpenChatApiRankingAllProcess(int $limit, int $ExecuteNum, bool $updateFlag): int
     {
-        return $this->openChatApiRankingDataDownloader->fetchOpenChatApiRankingAll($limit, $ExecuteNum, function (array $apiData, string $category) use ($updateFlag) {
+        // API OC一件ずつの処理
+        $processCallback = function (OpenChatDto $apiDto) use ($updateFlag): ?string {
+            $this->rankingPositionStore->addApiDto($apiDto);
+            return $this->openChatApiDbMergerProcess->validateAndMapToOpenChatDtoCallback($apiDto, $updateFlag);
+        };
+
+        // API URL一件ずつの処理 
+        $callback = function (array $apiData) use ($processCallback, $updateFlag): void {
             $this->checkKillFlag();
 
-            $callback = fn ($apiDto): ?string => $this->openChatApiDbMergerProcess->validateAndMapToOpenChatDtoCallback($apiDto, $updateFlag);
-            $errors = $this->openChatApiDtoFactory->validateAndMapToOpenChatDto($apiData, $callback);
+            $errors = $this->openChatApiDtoFactory->validateAndMapToOpenChatDto($apiData, $processCallback);
 
             foreach ($errors as $error) {
+                // 再接続
+                if (!$updateFlag) {
+                    DB::$pdo = null;
+                }
+
                 $this->logRepository->logUpdateOpenChatError(0, $error);
             }
+        };
 
-            $this->openChatRankingPositionStore->cacheApiData($category, $apiData);
-        });
+        // API カテゴリごとの処理
+        $callbackByCategory = function (string $category): void {
+            $this->rankingPositionStore->saveClearCurrentCategoryApiDataCache($category);
+        };
+
+        return $this->openChatApiRankingDataDownloader->fetchOpenChatApiRankingAll($limit, $ExecuteNum, $callback, $callbackByCategory);
     }
 
     private function checkKillFlag()

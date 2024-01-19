@@ -7,7 +7,7 @@ namespace App\Services\OpenChat\Updater;
 use App\Services\OpenChat\Crawler\OpenChatDtoFetcherInterface;
 use App\Services\OpenChat\Crawler\OpenChatApiFromEmidDownloader;
 use App\Services\OpenChat\Crawler\OpenChatUrlChecker;
-use App\Models\Repositories\LogRepositoryInterface;
+use App\Models\Repositories\Log\LogRepositoryInterface;
 
 class OpenChatUpdaterFromApi implements OpenChatUpdaterWithFetchInterface
 {

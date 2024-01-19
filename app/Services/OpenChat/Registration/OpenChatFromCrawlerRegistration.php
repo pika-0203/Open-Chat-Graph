@@ -6,7 +6,7 @@ namespace App\Services\OpenChat\Registration;
 
 use App\Config\OpenChatCrawlerConfig;
 use App\Models\Repositories\OpenChatRepositoryInterface;
-use App\Models\Repositories\LogRepositoryInterface;
+use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Services\OpenChat\Crawler\OpenChatCrawler;
 use App\Services\OpenChat\Store\OpenChatImageStore;
 use App\Services\OpenChat\Dto\OpenChatDto;

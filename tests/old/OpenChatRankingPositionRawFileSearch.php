@@ -6,7 +6,7 @@ namespace App\Services\RankingPosition;
 
 use App\Config\AppConfig;
 
-class OpenChatRankingPositionRawFileSearch
+//class OpenChatRankingPositionRawFileSearch
 {
     const CRON_START_MINUTES = 30;
 

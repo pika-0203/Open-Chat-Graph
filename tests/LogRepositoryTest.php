@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 use Shadow\DB;
-use App\Models\Repositories\LogRepository;
+use App\Models\Repositories\Log\LogRepository;
 
 class LogRepositoryTest extends TestCase
 {

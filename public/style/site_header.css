@@ -421,7 +421,7 @@ body::before {
     position: absolute;
     left: auto;
     right: 1rem;
-    width: 45%;
+    width: 60%;
     padding: 0;
   }
 }

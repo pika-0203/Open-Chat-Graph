@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\OpenChat\Updater\Process;
 
 use App\Services\OpenChat\Updater\OpenChatUpdaterWithFetchInterface;
-use App\Models\Repositories\LogRepositoryInterface;
+use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Services\Utility\ErrorCounter;
 use App\Services\Crawler\CrawlerFactory;
 

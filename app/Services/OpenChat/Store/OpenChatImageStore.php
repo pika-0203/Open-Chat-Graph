@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\OpenChat\Store;
 
 use App\Services\OpenChat\Crawler\OpenChatImgDownloader;
-use App\Models\Repositories\LogRepositoryInterface;
+use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Config\OpenChatCrawlerConfig;
 
 class OpenChatImageStore
