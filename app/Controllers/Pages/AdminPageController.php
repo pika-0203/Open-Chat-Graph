@@ -75,7 +75,7 @@ class AdminPageController
         echo 'done';
     }
 
-    private function gcesyncall(GceDbTableSynchronizer $sql, GceRankingUpdater $gce, GceDifferenceUpdater $gcedeiff)
+    function gcesyncall(GceDbTableSynchronizer $sql, GceRankingUpdater $gce, GceDifferenceUpdater $gcedeiff)
     {
         set_time_limit(3600 * 3);
         $message = "start: " . date('Y-m-d H:i:s') . "\n\n";
@@ -97,7 +97,7 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'GCE SQL 同期完了', 'message' => $message]);
     }
 
-    function gcegenerank(GceRankingUpdater $gce)
+    private function gcegenerank(GceRankingUpdater $gce)
     {
         $gce->updateRanking();
         echo 'done';

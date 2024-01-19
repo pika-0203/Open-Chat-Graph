@@ -117,7 +117,7 @@ class OpenChatStatsRankingApiRepositoryWithGce
 
         $search = DBGce::executeFulltextSearchQuery(
             $query($categoryStatement),
-            'MATCH(name, description) AGAINST(:search IN BOOLEAN MODE)',
+            'WHERE MATCH(name, description) AGAINST(:search IN BOOLEAN MODE)',
             $args->keyword,
             $params,
         );
