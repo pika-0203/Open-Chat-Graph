@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Models\SQLite;
+namespace App\Models\SQLite\Repositories\Statistics;
 
 use App\Models\SQLite\SQLiteStatistics;
 use App\Models\Importer\SqlInsert;

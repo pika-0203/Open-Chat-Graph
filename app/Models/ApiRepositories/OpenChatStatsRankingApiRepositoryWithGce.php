@@ -63,9 +63,9 @@ class OpenChatStatsRankingApiRepositoryWithGce
         $categoryStatement = $args->category ? "category = {$args->category}" : 1;
 
         $sort = [
-            'rank' => 'sr.id',
-            'increase' => 'sr.diff_member',
-            'rate' => 'sr.percent_increase',
+            'rank' => 'id',
+            'increase' => 'diff_member',
+            'rate' => 'percent_increase',
         ];
 
         $sortColumn = $sort[$args->sort] ?? $sort['rate'];
@@ -75,20 +75,19 @@ class OpenChatStatsRankingApiRepositoryWithGce
             'limit' => $args->limit,
         ];
 
-        $searchBan = getSeachBannedIdQuery('oc.id');
+        $searchBan = getSeachBannedIdQuery('id');
 
         if (!$args->page) {
             // 1ページ目の場合
-            $query = fn ($category) => fn ($like) =>
+            $query = fn ($category) => fn ($where) =>
             "(
                 SELECT
-                    oc.id
+                    id
                 FROM
-                    open_chat AS oc
-                    JOIN {$tableName} AS sr ON oc.id = sr.open_chat_id
-                WHERE (MATCH(name, description) AGAINST(:search IN BOOLEAN MODE) OR ({$like})) AND {$category} AND NOT {$searchBan}
+                    open_chat
+                {$where} AND {$category} AND NOT {$searchBan} AND {$tableName}_id > 0
                 ORDER BY
-                    {$sortColumn} {$args->order}
+                    {$tableName}_{$sortColumn} {$args->order}
                 LIMIT
                     :offset, :limit
             )
@@ -97,20 +96,18 @@ class OpenChatStatsRankingApiRepositoryWithGce
                 SELECT
                     count(*) AS id
                 FROM
-                    open_chat AS oc
-                    JOIN {$tableName} AS sr ON oc.id = sr.open_chat_id
-                WHERE (MATCH(name, description) AGAINST(:search IN BOOLEAN MODE) OR ({$like})) AND {$category} AND NOT {$searchBan}
+                    open_chat
+                {$where} AND {$category} AND NOT {$searchBan} AND {$tableName}_id > 0
             )";
         } else {
-            $query = fn ($category) => fn ($like) =>
+            $query = fn ($category) => fn ($where) =>
             "SELECT
-                oc.id
+                id
             FROM
-                open_chat AS oc
-                JOIN {$tableName} AS sr ON oc.id = sr.open_chat_id
-            WHERE (MATCH(name, description) AGAINST(:search IN BOOLEAN MODE) OR ({$like})) AND {$category} AND NOT {$searchBan}
+                open_chat
+            {$where} AND {$category} AND NOT {$searchBan} AND {$tableName}_id > 0
             ORDER BY
-                {$sortColumn} {$args->order}
+                {$tableName}_{$sortColumn} {$args->order}
             LIMIT
                 :offset, :limit";
         }
@@ -118,14 +115,11 @@ class OpenChatStatsRankingApiRepositoryWithGce
         $args->keyword = preg_replace('/\A[\x00\s]++|[\x00\s]++\z/u', '', $args->keyword);
         $args->keyword = preg_replace('/\s+/u', ' ', $args->keyword);
 
-        $params['search'] = DBGce::fulltextSearchParam($args->keyword);
-
-        $search = DBGce::executeLikeSearchQuery(
+        $search = DBGce::executeFulltextSearchQuery(
             $query($categoryStatement),
-            fn ($i) => "(oc.name LIKE :keyword{$i} OR oc.description LIKE :keyword{$i})",
+            'MATCH(name, description) AGAINST(:search IN BOOLEAN MODE)',
             $args->keyword,
             $params,
-            whereClausePrefix: ''
         );
 
         // 1ページ目の場合
@@ -207,13 +201,13 @@ class OpenChatStatsRankingApiRepositoryWithGce
 
         if (!$args->page) {
             // 1ページ目の場合
-            $query = fn ($category) => fn ($like) =>
+            $query = fn ($category) => fn ($where) =>
             "(
                 SELECT
                     id
                 FROM
                     open_chat
-                WHERE (MATCH(name, description) AGAINST(:search IN BOOLEAN MODE) OR ({$like})) AND {$category} AND NOT {$searchBan} AND is_alive = 1
+                {$where} AND {$category} AND is_alive = 1 AND NOT {$searchBan}
                 ORDER BY
                     {$sortColumn}
                 LIMIT
@@ -225,15 +219,15 @@ class OpenChatStatsRankingApiRepositoryWithGce
                     count(*) AS id
                 FROM
                     open_chat
-                WHERE (MATCH(name, description) AGAINST(:search IN BOOLEAN MODE) OR ({$like})) AND {$category} AND NOT {$searchBan} AND is_alive = 1
+                {$where} AND {$category} AND is_alive = 1 AND NOT {$searchBan}
             )";
         } else {
-            $query = fn ($category) => fn ($like) =>
+            $query = fn ($category) => fn ($where) =>
             "SELECT
                 id
             FROM
                 open_chat
-            WHERE (MATCH(name, description) AGAINST(:search IN BOOLEAN MODE) OR ({$like})) AND {$category} AND NOT {$searchBan} AND is_alive = 1
+            {$where} AND {$category} AND is_alive = 1 AND NOT {$searchBan}
             ORDER BY
                 {$sortColumn}
             LIMIT
@@ -243,14 +237,11 @@ class OpenChatStatsRankingApiRepositoryWithGce
         $args->keyword = preg_replace('/\A[\x00\s]++|[\x00\s]++\z/u', '', $args->keyword);
         $args->keyword = preg_replace('/\s+/u', ' ', $args->keyword);
 
-        $params['search'] = DBGce::fulltextSearchParam($args->keyword);
-
-        $search = DBGce::executeLikeSearchQuery(
+        $search = DBGce::executeFulltextSearchQuery(
             $query($categoryStatement . $whereClause),
-            fn ($i) => "(name LIKE :keyword{$i} OR description LIKE :keyword{$i})",
+            'WHERE MATCH(name, description) AGAINST(:search IN BOOLEAN MODE)',
             $args->keyword,
             $params,
-            whereClausePrefix: ''
         );
 
         // 1ページ目の場合

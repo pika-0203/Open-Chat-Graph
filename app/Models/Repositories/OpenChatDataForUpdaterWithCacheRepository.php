@@ -6,19 +6,22 @@ namespace App\Models\Repositories;
 
 use Shadow\DB;
 use App\Config\AppConfig;
+use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatRepositoryDto;
 use App\Services\OpenChat\Dto\OpenChatDto;
 
 class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdaterWithCacheRepositoryInterface
 {
-    private static ?array $openChatIdByEmidCache;
+    private static ?array $openChatIdAndNextUpdateCache;
+    private static ?array $openChatEmidCache;
     private static ?array $openChatDataCache;
     private static ?array $memberChangeWithinLastWeekCache;
     private StatisticsRepositoryInterface $statisticsRepository;
 
     public static function clearCache(): void
     {
-        self::$openChatIdByEmidCache = null;
+        self::$openChatIdAndNextUpdateCache = null;
+        self::$openChatEmidCache = null;
         self::$openChatDataCache = null;
         self::$memberChangeWithinLastWeekCache = null;
     }
@@ -26,7 +29,7 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
     public static function addOpenChatIdByEmidCache(int $id, string $emid): void
     {
         $next_update = 0;
-        self::$openChatIdByEmidCache[] = compact('id', 'emid', 'next_update');
+        self::$openChatIdAndNextUpdateCache[] = compact('id', 'emid', 'next_update');
     }
 
     public function __construct(StatisticsRepositoryInterface $statisticsRepository)
@@ -50,30 +53,25 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
             ORDER BY
                 id ASC";
 
-        self::$openChatIdByEmidCache = DB::fetchAll($query, ['curDate' => date('Y-m-d', time())]);
+        self::$openChatIdAndNextUpdateCache = DB::fetchAll($query, ['curDate' => date('Y-m-d', time())]);
+        self::$openChatEmidCache = array_column(self::$openChatIdAndNextUpdateCache, 'emid');
     }
 
     public function getOpenChatIdByEmid(string $emid): array|false
     {
-        if (!isset(self::$openChatIdByEmidCache)) {
+        if (!isset(self::$openChatIdAndNextUpdateCache)) {
             $this->cacheOpenChatIdByEmid();
         }
 
-        $search = false;
-        foreach (self::$openChatIdByEmidCache as $key => $oc) {
-            if ($oc['emid'] === $emid) {
-                $search = $key;
-                break;
-            }
-        }
+        $search = array_search($emid, self::$openChatEmidCache);
 
         if ($search === false) {
             return false;
         }
 
-        $result = self::$openChatIdByEmidCache[$search];
+        $result = self::$openChatIdAndNextUpdateCache[$search];
         if ($result['next_update']) {
-            self::$openChatIdByEmidCache[$search]['next_update'] = 0;
+            self::$openChatIdAndNextUpdateCache[$search]['next_update'] = 0;
         }
 
         return $result;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Statistics;
 
-use App\Models\Repositories\StatisticsPageRepositoryInterface;
+use App\Models\Repositories\Statistics\StatisticsPageRepositoryInterface;
 
 class DownloadCsvService
 {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
-use App\Models\Repositories\StatisticsPageRepositoryInterface;
+use App\Models\Repositories\Statistics\StatisticsPageRepositoryInterface;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
 use App\Views\Schema\OcPageSchema;
 use App\Views\Meta\OcPageMeta;

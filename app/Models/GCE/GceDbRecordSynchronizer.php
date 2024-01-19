@@ -36,4 +36,9 @@ class GceDbRecordSynchronizer
 
         return true;
     }
+
+    function deleteOpenChatById(int $id)
+    {
+        GceVmSql::execute("DELETE FROM open_chat WHERE id = :id", compact('id'));
+    }
 }

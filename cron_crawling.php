@@ -2,46 +2,72 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+use App\Config\AppConfig;
 use App\Controllers\Cron\SyncOpenChat;
 use App\Services\CronJson\SyncOpenChatState;
 use App\Services\Admin\AdminTool;
-use App\Services\RankingPosition\RisingPositionCrawling;
+use App\Services\RankingPosition\RankingPositionDailyUpdater;
+use App\Services\RankingPosition\RankingPositionHourUpdater;
 
 set_time_limit(3600 * 4);
 
 if (excludeTime()) {
+    // 日次処理 12:30の場合
     exit;
 }
 
 /**
- * @var SyncOpenChatState $state
+ * @var SyncOpenChatState $syncOpenChatState
  */
-$state = app(SyncOpenChatState::class);
+$syncOpenChatState = app(SyncOpenChatState::class);
 if ($state->isActive) {
-    AdminTool::sendLineNofity('SyncOpenChat: 二重起動');
+    AdminTool::sendLineNofity('SyncOpenChat: state is active');
     exit;
 }
 
 /**
- * @var SyncOpenChat $cron
+ * @var SyncOpenChat $syncOpenChat
  */
-$cron = app(SyncOpenChat::class, ['state' => $state]);
-
-/**
- * @var RisingPositionCrawling $risingPosition
- */
-$risingPosition = app(RisingPositionCrawling::class);
-
+$syncOpenChat = app(SyncOpenChat::class, ['state' => $syncOpenChatState]);
 try {
-    $cron->migrate(false);
+    $syncOpenChat->migrate(false);
 
-    $risingPosition->risingPositionCrawling();
-
-    $cron->finalizeMigrate();
-    $cron->finalizeUpdate();
+    $syncOpenChat->finalizeMigrate();
+    $syncOpenChat->finalizeUpdate();
 } catch (\Throwable $e) {
-    $cron->addMessage('SyncOpenChat: ' . $e->__toString());
-    AdminTool::sendLineNofity($cron->getMessage());
+    $syncOpenChat->addMessage('SyncOpenChat: ' . $e->__toString());
+    AdminTool::sendLineNofity($syncOpenChat->getMessage());
 }
 
-addCronLog($cron->getMessage());
+addCronLog($syncOpenChat->getMessage());
+unset($syncOpenChatState);
+unset($syncOpenChat);
+
+/**
+ * @var RankingPositionHourUpdater $rankingPosition
+ */
+$rankingPosition = app(RankingPositionHourUpdater::class);
+try {
+    $rankingPosition->crawlRisingAndUpdateRankingPositionHourDb();
+} catch (\Throwable $e) {
+    AdminTool::sendLineNofity('rankingPosition: ' . $e->__toString());
+}
+
+unset($rankingPosition);
+
+if (!excludeTime([0, AppConfig::CRON_START_MINUTE], [1, AppConfig::CRON_START_MINUTE])) {
+    exit;
+}
+
+// 日次処理 0:30の場合
+/**
+ * @var RankingPositionDailyUpdater $rankingPositionDaily
+ */
+$rankingPositionDaily = app(RankingPositionDailyUpdater::class);
+try {
+    $rankingPositionDaily->updateYesterdayRankingPositionDailyDb();
+} catch (\Throwable $e) {
+    AdminTool::sendLineNofity('rankingPositionDaily: ' . $e->__toString());
+}
+
+unset($rankingPosition);

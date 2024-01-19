@@ -9,9 +9,9 @@ use App\Config\AppConfig;
 
 class OpenChatApiRankingDownloader
 {
-    private OpenChatApiRankingDownloaderProcessInterface $openChatApiRankingDownloaderProcess;
+    private AbstractOpenChatApiRankingDownloaderProcess $openChatApiRankingDownloaderProcess;
 
-    function __construct(OpenChatApiRankingDownloaderProcessInterface $openChatApiRankingDownloaderProcess)
+    function __construct(AbstractOpenChatApiRankingDownloaderProcess $openChatApiRankingDownloaderProcess)
     {
         $this->openChatApiRankingDownloaderProcess = $openChatApiRankingDownloaderProcess;
     }
@@ -32,13 +32,14 @@ class OpenChatApiRankingDownloader
     /**
      * @param int $limit 一度にいくつのカテゴリを処理するか
      * @param int $ExecuteNum 何度目の実行かを指定する番号 (1から始まる番号)
-     * @param \Closure $callback 1件毎にループ内で呼び出すコールバック `$callback($apiData)`
+     * @param \Closure $callback 1件毎にループ内で呼び出すコールバック `$callback(array $apiData, string $category)`
+     * @param ?\Closure $callbackByCategory 1カテゴリーごとに呼び出すコールバック `$callbackByCategory(string $category)`
      * 
      * @return int resultCount 取得したオープンチャットの件数
      * 
      * @throws \RuntimeException
      */
-    function fetchOpenChatApiRankingAll(int $limit, int $ExecuteNum, \Closure $callback): int
+    function fetchOpenChatApiRankingAll(int $limit, int $ExecuteNum, \Closure $callback, ?\Closure $callbackByCategory): int
     {
         $categoryArray = array_values(AppConfig::OPEN_CHAT_CATEGORY);
         $startKey = ($ExecuteNum - 1) * $limit;
@@ -51,6 +52,9 @@ class OpenChatApiRankingDownloader
             }
 
             $resultCount += $this->fetchOpenChatApiRanking((string)$category, $callback);
+            if($callbackByCategory) {
+                $callbackByCategory((string)$category);
+            }
         }
 
         return $resultCount;

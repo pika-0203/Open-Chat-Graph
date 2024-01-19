@@ -45,7 +45,7 @@ class OclistPageController
         $this->args->order = Valid::str(Recp::input('order', 'asc'), regex: ['asc', 'desc'], e: $error);
         $this->args->sort = Valid::str(Recp::input('sort', 'rank'), regex: ['rank', 'increase', 'rate', 'member', 'created_at'], e: $error);
 
-        $this->args->keyword = Valid::str(Recp::input('keyword', ''), emptyAble: true, maxLen: 40, e: $error);
+        $this->args->keyword = Valid::str(Recp::input('keyword', ''), emptyAble: true, maxLen: 1000, e: $error);
         $this->args->sub_category = Valid::str(Recp::input('sub_category', ''), emptyAble: true, maxLen: 40, e: $error);
     }
 

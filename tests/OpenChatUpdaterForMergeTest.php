@@ -83,7 +83,7 @@ class OpenChatUpdaterForMergeTest extends TestCase
 
                 return null;
             });
-        });
+        }, fn () => null);
 
         var_dump($this->errors);
         var_dump($res);

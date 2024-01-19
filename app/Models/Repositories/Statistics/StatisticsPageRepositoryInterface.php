@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Repositories;
+namespace App\Models\Repositories\Statistics;
 
 interface StatisticsPageRepositoryInterface
 {

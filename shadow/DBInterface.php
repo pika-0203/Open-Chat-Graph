@@ -70,7 +70,7 @@ interface DBInterface
      * @throws PDOException If an error occurs during the query execution.
      * @throws InvalidArgumentException If any of the array values are not strings, numbers or bool.
      */
-    public static function fetch(string $query, ?array $params = null): array|false;
+    public static function fetch(string $query, ?array $params = null, array $args = [\PDO::FETCH_ASSOC]): array|object|false;
 
     /**
      * Executes an SQL query and returns rows as associative arrays.
@@ -87,7 +87,7 @@ interface DBInterface
      * @throws PDOException If an error occurs during the query execution.
      * @throws InvalidArgumentException If any of the array values are not strings, numbers or bool.
      */
-    public static function fetchAll(string $query, ?array $params = null): array;
+    public static function fetchAll(string $query, ?array $params = null, array $args = [\PDO::FETCH_ASSOC]): array;
 
     public static function fetchColumn(string $query, ?array $params = null): mixed;
 
@@ -166,8 +166,7 @@ interface DBInterface
         string $keyword,
         ?array $params = null,
         ?array $affix = ['%', '%'],
-        int $fetchAllMode = \PDO::FETCH_ASSOC,
-        array $fetchAllArgs = [],
+        array $fetchAllArgs = [\PDO::FETCH_ASSOC],
         string $whereClausePlaceholder = 'keyword',
     ): array;
 

@@ -6,20 +6,23 @@ namespace App\Services;
 
 use App\Models\GCE\GceDbTableSynchronizer;
 use App\Models\GCE\GceRankingUpdater;
-use App\Models\GCE\DBGce;
+use App\Models\GCE\GceDbRecordSynchronizer;
 use App\Models\Repositories\RepositoryCache;
 
 class GceDifferenceUpdater
 {
     private GceDbTableSynchronizer $tableSyncer;
     private GceRankingUpdater $ranking;
+    private GceDbRecordSynchronizer $gceDbRecordSynchronizer;
 
     function __construct(
         GceDbTableSynchronizer $tableSyncer,
         GceRankingUpdater $ranking,
+        GceDbRecordSynchronizer $gceDbRecordSynchronizer,
     ) {
         $this->ranking = $ranking;
         $this->tableSyncer = $tableSyncer;
+        $this->gceDbRecordSynchronizer = $gceDbRecordSynchronizer;
     }
 
     function finalizeSyncLatest()
@@ -36,7 +39,7 @@ class GceDifferenceUpdater
         $this->tableSyncer->syncOpenChatMerged();
         $this->tableSyncer->syncUserRegistrationOpenChat();
     }
-    
+
     function gceUpdateRanking()
     {
         $this->ranking->updateRanking();
@@ -44,12 +47,8 @@ class GceDifferenceUpdater
 
     private function deleteOpenChatByRepositryCache(): int
     {
-        $count = 0;
-        foreach (RepositoryCache::$deleteOpenChat as $id) {
-            $count++;
-            DBGce::execute("DELETE FROM open_chat WHERE id = :id", compact('id'));
-        }
-
-        return $count;
+        $deleteOpenChat = RepositoryCache::$deleteOpenChat;
+        array_map($this->gceDbRecordSynchronizer->deleteOpenChatById(...), $deleteOpenChat);
+        return count($deleteOpenChat);
     }
 }

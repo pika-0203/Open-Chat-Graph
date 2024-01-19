@@ -6,6 +6,8 @@ namespace App\Models\Repositories;
 
 use Shadow\DB;
 use App\Config\AppConfig;
+use App\Models\Repositories\RankingPosition\RankingPositionRepositoryInterface;
+use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatRepositoryDto;
 use App\Services\OpenChat\Dto\OpenChatUpdaterDto;
 use App\Services\OpenChat\Dto\ArchiveFlagsDto;
@@ -13,10 +15,14 @@ use App\Services\OpenChat\Dto\ArchiveFlagsDto;
 class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
 {
     private StatisticsRepositoryInterface $statisticsRepository;
+    private RankingPositionRepositoryInterface $rankingPositionRepository;
 
-    public function __construct(StatisticsRepositoryInterface $statisticsRepository)
-    {
+    public function __construct(
+        StatisticsRepositoryInterface $statisticsRepository,
+        RankingPositionRepositoryInterface $rankingPositionRepository
+    ) {
         $this->statisticsRepository = $statisticsRepository;
+        $this->rankingPositionRepository = $rankingPositionRepository;
     }
 
     public function getOpenChatDataById(int $id): OpenChatRepositoryDto|false
@@ -102,6 +108,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         );
 
         $this->statisticsRepository->daleteDailyStatistics($open_chat_id);
+        $this->rankingPositionRepository->daleteDailyPosition($open_chat_id);
 
         return $result && DB::executeAndCheckResult(
             "DELETE FROM
@@ -263,6 +270,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         }
 
         $this->statisticsRepository->mergeDuplicateOpenChatStatistics($duplicated_id, $open_chat_id);
+        $this->rankingPositionRepository->mergeDuplicateDailyPosition($duplicated_id, $open_chat_id);
         $this->deleteOpenChat($duplicated_id);
 
         DB::execute(

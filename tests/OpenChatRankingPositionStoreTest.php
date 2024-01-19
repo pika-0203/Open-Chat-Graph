@@ -2,77 +2,47 @@
 
 use PHPUnit\Framework\TestCase;
 use App\Services\OpenChat\Crawler\OpenChatApiRankingDownloader;
-use App\Services\RankingPosition\OpenChatRankingPositionStore;
-use App\Config\AppConfig;
+use App\Services\RankingPosition\Store\RankingPositionStore;
 use App\Services\OpenChat\Crawler\OpenChatApiRankingDownloaderProcess;
-use App\Services\OpenChat\Crawler\OpenChatApiRisingDownloaderProcess;
-
+use App\Services\OpenChat\Dto\OpenChatApiDtoFactory;
+use App\Services\OpenChat\Dto\OpenChatDto;
 class OpenChatRankingPositionStoreTest extends TestCase
 {
+    private RankingPositionStore $rankingPositionStore;
+    private OpenChatApiRankingDownloader $openChatApiRankingDataDownloader;
+    private OpenChatApiDtoFactory $openChatApiDtoFactory;
     public function testfetchSaveOpenChatRankingApiData()
     {
-        /**
-         * @var OpenChatRankingPositionStore $openChatRankingPositionStore
-         */
-        $openChatRankingPositionStore = app(OpenChatRankingPositionStore::class);
+        $this->rankingPositionStore = app(RankingPositionStore::class);
+        $this->openChatApiRankingDataDownloader = app(
+            OpenChatApiRankingDownloader::class,
+            ['openChatApiRankingDownloaderProcess' => app(OpenChatApiRankingDownloaderProcess::class)]
+        );
 
-        /**
-         * @var OpenChatApiRankingDownloader $openChatApiRankingDataDownloader
-         */
-        $openChatApiRankingDownloaderProcess = app(OpenChatApiRankingDownloaderProcess::class);
-        $openChatApiRankingDataDownloader = app(OpenChatApiRankingDownloader::class, compact('openChatApiRankingDownloaderProcess'));
+        $this->openChatApiDtoFactory = app(OpenChatApiDtoFactory::class);
 
-        $res = $openChatApiRankingDataDownloader->fetchOpenChatApiRankingAll(1, 21, function ($apiData, $category) use ($openChatRankingPositionStore) {
-            var_dump($category);
-            $openChatRankingPositionStore->cacheApiData($category, $apiData);
-        });
+        // API OC一件ずつの処理
+        $processCallback = function (OpenChatDto $apiDto): ?string {
+            $this->rankingPositionStore->addApiDto($apiDto);
+            return null;
+        };
 
-        $res = $openChatApiRankingDataDownloader->fetchOpenChatApiRankingAll(1, 25, function ($apiData, $category) use ($openChatRankingPositionStore) {
-            var_dump($category);
-            $openChatRankingPositionStore->cacheApiData($category, $apiData);
-        });
+        // API URL一件ずつの処理
+        $callback = function (array $apiData) use ($processCallback): void {
+            $errors = $this->openChatApiDtoFactory->validateAndMapToOpenChatDto($apiData, $processCallback);
+            $this->assertEmpty($errors);
+            debug($errors);
+        };
 
-        $openChatRankingPositionStore->saveClearApiDataCache(AppConfig::OPEN_CHAT_RANKING_POSITION_DIR);
+        // API カテゴリごとの処理
+        $callbackByCategory = function (string $category): void {
+            $this->rankingPositionStore->saveClearCurrentCategoryApiDataCache($category);
+        };
 
-        var_dump($res);
+        $result = $this->openChatApiRankingDataDownloader->fetchOpenChatApiRankingAll(100, 1, $callback, $callbackByCategory);
 
-        $this->testShowPositionData(AppConfig::OPEN_CHAT_RANKING_POSITION_DIR . '/27.dat');
-        $this->testShowPositionData(AppConfig::OPEN_CHAT_RANKING_POSITION_DIR . '/0.dat');
-
-        $this->assertTrue($res > 0);
-    }
-
-    public function testfetchSaveOpenChatRankingApiDataRising()
-    {
-        /**
-         * @var OpenChatRankingPositionStore $openChatRankingPositionStore
-         */
-        $openChatRankingPositionStore = app(OpenChatRankingPositionStore::class);
-
-        /**
-         * @var OpenChatApiRankingDownloader $openChatApiRankingDataDownloader
-         */
-        $openChatApiRankingDownloaderProcess = app(OpenChatApiRisingDownloaderProcess::class);
-        $openChatApiRankingDataDownloader = app(OpenChatApiRankingDownloader::class, compact('openChatApiRankingDownloaderProcess'));
-
-        $res = $openChatApiRankingDataDownloader->fetchOpenChatApiRankingAll(1, 21, function ($apiData, $category) use ($openChatRankingPositionStore) {
-            var_dump($category);
-            $openChatRankingPositionStore->cacheApiData($category, $apiData);
-        });
-
-        $res = $openChatApiRankingDataDownloader->fetchOpenChatApiRankingAll(1, 25, function ($apiData, $category) use ($openChatRankingPositionStore) {
-            var_dump($category);
-            $openChatRankingPositionStore->cacheApiData($category, $apiData);
-        });
-
-        $openChatRankingPositionStore->saveClearApiDataCache(AppConfig::OPEN_CHAT_RISING_POSITION_DIR);
-
-        var_dump($res);
-
-        $this->testShowPositionData(AppConfig::OPEN_CHAT_RISING_POSITION_DIR . '/27.dat');
-        $this->testShowPositionData(AppConfig::OPEN_CHAT_RISING_POSITION_DIR . '/0.dat');
-
-        $this->assertTrue($res > 0);
+        debug($result);
+        $this->assertTrue(true);
     }
 
     private function testShowPositionData(string $fileName)

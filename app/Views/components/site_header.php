@@ -35,7 +35,7 @@
         <form class="search-form-inner" method="GET" action="<?php echo url('ranking') ?>">
             <label for="q">
             </label>
-            <input type="text" id="q" name="keyword" placeholder="オープンチャットを検索" maxlength="40" autocomplete="off" required>
+            <input type="text" id="q" name="keyword" placeholder="オープンチャットを検索" maxlength="1000" autocomplete="off" required>
             <input type="hidden" name="list" value="all">
             <input type="hidden" name="sort" value="member">
             <input type="hidden" name="order" value="desc">

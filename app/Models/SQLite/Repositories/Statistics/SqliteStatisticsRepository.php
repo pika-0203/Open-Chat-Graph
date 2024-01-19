@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Models\SQLite;
+namespace App\Models\SQLite\Repositories\Statistics;
 
-use App\Models\Repositories\StatisticsRepositoryInterface;
+use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Models\SQLite\SQLiteStatistics;
 use App\Services\OpenChat\Dto\OpenChatDto;
 

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Models\SQLite;
+namespace App\Models\SQLite\Repositories\Statistics;
 
 use App\Models\ExecuteSqlFile;
-use App\Models\Repositories\StatisticsRankingUpdaterRepositoryInterface;
+use App\Models\Repositories\Statistics\StatisticsRankingUpdaterRepositoryInterface;
+use App\Models\SQLite\Repositories\Statistics\SqliteRankingExport;
 use App\Models\SQLite\SQLiteStatistics;
 use Shadow\DB;
 

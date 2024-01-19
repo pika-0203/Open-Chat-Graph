@@ -11,6 +11,7 @@ use App\Services\OpenChat\Registration\OpenChatFromApiRegistration;
 use App\Models\Repositories\OpenChatRepositoryWithCacheForUpdater;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
+use Shadow\DB;
 
 class OpenChatApiDbMergerProcess
 {
@@ -43,6 +44,11 @@ class OpenChatApiDbMergerProcess
             $this->openChatUpdater->updateOpenChat($openChatByEmid['id'], $apiDto);
 
             return null;
+        }
+
+        // 再接続
+        if(!$updateFlag) {
+            DB::$pdo = null;
         }
 
         // APIから追加のデータをダウンロードする

@@ -104,23 +104,16 @@ class ExceptionHandler
     {
         self::errorResponse($e, 'please try again later', 500, $log, 'Internal Server Error😥');
 
-        /*         $adminToolClass = \App\Services\Admin\AdminTool::class;
-        $adminAuthServiceClass = \App\Services\Admin\AdminAuthService::class;
-        if (class_exists($adminToolClass) && class_exists($adminAuthServiceClass)) {
+        $flagName = 'App\Config\Shadow\ExceptionHandlerConfig::EXCEPTION_HANDLER_DISPLAY_ERROR_TRACE_DETAILS';
+        $showErrorTraceFlag = defined($flagName) && constant($flagName);
+        $adminToolClass = \App\Services\Admin\AdminTool::class;
+        if (!$showErrorTraceFlag && class_exists($adminToolClass)) {
             try {
-                if (!isset($_SERVER['REQUEST_URI'])) {
-                    $adminToolClass::sendLineNofity($e->__toString() . "\nIP: " . getIp() . "\nUA: " . getUA());
-                    return
-                }
-
-                $adminAuthService = app($adminAuthServiceClass);
-                if (!$adminAuthService->auth()) {
-                    $adminToolClass::sendLineNofity($e->__toString() . "\nIP: " . getIp() . "\nUA: " . getUA());
-                }
+                $adminToolClass::sendLineNofity($e->__toString() . "\nIP: " . getIp() . "\nUA: " . getUA());
             } catch (\Throwable $exception) {
                 self::errorLog($exception);
             }
-        } */
+        }
     }
 
     /**

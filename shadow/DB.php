@@ -94,22 +94,29 @@ class DB implements DBInterface
         }
     }
 
-    public static function fetch(string $query, ?array $params = null): array|false
+    public static function fetch(string $query, ?array $params = null, array $args = [\PDO::FETCH_ASSOC]): array|object|false
     {
         if (static::$pdo === null) {
             static::connect();
         }
 
-        return static::execute($query, $params)->fetch(\PDO::FETCH_ASSOC);
+        $firstArg = $args[0] ?? 0;
+        if ($firstArg < \PDO::FETCH_CLASS || ($firstArg !== \PDO::FETCH_CLASS && $firstArg <= 10)) {
+            return static::execute($query, $params)->fetch(...$args);
+        }
+
+        $sth = static::execute($query, $params);
+        $sth->setFetchMode(...$args);
+        return $sth->fetch();
     }
 
-    public static function fetchAll(string $query, ?array $params = null): array
+    public static function fetchAll(string $query, ?array $params = null, array $args = [\PDO::FETCH_ASSOC]): array
     {
         if (static::$pdo === null) {
             static::connect();
         }
 
-        return static::execute($query, $params)->fetchAll(\PDO::FETCH_ASSOC);
+        return static::execute($query, $params)->fetchAll(...$args);
     }
 
     public static function fetchColumn(string $query, ?array $params = null): mixed
@@ -146,8 +153,7 @@ class DB implements DBInterface
         string $keyword,
         ?array $params = null,
         ?array $affix = ['%', '%'],
-        int $fetchAllMode = \PDO::FETCH_ASSOC,
-        array $fetchAllArgs = [],
+        array $fetchAllArgs = [\PDO::FETCH_ASSOC],
         string $whereClausePlaceholder = 'keyword',
         string $whereClausePrefix = 'WHERE '
     ): array {
@@ -182,7 +188,7 @@ class DB implements DBInterface
 
         if ($params === null) {
             $stmt->execute();
-            return $stmt->fetchAll($fetchAllMode, ...$fetchAllArgs);
+            return $stmt->fetchAll(...$fetchAllArgs);
         }
 
         foreach ($params as $key => $value) {
@@ -197,7 +203,7 @@ class DB implements DBInterface
         }
 
         $stmt->execute();
-        return $stmt->fetchAll($fetchAllMode, ...$fetchAllArgs);
+        return $stmt->fetchAll(...$fetchAllArgs);
     }
 
     /**
@@ -269,7 +275,7 @@ class DB implements DBInterface
      * @param string $input The input string to be escaped for full-text search.
      * @return string The escaped input string ready for use in a MySQL full-text search query.
      */
-    private static function escapeFullTextSearch($input)
+    protected static function escapeFullTextSearch($input)
     {
         // Escape specific characters for MySQL full-text search
         $escapedInput = str_replace(['+', '-', '<', '>', '(', ')', '~', '*', '"', '@'], ['\+', '\-', '\<', '\>', '\(', '\)', '\~', '\*', '\"', '\@'], $input);

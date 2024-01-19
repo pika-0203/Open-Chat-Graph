@@ -70,18 +70,19 @@ class OcApiController
             return false;
         }
 
-        $categoryIndex = $oc['category'];
         $emid = $oc['emid'];
-
+        
         $name = $oc['name'];
-        $category = AppConfig::OPEN_CHAT_CATEGORY_KEYS[$categoryIndex];
-
+        
         if (!$emid) {
             // ランキング未掲載でカテゴリがない場合
             return response(compact('name') + [
                 'next_update' => $rankingPosition->getTentativeNextUpdate(self::RANKING_POSITION_TRIGER_MINUTES)
             ]);
         }
+        
+        $categoryIndex = $oc['category'];
+        $category = AppConfig::OPEN_CHAT_CATEGORY_KEYS[$categoryIndex];
 
         $rankingData = $rankingPosition->getLatestRankingRawCache($categoryIndex, self::RANKING_POSITION_TRIGER_MINUTES);
         if (is_string($rankingData)) {

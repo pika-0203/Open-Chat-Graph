@@ -13,7 +13,7 @@ use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Services\OpenChat\DuplicateOpenChatMeger;
 use App\Services\GceDifferenceUpdater;
 use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
-use App\Models\Repositories\LogRepositoryInterface;
+use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Models\Repositories\OpenChatRepository;
 use App\Services\SitemapGenerator;
 use Shadow\DB;

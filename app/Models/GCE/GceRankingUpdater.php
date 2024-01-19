@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models\GCE;
 
 use App\Models\GCE\DBGce as GceVmSql;
-use App\Models\SQLite\SqliteRankingExport;
+use App\Models\SQLite\Repositories\Statistics\SqliteRankingExport;
 
 class GceRankingUpdater
 {
@@ -29,24 +29,32 @@ class GceRankingUpdater
             "UPDATE
                 open_chat
             SET
-                week_id = 0,
-                day_id = 0"
+                statistics_ranking_day_id = 0,
+                statistics_ranking_day_diff_member = 0,
+                statistics_ranking_day_percent_increase = 0,
+                statistics_ranking_week_id = 0,
+                statistics_ranking_week_diff_member = 0,
+                statistics_ranking_week_percent_increase = 0"
         );
 
         GceVmSql::execute(
             "UPDATE
                 open_chat AS oc
-                JOIN statistics_ranking_day AS ranking ON oc.id = ranking.open_chat_id
+                JOIN statistics_ranking_day AS r ON oc.id = r.open_chat_id
             SET
-                oc.day_id = ranking.id"
+                oc.statistics_ranking_day_id = r.id,
+                oc.statistics_ranking_day_diff_member = r.diff_member,
+                oc.statistics_ranking_day_percent_increase = r.percent_increase"
         );
 
         GceVmSql::execute(
             "UPDATE
                 open_chat AS oc
-                JOIN statistics_ranking_week AS ranking ON oc.id = ranking.open_chat_id
+                JOIN statistics_ranking_week AS r ON oc.id = r.open_chat_id
             SET
-                oc.week_id = ranking.id"
+                oc.statistics_ranking_week_id = r.id,
+                oc.statistics_ranking_week_diff_member = r.diff_member,
+                oc.statistics_ranking_week_percent_increase = r.percent_increase"
         );
     }
 }

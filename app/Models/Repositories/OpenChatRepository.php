@@ -7,7 +7,7 @@ namespace App\Models\Repositories;
 use Shadow\DB;
 use App\Config\AppConfig;
 use App\Services\OpenChat\Dto\OpenChatDto;
-use App\Models\Repositories\StatisticsRepositoryInterface;
+use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 
 class OpenChatRepository implements OpenChatRepositoryInterface
 {
@@ -89,7 +89,7 @@ class OpenChatRepository implements OpenChatRepositoryInterface
 
     public function addOpenChatFromDto(OpenChatDto $dto): int
     {
-        $dto->regestered_open_chat_id = DB::executeAndGetLastInsertId(
+        $dto->registered_open_chat_id = DB::executeAndGetLastInsertId(
             "INSERT INTO
                 open_chat (
                     name,
@@ -126,7 +126,7 @@ class OpenChatRepository implements OpenChatRepositoryInterface
                 'img_url' => $dto->profileImageObsHash,
                 'member' => $dto->memberCount,
                 'emid' => $dto->emid,
-                'created_at' => $dto->regestered_created_at,
+                'created_at' => $dto->registered_created_at,
                 'next_update' => $dto->getNextUpdate(),
                 'api_created_at' => $dto->createdAt,
                 'category' => $dto->category,
@@ -138,7 +138,7 @@ class OpenChatRepository implements OpenChatRepositoryInterface
         $this->statisticsRepository->addNewOpenChatStatisticsFromDto($dto);
 
         static::$insertCount++;
-        return $dto->regestered_open_chat_id;
+        return $dto->registered_open_chat_id;
     }
 
     public function markAsRegistrationByUser(int $id): void
