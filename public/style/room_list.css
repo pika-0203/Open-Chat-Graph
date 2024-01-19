@@ -346,14 +346,6 @@ main hr {
   gap: 3px;
 }
 
-@media screen and (min-width: 512px) {
-  .openchat-item-lower-outer {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-  }
-}
-
 .openchat-item-lower {
   display: flex;
   color: #757575;

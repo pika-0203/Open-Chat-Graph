@@ -41,7 +41,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
             ];
         }
 
-        return $this->inserter->importWithKeys(SQLiteRankingPositionHour::connect(), $tableName, $keys, $data);
+        return $this->inserter->importWithKeys(SQLiteRankingPositionHour::connect(), $tableName, $keys, $data, 500);
     }
 
     public function insertRankingHourFromDtoArray(string $fileTime, array $openChatDtoArray): int
