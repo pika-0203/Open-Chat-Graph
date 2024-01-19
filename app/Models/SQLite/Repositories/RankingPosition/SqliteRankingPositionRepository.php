@@ -19,17 +19,17 @@ class SqliteRankingPositionRepository implements RankingPositionRepositoryInterf
 
     public function insertDailyRankingPosition(array $rankingHourArray): int
     {
-        return $this->inserter->import(SQLiteRankingPosition::connect(), 'ranking', $rankingHourArray);
+        return $this->inserter->import(SQLiteRankingPosition::connect(), 'ranking', $rankingHourArray, 500);
     }
 
     public function insertDailyRisingPosition(array $risingHourArray): int
     {
-        return $this->inserter->import(SQLiteRankingPosition::connect(), 'rising', $risingHourArray);
+        return $this->inserter->import(SQLiteRankingPosition::connect(), 'rising', $risingHourArray, 500);
     }
 
     public function insertTotalCount(array $totalCount): int
     {
-        return $this->inserter->import(SQLiteRankingPosition::connect(), 'total_count', $totalCount);
+        return $this->inserter->import(SQLiteRankingPosition::connect(), 'total_count', $totalCount, 500);
     }
 
     public function daleteDailyPosition(int $open_chat_id): void
