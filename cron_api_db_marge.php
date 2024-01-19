@@ -16,7 +16,7 @@ set_time_limit(3600 * 4);
  * @var SyncOpenChatState $syncOpenChatState
  */
 $syncOpenChatState = app(SyncOpenChatState::class);
-if ($state->isActive) {
+if ($syncOpenChatState->isActive) {
     AdminTool::sendLineNofity('SyncOpenChat: state is active');
     exit;
 }

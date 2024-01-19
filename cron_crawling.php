@@ -20,7 +20,7 @@ if (excludeTime()) {
  * @var SyncOpenChatState $syncOpenChatState
  */
 $syncOpenChatState = app(SyncOpenChatState::class);
-if ($state->isActive) {
+if ($syncOpenChatState->isActive) {
     AdminTool::sendLineNofity('SyncOpenChat: state is active');
     exit;
 }
