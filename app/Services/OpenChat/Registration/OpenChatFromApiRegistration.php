@@ -10,15 +10,10 @@ use App\Services\OpenChat\Dto\OpenChatDto;
 
 class OpenChatFromApiRegistration
 {
-    private OpenChatRepositoryInterface $openChatRepository;
-    private OpenChatImageStore $openChatImageStore;
-
     function __construct(
-        OpenChatRepositoryInterface $openChatRepository,
-        OpenChatImageStore $openChatImageStore
+        private OpenChatRepositoryInterface $openChatRepository,
+        private OpenChatImageStore $openChatImageStore
     ) {
-        $this->openChatRepository = $openChatRepository;
-        $this->openChatImageStore = $openChatImageStore;
     }
 
     function registerOpenChatFromApi(OpenChatDto $apiDto): bool

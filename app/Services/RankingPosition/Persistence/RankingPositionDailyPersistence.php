@@ -11,18 +11,11 @@ use DateTime;
 
 class RankingPositionDailyPersistence
 {
-    private RankingPositionHourRepositoryInterface $rankingPositionHourRepository;
-    private RankingPositionRepositoryInterface $rankingPositionRepository;
-    private OpenChatDataForUpdaterWithCacheRepository $openChatDataForUpdaterWithCacheRepository;
-
     function __construct(
-        RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
-        RankingPositionRepositoryInterface $rankingPositionRepository,
-        OpenChatDataForUpdaterWithCacheRepository $openChatDataForUpdaterWithCacheRepository,
+        private RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
+        private RankingPositionRepositoryInterface $rankingPositionRepository,
+        private OpenChatDataForUpdaterWithCacheRepository $openChatDataForUpdaterWithCacheRepository,
     ) {
-        $this->rankingPositionHourRepository = $rankingPositionHourRepository;
-        $this->rankingPositionRepository = $rankingPositionRepository;
-        $this->openChatDataForUpdaterWithCacheRepository = $openChatDataForUpdaterWithCacheRepository;
     }
 
     function persistHourToDaily(\DateTime $date = new DateTime('yesterday')): void

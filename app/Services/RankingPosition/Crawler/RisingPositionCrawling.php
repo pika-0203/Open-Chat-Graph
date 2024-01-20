@@ -16,21 +16,18 @@ use App\Services\RankingPosition\Store\RisingPositionStore;
 class RisingPositionCrawling
 {
     private const FETCH_OPEN_CHAT_API_RANKING_ALL_ARG = [100, 1]; // 全カテゴリ取得
-    private RisingPositionStore $risingPositionStore;
     private OpenChatApiRankingDownloader $openChatApiRisingDataDownloader;
-    private OpenChatApiDtoFactory $openChatApiDtoFactory;
-    private LogRepositoryInterface $logRepository;
 
     function __construct(
-        RisingPositionStore $risingPositionStore,
+        private RisingPositionStore $risingPositionStore,
+        private OpenChatApiDtoFactory $openChatApiDtoFactory,
+        private LogRepositoryInterface $logRepository,
         OpenChatApiRisingDownloaderProcess $openChatApiRankingDownloaderProcess,
-        OpenChatApiDtoFactory $openChatApiDtoFactory,
-        LogRepositoryInterface $logRepository
     ) {
-        $this->risingPositionStore = $risingPositionStore;
-        $this->openChatApiRisingDataDownloader = app(OpenChatApiRankingDownloader::class, compact('openChatApiRankingDownloaderProcess'));
-        $this->openChatApiDtoFactory = $openChatApiDtoFactory;
-        $this->logRepository = $logRepository;
+        $this->openChatApiRisingDataDownloader = app(
+            OpenChatApiRankingDownloader::class,
+            compact('openChatApiRankingDownloaderProcess')
+        );
     }
 
     function risingPositionCrawling(): void

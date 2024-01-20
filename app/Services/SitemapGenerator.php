@@ -16,11 +16,9 @@ class SitemapGenerator
     const SITEMAP_DIR = __DIR__ . '/../../public/sitemaps/';
     const INDEX_SITEMAP = __DIR__ . '/../../public/sitemap.xml';
 
-    private OpenChatListRepositoryInterface $ocRepo;
-
-    function __construct(OpenChatListRepositoryInterface $ocRepo)
-    {
-        $this->ocRepo = $ocRepo;
+    function __construct(
+        private OpenChatListRepositoryInterface $ocRepo
+    ) {
     }
 
     function generate()

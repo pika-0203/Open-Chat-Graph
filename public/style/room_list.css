@@ -489,8 +489,8 @@ main hr {
 .page-select label {
   margin: auto;
   position: relative;
-  padding-right: 1rem;
-  font-size: 13px;
+  padding-right: 2rem;
+  font-size: 13.5px;
 }
 
 .page-select label span::after {
@@ -797,7 +797,7 @@ main hr {
   }
 
   .page-select select {
-    font-size: 15px;
+    font-size: 1rem;
   }
 
   .openchat-list-title.ranking-page {

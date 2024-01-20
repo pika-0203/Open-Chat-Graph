@@ -10,19 +10,11 @@ use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 
 class RankingPositionHourUpdater
 {
-    private RisingPositionCrawling $risingPositionCrawling;
-    private RankingPositionHourPersistence $rankingPositionHourPersistence;
-    private RankingPositionHourUpdaterState $state;
-
     function __construct(
-        RisingPositionCrawling $risingPositionCrawling,
-        RankingPositionHourPersistence $rankingPositionHourPersistence,
-        RankingPositionHourUpdaterState $state
+        private RisingPositionCrawling $risingPositionCrawling,
+        private RankingPositionHourPersistence $rankingPositionHourPersistence,
+        private RankingPositionHourUpdaterState $state
     ) {
-        $this->risingPositionCrawling = $risingPositionCrawling;
-        $this->rankingPositionHourPersistence = $rankingPositionHourPersistence;
-        $this->state = $state;
-
         $this->state->isActive = true;
         $this->state->update();
     }

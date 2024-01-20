@@ -9,13 +9,9 @@ use App\Services\OpenChat\Dto\OpenChatUpdaterDto;
 
 class OpenChatUpdaterDtoFinalizer
 {
-    private OpenChatDataForUpdaterWithCacheRepositoryInterface $updateRepository;
-
     function __construct(
-        OpenChatDataForUpdaterWithCacheRepositoryInterface $updateRepository,
-
+        private OpenChatDataForUpdaterWithCacheRepositoryInterface $updateRepository
     ) {
-        $this->updateRepository = $updateRepository;
     }
 
     function finalizeUpdaterDtoGeneration(OpenChatUpdaterDto $updaterDto): OpenChatUpdaterDto

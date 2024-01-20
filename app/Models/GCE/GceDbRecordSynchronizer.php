@@ -11,13 +11,10 @@ use App\Models\Importer\SqlInsert;
 
 class GceDbRecordSynchronizer
 {
-    private SqlInsertWithBindValue $inserterWithBindValue;
-    private SqlInsert $inserter;
-
-    function __construct(SqlInsertWithBindValue $inserterWithBindValue, SqlInsert $inserter)
-    {
-        $this->inserterWithBindValue = $inserterWithBindValue;
-        $this->inserter = $inserter;
+    function __construct(
+        private SqlInsertWithBindValue $inserterWithBindValue,
+        private SqlInsert $inserter
+    ) {
     }
 
     function syncOpenChatById(int $id): bool

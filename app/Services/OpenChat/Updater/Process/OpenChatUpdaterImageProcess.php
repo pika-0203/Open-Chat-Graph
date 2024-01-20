@@ -11,15 +11,10 @@ use App\Services\OpenChat\Dto\ArchiveFlagsDto;
 
 class OpenChatUpdaterImageProcess
 {
-    private OpenChatImageStore $openChatImageStore;
-    private OpenChatImageDeleter $openChatImageDeleter;
-
     function __construct(
-        OpenChatImageStore $openChatImageStore,
-        OpenChatImageDeleter $openChatImageDeleter,
+        private OpenChatImageStore $openChatImageStore,
+        private OpenChatImageDeleter $openChatImageDeleter,
     ) {
-        $this->openChatImageStore = $openChatImageStore;
-        $this->openChatImageDeleter = $openChatImageDeleter;
     }
 
     function processImageBeforeUpdate(OpenChatUpdaterDto $updaterDto)
@@ -37,7 +32,7 @@ class OpenChatUpdaterImageProcess
     function processImageAfterUpdate(OpenChatUpdaterDto $updaterDto, ArchiveFlagsDto|false $archiveFlagsDto)
     {
         $isNoEmidUpdateImg = !$updaterDto->hasEmid && $archiveFlagsDto && $archiveFlagsDto->update_img;
-        
+
         if ($updaterDto->delete_flag || $isNoEmidUpdateImg) {
             $this->openChatImageDeleter->deleteImage($updaterDto->open_chat_id, $updaterDto->db_img_url);
         }

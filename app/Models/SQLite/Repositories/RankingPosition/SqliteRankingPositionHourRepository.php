@@ -11,11 +11,9 @@ use App\Services\OpenChat\Dto\OpenChatDto;
 
 class SqliteRankingPositionHourRepository implements RankingPositionHourRepositoryInterface
 {
-    private SQLiteInsertImporter $inserter;
-
-    function __construct(SQLiteInsertImporter $inserter)
-    {
-        $this->inserter = $inserter;
+    function __construct(
+        private SQLiteInsertImporter $inserter
+    ) {
     }
 
     private function insertFromDtoArray(string $tableName, string $fileTime, array $openChatDtoArray): int

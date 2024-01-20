@@ -15,20 +15,14 @@ use Shadow\DB;
 
 class OpenChatApiDbMergerProcess
 {
-    private OpenChatApiFromEmidDownloader $openChatApiOcDataFromEmidDownloader;
-    private OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatDataWithCache;
-    private OpenChatUpdaterInterface $openChatUpdater;
     private OpenChatFromApiRegistration $openChatFromApiRegistration;
 
     function __construct(
-        OpenChatApiFromEmidDownloader $openChatApiOcDataFromEmidDownloader,
-        OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatDataWithCache,
-        OpenChatUpdaterInterface $openChatUpdater,
+        private OpenChatApiFromEmidDownloader $openChatApiOcDataFromEmidDownloader,
+        private OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatDataWithCache,
+        private OpenChatUpdaterInterface $openChatUpdater,
         OpenChatRepositoryWithCacheForUpdater $openChatRepository,
     ) {
-        $this->openChatApiOcDataFromEmidDownloader = $openChatApiOcDataFromEmidDownloader;
-        $this->openChatDataWithCache = $openChatDataWithCache;
-        $this->openChatUpdater = $openChatUpdater;
         $this->openChatFromApiRegistration = app(OpenChatFromApiRegistration::class, compact('openChatRepository'));
     }
 
@@ -47,7 +41,7 @@ class OpenChatApiDbMergerProcess
         }
 
         // 再接続
-        if(!$updateFlag) {
+        if (!$updateFlag) {
             DB::$pdo = null;
         }
 

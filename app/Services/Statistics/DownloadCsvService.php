@@ -8,11 +8,9 @@ use App\Models\Repositories\Statistics\StatisticsPageRepositoryInterface;
 
 class DownloadCsvService
 {
-    private StatisticsPageRepositoryInterface $statisticsRepository;
-
-    function __construct(StatisticsPageRepositoryInterface $statisticsRepository)
-    {
-        $this->statisticsRepository = $statisticsRepository;
+    function __construct(
+        private StatisticsPageRepositoryInterface $statisticsRepository
+    ) {
     }
 
     function sendCsv(int $open_chat_id, string $name)

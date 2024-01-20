@@ -11,15 +11,10 @@ use App\Services\OpenChat\Dto\OpenChatDto;
 
 class OpenChatApiFromEmidDownloader implements OpenChatDtoFetcherInterface
 {
-    private CrawlerFactory $crawlerFactory;
-    private OpenChatApiFromEmidDtoFactory $openChatApiFromEmidDtoFactory;
-
     function __construct(
-        CrawlerFactory $crawlerFactory,
-        OpenChatApiFromEmidDtoFactory $openChatApiFromEmidDtoFactory
+        private CrawlerFactory $crawlerFactory,
+        private OpenChatApiFromEmidDtoFactory $openChatApiFromEmidDtoFactory
     ) {
-        $this->crawlerFactory = $crawlerFactory;
-        $this->openChatApiFromEmidDtoFactory = $openChatApiFromEmidDtoFactory;
     }
 
     /**

@@ -15,14 +15,10 @@ use Shadow\Kernel\Validator as Valid;
 class OclistPageController
 {
     protected const LIMIT = 40;
-    protected OpenChatStatsRankingApiRepository $repo;
-    protected OpenChatApiArgs $args;
 
-    function __construct(OpenChatStatsRankingApiRepository $repo, OpenChatApiArgs $args)
-    {
-        $this->repo = $repo;
-        $this->args = $args;
-
+    function __construct(
+        private OpenChatApiArgs $args
+    ) {
         $this->setHeaders();
         $this->validateInputs();
     }
@@ -57,19 +53,19 @@ class OclistPageController
                     return response(app(OpenChatStatsRankingApiRepositoryWithGce::class)->findDailyStatsRanking($this->args));
                 }
 
-                return response($this->repo->findDailyStatsRanking($this->args));
+                return response(app(OpenChatStatsRankingApiRepository::class)->findDailyStatsRanking($this->args));
             case 'weekly':
                 if ($this->args->keyword) {
                     return response(app(OpenChatStatsRankingApiRepositoryWithGce::class)->findWeeklyStatsRanking($this->args));
                 }
 
-                return response($this->repo->findWeeklyStatsRanking($this->args));
+                return response(app(OpenChatStatsRankingApiRepository::class)->findWeeklyStatsRanking($this->args));
             case 'all':
                 if ($this->args->keyword) {
                     return response(app(OpenChatStatsRankingApiRepositoryWithGce::class)->findStatsAll($this->args));
                 }
 
-                return response($this->repo->findStatsAll($this->args));
+                return response(app(OpenChatStatsRankingApiRepository::class)->findStatsAll($this->args));
         }
     }
 }

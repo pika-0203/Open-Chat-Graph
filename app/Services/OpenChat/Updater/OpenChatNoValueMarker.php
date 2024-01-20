@@ -9,15 +9,10 @@ use App\Services\OpenChat\Dto\OpenChatUpdaterDtoFactory;
 
 class OpenChatNoValueMarker
 {
-    private UpdateOpenChatRepositoryInterface $updateRepository;
-    private OpenChatUpdaterDtoFactory $openChatUpdaterDtoFactory;
-
     function __construct(
-        UpdateOpenChatRepositoryInterface $updateRepository,
-        OpenChatUpdaterDtoFactory $openChatUpdaterDtoFactory,
+        private UpdateOpenChatRepositoryInterface $updateRepository,
+        private OpenChatUpdaterDtoFactory $openChatUpdaterDtoFactory,
     ) {
-        $this->updateRepository = $updateRepository;
-        $this->openChatUpdaterDtoFactory = $openChatUpdaterDtoFactory;
     }
 
     function markAsNoAliveOpenChat(int $open_chat_id): void

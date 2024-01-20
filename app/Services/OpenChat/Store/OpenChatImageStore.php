@@ -10,15 +10,10 @@ use App\Config\OpenChatCrawlerConfig;
 
 class OpenChatImageStore
 {
-    private OpenChatImgDownloader $imgDownloader;
-    private LogRepositoryInterface $logRepository;
-
     function __construct(
-        OpenChatImgDownloader $imgDownloader,
-        LogRepositoryInterface $logRepository,
+        private OpenChatImgDownloader $imgDownloader,
+        private LogRepositoryInterface $logRepository,
     ) {
-        $this->imgDownloader = $imgDownloader;
-        $this->logRepository = $logRepository;
     }
 
     function downloadAndStoreOpenChatImage(string $newOpenChatImgIdentifier, int $open_chat_id): bool
@@ -30,7 +25,7 @@ class OpenChatImageStore
             // 同じ画像が存在する場合 (デフォルトのカバー画像)
             return true;
         }
-        
+
         mkdirIfNotExists($destPath);
 
         $previewDestPath = $destPath . OpenChatCrawlerConfig::SOTRE_IMG_PREVIEW_DEST_PATH;

@@ -11,27 +11,17 @@ use App\Models\Repositories\Log\LogRepositoryInterface;
 
 class OpenChatUpdaterFromApi implements OpenChatUpdaterWithFetchInterface
 {
-    private OpenChatUpdaterInterface $openChatUpdater;
     private OpenChatDtoFetcherInterface $openChatDtoFetcher;
-    private OpenChatUrlChecker $openChatUrlChecker;
-    private OpenChatNoValueMarker $openChatNoValueMarker;
-    private LogRepositoryInterface $logRepository;
-    private OpenChatUpdaterFromPage $openChatUpdaterFromPage;
 
     function __construct(
-        OpenChatUpdaterInterface $openChatUpdater,
+        private OpenChatUpdaterInterface $openChatUpdater,
+        private OpenChatUrlChecker $openChatUrlChecker,
+        private OpenChatNoValueMarker $openChatNoValueMarker,
+        private LogRepositoryInterface $logRepository,
+        private OpenChatUpdaterFromPage $openChatUpdaterFromPage,
         OpenChatApiFromEmidDownloader $openChatDtoFetcher,
-        OpenChatUrlChecker $openChatUrlChecker,
-        OpenChatNoValueMarker $openChatNoValueMarker,
-        LogRepositoryInterface $logRepository,
-        OpenChatUpdaterFromPage $openChatUpdaterFromPage,
     ) {
-        $this->openChatUpdater = $openChatUpdater;
         $this->openChatDtoFetcher = $openChatDtoFetcher;
-        $this->openChatUrlChecker = $openChatUrlChecker;
-        $this->openChatNoValueMarker = $openChatNoValueMarker;
-        $this->logRepository = $logRepository;
-        $this->openChatUpdaterFromPage = $openChatUpdaterFromPage;
     }
 
     /**

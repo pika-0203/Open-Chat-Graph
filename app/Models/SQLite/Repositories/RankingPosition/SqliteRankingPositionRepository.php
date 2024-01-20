@@ -10,11 +10,9 @@ use App\Models\SQLite\SQLiteRankingPosition;
 
 class SqliteRankingPositionRepository implements RankingPositionRepositoryInterface
 {
-    private SQLiteInsertImporter $inserter;
-
-    function __construct(SQLiteInsertImporter $inserter)
-    {
-        $this->inserter = $inserter;
+    function __construct(
+        private SQLiteInsertImporter $inserter
+    ) {
     }
 
     public function insertDailyRankingPosition(array $rankingHourArray): int

@@ -14,15 +14,11 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 class CrawlerFactory
 {
-    private CookieJar $cookieJar;
     private static float $completionTime = 0;
 
-    /**
-     * @param CookieJar $cookieJar CookieJarオブジェクト
-     */
-    public function __construct(CookieJar $cookieJar)
-    {
-        $this->cookieJar = $cookieJar;
+    public function __construct(
+        private CookieJar $cookieJar
+    ) {
     }
 
     /**

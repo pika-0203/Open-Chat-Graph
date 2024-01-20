@@ -10,11 +10,9 @@ use App\Services\Crawler\CrawlerFactory;
 
 class OpenChatUrlChecker
 {
-    private CrawlerFactory $crawlerFactory;
-
-    function __construct(CrawlerFactory $crawlerFactory)
-    {
-        $this->crawlerFactory = $crawlerFactory;
+    function __construct(
+        private CrawlerFactory $crawlerFactory
+    ) {
     }
 
     /**

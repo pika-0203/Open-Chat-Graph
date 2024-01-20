@@ -9,11 +9,9 @@ use App\Config\AppConfig;
 
 class OpenChatApiRankingDownloader
 {
-    private AbstractOpenChatApiRankingDownloaderProcess $openChatApiRankingDownloaderProcess;
-
-    function __construct(AbstractOpenChatApiRankingDownloaderProcess $openChatApiRankingDownloaderProcess)
-    {
-        $this->openChatApiRankingDownloaderProcess = $openChatApiRankingDownloaderProcess;
+    function __construct(
+        private AbstractOpenChatApiRankingDownloaderProcess $openChatApiRankingDownloaderProcess
+    ) {
     }
 
     /**
@@ -52,7 +50,7 @@ class OpenChatApiRankingDownloader
             }
 
             $resultCount += $this->fetchOpenChatApiRanking((string)$category, $callback);
-            if($callbackByCategory) {
+            if ($callbackByCategory) {
                 $callbackByCategory((string)$category);
             }
         }

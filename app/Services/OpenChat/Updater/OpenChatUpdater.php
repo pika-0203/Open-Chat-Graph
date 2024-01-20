@@ -14,24 +14,13 @@ use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 class OpenChatUpdater implements OpenChatUpdaterInterface
 {
-    private OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatRepository;
-    private OpenChatUpdaterDtoFactory $openChatUpdaterDtoFactory;
-    private OpenChatUpdaterDtoFinalizer $openChatUpdaterDtoFinalizer;
-    private OpenChatUpdaterProcess $openChatUpdaterProcess;
-    private LogRepositoryInterface $logRepository;
-
     function __construct(
-        OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatRepository,
-        OpenChatUpdaterDtoFactory $openChatUpdaterDtoFactory,
-        OpenChatUpdaterDtoFinalizer $openChatUpdaterDtoFinalizer,
-        OpenChatUpdaterProcess $openChatUpdaterProcess,
-        LogRepositoryInterface $logRepository,
+        private OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatRepository,
+        private OpenChatUpdaterDtoFactory $openChatUpdaterDtoFactory,
+        private OpenChatUpdaterDtoFinalizer $openChatUpdaterDtoFinalizer,
+        private OpenChatUpdaterProcess $openChatUpdaterProcess,
+        private LogRepositoryInterface $logRepository,
     ) {
-        $this->openChatRepository = $openChatRepository;
-        $this->openChatUpdaterDtoFactory = $openChatUpdaterDtoFactory;
-        $this->openChatUpdaterDtoFinalizer = $openChatUpdaterDtoFinalizer;
-        $this->openChatUpdaterProcess = $openChatUpdaterProcess;
-        $this->logRepository = $logRepository;
     }
 
     function updateOpenChat(int $open_chat_id, OpenChatDto $ocDto): void

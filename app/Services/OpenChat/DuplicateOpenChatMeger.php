@@ -9,15 +9,10 @@ use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 
 class DuplicateOpenChatMeger
 {
-    private UpdateOpenChatRepositoryInterface $updateOpenChatRepository;
-    private OpenChatImageDeleter $openChatImageDeleter;
-
     function __construct(
-        UpdateOpenChatRepositoryInterface $updateOpenChatRepository,
-        OpenChatImageDeleter $openChatImageDeleter
+        private UpdateOpenChatRepositoryInterface $updateOpenChatRepository,
+        private OpenChatImageDeleter $openChatImageDeleter
     ) {
-        $this->updateOpenChatRepository = $updateOpenChatRepository;
-        $this->openChatImageDeleter = $openChatImageDeleter;
     }
 
     function mergeDuplicateOpenChat(): array

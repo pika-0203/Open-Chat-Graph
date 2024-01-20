@@ -10,13 +10,11 @@ use App\Config\AppConfig;
 
 class OpenChatSubCategorySynchronizer
 {
-    private OpenChatApiSubCategoryDownloader $openChatApiSubCategoryDownloader;
     private array $fetchedSubcategories = [];
 
     function __construct(
-        OpenChatApiSubCategoryDownloader $openChatApiSubCategoryDownloader,
+        private OpenChatApiSubCategoryDownloader $openChatApiSubCategoryDownloader,
     ) {
-        $this->openChatApiSubCategoryDownloader = $openChatApiSubCategoryDownloader;
     }
 
     /**

@@ -14,11 +14,10 @@ abstract class AbstractOpenChatApiRankingDownloaderProcess
      * @var string $callableGenerateUrl `$callableGenerateUrl(string $category, string $ct)`
      */
     protected string $callableGenerateUrl;
-    protected CrawlerFactory $crawlerFactory;
 
-    function __construct(CrawlerFactory $crawlerFactory)
-    {
-        $this->crawlerFactory = $crawlerFactory;
+    function __construct(
+        private CrawlerFactory $crawlerFactory
+    ) {
     }
 
     /**
