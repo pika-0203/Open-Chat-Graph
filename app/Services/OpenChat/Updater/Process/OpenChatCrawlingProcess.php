@@ -11,15 +11,10 @@ use App\Services\Crawler\CrawlerFactory;
 
 class OpenChatCrawlingProcess
 {
-    private LogRepositoryInterface $logRepository;
-    private ErrorCounter $errorCounter;
-
     function __construct(
-        LogRepositoryInterface $logRepository,
-        ErrorCounter $errorCounter
+        private LogRepositoryInterface $logRepository,
+        private ErrorCounter $errorCounter
     ) {
-        $this->logRepository = $logRepository;
-        $this->errorCounter = $errorCounter;
     }
 
     function crawlingProcess(array $target, OpenChatUpdaterWithFetchInterface $openChatUpdaterWithFetch, ?int $intervalSecond = null): bool
@@ -35,7 +30,7 @@ class OpenChatCrawlingProcess
 
             if ($this->errorCounter->hasExceededMaxErrors()) {
                 $this->logRepository->logUpdateOpenChatError(0, 'crawlingProcess: 連続エラー回数が上限を超えました.');
-                
+
                 return false;
             }
 

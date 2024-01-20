@@ -11,18 +11,11 @@ use App\Models\Repositories\OpenChatListRepositoryInterface;
 
 class UpdateRankingService
 {
-    private StaticTopPageDataGenerator $staticTopPageDataGenerator;
-    private StatisticsRankingUpdaterRepositoryInterface $rankingUpdater;
-    private OpenChatListRepositoryInterface $openChatListRepository;
-
     function __construct(
-        StaticTopPageDataGenerator $staticTopPageDataGenerator,
-        StatisticsRankingUpdaterRepositoryInterface $rankingUpdater,
-        OpenChatListRepositoryInterface $openChatListRepository,
+        private StaticTopPageDataGenerator $staticTopPageDataGenerator,
+        private StatisticsRankingUpdaterRepositoryInterface $rankingUpdater,
+        private OpenChatListRepositoryInterface $openChatListRepository,
     ) {
-        $this->staticTopPageDataGenerator = $staticTopPageDataGenerator;
-        $this->rankingUpdater = $rankingUpdater;
-        $this->openChatListRepository = $openChatListRepository;
     }
 
     /**
@@ -48,7 +41,7 @@ class UpdateRankingService
                 'recordCount' => $this->openChatListRepository->getRecordCount(),
             ]
         );
-        
+
         safeFileRewrite(AppConfig::TOP_RANKING_INFO_FILE_PATH, $data);
 
         $this->staticTopPageDataGenerator->updateStaticTopPageData();

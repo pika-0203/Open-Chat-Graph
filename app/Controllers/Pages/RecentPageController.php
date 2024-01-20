@@ -11,13 +11,10 @@ use App\Views\Schema\PageBreadcrumbsListSchema;
 
 class RecentPageController
 {
-    private OpenChatStatisticsRecent $openChatStatsRecent;
-    private SelectElementPagination $pagination;
-
-    function __construct(OpenChatStatisticsRecent $openChatStatsRecent, SelectElementPagination $pagination)
-    {
-        $this->openChatStatsRecent = $openChatStatsRecent;
-        $this->pagination = $pagination;
+    function __construct(
+        private OpenChatStatisticsRecent $openChatStatsRecent,
+        private SelectElementPagination $pagination
+    ) {
     }
 
     function index(?int $pageNumber)

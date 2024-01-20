@@ -9,13 +9,10 @@ use App\Models\Repositories\OpenChatListRepositoryInterface;
 
 class MyOpenChatList
 {
-    private OpenChatListRepositoryInterface $openChatListRepository;
-    private CookieListService $cookieListService;
-
-    function __construct(OpenChatListRepositoryInterface $openChatListRepository, CookieListService $cookieListService)
-    {
-        $this->openChatListRepository = $openChatListRepository;
-        $this->cookieListService = $cookieListService;
+    function __construct(
+        private OpenChatListRepositoryInterface $openChatListRepository,
+        private CookieListService $cookieListService
+    ) {
     }
 
     function init(): bool

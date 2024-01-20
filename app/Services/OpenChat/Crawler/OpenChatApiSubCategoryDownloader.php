@@ -10,11 +10,9 @@ use App\Config\AppConfig;
 
 class OpenChatApiSubCategoryDownloader
 {
-    private CrawlerFactory $crawlerFactory;
-
-    function __construct(CrawlerFactory $crawlerFactory)
-    {
-        $this->crawlerFactory = $crawlerFactory;
+    function __construct(
+        private CrawlerFactory $crawlerFactory
+    ) {
     }
 
     /**

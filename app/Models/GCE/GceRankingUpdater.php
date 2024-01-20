@@ -9,11 +9,9 @@ use App\Models\SQLite\Repositories\Statistics\SqliteRankingExport;
 
 class GceRankingUpdater
 {
-    private SqliteRankingExport $sqliteRankingExport;
-
-    function __construct(SqliteRankingExport $sqliteRankingExport)
-    {
-        $this->sqliteRankingExport = $sqliteRankingExport;
+    function __construct(
+        private SqliteRankingExport $sqliteRankingExport
+    ) {
     }
 
     function updateRanking(): void

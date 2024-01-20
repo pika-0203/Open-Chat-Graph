@@ -11,12 +11,11 @@ use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 
 class OpenChatRepository implements OpenChatRepositoryInterface
 {
-    private StatisticsRepositoryInterface $statisticsRepository;
     private static int $insertCount = 0;
 
-    public function __construct(StatisticsRepositoryInterface $statisticsRepository)
-    {
-        $this->statisticsRepository = $statisticsRepository;
+    public function __construct(
+        private StatisticsRepositoryInterface $statisticsRepository
+    ) {
     }
 
     public static function getInsertCount(): int

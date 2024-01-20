@@ -15,21 +15,12 @@ use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 class OpenChatFromCrawlerRegistration
 {
-    private LogRepositoryInterface $logRepository;
-    private OpenChatRepositoryInterface $openChatRepository;
-    private OpenChatCrawler $crawler;
-    private OpenChatImageStore $openChatImageStore;
-
     function __construct(
-        OpenChatRepositoryInterface $openChatRepository,
-        LogRepositoryInterface $logRepository,
-        OpenChatCrawler $crawler,
-        OpenChatImageStore $openChatImageStore
+        private OpenChatRepositoryInterface $openChatRepository,
+        private LogRepositoryInterface $logRepository,
+        private OpenChatCrawler $crawler,
+        private OpenChatImageStore $openChatImageStore
     ) {
-        $this->openChatRepository = $openChatRepository;
-        $this->logRepository = $logRepository;
-        $this->crawler = $crawler;
-        $this->openChatImageStore = $openChatImageStore;
     }
 
     /**

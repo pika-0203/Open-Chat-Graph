@@ -12,11 +12,10 @@ class RankingPositionHourApiService
 {
     private const UPDATE_MINUTES = 50;
     private int $now;
-    private RankingPositionHourApiRepositoryInterface $rankingPositionHourApiRepository;
 
-    function __construct(RankingPositionHourApiRepositoryInterface $rankingPositionHourApiRepository)
-    {
-        $this->rankingPositionHourApiRepository = $rankingPositionHourApiRepository;
+    function __construct(
+        private RankingPositionHourApiRepositoryInterface $rankingPositionHourApiRepository
+    ) {
         $this->now = time();
     }
 

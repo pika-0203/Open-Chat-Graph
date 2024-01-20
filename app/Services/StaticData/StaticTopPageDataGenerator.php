@@ -9,12 +9,9 @@ use App\Config\AppConfig;
 
 class StaticTopPageDataGenerator
 {
-    private OpenChatListRepositoryInterface $openChatListRepository;
-
     function __construct(
-        OpenChatListRepositoryInterface $openChatListRepository,
+        private OpenChatListRepositoryInterface $openChatListRepository,
     ) {
-        $this->openChatListRepository = $openChatListRepository;
     }
 
     /**

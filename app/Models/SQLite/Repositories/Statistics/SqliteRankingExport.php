@@ -10,11 +10,9 @@ use Shadow\DBInterface;
 
 class SqliteRankingExport
 {
-    private SqlInsert $inserter;
-
-    function __construct(SqlInsert $inserter)
-    {
-        $this->inserter = $inserter;
+    function __construct(
+        private SqlInsert $inserter
+    ) {
     }
 
     function exportRankingDay(DBInterface $db): void

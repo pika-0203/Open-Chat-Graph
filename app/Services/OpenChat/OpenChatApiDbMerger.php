@@ -18,23 +18,18 @@ use Shadow\DB;
 class OpenChatApiDbMerger
 {
     private OpenChatApiRankingDownloader $openChatApiRankingDataDownloader;
-    private OpenChatApiDtoFactory $openChatApiDtoFactory;
-    private OpenChatApiDbMergerProcess $openChatApiDbMergerProcess;
-    private LogRepositoryInterface $logRepository;
-    private RankingPositionStore $rankingPositionStore;
 
     function __construct(
+        private OpenChatApiDtoFactory $openChatApiDtoFactory,
+        private OpenChatApiDbMergerProcess $openChatApiDbMergerProcess,
+        private LogRepositoryInterface $logRepository,
+        private RankingPositionStore $rankingPositionStore,
         OpenChatApiRankingDownloaderProcess $openChatApiRankingDownloaderProcess,
-        OpenChatApiDtoFactory $openChatApiDtoFactory,
-        OpenChatApiDbMergerProcess $openChatApiDbMergerProcess,
-        LogRepositoryInterface $logRepository,
-        RankingPositionStore $RankingPositionStore,
     ) {
-        $this->openChatApiRankingDataDownloader = app(OpenChatApiRankingDownloader::class, compact('openChatApiRankingDownloaderProcess'));
-        $this->openChatApiDtoFactory = $openChatApiDtoFactory;
-        $this->openChatApiDbMergerProcess = $openChatApiDbMergerProcess;
-        $this->logRepository = $logRepository;
-        $this->rankingPositionStore = $RankingPositionStore;
+        $this->openChatApiRankingDataDownloader = app(
+            OpenChatApiRankingDownloader::class,
+            compact('openChatApiRankingDownloaderProcess')
+        );
     }
 
     function countMaxExecuteNum(int $limit): int

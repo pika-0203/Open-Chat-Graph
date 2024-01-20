@@ -12,15 +12,10 @@ use App\Services\OpenChat\Dto\OpenChatDto;
 
 class OpenChatCrawler implements OpenChatDtoFetcherInterface
 {
-    private CrawlerFactory $crawlerFactory;
-    private OpenChatCrawlerDtoFactory $openChatCrawlerDtoFactory;
-
     function __construct(
-        CrawlerFactory $crawlerFactory,
-        OpenChatCrawlerDtoFactory $openChatCrawlerDtoFactory
+        private CrawlerFactory $crawlerFactory,
+        private OpenChatCrawlerDtoFactory $openChatCrawlerDtoFactory
     ) {
-        $this->crawlerFactory = $crawlerFactory;
-        $this->openChatCrawlerDtoFactory = $openChatCrawlerDtoFactory;
     }
 
     /**

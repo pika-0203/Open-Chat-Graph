@@ -12,11 +12,9 @@ class OpenChatStatisticsRecent
 {
     use TraitPaginationRecordsCalculator;
 
-    private OpenChatListRepositoryInterface $openChatListRepository;
-
-    public function __construct(OpenChatListRepositoryInterface $openChatListRepository,)
-    {
-        $this->openChatListRepository = $openChatListRepository;
+    public function __construct(
+        private OpenChatListRepositoryInterface $openChatListRepository
+    ) {
     }
 
     /**

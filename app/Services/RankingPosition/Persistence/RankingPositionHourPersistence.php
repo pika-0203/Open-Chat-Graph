@@ -11,18 +11,11 @@ use App\Services\RankingPosition\Store\RisingPositionStore;
 
 class RankingPositionHourPersistence
 {
-    private RankingPositionHourRepositoryInterface $rankingPositionHourRepository;
-    private RisingPositionStore $risingPositionStore;
-    private RankingPositionStore $rankingPositionStore;
-
     function __construct(
-        RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
-        RisingPositionStore $risingPositionStore,
-        RankingPositionStore $rankingPositionStore
+        private RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
+        private RisingPositionStore $risingPositionStore,
+        private RankingPositionStore $rankingPositionStore
     ) {
-        $this->rankingPositionHourRepository = $rankingPositionHourRepository;
-        $this->risingPositionStore = $risingPositionStore;
-        $this->rankingPositionStore = $rankingPositionStore;
     }
 
     function persistStorageFileToDb(): void

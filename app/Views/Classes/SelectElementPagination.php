@@ -18,7 +18,7 @@ class SelectElementPagination
             $startLabel = $labelArray[$start - 1] ?? '';
             $endLabel = $labelArray[$end - 1] ?? '';
 
-            return "<option value='{$url}' {$selected}>{$startLabel} ~ {$endLabel} ({$start} ~ {$end})</option>";
+            return "<option value='{$url}' {$selected}>{$endLabel} ~ {$startLabel} ({$end} ~ {$start})</option>";
         };
 
         // 選択されたページに対して"selected"属性を返す
@@ -44,10 +44,10 @@ class SelectElementPagination
         $labelEnd = $labelArray[$labelEndNum - 1] ?? '';
 
         // select要素のラベルを生成する
-        $_label = "{$labelStart} ~ {$labelEnd}<br>({$labelStartNum} ~ {$labelEndNum})";
+        $_label = "{$labelEnd} ~ {$labelStart}<br>({$labelEndNum} ~ {$labelStartNum})";
 
         // タイトル用の文字列
-        $title = "{$labelStartNum} ~ {$labelEndNum}";
+        $title = "{$labelEndNum} ~ {$labelStartNum}";
 
         return [$title, $_selectElement, $_label];
     }

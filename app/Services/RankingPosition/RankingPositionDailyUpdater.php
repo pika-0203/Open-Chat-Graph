@@ -10,19 +10,16 @@ use Shadow\DB;
 
 class RankingPositionDailyUpdater
 {
-    private RankingPositionDailyPersistence $rankingPositionDailyPersistence;
-
     function __construct(
-        RankingPositionDailyPersistence $rankingPositionDailyPersistence
+        private RankingPositionDailyPersistence $rankingPositionDailyPersistence
     ) {
-        $this->rankingPositionDailyPersistence = $rankingPositionDailyPersistence;
     }
 
     function updateYesterdayRankingPositionDailyDb()
     {
         DB::$pdo = null;
         OpenChatDataForUpdaterWithCacheRepository::clearCache();
-        
+
         $this->rankingPositionDailyPersistence->persistHourToDaily();
     }
 }

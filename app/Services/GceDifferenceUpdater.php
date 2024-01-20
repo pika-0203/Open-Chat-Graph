@@ -11,18 +11,11 @@ use App\Models\Repositories\RepositoryCache;
 
 class GceDifferenceUpdater
 {
-    private GceDbTableSynchronizer $tableSyncer;
-    private GceRankingUpdater $ranking;
-    private GceDbRecordSynchronizer $gceDbRecordSynchronizer;
-
     function __construct(
-        GceDbTableSynchronizer $tableSyncer,
-        GceRankingUpdater $ranking,
-        GceDbRecordSynchronizer $gceDbRecordSynchronizer,
+        private GceDbTableSynchronizer $tableSyncer,
+        private GceRankingUpdater $ranking,
+        private GceDbRecordSynchronizer $gceDbRecordSynchronizer,
     ) {
-        $this->ranking = $ranking;
-        $this->tableSyncer = $tableSyncer;
-        $this->gceDbRecordSynchronizer = $gceDbRecordSynchronizer;
     }
 
     function finalizeSyncLatest()

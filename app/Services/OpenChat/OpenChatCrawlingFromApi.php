@@ -13,17 +13,13 @@ use App\Services\OpenChat\Updater\OpenChatUpdaterFromApi;
 
 class OpenChatCrawlingFromApi
 {
-    private UpdateOpenChatRepositoryInterface $updateRepository;
-    private OpenChatCrawlingProcess $openChatCrawlingProcess;
     private OpenChatUpdaterWithFetchInterface $openChatUpdater;
 
     function __construct(
-        UpdateOpenChatRepositoryInterface $updateRepository,
-        OpenChatCrawlingProcess $openChatCrawlingProcess,
+        private UpdateOpenChatRepositoryInterface $updateRepository,
+        private OpenChatCrawlingProcess $openChatCrawlingProcess,
         OpenChatUpdaterFromApi $openChatUpdater,
     ) {
-        $this->updateRepository = $updateRepository;
-        $this->openChatCrawlingProcess = $openChatCrawlingProcess;
         $this->openChatUpdater = $openChatUpdater;
     }
 

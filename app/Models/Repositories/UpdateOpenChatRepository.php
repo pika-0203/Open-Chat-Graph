@@ -14,15 +14,10 @@ use App\Services\OpenChat\Dto\ArchiveFlagsDto;
 
 class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
 {
-    private StatisticsRepositoryInterface $statisticsRepository;
-    private RankingPositionRepositoryInterface $rankingPositionRepository;
-
     public function __construct(
-        StatisticsRepositoryInterface $statisticsRepository,
-        RankingPositionRepositoryInterface $rankingPositionRepository
+        private StatisticsRepositoryInterface $statisticsRepository,
+        private RankingPositionRepositoryInterface $rankingPositionRepository
     ) {
-        $this->statisticsRepository = $statisticsRepository;
-        $this->rankingPositionRepository = $rankingPositionRepository;
     }
 
     public function getOpenChatDataById(int $id): OpenChatRepositoryDto|false
