@@ -7,16 +7,13 @@ use App\Services\CronJson\SyncOpenChatState;
 use App\Services\OpenChat\OpenChatCrawlingFromApi;
 use App\Services\OpenChat\OpenChatCrawlingFromPage;
 use App\Services\Admin\AdminTool;
+use App\Services\CronJson\RankingPositionHourUpdaterState;
 use App\Services\OpenChat\SubCategory\OpenChatSubCategorySynchronizer;
 use App\Services\RankingPosition\RankingPositionHourUpdater;
 
 set_time_limit(3600 * 4);
 
-/**
- * @var SyncOpenChatState $syncOpenChatState
- */
-$syncOpenChatState = app(SyncOpenChatState::class);
-if ($syncOpenChatState->isActive) {
+if (app(SyncOpenChatState::class)->isActive) {
     AdminTool::sendLineNofity('SyncOpenChat: state is active');
     exit;
 }
@@ -24,7 +21,7 @@ if ($syncOpenChatState->isActive) {
 /**
  * @var SyncOpenChat $syncOpenChat
  */
-$syncOpenChat = app(SyncOpenChat::class, ['state' => $syncOpenChatState]);
+$syncOpenChat = app(SyncOpenChat::class);
 try {
     $syncOpenChat->migrate();
     $syncOpenChat->update(app(OpenChatCrawlingFromApi::class));
@@ -42,17 +39,21 @@ addCronLog($syncOpenChat->getMessage());
 unset($syncOpenChatState);
 unset($syncOpenChat);
 
-/**
- * @var RankingPositionHourUpdater $rankingPosition
- */
-$rankingPosition = app(RankingPositionHourUpdater::class);
-try {
-    $rankingPosition->crawlRisingAndUpdateRankingPositionHourDb();
-} catch (\Throwable $e) {
-    AdminTool::sendLineNofity('rankingPosition: ' . $e->__toString());
-}
+if (app(RankingPositionHourUpdaterState::class)->isActive) {
+    AdminTool::sendLineNofity('RankingPositionHourUpdater: state is active');
+} else {
+    /**
+     * @var RankingPositionHourUpdater $rankingPosition
+     */
+    $rankingPosition = app(RankingPositionHourUpdater::class);
+    try {
+        $rankingPosition->crawlRisingAndUpdateRankingPositionHourDb();
+    } catch (\Throwable $e) {
+        AdminTool::sendLineNofity('rankingPosition: ' . $e->__toString());
+    }
 
-unset($rankingPosition);
+    unset($rankingPosition);
+}
 
 /**
  * @var OpenChatSubCategorySynchronizer $subCategory

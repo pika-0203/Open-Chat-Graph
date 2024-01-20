@@ -63,7 +63,8 @@ class RecentPageController
             $pageNumber,
             $rankingList['totalRecords'],
             AppConfig::OPEN_CHAT_LIST_LIMIT,
-            $rankingList['maxPageNumber']
+            $rankingList['maxPageNumber'],
+            $rankingList['labelArray']
         );
 
         // メタタグ、構造化データ

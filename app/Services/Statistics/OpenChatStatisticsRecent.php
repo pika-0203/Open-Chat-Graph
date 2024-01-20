@@ -20,33 +20,39 @@ class OpenChatStatisticsRecent
     }
 
     /**
-     * @return array|false `['pageNumber' => int, 'maxPageNumber' => int, 'openChatList' => array, 'totalRecords' => int]`
+     * @return array|false `['pageNumber' => int, 'maxPageNumber' => int, 'openChatList' => array, 'totalRecords' => int, 'labelArray' => array]`
      */
     public function getAllOrderByRegistrationDate(int $pageNumber): array|false
     {
+        $labelArray = $this->openChatListRepository->findAllOrderByIdAscCreatedAtColumn();
+
         return $this->get(
             $pageNumber,
-            $this->openChatListRepository->getRecordCount(),
-            $this->openChatListRepository->findAllOrderByIdDesc(...)
+            count($labelArray),
+            $this->openChatListRepository->findAllOrderByIdDesc(...),
+            $labelArray
         );
     }
 
     /**
-     * @return array|false `['pageNumber' => int, 'maxPageNumber' => int, 'openChatList' => array, 'totalRecords' => int]`
+     * @return array|false `['pageNumber' => int, 'maxPageNumber' => int, 'openChatList' => array, 'totalRecords' => int, 'labelArray' => array]`
      */
     public function getRecentChanges(int $pageNumber): array|false
     {
+        $labelArray = $this->openChatListRepository->findRecentArchiveAscArchivedAtColumn();
+
         return $this->get(
             $pageNumber,
-            $this->openChatListRepository->getRecentArchiveRecordCount(),
-            $this->openChatListRepository->findRecentArchive(...)
+            count($labelArray),
+            $this->openChatListRepository->findRecentArchive(...),
+            $labelArray
         );
     }
 
     /**
-     * @return array|false `['pageNumber' => int, 'maxPageNumber' => int, 'openChatList' => array, 'totalRecords' => int]`
+     * @return array|false `['pageNumber' => int, 'maxPageNumber' => int, 'openChatList' => array, 'totalRecords' => int, 'labelArray' => array]`
      */
-    private function get(int $pageNumber, int $totalRecords, \Closure $repository): array|false
+    private function get(int $pageNumber, int $totalRecords, \Closure $repository, array $labelArray = []): array|false
     {
         $limit = AppConfig::OPEN_CHAT_LIST_LIMIT;
 
@@ -58,14 +64,17 @@ class OpenChatStatisticsRecent
             return false;
         }
 
-        // ランキングを取得する
-        $openChatList = $repository($this->calcOffset($pageNumber, $limit), $limit * $pageNumber);
+        $repoArgs = [$this->calcOffset($pageNumber, $limit), $limit * $pageNumber];
+
+        // リストを取得する
+        $openChatList = $repository(...$repoArgs);
 
         return compact(
             'pageNumber',
             'maxPageNumber',
             'openChatList',
-            'totalRecords'
+            'totalRecords',
+            'labelArray',
         );
     }
 }

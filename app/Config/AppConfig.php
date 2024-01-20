@@ -17,7 +17,7 @@ class AppConfig
     const OPENCHAT_IMG_PREVIEW_PATH = '/preview/';
 
     const OPEN_CHAT_LIST_LIMIT = 100;
-    const MY_LIST_LIMIT = 20;
+    const MY_LIST_LIMIT = 50;
 
     const CRON_EXECUTE_COUNT = 500;
 

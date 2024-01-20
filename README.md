@@ -16,7 +16,7 @@ https://openchat-review.me
   - オープンチャット公式サイトの取得API  
   `https://openchat.line.me/api/category/${category}?sort=RANKING&limit=40&ct=${ct}`
   - ランキングデータの取得処理  
-  https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiRankingDownloaderProcess.php
+  https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/AbstractOpenChatApiRankingDownloaderProcess.php    
   - サブカテゴリデータ(カテゴリ内のキーワード)の取得処理  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiSubCategoryDownloader.php
 

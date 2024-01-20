@@ -11,19 +11,24 @@ class SelectElementPagination
      * 
      * @return array `[$title, $_selectElement, $_label]`
      */
-    function geneSelectElementPagerAsc(string $pagePath, string $queryString, int $pageNumber, int $totalRecords, int $itemsPerPage, int $maxPage): array
+    function geneSelectElementPagerAsc(string $pagePath, string $queryString, int $pageNumber, int $totalRecords, int $itemsPerPage, int $maxPage, array $labelArray = []): array
     {
         // ページ番号の表示に必要な要素を取得する
-        $getElement = fn ($url, $selected, $start, $end, $i) => "<option value='{$url}' {$selected}>{$i}ページ ({$start} - {$end})</option>";
+        $getElement = function ($url, $selected, $start, $end, $i) use ($labelArray) {
+            $startLabel = $labelArray[$start - 1] ?? '';
+            $endLabel = $labelArray[$end - 1] ?? '';
+
+            return "<option value='{$url}' {$selected}>{$startLabel} ~ {$endLabel} ({$start} ~ {$end})</option>";
+        };
 
         // 選択されたページに対して"selected"属性を返す
         $selected = fn ($i) => ($i === $pageNumber) ? "selected='selected'" : '';
 
         // ページ番号に応じて、そのページの最初のインデックスを計算する
-        $startNum = fn ($i) => ($i === 1) ? 1 : ($i - 1) * $itemsPerPage + 1;
+        $startNum = fn ($i) => ($i === 1) ? $totalRecords : $totalRecords - (($i - 1) * $itemsPerPage);
 
         // ページ番号に応じて、そのページの最後のインデックスを計算する
-        $endNum = fn ($i) => ($i === $totalRecords) ? $totalRecords : $i * $itemsPerPage;
+        $endNum = fn ($i) => ($i === $maxPage) ? 1 : $totalRecords - ($i * $itemsPerPage) + 1;
 
         // 各ページ番号の要素を生成する
         $_selectElement = '';
@@ -35,11 +40,14 @@ class SelectElementPagination
         $labelStartNum = $startNum($pageNumber);
         $labelEndNum = $endNum($pageNumber);
 
+        $labelStart = $labelArray[$labelStartNum - 1] ?? '';
+        $labelEnd = $labelArray[$labelEndNum - 1] ?? '';
+
         // select要素のラベルを生成する
-        $_label = "{$pageNumber}ページ ({$labelStartNum} - {$labelEndNum})";
+        $_label = "{$labelStart} ~ {$labelEnd}<br>({$labelStartNum} ~ {$labelEndNum})";
 
         // タイトル用の文字列
-        $title = "{$labelStartNum}〜{$labelEndNum}位";
+        $title = "{$labelStartNum} ~ {$labelEndNum}";
 
         return [$title, $_selectElement, $_label];
     }

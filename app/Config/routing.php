@@ -20,15 +20,19 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
 Route::path('member')
     ->match(cache(...));
 
-Route::path('recent');
+Route::path('recent')
+    ->match(cache(...));
 
-Route::path('recent/changes');
+Route::path('recent/changes')
+    ->match(cache(...));
 
 Route::path('recent/{pageNumber}')
-    ->matchNum('pageNumber', min: 1);
+    ->matchNum('pageNumber', min: 1)
+    ->match(cache(...));
 
 Route::path('recent/changes/{pageNumber}')
-    ->matchNum('pageNumber', min: 1);
+    ->matchNum('pageNumber', min: 1)
+    ->match(cache(...));
 
 Route::path('search')
     ->matchStr('q', maxLen: 40, emptyAble: true)

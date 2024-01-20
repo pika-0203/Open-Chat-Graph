@@ -24,6 +24,7 @@ class ConstructorInjectionMapper
 
         \App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface::class => \App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionHourRepository::class,
         \App\Models\Repositories\RankingPosition\RankingPositionRepositoryInterface::class => \App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionRepository::class,
+        \App\Models\Repositories\RankingPosition\RankingPositionHourApiRepositoryInterface::class => \App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionHourApiRepository::class,
         
         \App\Models\Repositories\OpenChatListRepositoryInterface::class => \App\Models\Repositories\OpenChatListRepository::class,
         \App\Models\Repositories\OpenChatPageRepositoryInterface::class => \App\Models\Repositories\OpenChatPageRepository::class,

@@ -6,7 +6,6 @@ namespace App\Models\SQLite\Repositories\RankingPosition;
 
 use App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface;
 use App\Models\SQLite\SQLiteInsertImporter;
-use App\Models\SQLite\SQLiteRankingPosition;
 use App\Models\SQLite\SQLiteRankingPositionHour;
 use App\Services\OpenChat\Dto\OpenChatDto;
 
