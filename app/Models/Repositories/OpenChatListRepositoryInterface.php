@@ -19,11 +19,6 @@ interface OpenChatListRepositoryInterface
     public function getRecordCount(): int;
 
     /**
-     * 最近更新のあったレコード数を取得する
-     */
-    public function getRecentArchiveRecordCount(): int;
-
-    /**
      * 日次ランキングのレコード数を取得する
      */
     public function getDailyRankingRecordCount(): int;
@@ -43,6 +38,8 @@ interface OpenChatListRepositoryInterface
         int $endId,
     ): array;
 
+    public function findAllOrderByIdAscCreatedAtColumn(): array;
+
     /**
      * 更新のあったオープンチャットを取得する
      * 
@@ -52,6 +49,8 @@ interface OpenChatListRepositoryInterface
         int $startId,
         int $endId,
     ): array;
+
+    public function findRecentArchiveAscArchivedAtColumn(): array;
 
     /**
      * @return array `[['id' => int, 'name' => string, 'url' => string, 'description' => string, 'img_url' => string, 'member' => int, 'diff_member' => int, 'percent_increase' => float, 'ranking_id' => int]]`

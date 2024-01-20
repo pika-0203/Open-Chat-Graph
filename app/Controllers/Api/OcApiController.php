@@ -8,13 +8,11 @@ use App\Config\AppConfig;
 use App\Services\OpenChat\Registration\OpenChatFromCrawlerRegistration;
 use App\Models\GCE\GceDbRecordSynchronizer;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
-use App\Services\RankingPosition\OpenChatRankingPositionRawFileSearch;
+use App\Services\CronJson\RankingPositionHourUpdaterState;
+use App\Services\RankingPosition\RankingPositionHourApiService;
 
 class OcApiController
 {
-    const CRON_START_MINUTES = 30;
-    const RANKING_POSITION_TRIGER_MINUTES = 50;
-
     /**
      * {
      *  id: number,
@@ -58,11 +56,13 @@ class OcApiController
      *  ranking_total_count: number | undifined;          // ランキング未掲載・更新中の場合 undifined
      *  ranking_all_position: number | false | undifined; // ランキング未掲載・更新中の場合 undifined
      *  ranking_all_total_count: number | undifined;      // ランキング未掲載・更新中の場合 undifined
+     *  member: number | false | undifined;               // ランキング未掲載・更新中の場合 undifined
      * }
      */
     function officialRankingPosition(
         OpenChatPageRepositoryInterface $ocRepo,
-        OpenChatRankingPositionRawFileSearch $rankingPosition,
+        RankingPositionHourApiService $service,
+        RankingPositionHourUpdaterState $state,
         int $open_chat_id
     ) {
         $oc = $ocRepo->getOpenChatById($open_chat_id);
@@ -70,52 +70,45 @@ class OcApiController
             return false;
         }
 
-        $emid = $oc['emid'];
-        
-        $name = $oc['name'];
-        
+        [
+            'emid' => $emid,
+            'name' => $name,
+            'category' => $categoryIndex,
+        ] = $oc;
+
+        $next_update = $service->getNextUpdate()->format(\DateTime::ATOM);
+
         if (!$emid) {
             // ランキング未掲載でカテゴリがない場合
-            return response(compact('name') + [
-                'next_update' => $rankingPosition->getTentativeNextUpdate(self::RANKING_POSITION_TRIGER_MINUTES)
-            ]);
-        }
-        
-        $categoryIndex = $oc['category'];
-        $category = AppConfig::OPEN_CHAT_CATEGORY_KEYS[$categoryIndex];
-
-        $rankingData = $rankingPosition->getLatestRankingRawCache($categoryIndex, self::RANKING_POSITION_TRIGER_MINUTES);
-        if (is_string($rankingData)) {
-            // ランキング更新中・取得データなしの場合
-            return response(compact('name', 'category') + [
-                'next_update' => $rankingData
-            ]);
+            return response(compact('name', 'next_update'));
         }
 
-        [
-            'rising' => [$rising_position, $rising_total_count],
-            'risingAll' => [$rising_all_position, $rising_all_total_count],
-            'ranking' => [$ranking_position, $ranking_total_count],
-            'rankingAll' => [$ranking_all_position, $ranking_all_total_count]
-        ] = $rankingPosition->searchPositionFromEmid($rankingData['rankingCaches'], $emid);
+        $categoryName = AppConfig::OPEN_CHAT_CATEGORY_KEYS[$categoryIndex];
 
-        $updated_at = $rankingData['updatedAt'];
-        $next_update = $rankingData['nextUpdate'];
+        $dto = $service->getLatestRanking($emid, $categoryIndex);
+        if (!$dto || $state->isActive) {
+            // ランキング未更新・更新中の場合
+            $next_update = $service->getTentativeNextUpdate()->format(\DateTime::ATOM);
+            return response(compact('name', 'category', 'next_update'));
+        }
 
-        return response(compact(
-            'name',
-            'next_update',
-            'category',
-            'updated_at',
-            'rising_position',
-            'rising_total_count',
-            'rising_all_position',
-            'rising_all_total_count',
-            'ranking_position',
-            'ranking_total_count',
-            'ranking_all_position',
-            'ranking_all_total_count'
-        ));
+        $updated_at = $service->getCurrentTime()->format(\DateTime::ATOM);
+
+        return response([
+            'name' => $name,
+            'next_update' => $next_update,
+            'category' => $categoryName,
+            'updated_at' => $updated_at,
+            'rising_position' => $dto->rising_position,
+            'rising_total_count' => $dto->rising_total_count,
+            'rising_all_position' => $dto->rising_all_position,
+            'rising_all_total_count' => $dto->rising_all_total_count,
+            'member' => $dto->member,
+            'ranking_position' => $dto->ranking_position,
+            'ranking_total_count' => $dto->ranking_total_count,
+            'ranking_all_position' => $dto->ranking_all_position,
+            'ranking_all_total_count' => $dto->ranking_all_total_count
+        ]);
     }
 
     function post(OpenChatFromCrawlerRegistration $openChat, GceDbRecordSynchronizer $gce, string $url)

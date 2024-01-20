@@ -5,7 +5,7 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use App\Models\ApiRepositories\OpenChatListApiRepository;
 
-class OpenChatListApiRepositoryTest extends TestCase
+class SqliteRankingPositionHourApiRepositoryTest extends TestCase
 {
     public function test()
     {

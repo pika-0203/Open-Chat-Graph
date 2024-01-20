@@ -30,29 +30,10 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
         );
     }
 
-    public function getRecordCount(): int
+    public function getRecordCount(bool $isAlive = true): int
     {
         return (int)DB::execute(
-            'SELECT COUNT(id) FROM open_chat WHERE is_alive = 1'
-        )->fetchColumn();
-    }
-
-    public function getRecentArchiveRecordCount(): int
-    {
-        return (int)DB::execute(
-            'SELECT
-                COUNT(oc.id)
-            FROM
-                open_chat AS oc
-                JOIN (
-                    SELECT
-                        id,
-                        MAX(archive_id) AS archive_id
-                    FROM
-                        open_chat_archive
-                    GROUP BY
-                        id
-                ) AS archive ON oc.id = archive.id'
+            'SELECT COUNT(*) FROM open_chat ' . ($isAlive ? 'WHERE is_alive = 1' : '')
         )->fetchColumn();
     }
 
@@ -86,8 +67,6 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 oc.created_at AS datetime
             FROM
                 open_chat AS oc
-            WHERE
-                is_alive = 1
             ORDER BY
                 oc.id DESC
             LIMIT
@@ -97,45 +76,70 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
         return DB::fetchAll($query, compact('startId', 'limit'));
     }
 
+    public function findAllOrderByIdAscCreatedAtColumn(): array
+    {
+        $date = date('Y-m-d');
+
+        $query =
+            "SELECT
+                CASE
+                    WHEN YEAR(:date) = YEAR(`created_at`)
+                    THEN DATE_FORMAT(`created_at`, '%m/%d %H時')
+                    ELSE DATE_FORMAT(`created_at`, '%Y/%m/%d %H時')
+                END AS `created_at`
+            FROM
+                open_chat
+            ORDER BY
+                id ASC";
+
+        return DB::fetchAll($query, compact('date'), args: [\PDO::FETCH_COLUMN]);
+    }
+
     public function findRecentArchive(
         int $startId,
         int $endId,
     ): array {
         $query =
             "SELECT
-                oc.id,
-                oc.name,
-                oc.url,
-                oc.img_url,
-                oc.description,
-                oc.member,
-                oc.emblem,
-                oc.is_alive,
-                oc.category,
-                archive.archived_at AS date,
-                archive.update_img,
-                archive.update_description,
-                archive.update_name
+                id,
+                name,
+                img_url,
+                description,
+                member,
+                emblem,
+                category,
+                archived_at AS date,
+                update_img,
+                update_description,
+                update_name
             FROM
-                open_chat AS oc
-                JOIN (
-                    SELECT
-                        id,
-                        MAX(archive_id) AS archive_id,
-                        MAX(group_id) AS group_id
-                    FROM
-                        open_chat_archive
-                    GROUP BY
-                        id
-                ) AS archive2 ON oc.id = archive2.id
-                JOIN open_chat_archive AS archive ON archive2.archive_id = archive.archive_id
+                open_chat_archive
             ORDER BY
-                DATE(archive.archived_at) DESC, archive2.group_id DESC
+                 DATE(archived_at) DESC, group_id DESC
             LIMIT
                 :startId, :limit";
 
         $limit = $endId - $startId;
         return DB::fetchAll($query, compact('startId', 'limit'));
+    }
+
+    public function findRecentArchiveAscArchivedAtColumn(): array
+    {
+        $date = date('Y-m-d');
+
+        $query =
+            "SELECT
+                CASE
+                    WHEN YEAR(:date) = YEAR(archived_at)
+                    THEN DATE_FORMAT(archived_at, '%m/%d')
+                    ELSE DATE_FORMAT(archived_at, '%Y/%m/%d')
+                END AS archived_at
+            FROM
+                open_chat_archive
+            ORDER BY
+                DATE(archived_at) ASC, group_id ASC";
+
+        return DB::fetchAll($query, compact('date'), args: [\PDO::FETCH_COLUMN]);
     }
 
     public function findArchives(int $id): array
