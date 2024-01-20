@@ -7,8 +7,10 @@ namespace App\Controllers\Api;
 use App\Config\AppConfig;
 use App\Services\OpenChat\Registration\OpenChatFromCrawlerRegistration;
 use App\Models\GCE\GceDbRecordSynchronizer;
+use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\CronJson\RankingPositionHourUpdaterState;
+use App\Services\OpenChat\Crawler\OpenChatCrawler;
 use App\Services\RankingPosition\RankingPositionHourApiService;
 
 class OcApiController
@@ -63,6 +65,8 @@ class OcApiController
         OpenChatPageRepositoryInterface $ocRepo,
         RankingPositionHourApiService $service,
         RankingPositionHourUpdaterState $state,
+        OpenChatCrawler $crawler,
+        LogRepositoryInterface $logRepo,
         int $open_chat_id
     ) {
         $oc = $ocRepo->getOpenChatById($open_chat_id);
@@ -90,6 +94,21 @@ class OcApiController
             // ランキング未更新・更新中の場合
             $next_update = $service->getTentativeNextUpdate()->format(\DateTime::ATOM);
             return response(compact('name', 'category', 'next_update'));
+        }
+
+        if (!$dto->member) {
+            try {
+                $ocDto = $crawler->fetchOpenChatDto($oc['url']);
+            } catch (\Throwable $e) {
+                $logRepo->logUpdateOpenChatError($open_chat_id, $e->__toString());
+                return response(compact('name', 'category', 'next_update'));
+            }
+
+            if (!$ocDto) {
+                return false;
+            }
+            
+            $dto->member = $ocDto->memberCount;
         }
 
         $updated_at = $service->getCurrentTime()->format(\DateTime::ATOM);
