@@ -15,12 +15,12 @@ class SqliteRankingPositionHourApiRepository implements RankingPositionHourApiRe
         SQLiteRankingPositionHour::connect('?mode=ro&nolock=1');
         $dto = new RankingPositionHourApiDto;
 
-        $risingTotal = $this->getTotalCount('rising', $category, $time);
+        $risingTotal = $category === 0 ? 0 : $this->getTotalCount('rising', $category, $time);
         $risingAllTotal = $this->getTotalCount('rising', 0, $time);
-        $rankingTotal = $this->getTotalCount('ranking', $category, $time);
+        $rankingTotal = $category === 0 ? 0 : $this->getTotalCount('ranking', $category, $time);
         $rankingAllTotal = $this->getTotalCount('ranking', 0, $time);
 
-        if (!$risingTotal || !$risingAllTotal || !$rankingTotal || !$rankingAllTotal) {
+        if ($risingTotal === false || !$risingAllTotal || $rankingTotal === false || !$rankingAllTotal) {
             return false;
         }
 
@@ -29,8 +29,9 @@ class SqliteRankingPositionHourApiRepository implements RankingPositionHourApiRe
         $dto->ranking_total_count = $rankingTotal;
         $dto->ranking_all_total_count = $rankingAllTotal;
 
-        $dto->member = $this->getMember($emid, $time);
+        $dto->member = $category === 0 ? false : $this->getMember($emid, $time);
         if (!$dto->member) {
+            SQLiteRankingPositionHour::$pdo = null;
             return $dto;
         }
 
@@ -47,7 +48,7 @@ class SqliteRankingPositionHourApiRepository implements RankingPositionHourApiRe
     {
         $timeString = $time->format('Y-m-d H:i:s');
 
-        return SQLiteRankingPositionHour::fetchColumn(
+        $result = SQLiteRankingPositionHour::fetchColumn(
             "SELECT
                 count(*)
             FROM
@@ -56,6 +57,8 @@ class SqliteRankingPositionHourApiRepository implements RankingPositionHourApiRe
                 time = '{$timeString}'
                 AND category = {$category}"
         );
+
+        return $result ? $result : false;
     }
 
     private function getMember(string $emid, \DateTime $time): int|false

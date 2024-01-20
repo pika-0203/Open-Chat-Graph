@@ -80,38 +80,34 @@ class OcApiController
             'category' => $categoryIndex,
         ] = $oc;
 
-        $next_update = $service->getNextUpdate()->format(\DateTime::ATOM);
+        $categoryIndex = $categoryIndex ? $categoryIndex : 0;
+        $categoryName = $categoryIndex ? AppConfig::OPEN_CHAT_CATEGORY_KEYS[$categoryIndex] : 'ランキング未掲載';
 
-        if (!$emid) {
-            // ランキング未掲載でカテゴリがない場合
-            return response(compact('name', 'next_update'));
-        }
-
-        $categoryName = AppConfig::OPEN_CHAT_CATEGORY_KEYS[$categoryIndex];
-
-        $dto = $service->getLatestRanking($emid, $categoryIndex);
+        $dto = $service->getLatestRanking((string)$emid, $categoryIndex);
         if (!$dto || $state->isActive) {
             // ランキング未更新・更新中の場合
             $next_update = $service->getTentativeNextUpdate()->format(\DateTime::ATOM);
-            return response(compact('name', 'category', 'next_update'));
+            return response(compact('name', 'categoryName', 'next_update'));
         }
+
+        $next_update = $service->getNextUpdate()->format(\DateTime::ATOM);
+        $updated_at = $service->getCurrentTime()->format(\DateTime::ATOM);
 
         if (!$dto->member) {
             try {
                 $ocDto = $crawler->fetchOpenChatDto($oc['url']);
             } catch (\Throwable $e) {
                 $logRepo->logUpdateOpenChatError($open_chat_id, $e->__toString());
-                return response(compact('name', 'category', 'next_update'));
+                return response(compact('name', 'categoryName', 'next_update'));
             }
 
             if (!$ocDto) {
                 return false;
             }
-            
+
+            $updated_at = (new \DateTime())->format(\DateTime::ATOM);
             $dto->member = $ocDto->memberCount;
         }
-
-        $updated_at = $service->getCurrentTime()->format(\DateTime::ATOM);
 
         return response([
             'name' => $name,
