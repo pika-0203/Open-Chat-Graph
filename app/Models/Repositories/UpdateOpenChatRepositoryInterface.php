@@ -28,11 +28,6 @@ interface UpdateOpenChatRepositoryInterface
     public function getUpdateFromApiTargetOpenChatId(?int $limit = null): array;
 
     /**
-     * 過去一週間でメンバー数に変化があったかを調べる
-     */
-    public function getMemberChangeWithinLastWeek(int $open_chat_id): bool;
-
-    /**
      * アーカイブにコピーする
      */
     public function copyToOpenChatArchive(ArchiveFlagsDto $archiveFlagsDto): bool;

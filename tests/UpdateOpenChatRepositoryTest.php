@@ -10,17 +10,6 @@ use App\Services\OpenChat\Dto\OpenChatUpdaterDto;
 
 class UpdateOpenChatRepositoryTest extends TestCase
 {
-    public function testgetMemberChangeWithinLastWeek(): void
-    {
-        /**
-         * @var UpdateOpenChatRepositoryInterface $Service
-         */
-        $Service = app()->make(UpdateOpenChatRepositoryInterface::class);
-        $result = $Service->getMemberChangeWithinLastWeek(1);
-        var_dump($result);
-        $this->assertIsBool($result);
-    }
-
     public function testgetOpenChatDataById(): void
     {
         /**
@@ -34,9 +23,8 @@ class UpdateOpenChatRepositoryTest extends TestCase
 
     public function testupdateOpenChat()
     {
-        $dto = new OpenChatUpdaterDto;
+        $dto = new OpenChatUpdaterDto();
         $dto->category = 6;
-        $dto->noteCount = 123;
         $dto->name = 'オプチャ ライブトークの部屋';
 
         /**
