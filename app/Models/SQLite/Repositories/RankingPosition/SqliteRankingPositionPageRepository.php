@@ -59,8 +59,8 @@ class SqliteRankingPositionPageRepository implements RankingPositionPageReposito
     {
         $query =
             "SELECT
-                t1.time,
-                t1.position,
+                t1.time AS time,
+                t1.position AS position,
                 t2.total_count_{$tableName} AS total_count
             FROM
                 (

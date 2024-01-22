@@ -78,7 +78,7 @@ class RankingPositionChartArrayService
         $interval = $firstTime->diff(new \DateTime)->days;
         $dateArray = [];
 
-        for ($i = 0; $i <= $interval; $i++) {
+        for ($i = 0; $i < $interval; $i++) {
             $dateArray[] = $currentTime->format('Y-m-d');
             $currentTime->modify('+1 day');
         }

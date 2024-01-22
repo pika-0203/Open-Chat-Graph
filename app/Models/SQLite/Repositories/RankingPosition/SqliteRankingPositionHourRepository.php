@@ -89,10 +89,10 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
 
         $query =
             "SELECT
-                ra.category,
+                ra.category AS category,
                 ifnull(ri.count, 0) AS total_count_rising,
                 ra.count AS total_count_ranking,
-                ra.time
+                ra.time AS time
             FROM
                 (
                     SELECT
