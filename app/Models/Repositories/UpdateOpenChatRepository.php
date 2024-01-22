@@ -165,11 +165,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         return DB::fetchAll($query, $params);
     }
 
-    public function getMemberChangeWithinLastWeek(int $open_chat_id): bool
-    {
-        return $this->statisticsRepository->getMemberChangeWithinLastWeek($open_chat_id);
-    }
-
     public function copyToOpenChatArchive(ArchiveFlagsDto $archiveFlagsDto): bool
     {
         $query =

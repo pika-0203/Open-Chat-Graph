@@ -16,7 +16,11 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
     private static ?array $openChatEmidCache;
     private static ?array $openChatDataCache;
     private static ?array $memberChangeWithinLastWeekCache;
-    private StatisticsRepositoryInterface $statisticsRepository;
+
+    public function __construct(
+        private StatisticsRepositoryInterface $statisticsRepository
+    ) {
+    }
 
     public static function clearCache(): void
     {
@@ -30,11 +34,6 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
     {
         $next_update = 0;
         self::$openChatIdAndNextUpdateCache[] = compact('id', 'emid', 'next_update');
-    }
-
-    public function __construct(StatisticsRepositoryInterface $statisticsRepository)
-    {
-        $this->statisticsRepository = $statisticsRepository;
     }
 
     private function cacheOpenChatIdByEmid(): void

@@ -104,7 +104,7 @@ class SqliteStatisticsRepository implements StatisticsRepositoryInterface
             FROM
                 statistics
             WHERE
-                `date` BETWEEN datetime(:curDate, '-7 days')
+                `date` BETWEEN DATE(:curDate, '-7 days')
                 AND :curDate
             GROUP BY
                 open_chat_id
@@ -112,7 +112,7 @@ class SqliteStatisticsRepository implements StatisticsRepositoryInterface
                 0 < (
                     CASE
                         WHEN COUNT(DISTINCT member) > 1 THEN 1
-                        WHEN MIN(`date`) > datetime(:curDate, '-7 days') THEN 1
+                        WHEN MIN(`date`) > DATE(:curDate, '-7 days') THEN 1
                         ELSE 0
                     END
                 )";
