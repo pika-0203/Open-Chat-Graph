@@ -55,7 +55,7 @@ class RankingPositionGoogleSheetsApiController
         $dto = $service->getLatestRanking((string)$emid, $categoryIndex);
         if (!$dto || $state->isActive) {
             // ランキング未更新・更新中の場合
-            $next_update = $service->getNextUpdate()->modify('-2 minute')->format(\DateTime::ATOM);
+            $next_update = $service->getTentativeNextUpdate()->format(\DateTime::ATOM);
             return response(compact('name', 'categoryName', 'next_update'));
         }
 
