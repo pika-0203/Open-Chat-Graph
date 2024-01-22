@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Models\Repositories;
 
 use Shadow\DB;
-use App\Config\AppConfig;
-use App\Models\Repositories\RankingPosition\RankingPositionRepositoryInterface;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatRepositoryDto;
 use App\Services\OpenChat\Dto\OpenChatUpdaterDto;
@@ -16,7 +14,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
 {
     public function __construct(
         private StatisticsRepositoryInterface $statisticsRepository,
-        private RankingPositionRepositoryInterface $rankingPositionRepository
+        private DeleteOpenChatRepositoryInterface $DeleteOpenChatRepository
     ) {
     }
 
@@ -50,7 +48,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
     public function updateOpenChatRecord(OpenChatUpdaterDto $dto): bool
     {
         if ($dto->delete_flag === true) {
-            return $this->deleteOpenChat($dto->open_chat_id);
+            return $this->DeleteOpenChatRepository->deleteOpenChat($dto->open_chat_id);
         }
 
         $columnsToSet = [
@@ -88,30 +86,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         }
 
         return $result;
-    }
-
-    protected function deleteOpenChat(int $open_chat_id): bool
-    {
-        RepositoryCache::addDeletedOpenChat($open_chat_id);
-
-        $result = DB::executeAndCheckResult(
-            "DELETE FROM
-                     open_chat
-                WHERE
-                     id = :open_chat_id",
-            compact('open_chat_id')
-        );
-
-        $this->statisticsRepository->daleteDailyStatistics($open_chat_id);
-        $this->rankingPositionRepository->daleteDailyPosition($open_chat_id);
-
-        return $result && DB::executeAndCheckResult(
-            "DELETE FROM
-                     open_chat_deleted
-                WHERE
-                     id = :open_chat_id",
-            compact('open_chat_id')
-        );
     }
 
     public function getUpdateFromPageTargetOpenChatId(?int $limit = null): array
@@ -203,83 +177,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
 
         return DB::execute($query, $archiveFlagsDto->toArray())
             ->rowCount() > 0;
-    }
-
-    public function getDuplicateOpenChatInfo(): array
-    {
-        $defaultImgs = implode("', '", AppConfig::DEFAULT_OPENCHAT_IMG_URL);
-
-        $query =
-            "SELECT
-                GROUP_CONCAT(id) as id,
-                img_url
-            FROM
-                open_chat
-            WHERE
-                img_url NOT IN (
-                    '{$defaultImgs}',
-                    'noimage'
-                )
-            GROUP BY
-                img_url
-            HAVING
-                COUNT(*) > 1";
-
-        $result = DB::fetchAll($query);
-
-        foreach ($result as &$oc) {
-            $oc['id'] = array_map(fn ($id) => (int)$id, explode(',', $oc['id']));
-        }
-
-        return $result;
-    }
-
-    public function deleteDuplicateOpenChat(int $duplicated_id, int $open_chat_id): void
-    {
-        $getEmid = fn ($id) => DB::fetchColumn(
-            'SELECT
-                emid
-            FROM
-                open_chat
-            WHERE
-                id = :id',
-            compact('id')
-        );
-
-        if (!$getEmid($open_chat_id)) {
-            $emid = $getEmid($duplicated_id);
-            $emid && DB::execute(
-                'UPDATE
-                    open_chat
-                SET
-                    emid = :emid
-                WHERE
-                    id = :open_chat_id',
-                compact('open_chat_id', 'emid')
-            );
-        }
-
-        $this->statisticsRepository->mergeDuplicateOpenChatStatistics($duplicated_id, $open_chat_id);
-        $this->rankingPositionRepository->mergeDuplicateDailyPosition($duplicated_id, $open_chat_id);
-        $this->deleteOpenChat($duplicated_id);
-
-        DB::execute(
-            'UPDATE
-                open_chat
-            SET
-                is_alive = 1
-            WHERE
-                id = :open_chat_id',
-            compact('open_chat_id')
-        );
-
-        DB::execute(
-            'INSERT INTO
-                open_chat_merged (duplicated_id, open_chat_id)
-            VALUES
-                (:duplicated_id, :open_chat_id)',
-            compact('duplicated_id', 'open_chat_id')
-        );
     }
 
     public function getOpenChatIdByEmid(string $emid): array|false

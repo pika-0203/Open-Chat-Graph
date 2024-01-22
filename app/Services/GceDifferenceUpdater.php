@@ -7,7 +7,7 @@ namespace App\Services;
 use App\Models\GCE\GceDbTableSynchronizer;
 use App\Models\GCE\GceRankingUpdater;
 use App\Models\GCE\GceDbRecordSynchronizer;
-use App\Models\Repositories\RepositoryCache;
+use App\Models\Repositories\DeleteOpenChatRepository;
 
 class GceDifferenceUpdater
 {
@@ -40,7 +40,7 @@ class GceDifferenceUpdater
 
     private function deleteOpenChatByRepositryCache(): int
     {
-        $deleteOpenChat = RepositoryCache::$deleteOpenChat;
+        $deleteOpenChat = DeleteOpenChatRepository::getDeletedOpenChat();
         array_map($this->gceDbRecordSynchronizer->deleteOpenChatById(...), $deleteOpenChat);
         return count($deleteOpenChat);
     }

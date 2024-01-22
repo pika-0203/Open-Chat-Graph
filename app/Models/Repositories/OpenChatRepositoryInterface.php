@@ -8,11 +8,6 @@ use App\Services\OpenChat\Dto\OpenChatDto;
 
 interface OpenChatRepositoryInterface
 {
-    /**
-     * 同じデータのレコードを探す
-     */
-    public function findDuplicateOpenChat(OpenChatDto $dto): int|false;
-
     public function getOpenChatIdByUrl(string $url): int|false;
 
     /**

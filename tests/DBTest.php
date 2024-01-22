@@ -11,11 +11,7 @@ class DBTest extends TestCase
 {
     public function test()
     {
-        /**
-         * @var GceDbTableSynchronizer $gce
-         */
-        $gce = app(GceDbTableSynchronizer::class);
-        $result = $gce->syncAll();
+        $result = DB::fetchAll('SELECT * FROM open_chat LIMIT 10', null, [PDO::FETCH_UNIQUE | PDO::FETCH_ASSOC]);
 
         debug($result);
 

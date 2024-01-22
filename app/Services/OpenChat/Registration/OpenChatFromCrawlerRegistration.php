@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\OpenChat\Registration;
 
 use App\Config\OpenChatCrawlerConfig;
+use App\Models\Repositories\DuplicateOpenChatRepositoryInterface;
 use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Services\OpenChat\Crawler\OpenChatCrawler;
@@ -17,6 +18,7 @@ class OpenChatFromCrawlerRegistration
 {
     function __construct(
         private OpenChatRepositoryInterface $openChatRepository,
+        private DuplicateOpenChatRepositoryInterface $duplicateOpenChatRepository,
         private LogRepositoryInterface $logRepository,
         private OpenChatCrawler $crawler,
         private OpenChatImageStore $openChatImageStore
@@ -66,7 +68,7 @@ class OpenChatFromCrawlerRegistration
             return $this->returnMessage('拒否: 説明文に「#nolog」が含まれています');
         }
 
-        $existingOpenChatId = $this->openChatRepository->findDuplicateOpenChat($ocDto);
+        $existingOpenChatId = $this->duplicateOpenChatRepository->findDuplicateOpenChat($ocDto);
 
         if ($existingOpenChatId !== false) {
             return $this->returnMessage('オープンチャットが既に登録されています', $existingOpenChatId);

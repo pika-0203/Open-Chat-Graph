@@ -32,13 +32,6 @@ interface UpdateOpenChatRepositoryInterface
      */
     public function copyToOpenChatArchive(ArchiveFlagsDto $archiveFlagsDto): bool;
 
-    public function deleteDuplicateOpenChat(int $duplicated_id, int $open_chat_id): void;
-
-    /**
-     * @return array `[['id' => array, 'img_url' => string]]`
-     */
-    public function getDuplicateOpenChatInfo(): array;
-
     /**
      * @return array|false `['id' => int, next_update => bool]`
      */
