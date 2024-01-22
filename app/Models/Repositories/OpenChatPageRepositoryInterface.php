@@ -8,6 +8,8 @@ interface OpenChatPageRepositoryInterface
 {
     public function getOpenChatById(int $id): array|false;
 
+    public function getRankingPositionCategoryById(int $id): int|false;
+
     public function getRedirectId(int $id): int|false;
 
     /**

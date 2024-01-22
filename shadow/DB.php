@@ -235,7 +235,7 @@ class DB implements DBInterface
             throw new \InvalidArgumentException('Invalid placeholder for WHERE clause.');
         }
 
-        $params[$matches[0]] = self::fulltextSearchParam($keyword);
+        $params[$matches[0]] = static::fulltextSearchParam($keyword);
 
         $queryResult = $query($whereClauseQuery);
         if (!is_string($queryResult)) {

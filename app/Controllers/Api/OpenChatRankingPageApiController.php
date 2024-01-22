@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controllers\Pages;
+namespace App\Controllers\Api;
 
 use App\Config\AppConfig;
 use App\Models\ApiRepositories\OpenChatStatsRankingApiRepository;
@@ -12,10 +12,8 @@ use Shared\Exceptions\BadRequestException as HTTP400;
 use Shadow\Kernel\Reception as Recp;
 use Shadow\Kernel\Validator as Valid;
 
-class OclistPageController
+class OpenChatRankingPageApiController
 {
-    protected const LIMIT = 40;
-
     function __construct(
         private OpenChatApiArgs $args
     ) {
@@ -34,7 +32,7 @@ class OclistPageController
         Recp::$isJson = true;
 
         $this->args->page = Valid::num(Recp::input('page', 0), min: 0, e: $error);
-        $this->args->limit = Valid::num(Recp::input('limit', self::LIMIT), min: 1, e: $error);
+        $this->args->limit = Valid::num(Recp::input('limit'), min: 1, e: $error);
         $this->args->category = (int)Valid::str(Recp::input('category', '0'), regex: AppConfig::OPEN_CHAT_CATEGORY, e: $error);
 
         $this->args->list = Valid::str(Recp::input('list', 'daily'), regex: ['daily', 'weekly', 'all'], e: $error);

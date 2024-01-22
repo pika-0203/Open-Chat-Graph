@@ -7,7 +7,10 @@ use App\Middleware\VerifyCsrfToken;
 use App\Middleware\RedirectLineWebBrowser;
 use App\Services\Admin\AdminAuthService;
 use App\Config\OpenChatCrawlerConfig;
-use App\Controllers\Api\OcApiController;
+use App\Controllers\Api\OpenChatRankingPageApiController;
+use App\Controllers\Api\OpenChatRegistrationApiController;
+use App\Controllers\Api\RankingPositionApiController;
+use App\Controllers\Api\RankingPositionGoogleSheetsApiController;
 use App\Controllers\Pages\ReactRankingPageController;
 
 Route::middlewareGroup(RedirectLineWebBrowser::class)
@@ -16,6 +19,12 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
 
     ->path('ranking/{category}', [ReactRankingPageController::class, 'ranking'])
     ->match(cache(...));
+
+Route::path('react-test')
+    ->match(redirect('ranking'));
+
+Route::path('react-test/{category}')
+    ->match(fn ($category) => redirect('ranking/' . $category . strstr($_SERVER['REQUEST_URI'] ?? '', '?')));
 
 Route::path('member')
     ->match(cache(...));
@@ -46,17 +55,27 @@ Route::path('oc/{open_chat_id}/archive/{group_id}')
 Route::path('oc/{open_chat_id}')
     ->matchNum('open_chat_id', min: 1);
 
-Route::path('oc/{open_chat_id}/json', [OcApiController::class, 'json'])
-    ->matchNum('open_chat_id', min: 1);
+Route::path('oclist', [OpenChatRankingPageApiController::class, 'index']);
 
-Route::path('oc/{open_chat_id}/official_ranking_position', [OcApiController::class, 'officialRankingPosition'])
+Route::path(
+    'position/{open_chat_id}',
+    [RankingPositionApiController::class, 'rankingPosition']
+)
+    ->matchNum('open_chat_id', min: 1)
+    ->matchStr('sort', regex: ['ranking', 'ranking_all', 'rising', 'rising_all']);
+
+
+Route::path(
+    'oc/{open_chat_id}/official_ranking_position',
+    [RankingPositionGoogleSheetsApiController::class, 'rankingPosition']
+)
     ->matchNum('open_chat_id', min: 1);
 
 Route::middlewareGroup(VerifyCsrfToken::class)
     ->path('/')
     ->middleware([RedirectLineWebBrowser::class])
 
-    ->path('oc@post', [OcApiController::class, 'post'])
+    ->path('oc@post', [OpenChatRegistrationApiController::class, 'register'])
     ->matchStr('url', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
 
     ->path('oc/{open_chat_id}/csv')

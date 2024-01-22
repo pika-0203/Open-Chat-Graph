@@ -102,7 +102,7 @@ viewComponent('head', compact('_css', '_meta', 'noindex')); ?>
       </form>
       <span class="openchat-list-date" style="flex-direction: row;">
         <div style="display: flex; flex-direction: column; justify-content: space-between;">
-          <?php if (is_int($oc['category'])) : ?>
+          <?php if (is_int($oc['api_created_at'])) : ?>
             <div>カテゴリー:&nbsp;</div>
           <?php endif ?>
           <?php if (is_int($oc['api_created_at'])) : ?>
@@ -111,8 +111,8 @@ viewComponent('head', compact('_css', '_meta', 'noindex')); ?>
           <div>登録:&nbsp;</div>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: space-between;">
-          <?php if (is_int($oc['category'])) : ?>
-            <div><?php echo array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) ?></div>
+          <?php if (is_int($oc['api_created_at'])) : ?>
+            <div><?php echo $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : 'その他' ?></div>
           <?php endif ?>
           <?php if (is_int($oc['api_created_at'])) : ?>
             <div><?php echo convertDatetime($oc['api_created_at']) ?></div>

@@ -49,14 +49,14 @@ class SqliteStatisticsRepository implements StatisticsRepositoryInterface
             "SELECT
                 CASE
                     WHEN COUNT(DISTINCT member) > 1 THEN 1
-                    WHEN MIN(`date`) > datetime(:date, '-7 days') THEN 1
+                    WHEN MIN(`date`) > DATE(:date, '-7 days') THEN 1
                     ELSE 0
                 END AS member_change
             FROM
                 statistics
             WHERE
                 open_chat_id = :open_chat_id
-                AND `date` BETWEEN datetime(:date, '-7 days')
+                AND `date` BETWEEN DATE(:date, '-7 days')
                 AND :date";
 
         $date = date('Y-m-d');

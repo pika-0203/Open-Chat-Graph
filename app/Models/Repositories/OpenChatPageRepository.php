@@ -12,25 +12,39 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
     {
         $query =
             "SELECT
-                oc.id,
-                oc.name,
-                oc.url,
-                oc.img_url,
-                oc.description,
-                oc.member,
-                oc.api_created_at,
-                oc.emblem,
-                oc.category,
-                oc.emid,
-                UNIX_TIMESTAMP(oc.created_at) AS created_at,
-                UNIX_TIMESTAMP(oc.updated_at) AS updated_at,
+                id,
+                name,
+                url,
+                img_url,
+                description,
+                member,
+                api_created_at,
+                emblem,
+                category,
+                emid,
+                UNIX_TIMESTAMP(created_at) AS created_at,
+                UNIX_TIMESTAMP(updated_at) AS updated_at,
                 is_alive
             FROM
-                open_chat AS oc
+                open_chat
             WHERE
-                oc.id = :id";
+                id = :id";
 
         return DB::fetch($query, ['id' => $id]);
+    }
+
+    public function getRankingPositionCategoryById(int $id): int|false
+    {
+        $query =
+            "SELECT
+                IFNULL(category, 0) AS category
+            FROM
+                open_chat
+            WHERE
+                id = :id
+                AND emid IS NOT NULL";
+
+        return DB::fetchColumn($query, ['id' => $id]);
     }
 
     public function getRedirectId(int $id): int|false
