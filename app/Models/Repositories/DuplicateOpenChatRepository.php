@@ -8,7 +8,7 @@ use App\Config\AppConfig;
 use Shadow\DB;
 use App\Services\OpenChat\Dto\OpenChatDto;
 
-class DuplicateOpenChatRepository
+class DuplicateOpenChatRepository implements DuplicateOpenChatRepositoryInterface
 {
     public function getDuplicateOpenChatInfo(): array
     {

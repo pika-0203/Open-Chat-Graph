@@ -140,7 +140,9 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
             $this->cacheOpenChatData();
         }
 
-        return isset(self::$openChatDataCache[$id]) ? new OpenChatRepositoryDto(self::$openChatDataCache[$id]) : false;
+        $oc = self::$openChatDataCache[$id] ?? false;
+
+        return $oc ? new OpenChatRepositoryDto($oc) : false;
     }
 
     public function getMemberChangeWithinLastWeek(int $open_chat_id): bool
