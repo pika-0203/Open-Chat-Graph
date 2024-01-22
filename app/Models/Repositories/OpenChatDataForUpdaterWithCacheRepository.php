@@ -95,7 +95,7 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
             WHERE
                 is_alive = 1';
 
-        self::$openChatDataCache = DB::fetchAll($query);
+        self::$openChatDataCache = DB::fetchAll($query, null, [\PDO::FETCH_UNIQUE | \PDO::FETCH_ASSOC]);
     }
 
     public function findDuplicateOpenChat(OpenChatDto $dto): int|false
@@ -131,7 +131,7 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
             return false;
         }
 
-        return self::$openChatDataCache[$search]['id'];
+        return (int)$search;
     }
 
     public function getOpenChatDataById(int $id): OpenChatRepositoryDto|false
@@ -140,19 +140,7 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
             $this->cacheOpenChatData();
         }
 
-        $search = false;
-        foreach (self::$openChatDataCache as $key => $oc) {
-            if ($oc['id'] === $id) {
-                $search = $key;
-                break;
-            }
-        }
-
-        if ($search === false) {
-            return false;
-        }
-
-        return new OpenChatRepositoryDto(self::$openChatDataCache[$search]);
+        return isset(self::$openChatDataCache[$id]) ? new OpenChatRepositoryDto(self::$openChatDataCache[$id]) : false;
     }
 
     public function getMemberChangeWithinLastWeek(int $open_chat_id): bool

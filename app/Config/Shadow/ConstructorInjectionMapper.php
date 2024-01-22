@@ -17,6 +17,8 @@ class ConstructorInjectionMapper
 
         \App\Models\Repositories\OpenChatRepositoryInterface::class => \App\Models\Repositories\OpenChatRepository::class,
         \App\Models\Repositories\UpdateOpenChatRepositoryInterface::class => \App\Models\Repositories\UpdateOpenChatRepository::class,
+        \App\Models\Repositories\DeleteOpenChatRepositoryInterface::class => \App\Models\Repositories\DeleteOpenChatRepository::class,
+        \App\Models\Repositories\DuplicateOpenChatRepositoryInterface::class => \App\Models\Repositories\DuplicateOpenChatRepository::class,
 
         \App\Models\Repositories\Statistics\StatisticsRepositoryInterface::class => \App\Models\SQLite\Repositories\Statistics\SqliteStatisticsRepository::class,
         \App\Models\Repositories\Statistics\StatisticsRankingUpdaterRepositoryInterface::class => \App\Models\SQLite\Repositories\Statistics\SqliteStatisticsRankingUpdaterRepository::class,

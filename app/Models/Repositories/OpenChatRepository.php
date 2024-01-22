@@ -28,47 +28,6 @@ class OpenChatRepository implements OpenChatRepositoryInterface
         static::$insertCount = 0;
     }
 
-    public function findDuplicateOpenChat(OpenChatDto $dto): int|false
-    {
-        if (in_array($dto->profileImageObsHash, AppConfig::DEFAULT_OPENCHAT_IMG_URL, true)) {
-            $params = [
-                'name' => $dto->name,
-                'description' => $dto->desc,
-                'img_url' => $dto->profileImageObsHash,
-            ];
-
-            $query =
-                'SELECT
-                    id
-                FROM
-                    open_chat
-                WHERE
-                    name = BINARY :name
-                    AND description = BINARY :description
-                    AND img_url = :img_url
-                ORDER BY
-                    id ASC
-                LIMIT 1';
-        } else {
-            $params = [
-                'img_url' => $dto->profileImageObsHash,
-            ];
-
-            $query =
-                'SELECT
-                    id
-                FROM
-                    open_chat
-                WHERE
-                    img_url = :img_url
-                ORDER BY
-                    id ASC
-                LIMIT 1';
-        }
-
-        return DB::execute($query, $params)->fetchColumn();
-    }
-
     public function getOpenChatIdByUrl(string $url): int|false
     {
         $query =
