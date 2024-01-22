@@ -20,12 +20,6 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
     ->path('ranking/{category}', [ReactRankingPageController::class, 'ranking'])
     ->match(cache(...));
 
-Route::path('react-test')
-    ->match(redirect('ranking'));
-
-Route::path('react-test/{category}')
-    ->match(fn ($category) => redirect('ranking/' . $category . strstr($_SERVER['REQUEST_URI'] ?? '', '?')));
-
 Route::path('member')
     ->match(cache(...));
 
@@ -42,10 +36,6 @@ Route::path('recent/{pageNumber}')
 Route::path('recent/changes/{pageNumber}')
     ->matchNum('pageNumber', min: 1)
     ->match(cache(...));
-
-Route::path('search')
-    ->matchStr('q', maxLen: 40, emptyAble: true)
-    ->match(fn (string $q) => redirect('ranking/?' . http_build_query(['keyword' => $q, 'list' => 'all']), 301));
 
 Route::path('oc/{open_chat_id}/archive/{group_id}')
     ->matchNum('open_chat_id', min: 1)
@@ -88,5 +78,16 @@ Route::path('admin/cookie')
         }
         return redirect();
     });
+
+// 旧URLからのリダイレクト先
+Route::path('search')
+    ->matchStr('q', maxLen: 40, emptyAble: true)
+    ->match(fn (string $q) => redirect('ranking/?' . http_build_query(['keyword' => $q, 'list' => 'all']), 301));
+
+Route::path('react-test')
+    ->match(redirect('ranking'));
+
+Route::path('react-test/{category}')
+    ->match(fn ($category) => redirect('ranking/' . $category . strstr($_SERVER['REQUEST_URI'] ?? '', '?')));
 
 Route::run();

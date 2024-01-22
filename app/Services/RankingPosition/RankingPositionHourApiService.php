@@ -30,15 +30,7 @@ class RankingPositionHourApiService
         $currentTime->setTime((int)$currentTime->format('H'), self::UPDATE_MINUTES);
         return $currentTime;
     }
-
-    function getTentativeNextUpdate(): \DateTime
-    {
-        $currentTime = new \DateTime('@' . $this->now);
-        $currentTime->setTimeZone(new \DateTimeZone('Asia/Tokyo'));
-        $currentTime->modify('+10 minute');
-        return $currentTime;
-    }
-
+    
     function getLatestRanking(string $emid, int $category): RankingPositionHourApiDto|false
     {
         return $this->rankingPositionHourApiRepository->getLatestRanking($emid, $category, $this->getCurrentTime());
