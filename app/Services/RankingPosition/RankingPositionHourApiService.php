@@ -30,7 +30,14 @@ class RankingPositionHourApiService
         $currentTime->setTime((int)$currentTime->format('H'), self::UPDATE_MINUTES);
         return $currentTime;
     }
-    
+
+    function getTentativeNextUpdate(): \DateTime
+    {
+        $next_update = $this->getNextUpdate();
+        $next_update->setTime((int)$next_update->format('H'), AppConfig::CRON_START_MINUTE - 2);
+        return $next_update;
+    }
+
     function getLatestRanking(string $emid, int $category): RankingPositionHourApiDto|false
     {
         return $this->rankingPositionHourApiRepository->getLatestRanking($emid, $category, $this->getCurrentTime());
