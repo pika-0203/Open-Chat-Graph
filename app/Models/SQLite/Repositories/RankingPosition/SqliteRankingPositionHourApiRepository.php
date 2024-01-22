@@ -16,11 +16,22 @@ class SqliteRankingPositionHourApiRepository implements RankingPositionHourApiRe
         $dto = new RankingPositionHourApiDto;
 
         $risingTotal = $category === 0 ? 0 : $this->getTotalCount('rising', $category, $time);
-        $risingAllTotal = $this->getTotalCount('rising', 0, $time);
-        $rankingTotal = $category === 0 ? 0 : $this->getTotalCount('ranking', $category, $time);
-        $rankingAllTotal = $this->getTotalCount('ranking', 0, $time);
+        if ($category && !$risingTotal) {
+            return false;
+        }
 
-        if ($risingTotal === false || !$risingAllTotal || $rankingTotal === false || !$rankingAllTotal) {
+        $risingAllTotal = $this->getTotalCount('rising', 0, $time);
+        if (!$risingAllTotal) {
+            return false;
+        }
+
+        $rankingTotal = $category === 0 ? 0 : $this->getTotalCount('ranking', $category, $time);
+        if ($category && !$rankingTotal) {
+            return false;
+        }
+
+        $rankingAllTotal = $this->getTotalCount('ranking', 0, $time);
+        if (!$rankingAllTotal) {
             return false;
         }
 
