@@ -48,12 +48,11 @@ Route::path('oc/{open_chat_id}')
 Route::path('oclist', [OpenChatRankingPageApiController::class, 'index']);
 
 Route::path(
-    'position/{open_chat_id}',
+    'oc/{open_chat_id}/position',
     [RankingPositionApiController::class, 'rankingPosition']
 )
     ->matchNum('open_chat_id', min: 1)
     ->matchStr('sort', regex: ['ranking', 'ranking_all', 'rising', 'rising_all']);
-
 
 Route::path(
     'oc/{open_chat_id}/official_ranking_position',
