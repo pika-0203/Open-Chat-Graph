@@ -33,20 +33,20 @@ class RankingPositionHourApiService
 
     function getTentativeNextUpdate(): \DateTime
     {
-        $currentTime = new \DateTime('@' . $this->now);
-
-        if (excludeTime(
+        $isExcludeTime = excludeTime(
             [AppConfig::CRON_MERGER_HOUR_RANGE_END, AppConfig::CRON_START_MINUTE - 10],
             [AppConfig::CRON_MERGER_HOUR_RANGE_END, self::UPDATE_MINUTES]
-        )) {
-        } else {
-            $currentTime->setTimeZone(new \DateTimeZone('Asia/Tokyo'));
-            $currentTime->modify('+2 minute');
-        }
+        );
 
         $currentTime = new \DateTime('@' . $this->now);
         $currentTime->setTimeZone(new \DateTimeZone('Asia/Tokyo'));
-        $currentTime->modify('+10 minute');
+        
+        if ($isExcludeTime) {
+            $currentTime->modify('+2 minute');
+        } else {
+            $currentTime->modify('+10 minute');
+        }
+
         return $currentTime;
     }
 
