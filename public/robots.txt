@@ -1,11 +1,9 @@
 Sitemap: https://openchat-review.me/sitemap.xml
 
 User-agent: *
-disallow: /ranking/daily
-disallow: /ranking/weekly
 disallow: /search
 disallow: /oc/*/csv
-disallow: /oc/*/json
+disallow: /oc/*/position
 disallow: /oc/*/official_ranking_position
 disallow: /oc-img
 disallow: /admin
