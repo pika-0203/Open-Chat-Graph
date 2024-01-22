@@ -13,7 +13,17 @@ class RankingPositionPageRepositoryInterfaceTest extends TestCase
     {
         $this->instance = app(RankingPositionPageRepositoryInterface::class);
 
+        $result = $this->instance->getDailyRankingPositionTimeAsc(192, 8);
+        debug($result);
+        $this->assertTrue(true);
+    }
 
+    public function testgetFirstTime()
+    {
+        $this->instance = app(RankingPositionPageRepositoryInterface::class);
+
+        $result = $this->instance->getFirstTime(192);
+        debug($result);
         $this->assertTrue(true);
     }
 }

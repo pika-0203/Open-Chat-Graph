@@ -21,6 +21,4 @@ RewriteRule ^oc-img/([0-9]+)/((?!.*\.webp).+)$ https://openchat-review.me/oc-img
 
 RewriteRule ^oc-img/(.*)$ https://openchat-review.me/oc-img/$1 [R=301,L]
 
-RewriteRule ^react-test/(.*)$ react-test/$1 [QSA,L]
-
 RewriteRule ^(.*)$ public/$1 [QSA,L]

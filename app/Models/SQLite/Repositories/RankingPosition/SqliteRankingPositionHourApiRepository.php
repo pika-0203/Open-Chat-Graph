@@ -75,7 +75,7 @@ class SqliteRankingPositionHourApiRepository implements RankingPositionHourApiRe
                 AND time = '{$timeString}'
             LIMIT
                 1"
-        );
+        ) ?? false;
     }
 
     private function getPotision(string $tableName, string $emid, int $category, \DateTime $time): int|false
@@ -91,6 +91,6 @@ class SqliteRankingPositionHourApiRepository implements RankingPositionHourApiRe
                 emid = '{$emid}'
                 AND category = {$category}
                 AND time = '{$timeString}'"
-        );
+        ) ?? false;
     }
 }

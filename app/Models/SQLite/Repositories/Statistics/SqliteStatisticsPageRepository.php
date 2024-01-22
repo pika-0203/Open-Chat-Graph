@@ -18,15 +18,14 @@ class SqliteStatisticsPageRepository implements StatisticsPageRepositoryInterfac
                     WHEN strftime('%Y', :date) = strftime('%Y', `date`)
                     THEN strftime('%m/%d', `date`)
                     ELSE strftime('%Y/%m/%d', `date`)
-                END AS `date`,
-                member,
-                date as realdate
+                END AS `formated_date`,
+                member
             FROM
                 statistics
             WHERE
                 open_chat_id = :open_chat_id
             ORDER BY
-                `realdate` ASC";
+                `date` ASC";
 
         $date = date('Y-m-d');
 
@@ -35,7 +34,7 @@ class SqliteStatisticsPageRepository implements StatisticsPageRepositoryInterfac
         SQLiteStatistics::$pdo = null;
 
         return [
-            'date' => array_column($result, 'date'),
+            'date' => array_column($result, 'formated_date'),
             'member' => array_column($result, 'member')
         ];
     }
