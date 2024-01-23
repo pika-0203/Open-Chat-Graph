@@ -207,7 +207,7 @@ class OpenChatStatsRankingApiRepositoryWithGce
                     id
                 FROM
                     open_chat
-                {$where} AND {$category} AND is_alive = 1 AND NOT {$searchBan}
+                {$where} AND {$category} AND NOT {$searchBan}
                 ORDER BY
                     {$sortColumn}
                 LIMIT
@@ -219,7 +219,7 @@ class OpenChatStatsRankingApiRepositoryWithGce
                     count(*) AS id
                 FROM
                     open_chat
-                {$where} AND {$category} AND is_alive = 1 AND NOT {$searchBan}
+                {$where} AND {$category} AND NOT {$searchBan}
             )";
         } else {
             $query = fn ($category) => fn ($where) =>
@@ -227,7 +227,7 @@ class OpenChatStatsRankingApiRepositoryWithGce
                 id
             FROM
                 open_chat
-            {$where} AND {$category} AND is_alive = 1 AND NOT {$searchBan}
+            {$where} AND {$category} AND NOT {$searchBan}
             ORDER BY
                 {$sortColumn}
             LIMIT
@@ -268,7 +268,8 @@ class OpenChatStatsRankingApiRepositoryWithGce
                 img_url,
                 emblem,
                 category,
-                api_created_at
+                api_created_at,
+                is_alive
             FROM
                 open_chat
             WHERE
