@@ -64,7 +64,8 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 oc.description,
                 oc.member,
                 oc.category,
-                oc.created_at AS datetime
+                oc.created_at AS datetime,
+                oc.is_alive
             FROM
                 open_chat AS oc
             ORDER BY
@@ -182,6 +183,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 oc.description,
                 oc.member,
                 oc.emblem,
+                oc.is_alive,
                 ranking.diff_member AS diff_member,
                 ranking.percent_increase AS percent_increase,
                 ranking.id AS ranking_id
