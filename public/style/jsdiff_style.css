@@ -7,7 +7,6 @@ td {
 
 table {
   table-layout: fixed;
-  width: 100%;
 }
 
 table tr td:first-child {
@@ -19,6 +18,13 @@ table tr td:first-child {
   text-align: center;
 }
 
+table th {
+  width: calc(100% / 3);
+  color: white;
+  font-size: 12px;
+  text-wrap: balance;
+}
+
 table td {
   width: calc(100% / 3);
   padding: 0.4rem 0.4rem;
@@ -28,6 +34,10 @@ table td {
   text-align: center;
   white-space: break-spaces;
   font-size: 12px;
+}
+
+.two-column {
+  width: calc(100% / 2);
 }
 
 del {
@@ -42,11 +52,11 @@ ins {
   text-decoration: none;
 }
 
-#result-td {
+.result-td {
   display: contents;
 }
 
-#result {
+.result {
   margin: 0;
   padding: 0.47rem 0.47rem;
   white-space: break-spaces;
