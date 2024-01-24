@@ -78,8 +78,7 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
     {
         $query =
             'SELECT
-                name,
-                description
+                *
             FROM
                 open_chat_archive
             WHERE

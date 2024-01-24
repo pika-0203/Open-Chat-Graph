@@ -86,7 +86,8 @@ class OcPageController
 
         $updated = [
             'name' => $nextArchive['name'],
-            'description' => $nextArchive['description']
+            'description' => $nextArchive['description'],
+            'img_url' => $nextArchive['img_url']
         ];
 
         return view('archive_oc_content', compact('oc', 'updated'));
