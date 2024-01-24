@@ -164,7 +164,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
             FROM
                 open_chat_archive
             ORDER BY
-                 DATE(archived_at) DESC, group_id DESC
+                 DATE(archived_at) DESC, member DESC
             LIMIT
                 :startId, :limit";
 
@@ -186,7 +186,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
             FROM
                 open_chat_archive
             ORDER BY
-                DATE(archived_at) ASC, group_id ASC";
+                DATE(archived_at) ASC, member ASC";
 
         return DB::fetchAll($query, compact('date'), args: [\PDO::FETCH_COLUMN]);
     }
