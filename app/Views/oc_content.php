@@ -50,10 +50,14 @@ viewComponent('head', compact('_css', '_meta', 'noindex')); ?>
         </nav>
         <div class="talkroom_number_of_stats">
           <div class="openchat-list-date">
-            <div class="refresh-icon"></div>
-            <time datetime="<?php echo dateTimeAttr($oc['updated_at']) ?>"><?php echo convertDatetime($oc['updated_at'], true) ?></time>
+            <?php if (($oc['is_alive'] ?? 1) === 1) : ?>
+              <div class="refresh-icon"></div>
+              <time datetime="<?php echo dateTimeAttr($oc['updated_at']) ?>"><?php echo convertDatetime($oc['updated_at'], true) ?></time>
+            <?php else : ?>
+              <time datetime="<?php echo dateTimeAttr($oc['updated_at']) ?>" style="color: #cf1c1c">削除: <?php echo convertDatetime($oc['updated_at']) ?></time>
+            <?php endif ?>
           </div>
-          <div class="<?php echo $oc['diff_member'] > 0 ? 'positive' : 'negative' ?>">
+          <div class="<?php if (isset($oc['diff_member'])) echo $oc['diff_member'] ?? 0 > 0 ? 'positive' : 'negative' ?>">
             <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
               <span class="openchat-itme-stats-title">前日比</span>
               <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?></span>
@@ -63,7 +67,7 @@ viewComponent('head', compact('_css', '_meta', 'noindex')); ?>
               <span class="zero-stats">±0</span>
             <?php endif ?>
           </div>
-          <div class="weekly <?php echo $oc['diff_member2'] > 0 ? 'positive' : 'negative' ?>">
+          <div class="weekly <?php if (isset($oc['diff_member'])) echo $oc['diff_member2'] ?? 0 > 0 ? 'positive' : 'negative' ?>">
             <?php if ($oc['diff_member2'] ?? 0 !== 0) : ?>
               <span class="openchat-itme-stats-title">前週比</span>
               <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?></span>
