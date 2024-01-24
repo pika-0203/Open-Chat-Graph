@@ -8,7 +8,6 @@ disallow: /oc/*/official_ranking_position
 disallow: /oc-img
 disallow: /admin
 disallow: /recent
-disallow: /archive
-disallow: /sync
+disallow: /recent/*
 disallow: /privacy
 disallow: /terms
