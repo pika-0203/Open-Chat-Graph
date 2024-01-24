@@ -28,7 +28,7 @@ class RecentPageController
         }
 
         $path = 'recent';
-        $title = '最近の登録';
+        $title = '最近登録されたオープンチャット';
 
         trimOpenChatListDescriptions($rankingList['openChatList']);
         return $this->generateView($path, $title, $pageNumber, $rankingList);
@@ -45,7 +45,24 @@ class RecentPageController
         }
 
         $path = 'recent/changes';
-        $title = '最近の更新';
+        $title = '最近アーカイブされたオープンチャット';
+
+        trimOpenChatListDescriptions($rankingList['openChatList']);
+        return $this->generateView($path, $title, $pageNumber, $rankingList);
+    }
+
+    function deleted(?int $pageNumber)
+    {
+        $pageNumber = $pageNumber ?? 1;
+        $rankingList = $this->openChatStatsRecent->getRecentDeleted($pageNumber, AppConfig::OPEN_CHAT_LIST_LIMIT);
+
+        if (!$rankingList) {
+            // 最大ページ数を超えてる場合は404
+            return false;
+        }
+
+        $path = 'recent/deleted';
+        $title = '最近削除されたオープンチャット';
 
         trimOpenChatListDescriptions($rankingList['openChatList']);
         return $this->generateView($path, $title, $pageNumber, $rankingList);

@@ -57,19 +57,19 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
     ): array {
         $query =
             'SELECT
-                oc.id,
-                oc.name,
-                oc.url,
-                oc.img_url,
-                oc.description,
-                oc.member,
-                oc.category,
-                oc.created_at AS datetime,
-                oc.is_alive
+                id,
+                name,
+                url,
+                img_url,
+                description,
+                member,
+                category,
+                created_at AS datetime,
+                is_alive
             FROM
-                open_chat AS oc
+                open_chat
             ORDER BY
-                oc.id DESC
+                id DESC
             LIMIT
                 :startId, :limit';
 
@@ -92,6 +92,54 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 open_chat
             ORDER BY
                 id ASC";
+
+        return DB::fetchAll($query, compact('date'), args: [\PDO::FETCH_COLUMN]);
+    }
+
+    public function findDeletedOrderByTimeDesc(
+        int $startId,
+        int $endId,
+    ): array {
+        $query =
+            'SELECT
+                id,
+                name,
+                url,
+                img_url,
+                description,
+                member,
+                category,
+                updated_at AS deleted_at
+            FROM
+                open_chat
+            WHERE
+                is_alive = 0
+            ORDER BY
+                 DATE(updated_at) DESC, member DESC
+            LIMIT
+                :startId, :limit';
+
+        $limit = $endId - $startId;
+        return DB::fetchAll($query, compact('startId', 'limit'));
+    }
+
+    public function findDeletedOrderByTimeAscUpdatedAtColumn(): array
+    {
+        $date = date('Y-m-d');
+
+        $query =
+            "SELECT
+                CASE
+                    WHEN YEAR(:date) = YEAR(`updated_at`)
+                    THEN DATE_FORMAT(`updated_at`, '%m/%d')
+                    ELSE DATE_FORMAT(`updated_at`, '%Y/%m/%d')
+                END AS `deleted_at`
+            FROM
+                open_chat
+            WHERE
+                is_alive = 0
+            ORDER BY
+                 DATE(updated_at) ASC, member ASC";
 
         return DB::fetchAll($query, compact('date'), args: [\PDO::FETCH_COLUMN]);
     }

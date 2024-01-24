@@ -17,6 +17,9 @@
           <?php if (isset($oc['date'])) : ?>
             <span class="registration-date blue"><?php echo convertDatetime($oc['date']) ?></span>
           <?php endif ?>
+          <?php if (isset($oc['deleted_at'])) : ?>
+            <span class="registration-date blue" style="color: #cf1c1c">削除 <?php echo convertDatetime($oc['deleted_at']) ?></span>
+          <?php endif ?>
           <span>メンバー <?php echo number_format($oc['member']) ?></span>
           <?php if (($oc['diff_member'] ?? 0) !== 0) : ?>
             <span>

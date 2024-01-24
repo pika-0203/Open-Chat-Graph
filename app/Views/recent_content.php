@@ -23,7 +23,13 @@
                 </button>
                 <button class="list-btn unset" id="changes" <?php if ($path === 'recent/changes') echo 'disabled' ?>>
                     <div class="btn-text">
-                        <span>更新</span>
+                        <span>アーカイブ</span>
+                    </div>
+                    <div class="btn-buttom"></div>
+                </button>
+                <button class="list-btn unset" id="deleted" <?php if ($path === 'recent/deleted') echo 'disabled' ?>>
+                    <div class="btn-text">
+                        <span>削除</span>
                     </div>
                     <div class="btn-buttom"></div>
                 </button>
@@ -66,6 +72,8 @@
                     pageMove('/recent')
                 } else if (e.target.closest("#changes")) {
                     pageMove('/recent/changes')
+                } else if (e.target.closest("#deleted")) {
+                    pageMove('/recent/deleted')
                 }
             }))
         })()

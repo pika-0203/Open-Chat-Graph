@@ -29,11 +29,18 @@ Route::path('recent')
 Route::path('recent/changes')
     ->match(cache(...));
 
+Route::path('recent/deleted')
+    ->match(cache(...));
+
 Route::path('recent/{pageNumber}')
     ->matchNum('pageNumber', min: 1)
     ->match(cache(...));
 
 Route::path('recent/changes/{pageNumber}')
+    ->matchNum('pageNumber', min: 1)
+    ->match(cache(...));
+
+Route::path('recent/deleted/{pageNumber}')
     ->matchNum('pageNumber', min: 1)
     ->match(cache(...));
 

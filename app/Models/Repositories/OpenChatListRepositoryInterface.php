@@ -41,6 +41,18 @@ interface OpenChatListRepositoryInterface
     public function findAllOrderByIdAscCreatedAtColumn(): array;
 
     /**
+     * 削除日順で取得する
+     * 
+     * @return array `[['id' => int, 'name' => string, 'url' => string, 'description' => string, 'img_url' => string, 'member' => int, 'deleted_at' => string]]`
+     */
+    public function findDeletedOrderByTimeDesc(
+        int $startId,
+        int $endId,
+    ): array;
+
+    public function findDeletedOrderByTimeAscUpdatedAtColumn(): array;
+
+    /**
      * 更新のあったオープンチャットを取得する
      * 
      * @return array `[['id' => int, 'name' => string, 'url' => string, 'description' => string, 'img_url' => string, 'member' => int, 'date' => string, 'archive_id' => int, 'update_description' => int, 'update_img' => int, 'update_name' => int]]`
