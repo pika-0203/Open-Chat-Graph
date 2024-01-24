@@ -640,8 +640,8 @@ main hr {
   top: 8px;
 }
 
-.registration .registration-date {
-  color: #494949;
+.registration .registration-date.gray {
+  color: #606060;
   font-size: 13px;
   /* font-weight: bold;*/
 }

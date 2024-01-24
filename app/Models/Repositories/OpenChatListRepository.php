@@ -157,7 +157,8 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 member,
                 emblem,
                 category,
-                archived_at AS date,
+                archived_at,
+                updated_at AS archive_updated_at,
                 update_img,
                 update_description,
                 update_name
@@ -202,7 +203,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 description,
                 img_url,
                 member,
-                archived_at,
+                updated_at AS archive_updated_at,
                 emblem,
                 update_description,
                 update_img,

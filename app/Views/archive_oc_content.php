@@ -74,7 +74,7 @@
                 </a>
             </div>
             <div class="talkroom_number_of_members">
-                <span><?php echo convertDatetimeAndOneDayBefore($oc['archived_at']) ?> 時点</span><span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?></span>
+                <span><?php echo convertDatetime($oc['updated_at']) ?> 時点</span><span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?></span>
             </div>
             <div class="talkroom_description_box">
                 <?php if ($oc['update_description']) : ?>
