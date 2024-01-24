@@ -23,7 +23,7 @@
                 </button>
                 <button class="list-btn unset" id="changes" <?php if ($path === 'recent/changes') echo 'disabled' ?>>
                     <div class="btn-text">
-                        <span>アーカイブ</span>
+                        <span>変更履歴</span>
                     </div>
                     <div class="btn-buttom"></div>
                 </button>

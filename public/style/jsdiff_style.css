@@ -20,7 +20,7 @@ table tr td:first-child {
 }
 
 table td {
-  width: 33%;
+  width: calc(100% / 3);
   padding: 0.4rem 0.4rem;
   border: 1px solid rgb(207, 217, 222);
   vertical-align: top;
@@ -48,7 +48,7 @@ ins {
 
 #result {
   margin: 0;
-  padding: 0.4rem 0.4rem;
+  padding: 0.47rem 0.47rem;
   white-space: break-spaces;
 }
 
