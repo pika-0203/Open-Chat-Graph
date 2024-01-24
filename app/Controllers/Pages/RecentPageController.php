@@ -85,7 +85,9 @@ class RecentPageController
         $subTitle = $pageNumber === 1 ? '' : "({$pageNumber}ページ目)";
         $_meta = meta()->setTitle($pageTitle . $subTitle);
         $_css = ['room_list', 'site_header', 'site_footer'];
-        $_schema = $pageNumber === 1 ? (new PageBreadcrumbsListSchema)->generateSchema($pageTitle, $path) : '';
+
+        //$_schema = $pageNumber === 1 ? (new PageBreadcrumbsListSchema)->generateSchema($pageTitle, $path) : '';
+        $_schema = '';
 
         trimOpenChatListDescriptions($rankingList);
 
