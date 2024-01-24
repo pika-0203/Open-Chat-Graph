@@ -4,7 +4,7 @@
     <?php foreach ($archiveList as $key => $oc) : ?>
         <li class="openchat-item <?php if (2 < $key) echo 'hidden-changelog' ?> unset registration">
             <?php $url = 'oc/' . $oc['id'] . '/archive/' . $oc['group_id'] ?>
-            <span class="registration-date blue"><?php echo convertDatetimeAndOneDayBefore($oc['archived_at']) ?> 時点</span>
+            <span class="registration-date gray"><?php echo convertDatetime($oc['archive_updated_at']) ?> 時点</span>
             <a class="link-overlay unset" href="<?php echo url($url) ?>" tabindex="-1" aria-hidden="true"></a>
             <img alt="オープンチャット「<?php echo $oc['name'] ?>」のアイコン" class="openchat-item-img <?php if ($oc['update_img'] ?? 0) echo 'border-blue' ?>" loading="lazy" src="<?php echo imgPreviewUrlLocal($oc['id'], $oc['img_url']) ?>">
             <h3 class="unset" <?php aliveStyleColor($oc) ?>>
