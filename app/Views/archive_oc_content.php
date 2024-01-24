@@ -96,11 +96,6 @@
       <div class="talkroom_number_of_members">
         <span><?php echo convertDatetime($oc['updated_at']) ?> 時点</span><span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?></span>
       </div>
-      <?php if (!$oc['update_description']) : ?>
-        <p id="talkroom-description" class="talkroom_description" style="margin:0.5rem 0;"><?php echo nl2brReplace($oc['description']) ?></p>
-      <?php endif ?>
-    </header>
-    <div class="openchat-header unset">
       <?php if ($oc['update_name']) : ?>
         <div class="talkroom_description_box">
           <div class="graph-title">
@@ -125,6 +120,11 @@
           </table>
         </div>
       <?php endif ?>
+      <?php if (!$oc['update_description']) : ?>
+        <p id="talkroom-description" class="talkroom_description" style="margin:0.5rem 0;"><?php echo nl2brReplace($oc['description']) ?></p>
+      <?php endif ?>
+    </header>
+    <div class="openchat-header unset">
       <?php if ($oc['update_description']) : ?>
         <div class="talkroom_description_box">
           <div class="graph-title">
