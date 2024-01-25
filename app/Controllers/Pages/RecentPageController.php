@@ -7,7 +7,6 @@ namespace App\Controllers\Pages;
 use App\Services\Statistics\OpenChatStatisticsRecent;
 use App\Config\AppConfig;
 use App\Views\SelectElementPagination;
-use App\Views\Schema\PageBreadcrumbsListSchema;
 
 class RecentPageController
 {
