@@ -10,11 +10,9 @@ use App\Services\Admin\FTPHandler;
 
 class ZipBackupCron
 {
-    private FTPHandler $ftpHandler;
-
-    function __construct(FTPHandler $ftpHandler)
-    {
-        $this->ftpHandler = $ftpHandler;
+    function __construct(
+        private FTPHandler $ftpHandler
+    ) {
     }
 
     /**
