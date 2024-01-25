@@ -401,7 +401,7 @@ body > footer {
 }
 
 .change-aside * {
-  font-size: 13.5px;
+  font-size: 13px;
 }
 
 @media screen and (max-width: 359px) {
@@ -452,6 +452,8 @@ body > footer {
     font-size: 12px;
   }
 
+  .change-aside *,
+  .changelog-area,
   .openchat-header {
     font-size: 13.5px;
   }
@@ -490,7 +492,6 @@ body > footer {
     font-size: 13px;
   }
 
-  .change-aside *,
   .openchat-itme-stats-title,
   .talkroom_number_of_stats {
     font-size: 13px;
@@ -527,9 +528,5 @@ body > footer {
 
   .chart-btn:hover:not(:disabled) {
     background-color: var(--hover);
-  }
-
-  .changelog-area {
-    font-size: 13.5px;
   }
 }
