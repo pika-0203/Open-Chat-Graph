@@ -396,6 +396,14 @@ body > footer {
   padding-top: 0.5rem;
 }
 
+.change-aside {
+  margin: 1rem 0 0.5rem 0;
+}
+
+.change-aside * {
+  font-size: 13.5px;
+}
+
 @media screen and (max-width: 359px) {
   .openchat-header.description-close {
     height: 420px;
@@ -482,6 +490,7 @@ body > footer {
     font-size: 13px;
   }
 
+  .change-aside *,
   .openchat-itme-stats-title,
   .talkroom_number_of_stats {
     font-size: 13px;
