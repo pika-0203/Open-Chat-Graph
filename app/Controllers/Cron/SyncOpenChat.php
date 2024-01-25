@@ -20,33 +20,17 @@ use Shadow\DB;
 
 class SyncOpenChat
 {
-    private SyncOpenChatState $state;
-    private OpenChatApiDbMerger $merger;
-    private GceDifferenceUpdater $gce;
-    private DuplicateOpenChatMeger $dupMeger;
-    private UpdateRankingService $updateRankingService;
-    private LogRepositoryInterface $log;
-    private SitemapGenerator $sitemap;
     private array $messages = [];
 
     function __construct(
-        SyncOpenChatState $state,
-        OpenChatApiDbMerger $merger,
-        GceDifferenceUpdater $gce,
-        DuplicateOpenChatMeger $dupMeger,
-        UpdateRankingService $updateRankingService,
-        LogRepositoryInterface $log,
-        SitemapGenerator $sitemap,
+        private SyncOpenChatState $state,
+        private OpenChatApiDbMerger $merger,
+        private GceDifferenceUpdater $gce,
+        private DuplicateOpenChatMeger $dupMeger,
+        private UpdateRankingService $updateRankingService,
+        private LogRepositoryInterface $log,
+        private SitemapGenerator $sitemap,
     ) {
-        $this->state = $state;
-        $this->merger = $merger;
-        $this->gce = $gce;
-        $this->dupMeger = $dupMeger;
-        $this->updateRankingService = $updateRankingService;
-        $this->log = $log;
-        $this->sitemap = $sitemap;
-
-
         $this->state->isActive = true;
         $this->state->update();
     }
