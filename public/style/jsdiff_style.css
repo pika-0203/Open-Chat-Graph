@@ -33,6 +33,7 @@ table td {
   font: 1em monospace;
   text-align: center;
   white-space: break-spaces;
+  overflow-wrap: anywhere;
   font-size: 12px;
   line-height: 1.4;
 }
