@@ -96,10 +96,34 @@
       <div class="talkroom_number_of_members">
         <span><?php echo convertDatetime($oc['updated_at']) ?> 時点</span><span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?></span>
       </div>
+      <aside class="change-aside">
+        <small>
+          <span><?php echo convertDatetime($oc['archived_at']) ?> 以降の変更箇所: </span>
+          <span>
+            <?php
+            $elements = [];
+
+            if ($oc['update_name']) $elements[] = 'オープンチャット名';
+            if ($oc['update_description']) $elements[] = '説明文';
+            if ($oc['update_img']) $elements[] = '画像';
+
+            foreach ($elements as $index => $text) {
+              if (!$text) {
+                continue;
+              }
+              echo $text;
+              if ($elements[$index + 1] ?? false) {
+                echo '、';
+              }
+            }
+            ?>
+          </span>
+        </small>
+      </aside>
       <?php if ($oc['update_name']) : ?>
         <div class="talkroom_description_box">
           <div class="graph-title">
-            <h2>タイトル</h2>
+            <h2>オープンチャット名</h2>
           </div>
           <table>
             <thead>
@@ -151,30 +175,7 @@
         </div>
       <?php endif ?>
     </div>
-    <aside style="margin: 1rem 0 0.5rem 0;">
-      <small>
-        <span><?php echo convertDatetime($oc['archived_at']) ?> 以降の変更箇所: </span>
-        <span>
-          <?php
-          $elements = [];
 
-          if ($oc['update_name']) $elements[] = 'オープンチャット名';
-          if ($oc['update_description']) $elements[] = '説明文';
-          if ($oc['update_img']) $elements[] = '画像';
-
-          foreach ($elements as $index => $text) {
-            if (!$text) {
-              continue;
-            }
-            echo $text;
-            if ($elements[$index + 1] ?? false) {
-              echo '、';
-            }
-          }
-          ?>
-        </span>
-      </small>
-    </aside>
   </article>
   <footer>
     <?php viewComponent('footer_inner') ?>
