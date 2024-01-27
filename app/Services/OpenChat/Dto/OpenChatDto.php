@@ -14,7 +14,6 @@ class OpenChatDto
     public ?int $createdAt = null;           // ranking-api data
     public ?int $category = null;            // ranking-api data
     public ?int $emblem = null;              // ranking-api data
-    public ?string $invitationTicket = null; // oc-api data
     public int $registered_created_at;       // construct value
     public int $registered_open_chat_id;     // DB registered
 
