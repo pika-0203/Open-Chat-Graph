@@ -15,7 +15,6 @@ use App\Services\GceDifferenceUpdater;
 use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
 use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Models\Repositories\OpenChatRepository;
-use App\Services\SitemapGenerator;
 use Shadow\DB;
 
 class SyncOpenChat
@@ -29,7 +28,6 @@ class SyncOpenChat
         private DuplicateOpenChatMeger $dupMeger,
         private UpdateRankingService $updateRankingService,
         private LogRepositoryInterface $log,
-        private SitemapGenerator $sitemap,
     ) {
         $this->state->isActive = true;
         $this->state->update();
@@ -117,7 +115,5 @@ class SyncOpenChat
 
         $this->gce->gceUpdateRanking();
         $this->addMessage("[GCE] done");
-
-        $this->sitemap->generate();
     }
 }

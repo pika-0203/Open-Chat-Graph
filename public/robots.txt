@@ -1,13 +1,2 @@
-Sitemap: https://openchat-review.me/sitemap.xml
-
 User-agent: *
-disallow: /search
-disallow: /oc/*/csv
-disallow: /oc/*/position
-disallow: /oc/*/official_ranking_position
-disallow: /oc-img
-disallow: /admin
-disallow: /recent
-disallow: /recent/*
-disallow: /privacy
-disallow: /terms
+disallow: /
