@@ -33,8 +33,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             FROM
                 open_chat AS oc
             WHERE
-                oc.id = :id
-                AND is_alive = 1';
+                oc.id = :id';
 
         $result = DB::fetch($query, ['id' => $id]);
         if (!$result) {
@@ -60,7 +59,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             'api_created_at' => $dto->createdAt ?? null,
             'category' => $dto->category ?? null,
             'emblem' => $dto->emblem ?? null,
-            'is_alive' => $dto->is_alive ?? null,
             'next_update' => isset($dto->next_update) ? date('Y-m-d', $dto->next_update) : null,
         ];
 
@@ -95,8 +93,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             FROM
                 open_chat
             WHERE
-                is_alive = 1
-                AND next_update <= :date
+                next_update <= :date
             ORDER BY
                 updated_at ASC";
 
@@ -120,7 +117,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
                 open_chat
             WHERE
                 emid = :emid
-                AND is_alive = 1
             ORDER BY
                 id ASC
             LIMIT 1';

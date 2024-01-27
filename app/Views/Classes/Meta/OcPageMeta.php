@@ -9,9 +9,6 @@ class OcPageMeta
     function generateMetadata(int $open_chat_id, array $oc): Metadata
     {
         $name = $oc['name'];
-        if (isset($oc['is_alive']) && $oc['is_alive'] === 0) {
-            $name = '【削除済み】' . $name;
-        }
 
         $ocDesc = mb_strimwidth($oc['description'], 0, 100, '…');
 

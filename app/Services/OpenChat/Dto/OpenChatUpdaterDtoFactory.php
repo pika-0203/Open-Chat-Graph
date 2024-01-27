@@ -34,22 +34,4 @@ class OpenChatUpdaterDtoFactory
 
         return $updaterDto;
     }
-
-    function mapToNoAliveOpenChatDto(int $open_chat_id): OpenChatUpdaterDto
-    {
-        $updaterDto = new OpenChatUpdaterDto($open_chat_id);
-
-        $updaterDto->is_alive = false;
-
-        return $updaterDto;
-    }
-
-    function mapToNoEmidOpenChatDto(int $open_chat_id): OpenChatUpdaterDto
-    {
-        $updaterDto = new OpenChatUpdaterDto($open_chat_id);
-
-        $updaterDto->emid = '';
-
-        return $updaterDto;
-    }
 }

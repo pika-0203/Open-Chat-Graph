@@ -22,8 +22,7 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
                 category,
                 emid,
                 UNIX_TIMESTAMP(created_at) AS created_at,
-                UNIX_TIMESTAMP(updated_at) AS updated_at,
-                is_alive
+                UNIX_TIMESTAMP(updated_at) AS updated_at
             FROM
                 open_chat
             WHERE

@@ -8,7 +8,6 @@ class OpenChatUpdaterDto
 {
     public int $updated_at;
     public int $open_chat_id;
-    public bool $is_alive = true;
     public bool $delete_flag = false;
 
     public ?string $emid = null;
@@ -19,7 +18,6 @@ class OpenChatUpdaterDto
     public ?int $createdAt = null;
     public ?int $category = null;
     public ?int $emblem = null;
-    public ?string $invitationTicket = null;
 
     public ?bool $hasEmid = null;
     public ?string $db_img_url = null;

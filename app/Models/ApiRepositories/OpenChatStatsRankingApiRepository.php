@@ -166,7 +166,7 @@ class OpenChatStatsRankingApiRepository
             oc.api_created_at
         FROM
             open_chat AS oc
-        {$where} {$category} AND oc.is_alive = 1
+        {$where} {$category}
         ORDER BY
             {$sortColumn} {$args->order}
         LIMIT
@@ -177,7 +177,7 @@ class OpenChatStatsRankingApiRepository
             count(*) as count
         FROM
             open_chat AS oc
-        {$where} {$category} AND oc.is_alive = 1";
+        {$where} {$category}";
 
         $categoryStatement = $args->category ? "category = {$args->category}" : 1;
 

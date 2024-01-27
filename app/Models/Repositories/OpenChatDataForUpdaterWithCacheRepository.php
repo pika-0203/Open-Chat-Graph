@@ -43,10 +43,6 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
                 next_update <= :curDate AS next_update
             FROM
                 open_chat
-            WHERE
-                emid IS NOT NULL
-                AND emid != ''
-                AND is_alive = 1
             ORDER BY
                 id ASC";
 
@@ -89,9 +85,7 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
                 emblem,
                 url
             FROM
-                open_chat AS oc
-            WHERE
-                is_alive = 1';
+                open_chat AS oc';
 
         self::$openChatDataCache = DB::fetchAll($query, null, [\PDO::FETCH_UNIQUE | \PDO::FETCH_ASSOC]);
     }

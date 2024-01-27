@@ -268,8 +268,7 @@ class OpenChatStatsRankingApiRepositoryWithGce
                 img_url,
                 emblem,
                 category,
-                api_created_at,
-                is_alive
+                api_created_at
             FROM
                 open_chat
             WHERE
