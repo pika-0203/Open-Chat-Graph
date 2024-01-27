@@ -9,28 +9,15 @@ use App\Services\StaticData\StaticTopPageDataGenerator;
 use App\Services\Admin\AdminAuthService;
 use Shadow\DB;
 use App\Services\Admin\AdminTool;
-use App\Config\OpenChatCrawlerConfig;
 use App\Services\OpenChat\DuplicateOpenChatMeger;
-use App\Services\OpenChat\Dto\OpenChatDto;
-use App\Services\OpenChat\OpenChatCrawlingFromPage;
 use App\Services\OpenChat\OpenChatApiDbMerger;
-use App\Services\OpenChat\Store\OpenChatImageStore;
-use App\Services\OpenChat\Crawler\OpenChatCrawler;
-use App\Config\AppConfig;
-use App\Exceptions\ApplicationException;
-use App\Config\ConfigJson;
 use App\Models\GCE\GceDbTableSynchronizer;
 use App\Models\GCE\DBGce;
-use App\Models\Importer\SqlInsert;
 use App\Models\GCE\GceRankingUpdater;
+use App\Models\Repositories\DeleteOpenChatRepositoryInterface;
 use App\Services\GceDifferenceUpdater;
-use App\Controllers\Cron\SyncOpenChat;
 use App\Models\SQLite\SQLiteStatistics;
 use App\Services\CronJson\SyncOpenChatState;
-use App\Services\OpenChat\Store\OpenChatImageDeleter;
-use App\Services\SitemapGenerator;
-use App\Services\OpenChat\Updater\Process\OpenChatCrawlingProcess;
-use App\Services\OpenChat\Updater\OpenChatUpdaterFromApi;
 use Shared\Exceptions\NotFoundException;
 
 class AdminPageController
@@ -87,11 +74,9 @@ class AdminPageController
         AdminTool::sendLineNofity($message);
 
         DBGce::execute("TRUNCATE TABLE open_chat_archive");
-        $message .= 'syncOpenChatArchive: ' . $sql->syncOpenChatArchive(true) . "\nend: " . date('Y-m-d H:i:s') . "\n\n";
         DBGce::execute("TRUNCATE TABLE open_chat_merged");
         $message .= 'syncOpenChatMerged: ' . $sql->syncOpenChatMerged() . "\nend: " . date('Y-m-d H:i:s') . "\n\n";
         DBGce::execute("TRUNCATE TABLE user_registration_open_chat");
-        $message .= 'syncUserRegistrationOpenChat: ' . $sql->syncUserRegistrationOpenChat() . "\nend: " . date('Y-m-d H:i:s') . "\n\n";
         $gce->updateRanking();
 
         return view('admin/admin_message_page', ['title' => 'GCE SQL 同期完了', 'message' => $message]);
@@ -137,109 +122,17 @@ class AdminPageController
         }
     }
 
-    private function removedeleted(OpenChatImageDeleter $openChatImageDeleter)
+    function removedeleted(DeleteOpenChatRepositoryInterface $dRepo)
     {
         set_time_limit(3600);
 
-        $openChat = (DB::fetchAll('SELECT id, img_url, url FROM open_chat WHERE is_alive = 0'));
+        $openChat = (DB::fetchAll("SELECT id FROM open_chat WHERE is_alive = 0 OR emid IS NULL OR emid = ''"));
 
         foreach ($openChat as $oc) {
-            $openChatImageDeleter->deleteImage($oc['id'], $oc['img_url']);
-            DB::execute('DELETE FROM open_chat WHERE id = ' . $oc['id']);
-            DB::execute('DELETE FROM open_chat_deleted WHERE id = ' . $oc['id']);
+            $dRepo->deleteOpenChat($oc['id']);
         }
 
         echo "done " . count($openChat);
-    }
-
-    private function removeonlyroom(OpenChatImageDeleter $openChatImageDeleter)
-    {
-        set_time_limit(3600);
-
-        $openChat = (DB::fetchAll('SELECT id, img_url, url FROM open_chat WHERE member < 3'));
-
-        foreach ($openChat as $oc) {
-            $openChatImageDeleter->deleteImage($oc['id'], $oc['img_url']);
-            DB::execute('DELETE FROM open_chat WHERE id = ' . $oc['id']);
-            DB::execute('DELETE FROM open_chat_deleted WHERE id = ' . $oc['id']);
-        }
-
-        echo "done " . count($openChat);
-    }
-
-    private function recoveryimg(OpenChatImageStore $imgStore, OpenChatCrawler $crawler)
-    {
-        set_time_limit(3600);
-
-        $rootDir = __DIR__ . '/../../../public/oc-img/';
-        $getDir = fn (int $id): string => $rootDir . (string)floor($id / 1000) . '/';
-
-        $openChat = (DB::fetchAll('SELECT id, img_url, url FROM open_chat WHERE is_alive = 1'));
-
-        $count = 0;
-        foreach ($openChat as $oc) {
-            if ($oc['img_url'] === 'noimage') {
-                $dto = $crawler->fetchOpenChatDto($oc['url']);
-
-                if (!$dto) {
-                    pre_var_dump('failed fetch open chat: ' . $oc['id']);
-                }
-
-                $count++;
-                pre_var_dump($oc);
-                pre_var_dump($imgStore->downloadAndStoreOpenChatImage($dto->profileImageObsHash, $oc['id']));
-
-                continue;
-            }
-
-            $filePath = $getDir($oc['id']) . $oc['img_url'] . '.webp';
-
-            if (!file_exists($filePath)) {
-                $count++;
-                pre_var_dump($oc);
-                pre_var_dump($imgStore->downloadAndStoreOpenChatImage($oc['img_url'], $oc['id']));
-            }
-        }
-
-        echo "done {$count}";
-    }
-
-    private function recoveryimg2()
-    {
-        set_time_limit(3600);
-
-        $rootDir = __DIR__ . '/../../../public/oc-img/';
-        $getDir = fn (int $id): string => (string)floor($id / 1000) . '/';
-
-        $recovery = function ($openChat) use ($getDir, $rootDir) {
-            foreach ($openChat as $oc) {
-                $filePath = $rootDir . $getDir($oc['id']) . 'preview/' . $oc['img_url'] . '_p.webp';
-                //$filePath = $rootDir . $getDir($oc['id']) . $oc['img_url'] . '.webp';
-                if (file_exists($filePath)) {
-                    continue;
-                }
-
-                $url = 'http://openchat-review.website/oc-img/' . $getDir($oc['id']) . 'preview/' . $oc['img_url'] . '_p.webp';
-                //$url = 'http://openchat-review.website/oc-img/' . $getDir($oc['id']) . $oc['img_url'] . '.webp';
-
-                try {
-                    $data = file_get_contents($url);
-                    if (!$data) {
-                        pre_var_dump('false: ' . $url);
-                    } else {
-                        file_put_contents($filePath, $data);
-                        pre_var_dump('done: ' . $url);
-                    }
-                } catch (\Throwable $e) {
-                    pre_var_dump($e->getMessage());
-                }
-            }
-        };
-
-        //$openChat = (DB::fetchAll('SELECT id, img_url FROM open_chat'));
-        $openChat2 = (DB::fetchAll('SELECT id, img_url FROM open_chat_archive'));
-
-        $recovery($openChat2);
     }
 
     function phpinfo()
