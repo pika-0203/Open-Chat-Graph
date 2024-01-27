@@ -14,7 +14,6 @@ class OpenChatRepositoryDto
     public ?int $createdAt;
     public ?int $category;
     public ?int $emblem;
-    public ?string $invitationTicket;
 
     function __construct(array $openChatData)
     {
@@ -26,6 +25,5 @@ class OpenChatRepositoryDto
         $this->createdAt = $openChatData['api_created_at'];
         $this->category = $openChatData['category'];
         $this->emblem = $openChatData['emblem'];
-        $this->invitationTicket = $openChatData['url'];
     }
 }

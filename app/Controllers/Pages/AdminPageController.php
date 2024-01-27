@@ -73,10 +73,8 @@ class AdminPageController
         $message .= 'syncOpenChatAll: ' . $sql->syncOpenChatAll() . "\nend: " . date('Y-m-d H:i:s') . "\n\n";
         AdminTool::sendLineNofity($message);
 
-        DBGce::execute("TRUNCATE TABLE open_chat_archive");
         DBGce::execute("TRUNCATE TABLE open_chat_merged");
         $message .= 'syncOpenChatMerged: ' . $sql->syncOpenChatMerged() . "\nend: " . date('Y-m-d H:i:s') . "\n\n";
-        DBGce::execute("TRUNCATE TABLE user_registration_open_chat");
         $gce->updateRanking();
 
         return view('admin/admin_message_page', ['title' => 'GCE SQL 同期完了', 'message' => $message]);
