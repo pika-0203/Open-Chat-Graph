@@ -65,6 +65,8 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 created_at AS datetime
             FROM
                 open_chat
+            WHERE
+                api_created_at IS NOT NULL
             ORDER BY
                 id DESC
             LIMIT
@@ -87,6 +89,8 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 END AS `created_at`
             FROM
                 open_chat
+            WHERE
+                api_created_at IS NOT NULL
             ORDER BY
                 id ASC";
 
