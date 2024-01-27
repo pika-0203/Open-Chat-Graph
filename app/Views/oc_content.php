@@ -19,7 +19,7 @@ viewComponent('head', compact('_css', '_meta', 'noindex')); ?>
           <img class=" talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgUrl($oc['img_url']) ?>">
         </div>
         <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span>
-          <div class="link-mark"><span class="line-link-icon"> </span><span class="link-title">LINEで開く</span></div>
+          <div class="link-mark"><span class="line-link-icon"> </span><span class="link-title">LINEオープンチャット公式サイト</span></div>
         </h1>
       </a>
 

@@ -10,7 +10,7 @@
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date">
                     <h2 class="unset">
-                        <span class="openchat-list-title">最近の登録</span>
+                        <span class="openchat-list-title">最近のランクイン</span>
                     </h2>
                 </div>
             </header>
