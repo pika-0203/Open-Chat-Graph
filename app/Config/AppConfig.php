@@ -25,7 +25,7 @@ class AppConfig
     const CRON_MERGER_HOUR_RANGE_START = 11;
     const CRON_MERGER_HOUR_RANGE_END = 12;
 
-    const LINE_OPEN_URL = 'https://line.me/ti/g2/';
+    const LINE_OPEN_URL = 'https://openchat.line.me/jp/cover/';
 
     const SITEMAP_DIR = __DIR__ . '/../../public/sitemap.xml';
 
