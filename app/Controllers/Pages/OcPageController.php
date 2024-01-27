@@ -30,16 +30,9 @@ class OcPageController
 
         $statisticsData = $statisticsRepo->getDailyStatisticsByPeriod($open_chat_id);
 
-        if ($oc['is_alive']) {
-            $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($statisticsData);
-        } else {
-            $oc += [
-                'diff_member' => null,
-                'percent_increase' => null,
-                'diff_member2' => null,
-                'percent_increase2' => null,
-            ];
-        }
+
+        $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($statisticsData);
+
 
         $_css = ['site_header', 'site_footer', 'room_page'];
 

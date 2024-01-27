@@ -126,7 +126,7 @@ class AdminPageController
     {
         set_time_limit(3600);
 
-        $openChat = (DB::fetchAll("SELECT id FROM open_chat WHERE is_alive = 0 OR emid IS NULL OR emid = ''"));
+        $openChat = (DB::fetchAll("SELECT id FROM open_chat WHERE emid IS NULL OR emid = '' LIMIT 1000"));
 
         foreach ($openChat as $oc) {
             $dRepo->deleteOpenChat($oc['id']);

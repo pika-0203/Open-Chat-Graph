@@ -24,16 +24,14 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                         open_chat_archive
                     GROUP BY
                         id
-                ) AS archive ON oc.id = archive.id
-            WHERE
-                is_alive = 1'
+                ) AS archive ON oc.id = archive.id'
         );
     }
 
-    public function getRecordCount(bool $isAlive = true): int
+    public function getRecordCount(): int
     {
         return (int)DB::execute(
-            'SELECT COUNT(*) FROM open_chat ' . ($isAlive ? 'WHERE is_alive = 1' : '')
+            'SELECT COUNT(*) FROM open_chat'
         )->fetchColumn();
     }
 
@@ -64,8 +62,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 description,
                 member,
                 category,
-                created_at AS datetime,
-                is_alive
+                created_at AS datetime
             FROM
                 open_chat
             ORDER BY
@@ -110,7 +107,6 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 oc.description,
                 oc.member,
                 oc.emblem,
-                oc.is_alive,
                 ranking.diff_member AS diff_member,
                 ranking.percent_increase AS percent_increase,
                 ranking.id AS ranking_id

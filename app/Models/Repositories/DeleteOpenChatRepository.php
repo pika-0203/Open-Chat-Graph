@@ -38,7 +38,13 @@ class DeleteOpenChatRepository implements DeleteOpenChatRepositoryInterface
         $this->statisticsRepository->daleteDailyStatistics($open_chat_id);
         $this->rankingPositionRepository->daleteDailyPosition($open_chat_id);
 
-        return $result;
+        return $result && DB::executeAndCheckResult(
+            "DELETE FROM
+                     open_chat_deleted
+                WHERE
+                     id = :open_chat_id",
+            compact('open_chat_id')
+        );
     }
 
     public function deleteDuplicatedOpenChat(int $duplicated_id, int $open_chat_id): void
@@ -69,16 +75,6 @@ class DeleteOpenChatRepository implements DeleteOpenChatRepositoryInterface
         $this->statisticsRepository->mergeDuplicateOpenChatStatistics($duplicated_id, $open_chat_id);
         $this->rankingPositionRepository->mergeDuplicateDailyPosition($duplicated_id, $open_chat_id);
         $this->deleteOpenChat($duplicated_id);
-
-        DB::execute(
-            'UPDATE
-                open_chat
-            SET
-                is_alive = 1
-            WHERE
-                id = :open_chat_id',
-            compact('open_chat_id')
-        );
 
         DB::execute(
             'INSERT INTO

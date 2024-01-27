@@ -16,10 +16,6 @@ class OpenChatListDto
         $this->emblem = $oc['emblem'] ?? 0;
         $this->category = $oc['category'] ?? -1;
 
-        if (isset($oc['is_alive'])) {
-            $this->isAlive = $oc['is_alive'];
-        }
-
         if (isset($oc['api_created_at'])) {
             $this->createdAt = convertDatetime($oc['api_created_at']);
         }
@@ -47,7 +43,6 @@ class OpenChatListDto
     public int $emblem; // 0 なし, 1 スペシャル, 2 公認
     public int $category;
     public ?int $totalCount;
-    public ?bool $isAlive;
     public ?string $increasedMember;
     public ?string $symbolIncrease;
     public ?string $percentageIncrease;
