@@ -4,23 +4,24 @@ declare(strict_types=1);
 
 namespace App\Services\OpenChat\Updater\Process;
 
-use App\Services\OpenChat\Updater\OpenChatUpdaterWithFetchInterface;
 use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Services\Utility\ErrorCounter;
 use App\Services\Crawler\CrawlerFactory;
+use App\Services\OpenChat\Updater\OpenChatUpdaterFromApi;
 
 class OpenChatCrawlingProcess
 {
     function __construct(
         private LogRepositoryInterface $logRepository,
-        private ErrorCounter $errorCounter
+        private ErrorCounter $errorCounter,
+        private OpenChatUpdaterFromApi $openChatUpdater,
     ) {
     }
 
-    function crawlingProcess(array $target, OpenChatUpdaterWithFetchInterface $openChatUpdaterWithFetch, ?int $intervalSecond = null): bool
+    function crawlingProcess(array $target, ?int $intervalSecond = null): bool
     {
         foreach ($target as $openChat) {
-            $result = $openChatUpdaterWithFetch->fetchUpdateOpenChat($openChat);
+            $result = $this->openChatUpdater->fetchUpdateOpenChat($openChat);
 
             if ($result === false) {
                 $this->errorCounter->increaseCount();

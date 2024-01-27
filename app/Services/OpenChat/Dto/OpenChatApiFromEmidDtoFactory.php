@@ -24,8 +24,6 @@ class OpenChatApiFromEmidDtoFactory
             $dto->profileImageObsHash = Validator::str($response['square']['profileImageObsHash'], e: $exceptionClass);
             $dto->memberCount = Validator::num($response['square']['memberCount'], e: $exceptionClass);
             $dto->invitationTicket = Validator::str($response['invitationTicket'], e: $exceptionClass);
-            //$dto->noteCount = Validator::num($response['noteCount'], emptyAble: true, e: $exceptionClass);
-            //$dto->recommendedSquaresEmidArray = $this->varidateRecommendedSquaresEmidArray($response['recommendedSquares'] ?? []);
         } catch (\Throwable $e) {
             $jsonString = json_encode($response, JSON_UNESCAPED_UNICODE);
             throw new $exceptionClass($e->__toString() . ": {$jsonString}");
@@ -51,15 +49,5 @@ class OpenChatApiFromEmidDtoFactory
         }
 
         return compact('invitationTicket');
-    }
-
-    private function varidateRecommendedSquaresEmidArray(?array $recommendedSquares): array
-    {
-        $recommendedSquaresEmidArray = [];
-        foreach ($recommendedSquares as $element) {
-            $recommendedSquaresEmidArray[] = Validator::str($element['square']['emid'], e: \RuntimeException::class);
-        }
-
-        return $recommendedSquaresEmidArray;
     }
 }

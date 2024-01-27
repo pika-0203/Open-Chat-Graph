@@ -33,40 +33,6 @@ class RecentPageController
         return $this->generateView($path, $title, $pageNumber, $rankingList);
     }
 
-    function changes(?int $pageNumber)
-    {
-        $pageNumber = $pageNumber ?? 1;
-        $rankingList = $this->openChatStatsRecent->getRecentChanges($pageNumber, AppConfig::OPEN_CHAT_LIST_LIMIT);
-
-        if (!$rankingList) {
-            // 最大ページ数を超えてる場合は404
-            return false;
-        }
-
-        $path = 'recent/changes';
-        $title = '最近変更されたオープンチャット';
-
-        trimOpenChatListDescriptions($rankingList['openChatList']);
-        return $this->generateView($path, $title, $pageNumber, $rankingList);
-    }
-
-    function deleted(?int $pageNumber)
-    {
-        $pageNumber = $pageNumber ?? 1;
-        $rankingList = $this->openChatStatsRecent->getRecentDeleted($pageNumber, AppConfig::OPEN_CHAT_LIST_LIMIT);
-
-        if (!$rankingList) {
-            // 最大ページ数を超えてる場合は404
-            return false;
-        }
-
-        $path = 'recent/deleted';
-        $title = '最近削除されたオープンチャット';
-
-        trimOpenChatListDescriptions($rankingList['openChatList']);
-        return $this->generateView($path, $title, $pageNumber, $rankingList);
-    }
-
     private function generateView(string $path, string $pageTitle, int $pageNumber, array $rankingList)
     {
         // ページネーションのselect要素

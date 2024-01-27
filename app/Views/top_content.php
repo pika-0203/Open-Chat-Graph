@@ -16,7 +16,7 @@
             <sup class="add-openchat-message success" id="add-openchat-describedby"><?php echo h(session('message')) ?></sup>
             <div class="openchat-item add-openchat-form-item">
                 <a class="link-overlay unset" href="<?php echo url('/oc/' . $requestOpenChat['id']) ?>" tabindex="-1"></a>
-                <img alt class="openchat-item-img" src="<?php echo imgPreviewUrlLocal($requestOpenChat['id'], $requestOpenChat['img_url']) ?>">
+                <img alt class="openchat-item-img" src="<?php echo imgPreviewUrl($requestOpenChat['id'], $requestOpenChat['img_url']) ?>">
                 <h2 class="unset">
                     <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $requestOpenChat['id']) ?>"><?php echo $requestOpenChat['name'] ?></a>
                 </h2>
@@ -84,7 +84,7 @@
             </a>
         </article>
         <hr>
-        <hr>
+        <!-- <hr>
         <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">
             <label for="add-openchat-input-url">オープンチャットを登録する</label>
             <input name="url" id="add-openchat-input-url" placeholder="オープンチャットのURL" spellcheck="false" type="text" aria-describedby="add-openchat-describedby" autocomplete="off">
@@ -92,10 +92,9 @@
 
             <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>統計を始める</button>
         </form>
-        <hr>
+        <hr> -->
     </main>
     <footer>
-        <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
         <?php viewComponent('footer_inner') ?>
     </footer>
     <script type="module">

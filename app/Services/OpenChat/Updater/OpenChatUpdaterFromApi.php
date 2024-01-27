@@ -4,24 +4,18 @@ declare(strict_types=1);
 
 namespace App\Services\OpenChat\Updater;
 
-use App\Services\OpenChat\Crawler\OpenChatDtoFetcherInterface;
 use App\Services\OpenChat\Crawler\OpenChatApiFromEmidDownloader;
 use App\Services\OpenChat\Crawler\OpenChatUrlChecker;
 use App\Models\Repositories\Log\LogRepositoryInterface;
 
-class OpenChatUpdaterFromApi implements OpenChatUpdaterWithFetchInterface
+class OpenChatUpdaterFromApi
 {
-    private OpenChatDtoFetcherInterface $openChatDtoFetcher;
-
     function __construct(
-        private OpenChatUpdaterInterface $openChatUpdater,
+        private OpenChatUpdater $openChatUpdater,
         private OpenChatUrlChecker $openChatUrlChecker,
-        private OpenChatNoValueMarker $openChatNoValueMarker,
         private LogRepositoryInterface $logRepository,
-        private OpenChatUpdaterFromPage $openChatUpdaterFromPage,
-        OpenChatApiFromEmidDownloader $openChatDtoFetcher,
+        private OpenChatApiFromEmidDownloader $openChatDtoFetcher,
     ) {
-        $this->openChatDtoFetcher = $openChatDtoFetcher;
     }
 
     /**
@@ -44,7 +38,9 @@ class OpenChatUpdaterFromApi implements OpenChatUpdaterWithFetchInterface
         }
 
         if ($ocDto === false || $ocDto->memberCount < 1) {
-            return $this->updatePrivateOpenChat($open_chat_id);
+            // 削除
+            $this->openChatUpdater->updateOpenChat($open_chat_id, false);
+            return true;
         }
 
         try {
@@ -58,19 +54,10 @@ class OpenChatUpdaterFromApi implements OpenChatUpdaterWithFetchInterface
         if ($isAlive) {
             $this->openChatUpdater->updateOpenChat($open_chat_id, $ocDto);
         } else {
-            $this->openChatNoValueMarker->markAsNoAliveOpenChat($open_chat_id);
+            // 削除
+            $this->openChatUpdater->updateOpenChat($open_chat_id, false);
         }
 
         return true;
-    }
-
-    function updatePrivateOpenChat(int $id): bool
-    {
-        $fetcherArg = $this->openChatNoValueMarker->markAsNoEmidOpenChat($id);
-        if (!$fetcherArg) {
-            return false;
-        }
-
-        return $this->openChatUpdaterFromPage->fetchUpdateOpenChat(compact('id', 'fetcherArg'));
     }
 }

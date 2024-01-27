@@ -14,23 +14,14 @@ viewComponent('head', compact('_css', '_meta', 'noindex')); ?>
     <!-- オープンチャット表示ヘッダー -->
     <header class="openchat-header description-close unset" id="openchat-header">
 
-      <?php if (($oc['is_alive'] ?? 1) === 1) : ?>
-        <a class="overlay-link-box unset" rel="external nofollow noopener" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['url'] ?>">
-          <div class="talkroom_banner_img_area unset">
-            <img class=" talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgUrlLocal($oc['id'], $oc['img_url']) ?>">
-          </div>
-          <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span>
-            <div class="link-mark"><span class="line-link-icon"> </span><span class="link-title">LINEで開く</span></div>
-          </h1>
-        </a>
-      <?php else : ?>
-        <div class="overlay-link-box unset">
-          <div class="talkroom_banner_img_area unset">
-            <img class=" talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgUrlLocal($oc['id'], $oc['img_url']) ?>">
-          </div>
-          <h1 class="talkroom_link_h1 unset" style="color:#cf1c1c"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?>【削除済み】<?php echo $oc['name'] ?></h1>
+      <a class="overlay-link-box unset" rel="external nofollow noopener" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] ?>">
+        <div class="talkroom_banner_img_area unset">
+          <img class=" talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgUrl($oc['img_url']) ?>">
         </div>
-      <?php endif ?>
+        <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span>
+          <div class="link-mark"><span class="line-link-icon"> </span><span class="link-title">LINEで開く</span></div>
+        </h1>
+      </a>
 
       <div class="talkroom_number_of_members">
         <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?></span>
@@ -50,12 +41,8 @@ viewComponent('head', compact('_css', '_meta', 'noindex')); ?>
         </nav>
         <div class="talkroom_number_of_stats">
           <div class="openchat-list-date">
-            <?php if (($oc['is_alive'] ?? 1) === 1) : ?>
-              <div class="refresh-icon"></div>
-              <time datetime="<?php echo dateTimeAttr($oc['updated_at']) ?>"><?php echo convertDatetime($oc['updated_at'], true) ?></time>
-            <?php else : ?>
-              <time datetime="<?php echo dateTimeAttr($oc['updated_at']) ?>" style="color: #cf1c1c">削除: <?php echo convertDatetime($oc['updated_at']) ?></time>
-            <?php endif ?>
+            <div class="refresh-icon"></div>
+            <time datetime="<?php echo dateTimeAttr($oc['updated_at']) ?>"><?php echo convertDatetime($oc['updated_at'], true) ?></time>
           </div>
           <div class="<?php if (isset($oc['diff_member'])) echo $oc['diff_member'] ?? 0 > 0 ? 'positive' : 'negative' ?>">
             <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
@@ -129,18 +116,12 @@ viewComponent('head', compact('_css', '_meta', 'noindex')); ?>
 
   </article>
 
-  <!-- チェンジログテーブル -->
-  <?php if ($archiveList) : ?>
-    <?php viewComponent('admin_oc_content_change_log', compact('archiveList')) ?>
-  <?php endif ?>
-
   <?php if (cookie()->has('labs-joincount')) : ?>
     <!-- ライブトーク利用時間分析ツールのファイル読み込みフォーム -->
     <?php viewComponent('labs_joincount_form') ?>
   <?php endif ?>
 
   <footer>
-    <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
     <?php viewComponent('footer_inner') ?>
   </footer>
 
@@ -293,7 +274,6 @@ viewComponent('head', compact('_css', '_meta', 'noindex')); ?>
       myListJsonCookie.set('expires', expiresTimestamp)
     })
   </script>
-  <?php echo $_schema ?>
 </body>
 
 </html>

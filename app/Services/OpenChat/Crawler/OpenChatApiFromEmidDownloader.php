@@ -9,7 +9,7 @@ use App\Config\OpenChatCrawlerConfig;
 use App\Services\OpenChat\Dto\OpenChatApiFromEmidDtoFactory;
 use App\Services\OpenChat\Dto\OpenChatDto;
 
-class OpenChatApiFromEmidDownloader implements OpenChatDtoFetcherInterface
+class OpenChatApiFromEmidDownloader
 {
     function __construct(
         private CrawlerFactory $crawlerFactory,
@@ -54,24 +54,6 @@ class OpenChatApiFromEmidDownloader implements OpenChatDtoFetcherInterface
         }
 
         return $responseArray;
-    }
-
-    /**
-     * @return array|string `['invitationTicket' => string]`  
-     *                      戻り値がstringの場合は例外のメッセージ
-     */
-    function fetchOpenChatApiFromEmidDtoElement(string $emid): array|string
-    {
-        try {
-            $response = $this->fetchFromEmid($emid);
-            if (!$response) {
-                return "400 or 404エラー: emid: {$emid}";
-            }
-
-            return $this->openChatApiFromEmidDtoFactory->validateAndMapToOpenChatApiFromEmidDtoElementArray($response);
-        } catch (\RuntimeException $e) {
-            return $e->getMessage() . ": emid: {$emid}";
-        }
     }
 
     /**

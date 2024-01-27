@@ -59,7 +59,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
             'SELECT
                 id,
                 name,
-                url,
+                emid,
                 img_url,
                 description,
                 member,
@@ -96,128 +96,6 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
         return DB::fetchAll($query, compact('date'), args: [\PDO::FETCH_COLUMN]);
     }
 
-    public function findDeletedOrderByTimeDesc(
-        int $startId,
-        int $endId,
-    ): array {
-        $query =
-            'SELECT
-                id,
-                name,
-                url,
-                img_url,
-                description,
-                member,
-                category,
-                updated_at AS deleted_at
-            FROM
-                open_chat
-            WHERE
-                is_alive = 0
-            ORDER BY
-                 DATE(updated_at) DESC, member DESC
-            LIMIT
-                :startId, :limit';
-
-        $limit = $endId - $startId;
-        return DB::fetchAll($query, compact('startId', 'limit'));
-    }
-
-    public function findDeletedOrderByTimeAscUpdatedAtColumn(): array
-    {
-        $date = date('Y-m-d');
-
-        $query =
-            "SELECT
-                CASE
-                    WHEN YEAR(:date) = YEAR(`updated_at`)
-                    THEN DATE_FORMAT(`updated_at`, '%m/%d')
-                    ELSE DATE_FORMAT(`updated_at`, '%Y/%m/%d')
-                END AS `deleted_at`
-            FROM
-                open_chat
-            WHERE
-                is_alive = 0
-            ORDER BY
-                 DATE(updated_at) ASC, member ASC";
-
-        return DB::fetchAll($query, compact('date'), args: [\PDO::FETCH_COLUMN]);
-    }
-
-    public function findRecentArchive(
-        int $startId,
-        int $endId,
-    ): array {
-        $query =
-            "SELECT
-                id,
-                name,
-                img_url,
-                description,
-                member,
-                emblem,
-                category,
-                archived_at,
-                updated_at AS archive_updated_at,
-                update_img,
-                update_description,
-                update_name
-            FROM
-                open_chat_archive
-            ORDER BY
-                 DATE(archived_at) DESC, member DESC
-            LIMIT
-                :startId, :limit";
-
-        $limit = $endId - $startId;
-        return DB::fetchAll($query, compact('startId', 'limit'));
-    }
-
-    public function findRecentArchiveAscArchivedAtColumn(): array
-    {
-        $date = date('Y-m-d');
-
-        $query =
-            "SELECT
-                CASE
-                    WHEN YEAR(:date) = YEAR(archived_at)
-                    THEN DATE_FORMAT(archived_at, '%m/%d')
-                    ELSE DATE_FORMAT(archived_at, '%Y/%m/%d')
-                END AS archived_at
-            FROM
-                open_chat_archive
-            ORDER BY
-                DATE(archived_at) ASC, member ASC";
-
-        return DB::fetchAll($query, compact('date'), args: [\PDO::FETCH_COLUMN]);
-    }
-
-    public function findArchives(int $id): array
-    {
-        $query =
-            "SELECT
-                id,
-                archive_id,
-                group_id,
-                name,
-                description,
-                img_url,
-                member,
-                updated_at AS archive_updated_at,
-                emblem,
-                update_description,
-                update_img,
-                update_name
-            FROM
-                open_chat_archive
-            WHERE
-                id = :id
-            ORDER BY
-                archive_id DESC";
-
-        return DB::fetchAll($query, compact('id'));
-    }
-
     public function getRankingRecordByMylist(array $idArray): array
     {
         $statements = array_fill(0, count($idArray), "?");
@@ -227,7 +105,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
             "SELECT
                 oc.id,
                 oc.name,
-                oc.url,
+                oc.emid,
                 oc.img_url,
                 oc.description,
                 oc.member,
@@ -272,7 +150,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
             "SELECT
                 oc.id,
                 oc.name,
-                oc.url,
+                oc.emid,
                 oc.img_url,
                 oc.description,
                 oc.member,
