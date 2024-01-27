@@ -8,7 +8,6 @@ use Shadow\DB;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatRepositoryDto;
 use App\Services\OpenChat\Dto\OpenChatUpdaterDto;
-use App\Services\OpenChat\Dto\ArchiveFlagsDto;
 
 class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
 {
@@ -61,7 +60,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             'api_created_at' => $dto->createdAt ?? null,
             'category' => $dto->category ?? null,
             'emblem' => $dto->emblem ?? null,
-            'url' => $dto->invitationTicket ?? null,
             'is_alive' => $dto->is_alive ?? null,
             'next_update' => isset($dto->next_update) ? date('Y-m-d', $dto->next_update) : null,
         ];
@@ -88,31 +86,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         return $result;
     }
 
-    public function getUpdateFromPageTargetOpenChatId(?int $limit = null): array
-    {
-        $query =
-            "SELECT
-                id,
-                url AS fetcherArg
-            FROM
-                open_chat
-            WHERE
-                is_alive = 1
-                AND next_update <= :date
-                AND (emid IS NULL OR emid = '')
-            ORDER BY
-                updated_at ASC";
-
-        $params = ['date' => date('Y-m-d')];
-
-        if ($limit !== null) {
-            $query .= ' LIMIT :limit';
-            $params['limit'] = $limit;
-        }
-
-        return DB::fetchAll($query, $params);
-    }
-
     public function getUpdateFromApiTargetOpenChatId(?int $limit = null): array
     {
         $query =
@@ -124,8 +97,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             WHERE
                 is_alive = 1
                 AND next_update <= :date
-                AND emid IS NOT NULL
-                AND emid != ''
             ORDER BY
                 updated_at ASC";
 
@@ -137,46 +108,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         }
 
         return DB::fetchAll($query, $params);
-    }
-
-    public function copyToOpenChatArchive(ArchiveFlagsDto $archiveFlagsDto): bool
-    {
-        $query =
-            "INSERT INTO
-                open_chat_archive (
-                    id,
-                    name,
-                    img_url,
-                    description,
-                    member,
-                    updated_at,
-                    category,
-                    emblem,
-                    note_count,
-                    update_img,
-                    update_description,
-                    update_name
-                )
-            SELECT
-                id,
-                name,
-                img_url,
-                description,
-                member,
-                updated_at,
-                category,
-                emblem,
-                note_count,
-                :update_img,
-                :update_description,
-                :update_name
-            FROM
-                open_chat
-            WHERE
-                id = :open_chat_id";
-
-        return DB::execute($query, $archiveFlagsDto->toArray())
-            ->rowCount() > 0;
     }
 
     public function getOpenChatIdByEmid(string $emid): array|false
@@ -202,18 +133,5 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         }
 
         return $result;
-    }
-
-    public function getOpenChatUrlById(int $open_chat_id): string|false
-    {
-        $query =
-            'SELECT
-                url
-            FROM
-                open_chat
-            WHERE
-                id = :open_chat_id';
-
-        return DB::fetchColumn($query, compact('open_chat_id'));
     }
 }

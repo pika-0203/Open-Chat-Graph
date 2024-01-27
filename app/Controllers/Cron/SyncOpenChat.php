@@ -6,7 +6,6 @@ namespace App\Controllers\Cron;
 
 use App\Config\AppConfig;
 use App\Services\CronJson\SyncOpenChatState;
-use App\Services\OpenChat\OpenChatCrawlingFromPage;
 use App\Services\OpenChat\OpenChatCrawlingFromApi;
 use App\Services\UpdateRankingService;
 use App\Services\OpenChat\OpenChatApiDbMerger;
@@ -81,7 +80,7 @@ class SyncOpenChat
         DB::$pdo = null;
     }
 
-    function update(OpenChatCrawlingFromApi|OpenChatCrawlingFromPage $openChatCrawling): void
+    function update(OpenChatCrawlingFromApi $openChatCrawling): void
     {
         $className = getClassSimpleName($openChatCrawling);
         $count = $openChatCrawling->caluclatemaxExecuteNum(null);

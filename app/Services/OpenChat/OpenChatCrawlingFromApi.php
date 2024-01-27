@@ -6,21 +6,15 @@ namespace App\Services\OpenChat;
 
 use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Services\OpenChat\Updater\Process\OpenChatCrawlingProcess;
-use App\Services\OpenChat\Updater\OpenChatUpdaterWithFetchInterface;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Config\AppConfig;
-use App\Services\OpenChat\Updater\OpenChatUpdaterFromApi;
 
 class OpenChatCrawlingFromApi
 {
-    private OpenChatUpdaterWithFetchInterface $openChatUpdater;
-
     function __construct(
         private UpdateOpenChatRepositoryInterface $updateRepository,
         private OpenChatCrawlingProcess $openChatCrawlingProcess,
-        OpenChatUpdaterFromApi $openChatUpdater,
     ) {
-        $this->openChatUpdater = $openChatUpdater;
     }
 
     /**
@@ -46,6 +40,6 @@ class OpenChatCrawlingFromApi
             return true;
         }
 
-        return $this->openChatCrawlingProcess->crawlingProcess($target, $this->openChatUpdater);
+        return $this->openChatCrawlingProcess->crawlingProcess($target);
     }
 }

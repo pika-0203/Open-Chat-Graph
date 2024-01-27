@@ -6,14 +6,12 @@ namespace App\Services\OpenChat;
 
 use App\Models\Repositories\DeleteOpenChatRepositoryInterface;
 use App\Models\Repositories\DuplicateOpenChatRepositoryInterface;
-use App\Services\OpenChat\Store\OpenChatImageDeleter;
 
 class DuplicateOpenChatMeger
 {
     function __construct(
         private DeleteOpenChatRepositoryInterface $DeleteOpenChatRepository,
         private DuplicateOpenChatRepositoryInterface $duplicateOpenChatRepository,
-        private OpenChatImageDeleter $openChatImageDeleter
     ) {
     }
 
@@ -42,11 +40,6 @@ class DuplicateOpenChatMeger
 
         foreach ($duplicateIdArray as $duplicated_id) {
             $this->DeleteOpenChatRepository->deleteDuplicatedOpenChat($duplicated_id, $open_chat_id);
-
-            // 違うディレクトリに同じ画像がある場合は削除する
-            if (filePathNumById($duplicated_id) !== filePathNumById($open_chat_id)) {
-                $this->openChatImageDeleter->deleteImage($duplicated_id, $imgUrl);
-            }
         }
     }
 }

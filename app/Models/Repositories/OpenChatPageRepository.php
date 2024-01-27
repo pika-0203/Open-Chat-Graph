@@ -14,7 +14,6 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
             "SELECT
                 id,
                 name,
-                url,
                 img_url,
                 description,
                 member,
@@ -58,37 +57,5 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
                 duplicated_id = :id";
 
         return DB::fetchColumn($query, ['id' => $id]);
-    }
-
-    public function getArciveById(int $open_chat_id, int $group_id): array|false
-    {
-        $query =
-            "SELECT
-                *
-            FROM
-                open_chat_archive
-            WHERE
-                group_id = :group_id
-                AND id = :open_chat_id";
-
-        return DB::fetch($query, compact('open_chat_id', 'group_id'));
-    }
-
-    public function getNextArciveById(int $archive_id, int $open_chat_id): array|false
-    {
-        $query =
-            'SELECT
-                *
-            FROM
-                open_chat_archive
-            WHERE
-                archive_id > :archive_id
-                AND id = :open_chat_id
-            ORDER BY
-                archive_id DESC
-            Limit 
-                1';
-
-        return DB::fetch($query, compact('archive_id', 'open_chat_id'));
     }
 }

@@ -23,11 +23,6 @@ class OpenChatDto
         $this->registered_created_at = time();
     }
 
-    function setOpenChatApiFromEmidDtoElement(array $ocApiElement)
-    {
-        $this->invitationTicket = $ocApiElement['invitationTicket'];
-    }
-
     function getNextUpdate(): string
     {
         return date('Y-m-d', strtotime('1 day', $this->registered_created_at));

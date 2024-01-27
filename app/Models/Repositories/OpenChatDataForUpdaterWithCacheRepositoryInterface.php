@@ -19,11 +19,6 @@ interface OpenChatDataForUpdaterWithCacheRepositoryInterface
     public function getOpenChatIdByEmid(string $emid): array|false;
 
     /**
-     * 同じデータのレコードを探す
-     */
-    public function findDuplicateOpenChat(OpenChatDto $dto): int|false;
-
-    /**
      * @return OpenChatRepositoryDto|false
      */
     public function getOpenChatDataById(int $id): OpenChatRepositoryDto|false;

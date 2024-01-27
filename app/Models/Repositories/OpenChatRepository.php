@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models\Repositories;
 
 use Shadow\DB;
-use App\Config\AppConfig;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 
@@ -28,30 +27,12 @@ class OpenChatRepository implements OpenChatRepositoryInterface
         static::$insertCount = 0;
     }
 
-    public function getOpenChatIdByUrl(string $url): int|false
-    {
-        $query =
-            'SELECT
-                id
-            FROM
-                open_chat
-            WHERE
-                url = :url
-                AND is_alive = 1
-            ORDER BY
-                id ASC
-            LIMIT 1';
-
-        return DB::execute($query, ['url' => $url])->fetchColumn();
-    }
-
     public function addOpenChatFromDto(OpenChatDto $dto): int
     {
         $dto->registered_open_chat_id = DB::executeAndGetLastInsertId(
             "INSERT INTO
                 open_chat (
                     name,
-                    url,
                     img_url,
                     description,
                     member,
@@ -66,7 +47,6 @@ class OpenChatRepository implements OpenChatRepositoryInterface
             VALUES
                 (
                     :name,
-                    :url,
                     :img_url,
                     :description,
                     :member,
@@ -89,7 +69,6 @@ class OpenChatRepository implements OpenChatRepositoryInterface
                 'api_created_at' => $dto->createdAt,
                 'category' => $dto->category,
                 'emblem' => $dto->emblem,
-                'url' => $dto->invitationTicket,
             ]
         );
 
@@ -97,29 +76,5 @@ class OpenChatRepository implements OpenChatRepositoryInterface
 
         static::$insertCount++;
         return $dto->registered_open_chat_id;
-    }
-
-    public function markAsRegistrationByUser(int $id): void
-    {
-        $query =
-            "INSERT INTO
-                user_registration_open_chat (id)
-            VALUES
-                (:id)";
-
-        DB::execute($query, ['id' => $id]);
-    }
-
-    public function markAsNoImage(int $id): void
-    {
-        $query =
-            "UPDATE
-                open_chat
-            SET
-                img_url = 'noimage'
-            WHERE
-                id = :id";
-
-        DB::execute($query, ['id' => $id]);
     }
 }

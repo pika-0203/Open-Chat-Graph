@@ -25,7 +25,6 @@ $syncOpenChat = app(SyncOpenChat::class);
 try {
     $syncOpenChat->migrate();
     $syncOpenChat->update(app(OpenChatCrawlingFromApi::class));
-    $syncOpenChat->update(app(OpenChatCrawlingFromPage::class));
 
     $syncOpenChat->finalizeMigrate();
     $syncOpenChat->finalizeUpdate();

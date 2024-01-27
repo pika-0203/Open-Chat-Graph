@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\Models\Repositories;
 
 use Shadow\DB;
-use App\Config\AppConfig;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatRepositoryDto;
-use App\Services\OpenChat\Dto\OpenChatDto;
 
 class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdaterWithCacheRepositoryInterface
 {
@@ -96,42 +94,6 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
                 is_alive = 1';
 
         self::$openChatDataCache = DB::fetchAll($query, null, [\PDO::FETCH_UNIQUE | \PDO::FETCH_ASSOC]);
-    }
-
-    public function findDuplicateOpenChat(OpenChatDto $dto): int|false
-    {
-        if (!isset(self::$openChatDataCache)) {
-            $this->cacheOpenChatData();
-        }
-
-        $imgUrl = $dto->profileImageObsHash;
-        $search = false;
-
-        if (!in_array($imgUrl, AppConfig::DEFAULT_OPENCHAT_IMG_URL)) {
-            foreach (self::$openChatDataCache as $key => $oc) {
-                if ($oc['img_url'] === $imgUrl) {
-                    $search = $key;
-                    break;
-                }
-            }
-        } else {
-            foreach (self::$openChatDataCache as $key => $oc) {
-                if (
-                    $oc['img_url'] === $imgUrl
-                    && $oc['description'] === $dto->desc
-                    && $oc['name'] === $dto->name
-                ) {
-                    $search = $key;
-                    break;
-                }
-            }
-        }
-
-        if ($search === false) {
-            return false;
-        }
-
-        return (int)$search;
     }
 
     public function getOpenChatDataById(int $id): OpenChatRepositoryDto|false

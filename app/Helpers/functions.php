@@ -144,11 +144,6 @@ function cache()
     header('Cache-Control: private');
 }
 
-function aliveStyleColor(array $oc)
-{
-    if (($oc['is_alive'] ?? null) === 0) echo 'style="color:#cf1c1c"';
-}
-
 function trimOpenChatListDescriptions(array &$openChatList, int $len = 170)
 {
     foreach ($openChatList as &$oc) {
@@ -158,43 +153,22 @@ function trimOpenChatListDescriptions(array &$openChatList, int $len = 170)
     }
 }
 
-function imgUrl(int $open_chat_id, string $img_url): string
+function imgUrl(string $img_url): string
 {
     if ($img_url === 'noimage') {
         $img_url = AppConfig::DEFAULT_OPENCHAT_IMG_URL['1'];
     }
 
-    return "https://obs.line-scdn.net/{$img_url}.jpg";
+    return "https://obs.line-scdn.net/{$img_url}";
 }
 
-function imgUrlLocal(int $open_chat_id, string $img_url): string
+function imgPreviewUrl(string $img_url): string
 {
     if ($img_url === 'noimage') {
         $img_url = AppConfig::DEFAULT_OPENCHAT_IMG_URL['1'];
-        $open_chat_id = 1;
     }
 
-    return url(AppConfig::OPENCHAT_IMG_PATH . (string)floor($open_chat_id / 1000) . "/{$img_url}.webp");
-}
-
-function imgPreviewUrl(int $open_chat_id, string $img_url): string
-{
-    if ($img_url === 'noimage') {
-        $img_url = AppConfig::DEFAULT_OPENCHAT_IMG_URL['1'];
-        $open_chat_id = 1;
-    }
-
-    return url(AppConfig::OPENCHAT_IMG_PATH . (string)floor($open_chat_id / 1000) . AppConfig::OPENCHAT_IMG_PREVIEW_PATH . "{$img_url}" . AppConfig::LINE_IMG_PREVIEW_SUFFIX . '.webp');
-}
-
-function imgPreviewUrlLocal(int $open_chat_id, string $img_url): string
-{
-    if ($img_url === 'noimage') {
-        $img_url = AppConfig::DEFAULT_OPENCHAT_IMG_URL['1'];
-        $open_chat_id = 1;
-    }
-
-    return url(AppConfig::OPENCHAT_IMG_PATH . (string)floor($open_chat_id / 1000) . AppConfig::OPENCHAT_IMG_PREVIEW_PATH . "{$img_url}" . AppConfig::LINE_IMG_PREVIEW_SUFFIX . '.webp');
+    return "https://obs.line-scdn.net/{$img_url}/preview";
 }
 
 function filePathNumById(int $id): string
