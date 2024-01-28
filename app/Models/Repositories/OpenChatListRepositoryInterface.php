@@ -7,13 +7,6 @@ namespace App\Models\Repositories;
 interface OpenChatListRepositoryInterface
 {
     /**
-     * 削除されていないopen_chat_idを全て取得する
-     * 
-     * @return array `[['id' => int, 'updated_at' => string]]`
-     */
-    public function getAliveOpenChatIdAll(): array;
-
-    /**
      * 削除されていないすべてのレコード数を取得する
      */
     public function getRecordCount(): int;
