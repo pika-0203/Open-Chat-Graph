@@ -98,7 +98,7 @@
                     <li>下記フォームに貼り付けて登録する</li>
                 </ul>
             </small>
-            <small style="color:#000">掲載されていないオープンチャットは登録できません。</small>
+            <small style="color:#000">公式サイトに掲載されていないオープンチャットは登録できません。</small>
         </p>
         <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">
             <label for="add-openchat-input-url">オープンチャットを登録する</label>
