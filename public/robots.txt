@@ -1,2 +1,4 @@
 User-agent: *
 disallow: /
+arrow: /$
+arrow: /ranking$

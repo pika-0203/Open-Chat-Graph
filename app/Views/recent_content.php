@@ -13,7 +13,7 @@
                         <span class="openchat-list-title" style="margin: 0;">最近のランクイン</span>
                     </h2>
                     <small style="font-size: 12px; color:#000">公式ランキングにランクインしたオプチャを新しい順で表示</small>
-                    <small style="font-size: 12px;">LINE公式サイトにて掲載が終了したオープンチャットのデータは、自動的にオプチャグラフから削除されます。</small>
+                    <small style="font-size: 12px;">LINEオープンチャット公式サイトで掲載が終了したオープンチャットは、オプチャグラフから削除されます。</small>
                 </div>
             </header>
             <!-- select要素ページネーション -->
