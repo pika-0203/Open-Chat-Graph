@@ -153,6 +153,11 @@ function trimOpenChatListDescriptions(array &$openChatList, int $len = 170)
     }
 }
 
+function trimOpenChatListDesc(string $desc, int $len = 170)
+{
+    return mb_strimwidth($desc, 0, $len, '…');
+}
+
 function imgUrl(string $img_url): string
 {
     if ($img_url === 'noimage') {

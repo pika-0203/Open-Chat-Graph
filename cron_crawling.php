@@ -12,8 +12,6 @@ use App\Services\RankingPosition\RankingPositionHourUpdater;
 
 set_time_limit(3600 * 4);
 
-checkLineSiteRobots();
-
 if (excludeTime()) {
     // 日次処理 12:30の場合
     exit;
@@ -29,6 +27,7 @@ if (app(SyncOpenChatState::class)->isActive) {
  */
 $syncOpenChat = app(SyncOpenChat::class);
 try {
+    checkLineSiteRobots();
     $syncOpenChat->migrate(false);
 
     $syncOpenChat->finalizeMigrate();

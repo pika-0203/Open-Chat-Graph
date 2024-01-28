@@ -12,28 +12,22 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => true]); ?>
   <article class="openchat unset">
 
     <!-- オープンチャット表示ヘッダー -->
-    <header class="openchat-header description-close unset" id="openchat-header">
-
-      <a class="overlay-link-box unset" rel="external nofollow noopener" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] ?>">
-        <div class="talkroom_banner_img_area unset">
-          <img class=" talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgUrl($oc['img_url']) ?>">
-        </div>
+    <header class="openchat-header unset" id="openchat-header">
+      <div class="talkroom_banner_img_area unset">
+        <img class=" talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgUrl($oc['img_url']) ?>">
+      </div>
+      <a rel="external" target="_blank" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] ?>" class="h1-link unset">
         <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span>
           <div class="link-mark"><span class="line-link-icon"> </span><span class="link-title">LINEオープンチャット公式サイト</span></div>
         </h1>
       </a>
-
       <div class="talkroom_number_of_members">
         <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?></span>
       </div>
       <div class="talkroom_description_box">
-        <p id="talkroom-description" class="talkroom_description"><?php echo nl2brReplace($oc['description']) ?></p>
+        <p id="talkroom-description" class="talkroom_description"><?php echo nl2brReplace(trimOpenChatListDesc($oc['description'])) ?></p>
       </div>
       <div class="detail_bottom" id="chart-footer-nav">
-        <button id="read_more_btn" class="unset" aria-label="続きを読む">
-          <div class="read_more_btn_icon"></div>
-          <span class="read_more_btn_text">続きを読む</span>
-        </button>
         <nav class="chart-footer-nav unset">
           <a href="<?php echo url('/oc/' . $oc['id'] . '/csv') ?>" download class="chart-btn unset">
             <span>CSVダウンロード</span>
@@ -126,55 +120,6 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => true]); ?>
   </footer>
 
   <script src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
-  <script>
-    ;
-    (function() {
-      // 説明文の続きを読むボタン
-      const readMoreBtn = document.getElementById('read_more_btn')
-      const talkroomDesc = document.getElementById('talkroom-description')
-
-      if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
-        readMoreBtn.style.visibility = "hidden"
-      } else {
-        const openChatHeader = document.getElementById('openchat-header')
-
-        readMoreBtn.addEventListener('click', () => {
-          if (openChatHeader.classList.contains('description-close')) {
-            openChatHeader.classList.remove('description-close')
-          } else {
-            window.scrollTo(0, 0);
-            openChatHeader.classList.add('description-close')
-          }
-        })
-      }
-
-      // 変更履歴の続きを読むボタン
-      const readMoreBtnChangeLog = document.getElementById('read_more_btn_changelog')
-      const changeLogArea = document.getElementById('changelog-area')
-
-      const changeArchiveList = () => {
-        document.querySelectorAll('.hidden-changelog').forEach(el => {
-          el.classList.toggle('show-changelog')
-        })
-
-        if (changeLogArea.classList.contains('description-close')) {
-          changeLogArea.classList.remove('description-close')
-          history.replaceState('', '', `${location.pathname}?archive_list=open`)
-        } else {
-          changeLogArea.classList.add('description-close')
-          history.replaceState('', '', `${location.pathname}`)
-        }
-      }
-
-      readMoreBtnChangeLog && readMoreBtnChangeLog.addEventListener('click', changeArchiveList)
-
-      const urlParams = new URLSearchParams(window.location.search)
-      if (urlParams.has('archive_list') && urlParams.get('archive_list') === 'open') {
-        changeArchiveList()
-      }
-    })()
-  </script>
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
   <script src="<?php echo fileUrl("/js/OpenChatChartFactory.js") ?>"></script>

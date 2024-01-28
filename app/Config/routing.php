@@ -27,6 +27,9 @@ Route::path('recent/{pageNumber}')
     ->matchNum('pageNumber', min: 1)
     ->match(cache(...));
 
+Route::path('oc')
+    ->match(redirect());
+
 Route::path('oc/{open_chat_id}')
     ->matchNum('open_chat_id', min: 1);
 
@@ -39,11 +42,11 @@ Route::path(
     ->matchNum('open_chat_id', min: 1)
     ->matchStr('sort', regex: ['ranking', 'ranking_all', 'rising', 'rising_all']);
 
-Route::middlewareGroup()
-    ->path('/')
-    ->middleware([RedirectLineWebBrowser::class])
 
-    ->path('oc/{open_chat_id}/csv')
+Route::path('/')
+    ->middleware([RedirectLineWebBrowser::class]);
+
+Route::path('oc/{open_chat_id}/csv')
     ->matchNum('open_chat_id', min: 1);
 
 Route::path('admin/cookie')
