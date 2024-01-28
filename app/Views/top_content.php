@@ -87,10 +87,18 @@
         <hr>
         <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">
             <label for="add-openchat-input-url">オープンチャットを登録する</label>
-            <input name="url" id="add-openchat-input-url" placeholder="オープンチャット公式サイトのURL" spellcheck="false" type="text" aria-describedby="add-openchat-describedby" autocomplete="off">
+            <input name="url" id="add-openchat-input-url" placeholder="LINEオープンチャット公式サイトのURL" spellcheck="false" type="text" aria-describedby="add-openchat-describedby" autocomplete="off">
             <span class="add-openchat-message" id="add-openchat-describedby">正しいURLを入力してください</span>
-            <small>オープンチャット公式サイトにて掲載が終了したオープンチャットは自動的に削除されます。</small>
             <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>統計を始める</button>
+            <p>
+                <small style="color: #000;">LINE公式サイトのランキングに掲載中のオープンチャットは、オプチャグラフが定期巡回して自動登録されます。</small>
+                <br>
+                <small style="color: #000;">オープンチャットが表示される公式サイトのURLを貼り付けることで、ランキングに未掲載のオープンチャットを手動登録することができます。</small>
+                <br>
+                <small style="color: #000;">LINE公式サイトにて掲載が終了したオープンチャットのデータは、自動的にオプチャグラフから削除されます。</small>
+                <br>
+                <small><a href="https://openchat.line.me/jp/explore">LINEオープンチャット公式サイト</a></small>
+            </p>
         </form>
         <hr>
     </main>

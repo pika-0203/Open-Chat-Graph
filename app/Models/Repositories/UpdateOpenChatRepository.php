@@ -106,7 +106,8 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             $params['limit'] = $limit;
         }
 
-        return DB::fetchAll($query, $params);
+        //return DB::fetchAll($query, $params);
+        return DB::fetchAll($query);
     }
 
     public function getOpenChatIdByEmid(string $emid): array|false

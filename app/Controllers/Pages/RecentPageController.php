@@ -27,7 +27,7 @@ class RecentPageController
         }
 
         $path = 'recent';
-        $title = '最近登録されたオープンチャット';
+        $title = '最近ランクインしたオープンチャット';
 
         trimOpenChatListDescriptions($rankingList['openChatList']);
         return $this->generateView($path, $title, $pageNumber, $rankingList);
