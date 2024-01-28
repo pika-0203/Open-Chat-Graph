@@ -134,10 +134,10 @@ header {
   word-break: break-all;
 }
 
- .talkroom_description {
+.talkroom_description {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 3;
   overflow: hidden;
 }
 
@@ -353,6 +353,10 @@ body > footer {
 @media screen and (max-width: 511px) {
   .chart-canvas-section {
     aspect-ratio: 1.6 / 1;
+  }
+
+  .openchat-header {
+    height: 412px;
   }
 }
 
