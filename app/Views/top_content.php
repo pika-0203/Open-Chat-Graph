@@ -87,7 +87,9 @@
         <hr>
         <p>
             <small style="color:#000; margin-bottom:1rem; display: block;">オプチャグラフは、LINEオープンチャット公式サイトのランキングに掲載中のオープンチャットを収集して自動登録します。</small>
-            <small style="color:#000; margin-bottom:1rem; display: block;">ランキング未掲載のオープンチャットを手動で登録する場合は、登録したいオープンチャットが表示されるLINEオープンチャット公式サイトのURLを登録してください。</small>
+        </p>
+        <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem;">
+            <small style="color:#000; margin-bottom:1rem; display: block;">ランキング未掲載のオープンチャットを手動で登録する場合は、登録したいオープンチャットが表示される<a href="https://openchat.line.me/jp/explore" rel="external" target="_blank">LINEオープンチャット公式サイト</a><span class="line-link-icon"></span>のURLを登録してください。</small>
         </p>
         <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">
             <label for="add-openchat-input-url">オープンチャットを登録する</label>
@@ -97,10 +99,12 @@
         </form>
         <p>
             <small style="color:#000">LINEオープンチャット公式サイトで掲載が終了したオープンチャットは、オプチャグラフから削除されます。</small>
-            <br>
-            <small><a href="https://openchat.line.me/jp/explore" rel="external" target="_blank">LINEオープンチャット公式サイト</a><span class="line-link-icon"></span></small>
         </p>
-        <hr>
+        <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem;">
+            <small style="color:#000">オープンチャットが当サイトに登録されないようにするには、オープンチャットの説明文に #nolog を含めます。</small>
+            <br>
+            <small style="color:#000">既に登録済みのオープンチャットは、データ更新時に #nolog を検出すると削除されます。</small>
+        </p>
     </main>
     <footer>
         <?php viewComponent('footer_inner') ?>
