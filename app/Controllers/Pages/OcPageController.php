@@ -43,8 +43,7 @@ class OcPageController
             $myList = [];
         }
 
-        $noindex = true;
-        return view('oc_content', compact('_meta', '_css', 'oc', 'statisticsData', 'myList', 'noindex'));
+        return view('oc_content', compact('_meta', '_css', 'oc', 'statisticsData', 'myList'));
     }
 
     function csv(

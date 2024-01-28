@@ -14,6 +14,6 @@
     <?php endforeach ?>
     <link rel="icon" type="image/png" href="<?php echo url(\App\Config\AppConfig::SITE_ICON_FILE_PATH) ?>">
     <?php if ($noindex ?? false) : ?>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex,nofollow,noarchive" />
     <?php endif ?>
 </head>
