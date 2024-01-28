@@ -86,7 +86,7 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
                 category,
                 emblem
             FROM
-                open_chat AS oc';
+                open_chat';
 
         self::$openChatDataCache = DB::fetchAll($query, null, [\PDO::FETCH_UNIQUE | \PDO::FETCH_ASSOC]);
     }
