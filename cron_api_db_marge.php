@@ -66,3 +66,5 @@ try {
 }
 
 unset($subCategory);
+
+updateSitemap();
