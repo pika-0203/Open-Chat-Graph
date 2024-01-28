@@ -25,7 +25,7 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => true]); ?>
         <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?></span>
       </div>
       <div class="talkroom_description_box">
-        <p id="talkroom-description" class="talkroom_description"><?php echo nl2brReplace(trimOpenChatListDesc($oc['description'])) ?></p>
+        <p id="talkroom-description" class="talkroom_description"><?php echo trimOpenChatListDesc($oc['description']) ?></p>
       </div>
       <div class="detail_bottom" id="chart-footer-nav">
         <nav class="chart-footer-nav unset">
