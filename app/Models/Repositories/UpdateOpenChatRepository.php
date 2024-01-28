@@ -86,14 +86,16 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
 
     public function getUpdateFromApiTargetOpenChatId(?int $limit = null): array
     {
+        // TODO: NEXT_UPDATE
+
         $query =
             "SELECT
                 id,
                 emid AS fetcherArg
             FROM
                 open_chat
-            WHERE
-                next_update <= :date
+            --WHERE
+                --next_update <= :date
             ORDER BY
                 updated_at ASC";
 

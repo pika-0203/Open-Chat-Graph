@@ -16,6 +16,7 @@ class OpenChatDto
     public ?int $emblem = null;              // ranking-api data
     public int $registered_created_at;       // construct value
     public int $registered_open_chat_id;     // DB registered
+    private string $apiDataInvitationTicket;
 
     function __construct()
     {
@@ -37,5 +38,15 @@ class OpenChatDto
             'member' => $this->memberCount,
             'date' => date('Y-m-d', $this->registered_created_at),
         ];
+    }
+
+    function setApiDataInvitationTicket(string $invitationTicket): void
+    {
+        $this->apiDataInvitationTicket = $invitationTicket;
+    }
+
+    function getApiDataInvitationTicket(): string
+    {
+        return $this->apiDataInvitationTicket;
     }
 }
