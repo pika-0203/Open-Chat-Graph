@@ -221,3 +221,25 @@ function checkLineSiteRobots()
         throw new \RuntimeException('Robots.txt: 拒否 ' . $robots);
     }
 }
+
+function updateSitemap()
+{
+    $today = date('Y-m-d');
+    $sitemap = <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://openchat-review.me</loc>
+        <lastmod>{$today}</lastmod>
+        <changefreq>daily</changefreq>
+    </url>
+    <url>
+        <loc>https://openchat-review.me/ranking</loc>
+        <lastmod>{$today}</lastmod>
+        <changefreq>daily</changefreq>
+    </url>
+</urlset>
+XML;
+
+    safeFileRewrite(PUBLIC_DIR . '/sitemap.xml', $sitemap);
+}

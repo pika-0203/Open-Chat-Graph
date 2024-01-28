@@ -8,8 +8,9 @@ use App\Services\Admin\AdminAuthService;
 
 class AdminAuth
 {
-    function handle(AdminAuthService $adminAuthService): bool
+    function handle(AdminAuthService $adminAuthService)//: bool
     {
-        return $adminAuthService->auth();
+        //return $adminAuthService->auth();
+        $adminAuthService->auth();
     }
 }

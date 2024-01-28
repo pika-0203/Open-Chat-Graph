@@ -65,4 +65,4 @@ Route::path('react-test')
 Route::path('react-test/{category}')
     ->match(fn ($category) => redirect('ranking/' . $category . strstr($_SERVER['REQUEST_URI'] ?? '', '?')));
 
-Route::run();
+Route::run(AdminAuth::class);
