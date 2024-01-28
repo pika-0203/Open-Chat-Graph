@@ -11,6 +11,8 @@ class OpenChatRegistrationApiController
 {
     function register(OpenChatFromCrawlerRegistration $openChat, GceDbRecordSynchronizer $gce, string $url)
     {
+        checkLineSiteRobots();
+        
         $openChat->getNumAddOpenChatPerMinute();
         $result = $openChat->registerOpenChatFromCrawler(sanitizeString($url));
 

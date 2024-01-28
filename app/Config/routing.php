@@ -43,7 +43,7 @@ Route::path(
     ->matchStr('sort', regex: ['ranking', 'ranking_all', 'rising', 'rising_all']);
 
 Route::path('/')
-    ->middleware([RedirectLineWebBrowser::class, VerifyCsrfToken::class]);
+    ->middleware([RedirectLineWebBrowser::class, VerifyCsrfToken::class, AdminAuth::class]);
 
 Route::path('oc@post', [OpenChatRegistrationApiController::class, 'register'])
     ->matchStr('url', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
@@ -71,4 +71,4 @@ Route::path('react-test')
 Route::path('react-test/{category}')
     ->match(fn ($category) => redirect('ranking/' . $category . strstr($_SERVER['REQUEST_URI'] ?? '', '?')));
 
-Route::run(AdminAuth::class);
+Route::run();
