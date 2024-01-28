@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models\Repositories;
 
 use App\Services\OpenChat\Dto\OpenChatRepositoryDto;
-use App\Services\OpenChat\Dto\OpenChatDto;
 
 interface OpenChatDataForUpdaterWithCacheRepositoryInterface
 {

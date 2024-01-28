@@ -6,6 +6,7 @@ namespace App\Services\OpenChat\Updater;
 
 use App\Services\OpenChat\Crawler\OpenChatApiFromEmidDownloader;
 use App\Models\Repositories\Log\LogRepositoryInterface;
+use App\Services\OpenChat\Crawler\OpenChatUrlChecker;
 
 class OpenChatUpdaterFromApi
 {
@@ -13,6 +14,7 @@ class OpenChatUpdaterFromApi
         private OpenChatUpdater $openChatUpdater,
         private LogRepositoryInterface $logRepository,
         private OpenChatApiFromEmidDownloader $openChatDtoFetcher,
+        private OpenChatUrlChecker $openChatUrlChecker,
     ) {
     }
 
@@ -35,7 +37,11 @@ class OpenChatUpdaterFromApi
             return false;
         }
 
-        if ($ocDto === false || $ocDto->memberCount < 1) {
+        if (
+            $ocDto === false
+            || $ocDto->memberCount < 1
+            || !$this->openChatUrlChecker->isOpenChatUrlAvailable($ocDto->getApiDataInvitationTicket())
+        ) {
             // 削除
             $this->openChatUpdater->updateOpenChat($open_chat_id, false);
             return true;

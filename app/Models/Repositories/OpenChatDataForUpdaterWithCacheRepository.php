@@ -82,8 +82,7 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
                 member,
                 api_created_at,
                 category,
-                emblem,
-                url
+                emblem
             FROM
                 open_chat AS oc';
 
