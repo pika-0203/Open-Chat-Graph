@@ -8,11 +8,12 @@
     <main class="ranking-page-main">
         <article>
             <header class="openchat-list-title-area unset">
-                <div class="openchat-list-date" style="gap: 4px;">
+                <div class="openchat-list-date" style="gap: 4px; flex-direction: column;">
                     <h2 class="unset">
-                        <span class="openchat-list-title">最近のランクイン</span>
+                        <span class="openchat-list-title" style="margin: 0;">最近のランクイン</span>
                     </h2>
-                    <small style="font-size: 12px">公式ランキングに掲載されたオプチャを時系列で表示しています。<br>公式サイトにて掲載が終了したオプチャはオプチャグラフから削除されます。</small>
+                    <small style="font-size: 12px; color:#000">公式ランキングにランクインしたオプチャを新しい順で表示</small>
+                    <small style="font-size: 12px;">LINE公式サイトにて掲載が終了したオープンチャットのデータは、自動的にオプチャグラフから削除されます。</small>
                 </div>
             </header>
             <!-- select要素ページネーション -->
