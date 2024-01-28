@@ -7,6 +7,7 @@ use App\Middleware\RedirectLineWebBrowser;
 use App\Services\Admin\AdminAuthService;
 use App\Controllers\Api\OpenChatRankingPageApiController;
 use App\Controllers\Api\RankingPositionApiController;
+use App\Controllers\Pages\OpenChatPageController;
 use App\Controllers\Pages\ReactRankingPageController;
 use App\Middleware\AdminAuth;
 
@@ -27,10 +28,7 @@ Route::path('recent/{pageNumber}')
     ->matchNum('pageNumber', min: 1)
     ->match(cache(...));
 
-Route::path('oc')
-    ->match(redirect());
-
-Route::path('oc/{open_chat_id}')
+Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
     ->matchNum('open_chat_id', min: 1);
 
 Route::path('oclist', [OpenChatRankingPageApiController::class, 'index']);
@@ -46,7 +44,7 @@ Route::path(
 Route::path('/')
     ->middleware([RedirectLineWebBrowser::class]);
 
-Route::path('oc/{open_chat_id}/csv')
+Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
     ->matchNum('open_chat_id', min: 1);
 
 Route::path('admin/cookie')
