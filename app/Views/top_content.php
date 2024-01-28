@@ -89,10 +89,10 @@
             <small style="color:#000; margin-bottom:1rem; display: block;">オプチャグラフは、LINEオープンチャット公式サイトのランキングに掲載中のオープンチャットを収集して自動登録します。</small>
         </p>
         <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem;">
-            <small style="color:#000">ランキング未掲載のオープンチャットを手動で登録する場合</small>
+            <small style="color:#000">オープンチャットを手動で登録する場合</small>
             <small style="color:#000">
                 <ul>
-                    <li><a href="https://openchat.line.me/jp/explore" rel="external" target="_blank">LINEオープンチャット公式サイト</a><span class="line-link-icon"></span>を開く</li>
+                    <li><a href="https://openchat.line.me/jp" rel="external" target="_blank">LINEオープンチャット公式サイト</a><span class="line-link-icon"></span>を開く</li>
                     <li>登録したいオープンチャットを探す</li>
                     <li>ページのURLをアドレスバーからコピーする</li>
                     <li>下記フォームに貼り付けて登録する</li>
