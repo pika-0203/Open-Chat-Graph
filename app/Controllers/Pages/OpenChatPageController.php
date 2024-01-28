@@ -11,7 +11,7 @@ use App\Views\Meta\OcPageMeta;
 use App\Services\Statistics\DownloadCsvService;
 use App\Views\StatisticsViewUtility;
 
-class OcPageController
+class OpenChatPageController
 {
     function index(
         StatisticsPageRepositoryInterface $statisticsRepo,
