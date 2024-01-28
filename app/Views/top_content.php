@@ -101,7 +101,7 @@
             <small style="color:#000">LINEオープンチャット公式サイトで掲載が終了したオープンチャットは、オプチャグラフから削除されます。</small>
         </p>
         <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem;">
-            <small style="color:#000">オープンチャットが当サイトに登録されないようにするには、オープンチャットの説明文に #nolog を含めます。</small>
+            <small style="color:#000">オープンチャットがオプチャグラフに登録されないようにするには、オープンチャットの説明文に #nolog を含めます。</small>
             <br>
             <small style="color:#000">既に登録済みのオープンチャットは、データ更新時に #nolog を検出すると削除されます。</small>
         </p>
