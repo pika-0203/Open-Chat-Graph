@@ -211,3 +211,13 @@ function excludeTime(
     $updateTimeRange = (new DateTime)->setTime(...$end);
     return ($currentTime > $updateTime) && ($currentTime < $updateTimeRange);
 }
+
+function checkLineSiteRobots()
+{
+    $robots = file_get_contents('https://openchat.line.me/robots.txt');
+    $ua = str_contains($robots, 'User-agent: *');
+    $arrow = str_contains($robots, 'Allow: /jp/');
+    if (!$ua || !$arrow) {
+        throw new \RuntimeException('Robots.txt: 拒否 ' . $robots);
+    }
+}

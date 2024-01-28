@@ -12,6 +12,8 @@ use App\Services\RankingPosition\RankingPositionHourUpdater;
 
 set_time_limit(3600 * 4);
 
+checkLineSiteRobots();
+
 if (app(SyncOpenChatState::class)->isActive) {
     AdminTool::sendLineNofity('SyncOpenChat: state is active');
     exit;
