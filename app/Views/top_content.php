@@ -91,7 +91,7 @@
         </p>
         <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">
             <label for="add-openchat-input-url">オープンチャットを登録する</label>
-            <input name="url" id="add-openchat-input-url" placeholder="LINEオープンチャット公式サイトのURL" spellcheck="false" type="text" aria-describedby="add-openchat-describedby" autocomplete="off">
+            <input name="url" id="add-openchat-input-url" placeholder="https://openchat.line.me/jp/cover/..." spellcheck="false" type="text" aria-describedby="add-openchat-describedby" autocomplete="off">
             <span class="add-openchat-message" id="add-openchat-describedby">正しいURLを入力してください</span>
             <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>登録する</button>
         </form>
