@@ -93,7 +93,7 @@
             <small style="color:#000">
                 <ul>
                     <li><a href="https://openchat.line.me/jp/explore" rel="external" target="_blank">LINEオープンチャット公式サイト</a><span class="line-link-icon"></span>を開く</li>
-                    <li>登録したいオープンチャットを探して開く</li>
+                    <li>登録したいオープンチャットを探す</li>
                     <li>ページのURLをアドレスバーからコピーする</li>
                     <li>下記フォームに貼り付けて登録する</li>
                 </ul>
