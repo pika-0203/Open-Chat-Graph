@@ -20,18 +20,6 @@ function gcesyncall(GceDbTableSynchronizer $sql, GceRankingUpdater $gce)
     $result = $sql->syncOpenChatAll();
     $message = 'syncOpenChatAll: ' . $result . "\nend: " . date('Y-m-d H:i:s');
     AdminTool::sendLineNofity($message);
-
-    DBGce::execute("TRUNCATE TABLE open_chat_archive");
-    $result = $sql->syncOpenChatArchive(true);
-    $message = 'syncOpenChatArchive: ' . $result . "\nend: " . date('Y-m-d H:i:s') . "\n\n";
-
-    DBGce::execute("TRUNCATE TABLE open_chat_merged");
-    $result = $sql->syncOpenChatMerged();
-    $message .= 'syncOpenChatMerged: ' . $result . "\nend: " . date('Y-m-d H:i:s') . "\n\n";
-
-    DBGce::execute("TRUNCATE TABLE user_registration_open_chat");
-    $result = $sql->syncUserRegistrationOpenChat();
-    $message .= 'syncUserRegistrationOpenChat: ' . $result . "\nend: " . date('Y-m-d H:i:s');
     
     $gce->updateRanking();
 
