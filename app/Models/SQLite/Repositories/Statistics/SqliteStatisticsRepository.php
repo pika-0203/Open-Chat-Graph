@@ -21,7 +21,7 @@ class SqliteStatisticsRepository implements StatisticsRepositoryInterface
         );
     }
 
-    public function insertUpdateDailyStatistics(int $open_chat_id, int $member, int|string $date): void
+    public function insertDailyStatistics(int $open_chat_id, int $member, int|string $date): void
     {
         $query =
             'INSERT OR IGNORE INTO statistics (open_chat_id, member, date)

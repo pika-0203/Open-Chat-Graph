@@ -15,7 +15,7 @@ interface StatisticsRepositoryInterface
      * 
      * @param ?int $member nullの場合は現在のメンバー数で追加する
      */
-    public function insertUpdateDailyStatistics(int $open_chat_id, int $member, int|string $date): void;
+    public function insertDailyStatistics(int $open_chat_id, int $member, int|string $date): void;
 
     public function daleteDailyStatistics(int $open_chat_id): void;
 

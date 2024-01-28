@@ -78,7 +78,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         );
 
         if (isset($dto->db_member)) {
-            $this->statisticsRepository->insertUpdateDailyStatistics($dto->open_chat_id, ($dto->memberCount ?? $dto->db_member), $dto->updated_at);
+            $this->statisticsRepository->insertDailyStatistics($dto->open_chat_id, ($dto->memberCount ?? $dto->db_member), $dto->updated_at);
         }
 
         return $result;
@@ -86,12 +86,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
 
     public function getUpdateFromApiTargetOpenChatId(?int $limit = null): array
     {
-        // TODO: NEXT_UPDATE
-        /**
-         *            --WHERE
-         *       --next_update <= :date
-         */
-
         $query =
             "SELECT
                 id,
@@ -100,6 +94,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
                 open_chat
             WHERE
                 DATE(updated_at) < :date
+                AND next_update <= :date
             ORDER BY
                 updated_at ASC";
 
