@@ -31,7 +31,8 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
     public static function addOpenChatIdByEmidCache(int $id, string $emid): void
     {
         $next_update = 0;
-        self::$openChatIdAndNextUpdateCache[] = compact('id', 'emid', 'next_update');
+        $img_url = '';
+        self::$openChatIdAndNextUpdateCache[] = compact('id', 'emid', 'next_update', 'img_url');
     }
 
     private function cacheOpenChatIdByEmid(): void
@@ -40,7 +41,8 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
             "SELECT
                 id,
                 emid,
-                next_update <= :curDate AS next_update
+                next_update <= :curDate AS next_update,
+                img_url
             FROM
                 open_chat
             ORDER BY

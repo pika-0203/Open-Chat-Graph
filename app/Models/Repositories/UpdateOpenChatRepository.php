@@ -87,6 +87,10 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
     public function getUpdateFromApiTargetOpenChatId(?int $limit = null): array
     {
         // TODO: NEXT_UPDATE
+        /**
+         *            --WHERE
+         *       --next_update <= :date
+         */
 
         $query =
             "SELECT
@@ -94,8 +98,8 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
                 emid AS fetcherArg
             FROM
                 open_chat
-            --WHERE
-                --next_update <= :date
+            WHERE
+                DATE(updated_at) < :date
             ORDER BY
                 updated_at ASC";
 
@@ -106,8 +110,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             $params['limit'] = $limit;
         }
 
-        //return DB::fetchAll($query, $params);
-        return DB::fetchAll($query);
+        return DB::fetchAll($query, $params);
     }
 
     public function getOpenChatIdByEmid(string $emid): array|false
