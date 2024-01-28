@@ -86,7 +86,7 @@
         <hr>
         <hr>
         <p>
-            <small style="color:#000; margin-bottom:1rem; display: block;">オプチャグラフは、LINEオープンチャット公式サイトのランキングに掲載中のオープンチャットを収集して自動登録します。</small>
+            <small style="color:#000; margin-bottom:1rem; display: block;">オプチャグラフは、<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">LINEオープンチャット公式サイトのランキング</a><span class="line-link-icon"></span>に掲載中のオープンチャットを自動的に収集して登録します。</small>
         </p>
         <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem;">
             <small style="color:#000">オープンチャットを手動で登録する場合</small>
