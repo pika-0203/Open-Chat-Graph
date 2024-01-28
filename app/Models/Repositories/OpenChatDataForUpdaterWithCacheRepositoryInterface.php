@@ -13,7 +13,7 @@ interface OpenChatDataForUpdaterWithCacheRepositoryInterface
     public static function addOpenChatIdByEmidCache(int $id, string $emid): void;
 
     /**
-     * @return array|false `['id' => int, next_update => 0 or 1]`
+     * @return array|false `['id' => int, next_update => 0 or 1, img_url => string]`
      */
     public function getOpenChatIdByEmid(string $emid): array|false;
 

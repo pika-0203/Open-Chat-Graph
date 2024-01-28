@@ -26,7 +26,14 @@ class OpenChatApiDbMergerProcess
     {
         // Emidが一致するオープンチャットを取得する
         $openChatByEmid = $this->openChatDataWithCache->getOpenChatIdByEmid($apiDto->emid);
-        if ($openChatByEmid && (!$openChatByEmid['next_update'] || !$updateFlag)) {
+        if (
+            $openChatByEmid
+            && (
+                !$openChatByEmid['next_update']
+                || $openChatByEmid['img_url'] === $apiDto->profileImageObsHash
+                || !$updateFlag
+            )
+        ) {
             // 一致したデータがあり更新対象ではない場合
             return null;
         } elseif ($openChatByEmid) {
