@@ -8,26 +8,6 @@ use Shadow\DB;
 
 class OpenChatListRepository implements OpenChatListRepositoryInterface
 {
-    public function getAliveOpenChatIdAll(): array
-    {
-        return DB::fetchAll(
-            'SELECT 
-                oc.id,
-                COALESCE(archive.archived_at, oc.created_at) AS updated_at
-            FROM 
-                open_chat AS oc
-                LEFT JOIN (
-                    SELECT
-                        id,
-                        MAX(archived_at) AS archived_at
-                    FROM
-                        open_chat_archive
-                    GROUP BY
-                        id
-                ) AS archive ON oc.id = archive.id'
-        );
-    }
-
     public function getRecordCount(): int
     {
         return (int)DB::execute(

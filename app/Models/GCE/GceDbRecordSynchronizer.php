@@ -28,9 +28,6 @@ class GceDbRecordSynchronizer
 
         $this->inserterWithBindValue->import(GceVmSql::connect(), 'open_chat', [$data]);
 
-        $data = DB::fetchAll("SELECT * FROM user_registration_open_chat WHERE id = :id", $param);
-        $this->inserter->import(GceVmSql::connect(), 'user_registration_open_chat', $data);
-
         return true;
     }
 

@@ -62,7 +62,7 @@ class AdminPageController
         echo 'done';
     }
 
-    function gcesyncall(GceDbTableSynchronizer $sql, GceRankingUpdater $gce, GceDifferenceUpdater $gcedeiff)
+    private function gcesyncall(GceDbTableSynchronizer $sql, GceRankingUpdater $gce, GceDifferenceUpdater $gcedeiff)
     {
         set_time_limit(3600 * 3);
         $message = "start: " . date('Y-m-d H:i:s') . "\n\n";
@@ -109,7 +109,7 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'updateStaticTopPageData done', 'message' => 'updateStaticTopPageData done']);
     }
 
-    function killmerge(SyncOpenChatState $json)
+    private function killmerge(SyncOpenChatState $json)
     {
         if ($json->isActive ?? false) {
             OpenChatApiDbMerger::enableKillFlag();
@@ -120,7 +120,7 @@ class AdminPageController
         }
     }
 
-    function removedeleted(DeleteOpenChatRepositoryInterface $dRepo)
+    private function removedeleted(DeleteOpenChatRepositoryInterface $dRepo)
     {
         set_time_limit(3600);
 
