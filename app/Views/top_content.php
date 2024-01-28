@@ -89,7 +89,16 @@
             <small style="color:#000; margin-bottom:1rem; display: block;">オプチャグラフは、LINEオープンチャット公式サイトのランキングに掲載中のオープンチャットを収集して自動登録します。</small>
         </p>
         <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem;">
-            <small style="color:#000; margin-bottom:1rem; display: block;">ランキング未掲載のオープンチャットを手動で登録する場合は、登録したいオープンチャットが表示される<a href="https://openchat.line.me/jp/explore" rel="external" target="_blank">LINEオープンチャット公式サイト</a><span class="line-link-icon"></span>のページのURLを貼り付けて登録してください。</small>
+            <small style="color:#000">ランキング未掲載のオープンチャットを手動で登録する場合</small>
+            <small style="color:#000">
+                <ul>
+                    <li><a href="https://openchat.line.me/jp/explore" rel="external" target="_blank">LINEオープンチャット公式サイト</a><span class="line-link-icon"></span>を開く</li>
+                    <li>登録したいオープンチャットを探して開く</li>
+                    <li>ページのURLをアドレスバーからコピーする</li>
+                    <li>下記フォームに貼り付けて登録する</li>
+                </ul>
+            </small>
+            <small style="color:#000">掲載されていないオープンチャットは登録できません。</small>
         </p>
         <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">
             <label for="add-openchat-input-url">オープンチャットを登録する</label>
@@ -97,13 +106,13 @@
             <span class="add-openchat-message" id="add-openchat-describedby">正しいURLを入力してください</span>
             <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>登録する</button>
         </form>
-        <p>
-            <small style="color:#000">LINEオープンチャット公式サイトで掲載が終了したオープンチャットは、オプチャグラフから削除されます。</small>
-        </p>
-        <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem;">
+        <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem; margin-top:1rem;">
             <small style="color:#000">オープンチャットがオプチャグラフに登録されないようにするには、オープンチャットの説明文に #nolog を含めます。</small>
             <br>
             <small style="color:#000">既に登録済みのオープンチャットは、データ更新時に #nolog を検出すると削除されます。</small>
+        </p>
+        <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem;">
+            <small style="color:#000">LINEオープンチャット公式サイトで掲載が終了したオープンチャットは、オプチャグラフから削除されます。</small>
         </p>
     </main>
     <footer>
