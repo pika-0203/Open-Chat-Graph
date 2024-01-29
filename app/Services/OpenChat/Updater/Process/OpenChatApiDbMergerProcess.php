@@ -36,7 +36,7 @@ class OpenChatApiDbMergerProcess
             // 再接続
             DB::$pdo = null;
 
-            if ($openChatByEmid && $openChatByEmid['img_url'] === $apiDto->profileImageObsHash) {
+            if ($openChatByEmid) {
                 // 一致したデータがあり更新対象ではない場合
                 return null;
             }
