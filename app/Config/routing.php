@@ -10,7 +10,6 @@ use App\Controllers\Api\OpenChatRegistrationApiController;
 use App\Controllers\Api\RankingPositionApiController;
 use App\Controllers\Pages\OpenChatPageController;
 use App\Controllers\Pages\ReactRankingPageController;
-use App\Middleware\AdminAuth;
 use App\Middleware\VerifyCsrfToken;
 
 Route::middlewareGroup(RedirectLineWebBrowser::class)
@@ -43,14 +42,15 @@ Route::path(
     ->matchStr('sort', regex: ['ranking', 'ranking_all', 'rising', 'rising_all']);
 
 Route::path('/')
-    ->middleware([RedirectLineWebBrowser::class, VerifyCsrfToken::class, AdminAuth::class]);
+    ->middleware([RedirectLineWebBrowser::class, VerifyCsrfToken::class]);
 
 Route::path('oc@post', [OpenChatRegistrationApiController::class, 'register'])
     ->matchStr('url', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
     ->middleware([RedirectLineWebBrowser::class, VerifyCsrfToken::class]);
 
 Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
-    ->matchNum('open_chat_id', min: 1);
+    ->matchNum('open_chat_id', min: 1)
+    ->middleware([RedirectLineWebBrowser::class]);
 
 Route::path('admin/cookie')
     ->match(function (AdminAuthService $adminAuthService, ?string $key) {

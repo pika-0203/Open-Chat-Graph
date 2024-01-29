@@ -22,7 +22,7 @@
             <p>Googleアナリティクスのデータ収集を行うためCookieを使用しています。<br>このデータは匿名で収集されており、個人を特定するものではありません。</p>
             <p>詳細は<a href="https://marketingplatform.google.com/about/analytics/terms/jp/" rel="noopener noreferrer" target="_blank">Googleアナリティクスサービス利用規約</a>や<a href="https://policies.google.com/technologies/ads?hl=ja" rel="noopener noreferrer" target="_blank">Googleポリシーと規約</a>をご覧ください。</p>
             <p>Cookieを無効にすることで収集を拒否することが出来ます。</p>
-            <p>Cookieが無効の場合、オープンチャット登録とCSVダウンロードの利用はできません。</p>
+            <p>Cookieが無効の場合、オープンチャットの登録ができません。</p>
             <h2>お問い合わせ窓口</h2>
             <p>E-mail: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>
         </article>
