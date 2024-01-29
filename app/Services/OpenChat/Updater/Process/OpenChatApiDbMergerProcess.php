@@ -32,20 +32,26 @@ class OpenChatApiDbMergerProcess
                 // 一致したデータがあり更新対象ではない場合
                 return null;
             }
+
+            if ($openChatByEmid) {
+                // DBに一致するオープンチャットがある場合
+                $this->openChatUpdater->updateOpenChat($openChatByEmid['id'], $apiDto);
+                return null;
+            }
         } else {
             // 再接続
             DB::$pdo = null;
 
-            if ($openChatByEmid) {
+            if ($openChatByEmid && $openChatByEmid['img_url'] === $apiDto->profileImageObsHash) {
                 // 一致したデータがあり更新対象ではない場合
                 return null;
             }
-        }
 
-        if ($openChatByEmid) {
-            // DBに一致するオープンチャットがある場合
-            $this->openChatUpdater->updateOpenChat($openChatByEmid['id'], $apiDto);
-            return null;
+            if ($openChatByEmid) {
+                // DBに一致するオープンチャットがある場合
+                $this->openChatUpdater->updateOpenChat($openChatByEmid['id'], $apiDto, false);
+                return null;
+            }
         }
 
         // 収集拒否の場合

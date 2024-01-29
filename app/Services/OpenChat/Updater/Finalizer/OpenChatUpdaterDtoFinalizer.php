@@ -14,8 +14,13 @@ class OpenChatUpdaterDtoFinalizer
     ) {
     }
 
-    function finalizeUpdaterDtoGeneration(OpenChatUpdaterDto $updaterDto): OpenChatUpdaterDto
+    function finalizeUpdaterDtoGeneration(OpenChatUpdaterDto $updaterDto, bool $updateNextUpdate = true): OpenChatUpdaterDto
     {
+        if (!$updateNextUpdate) {
+            $updaterDto->next_update = null;
+            return $updaterDto;
+        }
+
         // 過去一週間でメンバー数に動きがあるかどうかの確認
         if (!isset($updaterDto->memberCount) && !$this->updateRepository->getMemberChangeWithinLastWeek($updaterDto->open_chat_id)) {
             // 動きがない場合一週間後の更新にする
