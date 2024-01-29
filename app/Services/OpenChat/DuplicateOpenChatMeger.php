@@ -19,21 +19,15 @@ class DuplicateOpenChatMeger
     {
         $duplicateOpenChat = $this->duplicateOpenChatRepository->getDuplicateOpenChatInfo();
 
-        foreach ($duplicateOpenChat as $oc) {
-            $this->processMergeDuplicateOpenChat($oc);
+        foreach ($duplicateOpenChat as $idArray) {
+            $this->processMergeDuplicateOpenChat($idArray);
         }
 
         return $duplicateOpenChat;
     }
 
-    function processMergeDuplicateOpenChat(array $openChat): void
+    function processMergeDuplicateOpenChat(array $idArray): void
     {
-        /**
-         * @var array $idArray
-         * @var string $imgUrl
-         */
-        ['id' => $idArray, 'img_url' => $imgUrl] = $openChat;
-
         // open_chat_id が一番古いものを残す
         $open_chat_id = min($idArray);
         $duplicateIdArray = array_filter($idArray, fn ($id) => $id !== $open_chat_id);
