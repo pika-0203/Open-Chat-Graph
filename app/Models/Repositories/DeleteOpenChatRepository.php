@@ -38,13 +38,7 @@ class DeleteOpenChatRepository implements DeleteOpenChatRepositoryInterface
         $this->statisticsRepository->daleteDailyStatistics($open_chat_id);
         $this->rankingPositionRepository->daleteDailyPosition($open_chat_id);
 
-        return $result && DB::executeAndCheckResult(
-            "DELETE FROM
-                     open_chat_deleted
-                WHERE
-                     id = :open_chat_id",
-            compact('open_chat_id')
-        );
+        return $result;
     }
 
     public function deleteDuplicatedOpenChat(int $duplicated_id, int $open_chat_id): void
