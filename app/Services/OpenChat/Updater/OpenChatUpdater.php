@@ -23,7 +23,7 @@ class OpenChatUpdater
     ) {
     }
 
-    function updateOpenChat(int $open_chat_id, OpenChatDto|false $ocDto): void
+    function updateOpenChat(int $open_chat_id, OpenChatDto|false $ocDto, bool $updateNextUpdate = true): void
     {
         $repoDto = $this->openChatRepository->getOpenChatDataById($open_chat_id);
         if ($repoDto === false) {
@@ -35,7 +35,8 @@ class OpenChatUpdater
             $updaterDto = $this->openChatUpdaterDtoFactory->mapToDeleteOpenChatDto($open_chat_id, $repoDto->profileImageObsHash);
         } else {
             $updaterDto = $this->openChatUpdaterDtoFinalizer->finalizeUpdaterDtoGeneration(
-                $this->openChatUpdaterDtoFactory->mapToDto($open_chat_id, $repoDto, $ocDto)
+                $this->openChatUpdaterDtoFactory->mapToDto($open_chat_id, $repoDto, $ocDto),
+                $updateNextUpdate
             );
         }
 

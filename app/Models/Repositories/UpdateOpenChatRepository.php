@@ -77,7 +77,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             $columnsToUpdate
         );
 
-        if (isset($dto->db_member)) {
+        if (isset($dto->next_update) && isset($dto->db_member)) {
             $this->statisticsRepository->insertDailyStatistics($dto->open_chat_id, ($dto->memberCount ?? $dto->db_member), $dto->updated_at);
         }
 
