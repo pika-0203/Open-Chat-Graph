@@ -248,3 +248,10 @@ XML;
 
     safeFileRewrite(PUBLIC_DIR . '/sitemap.xml', $sitemap);
 }
+
+function getImgSetErrorTag(): string
+{
+    return <<<HTML
+ onerror="this.src='/assets/ogp.png'; this.removeAttribute('onerror'); this.removeAttribute('onload');" onload="this.removeAttribute('onerror'); this.removeAttribute('onload');"
+ HTML;
+}

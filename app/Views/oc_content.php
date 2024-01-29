@@ -14,7 +14,7 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => true]); ?>
     <!-- オープンチャット表示ヘッダー -->
     <header class="openchat-header unset" id="openchat-header">
       <div class="talkroom_banner_img_area unset">
-        <img class=" talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgUrl($oc['img_url']) ?>">
+        <img class=" talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgUrl($oc['img_url']) ?>" <?php echo getImgSetErrorTag() ?>>
       </div>
       <a rel="external" target="_blank" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] ?>" class="h1-link unset">
         <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span>
