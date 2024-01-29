@@ -4,7 +4,7 @@
   <?php foreach ($openChatList as $oc) : ?>
     <li class="openchat-item unset  <?php echo isset($oc['archived_at']) ? 'registration' : '' ?>">
       <a class="link-overlay unset" href="<?php echo url('/oc/' . $oc['id']) ?>" tabindex="-1" aria-hidden="true"></a>
-      <img alt="オープンチャット「<?php echo $oc['name'] ?>」のアイコン" class="openchat-item-img" loading="lazy" src="<?php echo imgPreviewUrl($oc['img_url']) ?>">
+      <img alt="オープンチャット「<?php echo $oc['name'] ?>」のアイコン" class="openchat-item-img" loading="lazy" src="<?php echo imgPreviewUrl($oc['img_url']) ?>" <?php echo getImgSetErrorTag() ?>>
       <h3 class="unset">
         <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $oc['id']) ?>"><?php if (($oc['emblem'] ?? 0) === 1) : ?><span class="super-icon sp"></span><?php elseif (($oc['emblem'] ?? 0) === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></a>
       </h3>
