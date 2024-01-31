@@ -7,7 +7,6 @@ namespace App\Controllers\Pages;
 use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Models\Repositories\Statistics\StatisticsPageRepositoryInterface;
-use App\Models\Repositories\OpenChatListRepositoryInterface;
 use App\Views\Meta\OcPageMeta;
 use App\Services\Statistics\DownloadCsvService;
 use App\Views\StatisticsViewUtility;
@@ -17,7 +16,6 @@ class OpenChatPageController
     function index(
         StatisticsPageRepositoryInterface $statisticsRepo,
         OpenChatPageRepositoryInterface $ocRepo,
-        OpenChatListRepositoryInterface $ocListRepo,
         OcPageMeta $meta,
         StatisticsViewUtility $statisticsViewUtility,
         int $open_chat_id
@@ -31,9 +29,7 @@ class OpenChatPageController
 
         $statisticsData = $statisticsRepo->getDailyStatisticsByPeriod($open_chat_id);
 
-
         $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($statisticsData);
-
 
         $_css = ['site_header', 'site_footer', 'room_page'];
 
@@ -46,7 +42,7 @@ class OpenChatPageController
 
         $category = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : '';
 
-        return view('oc_content', compact('_meta', '_css', 'oc', 'statisticsData', 'myList', 'category'));
+        return view('oc_content', compact('_meta', '_css', 'oc', 'myList', 'category'));
     }
 
     function csv(
