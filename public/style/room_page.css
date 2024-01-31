@@ -2,16 +2,17 @@ html {
   overflow-y: scroll; /* 常に垂直スクロールバーを表示 */
 }
 
+hr {
+  border-bottom: solid 1px rgb(239, 243, 244);
+  margin: 19px 0;
+}
+
 .openchat {
   display: block;
   margin: 0 auto;
   padding: 0 1rem;
+  padding-top: 19px;
   padding-bottom: 12px;
-}
-
-body:has(.changelog-h2) .openchat {
-  margin-bottom: 12px;
-  border-bottom: solid 1px rgb(239, 243, 244);
 }
 
 .openchat footer {
@@ -20,16 +21,10 @@ body:has(.changelog-h2) .openchat {
   justify-content: space-between;
 }
 
-header {
-  padding-bottom: 0;
-}
-
 .openchat-header {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
   font-size: 13px;
-  position: relative;
+  display: flex;
+  padding-bottom: 19px;
 }
 
 .openchat-header a {
@@ -39,51 +34,47 @@ header {
 /* メインエリア */
 /* オープンチャットヘッダー*/
 .talkroom_banner_img_area {
-  position: relative;
-  overflow-y: hidden;
-  height: 100%;
-  min-height: 186px;
-  align-self: stretch;
-  user-select: none;
-  pointer-events: none;
-  margin: 0 -1rem;
+  width: 38.38308%;
+  height: 38.38308%;
+  max-width: 38.38308%;
+  max-height: 38.38308%;
+  aspect-ratio: 1;
 }
 
 .talkroom_banner_img {
-  z-index: 0;
-  margin: auto;
-  display: block;
-  width: 100%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  user-select: none;
-  -webkit-user-select: none;
+  object-fit: cover;
+  display: flex;
+  border-radius: 22.5%;
+  aspect-ratio: 1;
+  height: 100%;
+}
+
+.openchat-header-right {
+  width: 55.04975%;
+  max-width: 55.04975%;
+  margin-left: 3.28358%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .h1-link {
   all: unset;
   display: flex;
-  margin: auto;
 }
 
 /* オープンチャットのタイトル*/
 .talkroom_link_h1 {
   line-height: 130%;
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #5077f2;
   display: block;
-  padding-top: 10px;
-  padding-bottom: 5px;
 }
 
 .link-mark {
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding-bottom: 3px;
 }
 
 .link-mark .line-link-icon {
@@ -101,15 +92,9 @@ header {
   color: #757575;
 }
 
-.talkroom_link:focus-visible {
-  z-index: 10;
-}
-
 /* メンバー数 */
 .talkroom_number_of_members {
-  display: flex;
-  gap: 9px;
-  margin: 0 auto;
+  margin-top: 2px;
 }
 
 .number_of_members {
@@ -128,7 +113,7 @@ header {
 
 /* オープンチャットの詳細エリア */
 .talkroom_description_box {
-  padding-top: 6px;
+  font-size: 12px;
 }
 
 /* オープンチャットの説明 */
@@ -141,80 +126,30 @@ header {
 .talkroom_description {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   overflow: hidden;
 }
 
 /* ボトムエリア */
-.detail_bottom {
+.openchat-bottom {
   display: flex;
-  position: relative;
-  padding-top: 3rem;
-}
-
-.chart-canvas-section {
-  width: 100%;
-  margin: 0 auto;
-  padding: 0;
-  aspect-ratio: 2 / 1;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.chart-btn-nav {
-  display: flex;
-  max-width: 340px;
-  padding-top: 0;
-  margin: 0 auto;
-  margin-top: 8px;
   justify-content: space-evenly;
-  flex-wrap: wrap;
-}
-
-.chart-btn {
-  height: 48px;
-  width: 78px;
-  background-color: inherit;
-  color: var(--color-text-secondary);
-  font-size: 14px;
-  display: inline-block;
-  text-align: center;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.chart-btn:disabled {
-  box-shadow: inset 0px -6px 0px -3px rgb(3, 199, 85);
-  color: black;
-  background-color: inherit;
-}
-
-.chart-btn span {
-  display: inline-block;
-  margin: auto;
-  width: fit-content;
-}
-
-.openchat h2 {
-  all: unset;
-  font-size: 15px;
-  font-weight: bold;
-  display: block;
-}
-
-.graph-title {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 .openchat-list-date {
   display: flex;
+  flex-direction: row;
   color: #606060;
   font-size: 12px;
   white-space: nowrap;
   align-items: center;
+  gap: 4px;
+}
+
+.openchat-list-date.inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .refresh-icon {
@@ -228,33 +163,6 @@ header {
   display: inline-block;
 }
 
-.chart-footer-nav {
-  display: none;
-}
-
-.disabled-style .chart-footer-nav {
-  display: flex;
-  position: absolute;
-  bottom: 4px;
-  left: 0;
-}
-
-.chart-footer-nav .chart-btn {
-  width: fit-content;
-  height: 21px;
-}
-
-.chart-footer-nav .chart-btn span {
-  font-weight: normal;
-  font-size: 12.5px;
-  font-weight: bold;
-}
-
-.chart-footer-nav .chart-btn:hover span {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
 .talkroom_number_of_stats {
   margin: auto 0;
   display: flex;
@@ -262,9 +170,6 @@ header {
   font-size: 12px;
   justify-content: flex-start;
   width: fit-content;
-  position: absolute;
-  right: 0;
-  bottom: -20px;
   align-items: flex-start;
 }
 
@@ -285,68 +190,14 @@ header {
   height: fit-content;
 }
 
-.changelog-area {
-  font-size: 13px;
-  padding-bottom: 0.5rem;
-}
-
-.changelog-h2 {
-  all: unset;
-  font-size: 15px;
-  font-weight: bold;
-  display: block;
-  margin-left: 1rem;
-  margin-bottom: -0.8rem;
-}
-
-.changelog-area li {
-  margin-bottom: 0.35rem;
-  margin-left: 1rem;
-}
-
-.changelog-area .archived-at {
-  color: #606060;
-  font-weight: bold;
-}
-
-.changelog-area .archived-member {
-  color: #606060;
-}
-
-.hidden-changelog {
-  display: none;
-}
-
-.hidden-changelog.show-changelog {
-  display: list-item;
-}
-
 body > footer {
   border-top: solid 1px rgb(239, 243, 244);
   padding-top: 0.5rem;
 }
 
-.change-aside {
-  margin: 1rem 0 0.5rem 0;
-}
-
-.change-aside * {
-  font-size: 13px;
-}
-
 @media screen and (max-width: 359px) {
-  .openchat-header {
-    height: 420px;
-  }
-
   .talkroom_link_h1 {
     font-size: 1rem;
-  }
-
-  .chart-canvas-section {
-    aspect-ratio: 1.4 / 1;
-    margin: 0 -1rem;
-    width: calc(100% + 2rem);
   }
 
   .talkroom_number_of_stats {
@@ -355,31 +206,31 @@ body > footer {
 }
 
 @media screen and (max-width: 511px) {
-  .chart-canvas-section {
-    aspect-ratio: 1.6 / 1;
-  }
-
-  .openchat-header {
-    height: 412px;
-  }
 }
 
 @media screen and (min-width: 512px) {
+  .talkroom_banner_img_area {
+    width: 30.44316%;
+    max-width: 30.44316%;
+  }
+
+  .openchat-header-right {
+    width: 63.77649%;
+    max-width: 63.77649%;
+    margin-left: 2.89017%;
+  }
+
   .talkroom_link_h1:hover .name {
     -webkit-text-decoration: underline 2px currentColor;
     text-decoration: underline 2px currentColor;
   }
 
-  .openchat-header {
-    height: 564px;
-  }
-
   .talkroom_link_h1 {
-    font-size: 19px;
+    font-size: 18px;
+    line-height: 145%;
   }
 
   .link-mark {
-    padding-bottom: 6px;
   }
 
   .link-mark .line-link-icon {
@@ -388,37 +239,14 @@ body > footer {
   }
 
   .link-mark .link-title {
-    font-size: 12px;
   }
 
-  .change-aside *,
-  .changelog-area,
-  .openchat-header {
+  .openchat-header,
+  .talkroom_description_box {
     font-size: 13.5px;
   }
 
-  .talkroom_banner_img_area {
-    min-height: 300px;
-  }
-
-  .disabled-style .chart-footer-nav {
-    bottom: 12px;
-  }
-
-  .chart-footer-nav .chart-btn span {
-    font-size: 15px;
-    text-decoration: underline 1px;
-  }
-
   .openchat-list-date {
-    margin-top: -9px;
-  }
-
-  .talkroom_link {
-    width: fit-content;
-    margin: 0 1rem;
-    padding: 0;
-    padding-top: 14px;
   }
 
   .openchat-list-date {
@@ -432,13 +260,5 @@ body > footer {
 
   .talkroom_description {
     line-height: 140%;
-  }
-
-  .chart-btn {
-    font-size: 15px;
-  }
-
-  .chart-btn:hover:not(:disabled) {
-    background-color: var(--hover);
   }
 }
