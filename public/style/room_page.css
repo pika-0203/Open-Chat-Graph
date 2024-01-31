@@ -1,3 +1,7 @@
+html {
+  overflow-y: scroll; /* 常に垂直スクロールバーを表示 */
+}
+
 .openchat {
   display: block;
   margin: 0 auto;

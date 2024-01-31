@@ -15,7 +15,7 @@ class DownloadCsvService
 
     function sendCsv(int $open_chat_id, string $name)
     {
-        $statisticsData = $this->statisticsRepository->getDailyStatisticsAll($open_chat_id);
+        $statisticsData = $this->statisticsRepository->getDailyStatsByIdForCsv($open_chat_id);
 
         $filename = '[OC_Graph]' . $this->sanitizeFileName($name);
         header('Content-Type: text/csv');

@@ -63,18 +63,36 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => true]); ?>
     </header>
 
     <!-- グラフセクション -->
-    <div class="graph-title">
-      <h2>メンバー数の推移</h2>
-    </div>
-    <div class="chart-canvas-section">
-      <canvas id="openchat-statistics" aria-label="全期間のメンバー数の折れ線グラフ" role="img"></canvas>
-    </div>
+    <br>
+    <script type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
+    <style>
+      .chart-canvas-box {
+        aspect-ratio: 1.7 / 1;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+        user-select: none;
+        -webkit-user-select: none;
+      }
 
-    <nav class="chart-btn-nav" id="chart-btn-nav">
-      <button class="chart-btn unset" id="btn-week" disabled>1 週間</button>
-      <button class="chart-btn unset" id="btn-month">1 ヶ月</button>
-      <button class="chart-btn unset" id="btn-all">全期間</button>
-    </nav>
+      @media screen and (max-width: 359px) {
+        .chart-canvas-box {
+          margin: 0 -1rem;
+          width: calc(100% + 2rem);
+          aspect-ratio: 1 / 1;
+        }
+      }
+
+      @media screen and (max-width: 511px) {
+        .chart-canvas-box {
+          aspect-ratio: 1.2 / 1;
+        }
+      }
+    </style>
+    <div class="chart-canvas-box">
+      <canvas id="chart-preact-canvas"></canvas>
+    </div>
+    <div id="app" data-oc-id="<?php echo $oc['id'] ?>" data-category="<?php echo $category ? $category : '' ?>"></div>
 
     <footer class="unset">
       <form class="my-list-form">
@@ -97,7 +115,7 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => true]); ?>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: space-between;">
           <?php if (is_int($oc['api_created_at'])) : ?>
-            <div><?php echo $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : 'その他' ?></div>
+            <div><?php echo $category ? $category : 'その他' ?></div>
           <?php endif ?>
           <?php if (is_int($oc['api_created_at'])) : ?>
             <div><?php echo convertDatetime($oc['api_created_at']) ?></div>
@@ -110,77 +128,11 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => true]); ?>
 
   </article>
 
-  <?php if (cookie()->has('labs-joincount')) : ?>
-    <!-- ライブトーク利用時間分析ツールのファイル読み込みフォーム -->
-    <?php viewComponent('labs_joincount_form') ?>
-  <?php endif ?>
-
   <footer>
     <?php viewComponent('footer_inner') ?>
   </footer>
 
   <script src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-  <script src="<?php echo fileUrl("/js/OpenChatChartFactory.js") ?>"></script>
-  <script>
-    const statisticsDate = <?php echo json_encode($statisticsData['date']) ?>;
-    const statisticsMember = <?php echo json_encode($statisticsData['member']) ?>;
-
-    let openChatChartInstance = new OpenChatChartFactory({
-        date: statisticsDate,
-        member: statisticsMember,
-      },
-      document.getElementById('openchat-statistics'),
-    )
-
-    ;
-    (function() {
-      const chartNavButtons = document.getElementById('chart-btn-nav').querySelectorAll('.chart-btn')
-      const chartFooterNav = document.getElementById('chart-footer-nav')
-
-      chartNavButtons.forEach(el => el.addEventListener('click', e => {
-        if (e.target.id === "btn-week") {
-          openChatChartInstance?.update(8)
-          chartFooterNav.classList.remove("disabled-style")
-        } else if (e.target.id === "btn-month") {
-          openChatChartInstance?.update(31)
-          chartFooterNav.classList.remove("disabled-style")
-        } else if (e.target.id === "btn-all") {
-          openChatChartInstance?.update(0)
-          chartFooterNav.classList.add("disabled-style")
-        }
-        chartNavButtons.forEach(btn => btn.disabled = false)
-        e.target.disabled = true
-      }))
-    })()
-  </script>
-
-  <?php if (cookie()->has('labs-joincount')) : ?>
-    <script type="module">
-      import {
-        JoinCountTalkAnalyzerEventListener
-      } from '<?php echo fileUrl('/js/JoinCountTalkAnalyzerEventListener.js') ?>'
-
-      import {
-        OpenChatChartFactoryWithJoinCount
-      } from '<?php echo fileUrl('/js/OpenChatChartFactoryWithJoinCount.js') ?>'
-
-      import {
-        JoinCountTalkAnalyzer
-      } from '<?php echo fileUrl('/js/JoinCountTalkAnalyzer.js') ?>'
-
-      const talkAnalyzer = new JoinCountTalkAnalyzerEventListener(
-        statisticsDate[statisticsDate.length - 1],
-        statisticsDate[0],
-        statisticsDate,
-        statisticsMember,
-        OpenChatChartFactoryWithJoinCount,
-        JoinCountTalkAnalyzer
-      )
-    </script>
-  <?php endif ?>
-
   <script type="module">
     import {
       JsonCookie

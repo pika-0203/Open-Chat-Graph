@@ -7,11 +7,11 @@ namespace App\Models\Repositories\RankingPosition\Dto;
 class RankingPositionPageRepoDto
 {
     /** @var string[] Y-m-d H:i:s */
-    public array $time;
+    public array $time = [];
 
     /** @var int[] */
-    public array $position;
+    public array $position = [];
 
     /** @var int[] */
-    public array $totalCount;
+    public array $totalCount = [];
 }
