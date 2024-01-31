@@ -14,13 +14,14 @@ class RankingPositionApiController
         private RankingPositionChartArrayService $rankingPositionChartArrayService,
         private OpenChatPageRepository $openChatPageRepository
     ) {
+        header('Access-Control-Allow-Origin: *');
     }
 
     function rankingPosition(int $open_chat_id, string $sort): Response|false
     {
         $category = $this->openChatPageRepository->getRankingPositionCategoryById($open_chat_id);
         if ($category === false) {
-            return false;
+            return response($this->rankingPositionChartArrayService->getStatsChartArrayWithoutPosition($open_chat_id));
         }
 
         switch ($sort) {

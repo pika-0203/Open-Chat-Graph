@@ -255,3 +255,14 @@ function getImgSetErrorTag(): string
  onerror="this.src='/assets/ogp.png'; this.removeAttribute('onerror'); this.removeAttribute('onload');" onload="this.removeAttribute('onerror'); this.removeAttribute('onload');"
  HTML;
 }
+
+function getFilePath($path, $pattern): string
+{
+    $file = glob(PUBLIC_DIR . "/{$path}/{$pattern}");
+    if ($file) {
+        $fileName = basename($file[0]);
+        return "{$path}/{$fileName}";
+    } else {
+        return '';
+    }
+}

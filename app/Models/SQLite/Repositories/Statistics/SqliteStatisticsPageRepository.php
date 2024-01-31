@@ -39,7 +39,7 @@ class SqliteStatisticsPageRepository implements StatisticsPageRepositoryInterfac
         ];
     }
 
-    public function getDailyStatisticsAll(int $open_chat_id): array
+    public function getDailyStatsByIdForCsv(int $open_chat_id): array
     {
         $query =
             "SELECT
@@ -51,6 +51,26 @@ class SqliteStatisticsPageRepository implements StatisticsPageRepositoryInterfac
                 open_chat_id = :open_chat_id
             ORDER BY
                 `date` ASC";
+
+        SQLiteStatistics::connect('?mode=ro&nolock=1');
+        $result = SQLiteStatistics::fetchAll($query, compact('open_chat_id'));
+        SQLiteStatistics::$pdo = null;
+
+        return $result;
+    }
+
+    public function getDailyMemberStatsDateAsc(int $open_chat_id): array
+    {
+        $query =
+            "SELECT
+                date,
+                member
+            FROM
+                statistics
+            WHERE
+                open_chat_id = :open_chat_id
+            ORDER BY
+                date ASC";
 
         SQLiteStatistics::connect('?mode=ro&nolock=1');
         $result = SQLiteStatistics::fetchAll($query, compact('open_chat_id'));

@@ -16,7 +16,14 @@ interface StatisticsPageRepositoryInterface
     /**
      * 日毎のメンバー数の統計を全て取得する (CSV出力用)
      * 
-     * @return array `[['date' => 'Y-m-d', 'member' => int]]`
+     * @return array `[['date' => 'Y/m/d', 'member' => int]]`
      */
-    public function getDailyStatisticsAll(int $open_chat_id): array;
+    public function getDailyStatsByIdForCsv(int $open_chat_id): array;
+
+    /**
+     * 日毎のメンバー数の統計を取得する
+     * 
+     * @return array{ date: string, member: int }[] date: Y-m-d
+     */
+    public function getDailyMemberStatsDateAsc(int $open_chat_id): array;
 }

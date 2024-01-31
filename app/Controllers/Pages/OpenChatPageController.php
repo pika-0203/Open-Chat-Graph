@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Models\Repositories\Statistics\StatisticsPageRepositoryInterface;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
@@ -43,7 +44,9 @@ class OpenChatPageController
             $myList = [];
         }
 
-        return view('oc_content', compact('_meta', '_css', 'oc', 'statisticsData', 'myList'));
+        $category = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : '';
+
+        return view('oc_content', compact('_meta', '_css', 'oc', 'statisticsData', 'myList', 'category'));
     }
 
     function csv(

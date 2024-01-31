@@ -25,36 +25,6 @@ class SqliteRankingPositionPageRepository implements RankingPositionPageReposito
         return $this->getDailyPosition('rising', $open_chat_id, $category);
     }
 
-    public function getFirstTime(int $open_chat_id): \DateTime|false
-    {
-        $query =
-            "SELECT
-                MIN(time)
-            FROM
-                (
-                    SELECT
-                        MIN(time) as time
-                    FROM
-                        ranking
-                    WHERE
-                        open_chat_id = :open_chat_id
-                    UNION
-                    SELECT
-                        MIN(time) as time
-                    FROM
-                        rising
-                    WHERE
-                        open_chat_id = :open_chat_id
-                )";
-
-        $result = SQLiteRankingPosition::fetchColumn($query, compact('open_chat_id'));
-        if (!$result) {
-            return false;
-        }
-
-        return new \DateTime($result);
-    }
-
     private function getDailyPosition(string $tableName, int $open_chat_id, int $category): RankingPositionPageRepoDto|false
     {
         $query =
