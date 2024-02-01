@@ -27,12 +27,16 @@ https://openchat-review.me
 MimimalCMS  
 https://github.com/mimimiku778/MimimalCMS
 
-## ランキングUI  
-Open-Chat-Graph-Frontend  
+## ランキングUIのリポジトリ  
+Open-Chat-Graph-Frontend React + TypeScript  
 https://github.com/mimimiku778/Open-Chat-Graph-Frontend
+
+## グラフUIのリポジトリ  
+Open-Chat-Graph-Frontend-Stats-Graph Preact + TypeScript
+https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph
 
 ## 連絡先
 [E-MAIL](<mailto:support@openchat-review.me>)  
 [OPENCHAT](<https://line.me/ti/g2/rLT0p-Tz19W7jxHvDDm9ECGNsyymhLQTHmmTkg>)
 
-###### mimimiku778 と pika-0203 は同一人物です。
+###### mimimiku778 と pika-0203 は同一人物です
