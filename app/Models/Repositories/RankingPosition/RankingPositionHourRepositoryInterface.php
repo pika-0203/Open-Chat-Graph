@@ -23,7 +23,12 @@ interface RankingPositionHourRepositoryInterface
     /**
      * @return array `[['category' => int, 'total_count_rising' => int, 'total_count_ranking' => int, 'time' => string]]`
      */
-    public function getTotalCount(\DateTime $date): array;
+    public function getTotalCount(\DateTime $date, bool $isDate = true): array;
 
     public function dalete(\DateTime $date): void;
+
+    /**
+     * @param array $totalCount `[['category' => int, 'total_count_rising' => int, 'total_count_ranking' => int, 'time' => string]]`
+     */
+    public function insertTotalCount(array $totalCount): int;
 }

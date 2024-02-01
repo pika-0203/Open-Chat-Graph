@@ -83,9 +83,15 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         return $this->getMinPositionHour('rising', $date, $all);
     }
 
-    public function getTotalCount(\DateTime $date): array
+    public function getTotalCount(\DateTime $date, bool $isDate = true): array
     {
-        $dateString = $date->format('Y-m-d');
+        if ($isDate) {
+            $dateString = $date->format('Y-m-d');
+            $where = "DATE(time) = '{$dateString}'";
+        } else {
+            $timeString = $date->format('Y-m-d H:i:s');
+            $where = "time = '{$timeString}'";
+        }
 
         $query =
             "SELECT
@@ -102,7 +108,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
                     FROM
                         ranking
                     WHERE
-                        DATE(time) = '{$dateString}'
+                        {$where}
                     GROUP BY
                         time,
                         category
@@ -115,7 +121,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
                     FROM
                         rising
                     WHERE
-                        DATE(time) = '{$dateString}'
+                        {$where}
                     GROUP BY
                         time,
                         category
@@ -130,6 +136,12 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         $dateString = $date->format('Y-m-d');
         SQLiteRankingPositionHour::execute("DELETE FROM ranking WHERE DATE(time) <= '{$dateString}'");
         SQLiteRankingPositionHour::execute("DELETE FROM rising WHERE DATE(time) <= '{$dateString}'");
+        SQLiteRankingPositionHour::execute("DELETE FROM total_count WHERE DATE(time) <= '{$dateString}'");
         SQLiteRankingPositionHour::$pdo->exec('VACUUM;');
+    }
+
+    public function insertTotalCount(array $totalCount): int
+    {
+        return $this->inserter->import(SQLiteRankingPositionHour::connect(), 'total_count', $totalCount, 500);
     }
 }

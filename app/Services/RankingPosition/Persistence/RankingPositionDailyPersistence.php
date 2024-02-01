@@ -36,7 +36,9 @@ class RankingPositionDailyPersistence
             $this->rankingPositionHourRepository->getTotalCount($date)
         );
 
-        $this->rankingPositionHourRepository->dalete($date);
+        $deleteDate = new DateTime($date->format('Y-m-d'));
+        $deleteDate->modify('- 1day');
+        $this->rankingPositionHourRepository->dalete($deleteDate);
     }
 
     /**
