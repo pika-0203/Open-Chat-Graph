@@ -14,7 +14,6 @@ use App\Views\StatisticsViewUtility;
 class OpenChatPageController
 {
     function index(
-        StatisticsPageRepositoryInterface $statisticsRepo,
         OpenChatPageRepositoryInterface $ocRepo,
         OcPageMeta $meta,
         StatisticsViewUtility $statisticsViewUtility,
@@ -27,9 +26,16 @@ class OpenChatPageController
             return $redirectId ? redirect("oc/{$redirectId}", 301) : false;
         }
 
-        $statisticsData = $statisticsRepo->getDailyStatisticsByPeriod($open_chat_id);
-
-        $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($statisticsData);
+        if (excludeTime()) {
+            $rankingInfo = unserialize(file_get_contents(AppConfig::TOP_RANKING_INFO_FILE_PATH));
+            $isUpdated = date('Y-m-d', $rankingInfo['rankingUpdatedAt']) === date('Y-m-d');
+            if (!$isUpdated) {
+                /** @var StatisticsPageRepositoryInterface $statisticsRepo */
+                $statisticsRepo = app(StatisticsPageRepositoryInterface::class);
+                $statisticsData = $statisticsRepo->getDailyStatisticsByPeriod($open_chat_id);
+                $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($statisticsData);
+            }
+        }
 
         $_css = ['site_header', 'site_footer', 'room_page'];
 
