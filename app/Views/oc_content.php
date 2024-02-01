@@ -4,7 +4,7 @@
 
 use App\Config\AppConfig;
 
-viewComponent('head', compact('_css', '_meta') + ['noindex' => true]); ?>
+viewComponent('head', compact('_css', '_meta') + ['noindex' => false]); ?>
 
 <body>
   <!-- 固定ヘッダー -->

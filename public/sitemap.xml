@@ -1,13 +1,2 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>https://openchat-review.me</loc>
-        <lastmod>2024-01-28</lastmod>
-        <changefreq>daily</changefreq>
-    </url>
-    <url>
-        <loc>https://openchat-review.me/ranking</loc>
-        <lastmod>2024-01-28</lastmod>
-        <changefreq>daily</changefreq>
-    </url>
-</urlset>
+<?xml version="1.0" encoding="utf-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><sitemap><loc>https://openchat-review.me/sitemaps/sitemap1.xml</loc><lastmod>2024-02-01T10:47:00+09:00</lastmod></sitemap><sitemap><loc>https://openchat-review.me/sitemaps/sitemap2.xml</loc><lastmod>2024-02-01T10:47:01+09:00</lastmod></sitemap><sitemap><loc>https://openchat-review.me/sitemaps/sitemap3.xml</loc><lastmod>2024-02-01T10:47:01+09:00</lastmod></sitemap><sitemap><loc>https://openchat-review.me/sitemaps/sitemap4.xml</loc><lastmod>2024-02-01T10:47:01+09:00</lastmod></sitemap><sitemap><loc>https://openchat-review.me/sitemaps/sitemap5.xml</loc><lastmod>2024-02-01T10:47:01+09:00</lastmod></sitemap><sitemap><loc>https://openchat-review.me/sitemaps/sitemap6.xml</loc><lastmod>2024-02-01T10:47:01+09:00</lastmod></sitemap></sitemapindex>

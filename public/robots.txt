@@ -1,4 +1,7 @@
 User-agent: *
 disallow: /
 arrow: /$
+arrow: /oc/*
+disallow: /oc/*/position
+disallow: /oc/*/csv
 arrow: /ranking$

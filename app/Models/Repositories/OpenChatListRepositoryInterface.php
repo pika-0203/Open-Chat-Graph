@@ -57,4 +57,9 @@ interface OpenChatListRepositoryInterface
         int $startId,
         int $endId,
     ): array;
+
+    /**
+     * @return array{ id: int, updated_at: string }[]
+     */
+    public function getOpenChatSiteMapData(): array;
 }
