@@ -5,3 +5,5 @@ arrow: /oc/*
 disallow: /oc/*/position
 disallow: /oc/*/csv
 arrow: /ranking$
+arrow: /sitemap.xml
+arrow: /sitemaps/*
