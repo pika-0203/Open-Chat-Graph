@@ -6,21 +6,21 @@
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
     <!-- オープンチャット表示ヘッダー -->
-    <article class="openchat unset">
-        <header class="openchat-header description-close unset" id="openchat-header">
+    <article class="openchat unset" style="margin-bottom: -3rem;">
+        <header class="openchat-header unset">
             <div class="talkroom_banner_img_area unset">
                 <img class="talkroom_banner_img" alt="フラスコのイメージ" src="<?php echo fileUrl("/assets/labs.svg") ?>">
             </div>
-            <h1 class="talkroom_link_h1 unset">Labs</span></h1>
             <div class="talkroom_description_box">
+                <h1 class="talkroom_link_h1 unset">Labs</span></h1>
                 <p id="talkroom-description" class="talkroom_description">試作中の機能をLabs（ラボ）として提供しています。</p>
             </div>
         </header>
     </article>
-    <section class="openchat unset">
+    <section style="margin-bottom: 3rem;">
         <aside>
             <a href="/labs/live" class="labs-link unset">
-                <h2>ライブトーク利用時間分析ツール</h2>
+                <span>ライブトーク利用時間分析ツール</span>
                 <img src="<?php echo fileUrl("/images/livegraph.webp") ?>" alt="ライブトーク利用時間分析ツール">
             </a>
         </aside>
