@@ -1,3 +1,69 @@
+.chart-btn-nav {
+  display: flex;
+  max-width: 340px;
+  padding-top: 0;
+  margin: 0 auto;
+  margin-top: 8px;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.chart-btn {
+  height: 48px;
+  width: 78px;
+  background-color: inherit;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.chart-btn:disabled {
+  box-shadow: inset 0px -6px 0px -3px rgb(3, 199, 85);
+  color: black;
+  background-color: inherit;
+}
+
+.chart-btn span {
+  display: inline-block;
+  margin: auto;
+  width: fit-content;
+}
+
+.chart-footer-nav {
+  display: none;
+}
+
+.disabled-style .chart-footer-nav {
+  display: flex;
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+}
+
+.chart-footer-nav .chart-btn {
+  width: fit-content;
+  height: 21px;
+}
+
+.chart-footer-nav .chart-btn span {
+  font-weight: normal;
+  font-size: 12.5px;
+  font-weight: bold;
+}
+
+.chart-footer-nav .chart-btn:hover span {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.chart-canvas-section {
+    margin-bottom: 1rem;
+}
+
 .site_header_outer {
     position: absolute;
 }

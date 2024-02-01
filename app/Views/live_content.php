@@ -7,15 +7,14 @@
     <?php viewComponent('site_header') ?>
     <!-- オープンチャット表示ヘッダー -->
     <main class="openchat unset hidden-graph" id="graph-area">
-        <section class="openchat-header unset" style="height: auto;">
+        <section class="unset" style="height: auto;">
             <h1 class="talkroom_link_h1 unset" id="octitle">ライブトーク利用時間分析ツール</span></h1>
             <p class="page-desc">トーク履歴からライブトークの利用時間をグラフで表示します。</p>
-            <hr class="page-desc">
         </section>
         <!-- グラフセクション -->
         <div class="graph-area">
             <div class="graph-title">
-                <h2>ライブトーク利用時間</h2>
+                <b>ライブトーク利用時間</b>
             </div>
             <nav class="chart-btn-nav" id="chart-btn-nav">
                 <button class="chart-btn unset" id="btn-week" disabled>1 週間</button>
