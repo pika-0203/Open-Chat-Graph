@@ -6,6 +6,7 @@ namespace App\Controllers\Api;
 
 use App\Models\Repositories\OpenChatPageRepository;
 use App\Services\RankingPosition\RankingPositionChartArrayService;
+use App\Services\RankingPosition\RankingPositionHourChartArrayService;
 use Shadow\Kernel\Response;
 
 class RankingPositionApiController
@@ -35,6 +36,28 @@ class RankingPositionApiController
                 return response($rankingPositionChartArrayService->getRisingPositionChartArray($open_chat_id, $category));
             case 'rising_all':
                 return response($rankingPositionChartArrayService->getRisingPositionChartArray($open_chat_id, 0));
+        }
+    }
+
+    function rankingPositionHour(
+        RankingPositionHourChartArrayService $rankingPositionHourChartArrayService,
+        int $open_chat_id,
+        string $sort
+    ): Response|false {
+        $oc = $this->openChatPageRepository->getRankingPositionCategoryAndEmidById($open_chat_id);
+        if ($oc === false) {
+            return false;
+        }
+
+        switch ($sort) {
+            case 'ranking':
+                return response($rankingPositionHourChartArrayService->getRankingPositionHourChartArray($oc['emid'], $oc['category']));
+            case 'ranking_all':
+                return response($rankingPositionHourChartArrayService->getRankingPositionHourChartArray($oc['emid'], 0));
+            case 'rising':
+                return response($rankingPositionHourChartArrayService->getRisingPositionHourChartArray($oc['emid'], $oc['category']));
+            case 'rising_all':
+                return response($rankingPositionHourChartArrayService->getRisingPositionHourChartArray($oc['emid'], 0));
         }
     }
 }

@@ -8,7 +8,7 @@ use App\Models\Repositories\RankingPosition\Dto\RankingPositionHourPageRepoDto;
 
 interface RankingPositionHourPageRepositoryInterface
 {
-    public function getHourRankingPositionTimeAsc(string $emid, int $category): RankingPositionHourPageRepoDto|false;
+    public function getHourRankingPositionTimeAsc(string $emid, int $category, int $intervalHour): RankingPositionHourPageRepoDto|false;
 
-    public function getHourRisingPositionTimeAsc(string $emid, int $category): RankingPositionHourPageRepoDto|false;
+    public function getHourRisingPositionTimeAsc(string $emid, int $category, int $intervalHour): RankingPositionHourPageRepoDto|false;
 }

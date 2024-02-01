@@ -17,4 +17,7 @@ class RankingPositionHourPageRepoDto
 
     /** @var int[] */
     public array $member = [];
+
+    /** @var string Y-m-d H:i:s */
+    public string $firstTime;
 }
