@@ -4,27 +4,26 @@ html {
 
 hr {
   border-bottom: solid 1px rgb(239, 243, 244);
-  margin: 19px 0;
+  margin: 12px 0;
 }
 
 .openchat {
   display: block;
   margin: 0 auto;
   padding: 0 1rem;
-  padding-top: 19px;
+  padding-top: 12px;
   padding-bottom: 12px;
 }
 
 .openchat footer {
   display: flex;
   padding-top: 1rem;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .openchat-header {
   font-size: 13px;
   display: flex;
-  padding-bottom: 19px;
 }
 
 .openchat-header a {
@@ -95,7 +94,7 @@ hr {
 
 /* メンバー数 */
 .talkroom_number_of_members {
-  margin-top: 2px;
+  margin-top: 6px;
 }
 
 .number_of_members {
@@ -109,7 +108,7 @@ hr {
 
 .openchat-itme-stats-title {
   color: var(--color-text-secondary);
-  font-size: 13px;
+  font-size: 12px;
 }
 
 /* オープンチャットの詳細エリア */
@@ -129,6 +128,7 @@ hr {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
   overflow: hidden;
+  margin-bottom: 6px;
 }
 
 /* ボトムエリア */
@@ -160,18 +160,18 @@ hr {
 }
 
 .openchat-list-date time {
-  margin-left: 4px;
   display: inline-block;
 }
 
 .talkroom_number_of_stats {
   margin: auto 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   font-size: 12px;
   justify-content: flex-start;
   width: fit-content;
   align-items: flex-start;
+  gap: 10px;
 }
 
 .my-list-form {
@@ -244,12 +244,12 @@ body > footer {
   }
 
   .openchat-list-date {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .openchat-itme-stats-title,
   .talkroom_number_of_stats {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .talkroom_description {
