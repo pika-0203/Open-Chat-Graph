@@ -35,4 +35,4 @@ https://github.com/mimimiku778/Open-Chat-Graph-Frontend
 [E-MAIL](<mailto:support@openchat-review.me>)  
 [OPENCHAT](<https://line.me/ti/g2/rLT0p-Tz19W7jxHvDDm9ECGNsyymhLQTHmmTkg>)
 
-<span style="font-size: 80%; color: gray;">mimimiku778 と pika-0203 は同一人物です</span>
+###### mimimiku778 と pika-0203 は同一人物です。
