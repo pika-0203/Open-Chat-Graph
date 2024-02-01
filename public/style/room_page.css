@@ -17,7 +17,7 @@ hr {
 
 .openchat footer {
   display: flex;
-  padding-top: 1rem;
+  padding-top: 2px;
   justify-content: space-around;
 }
 
@@ -171,7 +171,14 @@ hr {
   justify-content: flex-start;
   width: fit-content;
   align-items: flex-start;
-  gap: 10px;
+  gap: 8px;
+}
+
+.talkroom_number_of_stats .number-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2px;
 }
 
 .my-list-form {

@@ -34,21 +34,25 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => false]); ?>
           <time datetime="<?php echo dateTimeAttr($oc['updated_at']) ?>"><?php echo convertDatetime($oc['updated_at'], true) ?></time>
         </div>
         <div class="talkroom_number_of_stats">
-          <div class="<?php if (isset($oc['diff_member'])) echo $oc['diff_member'] ?? 0 > 0 ? 'positive' : 'negative' ?>">
+          <div class="number-box <?php if (isset($oc['diff_member'])) echo $oc['diff_member'] ?? 0 > 0 ? 'positive' : 'negative' ?>">
             <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
               <span class="openchat-itme-stats-title">前日比</span>
-              <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?></span>
-              <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
+              <div>
+                <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?></span>
+                <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
+              </div>
             <?php elseif ($oc['diff_member'] === 0) : ?>
               <span class="openchat-itme-stats-title">前日比</span>
               <span class="zero-stats">±0</span>
             <?php endif ?>
           </div>
-          <div class="weekly <?php if (isset($oc['diff_member'])) echo $oc['diff_member2'] ?? 0 > 0 ? 'positive' : 'negative' ?>">
+          <div class="number-box weekly <?php if (isset($oc['diff_member'])) echo $oc['diff_member2'] ?? 0 > 0 ? 'positive' : 'negative' ?>">
             <?php if ($oc['diff_member2'] ?? 0 !== 0) : ?>
               <span class="openchat-itme-stats-title">前週比</span>
-              <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?></span>
-              <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
+              <div>
+                <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?></span>
+                <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
+              </div>
             <?php elseif ($oc['diff_member2'] === 0) : ?>
               <span class="openchat-itme-stats-title">前週比</span>
               <span class="zero-stats">±0</span>
@@ -88,7 +92,7 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => false]); ?>
       <canvas id="chart-preact-canvas"></canvas>
     </div>
     <div id="app" data-oc-id="<?php echo $oc['id'] ?>" data-category="<?php echo $category ? $category : '' ?>"></div>
-
+    <hr>
     <footer class="unset">
       <form class="my-list-form">
         <?php if (count($myList) - 1 < AppConfig::MY_LIST_LIMIT || isset($myList[$oc['id']])) : ?>
