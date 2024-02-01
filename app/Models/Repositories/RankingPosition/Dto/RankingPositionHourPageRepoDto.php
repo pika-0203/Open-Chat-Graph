@@ -6,7 +6,7 @@ namespace App\Models\Repositories\RankingPosition\Dto;
 
 class RankingPositionHourPageRepoDto
 {
-    /** @var string[] Y-m-d H:i:s */
+    /** @var string[] H:i */
     public array $time = [];
 
     /** @var int[] */

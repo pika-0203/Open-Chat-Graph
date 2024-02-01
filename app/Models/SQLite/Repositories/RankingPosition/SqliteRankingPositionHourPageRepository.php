@@ -27,6 +27,10 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
 
     private function getHourPosition(string $tableName, string $emid, int $category): RankingPositionHourPageRepoDto|false
     {
+        $time = new \DateTime();
+        $time->modify('- 25hour');
+        $timeString = $time->format('Y-m-d H:i:s');
+
         $query =
             "SELECT
                 t1.time AS time,
@@ -42,6 +46,7 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
                     WHERE
                         emid = :emid
                         AND category = :category
+                        AND time > '{$timeString}'
                 ) AS t1
                 JOIN total_count AS t2 ON t1.time = t2.time
                 AND t1.category = t2.category

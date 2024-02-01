@@ -29,58 +29,34 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => false]); ?>
         <div class="talkroom_description_box">
           <p id="talkroom-description" class="talkroom_description"><?php echo trimOpenChatListDesc($oc['description'], 300) ?></p>
         </div>
-      </div>
-    </header>
-
-    <div class="openchat-bottom">
-      <div class="talkroom_number_of_stats">
         <div class="openchat-list-date">
           <div class="refresh-icon"></div>
           <time datetime="<?php echo dateTimeAttr($oc['updated_at']) ?>"><?php echo convertDatetime($oc['updated_at'], true) ?></time>
         </div>
-        <div class="<?php if (isset($oc['diff_member'])) echo $oc['diff_member'] ?? 0 > 0 ? 'positive' : 'negative' ?>">
-          <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
-            <span class="openchat-itme-stats-title">前日比</span>
-            <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?></span>
-            <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
-          <?php elseif ($oc['diff_member'] === 0) : ?>
-            <span class="openchat-itme-stats-title">前日比</span>
-            <span class="zero-stats">±0</span>
-          <?php endif ?>
-        </div>
-        <div class="weekly <?php if (isset($oc['diff_member'])) echo $oc['diff_member2'] ?? 0 > 0 ? 'positive' : 'negative' ?>">
-          <?php if ($oc['diff_member2'] ?? 0 !== 0) : ?>
-            <span class="openchat-itme-stats-title">前週比</span>
-            <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?></span>
-            <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
-          <?php elseif ($oc['diff_member2'] === 0) : ?>
-            <span class="openchat-itme-stats-title">前週比</span>
-            <span class="zero-stats">±0</span>
-          <?php endif ?>
+        <div class="talkroom_number_of_stats">
+          <div class="<?php if (isset($oc['diff_member'])) echo $oc['diff_member'] ?? 0 > 0 ? 'positive' : 'negative' ?>">
+            <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
+              <span class="openchat-itme-stats-title">前日比</span>
+              <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?></span>
+              <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
+            <?php elseif ($oc['diff_member'] === 0) : ?>
+              <span class="openchat-itme-stats-title">前日比</span>
+              <span class="zero-stats">±0</span>
+            <?php endif ?>
+          </div>
+          <div class="weekly <?php if (isset($oc['diff_member'])) echo $oc['diff_member2'] ?? 0 > 0 ? 'positive' : 'negative' ?>">
+            <?php if ($oc['diff_member2'] ?? 0 !== 0) : ?>
+              <span class="openchat-itme-stats-title">前週比</span>
+              <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?></span>
+              <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
+            <?php elseif ($oc['diff_member2'] === 0) : ?>
+              <span class="openchat-itme-stats-title">前週比</span>
+              <span class="zero-stats">±0</span>
+            <?php endif ?>
+          </div>
         </div>
       </div>
-      <span class="openchat-list-date" style="flex-direction: row;">
-        <div class="inner">
-          <?php if (is_int($oc['api_created_at'])) : ?>
-            <div>カテゴリー:&nbsp;</div>
-          <?php endif ?>
-          <?php if (is_int($oc['api_created_at'])) : ?>
-            <div>オプチャ作成:&nbsp;</div>
-          <?php endif ?>
-          <div>登録:&nbsp;</div>
-        </div>
-        <div style="display: flex; flex-direction: column; justify-content: space-between;">
-          <?php if (is_int($oc['api_created_at'])) : ?>
-            <div><?php echo $category ? $category : 'その他' ?></div>
-          <?php endif ?>
-          <?php if (is_int($oc['api_created_at'])) : ?>
-            <div><?php echo convertDatetime($oc['api_created_at']) ?></div>
-          <?php endif ?>
-          <div><?php echo convertDatetime($oc['created_at']) ?></div>
-        </div>
-      </span>
-    </div>
-
+    </header>
     <hr>
     <!-- グラフセクション -->
     <script type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
@@ -122,6 +98,26 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => false]); ?>
           </label>
         <?php endif ?>
       </form>
+      <span class="openchat-list-date" style="flex-direction: row;">
+        <div class="inner">
+          <?php if (is_int($oc['api_created_at'])) : ?>
+            <div>カテゴリー:&nbsp;</div>
+          <?php endif ?>
+          <?php if (is_int($oc['api_created_at'])) : ?>
+            <div>オプチャ作成:&nbsp;</div>
+          <?php endif ?>
+          <div>登録:&nbsp;</div>
+        </div>
+        <div style="display: flex; flex-direction: column; justify-content: space-between;">
+          <?php if (is_int($oc['api_created_at'])) : ?>
+            <div><?php echo $category ? $category : 'その他' ?></div>
+          <?php endif ?>
+          <?php if (is_int($oc['api_created_at'])) : ?>
+            <div><?php echo convertDatetime($oc['api_created_at']) ?></div>
+          <?php endif ?>
+          <div><?php echo convertDatetime($oc['created_at']) ?></div>
+        </div>
+      </span>
     </footer>
 
   </article>
