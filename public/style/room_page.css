@@ -219,6 +219,14 @@ body > footer {
     text-decoration: underline 2px currentColor;
   }
 
+  hr {
+    margin: 19px 0;
+  }
+
+  .openchat {
+    padding-top: 19px;
+  }
+
   .talkroom_link_h1 {
     font-size: 18px;
     line-height: 145%;
