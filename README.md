@@ -28,11 +28,11 @@ MimimalCMS
 https://github.com/mimimiku778/MimimalCMS
 
 ## ランキングUIのリポジトリ  
-Open-Chat-Graph-Frontend React + TypeScript  
+Open-Chat-Graph-Frontend  
 https://github.com/mimimiku778/Open-Chat-Graph-Frontend
 
 ## グラフUIのリポジトリ  
-Open-Chat-Graph-Frontend-Stats-Graph Preact + TypeScript
+Open-Chat-Graph-Frontend-Stats-Graph  
 https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph
 
 ## 連絡先
