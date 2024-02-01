@@ -41,9 +41,9 @@ abstract class AabstractRankingPositionStore
         if (!$data) {
             throw new \RuntimeException('invalid ranking data file: ' . $file);
         }
-        
+
         $fileTime = $this->getModifiedFileTime($file);
-        return [$fileTime, $data];
+        return [$fileTime->format('Y-m-d H:i:s'), $data];
     }
 
     function deleteApiDtoStorageAll(): void
@@ -51,7 +51,12 @@ abstract class AabstractRankingPositionStore
         deleteStorageFileAll($this->filePath, true);
     }
 
-    protected function getModifiedFileTime(string $fileName): string
+    function getFileDateTime(): \DateTime
+    {
+        return $this->getModifiedFileTime($this->filePath . "/0.dat");
+    }
+
+    protected function getModifiedFileTime(string $fileName): \DateTime
     {
         $fileTime = new \DateTime('@' . filemtime($fileName));
         $fileTime->setTimeZone(new \DateTimeZone('Asia/Tokyo'));
@@ -62,6 +67,6 @@ abstract class AabstractRankingPositionStore
 
         $fileTime->setTime((int)$fileTime->format('H'), AppConfig::CRON_START_MINUTE);
 
-        return $fileTime->format('Y-m-d H:i:s');
+        return $fileTime;
     }
 }

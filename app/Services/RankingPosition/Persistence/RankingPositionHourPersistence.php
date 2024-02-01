@@ -29,5 +29,9 @@ class RankingPositionHourPersistence
                 ...$this->rankingPositionStore->getStorageData((string)$category)
             );
         }
+
+        $this->rankingPositionHourRepository->insertTotalCount(
+            $this->rankingPositionHourRepository->getTotalCount($this->rankingPositionStore->getFileDateTime(), false)
+        );
     }
 }
