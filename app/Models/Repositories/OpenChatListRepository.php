@@ -154,4 +154,12 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
 
         return DB::fetchAll($query, compact('startId', 'endId'));
     }
+
+    /**
+     * @return array{ id: int, updated_at: string }[]
+     */
+    public function getOpenChatSiteMapData(): array
+    {
+        return DB::fetchAll("SELECT id, updated_at FROM open_chat");
+    }
 }
