@@ -12,21 +12,27 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
     {
         $query =
             "SELECT
-                id,
-                name,
-                img_url,
-                description,
-                member,
-                api_created_at,
-                emblem,
-                category,
-                emid,
-                UNIX_TIMESTAMP(created_at) AS created_at,
-                UNIX_TIMESTAMP(updated_at) AS updated_at
+                oc.id,
+                oc.name,
+                oc.img_url,
+                oc.description,
+                oc.member,
+                oc.api_created_at,
+                oc.emblem,
+                oc.category,
+                oc.emid,
+                UNIX_TIMESTAMP(oc.created_at) AS created_at,
+                UNIX_TIMESTAMP(oc.updated_at) AS updated_at,
+                r_day.diff_member AS diff_member,
+                r_day.percent_increase AS percent_increase,
+                r_week.diff_member AS diff_member2,
+                r_week.percent_increase AS percent_increase2
             FROM
-                open_chat
+                open_chat AS oc
+                LEFT JOIN statistics_ranking_day AS r_day ON oc.id = r_day.open_chat_id
+                LEFT JOIN statistics_ranking_week AS r_week ON oc.id = r_week.open_chat_id
             WHERE
-                id = :id";
+                oc.id = :id";
 
         return DB::fetch($query, ['id' => $id]);
     }

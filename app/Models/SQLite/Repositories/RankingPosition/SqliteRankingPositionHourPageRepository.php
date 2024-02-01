@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\SQLite\Repositories\RankingPosition;
 
-use App\Models\Repositories\RankingPosition\Dto\RankingPositionPageRepoDto;
+use App\Models\Repositories\RankingPosition\Dto\RankingPositionHourPageRepoDto;
 use App\Models\Repositories\RankingPosition\RankingPositionHourPageRepositoryInterface;
 use App\Models\SQLite\SQLiteRankingPositionHour;
 
@@ -15,22 +15,23 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
         SQLiteRankingPositionHour::connect('?mode=ro&nolock=1');
     }
 
-    public function getHourRankingPositionTimeAsc(string $emid, int $category): RankingPositionPageRepoDto|false
+    public function getHourRankingPositionTimeAsc(string $emid, int $category): RankingPositionHourPageRepoDto|false
     {
         return $this->getHourPosition('ranking', $emid, $category);
     }
 
-    public function getHourRisingPositionTimeAsc(string $emid, int $category): RankingPositionPageRepoDto|false
+    public function getHourRisingPositionTimeAsc(string $emid, int $category): RankingPositionHourPageRepoDto|false
     {
         return $this->getHourPosition('rising', $emid, $category);
     }
 
-    private function getHourPosition(string $tableName, string $emid, int $category): RankingPositionPageRepoDto|false
+    private function getHourPosition(string $tableName, string $emid, int $category): RankingPositionHourPageRepoDto|false
     {
         $query =
             "SELECT
                 t1.time AS time,
                 t1.position AS position,
+                t1.member AS member,
                 t2.total_count_{$tableName} AS total_count
             FROM
                 (
@@ -39,7 +40,7 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
                     FROM
                         {$tableName}
                     WHERE
-                        open_chat_id = :open_chat_id
+                        emid = :emid
                         AND category = :category
                 ) AS t1
                 JOIN total_count AS t2 ON t1.time = t2.time
@@ -47,15 +48,16 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
             ORDER BY
                 t1.time ASC";
 
-        $result = SQLiteRankingPosition::fetchAll($query, compact('open_chat_id', 'category'));
+        $result = SQLiteRankingPositionHour::fetchAll($query, compact('emid', 'category'));
         if (!$result) {
             return false;
         }
 
-        $dto = new RankingPositionPageRepoDto;
+        $dto = new RankingPositionHourPageRepoDto;
         $dto->time = array_column($result, 'time');
         $dto->position = array_column($result, 'position');
         $dto->totalCount = array_column($result, 'total_count');
+        $dto->member = array_column($result, 'member');
 
         return $dto;
     }
