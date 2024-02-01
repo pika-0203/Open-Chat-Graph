@@ -18,6 +18,7 @@ use App\Models\Repositories\DeleteOpenChatRepositoryInterface;
 use App\Services\GceDifferenceUpdater;
 use App\Models\SQLite\SQLiteStatistics;
 use App\Services\CronJson\SyncOpenChatState;
+use App\Services\SitemapGenerator;
 use Shared\Exceptions\NotFoundException;
 
 class AdminPageController
@@ -32,6 +33,12 @@ class AdminPageController
     function index()
     {
         throw new \Exception('test');
+    }
+
+    private function genesitemap(SitemapGenerator $sitemapGenerator)
+    {
+        $sitemapGenerator->generate();
+        echo 'done';
     }
 
     private function recoveryyesterdaystats()
