@@ -23,7 +23,7 @@ https://openchat-review.me
 増加率: `増加数 / 前日 or 前週のメンバー数`  
 ランク付け: `増加数 + 増加率 × 20`  
 
-## 開発フレームワーク
+## PHPフレームワークのリポジトリ  
 MimimalCMS  
 https://github.com/mimimiku778/MimimalCMS
 
