@@ -74,17 +74,17 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => false]); ?>
         -webkit-user-select: none;
       }
 
-      @media screen and (max-width: 359px) {
-        .chart-canvas-box {
-          margin: 0 -1rem;
-          width: calc(100% + 2rem);
-          aspect-ratio: 1 / 1;
-        }
-      }
-
       @media screen and (max-width: 511px) {
         .chart-canvas-box {
           aspect-ratio: 1.2 / 1;
+        }
+      }
+
+      @media screen and (max-width: 359px) {
+        .chart-canvas-box {
+          margin: 0 -0.75rem;
+          width: calc(100% + 1.5rem);
+          aspect-ratio: 1.1 / 1;
         }
       }
     </style>

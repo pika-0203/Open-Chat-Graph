@@ -41,6 +41,13 @@ Route::path(
     ->matchNum('open_chat_id', min: 1)
     ->matchStr('sort', regex: ['ranking', 'ranking_all', 'rising', 'rising_all']);
 
+Route::path(
+    'oc/{open_chat_id}/position_hour',
+    [RankingPositionApiController::class, 'rankingPositionHour']
+)
+    ->matchNum('open_chat_id', min: 1)
+    ->matchStr('sort', regex: ['ranking', 'ranking_all', 'rising', 'rising_all']);
+
 Route::path('/')
     ->middleware([RedirectLineWebBrowser::class, VerifyCsrfToken::class]);
 

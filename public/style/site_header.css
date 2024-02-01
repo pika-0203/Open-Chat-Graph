@@ -281,9 +281,9 @@ body::before {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 20px;
+  min-height: 20px;
   /* 生成ボタンサイズ */
-  width: 20px;
+  min-width: 20px;
   /* 生成ボタンサイズ */
   vertical-align: -0.8rem;
   color: #fff;

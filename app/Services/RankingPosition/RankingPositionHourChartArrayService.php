@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Services\RankingPosition;
 
-use App\Services\RankingPosition\Dto\RankingPositionChartDto;
+use App\Services\RankingPosition\Dto\RankingPositionHourChartDto;
 use App\Models\Repositories\RankingPosition\Dto\RankingPositionHourPageRepoDto;
 use App\Models\Repositories\RankingPosition\RankingPositionHourPageRepositoryInterface;
 
-class RankingPositionChartArrayService
+class RankingPositionHourChartArrayService
 {
-    private const SUBSTR_YMD_LEN = 10;
+    private const INTERVAL_HOUR = 24;
     private const SUBSTR_HI_OFFSET = 11;
     private const SUBSTR_HI_LEN = 5;
 
@@ -19,95 +19,83 @@ class RankingPositionChartArrayService
     ) {
     }
 
-    function getRankingPositionHourChartArray(string $emid, int $category): RankingPositionChartDto|false
+    function getRankingPositionHourChartArray(string $emid, int $category): RankingPositionHourChartDto
     {
-        $repoDto = $this->rankingPositionHourPageRepository->getHourRankingPositionTimeAsc($emid, $category);
+        $repoDto = $this->rankingPositionHourPageRepository->getHourRankingPositionTimeAsc($emid, $category, self::INTERVAL_HOUR);
         if (!$repoDto) {
-            return false;
+            return new RankingPositionHourChartDto;
         }
 
         return $this->buildRankingPositionChartArray($repoDto);
     }
 
-    function getRisingPositionHourChartArray(string $emid, int $category): RankingPositionChartDto|false
+    function getRisingPositionHourChartArray(string $emid, int $category): RankingPositionHourChartDto
     {
-        $repoDto = $this->rankingPositionHourPageRepository->getHourRisingPositionTimeAsc($emid, $category);
+        $repoDto = $this->rankingPositionHourPageRepository->getHourRisingPositionTimeAsc($emid, $category, self::INTERVAL_HOUR);
         if (!$repoDto) {
-            return false;
+            return new RankingPositionHourChartDto;
         }
 
         return $this->buildRankingPositionChartArray($repoDto);
     }
 
-    private function buildRankingPositionChartArray(RankingPositionHourPageRepoDto $repoDto): RankingPositionChartDto|false
+    private function buildRankingPositionChartArray(RankingPositionHourPageRepoDto $repoDto): RankingPositionHourChartDto
     {
-        return $this->generateChartArray(
-            $this->generateDateArray(
-                $repoDto->time[0],
-                $repoDto->time[count(($repoDto->time)) - 1]
-            ),
-            $repoDto
-        );
+        return $this->generateChartArray($this->generateTimeArray($repoDto->firstTime), $repoDto);
     }
 
     /**  
      *  @return string[]
      */
-    private function generateDateArray(string $firstTime, string $endTime): array
+    private function generateTimeArray(string $firstTime): array
     {
         $first = new \DateTime($firstTime);
 
-        $interval = $first->diff(new \DateTime($endTime))->h;
-        $dateArray = [];
-        $i = 0;
-
-        while ($i <= $interval) {
-            $dateArray[] = $first->format('Y-m-d H:i:s');
+        for ($i = 0; $i <= self::INTERVAL_HOUR; $i++) {
+            $timeArray[] = $first->format('Y-m-d H:i:s');
             $first->modify('+1 hour');
-            $i++;
         }
 
-        return $dateArray;
+        return $timeArray;
     }
 
     /**
-     * @param string[] $dateArray
-     * @param array{ date:string, member:int }[]
+     * @param string[] $timeArray
      */
-    private function generateChartArray(array $dateArray, RankingPositionHourPageRepoDto $repoDto): RankingPositionChartDto
+    private function generateChartArray(array $timeArray, RankingPositionHourPageRepoDto $repoDto): RankingPositionHourChartDto
     {
-        $dto = new RankingPositionChartDto;
+        $dto = new RankingPositionHourChartDto;
 
-        $getMemberStatsCurDate = fn (int $key): string => $memberStats[$key]['date'] ?? '';
-        $getRepoDtoCurDate = fn (int $key): string => isset($repoDto->time[$key]) ? substr($repoDto->time[$key], 0, self::SUBSTR_YMD_LEN) : '';
+        $getRepoDtoCurTime = fn (int $key): string => isset($repoDto->time[$key]) ? $repoDto->time[$key] : '';
 
-        $curKeyMemberStats = 0;
         $curKeyRepoDto = 0;
         $repoDtoArrayCount = count($repoDto->time);
-        $repoDtoCurDate = $getRepoDtoCurDate(0);
-        $memberStatsCurDate = $getMemberStatsCurDate(0);
+        $repoDtoCurTime = $getRepoDtoCurTime(0);
 
-        foreach ($dateArray as $date) {
-            $matchMemberStats = $memberStatsCurDate === $date;
-            $matchRepoDto = $repoDtoCurDate === $date;
+        foreach ($timeArray as $time) {
+            $timeString = substr($time, self::SUBSTR_HI_OFFSET, self::SUBSTR_HI_LEN);
+
+            if ($repoDtoCurTime !== $time) {
+                $dto->addValue(
+                    $timeString,
+                    null,
+                    null,
+                    $curKeyRepoDto > 0 && $curKeyRepoDto < $repoDtoArrayCount ? 0 : null,
+                    null,
+                );
+
+                continue;
+            }
 
             $dto->addValue(
-                $date,
-                $matchMemberStats ? $memberStats[$curKeyMemberStats]['member'] : null,
-                $matchRepoDto ? substr($repoDto->time[$curKeyRepoDto], self::SUBSTR_HI_OFFSET, self::SUBSTR_HI_LEN) : null,
-                $matchRepoDto ? $repoDto->position[$curKeyRepoDto] : ($curKeyRepoDto > 0 && $curKeyRepoDto < $repoDtoArrayCount ? 0 : null),
-                $matchRepoDto ? $repoDto->totalCount[$curKeyRepoDto] : null,
+                $timeString,
+                $repoDto->member[$curKeyRepoDto],
+                $repoDto->position[$curKeyRepoDto],
+                $repoDto->totalCount[$curKeyRepoDto],
             );
 
-            if ($matchMemberStats) {
-                $curKeyMemberStats++;
-                $memberStatsCurDate = $getMemberStatsCurDate($curKeyMemberStats);
-            }
-
-            if ($matchRepoDto) {
-                $curKeyRepoDto++;
-                $repoDtoCurDate = $getRepoDtoCurDate($curKeyRepoDto);
-            }
+            $curKeyRepoDto++;
+            $repoDtoCurTime = $getRepoDtoCurTime($curKeyRepoDto);
         }
 
         return $dto;

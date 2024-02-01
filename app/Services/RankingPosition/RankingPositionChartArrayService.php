@@ -21,7 +21,7 @@ class RankingPositionChartArrayService
     ) {
     }
 
-    function getRankingPositionChartArray(int $open_chat_id, int $category): RankingPositionChartDto|false
+    function getRankingPositionChartArray(int $open_chat_id, int $category): RankingPositionChartDto
     {
         $repoDto = $this->rankingPositionPageRepository->getDailyRankingPositionTimeAsc($open_chat_id, $category);
         if (!$repoDto) {
@@ -31,7 +31,7 @@ class RankingPositionChartArrayService
         return $this->buildRankingPositionChartArray($open_chat_id, $repoDto);
     }
 
-    function getRisingPositionChartArray(int $open_chat_id, int $category): RankingPositionChartDto|false
+    function getRisingPositionChartArray(int $open_chat_id, int $category): RankingPositionChartDto
     {
         $repoDto = $this->rankingPositionPageRepository->getDailyRisingPositionTimeAsc($open_chat_id, $category);
         if (!$repoDto) {
@@ -41,12 +41,12 @@ class RankingPositionChartArrayService
         return $this->buildRankingPositionChartArray($open_chat_id, $repoDto);
     }
 
-    function getStatsChartArrayWithoutPosition(int $open_chat_id): RankingPositionChartDto|false
+    function getStatsChartArrayWithoutPosition(int $open_chat_id): RankingPositionChartDto
     {
         return $this->buildRankingPositionChartArray($open_chat_id, new RankingPositionPageRepoDto);
     }
 
-    private function buildRankingPositionChartArray(int $open_chat_id, RankingPositionPageRepoDto $repoDto): RankingPositionChartDto|false
+    private function buildRankingPositionChartArray(int $open_chat_id, RankingPositionPageRepoDto $repoDto): RankingPositionChartDto
     {
         $memberStats = $this->statisticsPageRepository->getDailyMemberStatsDateAsc($open_chat_id);
         if (!$memberStats) {
