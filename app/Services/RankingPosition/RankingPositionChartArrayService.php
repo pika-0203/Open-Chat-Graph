@@ -39,7 +39,7 @@ class RankingPositionChartArrayService
             return $this->getStatsChartArrayWithoutPosition($open_chat_id);
         }
 
-        return $this->buildRankingPositionChartArray($open_chat_id, $repoDto);
+        return $this->buildRankingPositionChartArray($open_chat_id, $repoDto, true);
     }
 
     function getStatsChartArrayWithoutPosition(int $open_chat_id): RankingPositionChartDto
@@ -47,7 +47,7 @@ class RankingPositionChartArrayService
         return $this->buildRankingPositionChartArray($open_chat_id, new RankingPositionPageRepoDto);
     }
 
-    private function buildRankingPositionChartArray(int $open_chat_id, RankingPositionPageRepoDto $repoDto): RankingPositionChartDto
+    private function buildRankingPositionChartArray(int $open_chat_id, RankingPositionPageRepoDto $repoDto, bool $includeTime = false): RankingPositionChartDto
     {
         $memberStats = $this->statisticsPageRepository->getDailyMemberStatsDateAsc($open_chat_id);
         if (!$memberStats) {
@@ -60,7 +60,8 @@ class RankingPositionChartArrayService
                 $memberStats[count($memberStats) - 1]['date']
             ),
             $memberStats,
-            $repoDto
+            $repoDto,
+            $includeTime
         );
     }
 
@@ -89,7 +90,7 @@ class RankingPositionChartArrayService
      * @param string[] $dateArray
      * @param array{ date:string, member:int }[] $memberStats
      */
-    private function generateChartArray(array $dateArray, array $memberStats, RankingPositionPageRepoDto $repoDto): RankingPositionChartDto
+    private function generateChartArray(array $dateArray, array $memberStats, RankingPositionPageRepoDto $repoDto, bool $includeTime): RankingPositionChartDto
     {
         $dto = new RankingPositionChartDto;
 
@@ -114,7 +115,7 @@ class RankingPositionChartArrayService
             $dto->addValue(
                 $date,
                 $matchMemberStats ? $memberStats[$curKeyMemberStats]['member'] : null,
-                $matchRepoDto ? substr($repoDto->time[$curKeyRepoDto], self::SUBSTR_HI_OFFSET, self::SUBSTR_HI_LEN) : null,
+                $matchRepoDto && $includeTime ? substr($repoDto->time[$curKeyRepoDto], self::SUBSTR_HI_OFFSET, self::SUBSTR_HI_LEN) : null,
                 $matchRepoDto ? $repoDto->position[$curKeyRepoDto] : ($date === $repoDto->nextDate || $isBeforeStartDate ? null : 0),
                 $matchRepoDto ? $repoDto->totalCount[$curKeyRepoDto] : null,
             );
