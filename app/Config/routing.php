@@ -19,9 +19,6 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
     ->path('ranking/{category}', [ReactRankingPageController::class, 'ranking'])
     ->match(cache(...));
 
-Route::path('member')
-    ->match(cache(...));
-
 Route::path('recent')
     ->match(cache(...));
 
