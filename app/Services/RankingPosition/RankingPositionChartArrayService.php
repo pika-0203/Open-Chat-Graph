@@ -97,7 +97,6 @@ class RankingPositionChartArrayService
 
         $curKeyMemberStats = 0;
         $curKeyRepoDto = 0;
-        $repoDtoArrayCount = count($repoDto->time);
         $repoDtoCurDate = $getRepoDtoCurDate(0);
         $memberStatsCurDate = $getMemberStatsCurDate(0);
 
@@ -109,7 +108,7 @@ class RankingPositionChartArrayService
                 $date,
                 $matchMemberStats ? $memberStats[$curKeyMemberStats]['member'] : null,
                 $matchRepoDto ? substr($repoDto->time[$curKeyRepoDto], self::SUBSTR_HI_OFFSET, self::SUBSTR_HI_LEN) : null,
-                $matchRepoDto ? $repoDto->position[$curKeyRepoDto] : ($curKeyRepoDto > 0 && $curKeyRepoDto < $repoDtoArrayCount ? 0 : null),
+                $matchRepoDto ? $repoDto->position[$curKeyRepoDto] : ($date === $repoDto->nextDate ? null : 0),
                 $matchRepoDto ? $repoDto->totalCount[$curKeyRepoDto] : null,
             );
 

@@ -57,11 +57,14 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
                 t1.time ASC";
 
         $result = SQLiteRankingPositionHour::fetchAll($query, compact('emid', 'category'));
+        
+        $dto = new RankingPositionHourPageRepoDto;
+        $dto->firstTime = $firstTime;
+        
         if (!$result) {
-            return false;
+            return $dto;
         }
 
-        $dto = new RankingPositionHourPageRepoDto;
         $dto->time = array_column($result, 'time');
         $dto->position = array_column($result, 'position');
         $dto->totalCount = array_column($result, 'total_count');
