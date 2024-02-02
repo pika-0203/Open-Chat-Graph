@@ -11,7 +11,7 @@ use App\Models\Repositories\RankingPosition\RankingPositionHourPageRepositoryInt
 class RankingPositionHourChartArrayService
 {
     private const INTERVAL_HOUR = 24;
-    
+
     function __construct(
         private RankingPositionHourPageRepositoryInterface $rankingPositionHourPageRepository,
     ) {
@@ -76,7 +76,6 @@ class RankingPositionHourChartArrayService
             if ($repoDtoCurTime !== $time) {
                 $dto->addValue(
                     $timeStr,
-                    null,
                     null,
                     $curKeyRepoDto > 0 && $curKeyRepoDto < $repoDtoArrayCount ? 0 : null,
                     null,
