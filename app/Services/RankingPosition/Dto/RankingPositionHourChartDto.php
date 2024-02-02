@@ -7,10 +7,12 @@ namespace App\Services\RankingPosition\Dto;
 class RankingPositionHourChartDto
 {
     /** @var string[] H:i */
-    public array $time = [];
+    public array $date = [];
 
     /** @var (int|null)[] */
     public array $member = [];
+
+    public array $time = [];
 
     /** @var (int|null)[] */
     public array $position = [];
@@ -20,7 +22,7 @@ class RankingPositionHourChartDto
 
     function addValue(string $time, int|null $member, int|null $position, int|null $totalCount)
     {
-        $this->time[] = $time;
+        $this->date[] = $time;
         $this->member[] = $member;
         $this->position[] = $position;
         $this->totalCount[] = $totalCount;
