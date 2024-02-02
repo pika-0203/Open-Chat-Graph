@@ -1,4 +1,5 @@
 User-agent: *
+disallow: /?l=w
 disallow: /recent
 disallow: /oclist
 disallow: /search
