@@ -27,6 +27,11 @@ class SqliteRankingPositionPageRepository implements RankingPositionPageReposito
 
     private function getDailyPosition(string $tableName, int $open_chat_id, int $category): RankingPositionPageRepoDto|false
     {
+        $lastDate = $this->getLastDate($category);
+        if(!$lastDate) {
+            return false;
+        }
+
         $query =
             "SELECT
                 t1.time AS time,
@@ -47,16 +52,42 @@ class SqliteRankingPositionPageRepository implements RankingPositionPageReposito
             ORDER BY
                 t1.time ASC";
 
+        $dto = new RankingPositionPageRepoDto;
+        $dto->nextDate = $this->getNextDate($lastDate);
+        
         $result = SQLiteRankingPosition::fetchAll($query, compact('open_chat_id', 'category'));
         if (!$result) {
-            return false;
+            return $dto;
         }
 
-        $dto = new RankingPositionPageRepoDto;
         $dto->time = array_column($result, 'time');
         $dto->position = array_column($result, 'position');
         $dto->totalCount = array_column($result, 'total_count');
 
         return $dto;
+    }
+
+    private function getLastDate(int $category): string|false
+    {
+        return SQLiteRankingPosition::fetchColumn(
+            "SELECT
+                DATE(time)
+            FROM
+                total_count
+            WHERE
+                category = :category
+            ORDER BY
+                time DESC
+            LIMIT
+                1",
+            compact('category')
+        );
+    }
+
+    private function getNextDate(string $lastDate):string 
+    {
+        $nextDate = new \DateTime($lastDate);
+        $nextDate->modify('+ 1day');
+        return $nextDate->format('Y-m-d');
     }
 }

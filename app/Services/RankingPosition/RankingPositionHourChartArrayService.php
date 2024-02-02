@@ -67,7 +67,6 @@ class RankingPositionHourChartArrayService
         $getRepoDtoCurTime = fn (int $key): string => isset($repoDto->time[$key]) ? $repoDto->time[$key] : '';
 
         $curKeyRepoDto = 0;
-        $repoDtoArrayCount = count($repoDto->time);
         $repoDtoCurTime = $getRepoDtoCurTime(0);
 
         foreach ($timeArray as $time) {
@@ -76,8 +75,8 @@ class RankingPositionHourChartArrayService
             if ($repoDtoCurTime !== $time) {
                 $dto->addValue(
                     $timeStr,
-                    null,
-                    $curKeyRepoDto > 0 && $curKeyRepoDto < $repoDtoArrayCount ? 0 : null,
+                    0,
+                    0,
                     null,
                 );
 
