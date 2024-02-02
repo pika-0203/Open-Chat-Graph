@@ -11,9 +11,7 @@ use App\Models\Repositories\RankingPosition\RankingPositionHourPageRepositoryInt
 class RankingPositionHourChartArrayService
 {
     private const INTERVAL_HOUR = 24;
-    private const SUBSTR_HI_OFFSET = 11;
-    private const SUBSTR_HI_LEN = 5;
-
+    
     function __construct(
         private RankingPositionHourPageRepositoryInterface $rankingPositionHourPageRepository,
     ) {
@@ -73,11 +71,11 @@ class RankingPositionHourChartArrayService
         $repoDtoCurTime = $getRepoDtoCurTime(0);
 
         foreach ($timeArray as $time) {
-            $timeString = substr($time, self::SUBSTR_HI_OFFSET, self::SUBSTR_HI_LEN);
+            $timeStr = (new \DateTime($time))->format('m/d H:i');
 
             if ($repoDtoCurTime !== $time) {
                 $dto->addValue(
-                    $timeString,
+                    $timeStr,
                     null,
                     null,
                     $curKeyRepoDto > 0 && $curKeyRepoDto < $repoDtoArrayCount ? 0 : null,
@@ -88,7 +86,7 @@ class RankingPositionHourChartArrayService
             }
 
             $dto->addValue(
-                $timeString,
+                $timeStr,
                 $repoDto->member[$curKeyRepoDto],
                 $repoDto->position[$curKeyRepoDto],
                 $repoDto->totalCount[$curKeyRepoDto],
