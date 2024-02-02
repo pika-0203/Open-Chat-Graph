@@ -14,6 +14,7 @@ class RankingPositionChartArrayService
     private const SUBSTR_YMD_LEN = 10;
     private const SUBSTR_HI_OFFSET = 11;
     private const SUBSTR_HI_LEN = 5;
+    private const START_DATE = '2024-01-19';
 
     function __construct(
         private RankingPositionPageRepositoryInterface $rankingPositionPageRepository,
@@ -94,13 +95,19 @@ class RankingPositionChartArrayService
 
         $getMemberStatsCurDate = fn (int $key): string => $memberStats[$key]['date'] ?? '';
         $getRepoDtoCurDate = fn (int $key): string => isset($repoDto->time[$key]) ? substr($repoDto->time[$key], 0, self::SUBSTR_YMD_LEN) : '';
+        $getIsBeforeStartDate = fn (string $date) => strtotime($date) < strtotime(self::START_DATE);
 
         $curKeyMemberStats = 0;
         $curKeyRepoDto = 0;
         $repoDtoCurDate = $getRepoDtoCurDate(0);
         $memberStatsCurDate = $getMemberStatsCurDate(0);
+        $isBeforeStartDate = true;
 
         foreach ($dateArray as $date) {
+            if ($isBeforeStartDate) {
+                $isBeforeStartDate = $getIsBeforeStartDate($date);
+            }
+
             $matchMemberStats = $memberStatsCurDate === $date;
             $matchRepoDto = $repoDtoCurDate === $date;
 
@@ -108,7 +115,7 @@ class RankingPositionChartArrayService
                 $date,
                 $matchMemberStats ? $memberStats[$curKeyMemberStats]['member'] : null,
                 $matchRepoDto ? substr($repoDto->time[$curKeyRepoDto], self::SUBSTR_HI_OFFSET, self::SUBSTR_HI_LEN) : null,
-                $matchRepoDto ? $repoDto->position[$curKeyRepoDto] : ($date === $repoDto->nextDate ? null : 0),
+                $matchRepoDto ? $repoDto->position[$curKeyRepoDto] : ($date === $repoDto->nextDate || $isBeforeStartDate ? null : 0),
                 $matchRepoDto ? $repoDto->totalCount[$curKeyRepoDto] : null,
             );
 
