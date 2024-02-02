@@ -65,6 +65,11 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => false]); ?>
     <!-- グラフセクション -->
     <script type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
     <style>
+      .limit-btns .MuiTab-fullWidth {
+        min-width: 0;
+        padding: 0;
+      }
+
       .chart-canvas-box {
         aspect-ratio: 1.7 / 1;
         width: 100%;
@@ -85,6 +90,10 @@ viewComponent('head', compact('_css', '_meta') + ['noindex' => false]); ?>
           margin: 0 -0.75rem;
           width: calc(100% + 1.5rem);
           aspect-ratio: 1.1 / 1;
+        }
+
+        .limit-btns .MuiTab-fullWidth {
+          font-size: 13px;
         }
       }
     </style>
