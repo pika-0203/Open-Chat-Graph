@@ -70,6 +70,14 @@ class DeleteOpenChatRepository implements DeleteOpenChatRepositoryInterface
         $this->rankingPositionRepository->mergeDuplicateDailyPosition($duplicated_id, $open_chat_id);
         $this->deleteOpenChat($duplicated_id);
 
+        DB::executeAndCheckResult(
+            "DELETE FROM
+                     open_chat_deleted
+                WHERE
+                     id = :open_chat_id",
+            compact('open_chat_id')
+        );
+
         DB::execute(
             'INSERT INTO
                 open_chat_merged (duplicated_id, open_chat_id)
