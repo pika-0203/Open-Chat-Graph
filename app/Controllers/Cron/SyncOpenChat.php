@@ -96,8 +96,9 @@ class SyncOpenChat
 
     function finalizeMigrate(): void
     {
-        $this->gce->finalizeSyncLatest();
-        $this->addMessage("[GCE] done");
+        // TODO:GCE無効化
+        //$this->gce->finalizeSyncLatest();
+        //$this->addMessage("[GCE] done");
     }
 
     function finalizeUpdate(): void
@@ -105,8 +106,9 @@ class SyncOpenChat
         $result = $this->dupMeger->mergeDuplicateOpenChat();
         $this->addMessage("mergeDuplicateOpenChat: " . count($result));
 
-        $this->gce->finalizeOpenChatMerged();
-        $this->addMessage("[GCE] done");
+        // TODO:GCE無効化
+        //$this->gce->finalizeOpenChatMerged();
+        //$this->addMessage("[GCE] done");
 
         $this->sitemapGenerator->generate();
     }
@@ -116,7 +118,8 @@ class SyncOpenChat
         [$resultRowCount, $resultPastWeekRowCount] = $this->updateRankingService->update();
         $this->addMessage("updateRankingService: [day: {$resultRowCount}, week: {$resultPastWeekRowCount}]");
 
-        $this->gce->gceUpdateRanking();
-        $this->addMessage("[GCE] done");
+        // TODO:GCE無効化
+        //$this->gce->gceUpdateRanking();
+        //$this->addMessage("[GCE] done");
     }
 }
