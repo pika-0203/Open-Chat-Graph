@@ -75,8 +75,6 @@ class OpenChatStatsRankingApiRepositoryWithGce
             'limit' => $args->limit,
         ];
 
-        $searchBan = getSeachBannedIdQuery('id');
-
         if (!$args->page) {
             // 1ページ目の場合
             $query = fn ($category) => fn ($where) =>
@@ -85,7 +83,7 @@ class OpenChatStatsRankingApiRepositoryWithGce
                     id
                 FROM
                     open_chat
-                {$where} AND {$category} AND NOT {$searchBan} AND {$tableName}_id > 0
+                {$where} AND {$category} AND {$tableName}_id > 0
                 ORDER BY
                     {$tableName}_{$sortColumn} {$args->order}
                 LIMIT
@@ -97,7 +95,7 @@ class OpenChatStatsRankingApiRepositoryWithGce
                     count(*) AS id
                 FROM
                     open_chat
-                {$where} AND {$category} AND NOT {$searchBan} AND {$tableName}_id > 0
+                {$where} AND {$category} AND {$tableName}_id > 0
             )";
         } else {
             $query = fn ($category) => fn ($where) =>
@@ -105,7 +103,7 @@ class OpenChatStatsRankingApiRepositoryWithGce
                 id
             FROM
                 open_chat
-            {$where} AND {$category} AND NOT {$searchBan} AND {$tableName}_id > 0
+            {$where} AND {$category} AND {$tableName}_id > 0
             ORDER BY
                 {$tableName}_{$sortColumn} {$args->order}
             LIMIT
@@ -197,8 +195,6 @@ class OpenChatStatsRankingApiRepositoryWithGce
             'limit' => $args->limit,
         ];
 
-        $searchBan = getSeachBannedIdQuery('id');
-
         if (!$args->page) {
             // 1ページ目の場合
             $query = fn ($category) => fn ($where) =>
@@ -207,7 +203,7 @@ class OpenChatStatsRankingApiRepositoryWithGce
                     id
                 FROM
                     open_chat
-                {$where} AND {$category} AND NOT {$searchBan}
+                {$where} AND {$category}
                 ORDER BY
                     {$sortColumn}
                 LIMIT
@@ -219,7 +215,7 @@ class OpenChatStatsRankingApiRepositoryWithGce
                     count(*) AS id
                 FROM
                     open_chat
-                {$where} AND {$category} AND NOT {$searchBan}
+                {$where} AND {$category}
             )";
         } else {
             $query = fn ($category) => fn ($where) =>
@@ -227,7 +223,7 @@ class OpenChatStatsRankingApiRepositoryWithGce
                 id
             FROM
                 open_chat
-            {$where} AND {$category} AND NOT {$searchBan}
+            {$where} AND {$category}
             ORDER BY
                 {$sortColumn}
             LIMIT
