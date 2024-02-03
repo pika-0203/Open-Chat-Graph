@@ -353,12 +353,15 @@ body::before {
 
 /* Colors */
 .checkbox-label input[type='checkbox'] {
-  border: 2px solid rgb(3, 199, 85);
+  border: 2px solid;
+  border-image: linear-gradient(-332deg, #0dc95a, #11d871 20%, #11d593 45%, #12cfcd 70%, #16c2c1);
+  border-image-slice: 1;
+  mask: linear-gradient(black, black);
 }
 
 .checkbox-label input[type='checkbox']:checked,
 .checkbox-label input[type='checkbox']:indeterminate {
-  background: rgb(3, 199, 85);
+  background: linear-gradient(-332deg, #0dc95a, #11d871 20%, #11d593 45%, #12cfcd 70%, #16c2c1);
 }
 
 .admin-check-label {

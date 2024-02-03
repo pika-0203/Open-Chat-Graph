@@ -37,3 +37,19 @@
 .MuiChip-root.openchat-item-header-chip.graph {
   font-size: 0.875rem;
 }
+
+.MuiToggleButton-root.MuiToggleButton-standard {
+  color: #b7b7b7;
+  border: 1px solid #e8e8e8;
+}
+
+.MuiToggleButton-root.MuiToggleButton-standard:hover {
+  color: #000;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.MuiToggleButton-root.Mui-selected.MuiToggleButton-standard,
+.MuiToggleButton-root.Mui-selected.MuiToggleButton-standard:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  border: 1px solid #e8e8e8;
+}
