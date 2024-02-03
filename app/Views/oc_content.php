@@ -64,44 +64,11 @@ viewComponent('head', compact('_css', '_meta')); ?>
     <hr>
     <!-- グラフセクション -->
     <script type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
-    <style>
-      .limit-btns .MuiTab-fullWidth {
-        min-width: 0;
-        padding: 0;
-      }
-
-      .chart-canvas-box {
-        aspect-ratio: 1.7 / 1;
-        width: 100%;
-        margin: 0 auto;
-        padding: 0;
-        user-select: none;
-        -webkit-user-select: none;
-      }
-
-      @media screen and (max-width: 511px) {
-        .chart-canvas-box {
-          aspect-ratio: 1.2 / 1;
-        }
-      }
-
-      @media screen and (max-width: 359px) {
-        .chart-canvas-box {
-          margin: 0 -0.75rem;
-          width: calc(100% + 1.5rem);
-          aspect-ratio: 1.1 / 1;
-        }
-
-        .limit-btns .MuiTab-fullWidth {
-          font-size: 13px;
-        }
-      }
-    </style>
     <div class="chart-canvas-box">
       <canvas id="chart-preact-canvas"></canvas>
     </div>
     <div id="app" data-oc-id="<?php echo $oc['id'] ?>" data-category="<?php echo $category ? $category : '' ?>"></div>
-    <hr>
+
     <footer class="unset">
       <form class="my-list-form">
         <?php if (count($myList) - 1 < AppConfig::MY_LIST_LIMIT || isset($myList[$oc['id']])) : ?>

@@ -1,3 +1,7 @@
+:root {
+  --border-color: #efefef;
+}
+
 header,
 main {
   margin: 0 auto;
@@ -6,15 +10,25 @@ main {
   padding-bottom: 0rem;
 }
 
+.ht-top-header {
+  background-color: var(--border-color);
+  margin: 0rem -1rem 0rem -1rem;
+}
+
+.ht-top-mylist {
+  background-color: var(--border-color);
+  margin: 2rem -1rem 1rem -1rem;
+}
+
 main {
   padding-bottom: 12px;
   margin-bottom: 12px;
-  border-bottom: solid 1px rgb(239, 243, 244);
+  border-bottom: solid 1px var(--border-color);
 }
 
 .ranking-page-main {
   padding-top: 0rem;
-  border-bottom: solid 1px rgb(239, 243, 244);
+  border-bottom: solid 1px var(--border-color);
 }
 
 .article-news {
@@ -419,8 +433,8 @@ main hr {
   margin: 0 -1rem;
   margin-top: 1.5rem;
   margin-bottom: 22px;
-  border-top: solid 1px rgb(239, 243, 244);
-  border-bottom: solid 1px rgb(239, 243, 244);
+  border-top: solid 1px var(--border-color);
+  border-bottom: solid 1px var(--border-color);
   color: var(--color-link);
 }
 
@@ -456,8 +470,8 @@ main hr {
   display: flex;
   background-color: #fff;
   border-radius: 8px;
-  border: 1px solid rgb(207, 217, 222);
-  border-color: #c6d5e0;
+  border: 1px solid var(--border-color);
+  border-color: #efefef;
   box-sizing: border-box;
   margin: 0 auto;
   height: 48px;
@@ -524,7 +538,7 @@ main hr {
   width: fit-content;
   color: var(--headline);
   background-color: var(--background);
-  border: solid 1px rgb(207, 217, 222);
+  border: solid 1px var(--border-color);
   border-radius: var(--border-radius);
   padding: 0 1em;
   height: 48px;
@@ -591,7 +605,7 @@ main hr {
   margin-top: 12px;
   justify-content: space-evenly;
   flex-wrap: nowrap;
-  border-bottom: solid 1px rgb(239, 243, 244);
+  border-bottom: solid 1px var(--border-color);
 }
 
 .list-btn {

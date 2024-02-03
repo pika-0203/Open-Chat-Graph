@@ -1,9 +1,13 @@
+:root {
+  --border-color: #efefef;
+}
+
 html {
   overflow-y: scroll; /* 常に垂直スクロールバーを表示 */
 }
 
 hr {
-  border-bottom: solid 1px rgb(239, 243, 244);
+  border-bottom: solid 1px var(--border-color);
   margin: 12px 0;
 }
 
@@ -90,7 +94,7 @@ hr {
   width: fit-content;
   height: 12px;
   line-height: 16px;
-  color: #757575;
+  color: #777;
 }
 
 /* メンバー数 */
@@ -200,7 +204,7 @@ hr {
 }
 
 body > footer {
-  border-top: solid 1px rgb(239, 243, 244);
+  border-top: solid 1px var(--border-color);
   padding-top: 0.5rem;
 }
 

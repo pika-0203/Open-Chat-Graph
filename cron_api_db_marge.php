@@ -32,6 +32,7 @@ try {
 } catch (\Throwable $e) {
     $syncOpenChat->addMessage('SyncOpenChat: ' . $e->__toString());
     AdminTool::sendLineNofity($syncOpenChat->getMessage());
+    exit;
 }
 
 addCronLog($syncOpenChat->getMessage());

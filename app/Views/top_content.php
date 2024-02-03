@@ -12,7 +12,7 @@
         <!-- 送信後のレスポンス -->
         <?php if (session()->has('id')) : ?>
             <!-- 登録完了 or 登録済 -->
-            <hr style="background-color: rgb(239, 243, 244); margin: 0rem -1rem 0rem -1rem;">
+            <hr class="ht-top-header">
             <sup class="add-openchat-message success" id="add-openchat-describedby"><?php echo h(session('message')) ?></sup>
             <div class="openchat-item add-openchat-form-item">
                 <a class="link-overlay unset" href="<?php echo url('/oc/' . $requestOpenChat['id']) ?>" tabindex="-1"></a>
@@ -25,25 +25,25 @@
                     <span>メンバー <?php echo $requestOpenChat['member'] ?></span>
                 </footer>
             </div>
-            <hr style="background-color: rgb(239, 243, 244); margin: 0rem -1rem 0rem -1rem;">
+            <hr class="ht-top-header">
         <?php elseif (session()->has('message')) : ?>
             <!-- 無効なURLの場合 -->
-            <hr style="background-color: rgb(239, 243, 244); margin: 0rem -1rem 0rem -1rem;">
+            <hr class="ht-top-header">
             <div style="font-size: 17px; margin: 1rem;" class="add-openchat-message false" id="add-openchat-describedby"><?php echo h(session('message')) ?></div>
-            <hr style="background-color: rgb(239, 243, 244); margin: 0rem -1rem 0rem -1rem;">
+            <hr class="ht-top-header">
         <?php endif ?>
         <?php foreach (session()->getError() as $error) : ?>
             <!-- その他エラーメッセージ -->
-            <hr style="background-color: rgb(239, 243, 244); margin: 0rem -1rem 0rem -1rem;">
+            <hr class="ht-top-header">
             <div style="font-size: 17px; margin: 1rem;" class="add-openchat-message false" id="add-openchat-describedby"><?php echo h($error['message']) ?></div>
-            <hr style="background-color: rgb(239, 243, 244); margin: 0rem -1rem 0rem -1rem;">
+            <hr class="ht-top-header">
         <?php endforeach ?>
         <hr>
         <?php if ($myList) : ?>
             <article class="top-mylist">
                 <?php viewComponent('open_chat_list', ['openChatList' => $myList, 'localUrl' => true]) ?>
             </article>
-            <hr style="background-color: rgb(239, 243, 244); margin: 2rem -1rem 1rem -1rem;">
+            <hr class="ht-top-mylist">
         <?php endif ?>
 
         <article class="top-ranking" style="margin-bottom: -1rem;">
