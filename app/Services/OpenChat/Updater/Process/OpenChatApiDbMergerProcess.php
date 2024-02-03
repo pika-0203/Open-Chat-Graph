@@ -7,7 +7,7 @@ namespace App\Services\OpenChat\Updater\Process;
 use App\Services\OpenChat\Crawler\OpenChatApiFromEmidDownloader;
 use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepositoryInterface;
 use App\Services\OpenChat\Updater\OpenChatUpdater;
-use App\Models\Repositories\OpenChatRepositoryInterface;
+use App\Models\Repositories\OpenChatRepositoryWithCacheForUpdater;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use Shadow\DB;
@@ -18,7 +18,7 @@ class OpenChatApiDbMergerProcess
         private OpenChatApiFromEmidDownloader $openChatApiOcDataFromEmidDownloader,
         private OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatDataWithCache,
         private OpenChatUpdater $openChatUpdater,
-        private OpenChatRepositoryInterface $openChatRepository,
+        private OpenChatRepositoryWithCacheForUpdater $openChatRepository,
     ) {
     }
 
