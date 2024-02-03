@@ -274,7 +274,7 @@ main hr {
   min-width: 0;
   padding: 0;
   position: relative;
-  margin: 1rem 0;
+  margin: 18px 0;
   margin-right: 1.5rem;
   padding-left: 62px;
   cursor: pointer;
@@ -783,32 +783,6 @@ main hr {
 
   .openchat-list-title-result-area {
     margin-bottom: 1rem;
-  }
-
-  .openchat-item {
-    margin: 1.2rem 0;
-    margin-right: 1.5rem;
-    padding-left: 68px;
-  }
-
-  .openchat-item-img {
-    width: 56px;
-    height: 56px;
-    top: 0;
-  }
-
-  .openchat-item-title {
-    font-size: 16px;
-  }
-
-  .openchat-item-desc {
-    font-size: 13.5px;
-    margin-top: 4px;
-  }
-
-  .openchat-item-lower {
-    font-size: 13px;
-    margin-top: 1px;
   }
 
   .page-select {
