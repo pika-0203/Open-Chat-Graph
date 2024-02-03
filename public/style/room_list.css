@@ -209,7 +209,7 @@ main hr {
 }
 
 .openchat-list-subtitle {
-  color: #606060;
+  color: #777;
   font-size: 12px;
   display: inline-block;
   margin: auto 0;
@@ -218,7 +218,7 @@ main hr {
 
 .openchat-list-date {
   display: flex;
-  color: #606060;
+  color: #777;
   font-size: 13px;
   flex-wrap: wrap;
 }
@@ -254,7 +254,7 @@ main hr {
 .openchat-list-title-area p {
   font-size: 13px;
   margin: 0.5rem 0;
-  color: #606060;
+  color: #777;
 }
 
 .ranking-page-main .openchat-list-title-area p {
@@ -342,7 +342,7 @@ main hr {
 }
 
 .openchat-item-desc {
-  color: #606060;
+  color: #777;
   font-size: 13px;
   line-height: 135%;
   display: -webkit-box;
@@ -362,7 +362,7 @@ main hr {
 
 .openchat-item-lower {
   display: flex;
-  color: #757575;
+  color: #aaa;
   margin-top: 1px;
   font-size: 13px;
   line-height: 1.1rem;
@@ -370,9 +370,9 @@ main hr {
 }
 
 .openchat-item-mui-chip-outer {
-  border: 1px solid #bdbdbd;
-  font-size: 11px;
-  border-radius: 16px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  font-size: 12px;
   display: block;
   width: fit-content;
   height: 0%;
@@ -385,7 +385,7 @@ main hr {
   padding-left: 7px;
   padding-right: 7px;
   white-space: nowrap;
-  color: rgba(0, 0, 0, 0.87);
+  color: RGB(124, 124, 124);
 }
 
 .openchat-itme-stats-title {
@@ -655,7 +655,7 @@ main hr {
 }
 
 .registration .registration-date.gray {
-  color: #606060;
+  color: #777;
   font-size: 13px;
   /* font-weight: bold;*/
 }
