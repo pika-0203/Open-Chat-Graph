@@ -668,9 +668,9 @@ main hr {
   border: solid 2px var(--color-link);
 }
 
+.top-mylist .openchat-item::before,
 .top-mylist .openchat-item::after {
   position: absolute;
-  left: 33px;
   top: 76%;
   content: '';
   transform: translateY(-50%);
@@ -679,10 +679,22 @@ main hr {
   background-repeat: no-repeat;
   background-size: contain;
   display: block;
-  background-image: url(/assets/pin.svg);
-  background-color: #03c755;
   border-radius: 1rem;
+}
+
+.top-mylist .openchat-item::before {
+  left: 33px;
   border: solid 1px white;
+  background: linear-gradient(-332deg, #0dc95a, #11d871 21.96%, #11d593 53.46%, #12cfcd 81.85%, #16c2c1);
+  z-index: 2;
+}
+
+.top-mylist .openchat-item::after {
+  left: 35px;
+  width: 16px;
+  height: 16px;
+  background-image: url(/assets/pin.svg);
+  z-index: 3;
 }
 
 .top-mylist .openchat-item-desc {
@@ -819,13 +831,6 @@ main hr {
 
   .list-btn:hover:not(:disabled) {
     background-color: var(--hover);
-  }
-
-  .top-mylist .openchat-item::after {
-    left: 38px;
-    top: 80%;
-    width: 18px;
-    height: 18px;
   }
 
   .super-icon {
