@@ -16,12 +16,12 @@ hr {
   margin: 0 auto;
   padding: 0 1rem;
   padding-top: 12px;
-  padding-bottom: 12px;
+  padding-bottom: 1.5rem;
 }
 
 .openchat footer {
+  padding-top: 1.5rem;
   display: flex;
-  padding-top: 2px;
   justify-content: space-around;
   gap: 2px;
 }
@@ -145,7 +145,7 @@ hr {
 .openchat-list-date {
   display: flex;
   flex-direction: row;
-  color: #606060;
+  color: #777;
   font-size: 12px;
   white-space: nowrap;
   align-items: center;
