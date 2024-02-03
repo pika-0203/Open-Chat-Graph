@@ -15,8 +15,6 @@ use App\Models\GCE\GceDbTableSynchronizer;
 use App\Models\GCE\DBGce;
 use App\Models\GCE\GceRankingUpdater;
 use App\Models\Repositories\DeleteOpenChatRepositoryInterface;
-use App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionHourRepository;
-use App\Models\SQLite\SQLiteRankingPositionHour;
 use App\Services\GceDifferenceUpdater;
 use App\Models\SQLite\SQLiteStatistics;
 use App\Services\CronJson\SyncOpenChatState;
