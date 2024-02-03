@@ -18,6 +18,7 @@ use App\Models\Repositories\DeleteOpenChatRepositoryInterface;
 use App\Services\GceDifferenceUpdater;
 use App\Models\SQLite\SQLiteStatistics;
 use App\Services\CronJson\SyncOpenChatState;
+use App\Services\RankingPosition\RankingPositionHourUpdater;
 use App\Services\SitemapGenerator;
 use Shared\Exceptions\NotFoundException;
 
@@ -30,9 +31,20 @@ class AdminPageController
         }
     }
 
-    function index()
+    private function position()
     {
-        throw new \Exception('test');
+        /**
+         * @var RankingPositionHourUpdater $rankingPosition
+         */
+        $rankingPosition = app(RankingPositionHourUpdater::class);
+        try {
+            $rankingPosition->crawlRisingAndUpdateRankingPositionHourDb();
+        } catch (\Throwable $e) {
+            AdminTool::sendLineNofity('rankingPosition: ' . $e->__toString());
+            exit;
+        }
+
+        unset($rankingPosition);
     }
 
     private function genesitemap(SitemapGenerator $sitemapGenerator)

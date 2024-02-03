@@ -10,11 +10,6 @@ use App\Models\SQLite\SQLiteRankingPositionHour;
 
 class SqliteRankingPositionHourPageRepository implements RankingPositionHourPageRepositoryInterface
 {
-    function __construct()
-    {
-        SQLiteRankingPositionHour::connect('?mode=ro&nolock=1');
-    }
-
     public function getHourRankingPositionTimeAsc(string $emid, int $category, int $intervalHour): RankingPositionHourPageRepoDto|false
     {
         return $this->getHourPosition('ranking', $emid, $category, $intervalHour);

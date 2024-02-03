@@ -1,0 +1,39 @@
+.limit-btns .MuiTab-fullWidth {
+  min-width: 0;
+  padding: 0;
+}
+
+.chart-canvas-box {
+  aspect-ratio: 1.7 / 1;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media screen and (max-width: 511px) {
+  .chart-canvas-box {
+    aspect-ratio: 1.2 / 1;
+  }
+}
+
+@media screen and (max-width: 359px) {
+  .chart-canvas-box {
+    margin: 0 -0.75rem;
+    width: calc(100% + 1.5rem);
+    aspect-ratio: 1.1 / 1;
+  }
+
+  .limit-btns .MuiTab-fullWidth {
+    font-size: 13px;
+  }
+
+  .MuiChip-root.openchat-item-header-chip.graph {
+    font-size: 13px;
+  }
+}
+
+.MuiChip-root.openchat-item-header-chip.graph {
+  font-size: 0.875rem;
+}

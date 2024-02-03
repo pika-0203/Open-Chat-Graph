@@ -37,7 +37,7 @@ class OpenChatPageController
             }
         }
 
-        $_css = ['site_header', 'site_footer', 'room_page'];
+        $_css = ['site_header', 'site_footer', 'room_page', 'react/OpenChat', 'graph_page'];
 
         $_meta = $meta->generateMetadata($open_chat_id, $oc);
 
