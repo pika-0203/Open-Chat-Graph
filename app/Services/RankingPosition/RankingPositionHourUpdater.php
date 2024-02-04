@@ -19,11 +19,15 @@ class RankingPositionHourUpdater
         $this->state->update();
     }
 
-    function crawlRisingAndUpdateRankingPositionHourDb()
+    function risingPositionCrawling()
     {
         $this->risingPositionCrawling->risingPositionCrawling();
-        $this->rankingPositionHourPersistence->persistStorageFileToDb();
         $this->state->isActive = false;
         $this->state->update();
+    }
+
+    function crawlRisingAndUpdateRankingPositionHourDb()
+    {
+        $this->rankingPositionHourPersistence->persistStorageFileToDb();
     }
 }
