@@ -16,6 +16,16 @@
   .chart-canvas-box {
     aspect-ratio: 1.2 / 1;
   }
+
+  .MuiChip-root.openchat-item-header-chip.graph:hover {
+    color: #000;
+    background-color: #f5f5f5;
+  }
+
+  .MuiChip-root.openchat-item-header-chip.graph.selected:hover {
+    color: #fff;
+    background-color: #000;
+  }
 }
 
 @media screen and (max-width: 359px) {
@@ -41,11 +51,6 @@
 .MuiToggleButton-root.MuiToggleButton-standard {
   color: #b7b7b7;
   border: 1px solid #e8e8e8;
-}
-
-.MuiToggleButton-root.MuiToggleButton-standard:hover {
-  color: #000;
-  background-color: rgba(0, 0, 0, 0);
 }
 
 .MuiToggleButton-root.Mui-selected.MuiToggleButton-standard,
