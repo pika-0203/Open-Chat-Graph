@@ -10,7 +10,6 @@ use App\Services\OpenChat\OpenChatCrawlingFromApi;
 use App\Services\UpdateRankingService;
 use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Services\OpenChat\DuplicateOpenChatMeger;
-use App\Services\GceDifferenceUpdater;
 use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
 use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Models\Repositories\OpenChatRepository;
@@ -24,7 +23,6 @@ class SyncOpenChat
     function __construct(
         private SyncOpenChatState $state,
         private OpenChatApiDbMerger $merger,
-        private GceDifferenceUpdater $gce,
         private DuplicateOpenChatMeger $dupMeger,
         private UpdateRankingService $updateRankingService,
         private LogRepositoryInterface $log,
@@ -96,19 +94,12 @@ class SyncOpenChat
 
     function finalizeMigrate(): void
     {
-        // TODO:GCE無効化
-        //$this->gce->finalizeSyncLatest();
-        //$this->addMessage("[GCE] done");
     }
 
     function finalizeUpdate(): void
     {
         $result = $this->dupMeger->mergeDuplicateOpenChat();
         $this->addMessage("mergeDuplicateOpenChat: " . count($result));
-
-        // TODO:GCE無効化
-        //$this->gce->finalizeOpenChatMerged();
-        //$this->addMessage("[GCE] done");
 
         $this->sitemapGenerator->generate();
     }
@@ -117,9 +108,5 @@ class SyncOpenChat
     {
         [$resultRowCount, $resultPastWeekRowCount] = $this->updateRankingService->update();
         $this->addMessage("updateRankingService: [day: {$resultRowCount}, week: {$resultPastWeekRowCount}]");
-
-        // TODO:GCE無効化
-        //$this->gce->gceUpdateRanking();
-        //$this->addMessage("[GCE] done");
     }
 }

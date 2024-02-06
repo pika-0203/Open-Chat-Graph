@@ -17,9 +17,9 @@ class RankingPositionHourChartArrayService
     ) {
     }
 
-    function getRankingPositionHourChartArray(string $emid, int $category): RankingPositionHourChartDto
+    function getRankingPositionHourChartArray(int $open_chat_id, int $category): RankingPositionHourChartDto
     {
-        $repoDto = $this->rankingPositionHourPageRepository->getHourRankingPositionTimeAsc($emid, $category, self::INTERVAL_HOUR);
+        $repoDto = $this->rankingPositionHourPageRepository->getHourRankingPositionTimeAsc($open_chat_id, $category, self::INTERVAL_HOUR);
         if (!$repoDto) {
             return new RankingPositionHourChartDto;
         }
@@ -27,9 +27,9 @@ class RankingPositionHourChartArrayService
         return $this->buildRankingPositionChartArray($repoDto);
     }
 
-    function getRisingPositionHourChartArray(string $emid, int $category): RankingPositionHourChartDto
+    function getRisingPositionHourChartArray(int $open_chat_id, int $category): RankingPositionHourChartDto
     {
-        $repoDto = $this->rankingPositionHourPageRepository->getHourRisingPositionTimeAsc($emid, $category, self::INTERVAL_HOUR);
+        $repoDto = $this->rankingPositionHourPageRepository->getHourRisingPositionTimeAsc($open_chat_id, $category, self::INTERVAL_HOUR);
         if (!$repoDto) {
             return new RankingPositionHourChartDto;
         }

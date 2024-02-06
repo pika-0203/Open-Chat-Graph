@@ -72,7 +72,7 @@ hr {
 .talkroom_link_h1 {
   line-height: 130%;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
   color: #5077f2;
   display: block;
 }
@@ -94,17 +94,18 @@ hr {
   width: fit-content;
   height: 12px;
   line-height: 16px;
-  color: #777;
+  color: #aaa;
 }
 
 /* メンバー数 */
 .talkroom_number_of_members {
-  margin-top: 6px;
+  margin-top: 2px;
 }
 
 .number_of_members {
   display: block;
-  font-weight: bold;
+  color: #111;
+  font-weight: 700;
 }
 
 .zero-stats {
@@ -113,12 +114,14 @@ hr {
 
 .openchat-itme-stats-title {
   color: var(--color-text-secondary);
-  font-size: 12px;
+  color: #111;
+  font-size: 13px;
 }
 
 /* オープンチャットの詳細エリア */
 .talkroom_description_box {
   font-size: 13px;
+  margin-top: 6px;
 }
 
 /* オープンチャットの説明 */
@@ -126,6 +129,7 @@ hr {
   margin: 0;
   line-height: 125%;
   word-break: break-all;
+  color: #1f1f1f;
 }
 
 .talkroom_description {
@@ -133,7 +137,6 @@ hr {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
   overflow: hidden;
-  margin-bottom: 6px;
 }
 
 /* ボトムエリア */
@@ -145,7 +148,7 @@ hr {
 .openchat-list-date {
   display: flex;
   flex-direction: row;
-  color: #606060;
+  color: #aaa;
   font-size: 12px;
   white-space: nowrap;
   align-items: center;
@@ -169,21 +172,24 @@ hr {
 }
 
 .talkroom_number_of_stats {
-  margin: auto 0;
   display: flex;
   flex-direction: row;
-  font-size: 12px;
+  font-size: 13px;
   justify-content: flex-start;
   width: fit-content;
   align-items: flex-start;
   gap: 8px;
 }
 
+.talkroom_number_of_stats * {
+    font-weight: 700;
+}
+
 .talkroom_number_of_stats .number-box {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: 3px;
 }
 
 .my-list-form {
@@ -247,7 +253,7 @@ body > footer {
   .link-mark {
   }
 
-  .link-mark .line-link-icon {
+  .link-mark .line-link-icon777 {
     width: 16px;
     height: 16px;
   }
@@ -264,11 +270,6 @@ body > footer {
   }
 
   .openchat-list-date {
-    font-size: 12px;
-  }
-
-  .openchat-itme-stats-title,
-  .talkroom_number_of_stats {
     font-size: 12px;
   }
 

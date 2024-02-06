@@ -1,3 +1,7 @@
+#app {
+  height: 136px;
+}
+
 .limit-btns .MuiTab-fullWidth {
   min-width: 0;
   padding: 0;
@@ -10,21 +14,42 @@
   padding: 0;
   user-select: none;
   -webkit-user-select: none;
+  margin-top: 0.75rem;
+}
+
+.touch-pan-y {
+  touch-action: pan-y !important;
+}
+
+.MuiChip-root.openchat-item-header-chip.graph {
+  font-size: 0.875rem;
+}
+
+.MuiToggleButton-root.MuiToggleButton-standard {
+  color: #b7b7b7;
+  border: 1px solid #e8e8e8;
+}
+
+.MuiToggleButton-root.Mui-selected.MuiToggleButton-standard,
+.MuiToggleButton-root.Mui-selected.MuiToggleButton-standard:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  border: 1px solid #e8e8e8;
 }
 
 @media screen and (max-width: 511px) {
   .chart-canvas-box {
     aspect-ratio: 1.2 / 1;
+      margin-top: -2px;
   }
 
   .MuiChip-root.openchat-item-header-chip.graph:hover {
-    color: #000;
+    color: #111;
     background-color: #f5f5f5;
   }
 
   .MuiChip-root.openchat-item-header-chip.graph.selected:hover {
     color: #fff;
-    background-color: #000;
+    background-color: #111;
   }
 }
 
@@ -42,19 +67,4 @@
   .MuiChip-root.openchat-item-header-chip.graph {
     font-size: 13px;
   }
-}
-
-.MuiChip-root.openchat-item-header-chip.graph {
-  font-size: 0.875rem;
-}
-
-.MuiToggleButton-root.MuiToggleButton-standard {
-  color: #b7b7b7;
-  border: 1px solid #e8e8e8;
-}
-
-.MuiToggleButton-root.Mui-selected.MuiToggleButton-standard,
-.MuiToggleButton-root.Mui-selected.MuiToggleButton-standard:hover {
-  background-color: rgba(0, 0, 0, 0.04);
-  border: 1px solid #e8e8e8;
 }

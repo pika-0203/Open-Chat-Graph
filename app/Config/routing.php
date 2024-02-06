@@ -52,9 +52,10 @@ Route::path('oc@post', [OpenChatRegistrationApiController::class, 'register'])
     ->matchStr('url', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
     ->middleware([RedirectLineWebBrowser::class, VerifyCsrfToken::class]);
 
-Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
+/* Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
     ->matchNum('open_chat_id', min: 1)
-    ->middleware([RedirectLineWebBrowser::class]);
+    ->middleware([RedirectLineWebBrowser::class, VerifyCsrfToken::class]);
+ */
 
 Route::path('admin/cookie')
     ->match(function (AdminAuthService $adminAuthService, ?string $key) {

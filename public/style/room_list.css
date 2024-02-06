@@ -54,26 +54,29 @@ main header {
   margin: auto;
   line-height: 1.1;
   padding-bottom: 0.2rem;
+  color: #111;
 }
 
 .main-header-title-desc {
   display: block;
   font-size: 15px;
   padding-bottom: 0.1rem;
+  color: #111;
 }
 
 .add-openchat-form {
   display: block;
-  margin: 0;
+  margin: 1rem 0 1.5rem 0;
   min-width: auto;
   border-radius: 16px;
-  border: solid 1px rgb(207, 217, 222);
+  border: solid 1px #e8e8e8;
   padding: 12px;
 }
 
 .add-openchat-form label {
-  font-size: 15px;
-  font-weight: normal;
+  font-size: 13px;
+  color: #616161;
+  font-weight: 500;
 }
 
 .add-openchat-form input {
@@ -89,7 +92,7 @@ main header {
   -webkit-appearance: none;
   appearance: none;
   border-radius: 4px;
-  border: solid 1px rgb(207, 217, 222);
+  border: solid 1px #e8e8e8;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
@@ -218,7 +221,7 @@ main hr {
 
 .openchat-list-date {
   display: flex;
-  color: #777;
+  color: #aaa;
   font-size: 13px;
   flex-wrap: wrap;
 }
@@ -358,6 +361,7 @@ main hr {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  margin-top: 1px;
 }
 
 .openchat-item-lower {
@@ -375,7 +379,7 @@ main hr {
   font-size: 12px;
   display: block;
   width: fit-content;
-  height: 0%;
+  margin-top: 1px;
 }
 
 .openchat-item-mui-chip-inner {
@@ -435,7 +439,7 @@ main hr {
   margin-bottom: 22px;
   border-top: solid 1px var(--border-color);
   border-bottom: solid 1px var(--border-color);
-  color: var(--color-link);
+  color: #111;
 }
 
 .ranking-readMore {
@@ -453,8 +457,8 @@ main hr {
   margin-left: 3px;
   width: 6px;
   height: 6px;
-  border-top: 1px solid var(--color-link);
-  border-right: 1px solid var(--color-link);
+  border-top: 1px solid #111;
+  border-right: 1px solid #111;
   transform: rotate(45deg);
   margin-bottom: 2px;
 }
@@ -516,8 +520,8 @@ main hr {
   width: 8px;
   height: 8px;
   border: 0;
-  border-bottom: solid 2px #000;
-  border-right: solid 2px #000;
+  border-bottom: solid 2px #111;
+  border-right: solid 2px #111;
   transform: rotate(45deg);
 }
 
@@ -621,6 +625,7 @@ main hr {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  color: #b7b7b7;
 }
 
 .btn-text {
@@ -632,18 +637,18 @@ main hr {
 }
 
 .btn-buttom {
-  min-height: 3px;
+  min-height: 2px;
   width: 56px;
   border-radius: 10rem;
 }
 
 .list-btn:disabled {
   background-color: white;
-  color: black;
+  color: #111;
 }
 
 .list-btn:disabled .btn-buttom {
-  background-color: rgb(3, 199, 85);
+  background-color: #111;
 }
 
 .disabledList {
@@ -661,11 +666,11 @@ main hr {
 }
 
 .blue {
-  color: var(--color-link);
+  color: #4d73ff;
 }
 
 .border-blue {
-  border: solid 2px var(--color-link);
+  border: solid 2px #4d73ff;
 }
 
 .top-mylist .openchat-item::before,
@@ -724,6 +729,11 @@ main hr {
   margin-left: 2px;
 }
 
+.top-small-desc {
+  color: #616161;
+  font-size: 13px;
+}
+
 @media screen and (max-width: 359px) {
   .openchat-item {
     margin-right: 0;
@@ -740,6 +750,9 @@ main hr {
 }
 
 @media screen and (min-width: 512px) {
+  .openchat-item-mui-chip-outer {
+  }
+
   main {
     padding-top: 1rem;
   }

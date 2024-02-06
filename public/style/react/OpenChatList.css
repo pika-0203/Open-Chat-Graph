@@ -126,6 +126,7 @@ html {
   display: flex;
   flex-direction: column;
   gap: 1px;
+  margin-top: 1px;
 }
 
 .item-lower-stats {
@@ -180,6 +181,10 @@ html {
   .item-title-link {
     z-index: 1;
     position: relative;
+  }
+
+  .item-lower {
+    margin-top: 2px;
   }
 }
 

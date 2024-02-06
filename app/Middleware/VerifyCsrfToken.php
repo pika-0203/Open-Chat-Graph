@@ -15,12 +15,12 @@ class VerifyCsrfToken
         if ($reception->isMethod('GET')) {
             Cookie::csrfToken();
             return;
-        } 
+        }
 
         $this->verifyCsrfToken();
     }
 
-    public function verifyCsrfToken()
+    static function verifyCsrfToken()
     {
         try {
             verifyCsrfToken();

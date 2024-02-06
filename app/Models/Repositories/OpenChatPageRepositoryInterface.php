@@ -10,10 +10,5 @@ interface OpenChatPageRepositoryInterface
 
     public function getRankingPositionCategoryById(int $id): int|false;
 
-    /**
-     * @return false|array{ emid: string, category: int }
-     */
-    public function getRankingPositionCategoryAndEmidById(int $id): array|false;
-
     public function getRedirectId(int $id): int|false;
 }

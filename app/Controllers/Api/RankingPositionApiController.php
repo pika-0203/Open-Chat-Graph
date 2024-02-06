@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Api;
 
-use App\Models\Repositories\OpenChatPageRepository;
+use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\RankingPosition\RankingPositionChartArrayService;
 use App\Services\RankingPosition\RankingPositionHourChartArrayService;
 use Shadow\Kernel\Response;
@@ -12,9 +12,9 @@ use Shadow\Kernel\Response;
 class RankingPositionApiController
 {
     function __construct(
-        private OpenChatPageRepository $openChatPageRepository
+        private OpenChatPageRepositoryInterface $openChatPageRepository
     ) {
-        header('Access-Control-Allow-Origin: *');
+        localCORS();
     }
 
     function rankingPosition(
@@ -44,20 +44,20 @@ class RankingPositionApiController
         int $open_chat_id,
         string $sort
     ): Response|false {
-        $oc = $this->openChatPageRepository->getRankingPositionCategoryAndEmidById($open_chat_id);
-        if ($oc === false) {
+        $category = $this->openChatPageRepository->getRankingPositionCategoryById($open_chat_id);
+        if ($category === false) {
             return false;
         }
 
         switch ($sort) {
             case 'ranking':
-                return response($rankingPositionHourChartArrayService->getRankingPositionHourChartArray($oc['emid'], $oc['category']));
+                return response($rankingPositionHourChartArrayService->getRankingPositionHourChartArray($open_chat_id, $category));
             case 'ranking_all':
-                return response($rankingPositionHourChartArrayService->getRankingPositionHourChartArray($oc['emid'], 0));
+                return response($rankingPositionHourChartArrayService->getRankingPositionHourChartArray($open_chat_id, 0));
             case 'rising':
-                return response($rankingPositionHourChartArrayService->getRisingPositionHourChartArray($oc['emid'], $oc['category']));
+                return response($rankingPositionHourChartArrayService->getRisingPositionHourChartArray($open_chat_id, $category));
             case 'rising_all':
-                return response($rankingPositionHourChartArrayService->getRisingPositionHourChartArray($oc['emid'], 0));
+                return response($rankingPositionHourChartArrayService->getRisingPositionHourChartArray($open_chat_id, 0));
         }
     }
 }

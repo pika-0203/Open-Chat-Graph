@@ -10,17 +10,17 @@ use App\Models\SQLite\SQLiteRankingPositionHour;
 
 class SqliteRankingPositionHourPageRepository implements RankingPositionHourPageRepositoryInterface
 {
-    public function getHourRankingPositionTimeAsc(string $emid, int $category, int $intervalHour): RankingPositionHourPageRepoDto|false
+    public function getHourRankingPositionTimeAsc(int $open_chat_id, int $category, int $intervalHour): RankingPositionHourPageRepoDto|false
     {
-        return $this->getHourPosition('ranking', $emid, $category, $intervalHour);
+        return $this->getHourPosition('ranking', $open_chat_id, $category, $intervalHour);
     }
 
-    public function getHourRisingPositionTimeAsc(string $emid, int $category, int $intervalHour): RankingPositionHourPageRepoDto|false
+    public function getHourRisingPositionTimeAsc(int $open_chat_id, int $category, int $intervalHour): RankingPositionHourPageRepoDto|false
     {
-        return $this->getHourPosition('rising', $emid, $category, $intervalHour);
+        return $this->getHourPosition('rising', $open_chat_id, $category, $intervalHour);
     }
 
-    private function getHourPosition(string $tableName, string $emid, int $category, int $intervalHour): RankingPositionHourPageRepoDto|false
+    private function getHourPosition(string $tableName, int $open_chat_id, int $category, int $intervalHour): RankingPositionHourPageRepoDto|false
     {
         $endTime = $this->getLastTime($category);
         if (!$endTime) {
@@ -33,7 +33,7 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
             "SELECT
                 t1.time AS time,
                 t1.position AS position,
-                t1.member AS member,
+                t3.member AS member,
                 t2.total_count_{$tableName} AS total_count
             FROM
                 (
@@ -42,20 +42,22 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
                     FROM
                         {$tableName}
                     WHERE
-                        emid = :emid
+                        open_chat_id = :open_chat_id
                         AND category = :category
                         AND time >= '{$firstTime}'
                 ) AS t1
                 JOIN total_count AS t2 ON t1.time = t2.time
                 AND t1.category = t2.category
+                JOIN member AS t3 ON t1.time = t3.time
+                AND t1.open_chat_id = t3.open_chat_id
             ORDER BY
                 t1.time ASC";
 
-        $result = SQLiteRankingPositionHour::fetchAll($query, compact('emid', 'category'));
-        
+        $result = SQLiteRankingPositionHour::fetchAll($query, compact('open_chat_id', 'category'));
+
         $dto = new RankingPositionHourPageRepoDto;
         $dto->firstTime = $firstTime;
-        
+
         if (!$result) {
             return $dto;
         }
