@@ -6,7 +6,6 @@ namespace App\Services\RankingPosition\Persistence;
 
 use App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface;
 use App\Models\Repositories\RankingPosition\RankingPositionRepositoryInterface;
-use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
 use DateTime;
 
 class RankingPositionDailyPersistence
@@ -14,7 +13,6 @@ class RankingPositionDailyPersistence
     function __construct(
         private RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
         private RankingPositionRepositoryInterface $rankingPositionRepository,
-        private OpenChatDataForUpdaterWithCacheRepository $openChatDataForUpdaterWithCacheRepository,
     ) {
     }
 

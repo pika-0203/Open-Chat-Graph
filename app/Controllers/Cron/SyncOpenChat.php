@@ -92,10 +92,6 @@ class SyncOpenChat
         OpenChatDataForUpdaterWithCacheRepository::clearCache();
     }
 
-    function finalizeMigrate(): void
-    {
-    }
-
     function finalizeUpdate(): void
     {
         $result = $this->dupMeger->mergeDuplicateOpenChat();
