@@ -8,7 +8,6 @@ use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Models\Repositories\Statistics\StatisticsPageRepositoryInterface;
 use App\Views\Meta\OcPageMeta;
-use App\Services\Statistics\DownloadCsvService;
 use App\Views\StatisticsViewUtility;
 
 class OpenChatPageController
@@ -47,18 +46,5 @@ class OpenChatPageController
         $category = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : '';
 
         return view('oc_content', compact('_meta', '_css', 'oc', 'myList', 'category'));
-    }
-
-    function csv(
-        OpenChatPageRepositoryInterface $openChatRepository,
-        DownloadCsvService $csvService,
-        int $open_chat_id
-    ) {
-        $oc = $openChatRepository->getOpenChatById($open_chat_id);
-        if (!$oc) {
-            return false;
-        }
-
-        $csvService->sendCsv($open_chat_id, $oc['name']);
     }
 }
