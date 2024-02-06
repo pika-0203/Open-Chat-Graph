@@ -73,7 +73,7 @@
                     <div class="btn-buttom"></div>
                 </button>
             </nav>
-            <div id="list-daily" class="">
+            <div id="list-daily">
                 <?php viewComponent('open_chat_list', ['openChatList' => $openChatList, 'isDaily' => true, 'localUrl' => true]) ?>
             </div>
             <div id="list-weekly" class="disabledList">
@@ -85,34 +85,34 @@
         </article>
         <hr>
         <hr>
-        <p>
-            <small style="color:#000; margin-bottom:1rem; display: block;">オプチャグラフは、<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">LINEオープンチャット公式サイトのランキング</a><span class="line-link-icon"></span>に掲載中のオープンチャットを自動的に収集して登録します。</small>
+        <p style="padding-top: 2rem;">
+            <small class="top-small-desc" style="margin-bottom:1rem; display: block;">オプチャグラフは、<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">LINEオープンチャット公式サイトのランキング</a>に掲載中のオープンチャットを自動的に収集して登録します。</small>
         </p>
         <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem;">
-            <small style="color:#000">オープンチャットを手動で登録する場合</small>
-            <small style="color:#000">
+            <small class="top-small-desc"><b>オープンチャットを手動で登録する場合</b></small>
+            <small class="top-small-desc">
                 <ul>
-                    <li><a href="https://openchat.line.me/jp" rel="external" target="_blank">LINEオープンチャット公式サイト</a><span class="line-link-icon"></span>を開く</li>
+                    <li><a href="https://openchat.line.me/jp" rel="external" target="_blank">LINEオープンチャット公式サイト</a>を開く</li>
                     <li>登録したいオープンチャットを探す</li>
                     <li>ページのURLをアドレスバーからコピーする</li>
                     <li>下記フォームに貼り付けて登録する</li>
                 </ul>
             </small>
-            <small style="color:#000">公式サイトに掲載されていないオープンチャットは登録できません。</small>
+            <small class="top-small-desc">公式サイトに掲載されていないオープンチャットは登録できません。</small>
         </p>
         <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">
-            <label for="add-openchat-input-url">オープンチャットを登録する</label>
+            <label for="add-openchat-input-url">公式サイトのURL</label>
             <input name="url" id="add-openchat-input-url" placeholder="https://openchat.line.me/jp/cover/..." spellcheck="false" type="text" aria-describedby="add-openchat-describedby" autocomplete="off">
             <span class="add-openchat-message" id="add-openchat-describedby">正しいURLを入力してください</span>
             <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>登録する</button>
         </form>
         <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem; margin-top:1rem;">
-            <small style="color:#000">オープンチャットがオプチャグラフに登録されないようにするには、オープンチャットの説明文に #nolog を含めます。</small>
+            <small class="top-small-desc"><b>オープンチャットがオプチャグラフに登録されないようにするには、オープンチャットの説明文に #nolog を含めます。</b></small>
             <br>
-            <small style="color:#000">既に登録済みのオープンチャットは、データ更新時に #nolog を検出すると削除されます。</small>
+            <small class="top-small-desc">既に登録済みのオープンチャットは、データ更新時に #nolog を検出すると削除されます。</small>
         </p>
         <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem;">
-            <small style="color:#000">LINEオープンチャット公式サイトで掲載が終了したオープンチャットは、オプチャグラフから削除されます。</small>
+            <small class="top-small-desc">LINEオープンチャット公式サイトで掲載が終了したオープンチャットは、オプチャグラフから削除されます。</small>
         </p>
     </main>
     <footer>

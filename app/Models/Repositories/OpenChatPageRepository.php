@@ -50,20 +50,6 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
         return DB::fetchColumn($query, ['id' => $id]);
     }
 
-    public function getRankingPositionCategoryAndEmidById(int $id): array|false
-    {
-        $query =
-            "SELECT
-                IFNULL(category, 0) AS category,
-                emid
-            FROM
-                open_chat
-            WHERE
-                id = :id";
-
-        return DB::fetch($query, ['id' => $id]);
-    }
-
     public function getRedirectId(int $id): int|false
     {
         $query =

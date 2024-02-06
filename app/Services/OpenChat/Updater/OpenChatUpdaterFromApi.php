@@ -31,20 +31,20 @@ class OpenChatUpdaterFromApi
 
         try {
             $ocDto = $this->openChatDtoFetcher->fetchOpenChatDto($fetcherArg);
+
+            if (
+                $ocDto === false
+                || $ocDto->memberCount < 1
+                || !$this->openChatUrlChecker->isOpenChatUrlAvailable($ocDto->getApiDataInvitationTicket())
+            ) {
+                // 削除
+                $this->openChatUpdater->updateOpenChat($open_chat_id, false);
+                return true;
+            }
         } catch (\RuntimeException $e) {
             $this->logRepository->logUpdateOpenChatError($open_chat_id, $e->getMessage());
 
             return false;
-        }
-
-        if (
-            $ocDto === false
-            || $ocDto->memberCount < 1
-            || !$this->openChatUrlChecker->isOpenChatUrlAvailable($ocDto->getApiDataInvitationTicket())
-        ) {
-            // 削除
-            $this->openChatUpdater->updateOpenChat($open_chat_id, false);
-            return true;
         }
 
         $this->openChatUpdater->updateOpenChat($open_chat_id, $ocDto);

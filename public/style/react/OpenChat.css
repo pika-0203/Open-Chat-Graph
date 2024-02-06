@@ -40,7 +40,7 @@
 }
 
 .stats-wrapper.negative.weekly {
-  color: #000;
+  color: #111;
 }
 
 .visually-hidden {
@@ -72,19 +72,19 @@
 
 .category-tab .MuiButtonBase-root.Mui-selected {
   font-weight: 700;
-  color: #000;
+  color: #111;
 }
 
 .category-tab-pc .MuiButtonBase-root.Mui-selected {
-  color: #000;
+  color: #111;
 }
 
 .category-tab .MuiTabs-indicator {
-  background-color: #000;
+  background-color: #111;
 }
 
 .category-tab-pc .MuiTabs-indicator {
-  background-color: #000;
+  background-color: #111;
   width: 3px;
 }
 
@@ -100,7 +100,7 @@
 
 .MuiChip-root.openchat-item-header-chip {
   background-color: #f5f5f5;
-  color: #000;
+  color: #111;
   user-select: none;
   font-weight: 500;
   font-size: 14px;

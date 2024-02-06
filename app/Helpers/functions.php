@@ -266,3 +266,11 @@ function getFilePath($path, $pattern): string
         return '';
     }
 }
+
+function localCORS()
+{
+    $ip = getIP();
+    if ($ip === '::1' || strstr($ip, '192.168') !== false) {
+        header('Access-Control-Allow-Origin: *');
+    }
+}

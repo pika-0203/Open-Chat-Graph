@@ -7,17 +7,17 @@ namespace App\Models\Repositories\RankingPosition;
 interface RankingPositionRepositoryInterface
 {
     /**
-     * @param array $rankingHourArray `[['open_chat_id' => int, 'category' => int, 'position => int, 'time' => stirng]]`
+     * @param array{ open_chat_id: int, category: int, position: int, time: stirng }[] $rankingHourArray
      */
     public function insertDailyRankingPosition(array $rankingHourArray): int;
 
     /**
-     * @param array $risingHourArray `[['open_chat_id' => int, 'category' => int, 'position' => int, 'time' => stirng]]`
+     * @param array{ open_chat_id: int, category: int, position: int, time: stirng }[] $risingHourArray
      */
     public function insertDailyRisingPosition(array $risingHourArray): int;
 
     /**
-     * @param array $totalCount `[['category' => int, 'total_count_rising' => int, 'total_count_ranking' => int, 'time' => string]]`
+     * @param array{ category: int, total_count_rising: int, total_count_ranking: int, time: string } $totalCount
      */
     public function insertTotalCount(array $totalCount): int;
 

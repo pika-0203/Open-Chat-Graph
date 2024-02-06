@@ -13,7 +13,7 @@ class RankingPositionHourPageRepositoryInterfaceTest extends TestCase
     {
         $this->instance = app(RankingPositionHourPageRepositoryInterface::class);
 
-        $result = $this->instance->getHourRankingPositionTimeAsc('F1_Ziqfzj3Rs-NkBze8caN9qD-Vm9Iir4QnKu4xJk8Di94hCClypR6s5yio', 0, 24);
+        $result = $this->instance->getHourRankingPositionTimeAsc(124912, 0, 24);
         debug($result);
         $this->assertTrue(true);
     }

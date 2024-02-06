@@ -6,7 +6,7 @@
   --color-accent: #1558d615;
   --color-bg: #fff;
   --color-bg-secondary: rgb(207, 217, 222);
-  --color-link: #136aff;
+  --color-link: #2196f3;
   --color-secondary: #920de9;
   --color-secondary-accent: #920de90b;
   --color-shadow: #f4f4f4;
@@ -56,7 +56,6 @@ main {
 }
 
 hr {
-  background-color: var(--color-bg-secondary);
   border: none;
   height: 1px;
   margin: 4rem 0;
@@ -257,7 +256,6 @@ sup {
 /* Links */
 a {
   color: var(--color-link);
-  display: inline-block;
   font-weight: bold;
   text-decoration: none;
 }

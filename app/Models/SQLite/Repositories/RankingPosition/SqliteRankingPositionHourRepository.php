@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models\SQLite\Repositories\RankingPosition;
 
+use App\Models\Repositories\RankingPosition\Dto\RankingPositionHourInsertDto;
 use App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface;
 use App\Models\SQLite\SQLiteInsertImporter;
 use App\Models\SQLite\SQLiteRankingPositionHour;
-use App\Services\OpenChat\Dto\OpenChatDto;
 
 class SqliteRankingPositionHourRepository implements RankingPositionHourRepositoryInterface
 {
@@ -16,39 +16,60 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
     ) {
     }
 
-    private function insertFromDtoArray(string $tableName, string $fileTime, array $openChatDtoArray): int
+    /**
+     * @param RankingPositionHourInsertDto[] $insertDtoArray
+     */
+    private function insertFromDtoArray(string $tableName, string $fileTime, array $insertDtoArray): int
     {
         $keys = [
-            'emid',
-            'member',
+            'open_chat_id',
             'position',
             'category',
             'time'
         ];
 
-        $data = [];
-        foreach ($openChatDtoArray as $key => $dto) {
-            /** @var OpenChatDto $dto */
-            $data[] = [
-                $dto->emid,
-                $dto->memberCount,
-                $key + 1,
-                $dto->category ?? 0,
+        $data = array_map(function (RankingPositionHourInsertDto $dto) use ($fileTime) {
+            return [
+                $dto->open_chat_id,
+                $dto->position,
+                $dto->category,
                 $fileTime
             ];
-        }
+        }, $insertDtoArray);
 
         return $this->inserter->importWithKeys(SQLiteRankingPositionHour::connect(), $tableName, $keys, $data, 500);
     }
 
-    public function insertRankingHourFromDtoArray(string $fileTime, array $openChatDtoArray): int
+    public function insertRankingHourFromDtoArray(string $fileTime, array $insertDtoArray): int
     {
-        return $this->insertFromDtoArray('ranking', $fileTime, $openChatDtoArray);
+        return $this->insertFromDtoArray('ranking', $fileTime, $insertDtoArray);
     }
 
-    public function insertRisingHourFromDtoArray(string $fileTime, array $openChatDtoArray): int
+    public function insertRisingHourFromDtoArray(string $fileTime, array $insertDtoArray): int
     {
-        return $this->insertFromDtoArray('rising', $fileTime, $openChatDtoArray);
+        return $this->insertFromDtoArray('rising', $fileTime, $insertDtoArray);
+    }
+
+    /**
+     * @param RankingPositionHourInsertDto[] $insertDtoArray
+     */
+    public function insertHourMemberFromDtoArray(string $fileTime, array $insertDtoArray): int
+    {
+        $keys = [
+            'open_chat_id',
+            'member',
+            'time'
+        ];
+
+        $data = array_map(function (RankingPositionHourInsertDto $dto) use ($fileTime) {
+            return [
+                $dto->open_chat_id,
+                $dto->member,
+                $fileTime
+            ];
+        }, $insertDtoArray);
+
+        return $this->inserter->importWithKeys(SQLiteRankingPositionHour::connect(), 'member', $keys, $data, 500);
     }
 
     private function getMinPositionHour(string $tableName, \DateTime $date, bool $all): array
@@ -58,7 +79,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
 
         $query =
             "SELECT
-                emid,
+                open_chat_id,
                 category,
                 MIN(position) as position,
                 time
@@ -68,7 +89,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
                 DATE(time) = '{$dateString}'
                 AND {$isAll} category = 0
             GROUP BY
-                emid";
+                open_chat_id";
 
         return SQLiteRankingPositionHour::fetchAll($query);
     }
@@ -140,8 +161,9 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         SQLiteRankingPositionHour::$pdo->exec('VACUUM;');
     }
 
-    public function insertTotalCount(array $totalCount): int
+    public function insertTotalCount(string $fileTime): int
     {
+        $totalCount = $this->getTotalCount(new \DateTime($fileTime), false);
         return $this->inserter->import(SQLiteRankingPositionHour::connect(), 'total_count', $totalCount, 500);
     }
 }
