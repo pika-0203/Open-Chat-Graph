@@ -10,6 +10,8 @@ use App\Services\Admin\FTPHandler;
 
 class ZipBackupCron
 {
+    const MAX_BACKUP_COUNT = 2;
+
     function __construct(
         private FTPHandler $ftpHandler
     ) {
@@ -29,7 +31,7 @@ class ZipBackupCron
 
         $remotePath = $state->getRemotePath();
 
-        $backups = $this->deleteOldBackup($state->getBackups(), $remotePath, 1);
+        $backups = $this->deleteOldBackup($state->getBackups(), $remotePath, self::MAX_BACKUP_COUNT);
         $backups[] = $remotePath;
 
         $this->uploadEachZippedDirectory($state->getTargetLocalPath(), $remotePath, $state->getTempZipPath());

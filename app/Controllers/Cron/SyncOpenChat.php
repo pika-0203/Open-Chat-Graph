@@ -86,6 +86,7 @@ class SyncOpenChat
         $count = $openChatCrawling->caluclatemaxExecuteNum(null);
 
         $this->addMessage("Start {$className}: " . $count[0]);
+        
         $openChatCrawling->openChatCrawling(null);
         $this->addMessage("done {$className}\n");
 

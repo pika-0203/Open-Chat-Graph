@@ -6,5 +6,4 @@ use Shadow\AbstoractJsonStorageObject;
 
 class ConfigJson extends AbstoractJsonStorageObject
 {
-    public array $searchBan;
 }

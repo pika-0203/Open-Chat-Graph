@@ -13,8 +13,6 @@ class AppConfig
 
     const LINE_URL = 'https://line.me/ti/g2/';
     const LINE_IMG_PREVIEW_SUFFIX = '_p';
-    const OPENCHAT_IMG_PATH = '/oc-img/';
-    const OPENCHAT_IMG_PREVIEW_PATH = '/preview/';
 
     const OPEN_CHAT_LIST_LIMIT = 100;
     const MY_LIST_LIMIT = 50;
