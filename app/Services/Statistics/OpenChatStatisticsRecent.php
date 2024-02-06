@@ -35,36 +35,6 @@ class OpenChatStatisticsRecent
     /**
      * @return array|false `['pageNumber' => int, 'maxPageNumber' => int, 'openChatList' => array, 'totalRecords' => int, 'labelArray' => array]`
      */
-    public function getRecentChanges(int $pageNumber): array|false
-    {
-        $labelArray = $this->openChatListRepository->findRecentArchiveAscArchivedAtColumn();
-
-        return $this->get(
-            $pageNumber,
-            count($labelArray),
-            $this->openChatListRepository->findRecentArchive(...),
-            $labelArray
-        );
-    }
-
-    /**
-     * @return array|false `['pageNumber' => int, 'maxPageNumber' => int, 'openChatList' => array, 'totalRecords' => int, 'labelArray' => array]`
-     */
-    public function getRecentDeleted(int $pageNumber): array|false
-    {
-        $labelArray = $this->openChatListRepository->findDeletedOrderByTimeAscUpdatedAtColumn();
-
-        return $this->get(
-            $pageNumber,
-            count($labelArray),
-            $this->openChatListRepository->findDeletedOrderByTimeDesc(...),
-            $labelArray
-        );
-    }
-
-    /**
-     * @return array|false `['pageNumber' => int, 'maxPageNumber' => int, 'openChatList' => array, 'totalRecords' => int, 'labelArray' => array]`
-     */
     private function get(int $pageNumber, int $totalRecords, \Closure $repository, array $labelArray = []): array|false
     {
         $limit = AppConfig::OPEN_CHAT_LIST_LIMIT;

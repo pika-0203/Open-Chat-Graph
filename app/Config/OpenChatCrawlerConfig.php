@@ -7,23 +7,7 @@ class OpenChatCrawlerConfig
     const USER_AGENT = 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)';
     const LINE_URL_MATCH_PATTERN = '{(?<=https:\/\/openchat\.line\.me\/jp\/cover\/).+?(?=\?|$)}';
 
-    const DOM_CLASS_NAME = '.MdMN04Txt';
-    const DOM_CLASS_MEMBER = '.MdMN05Txt';
-    const DOM_CLASS_DESCRIPTION = '.MdMN06Desc';
-    const DOM_CLASS_IMG = '.mdMN01Img';
-
     const LINE_IMG_URL = 'https://obs.line-scdn.net/';
-    const LINE_IMG_PREVIEW_PATH = '/preview';
-    const IMG_MIME_TYPE = [
-        'image/jpeg' => 'jpg',
-        'image/png' => 'png',
-        'image/gif' => 'gif',
-        'image/webp' => 'webp',
-    ];
-
-    const STORE_IMG_QUALITY = 50;
-    const STORE_IMG_DEST_PATH = __DIR__ . '/../../public/oc-img';
-    const SOTRE_IMG_PREVIEW_DEST_PATH = '/preview';
 
     const OPEN_CHAT_API_OC_DATA_FROM_EMID_DOWNLOADER_HEADER = [
         "X-Line-Seo-User: x9bfc33ffe50854cf0d446a6013cf1824",

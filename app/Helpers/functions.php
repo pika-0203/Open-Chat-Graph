@@ -160,19 +160,11 @@ function trimOpenChatListDesc(string $desc, int $len = 170)
 
 function imgUrl(string $img_url): string
 {
-    if ($img_url === 'noimage') {
-        $img_url = AppConfig::DEFAULT_OPENCHAT_IMG_URL['1'];
-    }
-
     return "https://obs.line-scdn.net/{$img_url}";
 }
 
 function imgPreviewUrl(string $img_url): string
 {
-    if ($img_url === 'noimage') {
-        $img_url = AppConfig::DEFAULT_OPENCHAT_IMG_URL['1'];
-    }
-
     return "https://obs.line-scdn.net/{$img_url}/preview";
 }
 
@@ -184,22 +176,6 @@ function filePathNumById(int $id): string
 function getCategoryName(int $category): string
 {
     return AppConfig::OPEN_CHAT_CATEGORY_KEYS[$category] ?? '';
-}
-
-function getSeachBannedIdQuery(string $column): string
-{
-    /** @var ConfigJson $json */
-    $json = app(ConfigJson::class);
-    if (!$json->searchBan) {
-        return '0';
-    }
-
-    $where = [];
-    foreach ($json->searchBan as $id) {
-        $where[] = "{$column} = {$id}";
-    }
-
-    return '(' . implode(' OR ', $where) . ')';
 }
 
 function addCronLog(string $string)
