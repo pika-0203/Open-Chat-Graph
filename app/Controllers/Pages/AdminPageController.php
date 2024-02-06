@@ -11,7 +11,7 @@ use Shadow\DB;
 use App\Services\Admin\AdminTool;
 use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Models\SQLite\SQLiteStatistics;
-use App\Services\CronJson\SyncOpenChatState;
+use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\RankingPosition\RankingPositionHourUpdater;
 use App\Services\SitemapGenerator;
 use Shared\Exceptions\NotFoundException;

@@ -77,4 +77,9 @@ class OpenChatRepository implements OpenChatRepositoryInterface
         static::$insertCount++;
         return $dto->registered_open_chat_id;
     }
+
+    public function getOpenChatIdEmidArrayAll(): array
+    {
+        return DB::fetchAll("SELECT id, emid FROM open_chat");
+    }
 }

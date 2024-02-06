@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Services\CronJson\SQLiteBackupCronState;
+use App\Services\Cron\CronJson\SQLiteBackupCronState;
 use PHPUnit\Framework\TestCase;
 
 class SQLiteBackupCronStateTest extends TestCase
