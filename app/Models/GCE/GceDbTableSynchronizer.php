@@ -32,16 +32,6 @@ class GceDbTableSynchronizer
         return $this->inserterWithBindValue->import(GceVmSql::connect(), 'open_chat', $data);
     }
 
-    function syncOpenChatMerged(): int
-    {
-        $data = DB::fetchAll("SELECT * FROM open_chat_merged");
-        if (!$data) {
-            return 0;
-        }
-
-        return $this->inserter->import(GceVmSql::connect(), 'open_chat_merged', $data);
-    }
-
     function syncOpenChatAll(): int
     {
         $data = DB::fetchAll("SELECT * FROM open_chat");

@@ -9,13 +9,7 @@ use App\Services\StaticData\StaticTopPageDataGenerator;
 use App\Services\Admin\AdminAuthService;
 use Shadow\DB;
 use App\Services\Admin\AdminTool;
-use App\Services\OpenChat\DuplicateOpenChatMeger;
 use App\Services\OpenChat\OpenChatApiDbMerger;
-use App\Models\GCE\GceDbTableSynchronizer;
-use App\Models\GCE\DBGce;
-use App\Models\GCE\GceRankingUpdater;
-use App\Models\Repositories\DeleteOpenChatRepositoryInterface;
-use App\Services\GceDifferenceUpdater;
 use App\Models\SQLite\SQLiteStatistics;
 use App\Services\CronJson\SyncOpenChatState;
 use App\Services\RankingPosition\RankingPositionHourUpdater;
@@ -72,39 +66,6 @@ class AdminPageController
         var_dump($exeption);
     }
 
-    private function gcelatest(GceDifferenceUpdater $gce, DuplicateOpenChatMeger $dupMeger)
-    {
-        $gce->finalizeSyncLatest();
-        $result = $dupMeger->mergeDuplicateOpenChat();
-        $gce->finalizeOpenChatMerged();
-
-        echo 'done';
-    }
-
-    private function gcesyncall(GceDbTableSynchronizer $sql, GceRankingUpdater $gce, GceDifferenceUpdater $gcedeiff)
-    {
-        set_time_limit(3600 * 3);
-        $message = "start: " . date('Y-m-d H:i:s') . "\n\n";
-
-        //$gcedeiff->finalizeDifferenceUpdate();
-
-        DBGce::execute("TRUNCATE TABLE open_chat");
-        $message .= 'syncOpenChatAll: ' . $sql->syncOpenChatAll() . "\nend: " . date('Y-m-d H:i:s') . "\n\n";
-        AdminTool::sendLineNofity($message);
-
-        DBGce::execute("TRUNCATE TABLE open_chat_merged");
-        $message .= 'syncOpenChatMerged: ' . $sql->syncOpenChatMerged() . "\nend: " . date('Y-m-d H:i:s') . "\n\n";
-        $gce->updateRanking();
-
-        return view('admin/admin_message_page', ['title' => 'GCE SQL 同期完了', 'message' => $message]);
-    }
-
-    private function gcegenerank(GceRankingUpdater $gce)
-    {
-        $gce->updateRanking();
-        echo 'done';
-    }
-
     function cookie(AdminAuthService $adminAuthService, ?string $key)
     {
         if (!$adminAuthService->registerAdminCookie($key)) {
@@ -137,19 +98,6 @@ class AdminPageController
         } else {
             echo 'fails';
         }
-    }
-
-    private function removedeleted(DeleteOpenChatRepositoryInterface $dRepo)
-    {
-        set_time_limit(3600);
-
-        $openChat = (DB::fetchAll("SELECT id FROM open_chat WHERE emid IS NULL OR emid = '' LIMIT 1000"));
-
-        foreach ($openChat as $oc) {
-            $dRepo->deleteOpenChat($oc['id']);
-        }
-
-        echo "done " . count($openChat);
     }
 
     function phpinfo()

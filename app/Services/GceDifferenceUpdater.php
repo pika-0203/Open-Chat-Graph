@@ -24,12 +24,6 @@ class GceDifferenceUpdater
         $this->deleteOpenChatByRepositryCache();
     }
 
-    function finalizeOpenChatMerged()
-    {
-        $this->deleteOpenChatByRepositryCache();
-        $this->tableSyncer->syncOpenChatMerged();
-    }
-
     function gceUpdateRanking()
     {
         $this->ranking->updateRanking();
