@@ -77,13 +77,5 @@ class DeleteOpenChatRepository implements DeleteOpenChatRepositoryInterface
                      id = :open_chat_id",
             compact('open_chat_id')
         );
-
-        DB::execute(
-            'INSERT INTO
-                open_chat_merged (duplicated_id, open_chat_id)
-            VALUES
-                (:duplicated_id, :open_chat_id)',
-            compact('duplicated_id', 'open_chat_id')
-        );
     }
 }

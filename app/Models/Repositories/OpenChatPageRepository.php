@@ -49,17 +49,4 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
 
         return DB::fetchColumn($query, ['id' => $id]);
     }
-
-    public function getRedirectId(int $id): int|false
-    {
-        $query =
-            "SELECT
-                open_chat_id
-            FROM
-                open_chat_merged
-            WHERE
-                duplicated_id = :id";
-
-        return DB::fetchColumn($query, ['id' => $id]);
-    }
 }

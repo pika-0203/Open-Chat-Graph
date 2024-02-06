@@ -21,9 +21,7 @@ class OpenChatPageController
     ) {
         $oc = $ocRepo->getOpenChatById($open_chat_id);
         if (!$oc) {
-            $redirectId = $ocRepo->getRedirectId($open_chat_id);
-
-            return $redirectId ? redirect("oc/{$redirectId}", 301) : false;
+            return false;
         }
 
         if (excludeTime()) {
