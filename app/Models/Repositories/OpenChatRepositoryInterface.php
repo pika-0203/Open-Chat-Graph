@@ -16,4 +16,9 @@ interface OpenChatRepositoryInterface
     public static function getInsertCount(): int;
 
     public static function resetInsertCount(): void;
+
+    /**
+     * @return array{ id: int, emid: string }[]
+     */
+    public function getOpenChatIdEmidArrayAll(): array;
 }

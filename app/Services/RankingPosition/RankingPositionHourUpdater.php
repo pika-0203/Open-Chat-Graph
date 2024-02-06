@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\RankingPosition;
 
-use App\Services\CronJson\RankingPositionHourUpdaterState;
+use App\Services\Cron\CronJson\RankingPositionHourUpdaterState;
 use App\Services\RankingPosition\Crawler\RisingPositionCrawling;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 

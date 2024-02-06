@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use App\Controllers\Cron\ZipBackupCron;
-use App\Services\CronJson\SQLiteBackupCronState;
+use App\Services\Cron\ZipBackupCron;
+use App\Services\Cron\CronJson\SQLiteBackupCronState;
 
 class ZipBackupCronTest extends TestCase
 {

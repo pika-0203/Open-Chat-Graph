@@ -3,10 +3,10 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Config\AppConfig;
-use App\Controllers\Cron\SyncOpenChat;
-use App\Services\CronJson\SyncOpenChatState;
+use App\Services\Cron\SyncOpenChat;
+use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\Admin\AdminTool;
-use App\Services\CronJson\RankingPositionHourUpdaterState;
+use App\Services\Cron\CronJson\RankingPositionHourUpdaterState;
 use App\Services\RankingPosition\RankingPositionDailyUpdater;
 use App\Services\RankingPosition\RankingPositionHourUpdater;
 

@@ -2,11 +2,11 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\Controllers\Cron\SyncOpenChat;
-use App\Services\CronJson\SyncOpenChatState;
+use App\Services\Cron\SyncOpenChat;
+use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\OpenChat\OpenChatCrawlingFromApi;
 use App\Services\Admin\AdminTool;
-use App\Services\CronJson\RankingPositionHourUpdaterState;
+use App\Services\Cron\CronJson\RankingPositionHourUpdaterState;
 use App\Services\OpenChat\SubCategory\OpenChatSubCategorySynchronizer;
 use App\Services\RankingPosition\RankingPositionHourUpdater;
 
