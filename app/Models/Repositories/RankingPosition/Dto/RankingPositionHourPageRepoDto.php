@@ -15,7 +15,7 @@ class RankingPositionHourPageRepoDto
     /** @var (int|null)[] */
     public array $totalCount = [];
 
-    /** @var int[] */
+    /** @var (int|null)[] */
     public array $member = [];
 
     /** @var string Y-m-d H:i:s */
