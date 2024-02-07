@@ -11,7 +11,7 @@ interface OpenChatRepositoryInterface
     /**
      * @return int id
      */
-    public function addOpenChatFromDto(OpenChatDto $dto): int;
+    public function addOpenChatFromDto(OpenChatDto $dto): int|false;
 
     public static function getInsertCount(): int;
 

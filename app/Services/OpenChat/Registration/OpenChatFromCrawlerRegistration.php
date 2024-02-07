@@ -73,6 +73,10 @@ class OpenChatFromCrawlerRegistration
     private function registerRecordProcess(OpenChatDto $ocDto): array
     {
         $open_chat_id = $this->openChatRepository->addOpenChatFromDto($ocDto);
+        if ($open_chat_id) {
+            return $this->returnMessage('ネットワークエラーが発生しました');
+        }
+
         $this->logRepository->logAddOpenChat($open_chat_id, getIP(), getUA());
 
         return $this->returnMessage('オープンチャットを登録しました', $open_chat_id);
