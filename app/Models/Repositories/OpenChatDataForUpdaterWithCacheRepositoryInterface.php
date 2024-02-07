@@ -10,7 +10,7 @@ interface OpenChatDataForUpdaterWithCacheRepositoryInterface
 {
     public static function clearCache(): void;
 
-    public static function addOpenChatIdByEmidCache(int $id, string $emid): void;
+    public static function addOpenChatIdByEmidCache(int $id, string $emid, string $img_url): void;
 
     /**
      * @return false|array{ id: int, next_update: int, img_url: string } next_update:  0 | 1
