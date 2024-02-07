@@ -18,16 +18,6 @@ class LogRepository implements LogRepositoryInterface
         $this->insertLog('UpdateOpenChat', 'null', 'null', "id: {$open_chat_id} error: {$message}");
     }
 
-    public function logOpenChatImageStoreError(string $imgIdentifier, string $message): void
-    {
-        $this->insertLog('OpenChatImageStoreError', 'null', 'null', "imgIdentifier: {$imgIdentifier} error: {$message}");
-    }
-
-    public function logAddOpenChatDuplicationError(int $open_chat_id, string $url, string $ip, string $ua): void
-    {
-        $this->insertLog('AddOpenChatDuplicationError', $ip, $ua, "id: {$open_chat_id} url: {$url}");
-    }
-
     public function logAddOpenChatError(string $ip, string $ua, string $message): void
     {
         $this->insertLog('AddOpenChatError', $ip, $ua, $message);

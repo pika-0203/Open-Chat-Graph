@@ -27,10 +27,10 @@ class OpenChatRepository implements OpenChatRepositoryInterface
         static::$insertCount = 0;
     }
 
-    public function addOpenChatFromDto(OpenChatDto $dto): int
+    public function addOpenChatFromDto(OpenChatDto $dto): int|false
     {
         $dto->registered_open_chat_id = DB::executeAndGetLastInsertId(
-            "INSERT INTO
+            "INSERT IGNORE INTO
                 open_chat (
                     name,
                     img_url,
@@ -71,6 +71,10 @@ class OpenChatRepository implements OpenChatRepositoryInterface
                 'emblem' => $dto->emblem,
             ]
         );
+
+        if(!$dto->registered_open_chat_id) {
+            return false;
+        }
 
         $this->statisticsRepository->addNewOpenChatStatisticsFromDto($dto);
 
