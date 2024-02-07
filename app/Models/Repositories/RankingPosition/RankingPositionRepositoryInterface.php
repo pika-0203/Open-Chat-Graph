@@ -22,6 +22,4 @@ interface RankingPositionRepositoryInterface
     public function insertTotalCount(array $totalCount): int;
 
     public function daleteDailyPosition(int $open_chat_id): void;
-
-    public function mergeDuplicateDailyPosition(int $duplicated_id, int $open_chat_id): void;
 }

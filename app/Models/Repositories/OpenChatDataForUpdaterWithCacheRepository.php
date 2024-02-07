@@ -33,6 +33,7 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
         $next_update = 0;
         $img_url = '';
         self::$openChatIdAndNextUpdateCache[] = compact('id', 'emid', 'next_update', 'img_url');
+        self::$openChatEmidCache[] = $emid;
     }
 
     private function cacheOpenChatIdByEmid(): void

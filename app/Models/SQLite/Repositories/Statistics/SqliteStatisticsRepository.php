@@ -65,37 +65,6 @@ class SqliteStatisticsRepository implements StatisticsRepositoryInterface
             ->fetchColumn() !== 0;
     }
 
-    public function mergeDuplicateOpenChatStatistics(int $duplicated_id, int $open_chat_id): void
-    {
-        $statistics = SQLiteStatistics::fetchAll(
-            'SELECT 
-                member,
-                date
-            FROM
-                statistics
-            WHERE 
-                open_chat_id = :duplicated_id',
-            compact('duplicated_id')
-        );
-
-        foreach ($statistics as $stat) {
-            SQLiteStatistics::execute(
-                'INSERT OR IGNORE INTO statistics (open_chat_id, member, date)
-                VALUES
-                    (
-                        :open_chat_id,
-                        :member,
-                        :date
-                    )',
-                [
-                    'open_chat_id' => $open_chat_id,
-                    'member' => $stat['member'],
-                    'date' => $stat['date'],
-                ]
-            );
-        }
-    }
-
     public function getMemberChangeWithinLastWeekCacheArray(): array
     {
         $query =
