@@ -110,6 +110,25 @@ main header {
   box-shadow: 0px 0px 0px 0px;
 }
 
+.recent-oc-btn {
+  color: #111;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.recent-oc-btn::after {
+  display: inline-block;
+  content: '';
+  margin-left: 3px;
+  width: 5px;
+  height: 5px;
+  border-top: 1px solid #111;
+  border-right: 1px solid #111;
+  transform: rotate(45deg);
+  margin-bottom: 2px;
+}
+
 /* Submit button */
 .ellipse-btn {
   all: unset;
@@ -508,7 +527,7 @@ main hr {
   margin: auto;
   position: relative;
   padding-right: 2rem;
-  font-size: 13.5px;
+  font-size: 12px;
 }
 
 .page-select label span::after {
@@ -516,9 +535,9 @@ main hr {
   position: absolute;
   top: 50%;
   right: -7px;
-  margin-top: -7px;
-  width: 8px;
-  height: 8px;
+  margin-top: -6px;
+  width: 6px;
+  height: 6px;
   border: 0;
   border-bottom: solid 2px #111;
   border-right: solid 2px #111;
@@ -555,7 +574,7 @@ main hr {
 }
 
 .button01.prev a {
-  color: var(--transparent-headline);
+  color: #aaa;
   border: 0px;
   background-color: inherit;
   box-shadow: 0 0 0 0;
@@ -577,8 +596,8 @@ main hr {
   margin-right: 4px;
   width: 5px;
   height: 5px;
-  border-top: 2px solid var(--transparent-headline);
-  border-right: 2px solid var(--transparent-headline);
+  border-top: 2px solid #aaa;
+  border-right: 2px solid #aaa;
   transform: rotate(225deg);
   margin-bottom: 2px;
 }
@@ -598,7 +617,7 @@ main hr {
   line-height: 1.4;
   font-size: 13px;
   margin: 0 0.5rem;
-  color: var(--transparent-headline);
+  color: #aaa;
   white-space: nowrap;
 }
 
@@ -849,5 +868,10 @@ main hr {
   .super-icon {
     margin-top: -1px;
     scale: 0.85;
+  }
+
+  .recent-oc-btn,
+  .top-small-desc {
+    font-size: 13.5px;
   }
 }

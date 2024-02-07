@@ -54,7 +54,10 @@ Route::path(
     ->matchStr('sort', regex: ['ranking', 'rising']);
 
 Route::path('/')
-    ->middleware([RedirectLineWebBrowser::class, VerifyCsrfToken::class]);
+    ->middleware([RedirectLineWebBrowser::class]);
+
+Route::path('register')
+    ->middleware([VerifyCsrfToken::class]);
 
 Route::path('oc@post', [OpenChatRegistrationApiController::class, 'register'])
     ->matchStr('url', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)

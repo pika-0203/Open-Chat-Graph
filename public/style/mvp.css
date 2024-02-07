@@ -223,6 +223,10 @@ p {
   width: 100%;
 }
 
+b {
+  color: #333;
+}
+
 pre {
   margin: 1rem 0;
   max-width: var(--width-card-wide);
@@ -256,15 +260,6 @@ sup {
 /* Links */
 a {
   color: var(--color-link);
-  font-weight: bold;
-  text-decoration: none;
-}
-
-a:active {
-  text-decoration: underline;
-}
-
-a:hover {
   text-decoration: underline;
 }
 

@@ -3,20 +3,33 @@
 <?php viewComponent('head', compact('_css', '_meta') + ['noindex' => true]) ?>
 
 <body>
+    <style>
+        hr {
+            border-bottom: solid 1px var(--border-color);
+            margin: 12px 0;
+        }
+
+        .list-title {
+            color: #111;
+            all: unset;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
     <main class="ranking-page-main">
         <article>
             <header class="openchat-list-title-area unset">
-                <div class="openchat-list-date" style="gap: 4px; flex-direction: column;">
-                    <h2 class="unset">
-                        <span class="openchat-list-title" style="margin: 0;">最近のランクイン</span>
+                <div style="flex-direction: column;">
+                    <h2>
+                        <span class="list-title">最近のランクイン</span>
                     </h2>
-                    <small style="font-size: 12px; color:#000">公式ランキングにランクインしたオプチャを新しい順で表示</small>
-                    <small style="font-size: 12px;">LINEオープンチャット公式サイトで掲載が終了したオープンチャットは、オプチャグラフから削除されます。</small>
+                    <small style="font-size: 12px; color:#000">「公式ランキングにランクインした順」でオプチャグラフに登録済みのオープンチャットを表示します</small>
                 </div>
             </header>
             <!-- select要素ページネーション -->
+            <hr>
             <nav class="page-select unset">
                 <form class="unset">
                     <select id="page-selector" class="unset">

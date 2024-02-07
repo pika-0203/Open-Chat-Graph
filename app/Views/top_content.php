@@ -86,33 +86,13 @@
         <hr>
         <hr>
         <p style="padding-top: 2rem;">
-            <small class="top-small-desc" style="margin-bottom:1rem; display: block;">オプチャグラフは、<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">LINEオープンチャット公式サイトのランキング</a>に掲載中のオープンチャットを自動的に収集して登録します。</small>
+            <small class="top-small-desc" style="margin-bottom:1rem; display: block;">オプチャグラフは<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">LINEオープンチャット公式サイトのランキング</a>に掲載中のオープンチャットを自動的に記録します</small>
+        <p>
+            <a class="recent-oc-btn" href="<?php echo url('recent') ?>">最近ランクインしたオープンチャット</a>
         </p>
-        <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem;">
-            <small class="top-small-desc"><b>オープンチャットを手動で登録する場合</b></small>
-            <small class="top-small-desc">
-                <ul>
-                    <li><a href="https://openchat.line.me/jp" rel="external" target="_blank">LINEオープンチャット公式サイト</a>を開く</li>
-                    <li>登録したいオープンチャットを探す</li>
-                    <li>ページのURLをアドレスバーからコピーする</li>
-                    <li>下記フォームに貼り付けて登録する</li>
-                </ul>
-            </small>
-            <small class="top-small-desc">公式サイトに掲載されていないオープンチャットは登録できません。</small>
+        <p>
+            <a class="recent-oc-btn" href="<?php echo url('register') ?>">オープンチャットを手動で登録する</a>
         </p>
-        <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">
-            <label for="add-openchat-input-url">公式サイトのURL</label>
-            <input name="url" id="add-openchat-input-url" placeholder="https://openchat.line.me/jp/cover/..." spellcheck="false" type="text" aria-describedby="add-openchat-describedby" autocomplete="off">
-            <span class="add-openchat-message" id="add-openchat-describedby">正しいURLを入力してください</span>
-            <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>登録する</button>
-        </form>
-        <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem; margin-top:1rem;">
-            <small class="top-small-desc"><b>オープンチャットがオプチャグラフに登録されないようにするには、オープンチャットの説明文に #nolog を含めます。</b></small>
-            <br>
-            <small class="top-small-desc">既に登録済みのオープンチャットは、データ更新時に #nolog を検出すると削除されます。</small>
-        </p>
-        <p style="border-top: solid 1px rgb(239, 243, 244); padding-top:1rem;">
-            <small class="top-small-desc">LINEオープンチャット公式サイトで掲載が終了したオープンチャットは、オプチャグラフから削除されます。</small>
         </p>
     </main>
     <footer>

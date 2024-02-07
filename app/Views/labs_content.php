@@ -12,7 +12,7 @@
                 <img class="talkroom_banner_img" alt="フラスコのイメージ" src="<?php echo fileUrl("/assets/labs.svg") ?>">
             </div>
             <div class="talkroom_description_box">
-                <h1 class="talkroom_link_h1 unset">Labs</span></h1>
+                <h2 class="talkroom_link_h1 unset">Labs</span></h2>
                 <p id="talkroom-description" class="talkroom_description">試作中の機能をLabs（ラボ）として提供しています。</p>
             </div>
         </header>
@@ -20,8 +20,10 @@
     <section style="margin-bottom: 3rem;">
         <aside>
             <a href="/labs/live" class="labs-link unset">
-                <span>ライブトーク利用時間分析ツール</span>
+                <h3>ライブトーク分析</h3>
+                <p><small>ライブトークの利用時間をグラフ表示します</small></p>
                 <img src="<?php echo fileUrl("/images/livegraph.webp") ?>" alt="ライブトーク利用時間分析ツール">
+                <br>
             </a>
         </aside>
     </section>
