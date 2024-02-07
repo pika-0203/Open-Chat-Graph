@@ -84,7 +84,7 @@
             </a>
         </article>
         <p style="padding-top: 3rem;">
-            <small class="top-small-desc" style="margin-bottom:1rem; display: block;">オプチャグラフは<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">LINEオープンチャット公式サイトのランキング</a>に掲載中のオープンチャットを自動的に記録します</small>
+            <small class="top-small-desc" style="margin-bottom:1rem; display: block;">オプチャグラフは<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">LINEオープンチャット公式サイトのランキング</a>に掲載中のオープンチャットを自動的に登録して集計します</small>
         </p>
         <p style="padding-top:12px">
             <a class="recent-oc-btn" href="<?php echo url('recent') ?>">最近ランクインしたオープンチャット</a>

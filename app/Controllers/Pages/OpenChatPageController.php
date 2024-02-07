@@ -26,6 +26,10 @@ class OpenChatPageController
         }
 
         $_statsDto = $statisticsChartArrayService->buildStatisticsChartArray($open_chat_id);
+        if (!$_statsDto) {
+            throw new \RuntimeException('メンバー統計がありません');
+        }
+
         $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($_statsDto);
 
         $_css = ['site_header', 'site_footer', 'room_page', 'react/OpenChat', 'graph_page'];
