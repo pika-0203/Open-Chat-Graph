@@ -10,6 +10,11 @@ use App\Models\SQLite\SQLiteRankingPositionHour;
 
 class SqliteRankingPositionHourPageRepository implements RankingPositionHourPageRepositoryInterface
 {
+    public function __construct()
+    {
+        SQLiteRankingPositionHour::connect('?mode=ro&nolock=1');
+    }
+
     public function getHourRankingPositionTimeAsc(int $open_chat_id, int $category, int $intervalHour): RankingPositionHourPageRepoDto|false
     {
         return $this->getHourPosition('ranking', $open_chat_id, $category, $intervalHour);
@@ -51,7 +56,7 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
                 LEFT JOIN total_count AS t2 ON t1.time = t2.time
                 AND t1.category = t2.category
             ORDER BY
-                t1.time ASC";
+                t3.time ASC";
 
         $result = SQLiteRankingPositionHour::fetchAll($query, compact('open_chat_id', 'category'));
 
