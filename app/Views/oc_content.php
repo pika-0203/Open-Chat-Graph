@@ -4,9 +4,15 @@
 
 use App\Config\AppConfig;
 
-viewComponent('head', compact('_css', '_meta')); ?>
+viewComponent('oc_head', compact('_css', '_meta')); ?>
 
 <body>
+  <script type="application/json" id="chart-arg">
+    <?php echo json_encode($_chartArgDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
+  </script>
+  <script type="application/json" id="stats-dto">
+    <?php echo json_encode($_statsDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
+  </script>
   <!-- 固定ヘッダー -->
   <?php viewComponent('site_header') ?>
   <article class="openchat unset">
@@ -61,11 +67,10 @@ viewComponent('head', compact('_css', '_meta')); ?>
     </header>
     <hr>
     <!-- グラフセクション -->
-    <script type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
     <div class="chart-canvas-box">
       <canvas id="chart-preact-canvas"></canvas>
     </div>
-    <div id="app" data-oc-id="<?php echo $oc['id'] ?>" data-category="<?php echo $category ? $category : 'その他' ?>" data-base-url="<?php echo url() ?>"></div>
+    <div id="app" data-oc-id="<?php echo $oc['id'] ?>" data-category-key="<?php echo $oc['category'] ?? 0 ?>" data-category="<?php echo $category ? $category : 'その他' ?>" data-base-url="<?php echo url() ?>"></div>
 
     <footer class="unset">
       <form class="my-list-form">
@@ -89,7 +94,7 @@ viewComponent('head', compact('_css', '_meta')); ?>
           </div>
           <div style="display: flex; flex-direction: column; justify-content: space-between;">
             <?php if (is_int($oc['api_created_at'])) : ?>
-              <div><?php echo $category ? $category : 'その他' ?></div>
+              <div><?php echo $category ?></div>
             <?php endif ?>
             <?php if (is_int($oc['api_created_at'])) : ?>
               <div><?php echo convertDatetime($oc['api_created_at']) ?></div>

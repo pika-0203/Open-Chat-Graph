@@ -6,7 +6,8 @@ namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
-use App\Models\Repositories\Statistics\StatisticsPageRepositoryInterface;
+use App\Services\Statistics\StatisticsChartArrayService;
+use App\Views\Dto\RankingPositionChartArgDto;
 use App\Views\Meta\OcPageMeta;
 use App\Views\StatisticsViewUtility;
 
@@ -15,6 +16,7 @@ class OpenChatPageController
     function index(
         OpenChatPageRepositoryInterface $ocRepo,
         OcPageMeta $meta,
+        StatisticsChartArrayService $statisticsChartArrayService,
         StatisticsViewUtility $statisticsViewUtility,
         int $open_chat_id
     ) {
@@ -23,16 +25,8 @@ class OpenChatPageController
             return false;
         }
 
-        if (excludeTime()) {
-            $rankingInfo = unserialize(file_get_contents(AppConfig::TOP_RANKING_INFO_FILE_PATH));
-            $isUpdated = date('Y-m-d', $rankingInfo['rankingUpdatedAt']) === date('Y-m-d');
-            if (!$isUpdated) {
-                /** @var StatisticsPageRepositoryInterface $statisticsRepo */
-                $statisticsRepo = app(StatisticsPageRepositoryInterface::class);
-                $statisticsData = $statisticsRepo->getDailyStatisticsByPeriod($open_chat_id);
-                $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($statisticsData);
-            }
-        }
+        $_statsDto = $statisticsChartArrayService->buildStatisticsChartArray($open_chat_id);
+        $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($_statsDto);
 
         $_css = ['site_header', 'site_footer', 'room_page', 'react/OpenChat', 'graph_page'];
 
@@ -43,8 +37,14 @@ class OpenChatPageController
             $myList = [];
         }
 
-        $category = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : '';
+        $category = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : 'その他';
 
-        return view('oc_content', compact('_meta', '_css', 'oc', 'myList', 'category'));
+        $_chartArgDto = new RankingPositionChartArgDto;
+        $_chartArgDto->id = $oc['id'];
+        $_chartArgDto->categoryKey = $oc['category'] ?? 0;
+        $_chartArgDto->categoryName = $category;
+        $_chartArgDto->baseUrl = url();
+
+        return view('oc_content', compact('_meta', '_css', 'oc', 'myList', 'category', '_chartArgDto', '_statsDto'));
     }
 }

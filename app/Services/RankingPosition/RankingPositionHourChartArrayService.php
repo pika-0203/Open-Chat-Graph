@@ -75,8 +75,8 @@ class RankingPositionHourChartArrayService
             if ($repoDtoCurTime !== $time) {
                 $dto->addValue(
                     $timeStr,
-                    0,
-                    0,
+                    $curKeyRepoDto ? 0 : null,
+                    $curKeyRepoDto ? 0 : null,
                     null,
                 );
 

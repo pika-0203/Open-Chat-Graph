@@ -11,52 +11,25 @@ class SqliteStatisticsPageRepository implements StatisticsPageRepositoryInterfac
 {
     public function getDailyStatisticsByPeriod(int $open_chat_id): array
     {
-        // `Y-m-d`から`Y/m/d`に変換する。`Y`が今年の場合は、`Y/`を省略して`m/d`にする。
         $query =
             "SELECT
-                CASE
-                    WHEN strftime('%Y', :date) = strftime('%Y', `date`)
-                    THEN strftime('%m/%d', `date`)
-                    ELSE strftime('%Y/%m/%d', `date`)
-                END AS `formated_date`,
+                date,
                 member
             FROM
                 statistics
             WHERE
                 open_chat_id = :open_chat_id
             ORDER BY
-                `date` ASC";
-
-        $date = date('Y-m-d');
-
-        SQLiteStatistics::connect('?mode=ro&nolock=1');
-        $result = SQLiteStatistics::fetchAll($query, compact('open_chat_id', 'date'));
-        SQLiteStatistics::$pdo = null;
-
-        return [
-            'date' => array_column($result, 'formated_date'),
-            'member' => array_column($result, 'member')
-        ];
-    }
-
-    public function getDailyStatsByIdForCsv(int $open_chat_id): array
-    {
-        $query =
-            "SELECT
-                strftime('%Y/%m/%d', `date`) AS `date`,
-                member
-            FROM
-                statistics
-            WHERE
-                open_chat_id = :open_chat_id
-            ORDER BY
-                `date` ASC";
+                date ASC";
 
         SQLiteStatistics::connect('?mode=ro&nolock=1');
         $result = SQLiteStatistics::fetchAll($query, compact('open_chat_id'));
         SQLiteStatistics::$pdo = null;
 
-        return $result;
+        return [
+            'date' => array_column($result, 'date'),
+            'member' => array_column($result, 'member')
+        ];
     }
 
     public function getDailyMemberStatsDateAsc(int $open_chat_id): array
