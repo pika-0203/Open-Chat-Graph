@@ -14,7 +14,7 @@ interface UpdateOpenChatRepositoryInterface
      */
     public function getOpenChatDataById(int $id): OpenChatRepositoryDto|false;
 
-    public function updateOpenChatRecord(OpenChatUpdaterDto $dto): bool;
+    public function updateOpenChatRecord(OpenChatUpdaterDto $dto): void;
 
     /**
      * @return array `['id' => int, 'fetcherArg' => emid]`

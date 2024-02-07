@@ -43,7 +43,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         return new OpenChatRepositoryDto($result);
     }
 
-    public function updateOpenChatRecord(OpenChatUpdaterDto $dto): bool
+    public function updateOpenChatRecord(OpenChatUpdaterDto $dto): void
     {
         if ($dto->delete_flag === true) {
             return $this->DeleteOpenChatRepository->deleteOpenChat($dto->open_chat_id);
@@ -67,7 +67,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
 
         $columnsToUpdate['id'] = $dto->open_chat_id;
 
-        $result = DB::executeAndCheckResult(
+        DB::execute(
             "UPDATE 
                 open_chat 
             SET 
@@ -80,8 +80,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         if (isset($dto->next_update) && isset($dto->db_member)) {
             $this->statisticsRepository->insertDailyStatistics($dto->open_chat_id, ($dto->memberCount ?? $dto->db_member), $dto->updated_at);
         }
-
-        return $result;
     }
 
     public function getUpdateFromApiTargetOpenChatId(?int $limit = null): array
