@@ -12,6 +12,8 @@ use App\Services\Admin\AdminTool;
 use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Models\SQLite\SQLiteStatistics;
 use App\Services\Cron\CronJson\SyncOpenChatState;
+use App\Services\RankingPosition\Persistence\RankingPositionDailyPersistence;
+use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\RankingPosition\RankingPositionHourUpdater;
 use App\Services\SitemapGenerator;
 use Shared\Exceptions\NotFoundException;
@@ -39,6 +41,12 @@ class AdminPageController
         }
 
         unset($rankingPosition);
+    }
+
+    private function positiondb(RankingPositionDailyPersistence $persistence)
+    {
+        $persistence->persistHourToDaily();
+        echo 'done';
     }
 
     private function genesitemap(SitemapGenerator $sitemapGenerator)

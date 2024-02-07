@@ -15,6 +15,11 @@
             font-size: 20px;
             font-weight: bold;
         }
+
+        .page-select {
+            margin-top: 1.25rem;
+            padding-bottom: 0.35rem;
+        }
     </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
