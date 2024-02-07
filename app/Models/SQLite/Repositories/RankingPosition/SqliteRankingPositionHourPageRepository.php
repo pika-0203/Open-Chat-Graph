@@ -31,8 +31,8 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
 
         $query =
             "SELECT
-                t1.time AS time,
-                t1.position AS position,
+                t3.time AS time,
+                IFNULL(t1.position, 0) AS position,
                 t3.member AS member,
                 t2.total_count_{$tableName} AS total_count
             FROM
@@ -40,16 +40,16 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
                     SELECT
                         *
                     FROM
-                        {$tableName}
+                        member
                     WHERE
                         open_chat_id = :open_chat_id
-                        AND category = :category
                         AND time >= '{$firstTime}'
-                ) AS t1
-                JOIN total_count AS t2 ON t1.time = t2.time
-                AND t1.category = t2.category
-                JOIN member AS t3 ON t1.time = t3.time
+                ) AS t3
+                LEFT JOIN {$tableName} AS t1 ON t1.time = t3.time
                 AND t1.open_chat_id = t3.open_chat_id
+                AND t1.category = :category
+                LEFT JOIN total_count AS t2 ON t1.time = t2.time
+                AND t1.category = t2.category
             ORDER BY
                 t1.time ASC";
 

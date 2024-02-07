@@ -7,7 +7,6 @@ namespace App\Services\RankingPosition;
 use App\Services\RankingPosition\Dto\RankingPositionChartDto;
 use App\Models\Repositories\RankingPosition\Dto\RankingPositionPageRepoDto;
 use App\Models\Repositories\RankingPosition\RankingPositionPageRepositoryInterface;
-use App\Models\Repositories\Statistics\StatisticsPageRepositoryInterface;
 
 class RankingPositionChartArrayService
 {
@@ -18,65 +17,53 @@ class RankingPositionChartArrayService
 
     function __construct(
         private RankingPositionPageRepositoryInterface $rankingPositionPageRepository,
-        private StatisticsPageRepositoryInterface $statisticsPageRepository,
     ) {
     }
 
-    function getRankingPositionChartArray(int $open_chat_id, int $category): RankingPositionChartDto|false
+    function getRankingPositionChartArray(int $open_chat_id, int $category, \DateTime $startDate, \DateTime $endDate): RankingPositionChartDto|false
     {
         $repoDto = $this->rankingPositionPageRepository->getDailyRankingPositionTimeAsc($open_chat_id, $category);
         if (!$repoDto) {
-            return $this->getStatsChartArrayWithoutPosition($open_chat_id);
+            return new RankingPositionPageRepoDto;
         }
 
-        return $this->buildRankingPositionChartArray($open_chat_id, $repoDto);
+        return $this->buildRankingPositionChartArray($repoDto, $startDate, $endDate);
     }
 
-    function getRisingPositionChartArray(int $open_chat_id, int $category): RankingPositionChartDto|false
+    function getRisingPositionChartArray(int $open_chat_id, int $category, \DateTime $startDate, \DateTime $endDate): RankingPositionChartDto|false
     {
         $repoDto = $this->rankingPositionPageRepository->getDailyRisingPositionTimeAsc($open_chat_id, $category);
         if (!$repoDto) {
-            return $this->getStatsChartArrayWithoutPosition($open_chat_id);
+            return new RankingPositionPageRepoDto;
         }
 
-        return $this->buildRankingPositionChartArray($open_chat_id, $repoDto, true);
+        return $this->buildRankingPositionChartArray($repoDto, $startDate, $endDate, true);
     }
 
-    function getStatsChartArrayWithoutPosition(int $open_chat_id): RankingPositionChartDto|false
-    {
-        return $this->buildRankingPositionChartArray($open_chat_id, new RankingPositionPageRepoDto);
-    }
-
-    private function buildRankingPositionChartArray(int $open_chat_id, RankingPositionPageRepoDto $repoDto, bool $includeTime = false): RankingPositionChartDto|false
-    {
-        $memberStats = $this->statisticsPageRepository->getDailyMemberStatsDateAsc($open_chat_id);
-        if (!$memberStats) {
-            return false;
-        }
-
+    private function buildRankingPositionChartArray(
+        RankingPositionPageRepoDto $repoDto,
+        \DateTime $startDate,
+        \DateTime $endDate,
+        bool $includeTime = false
+    ): RankingPositionChartDto|false {
         return $this->generateChartArray(
-            $this->generateDateArray(
-                $memberStats[0]['date'],
-                $memberStats[count($memberStats) - 1]['date']
-            ),
-            $memberStats,
+            $this->generateDateArray($startDate, $endDate),
             $repoDto,
             $includeTime
         );
     }
 
     /**  
-     *  @param string $firstDate `Y-m-d`
      *  @return string[]
      */
-    private function generateDateArray(string $firstDate, string $endDate): array
+    private function generateDateArray(\DateTime $startDate, \DateTime $endDate): array
     {
-        $first = new \DateTime($firstDate);
-        $interval = $first->diff(new \DateTime($endDate))->days;
+        $first = new \DateTime($startDate->format('Y-m-d'));
+        $interval = $first->diff($endDate)->days;
         if ($interval < 8) {
             $mod = 7 - $interval;
             $first->modify("-{$mod} day");
-            $interval = $first->diff(new \DateTime($endDate))->days;
+            $interval = $first->diff($endDate)->days;
         }
 
         $dateArray = [];
@@ -95,18 +82,15 @@ class RankingPositionChartArrayService
      * @param string[] $dateArray
      * @param array{ date:string, member:int }[] $memberStats
      */
-    private function generateChartArray(array $dateArray, array $memberStats, RankingPositionPageRepoDto $repoDto, bool $includeTime): RankingPositionChartDto
+    private function generateChartArray(array $dateArray, RankingPositionPageRepoDto $repoDto, bool $includeTime): RankingPositionChartDto
     {
         $dto = new RankingPositionChartDto;
 
-        $getMemberStatsCurDate = fn (int $key): string => $memberStats[$key]['date'] ?? '';
         $getRepoDtoCurDate = fn (int $key): string => isset($repoDto->time[$key]) ? substr($repoDto->time[$key], 0, self::SUBSTR_YMD_LEN) : '';
         $getIsBeforeStartDate = fn (string $date) => strtotime($date) < strtotime(self::START_DATE);
 
-        $curKeyMemberStats = 0;
         $curKeyRepoDto = 0;
         $repoDtoCurDate = $getRepoDtoCurDate(0);
-        $memberStatsCurDate = $getMemberStatsCurDate(0);
         $isBeforeStartDate = true;
 
         foreach ($dateArray as $date) {
@@ -114,24 +98,15 @@ class RankingPositionChartArrayService
                 $isBeforeStartDate = $getIsBeforeStartDate($date);
             }
 
-            $matchMemberStats = $memberStatsCurDate === $date;
             $matchRepoDto = $repoDtoCurDate === $date;
 
-            $member = null;
-            if ($matchMemberStats) {
-                $member = $memberStats[$curKeyMemberStats]['member'];
-                $curKeyMemberStats++;
-                $memberStatsCurDate = $getMemberStatsCurDate($curKeyMemberStats);
-            }
-
             $dto->addValue(
-                $date,
-                $member,
+                false,
+                false,
                 $matchRepoDto && $includeTime ? substr($repoDto->time[$curKeyRepoDto], self::SUBSTR_HI_OFFSET, self::SUBSTR_HI_LEN) : null,
-                $matchRepoDto ? $repoDto->position[$curKeyRepoDto] : ($date === $repoDto->nextDate || $isBeforeStartDate || !$curKeyMemberStats ? null : 0),
+                $matchRepoDto ? $repoDto->position[$curKeyRepoDto] : ($date === $repoDto->nextDate || $isBeforeStartDate || !$curKeyRepoDto ? null : 0),
                 $matchRepoDto ? $repoDto->totalCount[$curKeyRepoDto] : null,
             );
-
 
             if ($matchRepoDto) {
                 $curKeyRepoDto++;

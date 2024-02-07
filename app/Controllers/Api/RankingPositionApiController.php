@@ -20,44 +20,31 @@ class RankingPositionApiController
     function rankingPosition(
         RankingPositionChartArrayService $rankingPositionChartArrayService,
         int $open_chat_id,
-        string $sort
+        int $category,
+        string $sort,
+        string $start_date,
+        string $end_date
     ): Response|false {
-        $category = $this->openChatPageRepository->getRankingPositionCategoryById($open_chat_id);
-        if ($category === false) {
-            return response($rankingPositionChartArrayService->getStatsChartArrayWithoutPosition($open_chat_id));
-        }
-
-        switch ($sort) {
-            case 'ranking':
-                return response($rankingPositionChartArrayService->getRankingPositionChartArray($open_chat_id, $category));
-            case 'ranking_all':
-                return response($rankingPositionChartArrayService->getRankingPositionChartArray($open_chat_id, 0));
-            case 'rising':
-                return response($rankingPositionChartArrayService->getRisingPositionChartArray($open_chat_id, $category));
-            case 'rising_all':
-                return response($rankingPositionChartArrayService->getRisingPositionChartArray($open_chat_id, 0));
-        }
+        $startDate = new \DateTime($start_date);
+        $endDate = new \DateTime($end_date);
+        
+        return response(
+            $sort === 'ranking'
+                ? $rankingPositionChartArrayService->getRankingPositionChartArray($open_chat_id, $category, $startDate, $endDate)
+                : $rankingPositionChartArrayService->getRisingPositionChartArray($open_chat_id, $category, $startDate, $endDate)
+        );
     }
 
     function rankingPositionHour(
         RankingPositionHourChartArrayService $rankingPositionHourChartArrayService,
         int $open_chat_id,
+        int $category,
         string $sort
     ): Response|false {
-        $category = $this->openChatPageRepository->getRankingPositionCategoryById($open_chat_id);
-        if ($category === false) {
-            return false;
-        }
-
-        switch ($sort) {
-            case 'ranking':
-                return response($rankingPositionHourChartArrayService->getRankingPositionHourChartArray($open_chat_id, $category));
-            case 'ranking_all':
-                return response($rankingPositionHourChartArrayService->getRankingPositionHourChartArray($open_chat_id, 0));
-            case 'rising':
-                return response($rankingPositionHourChartArrayService->getRisingPositionHourChartArray($open_chat_id, $category));
-            case 'rising_all':
-                return response($rankingPositionHourChartArrayService->getRisingPositionHourChartArray($open_chat_id, 0));
-        }
+        return response(
+            $sort === 'ranking'
+                ? $rankingPositionHourChartArrayService->getRankingPositionHourChartArray($open_chat_id, $category)
+                : $rankingPositionHourChartArrayService->getRisingPositionHourChartArray($open_chat_id, $category)
+        );
     }
 }

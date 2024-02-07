@@ -9,10 +9,10 @@ class RankingPositionHourPageRepoDto
     /** @var string[] H:i */
     public array $time = [];
 
-    /** @var int[] */
+    /** @var (int|null)[] */
     public array $position = [];
 
-    /** @var int[] */
+    /** @var (int|null)[] */
     public array $totalCount = [];
 
     /** @var int[] */

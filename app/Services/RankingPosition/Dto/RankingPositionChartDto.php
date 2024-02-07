@@ -21,10 +21,10 @@ class RankingPositionChartDto
     /** @var (int|null)[] */
     public array $totalCount = [];
 
-    function addValue(string $date, int|null $member, string|null $time, int|null $position, int|null $totalCount)
+    function addValue(string|false $date, int|null|false $member, string|null $time, int|null $position, int|null $totalCount)
     {
-        $this->date[] = $date;
-        $this->member[] = $member;
+        if ($date !== false) $this->date[] = $date;
+        if ($member !== false) $this->member[] = $member;
         $this->time[] = $time;
         $this->position[] = $position;
         $this->totalCount[] = $totalCount;
