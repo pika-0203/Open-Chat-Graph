@@ -83,16 +83,14 @@
                 <span class="ranking-readMore">詳しく見る</span>
             </a>
         </article>
-        <hr>
-        <hr>
-        <p style="padding-top: 2rem;">
+        <p style="padding-top: 3rem;">
             <small class="top-small-desc" style="margin-bottom:1rem; display: block;">オプチャグラフは<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">LINEオープンチャット公式サイトのランキング</a>に掲載中のオープンチャットを自動的に記録します</small>
-        <p>
+        </p>
+        <p style="padding-top:12px">
             <a class="recent-oc-btn" href="<?php echo url('recent') ?>">最近ランクインしたオープンチャット</a>
         </p>
-        <p>
+        <p style="padding-top:12px">
             <a class="recent-oc-btn" href="<?php echo url('register') ?>">オープンチャットを手動で登録する</a>
-        </p>
         </p>
     </main>
     <footer>
