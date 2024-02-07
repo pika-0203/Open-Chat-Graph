@@ -40,11 +40,11 @@ class StatisticsChartArrayService
         $interval = $first->diff(new \DateTime($endDate))->days;
 
         // データが8日分未満の場合は追加する
-        if ($interval < 8) {
+        /* if ($interval < 8) {
             $mod = 7 - $interval;
             $first->modify("-{$mod} day");
             $interval = $first->diff(new \DateTime($endDate))->days;
-        }
+        } */
 
         $dateArray = [];
         $i = 0;

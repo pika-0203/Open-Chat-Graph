@@ -119,13 +119,13 @@ main header {
 .recent-oc-btn::after {
   display: inline-block;
   content: '';
-  margin-left: 3px;
-  width: 5px;
-  height: 5px;
+  margin-left: 2px;
+  width: 6px;
+  height: 6px;
   border-top: 1px solid #111;
   border-right: 1px solid #111;
-  transform: rotate(45deg);
-  margin-bottom: 2px;
+  transform: rotate(45deg) translateY(-8%);
+  margin-bottom: 1px;
 }
 
 /* Submit button */

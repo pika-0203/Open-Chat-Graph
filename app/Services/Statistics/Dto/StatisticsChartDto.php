@@ -12,9 +12,9 @@ class StatisticsChartDto
     /** @var (int|null)[] */
     public array $member = [];
 
-    public string $startDate;
+    public string $startDate = '';
 
-    public string $endDate;
+    public string $endDate = '';
 
     function __construct(string $startDate, string $endDate)
     {

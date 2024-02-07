@@ -62,11 +62,11 @@ class RankingPositionChartArrayService
     {
         $first = new \DateTime($startDate->format('Y-m-d'));
         $interval = $first->diff($endDate)->days;
-        if ($interval < 8) {
+        /* if ($interval < 8) {
             $mod = 7 - $interval;
             $first->modify("-{$mod} day");
             $interval = $first->diff($endDate)->days;
-        }
+        } */
 
         $dateArray = [];
         $i = 0;

@@ -14,14 +14,14 @@
             <p>・オープンチャットの管理者が成長傾向を把握し、比較できる事で運営に役立つ</p>
             <p>・ユーザーがオープンチャットを見つけて参加する機会を作る</p>
             <h2>仕組み</h2>
-            <p>オプチャグラフは<a href="https://openchat.line.me/jp" rel="external" target="_blank">LINEオープンチャット公式サイト</a>のデータ自動的に記録し、グラフ等に視覚化することで新たな知見を得ることができます。</p>
+            <p>オプチャグラフは<a href="https://openchat.line.me/jp" rel="external" target="_blank">LINEオープンチャット公式サイト</a>のデータを自動的に記録し、グラフ等に視覚化することで新たな知見を得ることができます。</p>
             <br>
             <p><b>オープンチャットがオプチャグラフに表示されないようにするには、オープンチャットの説明文に #nolog を含めます。</b></p>
             <p>既に登録済みのオープンチャットはデータ更新時に #nolog を検出すると削除されます。</p>
             <br>
             <p><b>公式サイトにて掲載が終了したオープンチャットはオプチャグラフから削除されます。</b></p>
             <h2>コンテンツの権利</h2>
-            <p>当サイトにおける投稿コンテンツに対して有する権利はオープンチャットの作成者及びLINE株式会社が従前どおり保持し、当サイトがかかる権利を取得することはありません。</p>
+            <p>当サイトにおける投稿コンテンツに対して有する権利はオープンチャットの作成者及びLINEヤフー株式会社が従前どおり保持し、当サイトがかかる権利を取得することはありません。</p>
             <p><a href="https://openchat.line.me/robots.txt" rel="external" target="_blank">LINEオープンチャット公式サイトのrobots.txt</a>を尊重し、クロール可能と解釈したデータを収集します。</p>
             <p>LINEの詳細は<a href="https://terms.line.me/line_terms?lang=ja" rel="noopener noreferrer" target="_blank">LINE利用規約</a>や<a href="https://terms.line.me/line_Square_TOU_JP?lang=ja" rel="noopener noreferrer" target="_blank">LINEオープンチャット利用規約</a>をご覧ください。</p>
             <h2>Cookie</h2>
