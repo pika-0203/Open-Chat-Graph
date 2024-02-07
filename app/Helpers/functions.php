@@ -85,38 +85,16 @@ function dateTimeAttr(int $timestamp): string
     return date('Y-m-d\TH:i:sO', $timestamp);
 }
 
-function convertDatetimeAndOneDayBefore(string|int $datetime, bool $time = false)
-{
-    if (is_int($datetime)) {
-        // タイムスタンプが与えられた場合
-        $previousDayTimestamp = $datetime - 86400; // 一日は 86400 秒
-        if ($time) {
-            return gmdate('Y.m.d H:i', $previousDayTimestamp);
-        }
-        return gmdate('Y.m.d', $previousDayTimestamp);
-    }
-
-    // 日付文字列を処理する場合、DateTimeImmutableを使用
-    $dateTime = new DateTimeImmutable($datetime);
-
-    // 一日前の日付を計算
-    $previousDay = $dateTime->sub(new DateInterval('P1D'));
-
-    // 形式を変更して返す
-    if ($time) {
-        return $previousDay->format('Y.m.d H:i');
-    }
-    return $previousDay->format('Y.m.d');
-}
-
 function convertDatetime(string|int $datetime, bool $time = false)
 {
+    $format = 'Y/n/j';
+
     if (is_int($datetime)) {
         // タイムスタンプが与えられた場合
         if ($time) {
-            return date('Y.m.d H:i', $datetime);
+            return date($format . ' H:i', $datetime);
         }
-        return date('Y.m.d', $datetime);
+        return date($format, $datetime);
     }
 
     // 日付文字列をDateTimeImmutableオブジェクトに変換
@@ -124,9 +102,9 @@ function convertDatetime(string|int $datetime, bool $time = false)
 
     // 形式を変更して返す
     if ($time) {
-        return $dateTime->format('Y.m.d H:i');
+        return $dateTime->format($format . ' H:i');
     }
-    return $dateTime->format('Y.m.d');
+    return $dateTime->format($format);
 }
 
 function getHostAndUri(): string
