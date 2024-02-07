@@ -21,7 +21,5 @@ interface StatisticsRepositoryInterface
 
     public function getMemberChangeWithinLastWeek(int $open_chat_id): bool;
 
-    public function mergeDuplicateOpenChatStatistics(int $duplicated_id, int $open_chat_id): void;
-
     public function getMemberChangeWithinLastWeekCacheArray(): array;
 }

@@ -46,7 +46,8 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
     public function updateOpenChatRecord(OpenChatUpdaterDto $dto): void
     {
         if ($dto->delete_flag === true) {
-            return $this->DeleteOpenChatRepository->deleteOpenChat($dto->open_chat_id);
+            $this->DeleteOpenChatRepository->deleteOpenChat($dto->open_chat_id);
+            return;
         }
 
         $columnsToSet = [

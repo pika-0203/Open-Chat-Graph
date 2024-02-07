@@ -9,7 +9,6 @@ use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\OpenChat\OpenChatCrawlingFromApi;
 use App\Services\UpdateRankingService;
 use App\Services\OpenChat\OpenChatApiDbMerger;
-use App\Services\OpenChat\DuplicateOpenChatMeger;
 use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
 use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Models\Repositories\OpenChatRepository;
@@ -23,7 +22,6 @@ class SyncOpenChat
     function __construct(
         private SyncOpenChatState $state,
         private OpenChatApiDbMerger $merger,
-        private DuplicateOpenChatMeger $dupMeger,
         private UpdateRankingService $updateRankingService,
         private LogRepositoryInterface $log,
         private SitemapGenerator $sitemapGenerator
@@ -95,9 +93,6 @@ class SyncOpenChat
 
     function finalizeUpdate(): void
     {
-        $result = $this->dupMeger->mergeDuplicateOpenChat();
-        $this->addMessage("mergeDuplicateOpenChat: " . count($result));
-
         $this->sitemapGenerator->generate();
     }
 

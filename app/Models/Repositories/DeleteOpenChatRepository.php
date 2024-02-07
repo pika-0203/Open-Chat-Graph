@@ -16,17 +16,8 @@ class DeleteOpenChatRepository implements DeleteOpenChatRepositoryInterface
     ) {
     }
 
-    private static array $deleteOpenChat = [];
-
-    public static function getDeletedOpenChat(): array
-    {
-        return self::$deleteOpenChat;
-    }
-
     public function deleteOpenChat(int $open_chat_id): bool
     {
-        self::$deleteOpenChat[] = $open_chat_id;
-
         $result = DB::executeAndCheckResult(
             "DELETE FROM
                      open_chat
@@ -39,43 +30,5 @@ class DeleteOpenChatRepository implements DeleteOpenChatRepositoryInterface
         $this->rankingPositionRepository->daleteDailyPosition($open_chat_id);
 
         return $result;
-    }
-
-    public function deleteDuplicatedOpenChat(int $duplicated_id, int $open_chat_id): void
-    {
-        $getEmid = fn ($id) => DB::fetchColumn(
-            'SELECT
-                emid
-            FROM
-                open_chat
-            WHERE
-                id = :id',
-            compact('id')
-        );
-
-        if (!$getEmid($open_chat_id)) {
-            $emid = $getEmid($duplicated_id);
-            $emid && DB::execute(
-                'UPDATE
-                    open_chat
-                SET
-                    emid = :emid
-                WHERE
-                    id = :open_chat_id',
-                compact('open_chat_id', 'emid')
-            );
-        }
-
-        $this->statisticsRepository->mergeDuplicateOpenChatStatistics($duplicated_id, $open_chat_id);
-        $this->rankingPositionRepository->mergeDuplicateDailyPosition($duplicated_id, $open_chat_id);
-        $this->deleteOpenChat($duplicated_id);
-
-        DB::executeAndCheckResult(
-            "DELETE FROM
-                     open_chat_deleted
-                WHERE
-                     id = :open_chat_id",
-            compact('open_chat_id')
-        );
     }
 }
