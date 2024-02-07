@@ -28,10 +28,9 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
         self::$memberChangeWithinLastWeekCache = null;
     }
 
-    public static function addOpenChatIdByEmidCache(int $id, string $emid): void
+    public static function addOpenChatIdByEmidCache(int $id, string $emid, string $img_url): void
     {
         $next_update = 0;
-        $img_url = '';
         self::$openChatIdAndNextUpdateCache[] = compact('id', 'emid', 'next_update', 'img_url');
         self::$openChatEmidCache[] = $emid;
     }

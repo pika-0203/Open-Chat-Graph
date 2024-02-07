@@ -15,7 +15,7 @@ class OpenChatRepositoryWithCacheForUpdater extends OpenChatRepository implement
             return false;
         }
 
-        OpenChatDataForUpdaterWithCacheRepository::addOpenChatIdByEmidCache($id, $dto->emid);
+        OpenChatDataForUpdaterWithCacheRepository::addOpenChatIdByEmidCache($id, $dto->emid, $dto->profileImageObsHash);
         return $id;
     }
 }
