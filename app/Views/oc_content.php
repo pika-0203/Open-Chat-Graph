@@ -93,10 +93,10 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
             <?php endif ?>
           </div>
           <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px">
-            <div><?php echo convertDatetime($oc['created_at']) ?></div>
             <?php if (is_int($oc['api_created_at'])) : ?>
               <div><?php echo convertDatetime($oc['api_created_at']) ?></div>
             <?php endif ?>
+            <div><?php echo convertDatetime($oc['created_at']) ?></div>
             <?php if (is_int($oc['api_created_at'])) : ?>
               <div><?php echo $category ?></div>
             <?php endif ?>
