@@ -31,7 +31,7 @@
                         <span class="list-title">最近登録されたオープンチャット</span>
                     </h2>
                     <p>
-                        <small style="font-size: 12px; color:#000">「公式ランキングにランクインした順」で表示します</small>
+                        <small style="font-size: 13px; color:#aaa">公式ランキングにランクインされた順で表示</small>
                     </p>
                 </div>
             </header>
