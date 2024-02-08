@@ -45,7 +45,7 @@
                     <label for="page-selector" class="unset"><span><?php echo $_label ?></span></label>
                 </form>
             </nav>
-            <?php viewComponent('open_chat_list', compact('openChatList')) ?>
+            <?php viewComponent('open_chat_list', compact('openChatList', 'isAdmin')) ?>
             <!-- 次のページ・前のページボタン -->
             <?php viewComponent('pager_nav', compact('pageNumber', 'maxPageNumber') + ['path' => '/' . $path]) ?>
         </article>
@@ -64,7 +64,6 @@
             })
         })(document.getElementById('page-selector'))
     </script>
-    <?php echo $_schema ?>
 </body>
 
 </html>
