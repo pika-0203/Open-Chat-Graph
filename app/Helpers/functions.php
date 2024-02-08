@@ -107,6 +107,20 @@ function convertDatetime(string|int $datetime, bool $time = false)
     return $dateTime->format($format);
 }
 
+function getCronModifiedDateTime(string $datetime): string
+{
+    $fileTime = new \DateTime($datetime);
+    $fileTime->setTimeZone(new \DateTimeZone('Asia/Tokyo'));
+
+    if ((int)$fileTime->format('i') < AppConfig::CRON_START_MINUTE) {
+        $fileTime->modify('-1 hour');
+    }
+
+    $fileTime->setTime((int)$fileTime->format('H'), AppConfig::CRON_START_MINUTE);
+
+    return $fileTime->format('Y/n/j g:i');
+}
+
 function getHostAndUri(): string
 {
     return $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
