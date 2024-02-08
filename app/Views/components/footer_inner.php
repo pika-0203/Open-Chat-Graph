@@ -9,5 +9,4 @@
         <a class="unset" rel="external nofollow noopener" href="https://openchat.line.me/jp/explore" target="_blank">公式ランキング<span class="line-link-icon777"></span></a>
     </div>
 </nav>
-<hr>
 <span class="copyright">オプチャグラフ</span>
