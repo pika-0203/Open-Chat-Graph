@@ -3,7 +3,7 @@
 }
 
 body > footer {
-  padding: 0;
+  padding: 19px 0 26px 0;
 }
 
 body > footer hr {
@@ -13,21 +13,17 @@ body > footer hr {
 }
 
 .footer-link-box {
-  margin: 19px 0 3px 0;
-}
-
-.footer-link-box {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  color: #111;
+  justify-content: space-evenly;
+  color: #b7b7b7;
 }
 
 .footer-link-inner a {
   cursor: pointer;
   text-decoration: none;
   text-underline-offset: 0.15em;
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
   font-size: 13px;
   line-height: 2.3;
   display: block;
@@ -43,10 +39,9 @@ body > footer hr {
   width: fit-content;
   display: block;
   font-size: 12px;
-  color: #aaa;
+  color: #b7b7b7;
   margin: 0 auto;
-  margin-top: -1.5rem;
-  padding: 1rem 0;
+  padding-top: 9px;
 }
 
 @media screen and (min-width: 512px) {
