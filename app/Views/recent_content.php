@@ -17,8 +17,8 @@
         }
 
         .page-select {
-            margin-top: 1.25rem;
-            padding-bottom: 0.35rem;
+            margin-top: 1.75rem;
+            padding-bottom: 0.85rem;
         }
     </style>
     <!-- 固定ヘッダー -->
@@ -28,9 +28,11 @@
             <header class="openchat-list-title-area unset">
                 <div style="flex-direction: column;">
                     <h2>
-                        <span class="list-title">最近のランクイン</span>
+                        <span class="list-title">最近登録されたオープンチャット</span>
                     </h2>
-                    <small style="font-size: 12px; color:#000">「公式ランキングにランクインした順」でオプチャグラフに登録済みのオープンチャットを表示します</small>
+                    <p>
+                        <small style="font-size: 12px; color:#000">「公式ランキングにランクインした順」で表示します</small>
+                    </p>
                 </div>
             </header>
             <!-- select要素ページネーション -->
