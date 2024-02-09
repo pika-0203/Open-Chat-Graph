@@ -32,7 +32,7 @@ class SyncOpenChat
 
     function handle()
     {
-        if (true || isDailyUpdateTime()) {
+        if (isDailyUpdateTime()) {
             set_time_limit(3600 * 2);
             $this->hourlyMerge();
             $this->hourlyRankingPosition();
