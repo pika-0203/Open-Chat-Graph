@@ -20,8 +20,8 @@ class AppConfig
     const CRON_EXECUTE_COUNT = 500;
 
     const CRON_START_MINUTE = 30;
-    const CRON_MERGER_HOUR_RANGE_START = 11;
-    const CRON_MERGER_HOUR_RANGE_END = 12;
+    const CRON_MERGER_HOUR_RANGE_START = 23;
+    const CRON_MERGER_HOUR_RANGE_END = 0;
 
     const LINE_OPEN_URL = 'https://openchat.line.me/jp/cover/';
 

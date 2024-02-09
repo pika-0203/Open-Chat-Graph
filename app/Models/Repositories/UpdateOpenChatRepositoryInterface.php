@@ -16,13 +16,15 @@ interface UpdateOpenChatRepositoryInterface
 
     public function updateOpenChatRecord(OpenChatUpdaterDto $dto): void;
 
-    /**
-     * @return array `['id' => int, 'fetcherArg' => emid]`
-     */
-    public function getUpdateFromApiTargetOpenChatId(?int $limit = null): array;
+    public function getOpenChatIdByEmid(string $emid): int|false;
 
     /**
-     * @return array|false `['id' => int, next_update => bool]`
+     * @return int[] open_chat_id
      */
-    public function getOpenChatIdByEmid(string $emid): array|false;
+    public function getOpenChatIdAll(): array;
+
+    /**
+     * @param array{ open_chat_id: int, member: int } $oc
+     */
+    public function updateMemberColumn(array $oc): void;
 }

@@ -19,10 +19,8 @@ class OpenChatUpdaterDto
     public ?int $category = null;
     public ?int $emblem = null;
 
-    public ?bool $hasEmid = null;
     public ?string $db_img_url = null;
     public ?int $db_member = null;
-    public ?int $next_update = null;
 
     function __construct(int $open_chat_id)
     {

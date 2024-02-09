@@ -56,7 +56,7 @@ class RankingPositionHourPersistence
             }
 
             $result[] = new RankingPositionHourInsertDto(
-                $id['id'],
+                $id,
                 $key + 1,
                 $dto->category ?? 0,
                 $dto->memberCount

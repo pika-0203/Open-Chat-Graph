@@ -33,7 +33,7 @@ FROM
         FROM
             statistics AS st
         WHERE
-            date = date('now')
+            date = date(':DATE_STRING')
             AND member >= 10
             AND EXISTS (
                 SELECT
@@ -42,7 +42,7 @@ FROM
                     statistics AS sub
                 WHERE
                     sub.open_chat_id = st.open_chat_id
-                    AND date = date('now', '-1 day')
+                    AND date = date(':DATE_STRING', '-1 day')
             )
     ) t1
     JOIN (
@@ -51,7 +51,7 @@ FROM
         FROM
             statistics
         WHERE
-            date = date('now', '-7 day')
+            date = date(':DATE_STRING', '-7 day')
             AND member >= 10
     ) t2 ON t1.open_chat_id = t2.open_chat_id;
 
@@ -61,7 +61,7 @@ DELETE FROM
 INSERT INTO
     statistics_ranking_week
 SELECT
-    rowid,
+    rowid,  
     open_chat_id,
     diff_member,
     percent_increase

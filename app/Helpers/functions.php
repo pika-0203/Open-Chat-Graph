@@ -170,19 +170,28 @@ function getCategoryName(int $category): string
     return AppConfig::OPEN_CHAT_CATEGORY_KEYS[$category] ?? '';
 }
 
-function addCronLog(string $string)
+function addCronLog(string|array $log)
 {
-    error_log(date('Y-m-d H:i:s') . ' ' . $string . "\n", 3, __DIR__ . '/../../logs/cron.log');
+    if (is_string($log)) {
+        $log = [$log];
+    }
+
+    foreach ($log as $string) {
+        error_log(date('Y-m-d H:i:s') . ' ' . $string . "\n", 3, __DIR__ . '/../../logs/cron.log');
+    }
 }
 
-function excludeTime(
+function isDailyUpdateTime(
     array $start = [AppConfig::CRON_MERGER_HOUR_RANGE_START, AppConfig::CRON_START_MINUTE],
     array $end = [AppConfig::CRON_MERGER_HOUR_RANGE_END, AppConfig::CRON_START_MINUTE]
 ): bool {
     $currentTime = new DateTime;
-    $updateTime = (new DateTime)->setTime(...$start);
-    $updateTimeRange = (new DateTime)->setTime(...$end);
-    return ($currentTime > $updateTime) && ($currentTime < $updateTimeRange);
+    $endTime = (new DateTime)->setTime(...$end);
+    $startTime = (new DateTime)->setTime(...$start);
+
+    if ($currentTime < $endTime) return true;
+    if ($currentTime > $startTime) return true;
+    return false;
 }
 
 function checkLineSiteRobots()

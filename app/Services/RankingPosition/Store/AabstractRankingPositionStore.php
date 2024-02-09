@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\RankingPosition\Store;
 
-use App\Config\AppConfig;
 use App\Services\OpenChat\Dto\OpenChatDto;
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 abstract class AabstractRankingPositionStore
 {
@@ -58,15 +58,6 @@ abstract class AabstractRankingPositionStore
 
     protected function getModifiedFileTime(string $fileName): \DateTime
     {
-        $fileTime = new \DateTime('@' . filemtime($fileName));
-        $fileTime->setTimeZone(new \DateTimeZone('Asia/Tokyo'));
-
-        if ((int)$fileTime->format('i') < AppConfig::CRON_START_MINUTE) {
-            $fileTime->modify('-1 hour');
-        }
-
-        $fileTime->setTime((int)$fileTime->format('H'), AppConfig::CRON_START_MINUTE);
-
-        return $fileTime;
+        return OpenChatServicesUtility::getModifiedCronTime(filemtime($fileName));
     }
 }

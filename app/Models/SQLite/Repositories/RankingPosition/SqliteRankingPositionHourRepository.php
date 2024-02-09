@@ -72,6 +72,23 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         return $this->inserter->importWithKeys(SQLiteRankingPositionHour::connect(), 'member', $keys, $data, 500);
     }
 
+    public function getDailyMemberStats(\DateTime $todayLastTime): array
+    {
+        $time = $todayLastTime->format('Y-m-d H:i:s');
+
+        $query =
+            "SELECT
+                open_chat_id,
+                member,
+                DATE(time) AS date
+            FROM
+                member
+            WHERE
+                time = '{$time}'";
+
+        return SQLiteRankingPositionHour::fetchAll($query);
+    }
+
     private function getMinPositionHour(string $tableName, \DateTime $date, bool $all): array
     {
         $dateString = $date->format('Y-m-d');
@@ -152,12 +169,12 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         return SQLiteRankingPositionHour::fetchAll($query);
     }
 
-    public function dalete(\DateTime $date): void
+    public function dalete(\DateTime $dateTime): void
     {
-        $dateString = $date->format('Y-m-d');
-        SQLiteRankingPositionHour::execute("DELETE FROM ranking WHERE DATE(time) <= '{$dateString}'");
-        SQLiteRankingPositionHour::execute("DELETE FROM rising WHERE DATE(time) <= '{$dateString}'");
-        SQLiteRankingPositionHour::execute("DELETE FROM total_count WHERE DATE(time) <= '{$dateString}'");
+        $timeStr = $dateTime->format('Y-m-d H:i:s');
+        SQLiteRankingPositionHour::execute("DELETE FROM ranking WHERE time < '{$timeStr}'");
+        SQLiteRankingPositionHour::execute("DELETE FROM rising WHERE time < '{$timeStr}'");
+        SQLiteRankingPositionHour::execute("DELETE FROM total_count WHERE time < '{$timeStr}'");
         SQLiteRankingPositionHour::$pdo->exec('VACUUM;');
     }
 

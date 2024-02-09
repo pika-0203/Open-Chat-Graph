@@ -12,6 +12,7 @@ use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Services\RankingPosition\Store\RankingPositionStore;
 use App\Config\AppConfig;
 use App\Exceptions\ApplicationException;
+use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use Shadow\DB;
 
@@ -32,49 +33,39 @@ class OpenChatApiDbMerger
         );
     }
 
-    function countMaxExecuteNum(int $limit): int
-    {
-        return $this->openChatApiRankingDataDownloader->countMaxExecuteNum($limit);
-    }
-
-    function fetchOpenChatApiRankingAll(int $limit, int $ExecuteNum, bool $updateFlag = true): int|false
+    /**
+     * @return array{ count: int, category: string, dateTime: \DateTime }[] 取得済件数とカテゴリ
+     * @throws \RuntimeException
+     */
+    function fetchOpenChatApiRankingAll(): array
     {
         try {
-            $count = $this->fetchOpenChatApiRankingAllProcess($limit, $ExecuteNum, $updateFlag);
+            return $this->fetchOpenChatApiRankingAllProcess();
         } catch (\RuntimeException $e) {
             // 再接続
-            if (!$updateFlag) {
-                DB::$pdo = null;
-            }
-
+            DB::$pdo = null;
             $this->logRepository->logUpdateOpenChatError(0, $e->__toString());
-
-            return false;
+            throw $e;
         }
-
-        return $count;
     }
 
-    private function fetchOpenChatApiRankingAllProcess(int $limit, int $ExecuteNum, bool $updateFlag): int
+    private function fetchOpenChatApiRankingAllProcess(): array
     {
         // API OC一件ずつの処理
-        $processCallback = function (OpenChatDto $apiDto) use ($updateFlag): ?string {
+        $processCallback = function (OpenChatDto $apiDto): ?string {
             $this->rankingPositionStore->addApiDto($apiDto);
-            return $this->openChatApiDbMergerProcess->validateAndMapToOpenChatDtoCallback($apiDto, $updateFlag);
+            return $this->openChatApiDbMergerProcess->validateAndMapToOpenChatDtoCallback($apiDto);
         };
 
         // API URL一件ずつの処理 
-        $callback = function (array $apiData) use ($processCallback, $updateFlag): void {
+        $callback = function (array $apiData) use ($processCallback): void {
             $this->checkKillFlag();
 
             $errors = $this->openChatApiDtoFactory->validateAndMapToOpenChatDto($apiData, $processCallback);
 
             foreach ($errors as $error) {
                 // 再接続
-                if (!$updateFlag) {
-                    DB::$pdo = null;
-                }
-
+                DB::$pdo = null;
                 $this->logRepository->logUpdateOpenChatError(0, $error);
             }
         };
@@ -82,9 +73,11 @@ class OpenChatApiDbMerger
         // API カテゴリごとの処理
         $callbackByCategory = function (string $category): void {
             $this->rankingPositionStore->saveClearCurrentCategoryApiDataCache($category);
+            // リポジトリキャッシュクリア
+            OpenChatDataForUpdaterWithCacheRepository::clearCache();
         };
 
-        return $this->openChatApiRankingDataDownloader->fetchOpenChatApiRankingAll($limit, $ExecuteNum, $callback, $callbackByCategory);
+        return $this->openChatApiRankingDataDownloader->fetchOpenChatApiRankingAll($callback, $callbackByCategory);
     }
 
     private function checkKillFlag()

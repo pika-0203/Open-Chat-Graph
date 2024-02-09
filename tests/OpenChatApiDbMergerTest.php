@@ -14,7 +14,7 @@ class OpenChatApiDbMergerTest extends TestCase
          */
         $openChatDataDbApiMerger = app(OpenChatApiDbMerger::class);
 
-        $result = $openChatDataDbApiMerger->fetchOpenChatApiRankingAll(100, 1);
+        $result = $openChatDataDbApiMerger->fetchOpenChatApiRankingAll();
 
         var_dump($result);
 

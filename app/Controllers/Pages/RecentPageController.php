@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
-use App\Services\Statistics\OpenChatStatisticsRecent;
+use App\Views\OpenChatStatisticsRecent;
 use App\Config\AppConfig;
 use App\Services\Admin\AdminAuthService;
 use App\Views\SelectElementPagination;

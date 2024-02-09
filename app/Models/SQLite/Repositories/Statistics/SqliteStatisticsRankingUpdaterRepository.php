@@ -14,6 +14,7 @@ class SqliteStatisticsRankingUpdaterRepository implements StatisticsRankingUpdat
 {
     protected const DAILY_RANKING_SQL = __DIR__ . '/sql/SQLite_StatisticsRankingUpdaterRepository_updateCreateDailyRankingTable.sql';
     protected const PAST_WEEK_RANKING_SQL = __DIR__ . '/sql/SQLite_StatisticsRankingUpdaterRepository_updateCreatePastWeekRankingTable.sql';
+    protected const DATE_PLACE_HOLDER = ':DATE_STRING';
 
     public function __construct(
         private ExecuteSqlFile $execSql,
@@ -21,16 +22,29 @@ class SqliteStatisticsRankingUpdaterRepository implements StatisticsRankingUpdat
     ) {
     }
 
-    public function updateCreateDailyRankingTable(): int
+    function test()
     {
-        $result = $this->execSql->execQueries(self::DAILY_RANKING_SQL, new SQLiteStatistics);
+        return str_replace(self::DATE_PLACE_HOLDER, '2024-02-09', file_get_contents(self::DAILY_RANKING_SQL));
+    }
+
+    public function updateCreateDailyRankingTable(string $date): int
+    {
+        $result = $this->execSql->execQueries(
+            str_replace(self::DATE_PLACE_HOLDER, $date, file_get_contents(self::DAILY_RANKING_SQL)),
+            new SQLiteStatistics
+        );
+
         $this->sqliteRankingExport->exportRankingDay(new DB);
         return $result;
     }
 
-    public function updateCreatePastWeekRankingTable(): int
+    public function updateCreatePastWeekRankingTable(string $date): int
     {
-        $result = $this->execSql->execQueries(self::PAST_WEEK_RANKING_SQL, new SQLiteStatistics);
+        $result = $this->execSql->execQueries(
+            str_replace(self::DATE_PLACE_HOLDER, $date, file_get_contents(self::PAST_WEEK_RANKING_SQL)),
+            new SQLiteStatistics
+        );
+
         $this->sqliteRankingExport->exportRankingWeek(new DB);
         return $result;
     }

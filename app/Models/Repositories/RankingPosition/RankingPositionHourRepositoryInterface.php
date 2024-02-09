@@ -13,6 +13,11 @@ interface RankingPositionHourRepositoryInterface
     public function insertHourMemberFromDtoArray(string $fileTime, array $insertDtoArray): int;
 
     /**
+     * @return array{ open_chat_id: int, member: int, date: string }
+     */
+    public function getDailyMemberStats(\DateTime $todayLastTime): array;
+
+    /**
      * @return array{ open_chat_id: int, category: int, position: int, time: stirng }[]
      */
     public function getMinRankingHour(\DateTime $date, bool $all = false): array;
@@ -27,7 +32,7 @@ interface RankingPositionHourRepositoryInterface
      */
     public function getTotalCount(\DateTime $date, bool $isDate = true): array;
 
-    public function dalete(\DateTime $date): void;
+    public function dalete(\DateTime $dateTime): void;
 
     public function insertTotalCount(string $fileTime): int;
 }
