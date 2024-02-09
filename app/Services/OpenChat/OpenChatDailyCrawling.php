@@ -2,26 +2,31 @@
 
 declare(strict_types=1);
 
-namespace App\Services\OpenChat\Updater\Process;
+namespace App\Services\OpenChat;
 
 use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Services\Utility\ErrorCounter;
-use App\Services\Crawler\CrawlerFactory;
 use App\Services\OpenChat\Updater\OpenChatUpdaterFromApi;
+use App\Services\Crawler\CrawlerFactory;
 
-class OpenChatCrawlingProcess
+class OpenChatDailyCrawling
 {
     function __construct(
+
+        private OpenChatUpdaterFromApi $openChatUpdater,
         private LogRepositoryInterface $logRepository,
         private ErrorCounter $errorCounter,
-        private OpenChatUpdaterFromApi $openChatUpdater,
     ) {
     }
 
-    function crawlingProcess(array $target, ?int $intervalSecond = null): bool
+    /**
+     * @param int[] $openChatIdArray
+     * @throws \RuntimeException
+     */
+    function crawling(array $openChatIdArray, ?int $intervalSecond = null): int
     {
-        foreach ($target as $openChat) {
-            $result = $this->openChatUpdater->fetchUpdateOpenChat($openChat);
+        foreach ($openChatIdArray as $id) {
+            $result = $this->openChatUpdater->fetchUpdateOpenChat($id);
 
             if ($result === false) {
                 $this->errorCounter->increaseCount();
@@ -30,9 +35,8 @@ class OpenChatCrawlingProcess
             }
 
             if ($this->errorCounter->hasExceededMaxErrors()) {
-                $this->logRepository->logUpdateOpenChatError(0, 'crawlingProcess: 連続エラー回数が上限を超えました.');
-
-                return false;
+                $message = 'crawlingProcess: 連続エラー回数が上限を超えました ' . $this->logRepository->getRecentLog();
+                throw new \RuntimeException($message);
             }
 
             if ($intervalSecond) {
@@ -40,6 +44,6 @@ class OpenChatCrawlingProcess
             }
         }
 
-        return true;
+        return count($openChatIdArray);
     }
 }

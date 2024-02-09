@@ -12,6 +12,7 @@ use App\Services\Admin\AdminTool;
 use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Models\SQLite\SQLiteStatistics;
 use App\Services\Cron\CronJson\SyncOpenChatState;
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\RankingPosition\Persistence\RankingPositionDailyPersistence;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\RankingPosition\RankingPositionHourUpdater;
@@ -83,9 +84,9 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'cookie取得完了', 'message' => 'アクセス用のcookieを取得しました']);
     }
 
-    private function generank(UpdateRankingService $updateRankingService)
+    function generank(UpdateRankingService $updateRankingService)
     {
-        $updateRankingService->update();
+        $updateRankingService->update(OpenChatServicesUtility::getCronModifiedStatsMemberDate());
 
         return view('admin/admin_message_page', ['title' => 'updateStaticData done', 'message' => 'updateStaticData done']);
     }

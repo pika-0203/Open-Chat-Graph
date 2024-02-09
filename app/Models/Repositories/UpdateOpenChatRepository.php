@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\Models\Repositories;
 
 use Shadow\DB;
-use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatRepositoryDto;
 use App\Services\OpenChat\Dto\OpenChatUpdaterDto;
 
 class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
 {
     public function __construct(
-        private StatisticsRepositoryInterface $statisticsRepository,
         private DeleteOpenChatRepositoryInterface $DeleteOpenChatRepository
     ) {
     }
@@ -40,7 +38,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             return false;
         }
 
-        return new OpenChatRepositoryDto($result);
+        return new OpenChatRepositoryDto($id, $result);
     }
 
     public function updateOpenChatRecord(OpenChatUpdaterDto $dto): void
@@ -60,7 +58,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             'api_created_at' => $dto->createdAt ?? null,
             'category' => $dto->category ?? null,
             'emblem' => $dto->emblem ?? null,
-            'next_update' => isset($dto->next_update) ? date('Y-m-d', $dto->next_update) : null,
         ];
 
         $columnsToUpdate = array_filter($columnsToSet, fn ($value) => $value !== null);
@@ -77,57 +74,36 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
                 id = :id",
             $columnsToUpdate
         );
-
-        if (isset($dto->next_update) && isset($dto->db_member)) {
-            $this->statisticsRepository->insertDailyStatistics($dto->open_chat_id, ($dto->memberCount ?? $dto->db_member), $dto->updated_at);
-        }
     }
 
-    public function getUpdateFromApiTargetOpenChatId(?int $limit = null): array
-    {
-        $query =
-            "SELECT
-                id,
-                emid AS fetcherArg
-            FROM
-                open_chat
-            WHERE
-                DATE(updated_at) < :date
-                AND next_update <= :date
-            ORDER BY
-                updated_at ASC";
-
-        $params = ['date' => date('Y-m-d')];
-
-        if ($limit !== null) {
-            $query .= ' LIMIT :limit';
-            $params['limit'] = $limit;
-        }
-
-        return DB::fetchAll($query, $params);
-    }
-
-    public function getOpenChatIdByEmid(string $emid): array|false
+    public function getOpenChatIdByEmid(string $emid): int|false
     {
         $query =
             'SELECT
-                id,
-                next_update <= :date AS next_update
+                id
             FROM
                 open_chat
             WHERE
-                emid = :emid
-            ORDER BY
-                id ASC
-            LIMIT 1';
+                emid = :emid';
 
-        $date = date('Y-m-d');
+        return DB::fetchColumn($query, compact('emid'));
+    }
 
-        $result = DB::fetch($query, compact('emid', 'date'));
-        if ($result !== false) {
-            $result['next_update'] = (bool)$result['next_update'];
-        }
+    public function getOpenChatIdAll(): array
+    {
+        $query =
+            'SELECT
+                id
+            FROM
+                open_chat';
 
-        return $result;
+        return DB::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
+    }
+
+    public function updateMemberColumn(array $oc): void
+    {
+        $member = $oc['member'];
+        $id = $oc['open_chat_id'];
+        DB::$pdo->exec("UPDATE open_chat SET member = {$member} WHERE id = {$id}");
     }
 }

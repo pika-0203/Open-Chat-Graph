@@ -6,31 +6,35 @@ namespace App\Services\OpenChat\Dto;
 
 class OpenChatUpdaterDtoFactory
 {
-    function mapToDto(int $open_chat_id, OpenChatRepositoryDto $repoDto, OpenChatDto $apiDto): OpenChatUpdaterDto
+    function mapToDto(OpenChatRepositoryDto $repoDto, OpenChatDto $apiDto, bool $updateMember): OpenChatUpdaterDto
     {
-        $updaterDto = new OpenChatUpdaterDto($open_chat_id);
+        $updaterDto = new OpenChatUpdaterDto($repoDto->open_chat_id);
 
         foreach ($repoDto as $prop => $value) {
+            if ($prop === 'open_chat_id') {
+                continue;
+            }
+
+            if($prop === 'memberCount' && !$updateMember) {
+                $updaterDto->memberCount = null;
+                continue;
+            }
+
             if (!isset($apiDto->$prop) || $apiDto->$prop === $value) {
                 $updaterDto->$prop = null;
-            } else {
-                $updaterDto->$prop = $apiDto->$prop;
             }
-        }
 
-        $updaterDto->db_member = $repoDto->memberCount;
-        $updaterDto->db_img_url = $repoDto->profileImageObsHash;
-        $updaterDto->hasEmid = (bool)$repoDto->emid;
+            $updaterDto->$prop = $apiDto->$prop;
+        }
 
         return $updaterDto;
     }
 
-    function mapToDeleteOpenChatDto(int $open_chat_id, string $imgUrl): OpenChatUpdaterDto
+    function mapToDeleteOpenChatDto(int $open_chat_id): OpenChatUpdaterDto
     {
         $updaterDto = new OpenChatUpdaterDto($open_chat_id);
 
         $updaterDto->delete_flag = true;
-        $updaterDto->db_img_url = $imgUrl;
 
         return $updaterDto;
     }

@@ -13,14 +13,14 @@ class ExecuteSqlFile
      * @return int returns the number of rows that were modified or deleted by the SQL statement.  
      *             If no rows were affected, returns 0.
      */
-    public function execute(string $sqlFile): int
+    public function execute(string $string): int
     {
-        return DB::transaction(fn () => $this->execQueries($sqlFile, new DB));
+        return DB::transaction(fn () => $this->execQueries($string, new DB));
     }
 
-    public function execQueries(string $sqlFile, DBInterface $db): int
+    public function execQueries(string $string, DBInterface $db): int
     {
-        $sqlQueries = explode(';', file_get_contents($sqlFile));
+        $sqlQueries = explode(';', $string);
 
         foreach ($sqlQueries as $query) {
             if (trim($query) === '') {

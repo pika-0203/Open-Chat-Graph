@@ -5,72 +5,25 @@ declare(strict_types=1);
 namespace App\Models\Repositories;
 
 use Shadow\DB;
-use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatRepositoryDto;
+use RuntimeException;
 
 class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdaterWithCacheRepositoryInterface
 {
-    private static ?array $openChatIdAndNextUpdateCache;
-    private static ?array $openChatEmidCache;
-    private static ?array $openChatDataCache;
-    private static ?array $memberChangeWithinLastWeekCache;
+    /**
+     * @var null|OpenChatRepositoryDto[] $openChatDataCache
+     */
+    private static ?array $openChatDataCache = null;
 
-    public function __construct(
-        private StatisticsRepositoryInterface $statisticsRepository
-    ) {
-    }
+    /**
+     * @var null|string[] $openChatIdCache
+     */
+    private static ?array $openChatEmidCache = null;
 
-    public static function clearCache(): void
-    {
-        self::$openChatIdAndNextUpdateCache = null;
-        self::$openChatEmidCache = null;
-        self::$openChatDataCache = null;
-        self::$memberChangeWithinLastWeekCache = null;
-    }
-
-    public static function addOpenChatIdByEmidCache(int $id, string $emid, string $img_url): void
-    {
-        $next_update = 0;
-        self::$openChatIdAndNextUpdateCache[] = compact('id', 'emid', 'next_update', 'img_url');
-        self::$openChatEmidCache[] = $emid;
-    }
-
-    private function cacheOpenChatIdByEmid(): void
-    {
-        $query =
-            "SELECT
-                id,
-                emid,
-                next_update <= :curDate AS next_update,
-                img_url
-            FROM
-                open_chat
-            ORDER BY
-                id ASC";
-
-        self::$openChatIdAndNextUpdateCache = DB::fetchAll($query, ['curDate' => date('Y-m-d', time())]);
-        self::$openChatEmidCache = array_column(self::$openChatIdAndNextUpdateCache, 'emid');
-    }
-
-    public function getOpenChatIdByEmid(string $emid): array|false
-    {
-        if (!isset(self::$openChatIdAndNextUpdateCache)) {
-            $this->cacheOpenChatIdByEmid();
-        }
-
-        $search = array_search($emid, self::$openChatEmidCache);
-
-        if ($search === false) {
-            return false;
-        }
-
-        $result = self::$openChatIdAndNextUpdateCache[$search];
-        if ($result['next_update']) {
-            self::$openChatIdAndNextUpdateCache[$search]['next_update'] = 0;
-        }
-
-        return $result;
-    }
+    /**
+     * @var null|int[] $openChatIdCache
+     */
+    private static ?array $openChatIdCache = null;
 
     private function cacheOpenChatData(): void
     {
@@ -86,9 +39,25 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
                 category,
                 emblem
             FROM
-                open_chat';
+                open_chat
+            ORDER BY
+                id ASC';
 
-        self::$openChatDataCache = DB::fetchAll($query, null, [\PDO::FETCH_UNIQUE | \PDO::FETCH_ASSOC]);
+        /**
+         * @var array{ id: int, emid: string, name: string, description: string, img_url: string, member: string, api_created_at: int|null, category: int|null, emblem: int|null }[] $dataArray
+         */
+        $dataArray = DB::fetchAll($query);
+        if (!$dataArray) {
+            throw new RuntimeException('DBが空です');
+        }
+
+        self::$openChatDataCache = [];
+        foreach ($dataArray as $data) {
+            self::$openChatDataCache[] = new OpenChatRepositoryDto($data['id'], $data);
+        }
+
+        self::$openChatIdCache = array_column($dataArray, 'id');
+        self::$openChatEmidCache = array_column($dataArray, 'emid');
     }
 
     public function getOpenChatDataById(int $id): OpenChatRepositoryDto|false
@@ -97,22 +66,46 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
             $this->cacheOpenChatData();
         }
 
-        $oc = self::$openChatDataCache[$id] ?? false;
-
-        return $oc ? new OpenChatRepositoryDto($oc) : false;
-    }
-
-    public function getMemberChangeWithinLastWeek(int $open_chat_id): bool
-    {
-        if (!isset(self::$memberChangeWithinLastWeekCache)) {
-            $this->cacheMemberChangeWithinLastWeek();
+        $key = array_search($id, self::$openChatIdCache);
+        if ($key === false) {
+            return false;
         }
 
-        return in_array($open_chat_id, self::$memberChangeWithinLastWeekCache);
+        return self::$openChatDataCache[$key];
     }
 
-    private function cacheMemberChangeWithinLastWeek(): void
+    public function getOpenChatDataByEmid(string $emid): OpenChatRepositoryDto|false
     {
-        self::$memberChangeWithinLastWeekCache = $this->statisticsRepository->getMemberChangeWithinLastWeekCacheArray();
+        if (!isset(self::$openChatDataCache)) {
+            $this->cacheOpenChatData();
+        }
+
+        $key = array_search($emid, self::$openChatEmidCache);
+        if ($key === false) {
+            return false;
+        }
+
+        return self::$openChatDataCache[$key];
+    }
+
+   public function getOpenChatIdByEmid(string $emid): int|false
+   {
+        if (!isset(self::$openChatDataCache)) {
+            $this->cacheOpenChatData();
+        }
+
+        $key = array_search($emid, self::$openChatEmidCache);
+        if ($key === false) {
+            return false;
+        }
+
+        return self::$openChatIdCache[$key];
+   }
+
+    public static function clearCache(): void
+    {
+        self::$openChatDataCache = null;
+        self::$openChatEmidCache = null;
+        self::$openChatIdCache = null;
     }
 }

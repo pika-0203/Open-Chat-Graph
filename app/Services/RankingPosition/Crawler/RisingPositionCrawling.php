@@ -15,7 +15,6 @@ use App\Services\RankingPosition\Store\RisingPositionStore;
 
 class RisingPositionCrawling
 {
-    private const FETCH_OPEN_CHAT_API_RANKING_ALL_ARG = [100, 1]; // 全カテゴリ取得
     private OpenChatApiRankingDownloader $openChatApiRisingDataDownloader;
 
     function __construct(
@@ -56,13 +55,7 @@ class RisingPositionCrawling
             $this->risingPositionStore->saveClearCurrentCategoryApiDataCache($category);
         };
 
-        $this->openChatApiRisingDataDownloader->fetchOpenChatApiRankingAll(
-            ...[
-                ...self::FETCH_OPEN_CHAT_API_RANKING_ALL_ARG,
-                $callback,
-                $callbackByCategory
-            ]
-        );
+        $this->openChatApiRisingDataDownloader->fetchOpenChatApiRankingAll($callback, $callbackByCategory);
     }
 
     private function checkKillFlag()

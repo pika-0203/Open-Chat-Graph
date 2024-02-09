@@ -6,7 +6,8 @@ namespace App\Services\OpenChat\Dto;
 
 class OpenChatRepositoryDto
 {
-    public ?string $emid;
+    public int $open_chat_id;
+    public string $emid;
     public string $name;
     public string $desc;
     public string $profileImageObsHash;
@@ -15,8 +16,12 @@ class OpenChatRepositoryDto
     public ?int $category;
     public ?int $emblem;
 
-    function __construct(array $openChatData)
+    /**
+     * @param array{ emid: string, name: string, description: string, img_url: string, member: string, api_created_at: int | null, category: int | null, emblem: int | null }[] $openChatData
+     */
+    function __construct(int $id, array $openChatData)
     {
+        $this->open_chat_id = $id;
         $this->emid = $openChatData['emid'];
         $this->name = $openChatData['name'];
         $this->desc = $openChatData['description'];

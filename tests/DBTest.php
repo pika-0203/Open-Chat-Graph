@@ -6,16 +6,16 @@ use PHPUnit\Framework\TestCase;
 use Shadow\DB;
 use App\Models\GCE\DBGce;
 use App\Models\GCE\GceDbTableSynchronizer;
+use App\Models\SQLite\Repositories\Statistics\SqliteStatisticsRankingUpdaterRepository;
 
 class DBTest extends TestCase
 {
     public function test()
     {
-        $result = DB::fetchAll('SELECT * FROM open_chat LIMIT 10', null, [PDO::FETCH_UNIQUE | PDO::FETCH_ASSOC]);
-
-        debug($result);
+        $a = app(SqliteStatisticsRankingUpdaterRepository::class);
+        
+        debug($a->test());
 
         $this->assertTrue(true);
     }
-    
 }

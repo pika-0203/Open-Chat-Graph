@@ -7,20 +7,20 @@ namespace App\Models\Repositories\Statistics;
 interface StatisticsRankingUpdaterRepositoryInterface
 {
     /**
-     *　日次統計ランキングのテーブルを最新データで書き換える
+     *　日次統計ランキングのテーブルを指定の日付で書き換える
      *
-     * @param int テーブルのレコード数
+     * @param string Y-m-d
      * 
      * @return int 挿入したレコード件数
      */
-    public function updateCreateDailyRankingTable(): int;
+    public function updateCreateDailyRankingTable(string $date): int;
 
     /**
-     *　過去１週間ランキングのテーブルを最新データで書き換える
+     *　過去１週間ランキングのテーブルを指定の日付で書き換える
      *
-     * @param int テーブルのレコード数
+     * @param string Y-m-d
      * 
      * @return int 挿入したレコード件数
      */
-    public function updateCreatePastWeekRankingTable(): int;
+    public function updateCreatePastWeekRankingTable(string $date): int;
 }

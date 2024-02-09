@@ -11,15 +11,25 @@ interface StatisticsRepositoryInterface
     public function addNewOpenChatStatisticsFromDto(OpenChatDto $dto): void;
 
     /**
-     * 統計のレコードを追加・更新する
-     * 
-     * @param ?int $member nullの場合は現在のメンバー数で追加する
+     * @param string $date Y-m-d
      */
-    public function insertDailyStatistics(int $open_chat_id, int $member, int|string $date): void;
+    public function insertDailyStatistics(int $open_chat_id, int $member, string $date): void;
 
     public function daleteDailyStatistics(int $open_chat_id): void;
 
-    public function getMemberChangeWithinLastWeek(int $open_chat_id): bool;
+    /**
+     * @return int[] open_chat_id
+     */
+    public function getMemberChangeWithinLastWeekCacheArray(string $date): array;
 
-    public function getMemberChangeWithinLastWeekCacheArray(): array;
+    /**
+     * @param array{ open_chat_id: int, member: int, date: string } $data
+     */
+    public function insertMember(array $data): int;
+
+    /**
+     * @param string $date Y-m-d
+     * @return array{ open_chat_id: int, member: int }[]
+     */
+    public function getOpenChatIdArrayByDate(string $date): array;
 }

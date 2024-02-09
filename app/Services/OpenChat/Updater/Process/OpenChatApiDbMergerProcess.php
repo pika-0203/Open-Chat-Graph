@@ -6,8 +6,7 @@ namespace App\Services\OpenChat\Updater\Process;
 
 use App\Services\OpenChat\Crawler\OpenChatApiFromEmidDownloader;
 use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepositoryInterface;
-use App\Services\OpenChat\Updater\OpenChatUpdater;
-use App\Models\Repositories\OpenChatRepositoryWithCacheForUpdater;
+use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use Shadow\DB;
@@ -17,45 +16,47 @@ class OpenChatApiDbMergerProcess
     function __construct(
         private OpenChatApiFromEmidDownloader $openChatApiOcDataFromEmidDownloader,
         private OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatDataWithCache,
-        private OpenChatUpdater $openChatUpdater,
-        private OpenChatRepositoryWithCacheForUpdater $openChatRepository,
+        private OpenChatMargeUpdateProcess $openChatMargeUpdateProcess,
+        private OpenChatRepositoryInterface $openChatRepository,
     ) {
     }
 
-    function validateAndMapToOpenChatDtoCallback(OpenChatDto $apiDto, bool $updateFlag = true): ?string
+    function validateAndMapToOpenChatDtoCallback(OpenChatDto $apiDto): ?string
     {
         // Emidが一致するオープンチャットを取得する
-        $openChatByEmid = $this->openChatDataWithCache->getOpenChatIdByEmid($apiDto->emid);
+        $repoDto = $this->openChatDataWithCache->getOpenChatDataByEmid($apiDto->emid);
 
-        if ($updateFlag) {
-            if ($openChatByEmid) {
-                // DBに一致するオープンチャットがある場合
-                $this->openChatUpdater->updateOpenChat($openChatByEmid['id'], $apiDto);
-                return null;
-            }
-        } else {
-            // 再接続
+        // 一致するものがない場合は追加
+        if (!$repoDto) {
+            // 再接続して追加
             DB::$pdo = null;
-
-            if ($openChatByEmid && $openChatByEmid['img_url'] === $apiDto->profileImageObsHash) {
-                // 一致したデータがあり更新対象ではない場合
-                return null;
-            }
-
-            if ($openChatByEmid) {
-                // DBに一致するオープンチャットがある場合
-                $this->openChatUpdater->updateOpenChat($openChatByEmid['id'], $apiDto, false);
-                return null;
-            }
-        }
-
-        // 収集拒否の場合
-        if (OpenChatServicesUtility::containsHashtagNolog($apiDto->desc)) {
+            $this->add($apiDto);
             return null;
         }
 
-        $this->openChatRepository->addOpenChatFromDto($apiDto);
+        // 更新がないかを確認
+        if (
+            $repoDto->name === $apiDto->name
+            && $repoDto->desc === $apiDto->desc
+            && $repoDto->profileImageObsHash === $apiDto->profileImageObsHash
+        ) {
+            return null;
+        }
+
+        // 再接続して更新
+        DB::$pdo = null;
+        $this->openChatMargeUpdateProcess->mergeUpdateOpenChat($repoDto, $apiDto, false);
 
         return null;
+    }
+
+    private function add(OpenChatDto $apiDto): void
+    {
+        // 収集拒否の場合
+        if (OpenChatServicesUtility::containsHashtagNolog($apiDto->desc)) {
+            return;
+        }
+
+        $this->openChatRepository->addOpenChatFromDto($apiDto);
     }
 }

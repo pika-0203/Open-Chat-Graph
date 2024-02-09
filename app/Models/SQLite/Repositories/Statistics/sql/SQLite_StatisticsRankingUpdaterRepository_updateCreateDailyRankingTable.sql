@@ -33,7 +33,7 @@ FROM
         FROM
             statistics
         WHERE
-            date = date('now')
+            date = date(':DATE_STRING')
             AND member >= 10
     ) t1
     JOIN (
@@ -42,7 +42,7 @@ FROM
         FROM
             statistics
         WHERE
-            date = date('now', '-1 day')
+            date = date(':DATE_STRING', '-1 day')
             AND member >= 10
     ) t2 ON t1.open_chat_id = t2.open_chat_id;
 

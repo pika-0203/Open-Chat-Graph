@@ -4,27 +4,21 @@ declare(strict_types=1);
 
 namespace App\Services\Cron;
 
-use App\Config\AppConfig;
 use App\Services\Cron\CronJson\SyncOpenChatState;
-use App\Services\OpenChat\OpenChatCrawlingFromApi;
-use App\Services\UpdateRankingService;
 use App\Services\OpenChat\OpenChatApiDbMerger;
-use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
 use App\Models\Repositories\Log\LogRepositoryInterface;
-use App\Models\Repositories\OpenChatRepository;
+use App\Services\DailyUpdateCronService;
+use App\Services\RankingPosition\RankingPositionHourUpdater;
 use App\Services\SitemapGenerator;
-use Shadow\DB;
 
 class SyncOpenChat
 {
-    private array $messages = [];
-
     function __construct(
         private SyncOpenChatState $state,
         private OpenChatApiDbMerger $merger,
-        private UpdateRankingService $updateRankingService,
         private LogRepositoryInterface $log,
-        private SitemapGenerator $sitemapGenerator
+        private SitemapGenerator $sitemap,
+        private RankingPositionHourUpdater $rankingPositionHour,
     ) {
         $this->state->isActive = true;
         $this->state->update();
@@ -36,69 +30,54 @@ class SyncOpenChat
         $this->state->update();
     }
 
-    function addMessage(string $message): void
+    function handle()
     {
-        $this->messages[] = date('Y-m-d H:i:s') . ' ' . $message;
-    }
+        if (true || isDailyUpdateTime()) {
+            set_time_limit(3600 * 2);
+            $this->hourlyMerge();
+            $this->hourlyRankingPosition();
+            
+            $this->state->isActive = false;
+            $this->state->update();
 
-    function getMessage(): string
-    {
-        return implode("\n", $this->messages);
-    }
-
-    function migrate(bool $updateFlag = true): void
-    {
-        OpenChatApiDbMerger::disableKillFlag();
-
-        $max = $this->merger->countMaxExecuteNum(1);
-        $this->addMessage("start migrate 1/{$max}");
-
-        $category = array_keys(AppConfig::OPEN_CHAT_CATEGORY);
-        $totalResult = 0;
-        $totalInsert = 0;
-
-        for ($i = 1; $i <= $max; $i++) {
-            $result = $this->merger->fetchOpenChatApiRankingAll(1, $i, $updateFlag);
-
-            $categoryName = $category[$i - 1];
-            if (!$result) {
-                throw new \RuntimeException("failed {$categoryName} {$i}: " . $this->log->getRecentLog());
-            }
-
-            $insertCount = OpenChatRepository::getInsertCount();
-            OpenChatRepository::resetInsertCount();
-            $totalInsert += $insertCount;
-
-            $this->addMessage("{$categoryName} {$i} result: {$result}, insert: {$insertCount}");
-            $totalResult += $result;
+            $this->dailyUpdate();
+        } else {
+            set_time_limit(1800);
+            $this->hourlyMerge();
+            $this->hourlyRankingPosition();
         }
 
-        $this->addMessage("done migrate total: {$totalResult}, insert: {$totalInsert}");
-        OpenChatDataForUpdaterWithCacheRepository::clearCache();
-        DB::$pdo = null;
+        $this->finalize();
     }
 
-    function update(OpenChatCrawlingFromApi $openChatCrawling): void
+    private function hourlyMerge()
     {
-        $className = getClassSimpleName($openChatCrawling);
-        $count = $openChatCrawling->caluclatemaxExecuteNum(null);
+        OpenChatApiDbMerger::disableKillFlag();
+        addCronLog("start merge");
 
-        $this->addMessage("Start {$className}: " . $count[0]);
-        
-        $openChatCrawling->openChatCrawling(null);
-        $this->addMessage("done {$className}\n");
-
-        OpenChatDataForUpdaterWithCacheRepository::clearCache();
+        $result = $this->merger->fetchOpenChatApiRankingAll();
+        addCronLog(
+            array_map(
+                fn ($r) => $r['category'] . ' count:' . $r['count'] . ' time:' . $r['dateTime']->format('H:i:s'),
+                $result
+            )
+        );
     }
 
-    function finalizeUpdate(): void
+    private function hourlyRankingPosition()
     {
-        $this->sitemapGenerator->generate();
+        $this->rankingPositionHour->crawlRisingAndUpdateRankingPositionHourDb();
     }
 
-    function finalizeRanking(): void
+    private function dailyUpdate()
     {
-        [$resultRowCount, $resultPastWeekRowCount] = $this->updateRankingService->update();
-        $this->addMessage("updateRankingService: [day: {$resultRowCount}, week: {$resultPastWeekRowCount}]");
+        /** @var DailyUpdateCronService $updater */
+        $updater = app(DailyUpdateCronService::class);
+        $updater->update();
+    }
+
+    function finalize(): void
+    {
+        $this->sitemap->generate();
     }
 }
