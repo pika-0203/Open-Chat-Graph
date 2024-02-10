@@ -28,7 +28,7 @@ class AdminPageController
         }
     }
 
-    private function position()
+    function position()
     {
         /**
          * @var RankingPositionHourUpdater $rankingPosition
@@ -44,9 +44,9 @@ class AdminPageController
         unset($rankingPosition);
     }
 
-    private function positiondb(RankingPositionDailyPersistence $persistence)
+    function positiondb(RankingPositionHourPersistence $rankingPositionHourPersistence)
     {
-        $persistence->persistHourToDaily();
+        $rankingPositionHourPersistence->persistStorageFileToDb();
         echo 'done';
     }
 
