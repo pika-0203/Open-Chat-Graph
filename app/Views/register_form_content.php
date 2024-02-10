@@ -8,15 +8,15 @@
         <hr>
         <hr>
         <small class="top-small-desc" style="font-size: 1rem;"><b>オープンチャットを手動で登録する</b></small>
-        <small class="top-small-desc" style="font-size: 14px;">
+        <small class="top-small-desc" style="font-size: 14px; color: #616161">
             <ul>
-                <li><a href="https://openchat.line.me/jp" rel="external" target="_blank">LINEオープンチャット公式サイト</a>を開く</li>
+                <li><a href="https://openchat.line.me/jp" rel="external" target="_blank" style="font-size: 14px; color: #616161">LINEオープンチャット公式サイト</a>を開く</li>
                 <li>登録したいオープンチャットを探す</li>
                 <li>ページのURLをアドレスバーからコピーする</li>
                 <li>下記フォームに貼り付けて登録する</li>
             </ul>
         </small>
-        <small class="top-small-desc">公式サイトに掲載されていないオープンチャットは登録できません。</small>
+        <small class="top-small-desc" style="font-size: 14px; color: #616161">公式サイトに掲載されていないオープンチャットは登録できません。</small>
         </p>
         <hr>
         <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">

@@ -227,7 +227,7 @@ main hr {
 
 .openchat-list-date {
   display: flex;
-  color: #aaa;
+  color: #b7b7b7;
   font-size: 13px;
   flex-wrap: wrap;
 }
