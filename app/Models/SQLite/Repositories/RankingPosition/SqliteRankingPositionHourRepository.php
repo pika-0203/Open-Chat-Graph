@@ -99,36 +99,29 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
                 t1.open_chat_id,
                 t1.category,
                 t1.position,
-                t1.time
+                MAX(t1.time) AS time
             FROM
-                {$tableName} AS t1
-            WHERE
-                t1.time = (
+                (
                     SELECT
-                        MAX(subq.time)
+                        *
                     FROM
-                        (
-                            SELECT
-                                *
-                            FROM
-                                {$tableName} AS t2
-                            WHERE
-                                t2.position = (
-                                    SELECT
-                                        MAX(t3.position)
-                                    FROM
-                                        {$tableName} AS t3
-                                    WHERE
-                                        t3.open_chat_id = t2.open_chat_id
-                                        AND DATE(t3.time) = '{$dateString}'
-                                        AND {$isAll} t3.category = 0
-                                )
-                                AND DATE(t2.time) = '{$dateString}'
-                                AND {$isAll} t2.category = 0
-                        ) AS subq
+                        {$tableName} AS t2
                     WHERE
-                        subq.open_chat_id = t1.open_chat_id
-                )";
+                        t2.position = (
+                            SELECT
+                                MAX(t3.position)
+                            FROM
+                                {$tableName} AS t3
+                            WHERE
+                                t3.open_chat_id = t2.open_chat_id
+                                AND DATE(t3.time) = '{$dateString}'
+                                AND {$isAll} t3.category = 0
+                        )
+                        AND DATE(t2.time) = '{$dateString}'
+                        AND {$isAll} t2.category = 0
+                ) AS t1
+            GROUP BY
+                open_chat_id";
 
         return SQLiteRankingPositionHour::fetchAll($query);
     }
