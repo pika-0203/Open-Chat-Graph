@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Config\AppConfig;
 use App\Config\ConfigJson;
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 /**
  * Inserts HTML line breaks before all newlines in a string.
@@ -107,18 +108,10 @@ function convertDatetime(string|int $datetime, bool $time = false): string
     return $dateTime->format($format);
 }
 
-function getCronModifiedDateTime(string $datetime): string
+function getCronModifiedDateTime(string $datetime, string $format = 'Y/n/j G:i'): string
 {
-    $fileTime = new \DateTime($datetime);
-    $fileTime->setTimeZone(new \DateTimeZone('Asia/Tokyo'));
-
-    if ((int)$fileTime->format('i') < AppConfig::CRON_START_MINUTE) {
-        $fileTime->modify('-1 hour');
-    }
-
-    $fileTime->setTime((int)$fileTime->format('H'), AppConfig::CRON_START_MINUTE);
-
-    return $fileTime->format('Y/n/j G:i');
+    $fileTime = OpenChatServicesUtility::getModifiedCronTime($datetime);
+    return $fileTime->format($format);
 }
 
 function getHostAndUri(): string

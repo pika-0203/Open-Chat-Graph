@@ -21,25 +21,29 @@ class OpenChatServicesUtility
      */
     static function getCronModifiedStatsMemberDate(): string
     {
-        if (self::$date) {
-            return self::$date->format('Y-m-d');
-        }
-        
-        self::$date = new \DateTime();
-        self::$date->setTimeZone(new \DateTimeZone('Asia/Tokyo'));
-
-        if ((int)self::$date->format('H') < AppConfig::CRON_MERGER_HOUR_RANGE_START) {
-            self::$date->modify('-1 day');
-        } else if ((int)self::$date->format('i') < AppConfig::CRON_START_MINUTE) {
-            self::$date->modify('-1 day');
+        if (!self::$date) {
+            self::$date = self::getCronModifiedDate(new \DateTime());
         }
 
         return self::$date->format('Y-m-d');
     }
 
-    static function getModifiedCronTime(int $time): \DateTime
+    static function getCronModifiedDate(\DateTime $date): \DateTime
     {
-        $fileTime = new \DateTime('@' . $time);
+        $date->setTimeZone(new \DateTimeZone('Asia/Tokyo'));
+
+        if ((int)$date->format('H') < AppConfig::CRON_MERGER_HOUR_RANGE_START) {
+            $date->modify('-1 day');
+        } else if ((int)$date->format('i') < AppConfig::CRON_START_MINUTE) {
+            $date->modify('-1 day');
+        }
+
+        return $date;
+    }
+
+    static function getModifiedCronTime(string|int $time): \DateTime
+    {
+        $fileTime = new \DateTime(is_int($time) ? '@' . $time : $time);
         $fileTime->setTimeZone(new \DateTimeZone('Asia/Tokyo'));
 
         if ((int)$fileTime->format('i') < AppConfig::CRON_START_MINUTE) {
