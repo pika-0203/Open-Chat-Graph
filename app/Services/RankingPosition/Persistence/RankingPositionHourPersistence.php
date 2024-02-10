@@ -15,7 +15,7 @@ use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 class RankingPositionHourPersistence
 {
-    private \DateTime $datetime;
+    private string $cronStartTime;
 
     function __construct(
         private RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
@@ -23,7 +23,7 @@ class RankingPositionHourPersistence
         private RisingPositionStore $risingPositionStore,
         private RankingPositionStore $rankingPositionStore
     ) {
-        $this->datetime = OpenChatServicesUtility::getModifiedCronTime(time());
+        $this->cronStartTime = OpenChatServicesUtility::getModifiedCronTime('now')->format('Y-m-d H:i:s');
     }
 
     function persistStorageFileToDb(): void
@@ -34,17 +34,20 @@ class RankingPositionHourPersistence
             $risingInsertDtoArray = $this->createInsertDtoArray($risingData);
             $this->rankingPositionHourRepository->insertRisingHourFromDtoArray($risingFileTime, $risingInsertDtoArray);
             $this->rankingPositionHourRepository->insertHourMemberFromDtoArray($risingFileTime, $risingInsertDtoArray);
-            
+
             [$rankingFileTime, $rankingData] = $this->rankingPositionStore->getStorageData((string)$category);
             $rankingInsertDtoArray = $this->createInsertDtoArray($rankingData);
             $this->rankingPositionHourRepository->insertRankingHourFromDtoArray($rankingFileTime, $rankingInsertDtoArray);
             $this->rankingPositionHourRepository->insertHourMemberFromDtoArray($rankingFileTime, $rankingInsertDtoArray);
-            
+
             $fileTime = $rankingFileTime;
         }
 
         $this->rankingPositionHourRepository->insertTotalCount($fileTime);
-        $this->rankingPositionHourRepository->dalete($this->datetime);
+
+        $deleteTime = new \DateTime($this->cronStartTime);
+        $deleteTime->modify('- 1day');
+        $this->rankingPositionHourRepository->dalete($deleteTime);
     }
 
     /**

@@ -218,6 +218,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         SQLiteRankingPositionHour::execute("DELETE FROM ranking WHERE time < '{$timeStr}'");
         SQLiteRankingPositionHour::execute("DELETE FROM rising WHERE time < '{$timeStr}'");
         SQLiteRankingPositionHour::execute("DELETE FROM total_count WHERE time < '{$timeStr}'");
+        SQLiteRankingPositionHour::execute("DELETE FROM member WHERE time < '{$timeStr}'");
         SQLiteRankingPositionHour::$pdo->exec('VACUUM;');
     }
 

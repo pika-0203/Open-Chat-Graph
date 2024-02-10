@@ -2,19 +2,31 @@
 
 declare(strict_types=1);
 
+use App\Models\Repositories\RankingPosition\Dto\RankingPositionHourMemberDto;
+use App\Models\SQLite\SQLiteRankingPositionHour;
 use PHPUnit\Framework\TestCase;
-use Shadow\DB;
-use App\Models\GCE\DBGce;
-use App\Models\GCE\GceDbTableSynchronizer;
-use App\Models\SQLite\Repositories\Statistics\SqliteStatisticsRankingUpdaterRepository;
 
 class DBTest extends TestCase
 {
     public function test()
     {
-        $a = app(SqliteStatisticsRankingUpdaterRepository::class);
+        /**
+         * @var RankingPositionHourMemberDto[] $anHourAgo
+         */
+        $anHourAgo = SQLiteRankingPositionHour::fetchAll(
+            "SELECT open_chat_id, member FROM member WHERE time = '2024-02-10 17:30:00'",
+            args: [\PDO::FETCH_CLASS, RankingPositionHourMemberDto::class]
+        );
+
+        /**
+         * @var RankingPositionHourMemberDto[] $now
+         */
+        $now = SQLiteRankingPositionHour::fetchAll(
+            "SELECT open_chat_id, member FROM member WHERE time = '2024-02-10 18:30:00'",
+            args: [\PDO::FETCH_CLASS, RankingPositionHourMemberDto::class]
+        );
+
         
-        debug($a->test());
 
         $this->assertTrue(true);
     }
