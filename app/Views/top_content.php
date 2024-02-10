@@ -50,10 +50,9 @@
             <header class="openchat-list-title-area unset">
                 <a class="openchat-list-date unset ranking-url" href="<?php echo url('ranking') ?>">
                     <h2 class="unset">
-                        <span class="openchat-list-title">増加ランキング</span>
+                        <span class="openchat-list-title">メンバー増加ランキング</span>
                     </h2>
                     <div class="refresh-time">
-                        <span class="count"><?php echo number_format($recordCount) ?> 件</span>
                         <div class="refresh-icon"></div>
                         <time datetime="<?php echo dateTimeAttr($updatedAt) ?>"><?php echo convertDatetime($updatedAt, true) ?></time>
                     </div>
@@ -83,13 +82,13 @@
                 <span class="ranking-readMore">詳しく見る</span>
             </a>
         </article>
-        <p style="padding-top: 3rem;">
-            <small class="top-small-desc" style="margin-bottom:1rem; display: block;">オプチャグラフは<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">LINEオープンチャット公式サイトのランキング</a>に掲載中のオープンチャットを自動的に登録して集計します</small>
+        <p style="padding-top:2rem;">
+            <small class="top-small-desc" style="display: block;">オプチャグラフは<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">公式ランキング</a>に掲載中のオープンチャットを自動的に登録して集計します。</small>
         </p>
-        <p style="padding-top:12px">
+        <p style="padding-top:8px">
             <a class="recent-oc-btn" href="<?php echo url('recent') ?>">最近登録されたオープンチャット</a>
         </p>
-        <p style="padding-top:12px">
+        <p style="padding-top:8px">
             <a class="recent-oc-btn" href="<?php echo url('register') ?>">オープンチャットを手動で登録する</a>
         </p>
     </main>
