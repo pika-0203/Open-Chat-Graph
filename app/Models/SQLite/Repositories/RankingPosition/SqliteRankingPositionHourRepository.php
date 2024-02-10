@@ -99,7 +99,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
                 open_chat_id,
                 category,
                 MIN(position) as position,
-                time
+                MAX(time) as time
             FROM
                 {$tableName}
             WHERE
