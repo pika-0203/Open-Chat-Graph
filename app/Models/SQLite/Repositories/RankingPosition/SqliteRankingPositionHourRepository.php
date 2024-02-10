@@ -109,7 +109,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
                     WHERE
                         t2.position = (
                             SELECT
-                                MAX(t3.position)
+                                MIN(t3.position)
                             FROM
                                 {$tableName} AS t3
                             WHERE

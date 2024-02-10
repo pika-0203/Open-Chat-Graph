@@ -3,19 +3,19 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Services\Admin\AdminTool;
-use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
+use App\Services\RankingPosition\RankingPositionDailyUpdater;
 
 set_time_limit(3600 * 2);
 
 AdminTool::sendLineNofity('test: start');
 
 /**
- * @var RankingPositionHourPersistence $syncOpenChat
+ * @var RankingPositionDailyUpdater $inst
  */
-$inst = app(RankingPositionHourPersistence::class);
+$inst = app(RankingPositionDailyUpdater::class);
 
 try {
-    $inst->persistStorageFileToDb();
+    $inst->updateYesterdayDailyDb();
 } catch (\Throwable $e) {
     AdminTool::sendLineNofity($e->__toString());
     exit;
