@@ -35,6 +35,41 @@ FROM
         WHERE
             date = date(':DATE_STRING')
             AND member >= 10
+            AND (
+                open_chat_id IN (
+                    SELECT
+                        open_chat_id
+                    FROM
+                        statistics
+                    WHERE
+                        `date` BETWEEN DATE(':DATE_STRING', '-8 days')
+                        AND ':DATE_STRING'
+                    GROUP BY
+                        open_chat_id
+                    HAVING
+                        0 < (
+                            CASE
+                                WHEN COUNT(DISTINCT member) > 1 THEN 1
+                                ELSE 0
+                            END
+                        )
+                )
+                OR open_chat_id IN (
+                    SELECT
+                        open_chat_id
+                    FROM
+                        statistics
+                    GROUP BY
+                        open_chat_id
+                    HAVING
+                        0 < (
+                            CASE
+                                WHEN COUNT(member) < 8 THEN 1
+                                ELSE 0
+                            END
+                        )
+                )
+            )
     ) t1
     JOIN (
         SELECT

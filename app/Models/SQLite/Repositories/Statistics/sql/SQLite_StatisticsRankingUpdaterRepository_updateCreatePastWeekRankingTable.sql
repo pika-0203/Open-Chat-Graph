@@ -29,20 +29,29 @@ SELECT
 FROM
     (
         SELECT
-            st.*
+            *
         FROM
-            statistics AS st
+            statistics
         WHERE
             date = date(':DATE_STRING')
             AND member >= 10
-            AND EXISTS (
+            AND open_chat_id IN (
                 SELECT
-                    *
+                    open_chat_id
                 FROM
-                    statistics AS sub
+                    statistics
                 WHERE
-                    sub.open_chat_id = st.open_chat_id
-                    AND date = date(':DATE_STRING', '-1 day')
+                    `date` BETWEEN DATE(':DATE_STRING', '-8 days')
+                    AND ':DATE_STRING'
+                GROUP BY
+                    open_chat_id
+                HAVING
+                    0 < (
+                        CASE
+                            WHEN COUNT(DISTINCT member) > 1 THEN 1
+                            ELSE 0
+                        END
+                    )
             )
     ) t1
     JOIN (
@@ -61,7 +70,7 @@ DELETE FROM
 INSERT INTO
     statistics_ranking_week
 SELECT
-    rowid,  
+    rowid,
     open_chat_id,
     diff_member,
     percent_increase
@@ -92,7 +101,6 @@ FROM
                 )
                 ELSE index1
             END DESC
-
-);
+    );
 
 DROP TABLE statistics_ranking_week_temp;

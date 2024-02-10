@@ -15,13 +15,13 @@
     <?php foreach ($_css as $css) : ?>
         <link rel="stylesheet" href="<?php echo fileUrl($css) ?>">
     <?php endforeach ?>
-    <script type="application/json" id="arg-dto">
-        <?php echo json_encode($_argDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
-    </script>
     <script defer="defer" src="<?php echo fileUrl($_js) ?>"></script>
 </head>
 
 <body style="margin: 0">
+    <script type="application/json" id="arg-dto">
+        <?php echo json_encode($_argDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 </body>
