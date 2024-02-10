@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
+use App\Views\Dto\RankingArgDto;
 
 class ReactRankingPageController
 {
@@ -23,11 +24,11 @@ class ReactRankingPageController
             ->setTitle('【毎日更新】参加人数のランキング')
             ->generateTags();
 
-        $_jsonData = file_get_contents(AppConfig::OPEN_CHAT_SUB_CATEGORIES_FILE_PATH);
+        $_argDto = new RankingArgDto;
+        $_argDto->baseUrl = url();
+        $_argDto->rankingUpdatedAt = convertDatetime(unserialize(file_get_contents(AppConfig::TOP_RANKING_INFO_FILE_PATH))['rankingUpdatedAt'], true);
+        $_argDto->subCategories = json_decode(file_get_contents(AppConfig::OPEN_CHAT_SUB_CATEGORIES_FILE_PATH), true);
 
-        $rankingInfo = unserialize(file_get_contents(AppConfig::TOP_RANKING_INFO_FILE_PATH));
-        $rankingUpdatedAt = $rankingInfo['rankingUpdatedAt'];
-
-        return view('ranking_react_content', compact('_css', '_js', '_meta', '_jsonData', 'rankingUpdatedAt'));
+        return view('ranking_react_content', compact('_css', '_js', '_meta', '_argDto'));
     }
 }
