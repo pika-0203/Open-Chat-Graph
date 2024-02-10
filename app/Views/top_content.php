@@ -79,7 +79,7 @@
                 <?php viewComponent('open_chat_list', ['openChatList' => $pastWeekOpenChatList, 'isDaily' => false, 'localUrl' => true]) ?>
             </div>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-                <span class="ranking-readMore">詳しく見る</span>
+                <span class="ranking-readMore">カテゴリーから探す</span>
             </a>
         </article>
         <p style="padding-top:2rem;">
