@@ -96,9 +96,9 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
 
         $query =
             "SELECT
-                t1.open_chat_id,
-                t1.category,
-                t1.position,
+                t1.open_chat_id AS open_chat_id,
+                t1.category AS category,
+                t1.position AS position,
                 MAX(t1.time) AS time
             FROM
                 (
@@ -133,10 +133,10 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
 
         $query =
             "SELECT
-                t1.open_chat_id,
-                t1.category,
-                t1.position,
-                t1.time
+                t1.open_chat_id AS open_chat_id,
+                t1.category AS category,
+                t1.position AS position,
+                t1.time AS time
             FROM
                 {$tableName} AS t1
             WHERE
