@@ -53,7 +53,7 @@ class OpenChatFromCrawlerRegistration
 
         $existingOpenChatId = $this->updateOpenChatRepository->getOpenChatIdByEmid($emid);
         if ($existingOpenChatId !== false) {
-            return $this->returnMessage('オープンチャットが既に登録されています', $existingOpenChatId['id']);
+            return $this->returnMessage('オープンチャットが既に登録されています', $existingOpenChatId);
         }
 
         $ocDto = $this->fetchOpenChat($emid);
