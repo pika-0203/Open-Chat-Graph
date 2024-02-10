@@ -4,8 +4,6 @@
     $_css = array
     $_js = string
     $_meta = Metadata
-    $_jsonData = string
-    $rankingUpdatedAt = string
 -->
 
 <head prefix="og: http://ogp.me/ns#">
@@ -17,10 +15,8 @@
     <?php foreach ($_css as $css) : ?>
         <link rel="stylesheet" href="<?php echo fileUrl($css) ?>">
     <?php endforeach ?>
-
-    <script>
-        window.subCategories = <?php echo $_jsonData; ?>;
-        window.rankingUpdatedAt = "<?php echo convertDatetime($rankingUpdatedAt, true); ?>";
+    <script type="application/json" id="arg-dto">
+        <?php echo json_encode($_argDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
     </script>
     <script defer="defer" src="<?php echo fileUrl($_js) ?>"></script>
 </head>

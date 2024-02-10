@@ -85,7 +85,7 @@ function dateTimeAttr(int $timestamp): string
     return date('Y-m-d\TH:i:sO', $timestamp);
 }
 
-function convertDatetime(string|int $datetime, bool $time = false)
+function convertDatetime(string|int $datetime, bool $time = false): string
 {
     $format = 'Y/n/j';
 
