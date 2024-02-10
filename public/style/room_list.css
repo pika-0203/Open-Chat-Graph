@@ -111,21 +111,9 @@ main header {
 }
 
 .recent-oc-btn {
-  color: #111;
-  text-decoration: none;
+  color: #b7b7b7;
+  text-decoration: underline 1px;
   font-size: 13px;
-}
-
-.recent-oc-btn::after {
-  display: inline-block;
-  content: '';
-  margin-left: 2px;
-  width: 6px;
-  height: 6px;
-  border-top: 1px solid #111;
-  border-right: 1px solid #111;
-  transform: rotate(45deg) translateY(-8%);
-  margin-bottom: 1px;
 }
 
 /* Submit button */
@@ -244,9 +232,10 @@ main hr {
   flex-wrap: wrap;
 }
 
-@media screen and (max-width: 359px) {
+@media screen and (max-width: 374px) {
   .openchat-list-date {
     font-size: 11px;
+    gap: 3px;
   }
 }
 
@@ -747,8 +736,9 @@ main hr {
   margin-left: 2px;
 }
 
-.top-small-desc {
-  color: #616161;
+.top-small-desc,
+.top-small-desc a {
+  color: #b7b7b7;
   font-size: 13px;
 }
 
