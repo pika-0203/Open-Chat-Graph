@@ -12,7 +12,7 @@
       <footer class="openchat-item-lower-outer">
         <div class="openchat-item-lower unset <?php echo ($oc['diff_member'] ?? 1) > 0 ? 'positive' : 'negative' ?> <?php echo ($isDaily ?? true) ? '' : 'weekly' ?>">
           <?php if (isset($oc['datetime'])) : ?>
-            <span class="registration-date blue"><?php echo $isAdmin ?? false ? convertDatetime($oc['datetime'], true) :getCronModifiedDateTime($oc['datetime']) ?></span>
+            <span class="registration-date blue"><?php echo $isAdmin ?? false ? convertDatetime($oc['datetime'], true) : getCronModifiedDateTime($oc['datetime']) ?></span>
           <?php endif ?>
           <span>メンバー <?php echo number_format($oc['member']) ?></span>
           <?php if (($oc['diff_member'] ?? 0) !== 0) : ?>

@@ -111,12 +111,34 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         return SQLiteRankingPositionHour::fetchAll($query);
     }
 
-    public function getMinRankingHour(\DateTime $date, bool $all = false): array
+    private function getLastPositionHour(string $tableName, \DateTime $date, bool $all): array
     {
-        return $this->getMinPositionHour('ranking', $date, $all);
+        $dateString = $date->format('Y-m-d');
+        $isAll = $all ? '' : 'NOT';
+
+        $query =
+            "SELECT
+                open_chat_id,
+                category,
+                position,
+                MAX(time) as time
+            FROM
+                {$tableName}
+            WHERE
+                DATE(time) = '{$dateString}'
+                AND {$isAll} category = 0
+            GROUP BY
+                open_chat_id";
+
+        return SQLiteRankingPositionHour::fetchAll($query);
     }
 
-    public function getMinRisingHour(\DateTime $date, bool $all = false): array
+    public function getDaliyRanking(\DateTime $date, bool $all = false): array
+    {
+        return $this->getLastPositionHour('ranking', $date, $all);
+    }
+
+    public function getDailyRising(\DateTime $date, bool $all = false): array
     {
         return $this->getMinPositionHour('rising', $date, $all);
     }
