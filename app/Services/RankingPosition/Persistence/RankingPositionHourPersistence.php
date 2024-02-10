@@ -11,15 +11,19 @@ use App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterfa
 use App\Services\RankingPosition\Store\RankingPositionStore;
 use App\Services\RankingPosition\Store\RisingPositionStore;
 use App\Services\OpenChat\Dto\OpenChatDto;
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 class RankingPositionHourPersistence
 {
+    private \DateTime $datetime;
+
     function __construct(
         private RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
         private OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatDataWithCache,
         private RisingPositionStore $risingPositionStore,
         private RankingPositionStore $rankingPositionStore
     ) {
+        $this->datetime = OpenChatServicesUtility::getModifiedCronTime(time());
     }
 
     function persistStorageFileToDb(): void
@@ -40,6 +44,7 @@ class RankingPositionHourPersistence
         }
 
         $this->rankingPositionHourRepository->insertTotalCount($fileTime);
+        $this->rankingPositionHourRepository->dalete($this->datetime);
     }
 
     /**
