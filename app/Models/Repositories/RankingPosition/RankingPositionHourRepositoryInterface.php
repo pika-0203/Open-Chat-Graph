@@ -20,12 +20,12 @@ interface RankingPositionHourRepositoryInterface
     /**
      * @return array{ open_chat_id: int, category: int, position: int, time: stirng }[]
      */
-    public function getMinRankingHour(\DateTime $date, bool $all = false): array;
+    public function getDaliyRanking(\DateTime $date, bool $all = false): array;
 
     /**
      * @return array{ open_chat_id: int, category: int, position: int, time: stirng }[]
      */
-    public function getMinRisingHour(\DateTime $date, bool $all = false): array;
+    public function getDailyRising(\DateTime $date, bool $all = false): array;
 
     /**
      * @return array{ category: int, total_count_rising: int, total_count_ranking: int, time: string }

@@ -118,7 +118,7 @@ function getCronModifiedDateTime(string $datetime): string
 
     $fileTime->setTime((int)$fileTime->format('H'), AppConfig::CRON_START_MINUTE);
 
-    return $fileTime->format('Y/n/j g:i');
+    return $fileTime->format('Y/n/j G:i');
 }
 
 function getHostAndUri(): string

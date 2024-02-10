@@ -26,13 +26,13 @@ class RankingPositionDailyPersistence
 
         $this->insert(
             $date,
-            $this->rankingPositionHourRepository->getMinRankingHour(...),
+            $this->rankingPositionHourRepository->getDaliyRanking(...),
             $this->rankingPositionRepository->insertDailyRankingPosition(...)
         );
 
         $this->insert(
             $date,
-            $this->rankingPositionHourRepository->getMinRisingHour(...),
+            $this->rankingPositionHourRepository->getDailyRising(...),
             $this->rankingPositionRepository->insertDailyRisingPosition(...)
         );
 

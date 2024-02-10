@@ -34,7 +34,7 @@ class SqliteRankingPositionHourRepositoryTest extends TestCase
          */
         $repo = app(SqliteRankingPositionHourRepository::class);
 
-        $result = $repo->getMinRisingHour(new \DateTime());
+        $result = $repo->getDailyRising(new \DateTime());
 
         debug(array_slice($result, 0, 10));
 
