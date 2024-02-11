@@ -89,7 +89,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         return SQLiteRankingPositionHour::fetchAll($query);
     }
 
-    private function getMinPositionHour(string $tableName, \DateTime $date, bool $all): array
+    private function getMinPosition(string $tableName, \DateTime $date, bool $all): array
     {
         $dateString = $date->format('Y-m-d');
         $isAll = $all ? '' : 'NOT';
@@ -126,42 +126,87 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         return SQLiteRankingPositionHour::fetchAll($query);
     }
 
-    private function getLastPositionHour(string $tableName, \DateTime $date, bool $all): array
+    private function getIdArray(string $tableName, string $dateString, bool $all): array
     {
-        $dateString = $date->format('Y-m-d');
         $isAll = $all ? '' : 'NOT';
 
         $query =
-            "SELECT
-                t1.open_chat_id AS open_chat_id,
-                t1.category AS category,
-                t1.position AS position,
-                t1.time AS time
-            FROM
-                {$tableName} AS t1
+            "SELECT 
+                open_chat_id
+            FROM 
+                {$tableName}
             WHERE
-                t1.time = (
-                    SELECT
-                        MAX(t2.time)
-                    FROM
-                        {$tableName} AS t2
-                    WHERE
-                        t2.open_chat_id = t1.open_chat_id
-                        AND DATE(t2.time) = '{$dateString}'
-                        AND {$isAll} t2.category = 0
-                )";
+                DATE(time) = '{$dateString}'
+                AND {$isAll} category = 0
+            GROUP BY
+                open_chat_id";
 
-        return SQLiteRankingPositionHour::fetchAll($query);
+        return SQLiteRankingPositionHour::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
+    }
+
+    private function getMedianPositionQuery(string $tableName, int $open_chat_id, string $dateString, bool $all): array|false
+    {
+        $isAll = $all ? '' : 'NOT';
+
+        $query =
+            "SELECT 
+                open_chat_id,
+                category,
+                position,
+                time
+            FROM 
+                {$tableName}
+            WHERE
+                DATE(time) = '{$dateString}'
+                AND {$isAll} category = 0
+                AND open_chat_id = '{$open_chat_id}'
+            ORDER BY
+                position ASC";
+
+        $records = SQLiteRankingPositionHour::fetchAll($query);
+
+        $count = count($records);
+        if (!$count) return false;
+        if ($count === 1) return $records[0];
+
+        $centerCount = $count / 2;
+
+        if (is_float($centerCount)) {
+            // 奇数の場合
+            $median = $records[(int)ceil($centerCount) - 1];
+            $median['position'] = (int)floor(
+                ($median['position'] + $records[(int)ceil($centerCount) - 1]['position']) / 2
+            );
+        } else {
+            $median = $records[$centerCount - 1];
+        }
+
+        return $median;
+    }
+
+    private function getMedianPosition(string $tableName, \DateTime $date, bool $all): array
+    {
+        $dateString = $date->format('Y-m-d');
+        $idArray = $this->getIdArray($tableName, $dateString, $all);
+
+        $result = [];
+        foreach ($idArray as $id) {
+            $record = $this->getMedianPositionQuery($tableName, $id, $dateString, $all);
+            if (!$record) continue;
+            $result[] = $record;
+        }
+
+        return $result;
     }
 
     public function getDaliyRanking(\DateTime $date, bool $all = false): array
     {
-        return $this->getLastPositionHour('ranking', $date, $all);
+        return $this->getMedianPosition('ranking', $date, $all);
     }
 
     public function getDailyRising(\DateTime $date, bool $all = false): array
     {
-        return $this->getMinPositionHour('rising', $date, $all);
+        return $this->getMinPosition('rising', $date, $all);
     }
 
     public function getTotalCount(\DateTime $date, bool $isDate = true): array
@@ -242,8 +287,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
             ORDER BY
                 time DESC
             LIMIT
-                1",
-            compact('category')
+                1"
         );
     }
 }
