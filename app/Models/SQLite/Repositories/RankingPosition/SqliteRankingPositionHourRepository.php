@@ -149,12 +149,12 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         $isAll = $all ? '' : 'NOT';
 
         $query =
-            "SELECT 
+            "SELECT
                 open_chat_id,
                 category,
                 position,
                 time
-            FROM 
+            FROM
                 {$tableName}
             WHERE
                 DATE(time) = '{$dateString}'
@@ -163,6 +163,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
             ORDER BY
                 position ASC";
 
+        /** @var array{ open_chat_id:int, category:int, position:int, time: string }[] $records */
         $records = SQLiteRankingPositionHour::fetchAll($query);
 
         $count = count($records);
@@ -174,8 +175,8 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         if (is_float($centerCount)) {
             // 奇数の場合
             $median = $records[(int)ceil($centerCount) - 1];
-            $median['position'] = (int)floor(
-                ($median['position'] + $records[(int)ceil($centerCount) - 1]['position']) / 2
+            $median['position'] = (int)ceil(
+                ($median['position'] + $records[(int)floor($centerCount) - 1]['position']) / 2
             );
         } else {
             $median = $records[$centerCount - 1];

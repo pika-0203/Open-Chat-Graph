@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Models\SQLite\Repositories\Statistics;
 
 use App\Models\ExecuteSqlFile;
+use App\Models\Importer\SqlInsert;
 use App\Models\Repositories\Statistics\StatisticsRankingUpdaterRepositoryInterface;
-use App\Models\SQLite\Repositories\Statistics\SqliteRankingExport;
 use App\Models\SQLite\SQLiteStatistics;
 use Shadow\DB;
+use Shadow\DBInterface;
 
 class SqliteStatisticsRankingUpdaterRepository implements StatisticsRankingUpdaterRepositoryInterface
 {
@@ -18,13 +19,8 @@ class SqliteStatisticsRankingUpdaterRepository implements StatisticsRankingUpdat
 
     public function __construct(
         private ExecuteSqlFile $execSql,
-        private SqliteRankingExport $sqliteRankingExport
+        private SqlInsert $inserter
     ) {
-    }
-
-    function test()
-    {
-        return str_replace(self::DATE_PLACE_HOLDER, '2024-02-09', file_get_contents(self::DAILY_RANKING_SQL));
     }
 
     public function updateCreateDailyRankingTable(string $date): int
@@ -34,7 +30,7 @@ class SqliteStatisticsRankingUpdaterRepository implements StatisticsRankingUpdat
             new SQLiteStatistics
         );
 
-        $this->sqliteRankingExport->exportRankingDay(new DB);
+        $this->exportProcess('statistics_ranking_day', new DB);
         return $result;
     }
 
@@ -45,7 +41,18 @@ class SqliteStatisticsRankingUpdaterRepository implements StatisticsRankingUpdat
             new SQLiteStatistics
         );
 
-        $this->sqliteRankingExport->exportRankingWeek(new DB);
+        $this->exportProcess('statistics_ranking_week', new DB);
         return $result;
+    }
+
+    private function exportProcess(string $tableName, DBInterface $db): void
+    {
+        $data = SQLiteStatistics::fetchAll("SELECT * FROM {$tableName}");
+        if (!$data) {
+            throw new \RuntimeException("{$tableName} is empty");
+        }
+
+        $db->execute("TRUNCATE TABLE {$tableName}");
+        $this->inserter->import($db->connect(), $tableName, $data, 10000);
     }
 }
