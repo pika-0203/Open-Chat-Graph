@@ -55,10 +55,12 @@ class DailyUpdateCronService
         [$inRankIdMember, $outOfRankId] = $this->getTargetOpenChatIdArray();
 
         $this->memberColumnUpdater->updateMemberColumn($inRankIdMember);
+        unset($inRankIdMember);
 
         addCronLog('openChatCrawling start: ' . count($outOfRankId));
         $result = $this->openChatDailyCrawling->crawling($outOfRankId);
         addCronLog('openChatCrawling done: ' . $result);
+        unset($outOfRankId);
 
         $this->updateRankingService->update($this->date);
     }
