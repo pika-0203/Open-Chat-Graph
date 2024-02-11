@@ -35,4 +35,9 @@ interface RankingPositionHourRepositoryInterface
     public function dalete(\DateTime $dateTime): void;
 
     public function insertTotalCount(string $fileTime): int;
+
+    /**
+     * @return string|false Y-m-d H:i:s
+     */
+    public function getLastHour(): string|false;
 }

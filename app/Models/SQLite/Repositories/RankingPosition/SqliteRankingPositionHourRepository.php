@@ -227,4 +227,23 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         $totalCount = $this->getTotalCount(new \DateTime($fileTime), false);
         return $this->inserter->import(SQLiteRankingPositionHour::connect(), 'total_count', $totalCount, 500);
     }
+
+    public function getLastHour(): string|false
+    {
+        return SQLiteRankingPositionHour::fetchColumn(
+            "SELECT
+                time
+            FROM
+                total_count
+            GROUP BY
+                time
+            HAVING
+                count(time) = 25
+            ORDER BY
+                time DESC
+            LIMIT
+                1",
+            compact('category')
+        );
+    }
 }

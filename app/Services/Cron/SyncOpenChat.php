@@ -8,6 +8,7 @@ use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Services\DailyUpdateCronService;
+use App\Services\RankingPosition\Persistence\RankingPositionHourPersistenceLastHourChecker;
 use App\Services\RankingPosition\RankingPositionHourUpdater;
 use App\Services\SitemapGenerator;
 
@@ -19,6 +20,7 @@ class SyncOpenChat
         private LogRepositoryInterface $log,
         private SitemapGenerator $sitemap,
         private RankingPositionHourUpdater $rankingPositionHour,
+        private RankingPositionHourPersistenceLastHourChecker $rankingPositionHourChecker,
     ) {
         $this->state->isActive = true;
         $this->state->update();
@@ -34,20 +36,25 @@ class SyncOpenChat
     {
         if (isDailyUpdateTime()) {
             set_time_limit(3600 * 2);
-            $this->hourlyMerge();
-            $this->hourlyRankingPosition();
-            
-            $this->state->isActive = false;
-            $this->state->update();
-
-            $this->dailyUpdate();
+            $this->hourlyTask();
+            $this->dailyTask();
         } else {
-            set_time_limit(1800);
-            $this->hourlyMerge();
-            $this->hourlyRankingPosition();
+            set_time_limit(3000);
+            $this->hourlyTask();
         }
 
         $this->finalize();
+    }
+
+    private function hourlyTask()
+    {
+        $this->rankingPositionHourChecker->checkLastHour();
+
+        $this->hourlyMerge();
+        $this->hourlyRankingPosition();
+
+        $this->state->isActive = false;
+        $this->state->update();
     }
 
     private function hourlyMerge()
@@ -69,7 +76,7 @@ class SyncOpenChat
         $this->rankingPositionHour->crawlRisingAndUpdateRankingPositionHourDb();
     }
 
-    private function dailyUpdate()
+    private function dailyTask()
     {
         /** @var DailyUpdateCronService $updater */
         $updater = app(DailyUpdateCronService::class);
