@@ -76,9 +76,11 @@ class SqliteHourMemberRankingUpdaterRepository implements HourMemberRankingUpdat
                         member AS t3
                     WHERE
                         t3.time = '{$timeString2}'
+                        AND t3.member >= 10
                 ) AS t2 ON t1.open_chat_id = t2.open_chat_id
             WHERE
                 t1.time = '{$timeString}'
+                AND t1.member >= 10
             ORDER BY
 	            (
                     CAST(t1.member AS REAL) - CAST(t2.member AS REAL)
