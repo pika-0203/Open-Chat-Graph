@@ -10,6 +10,8 @@ interface OpenChatDataForUpdaterWithCacheRepositoryInterface
 {
     public static function clearCache(): void;
 
+    public static function cacheOpenChatData(bool $excludeData = false): void;
+
     /**
      * @return OpenChatRepositoryDto|false
      */

@@ -25,23 +25,27 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
      */
     private static ?array $openChatIdCache = null;
 
-    private function cacheOpenChatData(): void
+    public static function cacheOpenChatData(bool $excludeData = false): void
     {
-        $query =
-            'SELECT
-                id,
-                emid,
+        $dataColumn = $excludeData
+            ? ''
+            : ",
                 name,
                 description,
                 img_url,
                 member,
                 api_created_at,
                 category,
-                emblem
+                emblem";
+
+        $query =
+            "SELECT
+                id,
+                emid{$dataColumn}
             FROM
                 open_chat
             ORDER BY
-                id ASC';
+                id ASC";
 
         /**
          * @var array{ id: int, emid: string, name: string, description: string, img_url: string, member: string, api_created_at: int|null, category: int|null, emblem: int|null }[] $dataArray
@@ -51,18 +55,29 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
             throw new RuntimeException('DBが空です');
         }
 
+        self::$openChatIdCache = array_column($dataArray, 'id');
+        self::$openChatEmidCache = array_column($dataArray, 'emid');
+
+        if ($excludeData) {
+            return;
+        }
+
         self::$openChatDataCache = [];
         foreach ($dataArray as $data) {
             self::$openChatDataCache[] = new OpenChatRepositoryDto($data['id'], $data);
         }
+    }
 
-        self::$openChatIdCache = array_column($dataArray, 'id');
-        self::$openChatEmidCache = array_column($dataArray, 'emid');
+    public static function clearCache(): void
+    {
+        self::$openChatDataCache = null;
+        self::$openChatEmidCache = null;
+        self::$openChatIdCache = null;
     }
 
     public function getOpenChatDataById(int $id): OpenChatRepositoryDto|false
     {
-        if (!isset(self::$openChatDataCache)) {
+        if (!isset(self::$openChatIdCache, self::$openChatDataCache)) {
             $this->cacheOpenChatData();
         }
 
@@ -76,7 +91,7 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
 
     public function getOpenChatDataByEmid(string $emid): OpenChatRepositoryDto|false
     {
-        if (!isset(self::$openChatDataCache)) {
+        if (!isset(self::$openChatEmidCache, self::$openChatDataCache)) {
             $this->cacheOpenChatData();
         }
 
@@ -88,9 +103,9 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
         return self::$openChatDataCache[$key];
     }
 
-   public function getOpenChatIdByEmid(string $emid): int|false
-   {
-        if (!isset(self::$openChatDataCache)) {
+    public function getOpenChatIdByEmid(string $emid): int|false
+    {
+        if (!isset(self::$openChatIdCache, self::$openChatEmidCache)) {
             $this->cacheOpenChatData();
         }
 
@@ -100,12 +115,5 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
         }
 
         return self::$openChatIdCache[$key];
-   }
-
-    public static function clearCache(): void
-    {
-        self::$openChatDataCache = null;
-        self::$openChatEmidCache = null;
-        self::$openChatIdCache = null;
     }
 }
