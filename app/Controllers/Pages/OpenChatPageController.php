@@ -41,13 +41,15 @@ class OpenChatPageController
             $myList = [];
         }
 
-        $category = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : 'すべて';
+        $categoryValue = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : null;
 
         $_chartArgDto = new RankingPositionChartArgDto;
         $_chartArgDto->id = $oc['id'];
         $_chartArgDto->categoryKey = $oc['category'] ?? 0;
-        $_chartArgDto->categoryName = $category;
+        $_chartArgDto->categoryName = $categoryValue ?? 'すべて';
         $_chartArgDto->baseUrl = url();
+
+        $category = $categoryValue ?? 'その他';
 
         return view('oc_content', compact('_meta', '_css', 'oc', 'myList', 'category', '_chartArgDto', '_statsDto'));
     }
