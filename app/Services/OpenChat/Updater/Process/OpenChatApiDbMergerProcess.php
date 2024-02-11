@@ -39,6 +39,8 @@ class OpenChatApiDbMergerProcess
             $repoDto->name === $apiDto->name
             && $repoDto->desc === $apiDto->desc
             && $repoDto->profileImageObsHash === $apiDto->profileImageObsHash
+            && $repoDto->category === $apiDto->category
+            && $repoDto->emblem === $apiDto->emblem
         ) {
             return null;
         }
