@@ -7,8 +7,8 @@ namespace App\Services\Cron;
 use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Services\DailyUpdateCronService;
+use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistenceLastHourChecker;
-use App\Services\RankingPosition\RankingPositionHourUpdater;
 use App\Services\SitemapGenerator;
 use App\Services\UpdateHourlyMemberRankingService;
 
@@ -18,7 +18,7 @@ class SyncOpenChat
         private SyncOpenChatState $state,
         private OpenChatApiDbMerger $merger,
         private SitemapGenerator $sitemap,
-        private RankingPositionHourUpdater $rankingPositionHour,
+        private RankingPositionHourPersistence $rankingPositionHourPersistence,
         private RankingPositionHourPersistenceLastHourChecker $rankingPositionHourChecker,
         private UpdateHourlyMemberRankingService $hourlyMemberRanking,
     ) {
@@ -78,7 +78,7 @@ class SyncOpenChat
 
     private function hourlyRankingPosition()
     {
-        $this->rankingPositionHour->crawlRisingAndUpdateRankingPositionHourDb();
+        $this->rankingPositionHourPersistence->persistStorageFileToDb();
     }
 
     private function hourlyMemberRankingUpdate()
