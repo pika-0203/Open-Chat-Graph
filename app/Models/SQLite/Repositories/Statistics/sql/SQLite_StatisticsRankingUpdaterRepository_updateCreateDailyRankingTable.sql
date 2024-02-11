@@ -24,7 +24,7 @@ SELECT
             (
                 CAST(t1.member AS REAL) - CAST(t2.member AS REAL)
             ) / CAST(t2.member AS REAL)
-        ) * 20
+        ) * 10
     ) AS index1
 FROM
     (
