@@ -41,7 +41,7 @@ class OpenChatPageController
             $myList = [];
         }
 
-        $category = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : 'その他';
+        $category = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : 'すべて';
 
         $_chartArgDto = new RankingPositionChartArgDto;
         $_chartArgDto->id = $oc['id'];
