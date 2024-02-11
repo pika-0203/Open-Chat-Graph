@@ -97,7 +97,7 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'updateStaticData done', 'message' => 'updateStaticData done']);
     }
 
-    private function genetop(StaticTopPageDataGenerator $staticTopPageDataGenerator)
+    function genetop(StaticTopPageDataGenerator $staticTopPageDataGenerator)
     {
         $staticTopPageDataGenerator->updateStaticTopPageData();
 
