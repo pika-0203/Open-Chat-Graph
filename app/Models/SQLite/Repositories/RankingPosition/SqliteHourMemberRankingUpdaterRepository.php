@@ -87,7 +87,7 @@ class SqliteHourMemberRankingUpdaterRepository implements HourMemberRankingUpdat
                         (
                             CAST(t1.member AS REAL) - CAST(t2.member AS REAL)
                         ) / CAST(t2.member AS REAL)
-                    ) * 20
+                    ) * 10
                 ) DESC";
 
         return SQLiteRankingPositionHour::fetchAll($query);
