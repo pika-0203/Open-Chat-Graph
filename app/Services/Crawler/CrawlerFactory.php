@@ -64,25 +64,32 @@ class CrawlerFactory
 
         $retryCount = 0;
 
-        try {
-            while ($retryCount < $retryLimit) {
+
+        while ($retryCount < $retryLimit) {
+            try {
                 $crawler = $client->request($method, $url);
                 self::$completionTime = microtime(true);
 
                 $response = $client->getResponse();
                 $statusCode = $response->getStatusCode();
-
-                if ($statusCode === 200) {
-                    return $getCrawler ? $crawler : $response->getContent();
-                } elseif ($statusCode === 404 || $statusCode === 400) {
-                    return false;
+            } catch (\Throwable $e) {
+                $retryCount++;
+                if ($retryCount >= $retryLimit) {
+                    throw new \RuntimeException(get_class($e) . ': ' . $e->getMessage());
                 }
 
-                $retryCount++;
                 sleep($retryInterval);
+                continue;
             }
-        } catch (\Throwable $e) {
-            throw new \RuntimeException(get_class($e) . ': ' . $e->getMessage());
+
+            if ($statusCode === 200) {
+                return $getCrawler ? $crawler : $response->getContent();
+            } elseif ($statusCode === 404 || $statusCode === 400) {
+                return false;
+            }
+
+            $retryCount++;
+            sleep($retryInterval);
         }
 
         throw new \RuntimeException($statusCode . ': ' . $url, $statusCode);

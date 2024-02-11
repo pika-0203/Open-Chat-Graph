@@ -29,7 +29,7 @@ class OpenChatRankingPageApiController
         $this->args->limit = Valid::num(Recp::input('limit'), min: 1, e: $error);
         $this->args->category = (int)Valid::str(Recp::input('category', '0'), regex: AppConfig::OPEN_CHAT_CATEGORY, e: $error);
 
-        $this->args->list = Valid::str(Recp::input('list', 'daily'), regex: ['daily', 'weekly', 'all'], e: $error);
+        $this->args->list = Valid::str(Recp::input('list', 'daily'), regex: ['hourly', 'daily', 'weekly', 'all'], e: $error);
         $this->args->order = Valid::str(Recp::input('order', 'asc'), regex: ['asc', 'desc'], e: $error);
         $this->args->sort = Valid::str(Recp::input('sort', 'rank'), regex: ['rank', 'increase', 'rate', 'member', 'created_at'], e: $error);
 
@@ -40,6 +40,8 @@ class OpenChatRankingPageApiController
     function index(OpenChatStatsRankingApiRepository $repo)
     {
         switch ($this->args->list) {
+            case 'hourly':
+                return response($repo->findHourlyStatsRanking($this->args));
             case 'daily':
                 return response($repo->findDailyStatsRanking($this->args));
             case 'weekly':

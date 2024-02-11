@@ -5,11 +5,16 @@ declare(strict_types=1);
 namespace App\Models\ApiRepositories;
 
 use Shadow\DB;
-use App\Services\Traits\TraitPaginationRecordsCalculator;
 
 class OpenChatStatsRankingApiRepository
 {
-    use TraitPaginationRecordsCalculator;
+    function findHourlyStatsRanking(OpenChatApiArgs $args): array
+    {
+        return array_map(
+            fn ($oc) => new OpenChatListDto($oc),
+            $this->getStatsRanking('statistics_ranking_hour', $args)
+        );
+    }
 
     function findDailyStatsRanking(OpenChatApiArgs $args): array
     {
