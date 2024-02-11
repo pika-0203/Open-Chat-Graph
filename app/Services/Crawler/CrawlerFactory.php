@@ -64,7 +64,6 @@ class CrawlerFactory
 
         $retryCount = 0;
 
-
         while ($retryCount < $retryLimit) {
             try {
                 $crawler = $client->request($method, $url);
