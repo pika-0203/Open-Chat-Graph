@@ -16,6 +16,7 @@ use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\RankingPosition\RankingPositionHourUpdater;
 use App\Services\SitemapGenerator;
+use App\Services\UpdateHourlyMemberRankingService;
 use Shared\Exceptions\NotFoundException;
 
 class AdminPageController
@@ -46,6 +47,12 @@ class AdminPageController
     function positiondb(RankingPositionHourPersistence $rankingPositionHourPersistence)
     {
         $rankingPositionHourPersistence->persistStorageFileToDb();
+        echo 'done';
+    }
+
+    function hourlygenerank(UpdateHourlyMemberRankingService $hourlyMemberRanking)
+    {
+        $hourlyMemberRanking->update();
         echo 'done';
     }
 
