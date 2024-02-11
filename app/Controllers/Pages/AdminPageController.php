@@ -14,7 +14,6 @@ use App\Models\SQLite\SQLiteStatistics;
 use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
-use App\Services\RankingPosition\RankingPositionHourUpdater;
 use App\Services\SitemapGenerator;
 use App\Services\UpdateHourlyMemberRankingService;
 use Shared\Exceptions\NotFoundException;
@@ -26,22 +25,6 @@ class AdminPageController
         if (!$adminAuthService->auth()) {
             throw new NotFoundException;
         }
-    }
-
-    function position()
-    {
-        /**
-         * @var RankingPositionHourUpdater $rankingPosition
-         */
-        $rankingPosition = app(RankingPositionHourUpdater::class);
-        try {
-            $rankingPosition->crawlRisingAndUpdateRankingPositionHourDb();
-        } catch (\Throwable $e) {
-            AdminTool::sendLineNofity('rankingPosition: ' . $e->__toString());
-            exit;
-        }
-
-        unset($rankingPosition);
     }
 
     function positiondb(RankingPositionHourPersistence $rankingPositionHourPersistence)

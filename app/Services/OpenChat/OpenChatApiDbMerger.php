@@ -4,32 +4,43 @@ declare(strict_types=1);
 
 namespace App\Services\OpenChat;
 
+use App\Config\AppConfig;
 use App\Services\OpenChat\Crawler\OpenChatApiRankingDownloader;
 use App\Services\OpenChat\Crawler\OpenChatApiRankingDownloaderProcess;
-use App\Services\OpenChat\Dto\OpenChatApiDtoFactory;
-use App\Services\OpenChat\Updater\Process\OpenChatApiDbMergerProcess;
+use App\Services\OpenChat\Crawler\OpenChatApiRisingDownloaderProcess;
 use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Services\RankingPosition\Store\RankingPositionStore;
-use App\Config\AppConfig;
-use App\Exceptions\ApplicationException;
+use App\Services\RankingPosition\Store\RisingPositionStore;
+use App\Services\RankingPosition\Store\AabstractRankingPositionStore;
+use App\Services\OpenChat\Updater\Process\OpenChatApiDbMergerProcess;
 use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
+use App\Services\OpenChat\Dto\OpenChatApiDtoFactory;
 use App\Services\OpenChat\Dto\OpenChatDto;
+use App\Exceptions\ApplicationException;
 use Shadow\DB;
 
 class OpenChatApiDbMerger
 {
-    private OpenChatApiRankingDownloader $openChatApiRankingDataDownloader;
+    private OpenChatApiRankingDownloader $rankingDownloader;
+    private OpenChatApiRankingDownloader $risingDownloader;
 
     function __construct(
         private OpenChatApiDtoFactory $openChatApiDtoFactory,
         private OpenChatApiDbMergerProcess $openChatApiDbMergerProcess,
         private LogRepositoryInterface $logRepository,
-        private RankingPositionStore $rankingPositionStore,
+        private RankingPositionStore $rankingStore,
+        private RisingPositionStore $risingStore,
         OpenChatApiRankingDownloaderProcess $openChatApiRankingDownloaderProcess,
+        OpenChatApiRisingDownloaderProcess $openChatApiRisingDownloaderProcess,
     ) {
-        $this->openChatApiRankingDataDownloader = app(
+        $this->rankingDownloader = app(
             OpenChatApiRankingDownloader::class,
-            compact('openChatApiRankingDownloaderProcess')
+            ['openChatApiRankingDownloaderProcess' => $openChatApiRankingDownloaderProcess]
+        );
+
+        $this->risingDownloader = app(
+            OpenChatApiRankingDownloader::class,
+            ['openChatApiRankingDownloaderProcess' => $openChatApiRisingDownloaderProcess]
         );
     }
 
@@ -40,7 +51,10 @@ class OpenChatApiDbMerger
     function fetchOpenChatApiRankingAll(): array
     {
         try {
-            return $this->fetchOpenChatApiRankingAllProcess();
+            $result = [];
+            $result += $this->fetchOpenChatApiRankingAllProcess($this->risingStore, $this->risingDownloader);
+            $result += $this->fetchOpenChatApiRankingAllProcess($this->rankingStore, $this->rankingDownloader);
+            return $result;
         } catch (\RuntimeException $e) {
             // 再接続
             DB::$pdo = null;
@@ -49,11 +63,13 @@ class OpenChatApiDbMerger
         }
     }
 
-    private function fetchOpenChatApiRankingAllProcess(): array
-    {
+    private function fetchOpenChatApiRankingAllProcess(
+        AabstractRankingPositionStore $positionStore,
+        OpenChatApiRankingDownloader $downloader
+    ): array {
         // API OC一件ずつの処理
-        $processCallback = function (OpenChatDto $apiDto): ?string {
-            $this->rankingPositionStore->addApiDto($apiDto);
+        $processCallback = function (OpenChatDto $apiDto) use ($positionStore): ?string {
+            $positionStore->addApiDto($apiDto);
             return $this->openChatApiDbMergerProcess->validateAndMapToOpenChatDtoCallback($apiDto);
         };
 
@@ -71,13 +87,13 @@ class OpenChatApiDbMerger
         };
 
         // API カテゴリごとの処理
-        $callbackByCategory = function (string $category): void {
-            $this->rankingPositionStore->saveClearCurrentCategoryApiDataCache($category);
+        $callbackByCategory = function (string $category) use ($positionStore): void {
+            $positionStore->saveClearCurrentCategoryApiDataCache($category);
             // リポジトリキャッシュクリア
             OpenChatDataForUpdaterWithCacheRepository::clearCache();
         };
 
-        return $this->openChatApiRankingDataDownloader->fetchOpenChatApiRankingAll($callback, $callbackByCategory);
+        return $downloader->fetchOpenChatApiRankingAll($callback, $callbackByCategory);
     }
 
     private function checkKillFlag()
