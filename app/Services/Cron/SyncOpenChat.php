@@ -6,7 +6,6 @@ namespace App\Services\Cron;
 
 use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\OpenChat\OpenChatApiDbMerger;
-use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Services\DailyUpdateCronService;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistenceLastHourChecker;
 use App\Services\RankingPosition\RankingPositionHourUpdater;
@@ -17,7 +16,6 @@ class SyncOpenChat
     function __construct(
         private SyncOpenChatState $state,
         private OpenChatApiDbMerger $merger,
-        private LogRepositoryInterface $log,
         private SitemapGenerator $sitemap,
         private RankingPositionHourUpdater $rankingPositionHour,
         private RankingPositionHourPersistenceLastHourChecker $rankingPositionHourChecker,
@@ -48,13 +46,17 @@ class SyncOpenChat
 
     private function hourlyTask()
     {
-        $this->rankingPositionHourChecker->checkLastHour();
-
+        $this->hourlyRankingPositionCheckLastHour();
         $this->hourlyMerge();
         $this->hourlyRankingPosition();
 
         $this->state->isActive = false;
         $this->state->update();
+    }
+
+    private function hourlyRankingPositionCheckLastHour()
+    {
+        $this->rankingPositionHourChecker->checkLastHour();
     }
 
     private function hourlyMerge()

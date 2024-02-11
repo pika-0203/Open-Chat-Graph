@@ -42,6 +42,8 @@ class RankingPositionDailyUpdater
         $ocDbIdArray = $this->updateRepository->getOpenChatIdAll();
 
         $filteredData = array_filter($data, fn ($stats) => in_array($stats['open_chat_id'], $ocDbIdArray));
+        unset($ocDbIdArray);
+        
         $this->statisticsRepository->insertMember($filteredData);
     }
 }
