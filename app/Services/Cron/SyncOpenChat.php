@@ -10,6 +10,7 @@ use App\Services\DailyUpdateCronService;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistenceLastHourChecker;
 use App\Services\RankingPosition\RankingPositionHourUpdater;
 use App\Services\SitemapGenerator;
+use App\Services\UpdateHourlyMemberRankingService;
 
 class SyncOpenChat
 {
@@ -19,6 +20,7 @@ class SyncOpenChat
         private SitemapGenerator $sitemap,
         private RankingPositionHourUpdater $rankingPositionHour,
         private RankingPositionHourPersistenceLastHourChecker $rankingPositionHourChecker,
+        private UpdateHourlyMemberRankingService $hourlyMemberRanking,
     ) {
         $this->state->isActive = true;
         $this->state->update();
@@ -49,6 +51,7 @@ class SyncOpenChat
         $this->hourlyRankingPositionCheckLastHour();
         $this->hourlyMerge();
         $this->hourlyRankingPosition();
+        $this->hourlyMemberRankingUpdate();
 
         $this->state->isActive = false;
         $this->state->update();
@@ -76,6 +79,11 @@ class SyncOpenChat
     private function hourlyRankingPosition()
     {
         $this->rankingPositionHour->crawlRisingAndUpdateRankingPositionHourDb();
+    }
+
+    private function hourlyMemberRankingUpdate()
+    {
+        $this->hourlyMemberRanking->update();
     }
 
     private function dailyTask()
