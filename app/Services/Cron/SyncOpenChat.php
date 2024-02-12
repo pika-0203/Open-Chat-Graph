@@ -23,20 +23,22 @@ class SyncOpenChat
         private UpdateHourlyMemberRankingService $hourlyMemberRanking,
     ) {
         $this->state->isHourlyTaskActive = true;
-        $this->state->isDailyTaskActive = false;
         $this->state->update();
     }
 
     function __destruct()
     {
         $this->state->isHourlyTaskActive = false;
-        $this->state->isDailyTaskActive = false;
         $this->state->update();
     }
 
     function handle()
     {
         if (isDailyUpdateTime()) {
+            set_time_limit(4500);
+            $this->hourlyTask();
+            $this->dailyTask();
+        } elseif (isDailyUpdateTime(new \DateTime('-2 hour')) && $this->state->isDailyTaskActive) {
             set_time_limit(4500);
             $this->hourlyTask();
             $this->dailyTask();
@@ -90,13 +92,17 @@ class SyncOpenChat
 
     private function dailyTask()
     {
-        /** @var DailyUpdateCronService $updater */
-        $updater = app(DailyUpdateCronService::class);
-
         $this->state->isDailyTaskActive = true;
         $this->state->update();
 
-        $updater->update();
+        try {
+            /** @var DailyUpdateCronService $updater */
+            $updater = app(DailyUpdateCronService::class);
+            $updater->update();
+        } catch (\Throwable $e) {
+            $this->state->isDailyTaskActive = false;
+            throw $e;
+        }
 
         $this->state->isDailyTaskActive = false;
         $this->state->update();

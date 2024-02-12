@@ -8,7 +8,10 @@ use App\Services\Admin\AdminTool;
 
 if (app(SyncOpenChatState::class)->isHourlyTaskActive) {
     AdminTool::sendLineNofity('SyncOpenChat: "isHourlyTaskActive" is active');
-    exit;
+}
+
+if (app(SyncOpenChatState::class)->isDailyTaskActive) {
+    AdminTool::sendLineNofity('SyncOpenChat: "isDailyTaskActive" is active');
 }
 
 /**
