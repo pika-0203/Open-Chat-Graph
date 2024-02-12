@@ -50,7 +50,7 @@
             <header class="openchat-list-title-area unset">
                 <a class="openchat-list-date unset ranking-url" href="<?php echo url('ranking') ?>">
                     <h2 class="unset">
-                        <span class="openchat-list-title">ランキング</span>
+                        <span class="openchat-list-title">メンバー増加</span>
                     </h2>
                     <div class="refresh-time">
                         <div class="refresh-icon"></div>
@@ -61,13 +61,13 @@
             <nav class="list-btn-nav" id="list-btn-nav">
                 <button class="list-btn unset" id="btn-daily" disabled>
                     <div class="btn-text">
-                        <span>前日比</span>
+                        <span>１日</span>
                     </div>
                     <div class="btn-buttom"></div>
                 </button>
                 <button class="list-btn unset" id="btn-weekly">
                     <div class="btn-text">
-                        <span>前週比</span>
+                        <span>１週間</span>
                     </div>
                     <div class="btn-buttom"></div>
                 </button>
@@ -79,7 +79,7 @@
                 <?php viewComponent('open_chat_list', ['openChatList' => $pastWeekOpenChatList, 'isDaily' => false, 'localUrl' => true]) ?>
             </div>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-                <span class="ranking-readMore">カテゴリーから探す</span>
+                <span class="ranking-readMore">オープンチャット一覧を開く</span>
             </a>
         </article>
         <p style="padding-top:2rem;">

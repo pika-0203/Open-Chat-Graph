@@ -15,7 +15,7 @@ class StaticTopPageDataGenerator
     }
 
     /**
-     * @return array `['openChatList' => array, 'pastWeekOpenChatList' => array, 'updatedAt' => int]`
+     * @return array{ openChatList: array, pastWeekOpenChatList: array, updatedAt: int }
      */
     function getTopPageDataFromDB(): array
     {
