@@ -99,7 +99,7 @@ hr {
 
 /* メンバー数 */
 .talkroom_number_of_members {
-  margin-top: 2px;
+  margin-top: 0px;
 }
 
 .number_of_members {
@@ -116,6 +116,7 @@ hr {
   color: var(--color-text-secondary);
   color: #111;
   font-size: 13px;
+  margin-right: 2px;
 }
 
 /* オープンチャットの詳細エリア */
@@ -179,6 +180,7 @@ hr {
   width: fit-content;
   align-items: flex-start;
   gap: 8px;
+  margin-top: 2px;
 }
 
 .talkroom_number_of_stats * {
@@ -189,7 +191,6 @@ hr {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 3px;
 }
 
 .my-list-form {

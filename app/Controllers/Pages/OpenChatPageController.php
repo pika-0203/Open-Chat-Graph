@@ -6,6 +6,7 @@ namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\Statistics\StatisticsChartArrayService;
 use App\Views\Dto\RankingPositionChartArgDto;
 use App\Views\Meta\OcPageMeta;
@@ -51,6 +52,10 @@ class OpenChatPageController
 
         $category = $categoryValue ?? 'その他';
 
-        return view('oc_content', compact('_meta', '_css', 'oc', 'myList', 'category', '_chartArgDto', '_statsDto'));
+        $rankingInfo = unserialize(file_get_contents(AppConfig::TOP_RANKING_INFO_FILE_PATH))['rankingUpdatedAt'];
+        $_updatedAt = OpenChatServicesUtility::getCronModifiedDate(new \DateTime('@' . $rankingInfo))
+            ->format('n月j日');
+
+        return view('oc_content', compact('_meta', '_css', 'oc', 'myList', 'category', '_chartArgDto', '_statsDto', '_updatedAt'));
     }
 }
