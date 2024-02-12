@@ -9,7 +9,5 @@ disallow: /oc/*/position
 disallow: /oc/*/csv
 disallow: /assets
 disallow: /images
-disallow: /ranking
 allow: /assets/icon-192x192.png
 allow: /assets/ogp.png
-allow: /ranking$
