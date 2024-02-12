@@ -7,7 +7,7 @@
     <main>
         <header>
             <span class="main-header-title">OPENCHAT GRAPH</span>
-            <span class="main-header-title-desc">メンバー数の統計をグラフで分析</span>
+            <span class="main-header-title-desc">メンバー数の増加をグラフで分析</span>
         </header>
         <!-- 送信後のレスポンス -->
         <?php if (session()->has('id')) : ?>
@@ -61,13 +61,13 @@
             <nav class="list-btn-nav" id="list-btn-nav">
                 <button class="list-btn unset" id="btn-daily" disabled>
                     <div class="btn-text">
-                        <span>１日</span>
+                        <span><?php echo $_updatedAt ?></span>
                     </div>
                     <div class="btn-buttom"></div>
                 </button>
                 <button class="list-btn unset" id="btn-weekly">
                     <div class="btn-text">
-                        <span>１週間</span>
+                        <span>過去１週間</span>
                     </div>
                     <div class="btn-buttom"></div>
                 </button>
@@ -95,18 +95,6 @@
     <footer>
         <?php viewComponent('footer_inner') ?>
     </footer>
-    <script type="module">
-        import {
-            OpenChatUrlValidator
-        } from '<?php echo fileUrl('/js/OpenChatUrlValidator.js') ?>';
-
-        const addOpenChatForm = document.getElementById('add-openchat-form')
-        const inputValidator = new OpenChatUrlValidator(addOpenChatForm)
-        addOpenChatForm.addEventListener('input', () => inputValidator.handle())
-
-        // 古いSafariの対策
-        addOpenChatForm.addEventListener('submit', e => e.target.elements['submit'].disabled && e.preventDefault())
-    </script>
     <script>
         ;
         (function() {
