@@ -6,5 +6,6 @@ use Shadow\AbstoractJsonStorageObject;
 
 class SyncOpenChatState extends AbstoractJsonStorageObject
 {
-    public bool $isActive;
+    public bool $isHourlyTaskActive;
+    public bool $isDailyTaskActive;
 }
