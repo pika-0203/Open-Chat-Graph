@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\User\MyOpenChatList;
 use App\Services\StaticData\StaticDataGeneration;
 
@@ -24,7 +26,7 @@ class IndexPageController
         }
 
         $myList = [];
-        
+
         // クッキーにピン留めがある場合
         if (cookie()->has('myList')) {
             /** 
@@ -38,6 +40,10 @@ class IndexPageController
         $_meta = meta();
         $_meta->title = "{$_meta->title} | オープンチャットの人数統計とグラフ分析";
 
-        return view('top_content', compact('_meta', '_css', 'myList') + $rankingList);
+        $rankingInfo = unserialize(file_get_contents(AppConfig::TOP_RANKING_INFO_FILE_PATH))['rankingUpdatedAt'];
+        $_updatedAt = OpenChatServicesUtility::getCronModifiedDate(new \DateTime('@' . $rankingInfo))
+            ->format('m月d日');
+
+        return view('top_content', compact('_meta', '_css', 'myList', '_updatedAt') + $rankingList);
     }
 }

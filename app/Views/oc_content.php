@@ -39,13 +39,13 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
           <div class="talkroom_number_of_stats">
             <div class="number-box <?php echo $oc['diff_member'] > 0 ? 'positive' : 'negative' ?>">
               <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
-                <span class="openchat-itme-stats-title">1日</span>
+                <span class="openchat-itme-stats-title">前日比</span>
                 <div>
                   <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?></span>
                   <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
                 </div>
               <?php elseif ($oc['diff_member'] === 0) : ?>
-                <span class="openchat-itme-stats-title">1日</span>
+                <span class="openchat-itme-stats-title">前日比</span>
                 <span class="zero-stats">±0</span>
               <?php endif ?>
             </div>
