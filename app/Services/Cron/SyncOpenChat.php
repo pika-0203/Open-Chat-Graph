@@ -22,24 +22,26 @@ class SyncOpenChat
         private RankingPositionHourPersistenceLastHourChecker $rankingPositionHourChecker,
         private UpdateHourlyMemberRankingService $hourlyMemberRanking,
     ) {
-        $this->state->isActive = true;
+        $this->state->isHourlyTaskActive = true;
+        $this->state->isDailyTaskActive = false;
         $this->state->update();
     }
 
     function __destruct()
     {
-        $this->state->isActive = false;
+        $this->state->isHourlyTaskActive = false;
+        $this->state->isDailyTaskActive = false;
         $this->state->update();
     }
 
     function handle()
     {
         if (isDailyUpdateTime()) {
-            set_time_limit(3600 * 2);
+            set_time_limit(4500);
             $this->hourlyTask();
             $this->dailyTask();
         } else {
-            set_time_limit(3000);
+            set_time_limit(1800);
             $this->hourlyTask();
         }
 
@@ -50,11 +52,11 @@ class SyncOpenChat
     {
         $this->hourlyRankingPositionCheckLastHour();
         $this->hourlyMerge();
-        $this->hourlyRankingPosition();
-        $this->hourlyMemberRankingUpdate();
-
         $this->state->isActive = false;
         $this->state->update();
+
+        $this->hourlyRankingPosition();
+        $this->hourlyMemberRankingUpdate();
     }
 
     private function hourlyRankingPositionCheckLastHour()
@@ -90,7 +92,14 @@ class SyncOpenChat
     {
         /** @var DailyUpdateCronService $updater */
         $updater = app(DailyUpdateCronService::class);
+
+        $this->state->isDailyTaskActive = true;
+        $this->state->update();
+
         $updater->update();
+
+        $this->state->isDailyTaskActive = false;
+        $this->state->update();
     }
 
     function finalize(): void

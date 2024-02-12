@@ -6,8 +6,8 @@ use App\Services\Cron\SyncOpenChat;
 use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\Admin\AdminTool;
 
-if (app(SyncOpenChatState::class)->isActive) {
-    AdminTool::sendLineNofity('SyncOpenChat: state is active');
+if (app(SyncOpenChatState::class)->isHourlyTaskActive) {
+    AdminTool::sendLineNofity('SyncOpenChat: "isHourlyTaskActive" is active');
     exit;
 }
 
