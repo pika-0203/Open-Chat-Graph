@@ -42,7 +42,7 @@ class IndexPageController
 
         $rankingInfo = unserialize(file_get_contents(AppConfig::TOP_RANKING_INFO_FILE_PATH))['rankingUpdatedAt'];
         $_updatedAt = OpenChatServicesUtility::getCronModifiedDate(new \DateTime('@' . $rankingInfo))
-            ->format('m月d日');
+            ->format('n月j日');
 
         return view('top_content', compact('_meta', '_css', 'myList', '_updatedAt') + $rankingList);
     }
