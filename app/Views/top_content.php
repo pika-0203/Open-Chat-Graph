@@ -50,7 +50,7 @@
             <header class="openchat-list-title-area unset">
                 <a class="openchat-list-date unset ranking-url" href="<?php echo url('ranking') ?>">
                     <h2 class="unset">
-                        <span class="openchat-list-title">メンバー増加ランキング</span>
+                        <span class="openchat-list-title">ランキング</span>
                     </h2>
                     <div class="refresh-time">
                         <div class="refresh-icon"></div>
