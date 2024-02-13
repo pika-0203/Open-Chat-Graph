@@ -35,16 +35,10 @@ class SyncOpenChat
 
     function handle()
     {
-        set_time_limit(1620);
-
         if (
             isDailyUpdateTime()
             || (isDailyUpdateTime(new \DateTime('-2 hour')) && $this->state->isDailyTaskActive)
         ) {
-            $this->state->isDailyTaskActive = true;
-            $this->state->update();
-
-            $this->hourlyTask();
             $this->dailyTask();
         } else {
             $this->hourlyTask();
@@ -56,6 +50,7 @@ class SyncOpenChat
     function handleHalfHourCheck()
     {
         if ($this->state->isHourlyTaskActive) {
+            OpenChatApiDbMerger::enableKillFlag();
             addCronLog('Retry hourlyTask');
             AdminTool::sendLineNofity('Retry hourlyTask');
             $this->handle();
@@ -71,8 +66,10 @@ class SyncOpenChat
         }
     }
 
-    private function hourlyTask()
+    function hourlyTask()
     {
+        set_time_limit(1620);
+
         $this->hourlyMerge();
 
         $this->state->isHourlyTaskActive = false;
@@ -106,10 +103,14 @@ class SyncOpenChat
         $this->hourlyMemberRanking->update();
     }
 
-    private function dailyTask()
+    function dailyTask()
     {
-        set_time_limit(3600);
+        $this->state->isDailyTaskActive = true;
+        $this->state->update();
 
+        $this->hourlyTask();
+
+        set_time_limit(3600);
         try {
             /** @var DailyUpdateCronService $updater */
             $updater = app(DailyUpdateCronService::class);

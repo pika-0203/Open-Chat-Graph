@@ -74,7 +74,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
 
     public function getDailyMemberStats(\DateTime $todayLastTime): array
     {
-        $time = $todayLastTime->format('Y-m-d H:i:s');
+        $time = $todayLastTime->format('Y-m-d');
 
         $query =
             "SELECT
@@ -84,7 +84,11 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
             FROM
                 member
             WHERE
-                time = '{$time}'";
+                DATE(time) = '{$time}'
+            GROUP BY
+                open_chat_id
+            HAVING
+                MAX(time)";
 
         return SQLiteRankingPositionHour::fetchAll($query);
     }

@@ -87,15 +87,11 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'updateStaticTopPageData done', 'message' => 'updateStaticTopPageData done']);
     }
 
-    private function killmerge(SyncOpenChatState $json)
+    function killmerge()
     {
-        if ($json->isActive ?? false) {
-            OpenChatApiDbMerger::enableKillFlag();
+        OpenChatApiDbMerger::enableKillFlag();
 
-            return view('admin/admin_message_page', ['title' => 'OpenChatApiDbMerger', 'message' => 'OpenChatApiDbMergerを強制終了しました']);
-        } else {
-            echo 'fails';
-        }
+        return view('admin/admin_message_page', ['title' => 'OpenChatApiDbMerger', 'message' => 'OpenChatApiDbMergerを強制終了しました']);
     }
 
     function phpinfo()
