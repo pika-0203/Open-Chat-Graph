@@ -17,6 +17,7 @@ use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
 use App\Services\OpenChat\Dto\OpenChatApiDtoFactory;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Exceptions\ApplicationException;
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use Shadow\DB;
 
 class OpenChatApiDbMerger
@@ -86,13 +87,19 @@ class OpenChatApiDbMerger
         };
 
         // API カテゴリごとの処理
-        $callbackByCategory = function (string $category) use ($positionStore): void {
+        $callbackByCategoryBefore = function (string $category) use ($positionStore): bool {
+            $fileTime = $positionStore->getFileDateTime($category)->format('Y-m-d H:i:s');
+            $now = OpenChatServicesUtility::getModifiedCronTime('now')->format('Y-m-d H:i:s');
+            return $fileTime === $now;
+        };
+
+        $callbackByCategoryAfter = function (string $category) use ($positionStore): void {
             $positionStore->saveClearCurrentCategoryApiDataCache($category);
             // リポジトリキャッシュクリア
             OpenChatDataForUpdaterWithCacheRepository::clearCache();
         };
 
-        return $downloader->fetchOpenChatApiRankingAll($callback, $callbackByCategory);
+        return $downloader->fetchOpenChatApiRankingAll($callback, $callbackByCategoryBefore, $callbackByCategoryAfter);
     }
 
     private function checkKillFlag()
