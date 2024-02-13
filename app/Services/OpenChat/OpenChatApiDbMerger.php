@@ -51,10 +51,9 @@ class OpenChatApiDbMerger
     function fetchOpenChatApiRankingAll(): array
     {
         try {
-            $result = [];
-            $result += $this->fetchOpenChatApiRankingAllProcess($this->risingStore, $this->risingDownloader);
-            $result += $this->fetchOpenChatApiRankingAllProcess($this->rankingStore, $this->rankingDownloader);
-            return $result;
+            $result1 = $this->fetchOpenChatApiRankingAllProcess($this->risingStore, $this->risingDownloader);
+            $result2 = $this->fetchOpenChatApiRankingAllProcess($this->rankingStore, $this->rankingDownloader);
+            return [...$result1, ...$result2];
         } catch (\RuntimeException $e) {
             // 再接続
             DB::$pdo = null;
