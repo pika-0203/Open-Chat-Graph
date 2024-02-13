@@ -12,6 +12,7 @@ use App\Services\OpenChat\OpenChatDailyCrawling;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistenceLastHourChecker;
 use App\Services\SitemapGenerator;
+use App\Services\UpdateHourlyMemberColumnService;
 use App\Services\UpdateHourlyMemberRankingService;
 
 class SyncOpenChat
@@ -23,15 +24,8 @@ class SyncOpenChat
         private RankingPositionHourPersistence $rankingPositionHourPersistence,
         private RankingPositionHourPersistenceLastHourChecker $rankingPositionHourChecker,
         private UpdateHourlyMemberRankingService $hourlyMemberRanking,
+        private UpdateHourlyMemberColumnService $hourlyMemberColumn
     ) {
-        $this->state->isHourlyTaskActive = true;
-        $this->state->update();
-    }
-
-    function __destruct()
-    {
-        $this->state->isHourlyTaskActive = false;
-        $this->state->update();
     }
 
     function handle()
@@ -40,6 +34,8 @@ class SyncOpenChat
             $this->hourlyTask();
             $this->dailyTask();
         } else if (isDailyUpdateTime(new \DateTime('-2 hour')) && $this->state->isDailyTaskActive) {
+            addCronLog('Retry dailyTask');
+            AdminTool::sendLineNofity('Retry dailyTask');
             OpenChatDailyCrawling::enableKillFlag();
             $this->hourlyTask();
             $this->dailyTask();
@@ -72,6 +68,8 @@ class SyncOpenChat
     function hourlyTask()
     {
         set_time_limit(1620);
+        $this->state->isHourlyTaskActive = true;
+        $this->state->update();
 
         $this->hourlyMerge();
 
@@ -103,6 +101,7 @@ class SyncOpenChat
 
     private function hourlyMemberRankingUpdate()
     {
+        $this->hourlyMemberColumn->update();
         $this->hourlyMemberRanking->update();
     }
 
@@ -114,14 +113,11 @@ class SyncOpenChat
         $this->hourlyTask();
 
         set_time_limit(3600);
-        try {
-            /** @var DailyUpdateCronService $updater */
-            $updater = app(DailyUpdateCronService::class);
-            OpenChatDailyCrawling::disableKillFlag();
-            $updater->update();
-        } catch (\Throwable $e) {
-            throw $e;
-        }
+
+        /** @var DailyUpdateCronService $updater */
+        $updater = app(DailyUpdateCronService::class);
+        OpenChatDailyCrawling::disableKillFlag();
+        $updater->update();
 
         $this->state->isDailyTaskActive = false;
         $this->state->update();

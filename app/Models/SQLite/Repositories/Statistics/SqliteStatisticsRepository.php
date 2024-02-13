@@ -116,8 +116,7 @@ class SqliteStatisticsRepository implements StatisticsRepositoryInterface
     {
         $query =
             "SELECT
-                open_chat_id,
-                member
+                open_chat_id
             FROM
                 statistics
             WHERE

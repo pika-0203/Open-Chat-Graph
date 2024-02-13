@@ -93,6 +93,26 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         return SQLiteRankingPositionHour::fetchAll($query);
     }
 
+    public function getHourlyMemberColumn(\DateTime $lastTime): array
+    {
+        $time = $lastTime->format('Y-m-d H:i:s');
+
+        $query =
+            "SELECT
+                open_chat_id,
+                member
+            FROM
+                member
+            WHERE
+                time = '{$time}'
+            GROUP BY
+                open_chat_id
+            HAVING
+                MAX(time)";
+
+        return SQLiteRankingPositionHour::fetchAll($query);
+    }
+
     private function getMinPosition(string $tableName, \DateTime $date, bool $all): array
     {
         $dateString = $date->format('Y-m-d');
