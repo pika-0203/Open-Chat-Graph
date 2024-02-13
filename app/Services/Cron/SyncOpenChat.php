@@ -53,9 +53,9 @@ class SyncOpenChat
     function handleHalfHourCheck()
     {
         if ($this->state->isHourlyTaskActive) {
-            OpenChatApiDbMerger::enableKillFlag();
             addCronLog('Retry hourlyTask');
             AdminTool::sendLineNofity('Retry hourlyTask');
+            OpenChatApiDbMerger::enableKillFlag();
             $this->handle();
             return;
         }
