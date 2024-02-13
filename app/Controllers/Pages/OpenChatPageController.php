@@ -46,7 +46,7 @@ class OpenChatPageController
 
         $_chartArgDto = new RankingPositionChartArgDto;
         $_chartArgDto->id = $oc['id'];
-        $_chartArgDto->categoryKey = $oc['category'] ?? 0;
+        $_chartArgDto->categoryKey = $oc['category'] ?? (is_int($oc['api_created_at']) ? 0 : null);
         $_chartArgDto->categoryName = $categoryValue ?? 'すべて';
         $_chartArgDto->baseUrl = url();
 
