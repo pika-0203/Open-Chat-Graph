@@ -29,7 +29,7 @@ interface StatisticsRepositoryInterface
 
     /**
      * @param string $date Y-m-d
-     * @return array{ open_chat_id: int, member: int }[]
+     * @return int[]
      */
     public function getOpenChatIdArrayByDate(string $date): array;
 }

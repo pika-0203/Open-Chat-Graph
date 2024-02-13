@@ -4,35 +4,24 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Config\AppConfig;
-use App\Models\Repositories\RankingPosition\HourMemberRankingUpdaterRepositoryInterface;
 use App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface;
+use App\Services\OpenChat\Updater\MemberColumnUpdater;
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 class UpdateHourlyMemberColumnService
 {
+    private \DateTime $time;
+
     function __construct(
-        private HourMemberRankingUpdaterRepositoryInterface $hourMemberRankingUpdaterRepository,
         private RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
+        private MemberColumnUpdater $memberColumnUpdater,
     ) {
+        $this->time = OpenChatServicesUtility::getModifiedCronTime('now');
     }
 
-    function update()
+    function update(): void
     {
-        $time = $this->rankingPositionHourRepository->getLastHour();
-        if (!$time) return;
-
-        $this->hourMemberRankingUpdaterRepository->updateHourRankingTable(new \DateTime($time));
-        $this->updateStaticData($time);
-    }
-
-    private function updateStaticData(string $time)
-    {
-        $data = serialize(
-            [
-                'rankingUpdatedAt' => strtotime($time),
-            ]
-        );
-
-        safeFileRewrite(AppConfig::TOP_RANKING_HOUR_INFO_FILE_PATH, $data);
+        $inRankIdMember = $this->rankingPositionHourRepository->getHourlyMemberColumn($this->time);
+        $this->memberColumnUpdater->updateMemberColumn($inRankIdMember);
     }
 }

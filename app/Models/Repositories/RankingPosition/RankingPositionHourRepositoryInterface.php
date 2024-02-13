@@ -13,9 +13,14 @@ interface RankingPositionHourRepositoryInterface
     public function insertHourMemberFromDtoArray(string $fileTime, array $insertDtoArray): int;
 
     /**
-     * @return array{ open_chat_id: int, member: int, date: string }
+     * @return array{ open_chat_id: int, member: int, date: string }[]
      */
     public function getDailyMemberStats(\DateTime $todayLastTime): array;
+
+    /**
+     * @return array{ open_chat_id: int, member: int }[]
+     */
+    public function getHourlyMemberColumn(\DateTime $lastTime): array;
 
     /**
      * @return array{ open_chat_id: int, category: int, position: int, time: stirng }[]
