@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Cron;
 
+use App\Services\Admin\AdminTool;
 use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Services\DailyUpdateCronService;
@@ -34,36 +35,51 @@ class SyncOpenChat
 
     function handle()
     {
-        if (isDailyUpdateTime()) {
-            set_time_limit(4500);
-            $this->hourlyTask();
-            $this->dailyTask();
-        } elseif (isDailyUpdateTime(new \DateTime('-2 hour')) && $this->state->isDailyTaskActive) {
-            set_time_limit(4500);
+        set_time_limit(1620);
+
+        if (
+            isDailyUpdateTime()
+            || (isDailyUpdateTime(new \DateTime('-2 hour')) && $this->state->isDailyTaskActive)
+        ) {
+            $this->state->isDailyTaskActive = true;
+            $this->state->update();
+
             $this->hourlyTask();
             $this->dailyTask();
         } else {
-            set_time_limit(1800);
             $this->hourlyTask();
         }
 
         $this->finalize();
     }
 
+    function handleHalfHourCheck()
+    {
+        if ($this->state->isHourlyTaskActive) {
+            addCronLog('Retry hourlyTask');
+            AdminTool::sendLineNofity('Retry hourlyTask');
+            $this->handle();
+            return;
+        }
+
+        if (!$this->rankingPositionHourChecker->isLastHourPersistenceCompleted()) {
+            addCronLog('Retry position perisistance');
+            AdminTool::sendLineNofity('Retry position perisistance');
+            $this->hourlyRankingPosition();
+            $this->hourlyMemberRankingUpdate();
+            return;
+        }
+    }
+
     private function hourlyTask()
     {
-        $this->hourlyRankingPositionCheckLastHour();
         $this->hourlyMerge();
-        $this->state->isActive = false;
+
+        $this->state->isHourlyTaskActive = false;
         $this->state->update();
 
         $this->hourlyRankingPosition();
         $this->hourlyMemberRankingUpdate();
-    }
-
-    private function hourlyRankingPositionCheckLastHour()
-    {
-        $this->rankingPositionHourChecker->checkLastHour();
     }
 
     private function hourlyMerge()
@@ -92,15 +108,13 @@ class SyncOpenChat
 
     private function dailyTask()
     {
-        $this->state->isDailyTaskActive = true;
-        $this->state->update();
+        set_time_limit(3600);
 
         try {
             /** @var DailyUpdateCronService $updater */
             $updater = app(DailyUpdateCronService::class);
             $updater->update();
         } catch (\Throwable $e) {
-            $this->state->isDailyTaskActive = false;
             throw $e;
         }
 

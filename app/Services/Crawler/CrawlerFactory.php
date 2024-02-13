@@ -41,7 +41,7 @@ class CrawlerFactory
         string $userAgent,
         int $max_redirects = 3,
         int $retryLimit = 3,
-        int $retryInterval = 30,
+        int $retryInterval = 3,
         string $method = 'GET',
         string $acceptLanguage = 'en',
         bool $getCrawler = true,
