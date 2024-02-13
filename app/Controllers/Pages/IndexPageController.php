@@ -40,8 +40,7 @@ class IndexPageController
         $_meta = meta();
         $_meta->title = "{$_meta->title} | オープンチャットの人数統計とグラフ分析";
 
-        $rankingInfo = unserialize(file_get_contents(AppConfig::TOP_RANKING_INFO_FILE_PATH))['rankingUpdatedAt'];
-        $_updatedAt = OpenChatServicesUtility::getCronModifiedDate(new \DateTime('@' . $rankingInfo))
+        $_updatedAt = OpenChatServicesUtility::getCronModifiedDate(new \DateTime('@' . $rankingList['updatedAt']))
             ->format('n月j日');
 
         return view('top_content', compact('_meta', '_css', 'myList', '_updatedAt') + $rankingList);

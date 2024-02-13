@@ -107,6 +107,13 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function findMemberStatsHourlyRanking(
+        int $startId,
+        int $endId,
+    ): array {
+        return $this->findMemberStatsRanking($startId, $endId, 'statistics_ranking_hour');
+    }
+
     public function findMemberStatsDailyRanking(
         int $startId,
         int $endId,
