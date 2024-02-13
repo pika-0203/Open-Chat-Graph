@@ -9,6 +9,7 @@ use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Services\OpenChat\OpenChatDailyCrawling;
 use App\Services\OpenChat\SubCategory\OpenChatSubCategorySynchronizer;
+use App\Services\OpenChat\Updater\MemberColumnUpdater;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\RankingPosition\RankingPositionDailyUpdater;
 

@@ -12,19 +12,13 @@ class RankingPositionHourPersistenceLastHourChecker
     function __construct(
         private RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
         private RankingPositionStore $rankingPositionStore,
-        private RankingPositionHourPersistence $rankingPositionHourPersistence,
     ) {
     }
 
-    function checkLastHour(): void
+    function isLastHourPersistenceCompleted(): bool
     {
         $fileTime = $this->rankingPositionStore->getFileDateTime()->format('Y-m-d H:i:s');
         $dbTime = $this->rankingPositionHourRepository->getLastHour();
-        if ($fileTime === $dbTime) {
-            return;
-        }
-
-        addCronLog('HourPersistence RETRY');
-        $this->rankingPositionHourPersistence->persistStorageFileToDb();
+        return $fileTime === $dbTime;
     }
 }
