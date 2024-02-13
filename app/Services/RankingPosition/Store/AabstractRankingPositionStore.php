@@ -51,9 +51,9 @@ abstract class AabstractRankingPositionStore
         deleteStorageFileAll($this->filePath, true);
     }
 
-    function getFileDateTime(): \DateTime
+    function getFileDateTime(string $category = '0'): \DateTime
     {
-        return $this->getModifiedFileTime($this->filePath . "/0.dat");
+        return $this->getModifiedFileTime($this->filePath . "/{$category}.dat");
     }
 
     protected function getModifiedFileTime(string $fileName): \DateTime

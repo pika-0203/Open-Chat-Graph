@@ -15,22 +15,28 @@ class OpenChatApiRankingDownloader
 
     /**
      * @param \Closure $callback 1件毎にループ内で呼び出すコールバック `$callback(array $apiData, string $category)`
-     * @param ?\Closure $callbackByCategory 1カテゴリーごとに呼び出すコールバック `$callbackByCategory(string $category)`
+     * @param ?\Closure $callbackByCategoryBefore 1カテゴリーごとに呼び出すコールバック `$callbackByCategoryBefore(string $category): bool`
+     * @param ?\Closure $callbackByCategoryAfter 1カテゴリーごとに呼び出すコールバック `$callbackByCategoryAfter(string $category)`
      * 
      * @return array{ count: int, category: string, dateTime: \DateTime }[] 取得済件数とカテゴリ
      * 
      * @throws \RuntimeException
      */
-    function fetchOpenChatApiRankingAll(\Closure $callback, ?\Closure $callbackByCategory): array
+    function fetchOpenChatApiRankingAll(\Closure $callback, ?\Closure $callbackByCategoryBefore, ?\Closure $callbackByCategoryAfter): array
     {
         $result = [];
         foreach (AppConfig::OPEN_CHAT_CATEGORY as $key => $category) {
-            $count = $this->fetchOpenChatApiRanking((string)$category, $callback);
-            if ($callbackByCategory) {
-                $callbackByCategory((string)$category);
+            if ($callbackByCategoryBefore && $callbackByCategoryBefore((string)$category)) {
+                continue;
             }
 
-            $result[] = ['count' => $count, 'category' => $key, 'dateTime' => new \DateTime()]; 
+            $count = $this->fetchOpenChatApiRanking((string)$category, $callback);
+
+            if ($callbackByCategoryAfter) {
+                $callbackByCategoryAfter((string)$category);
+            }
+
+            $result[] = ['count' => $count, 'category' => $key, 'dateTime' => new \DateTime()];
         }
 
         return $result;
