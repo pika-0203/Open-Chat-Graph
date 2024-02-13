@@ -8,6 +8,7 @@ use App\Services\Admin\AdminTool;
 use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Services\DailyUpdateCronService;
+use App\Services\OpenChat\OpenChatDailyCrawling;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistenceLastHourChecker;
 use App\Services\SitemapGenerator;
@@ -35,10 +36,12 @@ class SyncOpenChat
 
     function handle()
     {
-        if (
-            isDailyUpdateTime()
-            || (isDailyUpdateTime(new \DateTime('-2 hour')) && $this->state->isDailyTaskActive)
-        ) {
+        if (isDailyUpdateTime()) {
+            $this->hourlyTask();
+            $this->dailyTask();
+        } else if (isDailyUpdateTime(new \DateTime('-2 hour')) && $this->state->isDailyTaskActive) {
+            OpenChatDailyCrawling::enableKillFlag();
+            $this->hourlyTask();
             $this->dailyTask();
         } else {
             $this->hourlyTask();
@@ -114,6 +117,7 @@ class SyncOpenChat
         try {
             /** @var DailyUpdateCronService $updater */
             $updater = app(DailyUpdateCronService::class);
+            OpenChatDailyCrawling::disableKillFlag();
             $updater->update();
         } catch (\Throwable $e) {
             throw $e;
