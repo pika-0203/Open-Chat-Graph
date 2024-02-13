@@ -7,10 +7,12 @@ namespace App\Services;
 use App\Config\AppConfig;
 use App\Models\Repositories\RankingPosition\HourMemberRankingUpdaterRepositoryInterface;
 use App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface;
+use App\Services\StaticData\StaticTopPageDataGenerator;
 
 class UpdateHourlyMemberRankingService
 {
     function __construct(
+        private StaticTopPageDataGenerator $staticTopPageDataGenerator,
         private HourMemberRankingUpdaterRepositoryInterface $hourMemberRankingUpdaterRepository,
         private RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
     ) {
@@ -34,5 +36,6 @@ class UpdateHourlyMemberRankingService
         );
 
         safeFileRewrite(AppConfig::TOP_RANKING_HOUR_INFO_FILE_PATH, $data);
+        $this->staticTopPageDataGenerator->updateStaticTopPageData();
     }
 }

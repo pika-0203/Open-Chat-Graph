@@ -21,6 +21,7 @@ class StaticTopPageDataGenerator
     {
         // トップページのキャッシュファイルを生成する
         $rankingList = [];
+        $rankingList['hourOpenChatList'] = $this->openChatListRepository->findMemberStatsHourlyRanking(0, 10);
         $rankingList['openChatList'] = $this->openChatListRepository->findMemberStatsDailyRanking(0, 10);
         $rankingList['pastWeekOpenChatList'] = $this->openChatListRepository->findMemberStatsPastWeekRanking(0, 10);
 
@@ -30,6 +31,10 @@ class StaticTopPageDataGenerator
             'rankingRowCount' => $rankingList['dailyRankingRowCount'],
             'recordCount' => $rankingList['recordCount'],
         ] = unserialize($data);
+
+        $rankingList['hourlyUpdatedAt'] = unserialize(
+            file_get_contents(AppConfig::TOP_RANKING_HOUR_INFO_FILE_PATH)
+        )['rankingUpdatedAt'];
 
         $rankingList['recordCount'] = $this->openChatListRepository->getRecordCount();
 

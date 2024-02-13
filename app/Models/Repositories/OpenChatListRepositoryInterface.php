@@ -39,6 +39,14 @@ interface OpenChatListRepositoryInterface
     public function getRankingRecordByMylist(array $idArray): array;
 
     /**
+     * @return array `[['id' => int, 'name' => string, 'url' => string, 'description' => string, 'img_url' => string, 'member' => int, 'diff_member' => int, 'percent_increase' => float]]`
+     */
+    public function findMemberStatsHourlyRanking(
+        int $startId,
+        int $endId,
+    ): array;
+
+    /**
      * 日次ランキングを取得する
      * 
      * @return array `[['id' => int, 'name' => string, 'url' => string, 'description' => string, 'img_url' => string, 'member' => int, 'diff_member' => int, 'percent_increase' => float]]`
