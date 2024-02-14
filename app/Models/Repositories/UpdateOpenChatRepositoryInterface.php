@@ -18,11 +18,7 @@ interface UpdateOpenChatRepositoryInterface
 
     public function getOpenChatIdByEmid(string $emid): int|false;
 
-    /**
-     * @return int[] open_chat_id
-     */
-    public function getOpenChatIdAll(): array;
-
+    
     /**
      * @param array{ open_chat_id: int, member: int } $oc
      */

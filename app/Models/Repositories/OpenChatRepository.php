@@ -83,4 +83,32 @@ class OpenChatRepository implements OpenChatRepositoryInterface
     {
         return DB::fetchAll("SELECT id, emid FROM open_chat");
     }
+
+    public function getOpenChatIdAll(): array
+    {
+        $query =
+            'SELECT
+                id
+            FROM
+                open_chat';
+
+        return DB::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
+    }
+
+    public function getOpenChatIdAllByCreatedAtDate(string $date): array
+    {
+        $date = new \DateTime($date);
+        $date->modify('+1day');
+        $dateStr = $date->format('Y-m-d');
+
+        $query =
+            "SELECT
+                id
+            FROM
+                open_chat
+            WHERE
+                created_at < '{$dateStr}'";
+
+        return DB::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
+    }
 }

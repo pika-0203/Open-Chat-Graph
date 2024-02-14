@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services\RankingPosition;
 
+use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Services\RankingPosition\Persistence\RankingPositionDailyPersistence;
 use App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
-use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 class RankingPositionDailyUpdater
@@ -18,7 +18,7 @@ class RankingPositionDailyUpdater
         private RankingPositionDailyPersistence $rankingPositionDailyPersistence,
         private StatisticsRepositoryInterface $statisticsRepository,
         private RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
-        private UpdateOpenChatRepositoryInterface $updateRepository,
+        private OpenChatRepositoryInterface $openChatRepository,
     ) {
         $this->date = OpenChatServicesUtility::getCronModifiedStatsMemberDate();
     }
@@ -32,7 +32,7 @@ class RankingPositionDailyUpdater
     private function persistMemberStatsFromRankingPositionDb(): void
     {
         $data = $this->rankingPositionHourRepository->getDailyMemberStats(new \DateTime($this->date));
-        $ocDbIdArray = $this->updateRepository->getOpenChatIdAll();
+        $ocDbIdArray = $this->openChatRepository->getOpenChatIdAll();
 
         $filteredData = array_filter($data, fn ($stats) => in_array($stats['open_chat_id'], $ocDbIdArray));
         unset($ocDbIdArray);

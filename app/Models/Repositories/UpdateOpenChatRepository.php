@@ -89,17 +89,6 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         return DB::fetchColumn($query, compact('emid'));
     }
 
-    public function getOpenChatIdAll(): array
-    {
-        $query =
-            'SELECT
-                id
-            FROM
-                open_chat';
-
-        return DB::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
-    }
-
     public function updateMemberColumn(array $oc): void
     {
         $member = $oc['member'];
