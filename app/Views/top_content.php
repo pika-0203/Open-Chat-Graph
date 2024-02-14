@@ -17,7 +17,7 @@
                     <time>ピン留め (1日毎に更新)</time>
                 </div>
                 <div style="margin: -4px 0 -4px 0;">
-                    <?php viewComponent('open_chat_list', ['openChatList' => $myList, 'isHourly' => true]) ?>
+                    <?php viewComponent('open_chat_list', ['openChatList' => $myList]) ?>
                 </div>
             </article>
             <hr class="ht-top-mylist">

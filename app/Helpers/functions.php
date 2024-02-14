@@ -176,11 +176,13 @@ function addCronLog(string|array $log)
 
 function isDailyUpdateTime(
     DateTime $currentTime = new DateTime,
-    array $start = [AppConfig::CRON_MERGER_HOUR_RANGE_START, AppConfig::CRON_START_MINUTE],
-    array $end = [AppConfig::CRON_MERGER_HOUR_RANGE_END, AppConfig::CRON_START_MINUTE]
+    array $start = [23, AppConfig::CRON_START_MINUTE],
+    array $end = [0, AppConfig::CRON_START_MINUTE],
+    DateTime $nowEnd = new DateTime,
+    DateTime $nowStart = new DateTime('+1 day')
 ): bool {
-    $endTime = (new DateTime)->setTime(...$end);
-    $startTime = (new DateTime)->setTime(...$start);
+    $endTime = $nowEnd->setTime(...$end);
+    $startTime = $nowStart->setTime(...$start);
 
     if ($currentTime < $endTime) return true;
     if ($currentTime > $startTime) return true;

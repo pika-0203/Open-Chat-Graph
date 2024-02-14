@@ -32,13 +32,7 @@ class RankingPositionDailyUpdater
 
     private function persistMemberStatsFromRankingPositionDb(): void
     {
-        $todayLastTime = new \DateTime($this->date);
-        $todayLastTime->setTime(
-            AppConfig::CRON_MERGER_HOUR_RANGE_START,
-            AppConfig::CRON_START_MINUTE
-        );
-
-        $data = $this->rankingPositionHourRepository->getDailyMemberStats($todayLastTime);
+        $data = $this->rankingPositionHourRepository->getDailyMemberStats(new \DateTime($this->date));
         $ocDbIdArray = $this->updateRepository->getOpenChatIdAll();
 
         $filteredData = array_filter($data, fn ($stats) => in_array($stats['open_chat_id'], $ocDbIdArray));
