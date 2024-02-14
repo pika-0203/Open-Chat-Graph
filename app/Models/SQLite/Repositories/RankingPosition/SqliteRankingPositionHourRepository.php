@@ -168,7 +168,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
         return SQLiteRankingPositionHour::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
     }
 
-    private function getMedianPositionQuery(string $tableName, int $open_chat_id, string $dateString, bool $all): array|false
+    function getMedianPositionQuery(string $tableName, int $open_chat_id, string $dateString, bool $all): array|false
     {
         $isAll = $all ? '' : 'NOT';
 
@@ -183,7 +183,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
             WHERE
                 DATE(time) = '{$dateString}'
                 AND {$isAll} category = 0
-                AND open_chat_id = '{$open_chat_id}'
+                AND open_chat_id = {$open_chat_id}
             ORDER BY
                 position ASC";
 

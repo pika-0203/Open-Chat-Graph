@@ -33,10 +33,12 @@ class SyncOpenChat
         if (isDailyUpdateTime()) {
             $this->hourlyTask();
             $this->dailyTask();
-        } else if (isDailyUpdateTime(new \DateTime('-2 hour')) && $this->state->isDailyTaskActive) {
+        } else if (
+            isDailyUpdateTime(new \DateTime('-2 hour'), nowEnd: new \DateTime('-1day'), nowStart: new \DateTime('now'))
+            && $this->state->isDailyTaskActive
+        ) {
             addCronLog('Retry dailyTask');
             AdminTool::sendLineNofity('Retry dailyTask');
-            OpenChatDailyCrawling::enableKillFlag();
             $this->hourlyTask();
             $this->dailyTask();
         } else {
@@ -51,7 +53,6 @@ class SyncOpenChat
         if ($this->state->isHourlyTaskActive) {
             addCronLog('Retry hourlyTask');
             AdminTool::sendLineNofity('Retry hourlyTask');
-            OpenChatApiDbMerger::enableKillFlag();
             $this->handle();
             return;
         }
@@ -82,6 +83,8 @@ class SyncOpenChat
 
     private function hourlyMerge()
     {
+        OpenChatApiDbMerger::enableKillFlag();
+        sleep(3);
         OpenChatApiDbMerger::disableKillFlag();
         addCronLog("start merge");
 
@@ -116,6 +119,8 @@ class SyncOpenChat
 
         /** @var DailyUpdateCronService $updater */
         $updater = app(DailyUpdateCronService::class);
+        OpenChatDailyCrawling::enableKillFlag();
+        sleep(3);
         OpenChatDailyCrawling::disableKillFlag();
         $updater->update();
 

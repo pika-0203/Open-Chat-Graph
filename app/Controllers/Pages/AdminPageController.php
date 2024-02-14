@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionHourRepository;
 use App\Services\UpdateRankingService;
 use App\Services\StaticData\StaticTopPageDataGenerator;
 use App\Services\Admin\AdminAuthService;
@@ -12,6 +13,7 @@ use App\Services\Admin\AdminTool;
 use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Models\SQLite\SQLiteStatistics;
 use App\Services\Cron\CronJson\SyncOpenChatState;
+use App\Services\OpenChat\OpenChatDailyCrawling;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\SitemapGenerator;
@@ -25,6 +27,12 @@ class AdminPageController
         if (!$adminAuthService->auth()) {
             throw new NotFoundException;
         }
+    }
+
+    function test(SqliteRankingPositionHourRepository $repo)
+    {
+        $res = $repo->getMedianPositionQuery('ranking', 138344, '2024-02-14', false);
+        var_dump($res);
     }
 
     function positiondb(RankingPositionHourPersistence $rankingPositionHourPersistence)
@@ -92,6 +100,12 @@ class AdminPageController
         OpenChatApiDbMerger::enableKillFlag();
 
         return view('admin/admin_message_page', ['title' => 'OpenChatApiDbMerger', 'message' => 'OpenChatApiDbMergerを強制終了しました']);
+    }
+
+    function killdaily()
+    {
+        OpenChatDailyCrawling::enableKillFlag();
+        return view('admin/admin_message_page', ['title' => 'OpenChatApiDbMerger', 'message' => 'OpenChatDailyCrawlingを強制終了しました']);
     }
 
     function phpinfo()
