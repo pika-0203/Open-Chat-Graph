@@ -224,21 +224,12 @@ body::before {
   display: flex;
 }
 
-.positive.weekly .openchat-item-stats,
-.openchat-item-stats-weekly-zero {
+.positive .openchat-item-stats {
   color: #4d73ff;
 }
 
-.negative.weekly .openchat-item-stats {
-  color: black;
-}
-
-.positive .openchat-item-stats {
-  color: #07b53b;
-}
-
 .negative .openchat-item-stats {
-  color: #b71c1c;
+  color: #ff5d6d;
 }
 
 .line-link-icon {

@@ -184,13 +184,17 @@ hr {
 }
 
 .talkroom_number_of_stats * {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .talkroom_number_of_stats .number-box {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.number-box.weekly .openchat-item-stats {
+  color: #07b53b;
 }
 
 .my-list-form {

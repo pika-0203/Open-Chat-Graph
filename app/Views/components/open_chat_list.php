@@ -1,5 +1,4 @@
 <!-- @param array $openChatList -->
-<!-- @param bool $isDaily -->
 <!-- @param bool $isHourly -->
 <ol class="openchat-item-list unset">
   <?php foreach ($openChatList as $oc) : ?>
@@ -11,7 +10,7 @@
       </h3>
       <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
       <footer class="openchat-item-lower-outer">
-        <div class="openchat-item-lower unset <?php echo ($oc['diff_member'] ?? 1) > 0 ? 'positive' : 'negative' ?> <?php echo ($isDaily ?? true) ? '' : 'weekly' ?>">
+        <div class="openchat-item-lower unset <?php echo ($oc['diff_member'] ?? 1) > 0 ? 'positive' : 'negative' ?>">
           <?php if (isset($oc['datetime'])) : ?>
             <span class="registration-date blue"><?php echo ($isAdmin ?? false) ? convertDatetime($oc['datetime'], true) : getCronModifiedDateTime($oc['datetime']) ?></span>
           <?php endif ?>
@@ -22,7 +21,7 @@
               <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
             </span>
           <?php elseif (($oc['diff_member'] ?? 1) === 0) : ?>
-            <span class="<?php echo ($isDaily ?? true) ? '' : 'openchat-item-stats-weekly-zero' ?>">±0</span>
+            <span>±0</span>
           <?php endif ?>
         </div>
         <?php if (isset($oc['category']) && $oc['category']) : ?>
