@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
-use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Services\OpenChat\OpenChatDailyCrawling;
 use App\Services\OpenChat\SubCategory\OpenChatSubCategorySynchronizer;
 use App\Services\OpenChat\Updater\MemberColumnUpdater;
@@ -19,7 +19,7 @@ class DailyUpdateCronService
     function __construct(
         private RankingPositionDailyUpdater $rankingPositionDailyUpdater,
         private OpenChatDailyCrawling $openChatDailyCrawling,
-        private UpdateOpenChatRepositoryInterface $updateRepository,
+        private OpenChatRepositoryInterface $openChatRepository,
         private StatisticsRepositoryInterface $statisticsRepository,
         private UpdateRankingService $updateRankingService,
         private MemberColumnUpdater $memberColumnUpdater,
@@ -33,7 +33,7 @@ class DailyUpdateCronService
      */
     function getTargetOpenChatIdArray(): array
     {
-        $ocDbIdArray = $this->updateRepository->getOpenChatIdAll();
+        $ocDbIdArray = $this->openChatRepository->getOpenChatIdAllByCreatedAtDate($this->date);
         $statsDbIdArray = $this->statisticsRepository->getOpenChatIdArrayByDate($this->date);
 
         $filteredIdArray = array_diff($ocDbIdArray, $statsDbIdArray);

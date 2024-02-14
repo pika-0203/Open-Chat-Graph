@@ -21,4 +21,15 @@ interface OpenChatRepositoryInterface
      * @return array{ id: int, emid: string }[]
      */
     public function getOpenChatIdEmidArrayAll(): array;
+
+    /**
+     * @return int[] open_chat_id
+     */
+    public function getOpenChatIdAll(): array;
+
+    /**
+     * @param string $date Y-m-d
+     * @return int[]
+     */
+    public function getOpenChatIdAllByCreatedAtDate(string $date): array;
 }
