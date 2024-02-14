@@ -29,12 +29,20 @@ class IndexPageController
         $_meta = meta();
         $_meta->title = "{$_meta->title} | オープンチャットの人数統計とグラフ分析";
 
-        $_updatedAt = OpenChatServicesUtility::getCronModifiedDate(new \DateTime('@' . $rankingList['updatedAt']))
-            ->format('n/j');
+        $updatedAtTime = OpenChatServicesUtility::getCronModifiedDate(new \DateTime('@' . $rankingList['updatedAt']));
+        $_dailyStart = $updatedAtTime->format('n月j日');
 
-        $_hourlyUpdatedAt = OpenChatServicesUtility::getModifiedCronTime($rankingList['hourlyUpdatedAt'])
-            ->format('g:i');
+        $updatedAtTime->modify('-7day');
+        $weeklyStart = $updatedAtTime->format('n月j日');
+        $_weeklyRange = $weeklyStart . ' 〜 ' . $_dailyStart;
 
-        return view('top_content', compact('_meta', '_css', 'myList', '_updatedAt', '_hourlyUpdatedAt') + $rankingList);
+        $hourlyUpdatedAt = OpenChatServicesUtility::getModifiedCronTime($rankingList['hourlyUpdatedAt']);
+
+        $hourlyEnd = $hourlyUpdatedAt->format('G:i');
+        $hourlyUpdatedAt->modify('-1hour');
+        $hourlyStart = $hourlyUpdatedAt->format('G:i');
+        $_hourlyRange = $hourlyStart . ' 〜 ' . $hourlyEnd;
+
+        return view('top_content', compact('_meta', '_css', 'myList', '_dailyStart', '_hourlyRange', '_weeklyRange') + $rankingList);
     }
 }
