@@ -15,7 +15,7 @@ class StaticTopPageDataGenerator
     }
 
     /**
-     * @return array{ openChatList: array, pastWeekOpenChatList: array, updatedAt: int }
+     * @return array{ hourOpenChatList:array, openChatList: array, pastWeekOpenChatList: array, memberOpenChatList: array, updatedAt: int }
      */
     function getTopPageDataFromDB(): array
     {
@@ -24,6 +24,7 @@ class StaticTopPageDataGenerator
         $rankingList['hourOpenChatList'] = $this->openChatListRepository->findMemberStatsHourlyRanking(0, 10);
         $rankingList['openChatList'] = $this->openChatListRepository->findMemberStatsDailyRanking(0, 10);
         $rankingList['pastWeekOpenChatList'] = $this->openChatListRepository->findMemberStatsPastWeekRanking(0, 10);
+        $rankingList['memberOpenChatList'] = $this->openChatListRepository->findMemberCountRanking(0, 10);
 
         $data = file_get_contents(AppConfig::TOP_RANKING_INFO_FILE_PATH);
         [
@@ -42,6 +43,7 @@ class StaticTopPageDataGenerator
         trimOpenChatListDescriptions($rankingList['hourOpenChatList']);
         trimOpenChatListDescriptions($rankingList['openChatList']);
         trimOpenChatListDescriptions($rankingList['pastWeekOpenChatList']);
+        trimOpenChatListDescriptions($rankingList['memberOpenChatList']);
 
         return $rankingList;
     }
