@@ -36,6 +36,7 @@ class UpdateHourlyMemberRankingService
         );
 
         safeFileRewrite(AppConfig::TOP_RANKING_HOUR_INFO_FILE_PATH, $data);
+        
         $this->staticTopPageDataGenerator->updateStaticTopPageData();
     }
 }

@@ -67,6 +67,16 @@ interface OpenChatListRepositoryInterface
     ): array;
 
     /**
+     * メンバー数ランキングを取得する
+     * 
+     * @return array `[['id' => int, 'name' => string, 'url' => string, 'description' => string, 'img_url' => string, 'member' => int, 'diff_member' => int, 'percent_increase' => float]]`
+     */
+    public function findMemberCountRanking(
+        int $startId,
+        int $endId,
+    ): array;
+
+    /**
      * @return array{ id: int, updated_at: string }[]
      */
     public function getOpenChatSiteMapData(): array;
