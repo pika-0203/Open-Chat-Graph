@@ -162,7 +162,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
         return DB::fetchAll($query, compact('startId', 'endId'));
     }
 
-    function findMemberCountRanking(int $startId, int $endId): array
+    function findMemberCountRanking(int $limit): array
     {
         $query =
             "SELECT
@@ -177,13 +177,12 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 api_created_at
             FROM
                 open_chat
-            WHERE
-                id > :startId
-                AND id <= :endId
             ORDER BY
-                member DESC";
+                member DESC
+            LIMIT
+                :limit";
 
-        return DB::fetchAll($query, compact('startId', 'endId'));
+        return DB::fetchAll($query, compact('limit'));
     }
 
     /**
