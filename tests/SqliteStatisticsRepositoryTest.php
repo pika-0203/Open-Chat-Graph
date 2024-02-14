@@ -3,20 +3,21 @@
 declare(strict_types=1);
 
 use App\Models\SQLite\Repositories\Statistics\SqliteStatisticsRepository;
+use App\Services\DailyUpdateCronService;
 use PHPUnit\Framework\TestCase;
 use Shadow\DB;
 
-class SqliteStatisticsRepositoryTest extends TestCase
+class DailyUpdateCronServiceTest extends TestCase
 {
-    private SqliteStatisticsRepository $inst;
+    private DailyUpdateCronService $inst;
 
     function test()
     {
-        $this->inst = app(SqliteStatisticsRepository::class);
+        $this->inst = app(DailyUpdateCronService::class);
 
-        $res = $this->inst->getMemberChangeWithinLastWeekCacheArray('2024-02-08');
+        $res = $this->inst->getTargetOpenChatIdArray();
 
-        debug(in_array(139976, $res));
+        debug(count($res));
 
         $this->assertIsBool(true);
     }

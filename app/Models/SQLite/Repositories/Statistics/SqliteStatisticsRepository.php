@@ -122,6 +122,6 @@ class SqliteStatisticsRepository implements StatisticsRepositoryInterface
             WHERE
                 date = '{$date}'";
 
-        return SQLiteStatistics::fetchAll($query);
+        return SQLiteStatistics::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
     }
 }

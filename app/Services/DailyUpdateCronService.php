@@ -31,12 +31,12 @@ class DailyUpdateCronService
     /**
      * @return int[]
      */
-    private function getTargetOpenChatIdArray(): array
+    function getTargetOpenChatIdArray(): array
     {
         $ocDbIdArray = $this->updateRepository->getOpenChatIdAll();
         $statsDbIdArray = $this->statisticsRepository->getOpenChatIdArrayByDate($this->date);
 
-        $filteredIdArray = array_filter($ocDbIdArray, fn (int $id) => !in_array($id, $statsDbIdArray));
+        $filteredIdArray = array_diff($ocDbIdArray, $statsDbIdArray);
 
         $memberChangeWithinLastWeekIdArray = $this->statisticsRepository->getMemberChangeWithinLastWeekCacheArray($this->date);
 
