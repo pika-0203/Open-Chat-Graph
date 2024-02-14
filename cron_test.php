@@ -15,14 +15,14 @@ try {
         FROM
             open_chat
         WHERE
-            created_at > '2024-02-15'";
+            created_at > '2024-02-13'";
 
     $ids = DB::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
 
     $result = 0;
     foreach ($ids as $id) {
         $r = SQLiteStatistics::executeAndCheckResult(
-            "DELETE FROM statistics WHERE open_chat_id = {$id} AND date = '2024-02-14'"
+            "DELETE FROM statistics WHERE open_chat_id = {$id} AND date = '2024-02-12'"
         );
         if ($r) $result++;
     }
