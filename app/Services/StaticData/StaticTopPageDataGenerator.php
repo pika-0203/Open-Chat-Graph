@@ -39,6 +39,7 @@ class StaticTopPageDataGenerator
         $rankingList['recordCount'] = $this->openChatListRepository->getRecordCount();
 
         // 説明文の文字数を詰める
+        trimOpenChatListDescriptions($rankingList['hourOpenChatList']);
         trimOpenChatListDescriptions($rankingList['openChatList']);
         trimOpenChatListDescriptions($rankingList['pastWeekOpenChatList']);
 

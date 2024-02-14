@@ -8,6 +8,7 @@
         <hr>
         <hr>
         <small class="top-small-desc" style="font-size: 1rem;"><b>オープンチャットを手動で登録する</b></small>
+
         <small class="top-small-desc" style="font-size: 14px; color: #616161">
             <ul>
                 <li><a href="https://openchat.line.me/jp" rel="external" target="_blank" style="font-size: 14px; color: #616161">LINEオープンチャット公式サイト</a>を開く</li>
@@ -18,6 +19,32 @@
         </small>
         <small class="top-small-desc" style="font-size: 14px; color: #616161">公式サイトに掲載されていないオープンチャットは登録できません。</small>
         </p>
+        <!-- 送信後のレスポンス -->
+        <?php if (session()->has('id')) : ?>
+            <!-- 登録完了 or 登録済 -->
+            <hr class="ht-top-header">
+            <sup class="add-openchat-message success" id="add-openchat-describedby"><?php echo h(session('message')) ?></sup>
+            <div class="openchat-item add-openchat-form-item">
+                <a class="link-overlay unset" href="<?php echo url('/oc/' . $requestOpenChat['id']) ?>" tabindex="-1"></a>
+                <img alt class="openchat-item-img" src="<?php echo imgPreviewUrl($requestOpenChat['img_url']) ?>" <?php echo getImgSetErrorTag() ?>>
+                <h2 class="unset">
+                    <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $requestOpenChat['id']) ?>"><?php echo $requestOpenChat['name'] ?></a>
+                </h2>
+                <p class="openchat-item-desc unset"><?php echo $requestOpenChat['description'] ?></p>
+                <footer class="openchat-item-lower unset">
+                    <span>メンバー <?php echo $requestOpenChat['member'] ?></span>
+                </footer>
+            </div>
+        <?php elseif (session()->has('message')) : ?>
+            <!-- 無効なURLの場合 -->
+            <hr class="ht-top-header">
+            <div style="font-size: 17px; margin: 1rem;" class="add-openchat-message false" id="add-openchat-describedby"><?php echo h(session('message')) ?></div>
+        <?php endif ?>
+        <?php foreach (session()->getError() as $error) : ?>
+            <!-- その他エラーメッセージ -->
+            <hr class="ht-top-header">
+            <div style="font-size: 17px; margin: 1rem;" class="add-openchat-message false" id="add-openchat-describedby"><?php echo h($error['message']) ?></div>
+        <?php endforeach ?>
         <hr>
         <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">
             <label for="add-openchat-input-url">公式サイトのURL</label>

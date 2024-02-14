@@ -15,7 +15,7 @@ class OpenChatRegistrationApiController
         $openChat->getNumAddOpenChatPerMinute();
         $result = $openChat->registerOpenChatFromCrawler(sanitizeString($url));
 
-        return redirect()
+        return redirect('register')
             ->with($result);
     }
 }

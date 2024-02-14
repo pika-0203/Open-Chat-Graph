@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
-use App\Config\AppConfig;
-use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\User\MyOpenChatList;
 use App\Services\StaticData\StaticDataGeneration;
@@ -15,15 +13,6 @@ class IndexPageController
     function index(StaticDataGeneration $staticDataGeneration)
     {
         $rankingList = $staticDataGeneration->getTopPageData();
-
-        // セッションにIDのリクエストがある場合
-        if (session()->has('id')) {
-            /** 
-             * @var OpenChatPageRepositoryInterface $openChatRepository
-             */
-            $openChatRepository = app(OpenChatPageRepositoryInterface::class);
-            $rankingList['requestOpenChat'] = $openChatRepository->getOpenChatById(session('id'));
-        }
 
         $myList = [];
 
@@ -41,8 +30,11 @@ class IndexPageController
         $_meta->title = "{$_meta->title} | オープンチャットの人数統計とグラフ分析";
 
         $_updatedAt = OpenChatServicesUtility::getCronModifiedDate(new \DateTime('@' . $rankingList['updatedAt']))
-            ->format('n月j日');
+            ->format('n/j');
 
-        return view('top_content', compact('_meta', '_css', 'myList', '_updatedAt') + $rankingList);
+        $_hourlyUpdatedAt = OpenChatServicesUtility::getModifiedCronTime($rankingList['hourlyUpdatedAt'])
+            ->format('g:i');
+
+        return view('top_content', compact('_meta', '_css', 'myList', '_updatedAt', '_hourlyUpdatedAt') + $rankingList);
     }
 }

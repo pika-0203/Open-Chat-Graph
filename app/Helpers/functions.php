@@ -187,43 +187,38 @@ function isDailyUpdateTime(
     return false;
 }
 
-function checkLineSiteRobots()
+function checkLineSiteRobots(int $retryLimit = 3, int $retryInterval = 1): string
 {
-    $robots = file_get_contents('https://openchat.line.me/robots.txt');
-    $ua = str_contains($robots, 'User-agent: *');
-    $arrow = str_contains($robots, 'Allow: /jp/');
-    if (!$ua || !$arrow) {
-        throw new \RuntimeException('Robots.txt: 拒否 ' . $robots);
+    $retryCount = 0;
+
+    while ($retryCount < $retryLimit) {
+        try {
+            $robots = file_get_contents('https://openchat.line.me/robots.txt');
+            if (!str_contains($robots, 'User-agent: *') || !str_contains($robots, 'Allow: /jp/')) {
+                throw new \RuntimeException('Robots.txt: 拒否 ' . $robots);
+            }
+
+            return $robots;
+        } catch (\Throwable $e) {
+            $retryCount++;
+            if ($retryCount >= $retryLimit) {
+                throw new \RuntimeException(get_class($e) . ': ' . $e->getMessage());
+            }
+
+            sleep($retryInterval);
+            continue;
+        }
+
+        $retryCount++;
+        sleep($retryInterval);
     }
-}
-
-function updateSitemap()
-{
-    $today = date('Y-m-d');
-    $sitemap = <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>https://openchat-review.me</loc>
-        <lastmod>{$today}</lastmod>
-        <changefreq>daily</changefreq>
-    </url>
-    <url>
-        <loc>https://openchat-review.me/ranking</loc>
-        <lastmod>{$today}</lastmod>
-        <changefreq>daily</changefreq>
-    </url>
-</urlset>
-XML;
-
-    safeFileRewrite(PUBLIC_DIR . '/sitemap.xml', $sitemap);
 }
 
 function getImgSetErrorTag(): string
 {
     return <<<HTML
- onerror="this.src='/assets/ogp.png'; this.removeAttribute('onerror'); this.removeAttribute('onload');" onload="this.removeAttribute('onerror'); this.removeAttribute('onload');"
- HTML;
+        onerror="this.src='/assets/ogp.png'; this.removeAttribute('onerror'); this.removeAttribute('onload');" onload="this.removeAttribute('onerror'); this.removeAttribute('onload');"
+    HTML;
 }
 
 function getFilePath($path, $pattern): string
