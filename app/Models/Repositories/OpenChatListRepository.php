@@ -96,7 +96,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 ranking.id AS ranking_id
             FROM
                 open_chat AS oc
-                LEFT JOIN statistics_ranking_hour AS ranking ON oc.id = ranking.open_chat_id
+                LEFT JOIN statistics_ranking_day AS ranking ON oc.id = ranking.open_chat_id
             WHERE
                 oc.id IN {$statement}";
 
