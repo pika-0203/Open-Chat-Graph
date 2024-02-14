@@ -26,21 +26,16 @@
   background-position: -33px -76px;
 }
 
-.show-north,
-.stats-wrapper.positive {
+.show-north {
   color: #07b53b;
 }
 
-.stats-wrapper.positive.weekly {
+.stats-wrapper.positive {
   color: #4d73ff;
 }
 
 .stats-wrapper.negative {
-  color: #b71c1c;
-}
-
-.stats-wrapper.negative.weekly {
-  color: #111;
+  color: #ff5d6d;
 }
 
 .visually-hidden {

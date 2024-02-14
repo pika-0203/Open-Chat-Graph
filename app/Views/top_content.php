@@ -13,7 +13,12 @@
         <hr>
         <?php if ($myList) : ?>
             <article class="top-mylist">
-                <?php viewComponent('open_chat_list', ['openChatList' => $myList]) ?>
+                <div class="refresh-time openchat-list-date">
+                    <time>ピン留め (1時間更新)</time>
+                </div>
+                <div style="margin: -4px 0 -4px 0;">
+                    <?php viewComponent('open_chat_list', ['openChatList' => $myList, 'isHourly' => true]) ?>
+                </div>
             </article>
             <hr class="ht-top-mylist">
         <?php endif ?>
@@ -63,7 +68,7 @@
                     </div>
                 </div>
             </header>
-            <?php viewComponent('open_chat_list', ['openChatList' => array_slice($pastWeekOpenChatList, 0, 5), 'isDaily' => false]) ?>
+            <?php viewComponent('open_chat_list', ['openChatList' => array_slice($pastWeekOpenChatList, 0, 5)]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=weekly') ?>">
                 <span class="ranking-readMore">もっと見る</span>
             </a>
