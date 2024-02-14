@@ -115,7 +115,7 @@ class SyncOpenChat
 
         $this->hourlyTask();
 
-        set_time_limit(3600);
+        set_time_limit(5400);
 
         /** @var DailyUpdateCronService $updater */
         $updater = app(DailyUpdateCronService::class);
