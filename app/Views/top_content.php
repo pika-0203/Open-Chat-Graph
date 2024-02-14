@@ -42,7 +42,7 @@
                         <span class="openchat-list-title">Daily</span>
                     </h2>
                     <div class="refresh-time">
-                        <time><?php echo $_dailyStart ?></time>
+                        <time>昨日</time>
                     </div>
                 </div>
             </header>
