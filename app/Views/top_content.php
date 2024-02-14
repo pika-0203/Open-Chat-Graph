@@ -78,15 +78,15 @@
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
-                        <span class="openchat-list-title">Weekly</span>
+                        <span class="openchat-list-title">Popular</span>
                     </h2>
                     <div class="refresh-time">
-                        <time><?php echo $_weeklyRange ?></time>
+                        <span>メンバーが多い順</span>
                     </div>
                 </div>
             </header>
             <?php viewComponent('open_chat_list', ['openChatList' => array_slice($memberOpenChatList, 0, 5)]) ?>
-            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=weekly') ?>">
+            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all') ?>">
                 <span class="ranking-readMore">もっと見る</span>
             </a>
         </article>
