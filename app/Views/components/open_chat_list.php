@@ -1,18 +1,19 @@
 <!-- @param array $openChatList -->
-<!-- @param array $isDaily -->
+<!-- @param bool $isDaily -->
+<!-- @param bool $isHourly -->
 <ol class="openchat-item-list unset">
   <?php foreach ($openChatList as $oc) : ?>
     <li class="openchat-item unset  <?php echo isset($oc['archived_at']) ? 'registration' : '' ?>">
-      <a class="link-overlay unset" href="<?php echo url('/oc/' . $oc['id']) ?>" tabindex="-1" aria-hidden="true"></a>
+      <a class="link-overlay unset" href="<?php echo url('/oc/' . $oc['id'] . (($isHourly ?? false) ? '?limit=hour' : '')) ?>" tabindex="-1" aria-hidden="true"></a>
       <img alt="オープンチャット「<?php echo $oc['name'] ?>」のアイコン" class="openchat-item-img" loading="lazy" src="<?php echo imgPreviewUrl($oc['img_url']) ?>" <?php echo getImgSetErrorTag() ?>>
       <h3 class="unset">
-        <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $oc['id']) ?>"><?php if (($oc['emblem'] ?? 0) === 1) : ?><span class="super-icon sp"></span><?php elseif (($oc['emblem'] ?? 0) === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></a>
+        <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $oc['id'] . (($isHourly ?? false) ? '?limit=hour' : '')) ?>"><?php if (($oc['emblem'] ?? 0) === 1) : ?><span class="super-icon sp"></span><?php elseif (($oc['emblem'] ?? 0) === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></a>
       </h3>
       <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
       <footer class="openchat-item-lower-outer">
         <div class="openchat-item-lower unset <?php echo ($oc['diff_member'] ?? 1) > 0 ? 'positive' : 'negative' ?> <?php echo ($isDaily ?? true) ? '' : 'weekly' ?>">
           <?php if (isset($oc['datetime'])) : ?>
-            <span class="registration-date blue"><?php echo $isAdmin ?? false ? convertDatetime($oc['datetime'], true) : getCronModifiedDateTime($oc['datetime']) ?></span>
+            <span class="registration-date blue"><?php echo ($isAdmin ?? false) ? convertDatetime($oc['datetime'], true) : getCronModifiedDateTime($oc['datetime']) ?></span>
           <?php endif ?>
           <span>メンバー <?php echo number_format($oc['member']) ?></span>
           <?php if (($oc['diff_member'] ?? 0) !== 0) : ?>

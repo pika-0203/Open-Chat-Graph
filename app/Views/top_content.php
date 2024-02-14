@@ -13,7 +13,7 @@
         <hr>
         <?php if ($myList) : ?>
             <article class="top-mylist">
-                <?php viewComponent('open_chat_list', ['openChatList' => $myList, 'localUrl' => true]) ?>
+                <?php viewComponent('open_chat_list', ['openChatList' => $myList]) ?>
             </article>
             <hr class="ht-top-mylist">
         <?php endif ?>
@@ -25,12 +25,11 @@
                         <span class="openchat-list-title">Hourly</span>
                     </h2>
                     <div class="refresh-time">
-                        <div class="refresh-icon"></div>
-                        <time><?php echo $_hourlyUpdatedAt ?></time>
+                        <time><?php echo $_hourlyRange ?></time>
                     </div>
                 </div>
             </header>
-            <?php viewComponent('open_chat_list', ['openChatList' => array_slice($hourOpenChatList, 0, 5), 'isDaily' => true]) ?>
+            <?php viewComponent('open_chat_list', ['openChatList' => array_slice($hourOpenChatList, 0, 5), 'isHourly' => true]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=hourly') ?>">
                 <span class="ranking-readMore">もっと見る</span>
             </a>
@@ -43,12 +42,11 @@
                         <span class="openchat-list-title">Daily</span>
                     </h2>
                     <div class="refresh-time">
-                        <div class="refresh-icon"></div>
-                        <time datetime="<?php echo dateTimeAttr($updatedAt) ?>"><?php echo convertDatetime($updatedAt) ?></time>
+                        <time><?php echo $_dailyStart ?></time>
                     </div>
                 </div>
             </header>
-            <?php viewComponent('open_chat_list', ['openChatList' => $openChatList, 'isDaily' => true]) ?>
+            <?php viewComponent('open_chat_list', ['openChatList' => array_slice($openChatList, 0, 5)]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=daily') ?>">
                 <span class="ranking-readMore">もっと見る</span>
             </a>
@@ -61,12 +59,11 @@
                         <span class="openchat-list-title">Weekly</span>
                     </h2>
                     <div class="refresh-time">
-                        <div class="refresh-icon"></div>
-                        <time datetime="<?php echo dateTimeAttr($updatedAt) ?>"><?php echo convertDatetime($updatedAt) ?></time>
+                        <time><?php echo $_weeklyRange ?></time>
                     </div>
                 </div>
             </header>
-            <?php viewComponent('open_chat_list', ['openChatList' => $pastWeekOpenChatList, 'isDaily' => false]) ?>
+            <?php viewComponent('open_chat_list', ['openChatList' => array_slice($pastWeekOpenChatList, 0, 5), 'isDaily' => false]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=weekly') ?>">
                 <span class="ranking-readMore">もっと見る</span>
             </a>
