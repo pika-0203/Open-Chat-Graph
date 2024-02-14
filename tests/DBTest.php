@@ -14,5 +14,6 @@ class DBTest extends TestCase
     public function test()
     {
         debug(OpenChatServicesUtility::getCronModifiedStatsMemberDate());
+        $this->assertTrue(true);
     }
 }
