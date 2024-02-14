@@ -24,7 +24,7 @@ class StaticTopPageDataGenerator
         $rankingList['hourOpenChatList'] = $this->openChatListRepository->findMemberStatsHourlyRanking(0, 10);
         $rankingList['openChatList'] = $this->openChatListRepository->findMemberStatsDailyRanking(0, 10);
         $rankingList['pastWeekOpenChatList'] = $this->openChatListRepository->findMemberStatsPastWeekRanking(0, 10);
-        $rankingList['memberOpenChatList'] = $this->openChatListRepository->findMemberCountRanking(0, 10);
+        $rankingList['memberOpenChatList'] = $this->openChatListRepository->findMemberCountRanking(10);
 
         $data = file_get_contents(AppConfig::TOP_RANKING_INFO_FILE_PATH);
         [
