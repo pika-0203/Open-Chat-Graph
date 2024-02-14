@@ -25,6 +25,7 @@ AdminTool::sendLineNofity('start');
 $inst = app(DailyUpdateCronService::class);
 
 try {
+    set_time_limit(5400);
     $inst->update();
 } catch (\Throwable $e) {
     AdminTool::sendLineNofity($e->__toString());
