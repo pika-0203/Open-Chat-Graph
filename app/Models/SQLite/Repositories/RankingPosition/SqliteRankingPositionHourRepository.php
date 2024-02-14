@@ -88,7 +88,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
             GROUP BY
                 open_chat_id
             HAVING
-                MAX(time)";
+                time = MAX(time)";
 
         return SQLiteRankingPositionHour::fetchAll($query);
     }
@@ -108,7 +108,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
             GROUP BY
                 open_chat_id
             HAVING
-                MAX(time)";
+                time = MAX(time)";
 
         return SQLiteRankingPositionHour::fetchAll($query);
     }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\RankingPosition;
 
-use App\Config\AppConfig;
 use App\Services\RankingPosition\Persistence\RankingPositionDailyPersistence;
 use App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
