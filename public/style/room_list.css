@@ -432,20 +432,13 @@ main hr {
   -webkit-line-clamp: 1;
 }
 
-.ranking-url {
-  cursor: pointer;
-}
-
 .top-ranking-readMore {
   cursor: pointer;
-  height: 60px;
+  height: 42px;
   display: flex;
   box-sizing: border-box;
   margin: 0 -1rem;
-  margin-top: 1.5rem;
   margin-bottom: 22px;
-  border-top: solid 1px var(--border-color);
-  border-bottom: solid 1px var(--border-color);
   color: #111;
 }
 

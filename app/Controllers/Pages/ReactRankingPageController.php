@@ -30,7 +30,7 @@ class ReactRankingPageController
 
         $_argDto = new RankingArgDto;
         $_argDto->baseUrl = url();
-        $_argDto->rankingUpdatedAt = convertDatetime($updatedAt, true);
+        $_argDto->rankingUpdatedAt = convertDatetime($updatedAtHour, true);
         $_argDto->hourlyUpdatedAt = getCronModifiedDateTime('@' . $updatedAtHour, 'Y-m-d H:i:s');
         $_argDto->modifiedUpdatedAtDate = OpenChatServicesUtility::getCronModifiedDate(new \DateTime('@' . $updatedAt))->format('Y-m-d');
         $_argDto->subCategories = json_decode(file_get_contents(AppConfig::OPEN_CHAT_SUB_CATEGORIES_FILE_PATH), true);

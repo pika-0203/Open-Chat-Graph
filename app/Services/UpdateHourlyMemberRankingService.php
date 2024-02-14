@@ -24,7 +24,7 @@ class UpdateHourlyMemberRankingService
         if (!$time) return;
 
         $this->hourMemberRankingUpdaterRepository->updateHourRankingTable(new \DateTime($time));
-        $this->updateStaticData($time);
+        $this->updateStaticData((new \DateTime())->format('Y-m-d H:i:s'));
     }
 
     private function updateStaticData(string $time)
