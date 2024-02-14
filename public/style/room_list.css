@@ -374,10 +374,23 @@ main hr {
 .openchat-item-lower {
   display: flex;
   color: #aaa;
-  margin-top: 1px;
   font-size: 13px;
   line-height: 1.1rem;
-  gap: 8px;
+  gap: 12px;
+}
+
+.openchat-item-lower > span:nth-child(2) {
+  position: relative;
+}
+
+.openchat-item-lower > span:nth-child(2):before {
+  content: '';
+  position: absolute;
+  top: 7.5px;
+  left: -7px;
+  width: 2px;
+  height: 2px;
+  background-color: #aaa;
 }
 
 .openchat-item-mui-chip-outer {
