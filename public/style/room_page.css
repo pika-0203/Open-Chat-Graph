@@ -197,6 +197,10 @@ hr {
   color: #07b53b;
 }
 
+.number-box.weekly.negative .openchat-item-stats {
+  color: #ff5d6d;
+}
+
 .my-list-form {
   all: unset;
   display: flex;
