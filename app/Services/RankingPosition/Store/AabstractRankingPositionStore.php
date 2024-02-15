@@ -4,27 +4,36 @@ declare(strict_types=1);
 
 namespace App\Services\RankingPosition\Store;
 
+use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepositoryInterface;
+use App\Models\Repositories\RankingPosition\Dto\RankingPositionHourInsertDto;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 abstract class AabstractRankingPositionStore
 {
     /**
-     * @var array $apiDtoCache [$apiDto]
+     * @var OpenChatDto[] $apiDtoCache
      */
     protected array $apiDtoCache = [];
     protected string $filePath;
+
+    function __construct(
+        private OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatDataWithCache,
+    ) {
+    }
 
     function addApiDto(OpenChatDto $apiDto)
     {
         $this->apiDtoCache[] = $apiDto;
     }
 
-    function saveClearCurrentCategoryApiDataCache(string $category): void
+    function clearAllCacheDataAndSaveCurrentCategoryApiDataCache(string $category): void
     {
+        $this->openChatDataWithCache->clearCache();
+
         saveSerializedArrayToFile(
             $this->filePath . "/{$category}.dat",
-            $this->apiDtoCache,
+            $this->createInsertDtoArray($this->apiDtoCache),
             true
         );
 
@@ -32,7 +41,31 @@ abstract class AabstractRankingPositionStore
     }
 
     /**
-     * @return array `[$fileTime, $data]` string $fileTime "Y-m-d H:i:s", array $data [OpenChatDto]
+     * @param OpenChatDto[] $data 
+     * @return RankingPositionHourInsertDto[]
+     */
+    private function createInsertDtoArray(array $data): array
+    {
+        $result = [];
+        foreach ($data as $key => $dto) {
+            $id = $this->openChatDataWithCache->getOpenChatIdByEmid($dto->emid);
+            if (!$id) {
+                continue;
+            }
+
+            $result[] = new RankingPositionHourInsertDto(
+                $id,
+                $key + 1,
+                $dto->category ?? 0,
+                $dto->memberCount
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array{ 0: string, 1: RankingPositionHourInsertDto[] }
      */
     function getStorageData(string $category): array
     {
