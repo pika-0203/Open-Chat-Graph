@@ -21,6 +21,10 @@ class RankingPositionDailyPersistence
 
     function persistHourToDaily(): void
     {
+        if ($this->rankingPositionRepository->getLastDate() === $this->date) {
+            return;
+        }
+
         $date = new \DateTime($this->date);
 
         $this->insert(
