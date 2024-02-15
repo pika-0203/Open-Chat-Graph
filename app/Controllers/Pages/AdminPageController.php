@@ -12,7 +12,6 @@ use Shadow\DB;
 use App\Services\Admin\AdminTool;
 use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Models\SQLite\SQLiteStatistics;
-use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\OpenChat\OpenChatDailyCrawling;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
@@ -29,10 +28,8 @@ class AdminPageController
         }
     }
 
-    function test(SqliteRankingPositionHourRepository $repo)
+    function test()
     {
-        $res = $repo->getMedianPositionQuery('ranking', 138344, '2024-02-14', false);
-        var_dump($res);
     }
 
     function positiondb(RankingPositionHourPersistence $rankingPositionHourPersistence)

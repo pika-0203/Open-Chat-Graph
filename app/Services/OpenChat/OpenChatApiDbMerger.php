@@ -13,7 +13,6 @@ use App\Services\RankingPosition\Store\RankingPositionStore;
 use App\Services\RankingPosition\Store\RisingPositionStore;
 use App\Services\RankingPosition\Store\AabstractRankingPositionStore;
 use App\Services\OpenChat\Updater\Process\OpenChatApiDbMergerProcess;
-use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
 use App\Services\OpenChat\Dto\OpenChatApiDtoFactory;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Exceptions\ApplicationException;
