@@ -80,7 +80,7 @@ class SyncOpenChat
         if (!$this->rankingPositionHourChecker->isLastHourPersistenceCompleted()) {
             $this->hourlyRankingPosition();
         }
-
+        
         $this->hourlyMemberRankingUpdate();
     }
 
