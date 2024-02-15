@@ -48,4 +48,22 @@ class SqliteRankingPositionRepository implements RankingPositionRepositoryInterf
             compact('open_chat_id')
         );
     }
+
+    public function getLastDate(): string|false
+    {
+        return SQLiteRankingPosition::fetchColumn(
+            "SELECT
+                DATE(time)
+            FROM
+                total_count
+            GROUP BY
+                time
+            HAVING
+                count(time) = 25
+            ORDER BY
+                time DESC
+            LIMIT
+                1"
+        );
+    }
 }

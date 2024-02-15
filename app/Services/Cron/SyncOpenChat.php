@@ -68,7 +68,6 @@ class SyncOpenChat
 
     function hourlyTask()
     {
-        set_time_limit(1620);
         $this->state->isHourlyTaskActive = true;
         $this->state->update();
 
@@ -86,6 +85,8 @@ class SyncOpenChat
 
     private function hourlyMerge()
     {
+        set_time_limit(1620);
+        
         OpenChatApiDbMerger::enableKillFlag();
         sleep(3);
         OpenChatApiDbMerger::disableKillFlag();
