@@ -34,7 +34,7 @@ class SyncOpenChat
             $this->hourlyTask();
             $this->dailyTask();
         } else if (
-            isDailyUpdateTime(new \DateTime('-2 hour'), nowEnd: new \DateTime('-1day'), nowStart: new \DateTime('now'))
+            isDailyUpdateTime(new \DateTime('-2 hour'), nowEnd: new \DateTime('now'), nowStart: new \DateTime('-1day'))
             && $this->state->isDailyTaskActive
         ) {
             addCronLog('Retry dailyTask');
@@ -77,7 +77,10 @@ class SyncOpenChat
         $this->state->isHourlyTaskActive = false;
         $this->state->update();
 
-        $this->hourlyRankingPosition();
+        if (!$this->rankingPositionHourChecker->isLastHourPersistenceCompleted()) {
+            $this->hourlyRankingPosition();
+        }
+
         $this->hourlyMemberRankingUpdate();
     }
 

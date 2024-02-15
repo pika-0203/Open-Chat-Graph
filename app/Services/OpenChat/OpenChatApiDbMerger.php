@@ -94,9 +94,7 @@ class OpenChatApiDbMerger
         };
 
         $callbackByCategoryAfter = function (string $category) use ($positionStore): void {
-            $positionStore->saveClearCurrentCategoryApiDataCache($category);
-            // リポジトリキャッシュクリア
-            OpenChatDataForUpdaterWithCacheRepository::clearCache();
+            $positionStore->clearAllCacheDataAndSaveCurrentCategoryApiDataCache($category);
         };
 
         return $downloader->fetchOpenChatApiRankingAll($callback, $callbackByCategoryBefore, $callbackByCategoryAfter);
