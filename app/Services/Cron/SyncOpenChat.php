@@ -34,7 +34,7 @@ class SyncOpenChat
             $this->hourlyTask();
             $this->dailyTask();
         } else if (
-            isDailyUpdateTime(new \DateTime('-2 hour'), nowEnd: new \DateTime('now'), nowStart: new \DateTime('-1day'))
+            isDailyUpdateTime(new \DateTime('-2 hour'), nowStart: new \DateTime('-1day'))
             && $this->state->isDailyTaskActive
         ) {
             addCronLog('Retry dailyTask');
