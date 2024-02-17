@@ -95,7 +95,7 @@ class OpenChatApiDbMergerWithParallelDownloader
             RankingType::Ranking => $this->rankingStore->getStorageData((string)$category)[1],
         };
 
-        $log = $type->value . " " . AppConfig::OPEN_CHAT_CATEGORY_KEYS[$category];
+        $log = $type->value . " " . array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
         addCronLog("merge start: {$log}");
 
         foreach ($dtos as $dto)
