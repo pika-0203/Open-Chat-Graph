@@ -50,7 +50,10 @@ class DailyUpdateCronService
         $outOfRankId = $this->getTargetOpenChatIdArray();
 
         addCronLog('openChatCrawling start: ' . count($outOfRankId));
+        
+        OpenChatDailyCrawling::disableKillFlag();
         $result = $this->openChatDailyCrawling->crawling($outOfRankId);
+
         addCronLog('openChatCrawling done: ' . $result);
         unset($outOfRankId);
 

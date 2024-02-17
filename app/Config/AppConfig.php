@@ -29,6 +29,7 @@ class AppConfig
 
     const TOP_RANKING_INFO_FILE_PATH = __DIR__ . '/../../storage/static_data_top/ranking_info.dat';
     const TOP_RANKING_HOUR_INFO_FILE_PATH = __DIR__ . '/../../storage/static_data_top/ranking_hour_info.dat';
+    const ROOT_PATH = __DIR__ . '/../../';
 
     const OPEN_CHAT_CATEGORY = [
         'ゲーム' => 17,

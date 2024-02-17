@@ -10,10 +10,8 @@ use App\Services\Admin\AdminTool;
  */
 $syncOpenChat = app(SyncOpenChat::class);
 try {
-    checkLineSiteRobots();
     $syncOpenChat->handleHalfHourCheck();
 } catch (\Throwable $e) {
-    AdminTool::sendLineNofity($e->__toString());
     addCronLog($e->__toString());
-    exit;
+    AdminTool::sendLineNofity($e->__toString());
 }

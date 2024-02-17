@@ -10,11 +10,6 @@ use App\Models\SQLite\SQLiteRankingPositionHour;
 
 class SqliteRankingPositionHourPageRepository implements RankingPositionHourPageRepositoryInterface
 {
-    public function __construct()
-    {
-        SQLiteRankingPositionHour::connect('?mode=ro&nolock=1');
-    }
-
     public function getHourRankingPositionTimeAsc(int $open_chat_id, int $category, int $intervalHour): RankingPositionHourPageRepoDto|false
     {
         return $this->getHourPosition('ranking', $open_chat_id, $category, $intervalHour);
@@ -27,6 +22,7 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
 
     private function getHourPosition(string $tableName, int $open_chat_id, int $category, int $intervalHour): RankingPositionHourPageRepoDto|false
     {
+        SQLiteRankingPositionHour::connect('?mode=ro&nolock=1');
         $endTime = $this->getLastTime($category);
         if (!$endTime) {
             return false;
@@ -59,6 +55,7 @@ class SqliteRankingPositionHourPageRepository implements RankingPositionHourPage
                 t3.time ASC";
 
         $result = SQLiteRankingPositionHour::fetchAll($query, compact('open_chat_id', 'category'));
+        SQLiteRankingPositionHour::$pdo = null;
 
         $dto = new RankingPositionHourPageRepoDto;
         $dto->firstTime = $firstTime;

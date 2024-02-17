@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Services\RankingPosition\Persistence;
 
 use App\Config\AppConfig;
+use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepositoryInterface;
+use App\Models\Repositories\RankingPosition\Dto\RankingPositionHourInsertDto;
 use App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface;
 use App\Services\RankingPosition\Store\RankingPositionStore;
 use App\Services\RankingPosition\Store\RisingPositionStore;
@@ -12,6 +14,7 @@ use App\Services\RankingPosition\Store\RisingPositionStore;
 class RankingPositionHourPersistence
 {
     function __construct(
+        private OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatDataWithCache,
         private RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
         private RisingPositionStore $risingPositionStore,
         private RankingPositionStore $rankingPositionStore
@@ -35,23 +38,59 @@ class RankingPositionHourPersistence
 
     private function persist(): string
     {
+        $this->openChatDataWithCache->clearCache();
+        $this->openChatDataWithCache->cacheOpenChatData(true);
+
         $fileTime = '';
         foreach (AppConfig::OPEN_CHAT_CATEGORY as $key => $category) {
-            [$risingFileTime, $risingInsertDtoArray] = $this->risingPositionStore->getStorageData((string)$category);
+            [$risingFileTime, $risingOcDtoArray] = $this->risingPositionStore->getStorageData((string)$category);
+            $risingInsertDtoArray = $this->createInsertDtoArray($risingOcDtoArray);
+            unset($risingOcDtoArray);
+
             $this->rankingPositionHourRepository->insertRisingHourFromDtoArray($risingFileTime, $risingInsertDtoArray);
             $this->rankingPositionHourRepository->insertHourMemberFromDtoArray($risingFileTime, $risingInsertDtoArray);
+
             unset($risingInsertDtoArray);
             addCronLog("HourPersistence Rising: {$key}");
 
-            [$rankingFileTime, $rankingInsertDtoArray] = $this->rankingPositionStore->getStorageData((string)$category);
+            [$rankingFileTime, $rankingOcDtoArray] = $this->rankingPositionStore->getStorageData((string)$category);
+            $rankingInsertDtoArray = $this->createInsertDtoArray($rankingOcDtoArray);
+            unset($rankingOcDtoArray);
+
             $this->rankingPositionHourRepository->insertRankingHourFromDtoArray($rankingFileTime, $rankingInsertDtoArray);
             $this->rankingPositionHourRepository->insertHourMemberFromDtoArray($rankingFileTime, $rankingInsertDtoArray);
+
             unset($rankingInsertDtoArray);
             addCronLog("HourPersistence Ranking: {$key}");
 
             $fileTime = $rankingFileTime;
         }
 
+        $this->openChatDataWithCache->clearCache();
         return $fileTime;
+    }
+
+    /**
+     * @param OpenChatDto[] $data 
+     * @return RankingPositionHourInsertDto[]
+     */
+    private function createInsertDtoArray(array $data): array
+    {
+        $result = [];
+        foreach ($data as $key => $dto) {
+            $id = $this->openChatDataWithCache->getOpenChatIdByEmid($dto->emid);
+            if (!$id) {
+                continue;
+            }
+
+            $result[] = new RankingPositionHourInsertDto(
+                $id,
+                $key + 1,
+                $dto->category ?? 0,
+                $dto->memberCount
+            );
+        }
+
+        return $result;
     }
 }
