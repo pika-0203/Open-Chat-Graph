@@ -48,7 +48,9 @@ class RankingPositionHourPersistence
             unset($risingOcDtoArray);
 
             $this->rankingPositionHourRepository->insertRisingHourFromDtoArray($risingFileTime, $risingInsertDtoArray);
-            $this->rankingPositionHourRepository->insertHourMemberFromDtoArray($risingFileTime, $risingInsertDtoArray);
+            if ($category === 0) {
+                $this->rankingPositionHourRepository->insertHourMemberFromDtoArray($risingFileTime, $risingInsertDtoArray);
+            }
 
             unset($risingInsertDtoArray);
             addCronLog("HourPersistence Rising: {$key}");

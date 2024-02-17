@@ -40,22 +40,22 @@ class ParallelDownloadOpenChat
 
     private function download(RankingType $type, int $category)
     {
-        $categoryStr = AppConfig::OPEN_CHAT_CATEGORY_KEYS[$category];
+        $categoryStr = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
         $typeStr = $type->value;
 
         addCronLog("download start: {$typeStr} {$categoryStr}");
 
-        $this->downloader->fetchOpenChatApi($type, $category);
+        $count = $this->downloader->fetchOpenChatApi($type, $category);
         $this->stateRepository->updateDownloaded($type, $category);
 
-        addCronLog("download complete: {$typeStr} {$categoryStr}");
+        addCronLog("download complete: {$typeStr} {$categoryStr} {$count}");
     }
 
     private function handleDetectStopFlag(array $args, ApplicationException $e)
     {
         foreach ($args as $api) {
             $type = $api['type'];
-            $category = AppConfig::OPEN_CHAT_CATEGORY_KEYS[$api['category']] ?? 'UNDIFINED';
+            $category = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$api['category']] ?? 'UNDIFINED';
             addCronLog("ParallelDownloadOpenChat {$type} {$category}: " . $e->getMessage());
         }
     }
@@ -65,7 +65,7 @@ class ParallelDownloadOpenChat
         // 全てのダウンロードプロセスを強制終了する
         OpenChatApiDataParallelDownloader::enableKillFlag();
 
-        $categoryStr = $category !== null ? (AppConfig::OPEN_CHAT_CATEGORY_KEYS[$category] ?? $category) : 'null';
+        $categoryStr = $category !== null ? (array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] ?? $category) : 'null';
         $typeStr = $type ?? 'null';
         $error = "ParallelDownloadOpenChat {$typeStr} {$categoryStr}: " . $e->__toString();
 

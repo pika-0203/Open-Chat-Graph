@@ -13,9 +13,9 @@ class SqliteHourMemberRankingUpdaterRepositoryTest extends TestCase
     {
         $this->instance = app(SqliteHourMemberRankingUpdaterRepository::class);
 
-        $result = $this->instance->updateHourRankingTable(new \DateTime('2024-02-10 15:30:00'));
+        $result = $this->instance->buildRankingData(new \DateTime('2024-02-17 05:30:00'));
 
-        debug($result);
+        debug($result[0]);
 
         $this->assertTrue(true);
     }

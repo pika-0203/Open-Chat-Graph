@@ -160,7 +160,7 @@ function filePathNumById(int $id): string
 
 function getCategoryName(int $category): string
 {
-    return AppConfig::OPEN_CHAT_CATEGORY_KEYS[$category] ?? '';
+    return array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] ?? '';
 }
 
 function addCronLog(string|array $log)

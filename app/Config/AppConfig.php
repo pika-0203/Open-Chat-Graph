@@ -59,34 +59,6 @@ class AppConfig
         'すべて' => 0,
     ];
 
-    const OPEN_CHAT_CATEGORY_KEYS = [
-        17 => 'ゲーム',
-        16 => 'スポーツ',
-        26 => '芸能人・有名人',
-        7 => '同世代',
-        22 => 'アニメ・漫画',
-        40 => '金融・ビジネス',
-        33 => '音楽',
-        8 => '地域・暮らし',
-        20 => 'ファッション・美容',
-        41 => 'イラスト',
-        11 => '研究・学習',
-        5 => '働き方・仕事',
-        2 => '学校・同窓会',
-        12 => '料理・グルメ',
-        23 => '健康',
-        6 => '団体',
-        28 => '妊活・子育て',
-        19 => '乗り物',
-        37 => '写真',
-        18 => '旅行',
-        27 => '動物・ペット',
-        24 => 'TV・VOD',
-        29 => '本',
-        30 => '映画・舞台',
-        0 => 'すべて',
-    ];
-
     const DEFAULT_OPENCHAT_IMG_URL = [
         '1' => '0h6tJf0hQsaVt3H0eLAsAWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnOA',
         '2' => '0h6tJf8QWOaVt3H0eLAsEWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnOQ',
