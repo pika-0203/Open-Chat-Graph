@@ -13,14 +13,14 @@ use Shadow\DB;
 class SqliteHourMemberRankingUpdaterRepository implements HourMemberRankingUpdaterRepositoryInterface
 {
     public function __construct(
-        private SqlInsert $inserter,
-        private StatisticsRepositoryInterface $statisticsRepository
+        private SqlInsert $inserter
     ) {
     }
 
-    public function updateHourRankingTable(\DateTime $dateTime): int
+    
+    public function updateHourRankingTable(\DateTime $dateTime, array $filters): int
     {
-        $data = $this->buildRankingData($dateTime);
+        $data = $this->buildRankingData($dateTime, $filters);
         if (!$data) {
             return 0;
         }
@@ -30,12 +30,12 @@ class SqliteHourMemberRankingUpdaterRepository implements HourMemberRankingUpdat
     }
 
     /**
+     * @param int[] $filters
      * @return array{ id: int, open_chat_id: int, diff_member: int, percent_increase: float }[]
      */
-    public function buildRankingData(\DateTime $dateTime): array
+    public function buildRankingData(\DateTime $dateTime, array $filters): array
     {
         $data = $this->getHourRanking($dateTime);
-        $filters = $this->statisticsRepository->getMemberChangeWithinLastWeekCacheArray($dateTime->format('Y-m-d'));
 
         $filterdIdArray = array_filter($data, fn ($row) => in_array($row['open_chat_id'], $filters) || $row['diff_member'] > 0);
 

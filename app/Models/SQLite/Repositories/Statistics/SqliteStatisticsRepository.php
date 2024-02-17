@@ -40,6 +40,52 @@ class SqliteStatisticsRepository implements StatisticsRepositoryInterface
         );
     }
 
+    public function getHourMemberChangeWithinLastWeekArray(string $date): array
+    {
+        // 変動がある部屋
+        $query =
+            "SELECT
+                open_chat_id
+            FROM
+                statistics
+            WHERE
+                `date` BETWEEN DATE(:curDate, '-8 days')
+                AND :curDate
+            GROUP BY
+                open_chat_id
+            HAVING
+                0 < (
+                    CASE
+                        WHEN COUNT(DISTINCT member) > 1 THEN 1
+                        ELSE 0
+                    END
+                )";
+
+        // レコード数が8以下の部屋
+        $query2 =
+            "SELECT
+                open_chat_id
+            FROM
+                statistics
+            GROUP BY
+                open_chat_id
+            HAVING
+                0 < (
+                    CASE
+                        WHEN COUNT(member) < 8 THEN 1
+                        ELSE 0
+                    END
+                )";
+
+        $mode = [\PDO::FETCH_COLUMN, 0];
+        $param = ['curDate' => $date];
+        return array_unique(array_merge(
+            SQLiteStatistics::fetchAll($query, $param, $mode),
+            SQLiteStatistics::fetchAll($query2, null, $mode),
+        ));
+    }
+
+
     public function getMemberChangeWithinLastWeekCacheArray(string $date): array
     {
         // 変動がある部屋

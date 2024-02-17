@@ -23,6 +23,11 @@ interface StatisticsRepositoryInterface
     public function getMemberChangeWithinLastWeekCacheArray(string $date): array;
 
     /**
+     * @return int[] open_chat_id
+     */
+    public function getHourMemberChangeWithinLastWeekArray(string $date): array;
+
+    /**
      * @param array{ open_chat_id: int, member: int, date: string } $data
      */
     public function insertMember(array $data): int;
