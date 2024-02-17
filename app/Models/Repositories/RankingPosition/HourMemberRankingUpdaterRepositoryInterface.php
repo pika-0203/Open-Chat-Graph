@@ -6,5 +6,8 @@ namespace App\Models\Repositories\RankingPosition;
 
 interface HourMemberRankingUpdaterRepositoryInterface
 {
-    public function updateHourRankingTable(\DateTime $dateTime): int;
+    /**
+     * @param int[] $filters
+     */
+    public function updateHourRankingTable(\DateTime $dateTime, array $filters): int;
 }

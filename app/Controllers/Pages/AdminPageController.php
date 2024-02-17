@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Config\AppConfig;
+use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionHourRepository;
 use App\Services\UpdateRankingService;
 use App\Services\StaticData\StaticTopPageDataGenerator;
@@ -28,29 +30,14 @@ class AdminPageController
         }
     }
 
-    function test()
+    function test(StatisticsRepositoryInterface $statisticsRepository)
     {
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
-        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        saveSerializedArrayToFile(
+            AppConfig::OPEN_CHAT_HOUR_FILTER_ID_DIR,
+            $statisticsRepository->getHourMemberChangeWithinLastWeekArray('2024-02-17'),
+            true
+        );
+
         echo 'done';
     }
 
