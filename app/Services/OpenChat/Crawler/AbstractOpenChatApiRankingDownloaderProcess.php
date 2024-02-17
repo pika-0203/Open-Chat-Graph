@@ -21,7 +21,7 @@ abstract class AbstractOpenChatApiRankingDownloaderProcess
     }
 
     /**
-     * @return array|false `[string|false $ct, int $count]`
+     * @return array{ 0: string|false, 1: int }|false
      */
     function fetchOpenChatApiRankingProcess(string $category, string $ct, \Closure $callback): array|false
     {

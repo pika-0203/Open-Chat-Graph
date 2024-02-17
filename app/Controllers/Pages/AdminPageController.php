@@ -30,6 +30,28 @@ class AdminPageController
 
     function test()
     {
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        exec('/usr/bin/php8.2 /home/cf782105/openchat-review.me/public_html/cron_test.php 20 30 >&2 &');
+        echo 'done';
     }
 
     function positiondb(RankingPositionHourPersistence $rankingPositionHourPersistence)

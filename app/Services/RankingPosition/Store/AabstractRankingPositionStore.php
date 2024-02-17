@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\RankingPosition\Store;
 
-use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepositoryInterface;
-use App\Models\Repositories\RankingPosition\Dto\RankingPositionHourInsertDto;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
@@ -17,11 +15,6 @@ abstract class AabstractRankingPositionStore
     protected array $apiDtoCache = [];
     protected string $filePath;
 
-    function __construct(
-        private OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatDataWithCache,
-    ) {
-    }
-
     function addApiDto(OpenChatDto $apiDto)
     {
         $this->apiDtoCache[] = $apiDto;
@@ -29,11 +22,9 @@ abstract class AabstractRankingPositionStore
 
     function clearAllCacheDataAndSaveCurrentCategoryApiDataCache(string $category): void
     {
-        $this->openChatDataWithCache->clearCache();
-
         saveSerializedArrayToFile(
             $this->filePath . "/{$category}.dat",
-            $this->createInsertDtoArray($this->apiDtoCache),
+            $this->apiDtoCache,
             true
         );
 
@@ -41,31 +32,7 @@ abstract class AabstractRankingPositionStore
     }
 
     /**
-     * @param OpenChatDto[] $data 
-     * @return RankingPositionHourInsertDto[]
-     */
-    private function createInsertDtoArray(array $data): array
-    {
-        $result = [];
-        foreach ($data as $key => $dto) {
-            $id = $this->openChatDataWithCache->getOpenChatIdByEmid($dto->emid);
-            if (!$id) {
-                continue;
-            }
-
-            $result[] = new RankingPositionHourInsertDto(
-                $id,
-                $key + 1,
-                $dto->category ?? 0,
-                $dto->memberCount
-            );
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return array{ 0: string, 1: RankingPositionHourInsertDto[] }
+     * @return array{ 0: string, 1: OpenChatDto[] }
      */
     function getStorageData(string $category): array
     {
@@ -86,6 +53,10 @@ abstract class AabstractRankingPositionStore
 
     function getFileDateTime(string $category = '0'): \DateTime
     {
+        if (!file_exists($this->filePath . "/{$category}.dat")) {
+            return new \DateTime('2024-02-17 00:00:00');
+        }
+
         return $this->getModifiedFileTime($this->filePath . "/{$category}.dat");
     }
 

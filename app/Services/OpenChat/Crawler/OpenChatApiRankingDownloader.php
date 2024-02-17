@@ -58,7 +58,7 @@ class OpenChatApiRankingDownloader
             }
 
             [$ct, $count] = $response;
-            $resultCount += (int)$count;
+            $resultCount += $count;
         }
 
         return $resultCount;

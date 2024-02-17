@@ -6,8 +6,9 @@ namespace App\Services\Cron;
 
 use App\Services\Admin\AdminTool;
 use App\Services\Cron\CronJson\SyncOpenChatState;
-use App\Services\OpenChat\OpenChatApiDbMerger;
+use App\Services\OpenChat\OpenChatApiDbMergerWithParallelDownloader;
 use App\Services\DailyUpdateCronService;
+use App\Services\OpenChat\OpenChatApiDataParallelDownloader;
 use App\Services\OpenChat\OpenChatDailyCrawling;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistenceLastHourChecker;
@@ -19,27 +20,34 @@ class SyncOpenChat
 {
     function __construct(
         private SyncOpenChatState $state,
-        private OpenChatApiDbMerger $merger,
+        private OpenChatApiDbMergerWithParallelDownloader $merger,
         private SitemapGenerator $sitemap,
         private RankingPositionHourPersistence $rankingPositionHourPersistence,
         private RankingPositionHourPersistenceLastHourChecker $rankingPositionHourChecker,
         private UpdateHourlyMemberRankingService $hourlyMemberRanking,
         private UpdateHourlyMemberColumnService $hourlyMemberColumn
     ) {
+        set_exception_handler($this->exceptionHandler(...));
+    }
+
+    private function exceptionHandler(\Throwable $e)
+    {
+        OpenChatApiDataParallelDownloader::enableKillFlag();
+        AdminTool::sendLineNofity($e->__toString());
+        addCronLog($e->__toString());
     }
 
     function handle()
     {
+        $this->init();
+
         if (isDailyUpdateTime()) {
-            $this->hourlyTask();
             $this->dailyTask();
-        } else if (
-            isDailyUpdateTime(new \DateTime('-2 hour'), nowStart: new \DateTime('-1day'))
-            && $this->state->isDailyTaskActive
-        ) {
+        } else if ($this->isFailedDailyUpdate()) {
             addCronLog('Retry dailyTask');
             AdminTool::sendLineNofity('Retry dailyTask');
-            $this->hourlyTask();
+            OpenChatDailyCrawling::enableKillFlag();
+            sleep(3);
             $this->dailyTask();
         } else {
             $this->hourlyTask();
@@ -48,21 +56,41 @@ class SyncOpenChat
         $this->finalize();
     }
 
+    private function isFailedDailyUpdate(): bool
+    {
+        return isDailyUpdateTime(new \DateTime('-2 hour'), nowStart: new \DateTime('-1day'))
+            && $this->state->isDailyTaskActive;
+    }
+
     function handleHalfHourCheck()
     {
         if ($this->state->isHourlyTaskActive) {
             addCronLog('Retry hourlyTask');
-            AdminTool::sendLineNofity('Retry hourlyTask');
+            OpenChatApiDataParallelDownloader::enableKillFlag();
+            OpenChatDailyCrawling::enableKillFlag();
+            sleep(3);
             $this->handle();
             return;
         }
 
         if (!$this->rankingPositionHourChecker->isLastHourPersistenceCompleted()) {
             addCronLog('Retry position perisistance');
-            AdminTool::sendLineNofity('Retry position perisistance');
             $this->hourlyRankingPosition();
             $this->hourlyMemberRankingUpdate();
             return;
+        }
+    }
+
+    private function init()
+    {
+        checkLineSiteRobots();
+
+        if ($this->state->isHourlyTaskActive) {
+            AdminTool::sendLineNofity('SyncOpenChat: hourlyTask is active');
+        }
+
+        if ($this->state->isDailyTaskActive) {
+            AdminTool::sendLineNofity('SyncOpenChat: dailyTask is active');
         }
     }
 
@@ -79,26 +107,14 @@ class SyncOpenChat
         if (!$this->rankingPositionHourChecker->isLastHourPersistenceCompleted()) {
             $this->hourlyRankingPosition();
         }
-        
+
         $this->hourlyMemberRankingUpdate();
     }
 
     private function hourlyMerge()
     {
         set_time_limit(1620);
-        
-        OpenChatApiDbMerger::enableKillFlag();
-        sleep(3);
-        OpenChatApiDbMerger::disableKillFlag();
-        addCronLog("start merge");
-
-        $result = $this->merger->fetchOpenChatApiRankingAll();
-        addCronLog(
-            array_map(
-                fn ($r) => $r['category'] . ' count:' . $r['count'] . ' time:' . $r['dateTime']->format('H:i:s'),
-                $result
-            )
-        );
+        $this->merger->fetchOpenChatApiRankingAll();
     }
 
     private function hourlyRankingPosition()
@@ -123,9 +139,6 @@ class SyncOpenChat
 
         /** @var DailyUpdateCronService $updater */
         $updater = app(DailyUpdateCronService::class);
-        OpenChatDailyCrawling::enableKillFlag();
-        sleep(3);
-        OpenChatDailyCrawling::disableKillFlag();
         $updater->update();
 
         $this->state->isDailyTaskActive = false;

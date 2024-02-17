@@ -10,11 +10,6 @@ use App\Models\SQLite\SQLiteRankingPosition;
 
 class SqliteRankingPositionPageRepository implements RankingPositionPageRepositoryInterface
 {
-    public function __construct()
-    {
-        SQLiteRankingPosition::connect('?mode=ro&nolock=1');
-    }
-
     public function getDailyRankingPositionTimeAsc(int $open_chat_id, int $category): RankingPositionPageRepoDto|false
     {
         return $this->getDailyPosition('ranking', $open_chat_id, $category);
@@ -27,6 +22,7 @@ class SqliteRankingPositionPageRepository implements RankingPositionPageReposito
 
     private function getDailyPosition(string $tableName, int $open_chat_id, int $category): RankingPositionPageRepoDto|false
     {
+        SQLiteRankingPosition::connect('?mode=ro&nolock=1');
         $lastDate = $this->getLastDate($category);
         if (!$lastDate) {
             return false;
@@ -56,6 +52,8 @@ class SqliteRankingPositionPageRepository implements RankingPositionPageReposito
         $dto->nextDate = $this->getNextDate($lastDate);
 
         $result = SQLiteRankingPosition::fetchAll($query, compact('open_chat_id', 'category'));
+        SQLiteRankingPosition::$pdo = null;
+
         if (!$result) {
             return $dto;
         }
