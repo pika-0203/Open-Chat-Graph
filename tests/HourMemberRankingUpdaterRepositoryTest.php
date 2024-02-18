@@ -13,9 +13,9 @@ class HourMemberRankingUpdaterRepositoryTest extends TestCase
          */
         $repo = app(HourMemberRankingUpdaterRepository::class);
 
-        $result = $repo->updateHourRankingTable(new DateTime('2024-02-17 09:30:00'), [3,333,3232,43242,5534,534,5454]);
+        $result = $repo->getHourRanking(new DateTime('2024-02-18 09:30:00'));
 
-        debug($result);
+        debug($result[0]);
 
         $this->assertTrue(true);
     }

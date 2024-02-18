@@ -13,7 +13,7 @@ interface StatisticsRankingUpdaterRepositoryInterface
      * 
      * @return int 挿入したレコード件数
      */
-    public function updateCreateDailyRankingTable(string $date): int;
+    public function updateCreateDailyRankingTable(string $date);
 
     /**
      *　過去１週間ランキングのテーブルを指定の日付で書き換える
@@ -22,5 +22,5 @@ interface StatisticsRankingUpdaterRepositoryInterface
      * 
      * @return int 挿入したレコード件数
      */
-    public function updateCreatePastWeekRankingTable(string $date): int;
+    public function updateCreatePastWeekRankingTable(string $date);
 }
