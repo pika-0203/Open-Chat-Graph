@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Api;
 
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
+use App\Services\OpenChat\Enum\RankingType;
 use App\Services\RankingPosition\RankingPositionChartArrayService;
 use App\Services\RankingPosition\RankingPositionHourChartArrayService;
 use Shadow\Kernel\Response;
@@ -27,7 +28,7 @@ class RankingPositionApiController
     ): Response|false {
         $startDate = new \DateTime($start_date);
         $endDate = new \DateTime($end_date);
-        
+
         return response(
             $sort === 'ranking'
                 ? $rankingPositionChartArrayService->getRankingPositionChartArray($open_chat_id, $category, $startDate, $endDate)
@@ -42,9 +43,7 @@ class RankingPositionApiController
         string $sort
     ): Response|false {
         return response(
-            $sort === 'ranking'
-                ? $rankingPositionHourChartArrayService->getRankingPositionHourChartArray($open_chat_id, $category)
-                : $rankingPositionHourChartArrayService->getRisingPositionHourChartArray($open_chat_id, $category)
+            $rankingPositionHourChartArrayService->getPositionHourChartArray(RankingType::from($sort), $open_chat_id, $category)
         );
     }
 }

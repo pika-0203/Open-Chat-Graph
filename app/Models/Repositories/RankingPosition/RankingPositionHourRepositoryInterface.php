@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models\Repositories\RankingPosition;
 
+use App\Services\OpenChat\Enum\RankingType;
+
 interface RankingPositionHourRepositoryInterface
 {
-    public function insertRankingHourFromDtoArray(string $fileTime, array $insertDtoArray): int;
-
-    public function insertRisingHourFromDtoArray(string $fileTime, array $insertDtoArray): int;
+    /**
+     * @param RankingPositionHourInsertDto[] $insertDtoArray
+     */
+    public function insertFromDtoArray(RankingType $type, string $fileTime, array $insertDtoArray): int;
 
     public function insertHourMemberFromDtoArray(string $fileTime, array $insertDtoArray): int;
 

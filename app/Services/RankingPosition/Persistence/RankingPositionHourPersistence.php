@@ -8,6 +8,7 @@ use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepositoryInterface;
 use App\Models\Repositories\RankingPosition\Dto\RankingPositionHourInsertDto;
 use App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface;
+use App\Services\OpenChat\Enum\RankingType;
 use App\Services\RankingPosition\Store\RankingPositionStore;
 use App\Services\RankingPosition\Store\RisingPositionStore;
 
@@ -47,7 +48,7 @@ class RankingPositionHourPersistence
             $risingInsertDtoArray = $this->createInsertDtoArray($risingOcDtoArray);
             unset($risingOcDtoArray);
 
-            $this->rankingPositionHourRepository->insertRisingHourFromDtoArray($risingFileTime, $risingInsertDtoArray);
+            $this->rankingPositionHourRepository->insertFromDtoArray(RankingType::Rising, $risingFileTime, $risingInsertDtoArray);
             if ($category === 0) {
                 $this->rankingPositionHourRepository->insertHourMemberFromDtoArray($risingFileTime, $risingInsertDtoArray);
             }
@@ -59,7 +60,7 @@ class RankingPositionHourPersistence
             $rankingInsertDtoArray = $this->createInsertDtoArray($rankingOcDtoArray);
             unset($rankingOcDtoArray);
 
-            $this->rankingPositionHourRepository->insertRankingHourFromDtoArray($rankingFileTime, $rankingInsertDtoArray);
+            $this->rankingPositionHourRepository->insertFromDtoArray(RankingType::Ranking, $rankingFileTime, $rankingInsertDtoArray);
             $this->rankingPositionHourRepository->insertHourMemberFromDtoArray($rankingFileTime, $rankingInsertDtoArray);
 
             unset($rankingInsertDtoArray);

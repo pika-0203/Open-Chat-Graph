@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services\RankingPosition;
 
+use App\Config\AppConfig;
 use App\Services\RankingPosition\Dto\RankingPositionHourChartDto;
 use App\Models\Repositories\RankingPosition\Dto\RankingPositionHourPageRepoDto;
 use App\Models\Repositories\RankingPosition\RankingPositionHourPageRepositoryInterface;
+use App\Services\OpenChat\Enum\RankingType;
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 class RankingPositionHourChartArrayService
 {
@@ -17,29 +20,26 @@ class RankingPositionHourChartArrayService
     ) {
     }
 
-    function getRankingPositionHourChartArray(int $open_chat_id, int $category): RankingPositionHourChartDto
+    function getPositionHourChartArray(RankingType $type, int $open_chat_id, int $category): RankingPositionHourChartDto
     {
-        $repoDto = $this->rankingPositionHourPageRepository->getHourRankingPositionTimeAsc($open_chat_id, $category, self::INTERVAL_HOUR);
-        if (!$repoDto) {
-            return new RankingPositionHourChartDto;
-        }
+        $repoDto = $this->rankingPositionHourPageRepository->getHourPosition(
+            $type,
+            $open_chat_id,
+            $category,
+            self::INTERVAL_HOUR,
+            $this->getLastTime()
+        );
 
-        return $this->buildRankingPositionChartArray($repoDto);
+        return $this->generateChartArray(
+            $this->generateTimeArray($repoDto->firstTime),
+            $repoDto
+        );
     }
 
-    function getRisingPositionHourChartArray(int $open_chat_id, int $category): RankingPositionHourChartDto
+    private function getLastTime(): \DateTime
     {
-        $repoDto = $this->rankingPositionHourPageRepository->getHourRisingPositionTimeAsc($open_chat_id, $category, self::INTERVAL_HOUR);
-        if (!$repoDto) {
-            return new RankingPositionHourChartDto;
-        }
-
-        return $this->buildRankingPositionChartArray($repoDto);
-    }
-
-    private function buildRankingPositionChartArray(RankingPositionHourPageRepoDto $repoDto): RankingPositionHourChartDto
-    {
-        return $this->generateChartArray($this->generateTimeArray($repoDto->firstTime), $repoDto);
+        $updatedAtHour = unserialize(file_get_contents(AppConfig::TOP_RANKING_HOUR_INFO_FILE_PATH))['rankingUpdatedAt'];
+        return OpenChatServicesUtility::getModifiedCronTime($updatedAtHour);
     }
 
     /**  

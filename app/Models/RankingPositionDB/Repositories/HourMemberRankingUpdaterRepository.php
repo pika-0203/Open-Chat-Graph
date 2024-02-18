@@ -2,22 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Models\SQLite\Repositories\RankingPosition;
+namespace App\Models\RankingPositionDB\Repositories;
 
 use App\Models\Importer\SqlInsert;
+use App\Models\RankingPositionDB\RankingPositionDB;
 use App\Models\Repositories\RankingPosition\HourMemberRankingUpdaterRepositoryInterface;
-use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
-use App\Models\SQLite\SQLiteRankingPositionHour;
 use Shadow\DB;
 
-class SqliteHourMemberRankingUpdaterRepository implements HourMemberRankingUpdaterRepositoryInterface
+class HourMemberRankingUpdaterRepository implements HourMemberRankingUpdaterRepositoryInterface
 {
     public function __construct(
         private SqlInsert $inserter
     ) {
     }
 
-    
     public function updateHourRankingTable(\DateTime $dateTime, array $filters): int
     {
         $data = $this->buildRankingData($dateTime, $filters);
@@ -36,12 +34,14 @@ class SqliteHourMemberRankingUpdaterRepository implements HourMemberRankingUpdat
     public function buildRankingData(\DateTime $dateTime, array $filters): array
     {
         $data = $this->getHourRanking($dateTime);
-
-        $filterdIdArray = array_filter($data, fn ($row) => in_array($row['open_chat_id'], $filters) || $row['diff_member'] > 0);
-
         $result = [];
-        foreach ($filterdIdArray as $id => $row) {
-            $result[] = ['id' => $id + 1] + $row;
+        $counter = 1; // 連番のカウンタ
+
+        foreach ($data as $row) {
+            if (in_array($row['open_chat_id'], $filters, true) || $row['diff_member'] > 0) {
+                $row['id'] = $counter++; // idに連番を設定し、カウンタをインクリメント
+                $result[] = $row;
+            }
         }
 
         return $result;
@@ -64,8 +64,8 @@ class SqliteHourMemberRankingUpdaterRepository implements HourMemberRankingUpdat
                 t1.member - t2.member AS diff_member,
                 (
                     (
-                        CAST(t1.member AS REAL) - CAST(t2.member AS REAL)
-                    ) * 100.0 / CAST(t2.member AS REAL)
+                        CAST(t1.member AS FLOAT) - CAST(t2.member AS FLOAT)
+                    ) * 100.0 / CAST(t2.member AS FLOAT)
                 ) AS percent_increase
             FROM
                 member as t1
@@ -83,15 +83,15 @@ class SqliteHourMemberRankingUpdaterRepository implements HourMemberRankingUpdat
                 AND t1.member >= 10
             ORDER BY
 	            (
-                    CAST(t1.member AS REAL) - CAST(t2.member AS REAL)
+                    CAST(t1.member AS FLOAT) - CAST(t2.member AS FLOAT)
                 ) + (
                     (
                         (
-                            CAST(t1.member AS REAL) - CAST(t2.member AS REAL)
-                        ) / CAST(t2.member AS REAL)
+                            CAST(t1.member AS FLOAT) - CAST(t2.member AS FLOAT)
+                        ) / CAST(t2.member AS FLOAT)
                     ) * 10
                 ) DESC";
 
-        return SQLiteRankingPositionHour::fetchAll($query);
+        return RankingPositionDB::fetchAll($query);
     }
 }
