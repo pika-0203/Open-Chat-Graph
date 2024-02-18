@@ -40,6 +40,7 @@ class HourMemberRankingUpdaterRepository implements HourMemberRankingUpdaterRepo
         foreach ($data as $row) {
             if (in_array($row['open_chat_id'], $filters, true) || $row['diff_member'] > 0) {
                 $row['id'] = $counter++; // idに連番を設定し、カウンタをインクリメント
+                unset($row['index1']);
                 $result[] = $row;
             }
         }
@@ -48,7 +49,7 @@ class HourMemberRankingUpdaterRepository implements HourMemberRankingUpdaterRepo
     }
 
     /**
-     * @return array{ open_chat_id: int, diff_member: int, percent_increase: float }[]
+     * @return array{ open_chat_id: int, diff_member: int, percent_increase: float, index1: float }[]
      */
     public function getHourRanking(\DateTime $dateTime): array
     {
@@ -66,7 +67,16 @@ class HourMemberRankingUpdaterRepository implements HourMemberRankingUpdaterRepo
                     (
                         CAST(t1.member AS FLOAT) - CAST(t2.member AS FLOAT)
                     ) * 100.0 / CAST(t2.member AS FLOAT)
-                ) AS percent_increase
+                ) AS percent_increase,
+                (
+                    CAST(t1.member AS FLOAT) - CAST(t2.member AS FLOAT)
+                ) + (
+                    (
+                        (
+                            CAST(t1.member AS FLOAT) - CAST(t2.member AS FLOAT)
+                        ) / CAST(t2.member AS FLOAT)
+                    ) * 10
+                ) AS index1
             FROM
                 member as t1
                 JOIN(
@@ -81,16 +91,16 @@ class HourMemberRankingUpdaterRepository implements HourMemberRankingUpdaterRepo
             WHERE
                 t1.time = '{$timeString}'
                 AND t1.member >= 10
-            ORDER BY
-	            (
-                    CAST(t1.member AS FLOAT) - CAST(t2.member AS FLOAT)
-                ) + (
-                    (
-                        (
-                            CAST(t1.member AS FLOAT) - CAST(t2.member AS FLOAT)
-                        ) / CAST(t2.member AS FLOAT)
-                    ) * 10
-                ) DESC";
+            ORDER BY 
+                CASE
+                    WHEN index1 > 0 THEN 1
+                    WHEN index1 = 0 THEN 2
+                    ELSE 3
+                END,
+                CASE
+                    WHEN index1 = 0 THEN t1.member
+                    ELSE index1
+                END DESC";
 
         return RankingPositionDB::fetchAll($query);
     }

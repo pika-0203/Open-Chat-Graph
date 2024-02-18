@@ -23,36 +23,43 @@ class SqliteStatisticsRankingUpdaterRepository implements StatisticsRankingUpdat
     ) {
     }
 
-    public function updateCreateDailyRankingTable(string $date): int
+    public function updateCreateDailyRankingTable(string $date)
     {
-        $result = $this->execSql->execQueries(
-            str_replace(self::DATE_PLACE_HOLDER, $date, file_get_contents(self::DAILY_RANKING_SQL)),
-            new SQLiteStatistics
+        $result = SQLiteStatistics::fetchAll(
+            file_get_contents(self::DAILY_RANKING_SQL),
+            [self::DATE_PLACE_HOLDER => $date]
         );
 
-        $this->exportProcess('statistics_ranking_day', new DB);
-        return $result;
+        $this->exportProcess('statistics_ranking_day', new DB, ...$this->buildData($result));
     }
 
-    public function updateCreatePastWeekRankingTable(string $date): int
+    public function updateCreatePastWeekRankingTable(string $date)
     {
-        $result = $this->execSql->execQueries(
-            str_replace(self::DATE_PLACE_HOLDER, $date, file_get_contents(self::PAST_WEEK_RANKING_SQL)),
-            new SQLiteStatistics
+        $result = SQLiteStatistics::fetchAll(
+            file_get_contents(self::PAST_WEEK_RANKING_SQL),
+            [self::DATE_PLACE_HOLDER => $date]
         );
 
-        $this->exportProcess('statistics_ranking_week', new DB);
-        return $result;
+        $this->exportProcess('statistics_ranking_week', new DB, ...$this->buildData($result));
     }
 
-    private function exportProcess(string $tableName, DBInterface $db): void
+    /**
+     * @param array{ open_chat_id: int, diff_member: int, percent_increase: float }[] $result 
+     */
+    private function buildData(array $result)
     {
-        $data = SQLiteStatistics::fetchAll("SELECT * FROM {$tableName}");
-        if (!$data) {
-            throw new \RuntimeException("{$tableName} is empty");
+        $keys = ['id', 'open_chat_id', 'diff_member', 'percent_increase'];
+        $data = [];
+        foreach ($result as $key => $row) {
+            $data[] = [$key + 1, $row['open_chat_id'], $row['diff_member'], $row['percent_increase']];
         }
 
+        return [$keys, $data];
+    }
+
+    private function exportProcess(string $tableName, DBInterface $db, array $keys, array $data): void
+    {
         $db->execute("TRUNCATE TABLE {$tableName}");
-        $this->inserter->import($db->connect(), $tableName, $data, 10000);
+        $this->inserter->importWithKeys($db->connect(), $tableName, $keys, $data);
     }
 }

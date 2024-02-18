@@ -13,8 +13,9 @@ class SqliteStatisticsRankingUpdaterRepositoryTest extends TestCase
     {
         $this->instance = app(SqliteStatisticsRankingUpdaterRepository::class);
 
-        $result = $this->instance->getDailyRankingPositionTimeAsc(192, 8);
-        debug($result);
+        $result = $this->instance->updateCreatePastWeekRankingTable('2024-02-18');
+
+
         $this->assertTrue(true);
     }
 }

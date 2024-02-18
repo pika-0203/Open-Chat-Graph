@@ -20,16 +20,12 @@ class UpdateRankingService
 
     /**
      * @param string $date Y-m-d
-     * @return array `[$resultRowCount, $resultPastWeekRowCount]`
      */
-    function update(string $date): array
+    function update(string $date)
     {
-        $resultRowCount = $this->rankingUpdater->updateCreateDailyRankingTable($date);
-        $resultPastWeekRowCount = $this->rankingUpdater->updateCreatePastWeekRankingTable($date);
-
+        $this->rankingUpdater->updateCreateDailyRankingTable($date);
+        $this->rankingUpdater->updateCreatePastWeekRankingTable($date);
         $this->updateStaticData($date);
-
-        return [$resultRowCount, $resultPastWeekRowCount];
     }
 
     private function updateStaticData(string $date)
