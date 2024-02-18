@@ -642,28 +642,28 @@ function stringToView(string $str): Shadow\Kernel\View
 }
 
 /**
- * Save a serialized array to a file.
+ * Save serialized value to a file.
  *
  * @param string $filename The name of the file to save the serialized array to.
- * @param array $array The array to be serialized and saved.
+ * @param mixed $value The value to be serialized and saved.
  * @param bool $fullPath [optional] Whether $filename is a full path. Default is false.
  * @throws \RuntimeException If there is an issue with file writing.
  */
-function saveSerializedArrayToFile(string $filename, array $array, bool $fullPath = false): void
+function saveSerializedFile(string $filename, mixed $value, bool $fullPath = false): void
 {
-    $data = gzencode(serialize($array));
+    $data = gzencode(serialize($value));
     $path = $fullPath === false ? (__DIR__ . '/../storage/' . $filename) : $filename;
     safeFileRewrite($path, $data);
 }
 
 /**
- * Retrieve and unserialize an array from a file.
+ * Retrieve and unserialize value from a file.
  *
  * @param string $filename The name of the file to retrieve the array from.
  * @param bool $fullPath [optional] Whether $filename is a full path. Default is false.
- * @return array|false The unserialized array, or false if an invalid file or error occurs.
+ * @return mixed The unserialized value, or false if an invalid file or error occurs.
  */
-function getUnserializedArrayFromFile(string $filename, bool $fullPath = false): array|false
+function getUnserializedFile(string $filename, bool $fullPath = false): mixed
 {
     $path = $fullPath === false ? (__DIR__ . '/../storage/' . $filename) : $filename;
 
@@ -676,13 +676,7 @@ function getUnserializedArrayFromFile(string $filename, bool $fullPath = false):
         return false;
     }
 
-    $unserializedArray = unserialize(gzdecode($data));
-
-    if (!is_array($unserializedArray)) {
-        return false;
-    }
-
-    return $unserializedArray;
+    return unserialize(gzdecode($data));
 }
 
 /**

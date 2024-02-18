@@ -22,7 +22,7 @@ abstract class AabstractRankingPositionStore
 
     function clearAllCacheDataAndSaveCurrentCategoryApiDataCache(string $category): void
     {
-        saveSerializedArrayToFile(
+        saveSerializedFile(
             $this->filePath . "/{$category}.dat",
             $this->apiDtoCache,
             true
@@ -37,7 +37,7 @@ abstract class AabstractRankingPositionStore
     function getStorageData(string $category): array
     {
         $file = $this->filePath . "/{$category}.dat";
-        $data = getUnserializedArrayFromFile($file, true);
+        $data = getUnserializedFile($file, true);
         if (!$data) {
             throw new \RuntimeException('invalid ranking data file: ' . $file);
         }

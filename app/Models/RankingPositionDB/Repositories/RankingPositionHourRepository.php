@@ -112,7 +112,10 @@ class RankingPositionHourRepository implements RankingPositionHourRepositoryInte
 
         $query =
             "SELECT
-                *
+                subquery.open_chat_id,
+                subquery.category,
+                subquery.position,
+                subquery.time
             FROM
                 (
                     SELECT

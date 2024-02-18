@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Config\AppConfig;
-use App\Services\StaticData\StaticTopPageDataGenerator;
+use App\Services\StaticData\StaticDataGenerator;
 use App\Models\Repositories\Statistics\StatisticsRankingUpdaterRepositoryInterface;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
 
 class UpdateRankingService
 {
     function __construct(
-        private StaticTopPageDataGenerator $staticTopPageDataGenerator,
+        private StaticDataGenerator $staticDataGenerator,
         private StatisticsRankingUpdaterRepositoryInterface $rankingUpdater,
         private OpenChatListRepositoryInterface $openChatListRepository,
     ) {
@@ -27,24 +27,14 @@ class UpdateRankingService
         $resultRowCount = $this->rankingUpdater->updateCreateDailyRankingTable($date);
         $resultPastWeekRowCount = $this->rankingUpdater->updateCreatePastWeekRankingTable($date);
 
-        $this->updateStaticData($resultRowCount, $resultPastWeekRowCount);
+        $this->updateStaticData($date);
 
         return [$resultRowCount, $resultPastWeekRowCount];
     }
 
-    private function updateStaticData(int $resultRowCount, int $resultPastWeekRowCount)
+    private function updateStaticData(string $date)
     {
-        $data = serialize(
-            [
-                'rankingUpdatedAt' => time(),
-                'rankingRowCount' => $resultRowCount,
-                'pastWeekRowCount' => $resultPastWeekRowCount,
-                'recordCount' => $this->openChatListRepository->getRecordCount(),
-            ]
-        );
-
-        safeFileRewrite(AppConfig::TOP_RANKING_INFO_FILE_PATH, $data);
-
-        $this->staticTopPageDataGenerator->updateStaticTopPageData();
+        safeFileRewrite(AppConfig::DAILY_CRON_UPDATED_AT_DATE, $date);
+        $this->staticDataGenerator->updateStaticData();
     }
 }

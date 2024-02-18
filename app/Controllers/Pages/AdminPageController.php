@@ -8,7 +8,7 @@ use App\Config\AppConfig;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionHourRepository;
 use App\Services\UpdateRankingService;
-use App\Services\StaticData\StaticTopPageDataGenerator;
+use App\Services\StaticData\StaticDataGenerator;
 use App\Services\Admin\AdminAuthService;
 use Shadow\DB;
 use App\Services\Admin\AdminTool;
@@ -32,7 +32,7 @@ class AdminPageController
 
     function test(StatisticsRepositoryInterface $statisticsRepository)
     {
-        saveSerializedArrayToFile(
+        saveSerializedFile(
             AppConfig::OPEN_CHAT_HOUR_FILTER_ID_DIR,
             $statisticsRepository->getHourMemberChangeWithinLastWeekArray('2024-02-17'),
             true
@@ -94,11 +94,11 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'updateStaticData done', 'message' => 'updateStaticData done']);
     }
 
-    function genetop(StaticTopPageDataGenerator $staticTopPageDataGenerator)
+    function genetop(StaticDataGenerator $staticDataGenerator)
     {
-        $staticTopPageDataGenerator->updateStaticTopPageData();
+        $staticDataGenerator->updateStaticData();
 
-        return view('admin/admin_message_page', ['title' => 'updateStaticTopPageData done', 'message' => 'updateStaticTopPageData done']);
+        return view('admin/admin_message_page', ['title' => 'updateStaticData done', 'message' => 'updateStaticData done']);
     }
 
     function killmerge()
