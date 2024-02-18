@@ -24,11 +24,11 @@ class ConstructorInjectionMapper
         \App\Models\Repositories\Statistics\StatisticsRankingUpdaterRepositoryInterface::class => \App\Models\SQLite\Repositories\Statistics\SqliteStatisticsRankingUpdaterRepository::class,
         \App\Models\Repositories\Statistics\StatisticsPageRepositoryInterface::class => \App\Models\SQLite\Repositories\Statistics\SqliteStatisticsPageRepository::class,
 
-        \App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface::class => \App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionHourRepository::class,
         \App\Models\Repositories\RankingPosition\RankingPositionRepositoryInterface::class => \App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionRepository::class,
         \App\Models\Repositories\RankingPosition\RankingPositionPageRepositoryInterface::class => \App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionPageRepository::class,
-        \App\Models\Repositories\RankingPosition\RankingPositionHourPageRepositoryInterface::class => \App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionHourPageRepository::class,
-        \App\Models\Repositories\RankingPosition\HourMemberRankingUpdaterRepositoryInterface::class => \App\Models\SQLite\Repositories\RankingPosition\SqliteHourMemberRankingUpdaterRepository::class,
+        \App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface::class => \App\Models\RankingPositionDB\Repositories\RankingPositionHourRepository::class,
+        \App\Models\Repositories\RankingPosition\RankingPositionHourPageRepositoryInterface::class => \App\Models\RankingPositionDB\Repositories\RankingPositionHourPageRepository::class,
+        \App\Models\Repositories\RankingPosition\HourMemberRankingUpdaterRepositoryInterface::class => \App\Models\RankingPositionDB\Repositories\HourMemberRankingUpdaterRepository::class,
         
         \App\Models\Repositories\OpenChatListRepositoryInterface::class => \App\Models\Repositories\OpenChatListRepository::class,
         \App\Models\Repositories\OpenChatPageRepositoryInterface::class => \App\Models\Repositories\OpenChatPageRepository::class,

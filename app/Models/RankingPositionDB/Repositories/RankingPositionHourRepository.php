@@ -2,24 +2,25 @@
 
 declare(strict_types=1);
 
-namespace App\Models\SQLite\Repositories\RankingPosition;
+namespace App\Models\RankingPositionDB\Repositories;
 
+use App\Models\Importer\SqlInsert;
+use App\Models\RankingPositionDB\RankingPositionDB;
 use App\Models\Repositories\RankingPosition\Dto\RankingPositionHourInsertDto;
 use App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface;
-use App\Models\SQLite\SQLiteInsertImporter;
-use App\Models\SQLite\SQLiteRankingPositionHour;
+use App\Services\OpenChat\Enum\RankingType;
 
-class SqliteRankingPositionHourRepository implements RankingPositionHourRepositoryInterface
+class RankingPositionHourRepository implements RankingPositionHourRepositoryInterface
 {
     function __construct(
-        private SQLiteInsertImporter $inserter
+        private SqlInsert $inserter
     ) {
     }
 
     /**
      * @param RankingPositionHourInsertDto[] $insertDtoArray
      */
-    private function insertFromDtoArray(string $tableName, string $fileTime, array $insertDtoArray): int
+    public function insertFromDtoArray(RankingType $type, string $fileTime, array $insertDtoArray): int
     {
         $keys = [
             'open_chat_id',
@@ -37,17 +38,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
             ];
         }, $insertDtoArray);
 
-        return $this->inserter->importWithKeys(SQLiteRankingPositionHour::connect(), $tableName, $keys, $data, 500);
-    }
-
-    public function insertRankingHourFromDtoArray(string $fileTime, array $insertDtoArray): int
-    {
-        return $this->insertFromDtoArray('ranking', $fileTime, $insertDtoArray);
-    }
-
-    public function insertRisingHourFromDtoArray(string $fileTime, array $insertDtoArray): int
-    {
-        return $this->insertFromDtoArray('rising', $fileTime, $insertDtoArray);
+        return $this->inserter->importWithKeys(RankingPositionDB::connect(), $type->value, $keys, $data, 250);
     }
 
     /**
@@ -69,7 +60,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
             ];
         }, $insertDtoArray);
 
-        return $this->inserter->importWithKeys(SQLiteRankingPositionHour::connect(), 'member', $keys, $data, 500);
+        return $this->inserter->importWithKeys(RankingPositionDB::connect(), 'member', $keys, $data, 250);
     }
 
     public function getDailyMemberStats(\DateTime $todayLastTime): array
@@ -78,19 +69,24 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
 
         $query =
             "SELECT
-                open_chat_id,
-                member,
-                DATE(time) AS date
+                m.open_chat_id,
+                m.member,
+                DATE(m.time) AS date
             FROM
-                member
-            WHERE
-                DATE(time) = '{$time}'
-            GROUP BY
-                open_chat_id
-            HAVING
-                time = MAX(time)";
+                member AS m
+            JOIN (
+                SELECT
+                    open_chat_id,
+                    MAX(time) AS max_time
+                FROM
+                    member
+                WHERE
+                    DATE(time) = '{$time}'
+                GROUP BY
+                    open_chat_id
+            ) AS latest ON m.open_chat_id = latest.open_chat_id AND m.time = latest.max_time";
 
-        return SQLiteRankingPositionHour::fetchAll($query);
+        return RankingPositionDB::fetchAll($query);
     }
 
     public function getHourlyMemberColumn(\DateTime $lastTime): array
@@ -104,13 +100,9 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
             FROM
                 member
             WHERE
-                time = '{$time}'
-            GROUP BY
-                open_chat_id
-            HAVING
-                time = MAX(time)";
+                time = '{$time}'";
 
-        return SQLiteRankingPositionHour::fetchAll($query);
+        return RankingPositionDB::fetchAll($query);
     }
 
     private function getMinPosition(string $tableName, \DateTime $date, bool $all): array
@@ -120,34 +112,27 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
 
         $query =
             "SELECT
-                t1.open_chat_id AS open_chat_id,
-                t1.category AS category,
-                t1.position AS position,
-                MAX(t1.time) AS time
+                *
             FROM
                 (
                     SELECT
-                        *
+                        *,
+                        ROW_NUMBER() OVER (
+                            PARTITION BY open_chat_id
+                            ORDER BY
+                                position ASC,
+                                time DESC
+                        ) as rn
                     FROM
-                        {$tableName} AS t2
+                        {$tableName}
                     WHERE
-                        t2.position = (
-                            SELECT
-                                MIN(t3.position)
-                            FROM
-                                {$tableName} AS t3
-                            WHERE
-                                t3.open_chat_id = t2.open_chat_id
-                                AND DATE(t3.time) = '{$dateString}'
-                                AND {$isAll} t3.category = 0
-                        )
-                        AND DATE(t2.time) = '{$dateString}'
-                        AND {$isAll} t2.category = 0
-                ) AS t1
-            GROUP BY
-                open_chat_id";
+                        DATE(time) = '{$dateString}'
+                        AND {$isAll} category = 0
+                ) AS subquery
+            WHERE
+                rn = 1;";
 
-        return SQLiteRankingPositionHour::fetchAll($query);
+        return RankingPositionDB::fetchAll($query);
     }
 
     private function getIdArray(string $tableName, string $dateString, bool $all): array
@@ -156,16 +141,14 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
 
         $query =
             "SELECT 
-                open_chat_id
-            FROM 
+                DISTINCT open_chat_id
+            FROM
                 {$tableName}
             WHERE
                 DATE(time) = '{$dateString}'
-                AND {$isAll} category = 0
-            GROUP BY
-                open_chat_id";
+                AND {$isAll} category = 0";
 
-        return SQLiteRankingPositionHour::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
+        return RankingPositionDB::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
     }
 
     public function getMedianPositionQuery(string $tableName, int $open_chat_id, string $dateString, bool $all): array|false
@@ -188,7 +171,7 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
                 position ASC";
 
         /** @var array{ open_chat_id:int, category:int, position:int, time: string }[] $records */
-        $records = SQLiteRankingPositionHour::fetchAll($query);
+        $records = RankingPositionDB::fetchAll($query);
 
         $count = count($records);
         if (!$count) return false;
@@ -279,28 +262,36 @@ class SqliteRankingPositionHourRepository implements RankingPositionHourReposito
                 ) AS ri ON ra.category = ri.category
                 AND ra.time = ri.time";
 
-        return SQLiteRankingPositionHour::fetchAll($query);
+        return RankingPositionDB::fetchAll($query);
     }
 
     public function dalete(\DateTime $dateTime): void
     {
-        $timeStr = $dateTime->format('Y-m-d H:i:s');
-        SQLiteRankingPositionHour::execute("DELETE FROM ranking WHERE time < '{$timeStr}'");
-        SQLiteRankingPositionHour::execute("DELETE FROM rising WHERE time < '{$timeStr}'");
-        SQLiteRankingPositionHour::execute("DELETE FROM total_count WHERE time < '{$timeStr}'");
-        SQLiteRankingPositionHour::execute("DELETE FROM member WHERE time < '{$timeStr}'");
-        SQLiteRankingPositionHour::$pdo->exec('VACUUM;');
+        // 指定の日時より以前
+        $time = new \DateTime($dateTime->format('Y-m-d H:i:s'));
+        $time->modify('-1second');
+        $timeStr = $time->format('Y-m-d H:i:s');
+
+        // 適当な過去の日時
+        $time2 = new \DateTime($dateTime->format('Y-m-d H:i:s'));
+        $time2->modify('-1week');
+        $timeStr2 = $time2->format('Y-m-d H:i:s');
+
+        RankingPositionDB::execute("DELETE FROM ranking WHERE time between '{$timeStr2}' AND '{$timeStr}'");
+        RankingPositionDB::execute("DELETE FROM rising WHERE time between '{$timeStr2}' AND '{$timeStr}'");
+        RankingPositionDB::execute("DELETE FROM total_count WHERE time between '{$timeStr2}' AND '{$timeStr}'");
+        RankingPositionDB::execute("DELETE FROM member WHERE time between '{$timeStr2}' AND '{$timeStr}'");
     }
 
     public function insertTotalCount(string $fileTime): int
     {
         $totalCount = $this->getTotalCount(new \DateTime($fileTime), false);
-        return $this->inserter->import(SQLiteRankingPositionHour::connect(), 'total_count', $totalCount, 500);
+        return $this->inserter->import(RankingPositionDB::connect(), 'total_count', $totalCount);
     }
 
     public function getLastHour(): string|false
     {
-        return SQLiteRankingPositionHour::fetchColumn(
+        return RankingPositionDB::fetchColumn(
             "SELECT
                 time
             FROM

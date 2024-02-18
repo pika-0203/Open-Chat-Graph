@@ -16,6 +16,7 @@ app/Services/Admin/**
 app/Config/AdminConfig.php
 app/Services/Admin/FTPHandler.php
 app/Config/Shadow/DatabaseConfig.php
+app/Config/RankingPositionDBConfig.php
 app/Config/Shadow/GceDatabaseConfig.php
 /node_modules
 /package-lock.json
