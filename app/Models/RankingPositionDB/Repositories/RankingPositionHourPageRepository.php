@@ -35,6 +35,7 @@ class RankingPositionHourPageRepository implements RankingPositionHourPageReposi
                         member
                     WHERE
                         open_chat_id = :open_chat_id
+                        AND time >= '{$firstTime}'
                 ) AS t3
                 LEFT JOIN {$tableName} AS t1 ON t1.time = t3.time
                 AND t1.open_chat_id = t3.open_chat_id
