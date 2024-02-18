@@ -81,7 +81,7 @@ class OpenChatUpdaterDtoFactoryTest extends TestCase
 
     private function getApiDtoMock(): OpenChatDto
     {
-        $file = getUnserializedArrayFromFile(__DIR__ . '/OpenChatApiDtoMock.dat', true);
+        $file = getUnserializedFile(__DIR__ . '/OpenChatApiDtoMock.dat', true);
         $data = $file[0];
 
         /**

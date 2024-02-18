@@ -22,7 +22,7 @@ class DBTest extends TestCase
 
         $dateTime = new \DateTime('now');
 
-        saveSerializedArrayToFile(
+        saveSerializedFile(
             AppConfig::OPEN_CHAT_HOUR_FILTER_ID_DIR,
             $this->statisticsRepository->getHourMemberChangeWithinLastWeekArray($dateTime->format('Y-m-d')),
             true

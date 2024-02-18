@@ -47,7 +47,7 @@ class OpenChatRankingPositionStoreTest extends TestCase
 
     private function testShowPositionData(string $fileName)
     {
-        $data = getUnserializedArrayFromFile($fileName, true);
+        $data = getUnserializedFile($fileName, true);
         var_dump($data);
         $this->assertIsArray($data);
     }

@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
-use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\User\MyOpenChatList;
-use App\Services\StaticData\StaticDataGeneration;
+use App\Services\StaticData\StaticDataFile;
 
 class IndexPageController
 {
-    function index(StaticDataGeneration $staticDataGeneration)
+    function index(StaticDataFile $staticDataGeneration)
     {
-        $rankingList = $staticDataGeneration->getTopPageData();
+        $dto = $staticDataGeneration->getTopPageData();
 
         $myList = [];
 
@@ -29,19 +28,22 @@ class IndexPageController
         $_meta = meta();
         $_meta->title = "{$_meta->title} | オープンチャットの人数統計とグラフ分析";
 
-        $updatedAtTime = OpenChatServicesUtility::getCronModifiedDate(new \DateTime('@' . $rankingList['updatedAt']));
-        $dailyStart = '昨日';
-        $updatedAtTime->modify('-7day');
-        $weeklyStart = $updatedAtTime->format('n月j日');
-        $_weeklyRange = $weeklyStart . ' 〜 ' . $dailyStart;
+        $dto->dailyUpdatedAt->modify('-7day');
+        $weeklyStart = $dto->dailyUpdatedAt->format('n月j日');
+        $weeklyRange =  "{$weeklyStart} 〜 昨日";
 
-        $hourlyUpdatedAt = OpenChatServicesUtility::getModifiedCronTime($rankingList['hourlyUpdatedAt']);
+        $hourlyEnd = $dto->hourlyUpdatedAt->format('G:i');
+        $dto->hourlyUpdatedAt->modify('-1hour');
+        $hourlyStart = $dto->hourlyUpdatedAt->format('G:i');
+        $hourlyRange = "{$hourlyStart} 〜 {$hourlyEnd}";
 
-        $hourlyEnd = $hourlyUpdatedAt->format('G:i');
-        $hourlyUpdatedAt->modify('-1hour');
-        $hourlyStart = $hourlyUpdatedAt->format('G:i');
-        $_hourlyRange = $hourlyStart . ' 〜 ' . $hourlyEnd;
-
-        return view('top_content', compact('_meta', '_css', 'myList', '_hourlyRange', '_weeklyRange') + $rankingList);
+        return view('top_content', compact(
+            'dto',
+            '_meta',
+            '_css',
+            'myList',
+            'hourlyRange',
+            'weeklyRange',
+        ));
     }
 }

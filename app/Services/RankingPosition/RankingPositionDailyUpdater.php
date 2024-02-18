@@ -25,8 +25,8 @@ class RankingPositionDailyUpdater
 
     function updateYesterdayDailyDb()
     {
-        $this->persistMemberStatsFromRankingPositionDb();
         $this->rankingPositionDailyPersistence->persistHourToDaily();
+        $this->persistMemberStatsFromRankingPositionDb();
     }
 
     private function persistMemberStatsFromRankingPositionDb(): void

@@ -27,8 +27,10 @@ class AppConfig
 
     const SITEMAP_DIR = __DIR__ . '/../../public/sitemap.xml';
 
-    const TOP_RANKING_INFO_FILE_PATH = __DIR__ . '/../../storage/static_data_top/ranking_info.dat';
-    const TOP_RANKING_HOUR_INFO_FILE_PATH = __DIR__ . '/../../storage/static_data_top/ranking_hour_info.dat';
+    const DAILY_CRON_UPDATED_AT_DATE =  __DIR__ . '/../../storage/static_data_top/daily_updated_at.dat';
+    const HOURLY_CRON_UPDATED_AT_DATETIME =     __DIR__ . '/../../storage/static_data_top/hourly_updated_at.dat';
+    const HOURLY_REAL_UPDATED_AT_DATETIME =      __DIR__ . '/../../storage/static_data_top/real_updated_at.dat';
+    
     const ROOT_PATH = __DIR__ . '/../../';
 
     const OPEN_CHAT_CATEGORY = [

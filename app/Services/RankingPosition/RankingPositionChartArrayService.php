@@ -7,6 +7,7 @@ namespace App\Services\RankingPosition;
 use App\Services\RankingPosition\Dto\RankingPositionChartDto;
 use App\Models\Repositories\RankingPosition\Dto\RankingPositionPageRepoDto;
 use App\Models\Repositories\RankingPosition\RankingPositionPageRepositoryInterface;
+use App\Services\OpenChat\Enum\RankingType;
 
 class RankingPositionChartArrayService
 {
@@ -20,53 +21,28 @@ class RankingPositionChartArrayService
     ) {
     }
 
-    function getRankingPositionChartArray(int $open_chat_id, int $category, \DateTime $startDate, \DateTime $endDate): RankingPositionChartDto|false
-    {
-        $repoDto = $this->rankingPositionPageRepository->getDailyRankingPositionTimeAsc($open_chat_id, $category);
-        return $this->buildRankingPositionChartArray(
-            $repoDto ? $repoDto : new RankingPositionPageRepoDto,
-            $startDate,
-            $endDate
-        );
-    }
-
-    function getRisingPositionChartArray(int $open_chat_id, int $category, \DateTime $startDate, \DateTime $endDate): RankingPositionChartDto|false
-    {
-        $repoDto = $this->rankingPositionPageRepository->getDailyRisingPositionTimeAsc($open_chat_id, $category);
-        return $this->buildRankingPositionChartArray(
-            $repoDto ? $repoDto : new RankingPositionPageRepoDto,
-            $startDate,
-            $endDate,
-            true
-        );
-    }
-
-    private function buildRankingPositionChartArray(
-        RankingPositionPageRepoDto $repoDto,
+    function getRankingPositionChartArray(
+        RankingType $type,
+        int $open_chat_id,
+        int $category,
         \DateTime $startDate,
-        \DateTime $endDate,
-        bool $includeTime = false
-    ): RankingPositionChartDto|false {
+        \DateTime $endDate
+    ): RankingPositionChartDto {
         return $this->generateChartArray(
             $this->generateDateArray($startDate, $endDate),
             $startDate,
-            $repoDto,
-            $includeTime
+            $this->rankingPositionPageRepository->getDailyPosition($type, $open_chat_id, $category),
+            $type === RankingType::Rising
         );
     }
 
-    /**  
+    /**
      *  @return string[]
      */
     private function generateDateArray(\DateTime $startDate, \DateTime $endDate): array
     {
         $first = new \DateTime($startDate->format('Y-m-d'));
         $interval = $first->diff($endDate)->days;
-        /* if ($interval < 8) {
-            $mod = 7 - $interval;
-            $first->modify("-{$mod} day");
-            $interval = $first->diff($endDate)->days;
-        } */
 
         $dateArray = [];
         $i = 0;
@@ -107,7 +83,7 @@ class RankingPositionChartArrayService
                 false,
                 false,
                 $matchRepoDto && $includeTime ? substr($repoDto->time[$curKeyRepoDto], self::SUBSTR_HI_OFFSET, self::SUBSTR_HI_LEN) : null,
-                $matchRepoDto ? $repoDto->position[$curKeyRepoDto] : ($date === $repoDto->nextDate || $isBeforeStartDate  ? null : 0),
+                $matchRepoDto ? $repoDto->position[$curKeyRepoDto] : ($isBeforeStartDate  ? null : 0),
                 $matchRepoDto ? $repoDto->totalCount[$curKeyRepoDto] : null,
             );
 

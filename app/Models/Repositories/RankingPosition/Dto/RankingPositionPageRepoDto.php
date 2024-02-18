@@ -14,7 +14,4 @@ class RankingPositionPageRepoDto
 
     /** @var int[] */
     public array $totalCount = [];
-
-    /** @var string Y-m-d */
-    public string $nextDate;
 }

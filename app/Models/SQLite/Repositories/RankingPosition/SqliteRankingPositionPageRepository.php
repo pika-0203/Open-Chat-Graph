@@ -7,27 +7,16 @@ namespace App\Models\SQLite\Repositories\RankingPosition;
 use App\Models\Repositories\RankingPosition\Dto\RankingPositionPageRepoDto;
 use App\Models\Repositories\RankingPosition\RankingPositionPageRepositoryInterface;
 use App\Models\SQLite\SQLiteRankingPosition;
+use App\Services\OpenChat\Enum\RankingType;
 
 class SqliteRankingPositionPageRepository implements RankingPositionPageRepositoryInterface
 {
-    public function getDailyRankingPositionTimeAsc(int $open_chat_id, int $category): RankingPositionPageRepoDto|false
-    {
-        return $this->getDailyPosition('ranking', $open_chat_id, $category);
-    }
-
-    public function getDailyRisingPositionTimeAsc(int $open_chat_id, int $category): RankingPositionPageRepoDto|false
-    {
-        return $this->getDailyPosition('rising', $open_chat_id, $category);
-    }
-
-    private function getDailyPosition(string $tableName, int $open_chat_id, int $category): RankingPositionPageRepoDto|false
-    {
-        SQLiteRankingPosition::connect('?mode=ro&nolock=1');
-        $lastDate = $this->getLastDate($category);
-        if (!$lastDate) {
-            return false;
-        }
-
+    public function getDailyPosition(
+        RankingType $type,
+        int $open_chat_id,
+        int $category,
+    ): RankingPositionPageRepoDto {
+        $tableName = $type->value;
         $query =
             "SELECT
                 t1.time AS time,
@@ -49,8 +38,8 @@ class SqliteRankingPositionPageRepository implements RankingPositionPageReposito
                 t1.time ASC";
 
         $dto = new RankingPositionPageRepoDto;
-        $dto->nextDate = $this->getNextDate($lastDate);
 
+        SQLiteRankingPosition::connect('?mode=ro&nolock=1');
         $result = SQLiteRankingPosition::fetchAll($query, compact('open_chat_id', 'category'));
         SQLiteRankingPosition::$pdo = null;
 
@@ -63,29 +52,5 @@ class SqliteRankingPositionPageRepository implements RankingPositionPageReposito
         $dto->totalCount = array_column($result, 'total_count');
 
         return $dto;
-    }
-
-    private function getLastDate(int $category): string|false
-    {
-        return SQLiteRankingPosition::fetchColumn(
-            "SELECT
-                DATE(time)
-            FROM
-                total_count
-            WHERE
-                category = :category
-            ORDER BY
-                time DESC
-            LIMIT
-                1",
-            compact('category')
-        );
-    }
-
-    private function getNextDate(string $lastDate): string
-    {
-        $nextDate = new \DateTime($lastDate);
-        $nextDate->modify('+ 1day');
-        return $nextDate->format('Y-m-d');
     }
 }

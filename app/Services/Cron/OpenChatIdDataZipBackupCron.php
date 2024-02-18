@@ -18,7 +18,7 @@ class OpenChatIdDataZipBackupCron
 
     function saveBackupIdEmidArray(): string
     {
-        saveSerializedArrayToFile(
+        saveSerializedFile(
             AppConfig::OPEN_CHAT_ID_DATA_FILE_PATH . '/id/data.dat',
             $this->openChatRepository->getOpenChatIdEmidArrayAll(),
             true

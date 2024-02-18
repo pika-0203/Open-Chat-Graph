@@ -57,10 +57,10 @@ class DailyUpdateCronService
         addCronLog('openChatCrawling done: ' . $result);
         unset($outOfRankId);
 
-        $this->updateRankingService->update($this->date);
-
         addCronLog('syncSubCategoriesAll start');
         $categoryResult = $this->openChatSubCategorySynchronizer->syncSubCategoriesAll();
         addCronLog('syncSubCategoriesAll done: ' . count($categoryResult));
+
+        $this->updateRankingService->update($this->date);
     }
 }
