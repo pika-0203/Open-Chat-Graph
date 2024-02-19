@@ -36,6 +36,23 @@
   border: 1px solid #e8e8e8;
 }
 
+.fade-in {
+  opacity: 0; /* 要素を最初は非表示にする */
+  animation-name: fade-in; /* 使用するアニメーションの名前を指定 */
+  animation-duration: 0.3s; /* アニメーションの時間を指定 */
+  animation-delay: 0.3s; /* 遅延の時間を指定 */
+  animation-fill-mode: forwards; /* アニメーション終了時のスタイルを保持 */
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  } /* アニメーションの初期状態 */
+  to {
+    opacity: 1;
+  } /* アニメーションの最終状態 */
+}
+
 @media screen and (max-width: 511px) {
   .chart-canvas-box {
     aspect-ratio: 1.2 / 1;
