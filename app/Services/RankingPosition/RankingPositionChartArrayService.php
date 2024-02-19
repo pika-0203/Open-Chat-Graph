@@ -83,7 +83,7 @@ class RankingPositionChartArrayService
                 false,
                 false,
                 $matchRepoDto && $includeTime ? substr($repoDto->time[$curKeyRepoDto], self::SUBSTR_HI_OFFSET, self::SUBSTR_HI_LEN) : null,
-                $matchRepoDto ? $repoDto->position[$curKeyRepoDto] : ($isBeforeStartDate  ? null : 0),
+                $matchRepoDto ? $repoDto->position[$curKeyRepoDto] : ($isBeforeStartDate ? null : 0),
                 $matchRepoDto ? $repoDto->totalCount[$curKeyRepoDto] : null,
             );
 
