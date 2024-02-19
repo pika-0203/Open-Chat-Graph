@@ -67,10 +67,8 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
     </header>
     <hr>
     <!-- グラフセクション -->
-    <div class="chart-canvas-box">
-      <canvas id="chart-preact-canvas"></canvas>
-    </div>
-    <div id="app" data-oc-id="<?php echo $oc['id'] ?>" data-category-key="<?php echo $oc['category'] ?? 0 ?>" data-category="<?php echo $category ? $category : 'その他' ?>" data-base-url="<?php echo url() ?>"></div>
+    <div class="chart-canvas-box" id="dummy-canvas"></div>
+    <div id="app"></div>
 
     <footer class="unset">
       <form class="my-list-form">
