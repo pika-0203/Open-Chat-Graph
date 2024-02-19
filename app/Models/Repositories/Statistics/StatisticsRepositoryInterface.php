@@ -28,7 +28,7 @@ interface StatisticsRepositoryInterface
     public function getHourMemberChangeWithinLastWeekArray(string $date): array;
 
     /**
-     * @param array{ open_chat_id: int, member: int, date: string } $data
+     * @param array{ open_chat_id: int, member: int, date: string }[] $data
      */
     public function insertMember(array $data): int;
 

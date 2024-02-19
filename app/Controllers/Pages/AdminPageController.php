@@ -30,15 +30,13 @@ class AdminPageController
         }
     }
 
-    function test(StatisticsRepositoryInterface $statisticsRepository)
+    function test()
     {
-        saveSerializedFile(
-            AppConfig::OPEN_CHAT_HOUR_FILTER_ID_DIR,
-            $statisticsRepository->getHourMemberChangeWithinLastWeekArray('2024-02-17'),
-            true
-        );
+        $path = AppConfig::ROOT_PATH . 'test_exec.php';
 
-        echo 'done';
+        exec("/usr/bin/php8.2 {$path} >/dev/null 2>&1 &");
+
+        return view('admin/admin_message_page', ['title' => 'exec', 'message' => $path . ' を実行しました。']);
     }
 
     function positiondb(RankingPositionHourPersistence $rankingPositionHourPersistence)
