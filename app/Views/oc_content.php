@@ -20,7 +20,7 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
     <!-- オープンチャット表示ヘッダー -->
     <header class="openchat-header unset">
       <div class="talkroom_banner_img_area">
-        <img class="talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgUrl($oc['img_url']) ?>" <?php echo getImgSetErrorTag() ?>>
+        <img class="talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgPreviewUrl($oc['img_url']) ?>" <?php echo getImgSetErrorTag() ?>>
       </div>
 
       <div class="openchat-header-right">
