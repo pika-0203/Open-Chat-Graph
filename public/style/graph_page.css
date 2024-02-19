@@ -1,5 +1,5 @@
 #app {
-  height: 117px;
+  min-height: 117px;
 }
 
 .limit-btns .MuiTab-fullWidth {
@@ -14,7 +14,7 @@
   padding: 0;
   user-select: none;
   -webkit-user-select: none;
-  margin-top: 0.75rem;
+  position: relative;
 }
 
 .touch-pan-y {
@@ -39,7 +39,7 @@
 @media screen and (max-width: 511px) {
   .chart-canvas-box {
     aspect-ratio: 1.2 / 1;
-      margin-top: -2px;
+    margin-top: -2px;
   }
 
   .MuiChip-root.openchat-item-header-chip.graph:hover {
