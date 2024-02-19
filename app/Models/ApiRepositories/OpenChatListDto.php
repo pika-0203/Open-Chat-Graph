@@ -14,7 +14,7 @@ class OpenChatListDto
         $this->member = $oc['member'];
         $this->img = $oc['img_url'];
         $this->emblem = $oc['emblem'] ?? 0;
-        $this->category = $oc['category'] ?? -1;
+        $this->category = $oc['emblem'] === null ? -1 : ($oc['category'] ?? 0);
 
         if (isset($oc['api_created_at'])) {
             $this->createdAt = convertDatetime($oc['api_created_at']);
@@ -51,7 +51,7 @@ class OpenChatListDto
     public ?string $dailyIncreasedMember;
     public ?string $dailySymbolIncrease;
     public ?string $dailyPercentageIncrease;
-    
+
     public ?string $weeklyIncreasedMember;
     public ?string $weeklySymbolIncrease;
     public ?string $weeklyPercentageIncrease;
