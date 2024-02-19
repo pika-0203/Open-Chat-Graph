@@ -1,5 +1,5 @@
 SELECT
-    t1.open_chat_id,
+    t1.open_chat_id AS open_chat_id,
     t1.member - t2.member AS diff_member,
     (
         (
