@@ -15,6 +15,7 @@ class SqliteStatisticsRankingUpdaterRepositoryTest extends TestCase
 
         $result = $this->instance->updateCreatePastWeekRankingTable('2024-02-18');
 
+        debug($result);
 
         $this->assertTrue(true);
     }
