@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controllers\Api;
 
+use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\OpenChat\Enum\RankingType;
+use App\Services\RankingPosition\Dto\RankingPositionChartDto;
 use App\Services\RankingPosition\RankingPositionChartArrayService;
 use App\Services\RankingPosition\RankingPositionHourChartArrayService;
 
@@ -25,6 +27,10 @@ class RankingPositionApiController
         string $start_date,
         string $end_date
     ) {
+        if (strtotime($start_date) > strtotime(file_get_contents(AppConfig::DAILY_CRON_UPDATED_AT_DATE))) {
+            return response(new RankingPositionChartDto);
+        }
+
         return response($chart->getRankingPositionChartArray(
             RankingType::from($sort),
             $open_chat_id,
