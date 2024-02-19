@@ -46,7 +46,7 @@ class RankingPositionDailyPersistence
 
     private function insert(\DateTime $date, \Closure $getter, \Closure $inserter)
     {
-        $inserter($getter($date));
-        $inserter($getter($date, true));
+        $inserter($getter($date), $this->date);
+        $inserter($getter($date, true), $this->date);
     }
 }

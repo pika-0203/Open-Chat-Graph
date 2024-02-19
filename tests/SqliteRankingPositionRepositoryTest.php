@@ -12,7 +12,7 @@ class SqliteRankingPositionRepositoryTest extends TestCase
          */
         $repo = app(RankingPositionRepositoryInterface::class);
 
-        $result = $repo->insertDailyRankingPosition([]);
+        $result = $repo->insertDailyRankingPosition();
 
         debug($result);
 
