@@ -49,6 +49,7 @@ class SyncOpenChat
             OpenChatDailyCrawling::enableKillFlag();
             sleep(3);
             $this->dailyTask();
+            AdminTool::sendLineNofity('Done retrying dailyTask');
         } else {
             $this->hourlyTask();
         }
