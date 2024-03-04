@@ -8,7 +8,7 @@
         <h1 style="letter-spacing: 0px;">オプチャグラフについて</h1>
         <article class="terms">
             <h2>リンク</h2>
-            <p><a rel="external nofollow noopener" href="https://github.com/pika-0203/Open-Chat-Graph" target="_blank">ソースコード - Github</a></p>
+            <p><a rel="external nofollow noopener" href="https://github.com/pika-0203/Open-Chat-Graph" target="_blank">Github</a></p>
             <h2>サイトの目的</h2>
             <p>・オープンチャットの管理者が成長傾向を把握し、比較できる事で運営に役立つ</p>
             <p>・ユーザーがオープンチャットを見つけて参加する機会を作る</p>
