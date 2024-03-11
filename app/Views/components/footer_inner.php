@@ -2,7 +2,6 @@
     <div class="footer-link-inner">
         <a class="unset" href="<?php echo url('') ?>">トップ</a>
         <a class="unset" href="<?php echo url('policy') ?>">オプチャグラフについて</a>
-        <a class="unset" href="<?php echo url('labs') ?>">Labs</a>
     </div>
     <div class="footer-link-inner">
         <a class="unset" href="<?php echo url('ranking') ?>">増加ランキング</a>
