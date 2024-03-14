@@ -129,13 +129,14 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
       const talkroomDescBox = document.getElementById('talkroom_description_box')
 
       if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
-        readMoreBtn.style.visibility = "hidden"
         talkroomDescBox.classList.add('hidden')
       } else {
         const open = document.getElementById('talkroom-description-btn')
         const close = document.getElementById('talkroom-description-close-btn')
 
+        readMoreBtn.style.visibility = "visible"
         open.addEventListener('click', () => talkroomDescBox.classList.remove('close'))
+        readMoreBtn.addEventListener('click', () => talkroomDescBox.classList.remove('close'))
         close.addEventListener('click', () => talkroomDescBox.classList.add('close'))
       }
     })()
