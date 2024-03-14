@@ -29,15 +29,21 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
             <div class="link-mark"><span class="link-title">LINEオープンチャット公式サイト</span><span class="line-link-icon"></span></div>
           </h1>
         </a>
-        <div class="talkroom_description_box">
-          <p id="talkroom-description" class="talkroom_description close">
-            <span onclick="this.parentNode.classList.remove('close')">
+
+        <div class="talkroom_description_box close" id="talkroom_description_box">
+          <p class="talkroom_description" id="talkroom-description">
+            <span id="talkroom-description-btn">
               <?php echo nl2brReplace($oc['description']) ?>
             </span>
             <br>
-            <button onclick="this.parentNode.classList.add('close')">閉じる</button>
+            <button id="talkroom-description-close-btn">一部を表示</button>
           </p>
+          <div class="more" id="read_more_btn">
+            <div class="more-separater">&nbsp;</div>
+            <div class="more-text">…もっと見る</div>
+          </div>
         </div>
+
         <div class="talkroom_number_of_members">
           <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?></span>
         </div>
@@ -114,7 +120,26 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
   <footer>
     <?php viewComponent('footer_inner') ?>
   </footer>
+  <script>
+    ;
+    (function() {
+      // 説明文の続きを読むボタン
+      const readMoreBtn = document.getElementById('read_more_btn')
+      const talkroomDesc = document.getElementById('talkroom-description')
+      const talkroomDescBox = document.getElementById('talkroom_description_box')
 
+      if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
+        readMoreBtn.style.visibility = "hidden"
+        talkroomDescBox.classList.add('hidden')
+      } else {
+        const open = document.getElementById('talkroom-description-btn')
+        const close = document.getElementById('talkroom-description-close-btn')
+
+        open.addEventListener('click', () => talkroomDescBox.classList.remove('close'))
+        close.addEventListener('click', () => talkroomDescBox.classList.add('close'))
+      }
+    })()
+  </script>
   <script src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
   <script type="module">
     import {
