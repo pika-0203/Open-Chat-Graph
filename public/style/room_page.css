@@ -133,11 +133,13 @@ hr {
   color: #1f1f1f;
 }
 
-.talkroom_description {
+.talkroom_description.close {
+  cursor: pointer;
   display: -webkit-box;
-  -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
   overflow: hidden;
+  user-select: none;
 }
 
 /* ボトムエリア */
@@ -245,6 +247,10 @@ body > footer {
     text-decoration: underline 2px currentColor;
   }
 
+  .talkroom_description.close:hover {
+    background-color: #f1f9f6;
+  }
+
   hr {
     margin: 19px 0;
   }
@@ -258,23 +264,14 @@ body > footer {
     line-height: 145%;
   }
 
-  .link-mark {
-  }
-
   .link-mark .line-link-icon777 {
     width: 16px;
     height: 16px;
   }
 
-  .link-mark .link-title {
-  }
-
   .openchat-header,
   .talkroom_description_box {
     font-size: 13.5px;
-  }
-
-  .openchat-list-date {
   }
 
   .openchat-list-date {

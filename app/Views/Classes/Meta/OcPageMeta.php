@@ -10,7 +10,7 @@ class OcPageMeta
     {
         $name = $oc['name'];
 
-        $ocDesc = mb_strimwidth($oc['description'], 0, 100, '…');
+        $ocDesc = $oc['description'];
 
         $memberNum = number_format($oc['member']);
         $statsDesc = "メンバー数 {$memberNum}人";
