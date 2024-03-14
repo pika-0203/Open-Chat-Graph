@@ -30,7 +30,13 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
           </h1>
         </a>
         <div class="talkroom_description_box">
-          <p id="talkroom-description" class="talkroom_description close" onclick="this.classList.remove('close')"><?php echo $oc['description'] ?></p>
+          <p id="talkroom-description" class="talkroom_description close">
+            <span onclick="this.parentNode.classList.remove('close')">
+              <?php echo $oc['description'] ?>
+            </span>
+            <br>
+            <button onclick="this.parentNode.classList.add('close')">閉じる</button>
+          </p>
         </div>
         <div class="talkroom_number_of_members">
           <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?></span>

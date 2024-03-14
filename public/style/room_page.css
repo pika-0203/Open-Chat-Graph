@@ -133,6 +133,15 @@ hr {
   color: #1f1f1f;
 }
 
+.talkroom_description button {
+  padding: 0.5rem;
+  font-size: 14px;
+  background-color: #1f1f1f;
+  color: #fff;
+  border-radius: 99px;
+  border: 0;
+}
+
 .talkroom_description.close {
   cursor: pointer;
   display: -webkit-box;
