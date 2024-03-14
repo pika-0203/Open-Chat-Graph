@@ -135,12 +135,17 @@ hr {
 }
 
 .talkroom_description button {
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   font-size: 14px;
   background-color: #1f1f1f;
   color: #fff;
   border-radius: 99px;
   border: 0;
+  font-weight: 500;
+}
+
+.talkroom_description.close button {
+  display: none;
 }
 
 .talkroom_description.close {
@@ -150,6 +155,7 @@ hr {
   -webkit-box-orient: vertical;
   overflow: hidden;
   user-select: none;
+  text-align: unset;
 }
 
 .talkroom_description.close br {
