@@ -32,7 +32,7 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
         <div class="talkroom_description_box">
           <p id="talkroom-description" class="talkroom_description close">
             <span onclick="this.parentNode.classList.remove('close')">
-              <?php echo $oc['description'] ?>
+              <?php echo nl2brReplace($oc['description']) ?>
             </span>
             <br>
             <button onclick="this.parentNode.classList.add('close')">閉じる</button>
