@@ -131,6 +131,7 @@ hr {
   line-height: 125%;
   word-break: break-all;
   color: #1f1f1f;
+  text-align: center;
 }
 
 .talkroom_description button {
@@ -149,6 +150,10 @@ hr {
   -webkit-box-orient: vertical;
   overflow: hidden;
   user-select: none;
+}
+
+.talkroom_description.close br {
+  display: none;
 }
 
 /* ボトムエリア */
