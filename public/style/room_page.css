@@ -123,6 +123,30 @@ hr {
 .talkroom_description_box {
   font-size: 13px;
   margin-top: 6px;
+  position: relative;
+  background-color: white;
+}
+
+.talkroom_description_box .more {
+  display: none;
+  line-height: 125%;
+}
+
+.talkroom_description_box.close .more {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  font-weight: 500;
+}
+
+.more-text {
+  background-color: white;
+}
+
+.talkroom_description_box .more-separater {
+  width: 3rem;
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 }
 
 /* オープンチャットの説明 */
@@ -132,6 +156,11 @@ hr {
   word-break: break-all;
   color: #1f1f1f;
   text-align: center;
+}
+
+.talkroom_description_box.close {
+  cursor: pointer;
+  user-select: none;
 }
 
 .talkroom_description button {
@@ -144,22 +173,25 @@ hr {
   font-weight: 500;
 }
 
-.talkroom_description.close button {
+.talkroom_description_box.close .talkroom_description button {
   display: none;
 }
 
-.talkroom_description.close {
-  cursor: pointer;
+.talkroom_description_box.close .talkroom_description {
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  user-select: none;
   text-align: unset;
 }
 
-.talkroom_description.close br {
+.talkroom_description_box.close .talkroom_description br {
   display: none;
+}
+
+.talkroom_description_box.close.hidden {
+  cursor: unset;
+  user-select: unset;
 }
 
 /* ボトムエリア */
@@ -267,7 +299,7 @@ body > footer {
     text-decoration: underline 2px currentColor;
   }
 
-  .talkroom_description.close:hover {
+  .talkroom_description_box.close:not(.hidden):hover {
     background-color: #f1f9f6;
   }
 
@@ -298,6 +330,7 @@ body > footer {
     font-size: 12px;
   }
 
+  .talkroom_description_box .more,
   .talkroom_description {
     line-height: 140%;
   }
