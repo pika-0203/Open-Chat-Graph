@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\StaticData;
 
 use App\Config\AppConfig;
+use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
 use App\Services\StaticData\Dto\StaticTopPageDto;
 use App\Views\Dto\RankingArgDto;
@@ -13,6 +14,7 @@ class StaticDataGenerator
 {
     function __construct(
         private OpenChatListRepositoryInterface $openChatListRepository,
+        private RecentCommentListRepositoryInterface $recentCommentListRepository,
     ) {
     }
 
@@ -24,6 +26,7 @@ class StaticDataGenerator
         $dto->dailyList = $this->openChatListRepository->findMemberStatsDailyRanking(0, 5);
         $dto->weeklyList = $this->openChatListRepository->findMemberStatsPastWeekRanking(0, 5);
         $dto->popularList = $this->openChatListRepository->findMemberCountRanking(5);
+        $dto->recentCommentList = $this->recentCommentListRepository->findRecentCommentOpenChat(0, 5);
 
         // 説明文の文字数を詰める
         trimOpenChatListDescriptions($dto->hourlyList);

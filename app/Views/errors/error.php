@@ -300,11 +300,17 @@ $_css = ['room_list', 'site_header', 'site_footer'];
         a {
             word-break: break-all;
         }
+
+        main {
+            max-width: var(--width);
+        }
     </style>
 
     <!-- 固定ヘッダー -->
-    <?php viewComponent('site_header') ?>
     <main>
+        <div style="margin: 0 -1rem; ">
+            <?php viewComponent('site_header') ?>
+        </div>
         <header>
             <h1><?php echo $httpCode ?? '' ?></h1>
             <h2><?php echo $httpStatusMessage ?? '' ?></h2>
