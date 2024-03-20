@@ -31,6 +31,19 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
         return DB::fetch($query, ['id' => $id]);
     }
 
+    public function isExistsOpenChat(int $id): bool
+    {
+        $query =
+            "SELECT
+                oc.id
+            FROM
+                open_chat AS oc
+            WHERE
+                oc.id = :id";
+
+        return !!DB::fetchColumn($query, ['id' => $id]);
+    }
+
     public function getRankingPositionCategoryById(int $id): int|false
     {
         $query =

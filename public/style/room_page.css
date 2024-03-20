@@ -17,6 +17,7 @@ hr {
   padding: 0 1rem;
   padding-top: 12px;
   padding-bottom: 1.5rem;
+  font-family: var(--font-family);
 }
 
 .openchat footer {
@@ -137,8 +138,8 @@ hr {
   bottom: 0;
   right: 0;
   display: flex;
-  font-weight: bolder;
   visibility: hidden;
+  color: #aaa;
 }
 
 .more-text {
@@ -172,6 +173,8 @@ hr {
   border-radius: 99px;
   border: 0;
   font-weight: 500;
+  user-select: none;
+  margin-top: 1rem;
 }
 
 .talkroom_description_box.close .talkroom_description button {
@@ -243,6 +246,7 @@ hr {
 }
 
 .talkroom_number_of_stats .number-box {
+  align-items: center;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -335,4 +339,8 @@ body > footer {
   .talkroom_description {
     line-height: 140%;
   }
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
 }

@@ -2,7 +2,7 @@
 <html lang="ja">
 <?php viewComponent('head', compact('_css', '_meta')) ?>
 
-<body>
+<body class="body">
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
     <!-- オープンチャット表示ヘッダー -->

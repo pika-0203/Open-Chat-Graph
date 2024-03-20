@@ -25,6 +25,10 @@ class VerifyCsrfToken
         try {
             verifyCsrfToken();
         } catch (BadRequestException $e) {
+            if (Reception::$isJson) {
+                throw $e;
+            }
+
             view('errors/invalid_cookie')->render();
             exit;
         } catch (\Exception $e) {

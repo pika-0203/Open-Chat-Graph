@@ -13,113 +13,120 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
   <script type="application/json" id="stats-dto">
     <?php echo json_encode($_statsDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
   </script>
-  <!-- 固定ヘッダー -->
-  <?php viewComponent('site_header') ?>
-  <article class="openchat unset">
+  <script type="application/json" id="comment-app-init-dto">
+    <?php echo json_encode($_commentArgDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
+  </script>
+  <div class="body">
+    <!-- 固定ヘッダー -->
+    <?php viewComponent('site_header') ?>
+    <article class="openchat unset">
 
-    <!-- オープンチャット表示ヘッダー -->
-    <header class="openchat-header unset">
-      <div class="talkroom_banner_img_area">
-        <img class="talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgPreviewUrl($oc['img_url']) ?>" <?php echo getImgSetErrorTag() ?>>
-      </div>
-
-      <div class="openchat-header-right">
-        <a rel="external" target="_blank" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] ?>" class="h1-link unset">
-          <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span>
-            <div class="link-mark"><span class="link-title">LINEオープンチャット公式サイト</span><span class="line-link-icon"></span></div>
-          </h1>
-        </a>
-
-        <div class="talkroom_description_box close" id="talkroom_description_box">
-          <p class="talkroom_description" id="talkroom-description">
-            <span id="talkroom-description-btn">
-              <?php echo nl2brReplace($oc['description']) ?>
-            </span>
-            <br>
-            <button id="talkroom-description-close-btn">一部を表示</button>
-          </p>
-          <div class="more" id="read_more_btn">
-            <div class="more-separater">&nbsp;</div>
-            <div class="more-text">…もっと見る</div>
-          </div>
+      <!-- オープンチャット表示ヘッダー -->
+      <header class="openchat-header unset">
+        <div class="talkroom_banner_img_area">
+          <img class="talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgPreviewUrl($oc['img_url']) ?>" <?php echo getImgSetErrorTag() ?>>
         </div>
 
-        <div class="talkroom_number_of_members">
-          <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?></span>
-        </div>
-        <?php if (isset($oc['diff_member'])) : ?>
-          <div class="talkroom_number_of_stats">
-            <div class="number-box <?php echo $oc['diff_member'] > 0 ? 'positive' : 'negative' ?>">
-              <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
-                <span class="openchat-itme-stats-title">昨日</span>
-                <div>
-                  <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?></span>
-                  <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
-                </div>
-              <?php elseif ($oc['diff_member'] === 0) : ?>
-                <span class="openchat-itme-stats-title">昨日</span>
-                <span class="zero-stats">±0</span>
-              <?php endif ?>
-            </div>
-            <div class="number-box weekly <?php echo $oc['diff_member2'] > 0 ? 'positive' : 'negative' ?>">
-              <?php if ($oc['diff_member2'] ?? 0 !== 0) : ?>
-                <span class="openchat-itme-stats-title">1週間</span>
-                <div>
-                  <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?></span>
-                  <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
-                </div>
-              <?php elseif ($oc['diff_member2'] === 0) : ?>
-                <span class="openchat-itme-stats-title">1週間</span>
-                <span class="zero-stats">±0</span>
-              <?php endif ?>
+        <div class="openchat-header-right">
+          <a rel="external" target="_blank" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] ?>" class="h1-link unset">
+            <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span>
+              <div class="link-mark"><span class="link-title">LINEオープンチャット公式サイト</span><span class="line-link-icon"></span></div>
+            </h1>
+          </a>
+
+          <div class="talkroom_description_box close" id="talkroom_description_box">
+            <p class="talkroom_description" id="talkroom-description">
+              <span id="talkroom-description-btn">
+                <?php echo nl2brReplace($oc['description']) ?>
+              </span>
+              <br>
+              <button id="talkroom-description-close-btn">一部を表示</button>
+            </p>
+            <div class="more" id="read_more_btn">
+              <div class="more-separater">&nbsp;</div>
+              <div class="more-text">…もっと見る</div>
             </div>
           </div>
-        <?php endif ?>
-      </div>
-    </header>
+
+          <div class="talkroom_number_of_members">
+            <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?></span>
+          </div>
+          <?php if (isset($oc['diff_member'])) : ?>
+            <div class="talkroom_number_of_stats">
+              <div class="number-box <?php echo $oc['diff_member'] > 0 ? 'positive' : 'negative' ?>">
+                <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
+                  <span class="openchat-itme-stats-title">昨日</span>
+                  <div>
+                    <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?></span>
+                    <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
+                  </div>
+                <?php elseif ($oc['diff_member'] === 0) : ?>
+                  <span class="openchat-itme-stats-title">昨日</span>
+                  <span class="zero-stats">±0</span>
+                <?php endif ?>
+              </div>
+              <div class="number-box weekly <?php echo $oc['diff_member2'] > 0 ? 'positive' : 'negative' ?>">
+                <?php if ($oc['diff_member2'] ?? 0 !== 0) : ?>
+                  <span class="openchat-itme-stats-title">1週間</span>
+                  <div>
+                    <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?></span>
+                    <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
+                  </div>
+                <?php elseif ($oc['diff_member2'] === 0) : ?>
+                  <span class="openchat-itme-stats-title">1週間</span>
+                  <span class="zero-stats">±0</span>
+                <?php endif ?>
+              </div>
+            </div>
+          <?php endif ?>
+        </div>
+      </header>
+      <hr>
+      <!-- グラフセクション -->
+      <div class="chart-canvas-box" id="dummy-canvas"></div>
+      <div id="app"></div>
+
+      <footer class="unset">
+        <form class="my-list-form">
+          <?php if (count($myList) - 1 < AppConfig::MY_LIST_LIMIT || isset($myList[$oc['id']])) : ?>
+            <label class="checkbox-label" for="my-list-checkbox">
+              <input type="checkbox" id="my-list-checkbox" <?php if (isset($myList[$oc['id']])) echo 'checked' ?>>
+              <span>トップにピン留め</span>
+            </label>
+          <?php endif ?>
+        </form>
+        <div>
+          <span class="openchat-list-date" style="flex-direction: row;">
+            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px">
+              <?php if (is_int($oc['api_created_at'])) : ?>
+                <div>オプチャ作成:&nbsp;</div>
+              <?php endif ?>
+              <div>登録:&nbsp;</div>
+              <?php if (is_int($oc['api_created_at'])) : ?>
+                <div>カテゴリー:&nbsp;</div>
+              <?php endif ?>
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px">
+              <?php if (is_int($oc['api_created_at'])) : ?>
+                <div><?php echo convertDatetime($oc['api_created_at']) ?></div>
+              <?php endif ?>
+              <div><?php echo convertDatetime($oc['created_at']) ?></div>
+              <?php if (is_int($oc['api_created_at'])) : ?>
+                <div><?php echo $category ?></div>
+              <?php endif ?>
+            </div>
+          </span>
+        </div>
+      </footer>
+
+    </article>
+
+    <div id="comment-root" style="margin: 1rem;"></div>
     <hr>
-    <!-- グラフセクション -->
-    <div class="chart-canvas-box" id="dummy-canvas"></div>
-    <div id="app"></div>
-
-    <footer class="unset">
-      <form class="my-list-form">
-        <?php if (count($myList) - 1 < AppConfig::MY_LIST_LIMIT || isset($myList[$oc['id']])) : ?>
-          <label class="checkbox-label" for="my-list-checkbox">
-            <input type="checkbox" id="my-list-checkbox" <?php if (isset($myList[$oc['id']])) echo 'checked' ?>>
-            <span>トップにピン留め</span>
-          </label>
-        <?php endif ?>
-      </form>
-      <div>
-        <span class="openchat-list-date" style="flex-direction: row;">
-          <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px">
-            <?php if (is_int($oc['api_created_at'])) : ?>
-              <div>オプチャ作成:&nbsp;</div>
-            <?php endif ?>
-            <div>登録:&nbsp;</div>
-            <?php if (is_int($oc['api_created_at'])) : ?>
-              <div>カテゴリー:&nbsp;</div>
-            <?php endif ?>
-          </div>
-          <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px">
-            <?php if (is_int($oc['api_created_at'])) : ?>
-              <div><?php echo convertDatetime($oc['api_created_at']) ?></div>
-            <?php endif ?>
-            <div><?php echo convertDatetime($oc['created_at']) ?></div>
-            <?php if (is_int($oc['api_created_at'])) : ?>
-              <div><?php echo $category ?></div>
-            <?php endif ?>
-          </div>
-        </span>
-      </div>
+    <footer>
+      <?php viewComponent('footer_inner') ?>
     </footer>
-
-  </article>
-
-  <footer>
-    <?php viewComponent('footer_inner') ?>
-  </footer>
+  </div>
   <script>
     ;
     (function() {

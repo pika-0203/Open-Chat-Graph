@@ -237,7 +237,12 @@ function getFilePath($path, $pattern): string
 function localCORS()
 {
     $ip = getIP();
-    if ($ip === '::1' || strstr($ip, '192.168') !== false) {
-        header('Access-Control-Allow-Origin: *');
+    if (strstr($ip, '::1') !== false || strstr($ip, '192.168') !== false) {
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
+        header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
+        if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") {
+            exit;
+        }
     }
 }

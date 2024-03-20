@@ -2,7 +2,7 @@
 <html lang="ja">
 <?php viewComponent('head', compact('_css', '_meta') + ['noindex' => true]) ?>
 
-<body>
+<body class="body">
     <?php viewComponent('site_header') ?>
     <main>
         <hr>

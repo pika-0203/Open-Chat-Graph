@@ -8,5 +8,7 @@ interface OpenChatPageRepositoryInterface
 {
     public function getOpenChatById(int $id): array|false;
 
+    public function isExistsOpenChat(int $id): bool;
+
     public function getRankingPositionCategoryById(int $id): int|false;
 }
