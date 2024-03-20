@@ -32,4 +32,8 @@ https://github.com/mimimiku778/Open-Chat-Graph-Frontend
 Open-Chat-Graph-Frontend-Stats-Graph  
 https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph
 
+## コメント機能  
+Open-Chat-Graph-Comments  
+https://github.com/mimimiku778/Open-Chat-Graph-Comments
+
 ###### mimimiku778 と pika-0203 は同一人物です
