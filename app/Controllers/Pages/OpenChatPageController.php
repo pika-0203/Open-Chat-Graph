@@ -6,7 +6,6 @@ namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
-use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\Statistics\StatisticsChartArrayService;
 use App\Views\Dto\RankingPositionChartArgDto;
 use App\Views\Meta\OcPageMeta;
@@ -52,6 +51,11 @@ class OpenChatPageController
 
         $category = $categoryValue ?? 'その他';
 
+        $_commentArgDto = [
+            'baseUrl' => url(),
+            'openChatId' => $oc['id']
+        ];
+
         return view('oc_content', compact(
             '_meta',
             '_css',
@@ -59,7 +63,8 @@ class OpenChatPageController
             'myList',
             'category',
             '_chartArgDto',
-            '_statsDto'
+            '_statsDto',
+            '_commentArgDto'
         ));
     }
 }

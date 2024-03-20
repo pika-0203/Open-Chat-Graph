@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Repositories;
 
+use App\Models\CommentRepositories\DeleteCommentRepositoryInterface;
 use Shadow\DB;
 use App\Models\Repositories\RankingPosition\RankingPositionRepositoryInterface;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
@@ -12,7 +13,8 @@ class DeleteOpenChatRepository implements DeleteOpenChatRepositoryInterface
 {
     public function __construct(
         private StatisticsRepositoryInterface $statisticsRepository,
-        private RankingPositionRepositoryInterface $rankingPositionRepository
+        private RankingPositionRepositoryInterface $rankingPositionRepository,
+        private DeleteCommentRepositoryInterface $deleteCommentRepository,
     ) {
     }
 
@@ -28,6 +30,8 @@ class DeleteOpenChatRepository implements DeleteOpenChatRepositoryInterface
 
         $this->statisticsRepository->daleteDailyStatistics($open_chat_id);
         $this->rankingPositionRepository->daleteDailyPosition($open_chat_id);
+        
+        $this->deleteCommentRepository->deleteCommentsAll($open_chat_id);
 
         return $result;
     }

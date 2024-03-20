@@ -2,12 +2,15 @@
 <html lang="ja">
 <?php viewComponent('head', compact('_css', '_meta')) ?>
 
-<body>
+<body class="body">
     <?php viewComponent('site_header') ?>
     <main>
         <header>
             <span class="main-header-title">OPENCHAT GRAPH</span>
             <span class="main-header-title-desc">メンバー数の増加をグラフで分析</span>
+            <small><b style="color:#ff5d6d">【NEW】2024.3.21 コメント機能を実装しました!</b></small>
+            <br>
+            <small><a href="/policy" style="color: inherit;">オプチャグラフについてのコメント欄</a>も開設しました</small>
         </header>
 
         <hr>

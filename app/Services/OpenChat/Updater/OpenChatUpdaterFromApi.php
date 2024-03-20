@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\OpenChat\Updater;
 
+use App\Exceptions\InvalidMemberCountException;
 use App\Services\OpenChat\Crawler\OpenChatApiFromEmidDownloader;
 use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepositoryInterface;
@@ -48,6 +49,10 @@ class OpenChatUpdaterFromApi
                     ? $ocDto
                     : false;
             }
+        } catch (InvalidMemberCountException $e) {
+            $this->logRepository->logUpdateOpenChatError($open_chat_id, $e->getMessage());
+            $this->updateDelete($repoDto, false);
+            return false;
         } catch (\RuntimeException $e) {
             $this->logRepository->logUpdateOpenChatError($open_chat_id, $e->getMessage());
             return false;

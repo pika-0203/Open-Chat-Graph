@@ -2,7 +2,7 @@
 <html lang="ja">
 <?php viewComponent('head', compact('_css', '_meta') + ['noindex' => true]) ?>
 
-<body>
+<body class="body">
     <style>
         hr {
             border-bottom: solid 1px var(--border-color);

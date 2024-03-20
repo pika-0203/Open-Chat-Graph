@@ -2,6 +2,10 @@
 
 namespace App\Config;
 
+use App\Controllers\Api\CommentLikePostApiController;
+use App\Controllers\Api\CommentListApiController;
+use App\Controllers\Api\CommentPostApiController;
+use App\Controllers\Api\CommentReportApiController;
 use Shadow\Kernel\Route;
 use App\Middleware\RedirectLineWebBrowser;
 use App\Services\Admin\AdminAuthService;
@@ -27,7 +31,8 @@ Route::path('recent/{pageNumber}')
     ->match(cache(...));
 
 Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
-    ->matchNum('open_chat_id', min: 1);
+    ->matchNum('open_chat_id', min: 1)
+    ->middleware([VerifyCsrfToken::class]);
 
 Route::path('oclist', [OpenChatRankingPageApiController::class, 'index']);
 
@@ -61,7 +66,7 @@ Route::path('register')
 
 Route::path('oc@post', [OpenChatRegistrationApiController::class, 'register'])
     ->matchStr('url', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
-    ->middleware([RedirectLineWebBrowser::class, VerifyCsrfToken::class]);
+    ->middleware([VerifyCsrfToken::class]);
 
 Route::path('admin/cookie')
     ->match(function (AdminAuthService $adminAuthService, ?string $key) {
@@ -70,6 +75,43 @@ Route::path('admin/cookie')
         }
         return redirect();
     });
+
+// コメントAPI
+Route::path(
+    'comment/{open_chat_id}@get@post',
+    [CommentListApiController::class, 'index', 'get'],
+    [CommentPostApiController::class, 'index', 'post']
+)
+    ->matchNum('open_chat_id', min: 0)
+    ->matchNum('page', 'get', min: 0)
+    ->matchNum('limit', 'get', min: 1)
+    ->matchStr('token', 'post')
+    ->matchStr('name', 'post', maxLen: 20, emptyAble: true)
+    ->matchStr('text', 'post', maxLen: 1000)
+    ->match(
+        fn (string $text, string $name) => removeAllZeroWidthCharacters($text)
+            ? ['name' => removeAllZeroWidthCharacters($name) ? $name : '']
+            : false,
+        'post'
+    );
+
+// コメントリアクションAPI
+Route::path(
+    'comment_reaction/{comment_id}@post@delete',
+    [CommentLikePostApiController::class, 'add', 'post'],
+    [CommentLikePostApiController::class, 'delete', 'delete']
+)
+    ->matchNum('comment_id', min: 1)
+    ->matchStr('type', 'post', regex: ['empathy', 'insights', 'negative'])
+    ->middleware([VerifyCsrfToken::class]);
+
+// 通報API
+Route::path(
+    'comment_report/{comment_id}@post',
+    [CommentReportApiController::class, 'index']
+)
+    ->matchNum('comment_id', min: 1)
+    ->matchStr('token');
 
 // 旧URLからのリダイレクト先
 Route::path('search')
