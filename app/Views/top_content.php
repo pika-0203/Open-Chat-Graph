@@ -8,9 +8,9 @@
         <header>
             <span class="main-header-title">OPENCHAT GRAPH</span>
             <span class="main-header-title-desc">メンバー数の増加をグラフで分析</span>
-            <small><b style="color:#ff5d6d">【NEW】2024.3.21 コメント機能を実装しました!</b></small>
+            <small><b style="color: inherit;">2024.3.21 コメント機能を実装しました</b></small>
             <br>
-            <small><a href="/policy" style="color: inherit;">オプチャグラフについてのコメント欄</a>も開設しました</small>
+            <small><a href="/policy" style="color: inherit;">オプチャグラフについてのコメント欄</a>を開設しました</small>
         </header>
 
         <hr>
@@ -26,6 +26,22 @@
             <hr class="ht-top-mylist">
         <?php endif ?>
 
+        <article class="top-list" style="margin-bottom: 2rem;">
+            <header class="openchat-list-title-area unset">
+                <div class="openchat-list-date unset ranking-url">
+                    <h2 class="unset">
+                        <span class="openchat-list-title">Comments</span>
+                    </h2>
+                    <div class="refresh-time">
+                        <time>最近のコメント投稿</time>
+                    </div>
+                </div>
+            </header>
+            <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
+            viewComponent('open_chat_list', ['openChatList' => $dto->recentCommentList]) ?>
+
+        </article>
+
         <article class="top-ranking" style="margin-bottom: -1rem;">
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
@@ -33,7 +49,7 @@
                         <span class="openchat-list-title">Hourly</span>
                     </h2>
                     <div class="refresh-time">
-                        <time><?php echo $hourlyRange ?></time>
+                        <time><?php echo $hourlyRange ?> の増加</time>
                     </div>
                 </div>
             </header>
@@ -51,7 +67,7 @@
                         <span class="openchat-list-title">Daily</span>
                     </h2>
                     <div class="refresh-time">
-                        <time>昨日</time>
+                        <time>昨日の増加</time>
                     </div>
                 </div>
             </header>
@@ -68,7 +84,7 @@
                         <span class="openchat-list-title">Weekly</span>
                     </h2>
                     <div class="refresh-time">
-                        <time><?php echo $weeklyRange ?></time>
+                        <time><?php echo $weeklyRange ?> の増加</time>
                     </div>
                 </div>
             </header>

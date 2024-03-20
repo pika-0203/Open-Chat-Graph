@@ -715,10 +715,12 @@ main hr {
   z-index: 3;
 }
 
+.top-list .openchat-item-desc,
 .top-mylist .openchat-item-desc {
   -webkit-line-clamp: 1;
 }
 
+.top-list .openchat-item,
 .top-mylist .openchat-item {
   min-height: 56px;
   margin-left: 0px;

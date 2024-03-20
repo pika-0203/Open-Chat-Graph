@@ -10,6 +10,10 @@ class StaticTopPageDto
     public array $dailyList;
     public array $weeklyList;
     public array $popularList;
+
+    /** @var array{ id:int, name:string, img_url:string, description:string, member:int, emblem:int, category:int, time:string }[] $recentCommentList */
+    public array $recentCommentList;
+    
     public \DateTime $hourlyUpdatedAt;
     public \DateTime $dailyUpdatedAt;
 }
