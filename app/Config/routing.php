@@ -30,6 +30,9 @@ Route::path('recent/{pageNumber}')
     ->matchNum('pageNumber', min: 1)
     ->match(cache(...));
 
+Route::path('policy')
+    ->middleware([VerifyCsrfToken::class]);
+
 Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
     ->matchNum('open_chat_id', min: 1)
     ->middleware([VerifyCsrfToken::class]);
