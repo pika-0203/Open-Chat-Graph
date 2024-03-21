@@ -46,3 +46,7 @@ h1 {
 .grecaptcha-badge {
   visibility: hidden;
 }
+
+.MuiPaper-outlined.MuiPaper-rounded {
+  border: none;
+}

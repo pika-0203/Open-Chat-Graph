@@ -13,7 +13,8 @@ class OpenChatServicesUtility
      */
     static function containsHashtagNolog(string $desc): bool
     {
-        return strpos($desc, '#nolog') !== false;
+        //return strpos($desc, '#nolog') !== false;
+        return false;
     }
 
     /**
