@@ -8,8 +8,6 @@
         <header>
             <span class="main-header-title">OPENCHAT GRAPH</span>
             <span class="main-header-title-desc">メンバー数の増加をグラフで分析</span>
-            <small class="top-small-desc" style="color: #ff5d6d; font-size: 13px"><b style="color: inherit;">【2024.3.21】コメント機能を実装しました</b></small>
-            <br>
             <small style="font-size: 11px; color:#777"><a href="/policy" style="font-size: inherit; color: inherit">オプチャグラフについてのコメント欄</a>を開設しました</small>
         </header>
 

@@ -23,7 +23,8 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
                         PARTITION BY open_chat_id
                         ORDER BY
                             time DESC
-                    ) AS rn
+                    ) AS rn,
+                    text
                 FROM
                     comment
                 WHERE
@@ -31,7 +32,8 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
             )
             SELECT
                 open_chat_id,
-                time
+                time,
+                text
             FROM
                 RankedComments
             WHERE
@@ -51,10 +53,7 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
                 oc.id,
                 oc.name,
                 oc.img_url,
-                oc.description,
-                oc.member,
-                oc.emblem,
-                oc.category
+                oc.emblem
             FROM
                 open_chat AS oc
             WHERE
@@ -66,7 +65,7 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
 
         $result = [];
         foreach ($oc as $i => $el) {
-            $result[] = $el + ['time' => $comments[$i]['time']];
+            $result[] = $el + ['time' => $comments[$i]['time'],'description' => $comments[$i]['text']];
         }
 
         return $result;
