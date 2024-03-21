@@ -15,7 +15,7 @@ class IndexPageController
         RecentCommentListRepositoryInterface $recentCommentListRepository
     ) {
         $dto = $staticDataGeneration->getTopPageData();
-        $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChat(0, 5);
+        $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChat(0, 10);
 
         $myList = [];
         // クッキーにピン留めがある場合
