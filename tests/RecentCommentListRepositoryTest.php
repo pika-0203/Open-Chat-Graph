@@ -14,7 +14,7 @@ class RecentCommentListRepositoryTest extends TestCase
         $this->inst = app(RecentCommentListRepository::class);
 
         $res = $this->inst->findRecentCommentOpenChat(0, 5);
-        debug(count($res));
+        debug($res);
 
         $this->assertTrue(true);
     }

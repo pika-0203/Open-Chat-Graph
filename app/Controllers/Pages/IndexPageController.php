@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Services\User\MyOpenChatList;
 use App\Services\StaticData\StaticDataFile;
 
 class IndexPageController
 {
-    function index(StaticDataFile $staticDataGeneration)
-    {
+    function index(
+        StaticDataFile $staticDataGeneration,
+        RecentCommentListRepositoryInterface $recentCommentListRepository
+    ) {
         $dto = $staticDataGeneration->getTopPageData();
+        $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChat(0, 5);
 
         $myList = [];
-
         // クッキーにピン留めがある場合
         if (cookie()->has('myList')) {
             /** 
