@@ -97,7 +97,7 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
         </form>
         <div>
           <span class="openchat-list-date" style="flex-direction: row;">
-            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px">
+            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px; line-height: 1.5;">
               <?php if (is_int($oc['api_created_at'])) : ?>
                 <div>オプチャ作成:&nbsp;</div>
               <?php endif ?>
@@ -106,7 +106,7 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
                 <div>カテゴリー:&nbsp;</div>
               <?php endif ?>
             </div>
-            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px">
+            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px; line-height: 1.5;">
               <?php if (is_int($oc['api_created_at'])) : ?>
                 <div><?php echo convertDatetime($oc['api_created_at']) ?></div>
               <?php endif ?>
