@@ -11,12 +11,14 @@
         <main>
             <article class="terms">
                 <h1 style="letter-spacing: 0px;">オプチャグラフについて</h1>
-                <p>オプチャグラフは<a href="https://openchat.line.me/jp" rel="external" target="_blank">LINEオープンチャット公式サイト</a>のデータを自動的に記録し、グラフ等に視覚化することで新たな知見を得ることができます。</p>
+                <p>オプチャグラフはLINEオープンチャット公式サイトのデータを自動的に記録し、グラフ等に視覚化することで新たな知見を得ることができます。</p>
                 <h2>サイトの目的</h2>
                 <p>・オープンチャットの管理者が成長傾向を把握し、比較できる事で運営に役立つ</p>
                 <p>・ユーザーがオープンチャットを見つけて参加する機会を作る</p>
                 <h2>オープンチャットの掲載条件</h2>
-                <p>公式サイトに掲載されているランキングを基にオープンチャットを記録します。掲載が終了したオープンチャットはオプチャグラフから削除されます。</p>
+                <p>LINEオープンチャット公式サイトに掲載されているランキングを基にオープンチャットを記録します。掲載が終了したオープンチャットはオプチャグラフから削除されます。</p>
+                <p>LINEオープンチャット公式サイト: <a rel="external nofollow noopener" href="https://openchat.line.me/jp" target="_blank">https://openchat.line.me/jp</a></p>
+                <p>LINEオープンチャット利用規約: <a rel="external nofollow noopener" href="https://terms.line.me/line_Square_TOU_JP?lang=ja" target="_blank">https://terms.line.me/line_Square_TOU_JP?lang=ja</a></p>
                 <!-- <p>オープンチャットがオプチャグラフに表示されないようにするには、オープンチャットの説明文に #nolog を含めます。</p>
                 <p>既に登録済みのオープンチャットはデータ更新時に #nolog を検出すると削除されます。</p> -->
                 <h2>コメント欄</h2>

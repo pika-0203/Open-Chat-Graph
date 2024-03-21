@@ -719,7 +719,6 @@ main hr {
   -webkit-line-clamp: 1;
 }
 
-.top-list .openchat-item,
 .top-mylist .openchat-item {
   min-height: 56px;
   margin-left: 0px;
