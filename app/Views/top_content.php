@@ -33,7 +33,7 @@
                         <span class="openchat-list-title">Comments</span>
                     </h2>
                     <div class="refresh-time">
-                        <time>最近のコメント投稿 <span style="font-size: 11px; margin: auto;">(1時間ごとに更新)</span></time>
+                        <time>最近のコメント投稿</time>
                     </div>
                 </div>
             </header>

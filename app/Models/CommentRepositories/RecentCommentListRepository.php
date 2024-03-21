@@ -43,6 +43,9 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
 
         $comments = CommentDB::fetchAll($query, compact('offset', 'limit'));
 
+        $ids = array_column($comments, 'open_chat_id');
+        $ids = implode(',', $ids);
+
         $ocQuery =
             "SELECT
                 oc.id,
@@ -55,14 +58,15 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
             FROM
                 open_chat AS oc
             WHERE
-                id = :id";
+                id IN ({$ids})
+            ORDER BY FIELD(id, {$ids})";
+
+
+        $oc = DB::fetchAll($ocQuery);
 
         $result = [];
-        foreach ($comments as $el) {
-            $oc = DB::fetch($ocQuery, ['id' => $el['open_chat_id']]);
-            if (!$oc) continue;
-
-            $result[] = $oc + ['time' => $el['time']];
+        foreach ($oc as $i => $el) {
+            $result[] = $el + ['time' => $comments[$i]['time']];
         }
 
         return $result;
