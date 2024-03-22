@@ -4,7 +4,7 @@
 
 use App\Config\AppConfig;
 
-viewComponent('oc_head', compact('_css', '_meta')); ?>
+viewComponent('oc_head', compact('_css', '_meta') + ['id' => $oc['id']]); ?>
 
 <body>
   <script type="application/json" id="chart-arg">
