@@ -231,6 +231,10 @@
     line-height: 1.9;
   }
 
+  .share-nav h3 {
+    margin: 0;
+  }
+
   .share-nav-inner {
     gap: 1.5rem;
   }
