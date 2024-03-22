@@ -30,7 +30,7 @@ class ReactRankingPageController
         }
 
         $_meta = meta()
-            ->setTitle($category ? $categoryNames[$category] . '｜参加人数のランキング' : '【毎日更新】参加人数のランキング')
+            ->setTitle($category ? ($categoryNames[$category] . '｜参加人数のランキング') : '【毎日更新】参加人数のランキング')
             ->generateTags();
 
         $_argDto = $staticDataFile->getRankingArgDto();
