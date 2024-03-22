@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Config\AppConfig;
 use App\Services\StaticData\StaticDataFile;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 
@@ -24,7 +25,7 @@ class ReactRankingPageController
         $_js = getFilePath('js/react', 'main.*.js');
 
         $_meta = meta()
-            ->setTitle('【毎日更新】参加人数のランキング')
+            ->setTitle($category ? array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '｜参加人数のランキング' : '【毎日更新】参加人数のランキング')
             ->generateTags();
 
         $_argDto = $staticDataFile->getRankingArgDto();
