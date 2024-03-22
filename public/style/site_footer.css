@@ -51,16 +51,16 @@
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap: 19px;
-  padding-bottom: 1.5rem;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .share-nav h3 {
   all: unset;
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 13px;
+  color: #111;
   display: block;
-  margin-left: 1rem;
+  margin: 0 auto;
 }
 
 .share-nav-inner {
