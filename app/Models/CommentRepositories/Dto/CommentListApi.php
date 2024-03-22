@@ -28,7 +28,7 @@ class CommentListApi
                 'name' => $this->name,
                 'text' => $this->text,
                 'time' => $this->time,
-                'userId' => $this->userId === AdminConfig::ADMIN_API_KEY ? '管理者' : base62Hash($this->userId, 'fnv132')
+                'userId' => $this->userId === AdminConfig::ADMIN_API_KEY ? '管理者' : ''
             ],
             'like' => [
                 'empathyCount' => $this->empathyCount,
