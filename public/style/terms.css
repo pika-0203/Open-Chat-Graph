@@ -3,13 +3,13 @@ main {
   color: #616161;
 }
 
-main p {
+.terms > p {
   font-size: 14px;
   line-height: 1.9;
 }
 
-.main-nav-link {
-  text-decoration: underline;
+.terms > p > a {
+  color: inherit;
 }
 
 h1 {
@@ -27,7 +27,7 @@ h1 {
   font-family: var(--font-family);
 }
 
-.terms h2 {
+.terms > h2 {
   padding-bottom: 0.3em;
   font-size: 1em;
   margin-top: 2.3em;
@@ -39,7 +39,7 @@ h1 {
   color: #333;
 }
 
-.terms ol p {
+.terms > ol p {
   margin: 0;
 }
 
