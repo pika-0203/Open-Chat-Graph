@@ -24,8 +24,13 @@ class ReactRankingPageController
 
         $_js = getFilePath('js/react', 'main.*.js');
 
+        $categoryNames = array_flip(AppConfig::OPEN_CHAT_CATEGORY);
+        if ($category && !isset($categoryNames[$category])) {
+            return false;
+        }
+
         $_meta = meta()
-            ->setTitle($category ? array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '｜参加人数のランキング' : '【毎日更新】参加人数のランキング')
+            ->setTitle($category ? $categoryNames[$category] . '｜参加人数のランキング' : '【毎日更新】参加人数のランキング')
             ->generateTags();
 
         $_argDto = $staticDataFile->getRankingArgDto();
