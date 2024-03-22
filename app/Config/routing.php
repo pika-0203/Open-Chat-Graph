@@ -18,11 +18,13 @@ use App\Controllers\Pages\RecentOpenChatPageController;
 use App\Middleware\VerifyCsrfToken;
 
 Route::middlewareGroup(RedirectLineWebBrowser::class)
-    ->path('ranking', [ReactRankingPageController::class, 'ranking'])
-    ->match(cache(...))
-
     ->path('ranking/{category}', [ReactRankingPageController::class, 'ranking'])
+    ->match(cache(...))
+    ->matchNum('category', min: 1)
+
+    ->path('ranking', [ReactRankingPageController::class, 'ranking'])
     ->match(cache(...));
+
 
 Route::path('policy')
     ->middleware([VerifyCsrfToken::class]);
