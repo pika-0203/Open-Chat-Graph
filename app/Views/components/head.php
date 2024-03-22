@@ -1,6 +1,5 @@
 <!-- @param string $_meta -->
 <!-- @param array $_css -->
-<!-- @param array $noindex -->
 
 <head prefix="og: http://ogp.me/ns#">
     <?php echo gTag(\App\Config\AppConfig::GTAG_ID) ?>
@@ -13,8 +12,5 @@
         <link rel="stylesheet" href="<?php echo fileUrl("style/{$css}.css") ?>">
     <?php endforeach ?>
     <link rel="icon" type="image/png" href="<?php echo url(\App\Config\AppConfig::SITE_ICON_FILE_PATH) ?>">
-    <?php if ($noindex ?? false) : ?>
-        <meta name="robots" content="noindex,nofollow,noarchive" />
-    <?php endif ?>
     <link rel="canonical" hrefs="<?php echo url(strstr(path(), '?', true) ?: path()) ?>">
 </head>

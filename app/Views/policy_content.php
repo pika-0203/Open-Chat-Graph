@@ -21,8 +21,8 @@
                 <p>LINEオープンチャット利用規約: <a rel="external nofollow noopener" href="https://terms.line.me/line_Square_TOU_JP?lang=ja" target="_blank">https://terms.line.me/line_Square_TOU_JP?lang=ja</a></p>
                 <!-- <p>オープンチャットがオプチャグラフに表示されないようにするには、オープンチャットの説明文に #nolog を含めます。</p>
                 <p>既に登録済みのオープンチャットはデータ更新時に #nolog を検出すると削除されます。</p> -->
-                <h2>コメント欄</h2>
-                <div id="comment-root" style="margin: 1rem 0;"></div>
+                <h2 style="border:none; margin-bottom:0;">コメント欄</h2>
+                <div id="comment-root" style="margin: 0;"></div>
                 <h2>お問い合わせ窓口</h2>
                 <p>E-mail: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>
                 <h2>リンク</h2>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-<?php viewComponent('head', compact('_css', '_meta') + ['noindex' => true]) ?>
+<?php viewComponent('head', compact('_css', '_meta')) ?>
 
 <body class="body">
     <style>
