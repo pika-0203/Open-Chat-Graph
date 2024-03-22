@@ -95,7 +95,7 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
             </label>
           <?php endif ?>
         </form>
-        <div style="position:relative;">
+        <div style="position:relative; min-width:7rem;">
           <span class="openchat-list-date" style="flex-direction: row;">
             <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px; line-height: 1.5;">
               <?php if (is_int($oc['api_created_at'])) : ?>
