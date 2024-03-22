@@ -16,4 +16,5 @@
     <?php if ($noindex ?? false) : ?>
         <meta name="robots" content="noindex,nofollow,noarchive" />
     <?php endif ?>
+    <link rel="canonical" hrefs="<?php echo url(strstr(path(), '?', true) ?: path()) ?>">
 </head>

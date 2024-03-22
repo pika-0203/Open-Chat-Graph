@@ -7,27 +7,29 @@ namespace App\Controllers\Pages;
 use App\Views\OpenChatStatisticsRecent;
 use App\Config\AppConfig;
 use App\Services\Admin\AdminAuthService;
+use App\Views\Schema\PageBreadcrumbsListSchema;
 use App\Views\SelectElementPagination;
 
-class RecentPageController
+class RecentOpenChatPageController
 {
     function __construct(
         private OpenChatStatisticsRecent $openChatStatsRecent,
-        private SelectElementPagination $pagination
+        private SelectElementPagination $pagination,
+        private PageBreadcrumbsListSchema $breadcrumbsShema
     ) {
     }
 
-    function index(?int $pageNumber, AdminAuthService $adminAuthService)
+    function index(?int $recent_page_number, AdminAuthService $adminAuthService)
     {
-        $pageNumber = $pageNumber ?? 1;
-        $rankingList = $this->openChatStatsRecent->getAllOrderByRegistrationDate($pageNumber, AppConfig::OPEN_CHAT_LIST_LIMIT);
+        $recent_page_number = $recent_page_number ?: 1;
+        $rankingList = $this->openChatStatsRecent->getAllOrderByRegistrationDate($recent_page_number, AppConfig::OPEN_CHAT_LIST_LIMIT);
 
         if (!$rankingList) {
             // 最大ページ数を超えてる場合は404
             return false;
         }
-        
-        $path = 'recent';
+
+        $path = '/oc?recent_page_number=';
         $pageTitle = '最近登録されたオープンチャット';
         $_css = ['room_list', 'site_header', 'site_footer'];
 
@@ -39,19 +41,21 @@ class RecentPageController
         [$title, $_select, $_label] = $this->pagination->geneSelectElementPagerAsc(
             $path,
             '',
-            $pageNumber,
+            $recent_page_number,
             $rankingList['totalRecords'],
             AppConfig::OPEN_CHAT_LIST_LIMIT,
             $rankingList['maxPageNumber'],
             $rankingList['labelArray']
         );
 
-        $subTitle = $pageNumber === 1 ? '' : "({$pageNumber}ページ目)";
+        $subTitle = $recent_page_number === 1 ? '' : "({$recent_page_number}ページ目)";
         $_meta = meta()->setTitle($pageTitle . $subTitle);
+
+        $_breadcrumbsShema = $this->breadcrumbsShema->generateSchema('最近登録されたオープンチャット', 'oc');
 
         return view(
             'recent_content',
-            compact('_meta', '_css', '_select', '_label', 'path', 'isAdmin') + $rankingList
+            compact('_meta', '_css', '_select', '_label', 'path', 'isAdmin', '_breadcrumbsShema') + $rankingList
         );
     }
 }

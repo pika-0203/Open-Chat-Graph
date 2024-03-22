@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Services\StaticData\StaticDataFile;
+use App\Views\Schema\PageBreadcrumbsListSchema;
 
 class ReactRankingPageController
 {
-    function ranking(StaticDataFile $staticDataFile)
+    function ranking(StaticDataFile $staticDataFile, PageBreadcrumbsListSchema $breadcrumbsShema)
     {
         $_css = [
             'style/react/OpenChat.css',
@@ -25,6 +26,8 @@ class ReactRankingPageController
 
         $_argDto = $staticDataFile->getRankingArgDto();
 
-        return view('ranking_react_content', compact('_css', '_js', '_meta', '_argDto'));
+        $_breadcrumbsShema = $breadcrumbsShema->generateSchema('参加人数のランキング', 'ranking');
+
+        return view('ranking_react_content', compact('_css', '_js', '_meta', '_argDto', '_breadcrumbsShema'));
     }
 }

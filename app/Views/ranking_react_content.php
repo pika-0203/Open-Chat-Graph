@@ -25,6 +25,7 @@
     </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <?php echo $_breadcrumbsShema ?>
 </body>
 
 </html>

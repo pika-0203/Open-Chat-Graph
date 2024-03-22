@@ -14,6 +14,7 @@ use App\Controllers\Api\OpenChatRegistrationApiController;
 use App\Controllers\Api\RankingPositionApiController;
 use App\Controllers\Pages\OpenChatPageController;
 use App\Controllers\Pages\ReactRankingPageController;
+use App\Controllers\Pages\RecentOpenChatPageController;
 use App\Middleware\VerifyCsrfToken;
 
 Route::middlewareGroup(RedirectLineWebBrowser::class)
@@ -23,19 +24,15 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
     ->path('ranking/{category}', [ReactRankingPageController::class, 'ranking'])
     ->match(cache(...));
 
-Route::path('recent')
-    ->match(cache(...));
-
-Route::path('recent/{pageNumber}')
-    ->matchNum('pageNumber', min: 1)
-    ->match(cache(...));
-
 Route::path('policy')
     ->middleware([VerifyCsrfToken::class]);
 
 Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
     ->matchNum('open_chat_id', min: 1)
     ->middleware([VerifyCsrfToken::class]);
+
+Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
+    ->matchNum('open_chat_id', min: 1);
 
 Route::path('oclist', [OpenChatRankingPageApiController::class, 'index']);
 
@@ -67,9 +64,15 @@ Route::path('/')
 Route::path('register')
     ->middleware([VerifyCsrfToken::class]);
 
-Route::path('oc@post', [OpenChatRegistrationApiController::class, 'register'])
-    ->matchStr('url', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
-    ->middleware([VerifyCsrfToken::class]);
+Route::path(
+    'oc@post@get',
+    [OpenChatRegistrationApiController::class, 'register', 'post'],
+    [RecentOpenChatPageController::class, 'index', 'get'],
+)
+    ->matchStr('url', 'post', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
+    ->middleware([VerifyCsrfToken::class], 'post')
+    ->matchNum('recent_page_number', 'get', emptyAble: true)
+    ->match(cache(...), 'get');
 
 Route::path('admin/cookie')
     ->match(function (AdminAuthService $adminAuthService, ?string $key) {

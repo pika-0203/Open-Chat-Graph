@@ -33,6 +33,7 @@
             <?php viewComponent('footer_inner') ?>
         </footer>
     </div>
+    <?php echo $_breadcrumbsShema ?>
 </body>
 
 </html>

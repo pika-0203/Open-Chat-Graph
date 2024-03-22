@@ -31,7 +31,7 @@
                         <span class="list-title">最近登録されたオープンチャット</span>
                     </h2>
                     <p>
-                        <small style="font-size: 13px; color:#aaa">公式ランキングにランクインされた順で表示</small>
+                        <small style="font-size: 13px; color:#777">公式ランキングにランクインされた順で表示</small>
                     </p>
                 </div>
             </header>
@@ -64,6 +64,7 @@
             })
         })(document.getElementById('page-selector'))
     </script>
+    <?php echo $_breadcrumbsShema ?>
 </body>
 
 </html>
