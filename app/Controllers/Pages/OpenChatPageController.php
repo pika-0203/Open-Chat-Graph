@@ -6,9 +6,12 @@ namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
+use App\Services\Statistics\DownloadCsvService;
 use App\Services\Statistics\StatisticsChartArrayService;
 use App\Views\Dto\RankingPositionChartArgDto;
 use App\Views\Meta\OcPageMeta;
+use App\Views\Schema\OcPageSchema;
+use App\Views\Schema\PageBreadcrumbsListSchema;
 use App\Views\StatisticsViewUtility;
 
 class OpenChatPageController
@@ -18,6 +21,8 @@ class OpenChatPageController
         OcPageMeta $meta,
         StatisticsChartArrayService $statisticsChartArrayService,
         StatisticsViewUtility $statisticsViewUtility,
+        PageBreadcrumbsListSchema $breadcrumbsShema,
+        OcPageSchema $ocPageSchema,
         int $open_chat_id
     ) {
         $oc = $ocRepo->getOpenChatById($open_chat_id);
@@ -56,6 +61,15 @@ class OpenChatPageController
             'openChatId' => $oc['id']
         ];
 
+        $_breadcrumbsShema = $breadcrumbsShema->generateSchema('オープンチャット', 'oc');
+
+        $_ocPageSchema = $ocPageSchema->generateSchema(
+            $oc['id'],
+            $oc['name'],
+            $oc['created_at'],
+            strtotime($_statsDto->endDate)
+        );
+
         return view('oc_content', compact(
             '_meta',
             '_css',
@@ -64,7 +78,23 @@ class OpenChatPageController
             'category',
             '_chartArgDto',
             '_statsDto',
-            '_commentArgDto'
+            '_commentArgDto',
+            '_breadcrumbsShema',
+            '_ocPageSchema'
         ));
+    }
+
+    function csv(
+        OpenChatPageRepositoryInterface $ocRepo,
+        DownloadCsvService $downloadCsvService,
+        int $open_chat_id
+    ) {
+        $oc = $ocRepo->getOpenChatById($open_chat_id);
+        if (!$oc) {
+            return false;
+        }
+
+        $downloadCsvService->sendCsv($open_chat_id, $oc['name']);
+        exit;
     }
 }

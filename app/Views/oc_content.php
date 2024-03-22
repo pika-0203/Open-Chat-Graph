@@ -95,7 +95,7 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
             </label>
           <?php endif ?>
         </form>
-        <div>
+        <div style="position:relative;">
           <span class="openchat-list-date" style="flex-direction: row;">
             <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px; line-height: 1.5;">
               <?php if (is_int($oc['api_created_at'])) : ?>
@@ -116,6 +116,7 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
               <?php endif ?>
             </div>
           </span>
+          <small style="position: absolute; bottom: -1.5rem;"><a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" style="font-size: 11px; color: #b7b7b7;">人数統計CSVファイル</a></small>
         </div>
       </footer>
 
@@ -127,6 +128,8 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
       <?php viewComponent('footer_inner') ?>
     </footer>
   </div>
+  <?php echo $_breadcrumbsShema ?>
+  <?php echo $_ocPageSchema ?>
   <script>
     ;
     (function() {

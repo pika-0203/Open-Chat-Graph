@@ -33,7 +33,7 @@ class SelectElementPagination
         // 各ページ番号の要素を生成する
         $_selectElement = '';
         for ($i = 1; $i <= $maxPage; $i++) {
-            $_selectElement .= $getElement(pagerUrl($pagePath, $i) . $queryString, $selected($i), $startNum($i), $endNum($i), $i) . "\n";
+            $_selectElement .= $getElement($this->pagerUrl($pagePath, $i) . $queryString, $selected($i), $startNum($i), $endNum($i), $i) . "\n";
         }
 
         // ラベルの番号を取得する
@@ -50,5 +50,12 @@ class SelectElementPagination
         $title = "{$labelEndNum} ~ {$labelStartNum}";
 
         return [$title, $_selectElement, $_label];
+    }
+
+    private function pagerUrl(string $path, int $pageNumber): string
+    {
+        $secondPath = ($pageNumber > 1) ? (string) $pageNumber : '';
+        $path = ($pageNumber > 1) ? (string) $path : '/oc';
+        return \Shadow\Kernel\Dispatcher\ReceptionInitializer::getDomainAndHttpHost() . $path . $secondPath;
     }
 }
