@@ -1,13 +1,4 @@
 User-agent: *
-disallow: /?l=w
-disallow: /recent
-disallow: /oclist
-disallow: /search
-disallow: /react-test
-disallow: /admin
-disallow: /oc/*/position
-disallow: /oc/*/csv
-disallow: /assets
-disallow: /images
-allow: /assets/icon-192x192.png
-allow: /assets/ogp.png
+Allow: /
+
+Sitemap: https://openchat-review.me/sitemap.xml

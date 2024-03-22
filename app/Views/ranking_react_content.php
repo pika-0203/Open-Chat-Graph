@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="<?php echo fileUrl($css) ?>">
     <?php endforeach ?>
     <script defer="defer" src="<?php echo fileUrl($_js) ?>"></script>
+    <link rel="canonical" hrefs="<?php echo url('ranking') ?>">
 </head>
 
 <body style="margin: 0">
