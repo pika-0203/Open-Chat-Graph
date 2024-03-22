@@ -9,8 +9,11 @@ use App\Views\Schema\PageBreadcrumbsListSchema;
 
 class ReactRankingPageController
 {
-    function ranking(StaticDataFile $staticDataFile, PageBreadcrumbsListSchema $breadcrumbsShema)
-    {
+    function ranking(
+        StaticDataFile $staticDataFile,
+        PageBreadcrumbsListSchema $breadcrumbsShema,
+        ?int $category
+    ) {
         $_css = [
             'style/react/OpenChat.css',
             'style/react/OpenChatList.css',
@@ -28,6 +31,6 @@ class ReactRankingPageController
 
         $_breadcrumbsShema = $breadcrumbsShema->generateSchema('参加人数のランキング', 'ranking');
 
-        return view('ranking_react_content', compact('_css', '_js', '_meta', '_argDto', '_breadcrumbsShema'));
+        return view('ranking_react_content', compact('_css', '_js', '_meta', '_argDto', '_breadcrumbsShema', 'category'));
     }
 }
