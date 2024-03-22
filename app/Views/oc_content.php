@@ -123,8 +123,8 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
     </article>
 
     <div id="comment-root" style="margin: 1rem;"></div>
-    <hr>
     <footer>
+      <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
       <?php viewComponent('footer_inner') ?>
     </footer>
   </div>
