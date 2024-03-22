@@ -1,5 +1,5 @@
 <nav class="share-nav unset">
-    <h3>共有</h3>
+    <h3>このページをシェアする</h3>
     <div class="share-nav-inner">
         <div class="share-menu-outer">
             <?php $url = urlencode(url(path())) ?>

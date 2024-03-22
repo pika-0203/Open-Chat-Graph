@@ -23,7 +23,6 @@ main {
 main {
   padding-bottom: 12px;
   margin-bottom: 12px;
-  border-bottom: solid 1px var(--border-color);
 }
 
 .ranking-page-main {

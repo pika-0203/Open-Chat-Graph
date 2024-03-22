@@ -52,8 +52,6 @@
             <span class="add-openchat-message" id="add-openchat-describedby">正しいURLを入力してください</span>
             <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>登録する</button>
         </form>
-        <hr>
-        <hr>
     </main>
     <footer>
         <?php viewComponent('footer_inner') ?>
