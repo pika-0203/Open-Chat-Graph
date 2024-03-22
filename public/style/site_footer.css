@@ -63,6 +63,10 @@
   margin: 0 auto;
 }
 
+.share-nav h3 span {
+  user-select: none;
+}
+
 .share-nav-inner {
   display: flex;
   flex-direction: column;
