@@ -47,6 +47,10 @@ h1 {
   visibility: hidden;
 }
 
-.MuiPaper-outlined.MuiPaper-rounded {
+#comment-root .MuiPaper-outlined.MuiPaper-rounded {
   border: 1px solid rgb(207, 217, 222);
+}
+
+#comment-root .comment-term-text-color {
+  color: #b7b7b7;
 }
