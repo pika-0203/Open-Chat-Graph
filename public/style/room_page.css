@@ -344,3 +344,11 @@ body > footer {
 .grecaptcha-badge {
   visibility: hidden;
 }
+
+#comment-root .MuiPaper-outlined.MuiPaper-rounded {
+  border: 1px solid #f5f5f5;
+}
+
+#comment-root .comment-term-text-color {
+  color: #b7b7b7;
+}
