@@ -39,7 +39,7 @@ class OcPageSchema
             ->distribution(
                 Schema::dataDownload()
                     ->encodingFormat('CSV')
-                    ->contentUrl($siteUrl . '/oc/' . $open_chat_id)
+                    ->contentUrl($siteUrl . '/oc/' . $open_chat_id . '/csv')
             );
 
         // JSON-LDのマークアップを生成
