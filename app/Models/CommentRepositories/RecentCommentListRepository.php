@@ -53,7 +53,7 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
                 oc.id,
                 oc.name,
                 oc.img_url,
-                oc.category,
+                --oc.category,
                 oc.emblem
             FROM
                 open_chat AS oc

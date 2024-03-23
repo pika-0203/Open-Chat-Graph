@@ -108,6 +108,30 @@ function convertDatetime(string|int $datetime, bool $time = false): string
     return $dateTime->format($format);
 }
 
+function timeElapsedString(string $datetime, int $thresholdMinutes = 15): string
+{
+    $now = new DateTimeImmutable();
+    $interval = $now->diff(new DateTimeImmutable($datetime));
+
+    $totalMinutes = $interval->days * 24 * 60 + $interval->h * 60 + $interval->i;
+
+    if ($totalMinutes <= $thresholdMinutes) {
+        return 'たった今';
+    } elseif ($interval->y > 0) {
+        return $interval->y . '年前';
+    } elseif ($interval->m > 0) {
+        return $interval->m . 'ヶ月前';
+    } elseif ($interval->d > 0) {
+        return $interval->d . '日前';
+    } elseif ($interval->h > 0) {
+        return $interval->h . '時間前';
+    } elseif ($interval->i > 0) {
+        return $interval->i . '分前';
+    } else {
+        return $interval->s . '秒前';
+    }
+}
+
 function getCronModifiedDateTime(string $datetime, string $format = 'Y/n/j G:i'): string
 {
     $fileTime = OpenChatServicesUtility::getModifiedCronTime($datetime);

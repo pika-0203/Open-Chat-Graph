@@ -29,7 +29,7 @@
             <span>±0</span>
           <?php endif ?>
           <?php if (isset($oc['time'])) : ?>
-            <span class="registration-date blue"><?php echo convertDatetime($oc['time'], true) ?></span>
+            <span class="registration-date blue"><?php echo timeElapsedString($oc['time']) ?></span>
           <?php endif ?>
         </div>
         <?php if (isset($oc['category']) && $oc['category']) : ?>
