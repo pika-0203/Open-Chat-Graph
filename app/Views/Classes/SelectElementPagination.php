@@ -52,10 +52,10 @@ class SelectElementPagination
         return [$title, $_selectElement, $_label];
     }
 
-    private function pagerUrl(string $path, int $pageNumber): string
+    static function pagerUrl(string $path, int $pageNumber, string $defaultPath = '/oc'): string
     {
         $secondPath = ($pageNumber > 1) ? (string) $pageNumber : '';
-        $path = ($pageNumber > 1) ? (string) $path : '/oc';
+        $path = ($pageNumber > 1) ? (string) $path : $defaultPath;
         return \Shadow\Kernel\Dispatcher\ReceptionInitializer::getDomainAndHttpHost() . $path . $secondPath;
     }
 }

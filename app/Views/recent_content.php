@@ -47,7 +47,7 @@
             </nav>
             <?php viewComponent('open_chat_list', compact('openChatList', 'isAdmin')) ?>
             <!-- 次のページ・前のページボタン -->
-            <?php viewComponent('pager_nav', compact('pageNumber', 'maxPageNumber') + ['path' => '/' . $path]) ?>
+            <?php viewComponent('pager_nav', compact('pageNumber', 'maxPageNumber') + ['path' => $path]) ?>
         </article>
     </main>
     <footer>
