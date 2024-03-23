@@ -260,6 +260,11 @@ main hr {
   display: inline-block;
 }
 
+.refresh-time span {
+  font-size: 14px;
+  line-height: normal;
+}
+
 .openchat-list-title-area p {
   font-size: 13px;
   margin: 0.5rem 0;
