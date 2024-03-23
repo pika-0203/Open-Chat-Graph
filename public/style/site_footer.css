@@ -65,6 +65,7 @@
 
 .share-nav h3 span {
   user-select: none;
+  font-family: Arial;
 }
 
 .share-nav-inner {
