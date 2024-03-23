@@ -20,10 +20,10 @@ class StaticDataGenerator
     {
         // トップページのキャッシュファイルを生成する
         $dto = new StaticTopPageDto;
-        $dto->hourlyList = $this->openChatListRepository->findMemberStatsHourlyRanking(0, 5);
-        $dto->dailyList = $this->openChatListRepository->findMemberStatsDailyRanking(0, 5);
-        $dto->weeklyList = $this->openChatListRepository->findMemberStatsPastWeekRanking(0, 5);
-        $dto->popularList = $this->openChatListRepository->findMemberCountRanking(5);
+        $dto->hourlyList = $this->openChatListRepository->findMemberStatsHourlyRanking(0, 10);
+        $dto->dailyList = $this->openChatListRepository->findMemberStatsDailyRanking(0, 10);
+        $dto->weeklyList = $this->openChatListRepository->findMemberStatsPastWeekRanking(0, 10);
+        $dto->popularList = $this->openChatListRepository->findMemberCountRanking(10);
         $dto->recentCommentList = [];
 
         // 説明文の文字数を詰める
