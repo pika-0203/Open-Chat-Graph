@@ -15,7 +15,7 @@
         <?php if ($myList) : ?>
             <article class="top-mylist">
                 <div class="refresh-time openchat-list-date">
-                    <time>ピン留め (1日毎に更新)</time>
+                    <span style="margin: 0">ピン留め (1日毎に更新)</span>
                 </div>
                 <div style="margin: -4px 0 -4px 0;">
                     <?php viewComponent('open_chat_list', ['openChatList' => $myList]) ?>
@@ -31,7 +31,7 @@
                         <span class="openchat-list-title">Comments</span>
                     </h2>
                     <div class="refresh-time">
-                        <time>最近のコメント投稿</time>
+                        <span>最近のコメント投稿</span>
                     </div>
                 </div>
             </header>
@@ -47,7 +47,7 @@
                         <span class="openchat-list-title">Hourly</span>
                     </h2>
                     <div class="refresh-time">
-                        <time><?php echo $hourlyRange ?> の増加</time>
+                        <span><?php echo $hourlyRange ?> の増加</span>
                     </div>
                 </div>
             </header>
@@ -65,7 +65,7 @@
                         <span class="openchat-list-title">Daily</span>
                     </h2>
                     <div class="refresh-time">
-                        <time>昨日の増加</time>
+                        <span>昨日の増加</span>
                     </div>
                 </div>
             </header>
@@ -82,7 +82,7 @@
                         <span class="openchat-list-title">Weekly</span>
                     </h2>
                     <div class="refresh-time">
-                        <time><?php echo $weeklyRange ?> の増加</time>
+                        <span><?php echo $weeklyRange ?> の増加</span>
                     </div>
                 </div>
             </header>
