@@ -16,7 +16,7 @@
                 <span class="share-menu-icon-facebook share-menu-icon"></span>
             </a>
             <div class="copy-btn-outer" id="copy-btn-outer">
-                <button class="share-menu-item unset" id="copy-btn">
+                <button class="share-menu-item unset" id="copy-btn" title="このページのタイトルとURLをコピーする">
                     <span class="copy-btn-icon link-icon"></span>
                 </button>
                 <div class="description1" id="copy-description">

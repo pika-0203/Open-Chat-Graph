@@ -34,7 +34,7 @@
         </div>
         <?php if (isset($oc['category']) && $oc['category']) : ?>
           <div class="openchat-item-mui-chip-outer">
-            <span class="openchat-item-mui-chip-inner"><?php echo getCategoryName($oc['category']) ?></span>
+            <span class="openchat-item-mui-chip-inner" aria-label="カテゴリ: <?php echo getCategoryName($oc['category']) ?>"><?php echo getCategoryName($oc['category']) ?></span>
           </div>
         <?php endif ?>
       </footer>
