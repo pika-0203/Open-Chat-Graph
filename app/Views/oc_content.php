@@ -44,7 +44,7 @@ viewComponent('oc_head', compact('_css', '_meta')); ?>
             </p>
             <div class="more" id="read_more_btn">
               <div class="more-separater">&nbsp;</div>
-              <div class="more-text">…もっと見る</div>
+              <button class="unset more-text">…もっと見る</button>
             </div>
           </div>
 

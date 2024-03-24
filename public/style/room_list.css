@@ -445,6 +445,7 @@ main hr {
   text-align: center;
 }
 
+.top-list .openchat-item-desc,
 .top-ranking .openchat-item-desc {
   -webkit-line-clamp: 1;
 }
@@ -768,9 +769,6 @@ main hr {
 }
 
 @media screen and (min-width: 512px) {
-  .openchat-item-mui-chip-outer {
-  }
-
   main {
     padding-top: 1rem;
   }
