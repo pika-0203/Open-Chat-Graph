@@ -42,7 +42,7 @@ class OcPageSchema
                     ->contentUrl($siteUrl . '/oc/' . $open_chat_id . '/csv')
             );
 
-            
+
         // JSON-LDのマークアップを生成
         return $dataset->toScript();
     }
