@@ -2,6 +2,85 @@
 
 All Notable changes to `schema-org` will be documented in this file.
 
+## 3.22.0 - 2024-01-11
+
+### What's Changed
+
+* upgrade to schema.org v23 by @Gummibeer in https://github.com/spatie/schema-org/pull/212
+
+**Full Changelog**: https://github.com/spatie/schema-org/compare/3.21.0...3.22.0
+
+## 3.21.0 - 2024-01-11
+
+### What's Changed
+
+* upgrade to schema.org v22 by @Gummibeer in https://github.com/spatie/schema-org/pull/211
+
+**Full Changelog**: https://github.com/spatie/schema-org/compare/3.20.0...3.21.0
+
+## 3.20.0 - 2024-01-11
+
+### What's Changed
+
+* upgrade to schema.org v21 by @Gummibeer in https://github.com/spatie/schema-org/pull/210
+
+**Full Changelog**: https://github.com/spatie/schema-org/compare/3.19.0...3.20.0
+
+## 3.19.0 - 2024-01-11
+
+### What's Changed
+
+* upgrade to schema.org v20 by @Gummibeer in https://github.com/spatie/schema-org/pull/209
+
+**Full Changelog**: https://github.com/spatie/schema-org/compare/3.18.0...3.19.0
+
+## 3.18.0 - 2024-01-11
+
+### What's Changed
+
+* upgrade to schema.org v19 by @Gummibeer in https://github.com/spatie/schema-org/pull/208
+
+**Full Changelog**: https://github.com/spatie/schema-org/compare/3.17.0...3.18.0
+
+## 3.17.0 - 2024-01-11
+
+### What's Changed
+
+* upgrade to schema.org v18 by @Gummibeer in https://github.com/spatie/schema-org/pull/207
+
+**Full Changelog**: https://github.com/spatie/schema-org/compare/3.16.0...3.17.0
+
+## 3.16.0 - 2024-01-11
+
+### What's Changed
+
+* upgrade to schema.org v17 by @Gummibeer in https://github.com/spatie/schema-org/pull/206
+
+**Full Changelog**: https://github.com/spatie/schema-org/compare/3.15.0...3.16.0
+
+## 3.15.0 - 2024-01-11
+
+### What's Changed
+
+* upgrade to schema.org v16 by @Gummibeer in https://github.com/spatie/schema-org/pull/204
+* add support/test-run for php8.3 by @Gummibeer in https://github.com/spatie/schema-org/pull/205
+
+**Full Changelog**: https://github.com/spatie/schema-org/compare/3.14.0...3.15.0
+
+## 3.14.0 - 2023-02-14
+
+### What's Changed
+
+- Add PHP 8.2 Support by @patinthehat in https://github.com/spatie/schema-org/pull/190
+- Add support for nonce attribute by @smortexa in https://github.com/spatie/schema-org/pull/191
+
+### New Contributors
+
+- @patinthehat made their first contribution in https://github.com/spatie/schema-org/pull/190
+- @smortexa made their first contribution in https://github.com/spatie/schema-org/pull/191
+
+**Full Changelog**: https://github.com/spatie/schema-org/compare/3.13.0...3.14.0
+
 ## 3.13.0 - 2022-11-14
 
 ### What's Changed
