@@ -16,4 +16,7 @@
     <script type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
     <script type="module" crossorigin src="/<?php echo getFilePath('js/comment', 'index-*.js') ?>"></script>
     <link rel="canonical" hrefs="<?php echo url(strstr(path(), '?', true) ?: path()) ?>">
+    <?php if (isset($_schema)) : ?>
+        <?php echo $_schema ?>
+    <?php endif ?>
 </head>

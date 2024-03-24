@@ -63,6 +63,20 @@ class OpenChatPageController
 
         $_breadcrumbsShema = $breadcrumbsShema->generateSchema('オープンチャット', 'oc');
 
+        $_schema = $breadcrumbsShema->generateStructuredDataWebPage(
+            $_meta->title,
+            $_meta->description,
+            url("oc/{$open_chat_id}"),
+            url('assets/ogp.png'),
+            'pika-0203',
+            'https://github.com/pika-0203',
+            'https://avatars.githubusercontent.com/u/132340402?v=4',
+            'オプチャグラフ',
+            url('assets/icon-192x192.png'),
+            new \DateTime('@' . $oc['created_at']),
+            new \DateTime($_statsDto->endDate),
+        );
+
         $_ocPageSchema = $ocPageSchema->generateSchema(
             $oc['id'],
             $oc['name'],
@@ -80,7 +94,8 @@ class OpenChatPageController
             '_statsDto',
             '_commentArgDto',
             '_breadcrumbsShema',
-            '_ocPageSchema'
+            '_ocPageSchema',
+            '_schema'
         ));
     }
 

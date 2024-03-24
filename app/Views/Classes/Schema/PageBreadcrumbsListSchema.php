@@ -28,4 +28,56 @@ class PageBreadcrumbsListSchema
         // JSON-LDのマークアップを生成
         return $breadcrumbList->toScript();
     }
+
+    function generateStructuredDataWebSite(
+        string $siteName,
+        string $description,
+        string $url,
+        string $image,
+        string $authorName,
+        string $authorUrl,
+        string $authorImage,
+        string $publisherName,
+        string $publisherLogo,
+        \DateTimeInterface $datePublished,
+        \DateTimeInterface $dateModified
+    ): string {
+        $webSite = Schema::webSite()
+            ->headline($siteName)
+            ->description($description)
+            ->mainEntityOfPage(Schema::webPage()->id($url))
+            ->image(Schema::imageObject()->url($image))
+            ->author(Schema::person()->name($authorName)->image($authorImage)->url($authorUrl))
+            ->publisher(Schema::organization()->name($publisherName)->logo(Schema::imageObject()->url($publisherLogo)))
+            ->datePublished($datePublished)
+            ->dateModified($dateModified);
+
+        return $webSite->toScript();
+    }
+
+    function generateStructuredDataWebPage(
+        string $title,
+        string $description,
+        string $url,
+        string $image,
+        string $authorName,
+        string $authorUrl,
+        string $authorImage,
+        string $publisherName,
+        string $publisherLogo,
+        \DateTimeInterface $datePublished,
+        \DateTimeInterface $dateModified
+    ): string {
+        $webSite = Schema::webPage()
+            ->headline($title)
+            ->description($description)
+            ->mainEntityOfPage(Schema::webPage()->id($url))
+            ->image(Schema::imageObject()->url($image))
+            ->author(Schema::person()->name($authorName)->image($authorImage)->url($authorUrl))
+            ->publisher(Schema::organization()->name($publisherName)->logo(Schema::imageObject()->url($publisherLogo)))
+            ->datePublished($datePublished)
+            ->dateModified($dateModified);
+
+        return $webSite->toScript();
+    }
 }
