@@ -32,7 +32,7 @@ class IndexPageController
 
         $_css = ['room_list', 'site_header', 'site_footer'];
         $_meta = meta();
-        $_meta->title = "{$_meta->title} | 人数・ランキング推移と匿名掲示板";
+        $_meta->title = "{$_meta->title} | オープンチャットの統計情報とコメント機能";
 
         $_schema = $pageBreadcrumbsListSchema->generateStructuredDataWebSite(
             'オプチャグラフ',
