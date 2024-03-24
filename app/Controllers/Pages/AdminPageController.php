@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
+use App\Models\CommentRepositories\DeleteCommentRepositoryInterface;
+use App\Models\Repositories\DeleteOpenChatRepositoryInterface;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionHourRepository;
 use App\Services\UpdateRankingService;
@@ -19,6 +21,7 @@ use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\SitemapGenerator;
 use App\Services\UpdateHourlyMemberRankingService;
+use Shadow\Kernel\Validator;
 use Shared\Exceptions\NotFoundException;
 
 class AdminPageController
@@ -37,6 +40,20 @@ class AdminPageController
         exec("/usr/bin/php8.2 {$path} >/dev/null 2>&1 &");
 
         return view('admin/admin_message_page', ['title' => 'exec', 'message' => $path . ' を実行しました。']);
+    }
+
+    function deleteoc(?string $oc, DeleteOpenChatRepositoryInterface $deleteOpenChatRepository)
+    {
+        if (!($oc = Validator::num($oc))) return false;
+        $result = $deleteOpenChatRepository->deleteOpenChat($oc);
+        return view('admin/admin_message_page', ['title' => 'オープンチャット削除', 'message' => $result ? '削除しました' : '削除されたオープンチャットはありません']);
+    }
+
+    function deletecomment(?string $oc, ?string $id, DeleteCommentRepositoryInterface $deleteCommentRepository)
+    {
+        if (!($oc = Validator::num($oc)) || !($id = Validator::num($id))) return false;
+        $result = $deleteCommentRepository->deleteCommentByOcId($oc, $id);
+        return view('admin/admin_message_page', ['title' => 'コメント削除', 'message' => $result ? '削除しました' : '削除されたコメントはありません']);
     }
 
     function positiondb(RankingPositionHourPersistence $rankingPositionHourPersistence)
