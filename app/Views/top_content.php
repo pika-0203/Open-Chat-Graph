@@ -47,7 +47,7 @@
                         <span class="openchat-list-title">Hourly</span>
                     </h2>
                     <div class="refresh-time">
-                        <span><?php echo $hourlyRange ?> の増加</span>
+                        <span><?php echo $hourlyRange ?> の増加ランキング</span>
                     </div>
                 </div>
             </header>
@@ -65,7 +65,7 @@
                         <span class="openchat-list-title">Daily</span>
                     </h2>
                     <div class="refresh-time">
-                        <span>昨日の増加</span>
+                        <span>昨日の増加ランキング</span>
                     </div>
                 </div>
             </header>
@@ -82,7 +82,7 @@
                         <span class="openchat-list-title">Weekly</span>
                     </h2>
                     <div class="refresh-time">
-                        <span><?php echo $weeklyRange ?> の増加</span>
+                        <span><?php echo $weeklyRange ?> の増加ランキング</span>
                     </div>
                 </div>
             </header>
@@ -99,7 +99,7 @@
                         <span class="openchat-list-title">Popular</span>
                     </h2>
                     <div class="refresh-time">
-                        <span>メンバーが多い順</span>
+                        <span>メンバー数ランキング</span>
                     </div>
                 </div>
             </header>
