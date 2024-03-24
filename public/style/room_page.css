@@ -165,7 +165,7 @@ hr {
   user-select: none;
 }
 
-.talkroom_description button {
+.talkroom_description > button {
   padding: 0.5rem 1rem;
   font-size: 14px;
   background-color: #1f1f1f;
@@ -175,9 +175,10 @@ hr {
   font-weight: 500;
   user-select: none;
   margin-top: 1rem;
+  cursor: pointer;
 }
 
-.talkroom_description_box.close .talkroom_description button {
+.talkroom_description_box.close .talkroom_description > button {
   display: none;
 }
 
