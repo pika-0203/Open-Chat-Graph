@@ -26,7 +26,11 @@ class OcPageSchema
                     ->name('pika-0203')
                     ->url('https://github.com/pika-0203')
             )
-            ->keywords(['LINE', 'オプチャ', 'OpenChat', 'オープンチャット'])
+            ->keywords([
+                "チャットルーム統計",
+                "リアルタイムデータ",
+                "ユーザー人数"
+            ])
             ->provider(
                 Schema::organization()
                     ->name('LINE Corporation')
@@ -34,13 +38,14 @@ class OcPageSchema
             )
             ->license('https://creativecommons.org/licenses/by/4.0/legalcode')
             ->url($siteUrl . '/oc/' . $open_chat_id)
-            ->datePublished(dateTimeAttr($created_at))
-            ->dateModified(dateTimeAttr($updated_at))
+            ->datePublished(new \DateTime('@' . $created_at))
+            ->dateModified(new \DateTime('@' . $updated_at))
             ->distribution(
                 Schema::dataDownload()
                     ->encodingFormat('CSV')
                     ->contentUrl($siteUrl . '/oc/' . $open_chat_id . '/csv')
-            );
+            )
+            ->measurementTechnique('LINEオープンチャットの公式サイトから人数データを記録');
 
 
         // JSON-LDのマークアップを生成

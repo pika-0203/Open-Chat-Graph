@@ -7,12 +7,15 @@ namespace App\Controllers\Pages;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Services\User\MyOpenChatList;
 use App\Services\StaticData\StaticDataFile;
+use App\Views\Schema\PageBreadcrumbsListSchema;
+use DateTime;
 
 class IndexPageController
 {
     function index(
         StaticDataFile $staticDataGeneration,
-        RecentCommentListRepositoryInterface $recentCommentListRepository
+        RecentCommentListRepositoryInterface $recentCommentListRepository,
+        PageBreadcrumbsListSchema $pageBreadcrumbsListSchema
     ) {
         $dto = $staticDataGeneration->getTopPageData();
         $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChat(0, 10);
@@ -29,7 +32,21 @@ class IndexPageController
 
         $_css = ['room_list', 'site_header', 'site_footer'];
         $_meta = meta();
-        $_meta->title = "{$_meta->title} | オープンチャットの人数統計とグラフ分析";
+        $_meta->title = "{$_meta->title} | 人数・ランキング推移と匿名掲示板";
+
+        $_schema = $pageBreadcrumbsListSchema->generateStructuredDataWebSite(
+            'オプチャグラフ',
+            $_meta->description,
+            url(),
+            url('assets/ogp.png'),
+            'pika-0203',
+            'https://github.com/pika-0203',
+            'https://avatars.githubusercontent.com/u/132340402?v=4',
+            'オプチャグラフ',
+            url('assets/icon-192x192.png'),
+            new DateTime('2023-05-06 00:00:00'),
+            $dto->hourlyUpdatedAt
+        );
 
         $dto->dailyUpdatedAt->modify('-7day');
         $weeklyStart = $dto->dailyUpdatedAt->format('n月j日');
@@ -47,6 +64,7 @@ class IndexPageController
             'myList',
             'hourlyRange',
             'weeklyRange',
+            '_schema'
         ));
     }
 }
