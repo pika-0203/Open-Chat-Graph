@@ -33,6 +33,7 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
                 name,
                 description,
                 img_url,
+                local_img_url,
                 member,
                 api_created_at,
                 category,
@@ -48,7 +49,7 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
                 id ASC";
 
         /**
-         * @var array{ id: int, emid: string, name: string, description: string, img_url: string, member: string, api_created_at: int|null, category: int|null, emblem: int|null }[] $dataArray
+         * @var array{ id: int, emid: string, name: string, description: string, img_url: string, local_img_url: string, member: string, api_created_at: int|null, category: int|null, emblem: int|null }[] $dataArray
          */
         $dataArray = DB::fetchAll($query);
         if (!$dataArray) {
