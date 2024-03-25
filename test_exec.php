@@ -16,7 +16,7 @@ $img = app(OpenChatImageStore::class);
 try {
     AdminTool::sendLineNofity('start');
 
-    $ocs = DB::fetchAll("SELECT id FROM open_chat");
+    $ocs = DB::fetchAll("SELECT id FROM open_chat ORDER BY id ASC");
 
     foreach ($ocs as $i => $oc) {
         OpenChatApiDbMerger::checkKillFlag();
@@ -29,7 +29,7 @@ try {
         }
 
         $result && DB::execute(
-            "UPDATE open_chat SET local_img_url = '{$img_url}' WHERE id = {$id}"
+            "UPDATE open_chat SET local_img_url = '{$result}' WHERE id = {$id}"
         );
     }
 

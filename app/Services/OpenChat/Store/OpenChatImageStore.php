@@ -20,15 +20,15 @@ class OpenChatImageStore
     /**
      * @return array{ dest:string,previewDest:string }|false
      */
-    private function getImgPath(int $open_chat_id, string $imgUrl): array|false
+    private function getImgPath(int $open_chat_id, string $fileName): array|false
     {
-        if (in_array($imgUrl, AppConfig::DEFAULT_OPENCHAT_IMG_URL)) {
+        if (in_array($fileName, AppConfig::DEFAULT_OPENCHAT_IMG_URL_HASH)) {
             return false;
         }
 
         return [
-            'dest' => publicDir(getImgPath($open_chat_id, $imgUrl)),
-            'previewDest' => publicDir(getImgPreviewPath($open_chat_id, $imgUrl)),
+            'dest' => publicDir(getImgPath($open_chat_id, $fileName)),
+            'previewDest' => publicDir(getImgPreviewPath($open_chat_id, $fileName)),
         ];
     }
 
@@ -39,11 +39,14 @@ class OpenChatImageStore
         mkdirIfNotExists(publicDir(AppConfig::OPENCHAT_IMG_PREVIEW_PATH . $subDir));
     }
 
-    function downloadAndStoreOpenChatImage(int $open_chat_id, string $imgUrl): bool
+    /** @return string|false imgUrlHash */
+    function downloadAndStoreOpenChatImage(int $open_chat_id, string $imgUrl): string|false
     {
-        $path = $this->getImgPath($open_chat_id, $imgUrl);
+        $imgUrlHash = base62Hash($imgUrl);
+
+        $path = $this->getImgPath($open_chat_id, $imgUrlHash);
         if (!$path) {
-            return true;
+            return $imgUrlHash;
         }
 
         $this->mkDir($open_chat_id);
@@ -51,7 +54,7 @@ class OpenChatImageStore
         try {
             $this->imgDownloader->storeOpenChatImg($imgUrl, $path['dest'], $path['previewDest']);
 
-            return true;
+            return $imgUrlHash;
         } catch (\RuntimeException $e) {
             // 再接続
             DB::$pdo = null;
@@ -61,9 +64,9 @@ class OpenChatImageStore
         }
     }
 
-    function deleteImage(int $open_chat_id, string $imgUrl): void
+    function deleteImage(int $open_chat_id, string $fileName): void
     {
-        $path = $this->getImgPath($open_chat_id, $imgUrl);
+        $path = $this->getImgPath($open_chat_id, $fileName);
 
         $path && array_map(fn (string $p) => file_exists($p) && unlink($p), $path);
     }

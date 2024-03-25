@@ -167,7 +167,7 @@ function imgPreviewUrl(int $id, string $img_url): string
 {
     return '/' . (in_array(
         $img_url,
-        AppConfig::DEFAULT_OPENCHAT_IMG_URL
+        AppConfig::DEFAULT_OPENCHAT_IMG_URL_HASH
     ) ? AppConfig::OPENCHAT_IMG_PATH . "/default/{$img_url}.webp" : getImgPath($id, $img_url));
 }
 
@@ -175,7 +175,7 @@ function imgPreviewUrl(int $id, string $img_url): string
 {
     return '/' . (in_array(
         $img_url,
-        AppConfig::DEFAULT_OPENCHAT_IMG_URL
+        AppConfig::DEFAULT_OPENCHAT_IMG_URL_HASH
     ) ? AppConfig::OPENCHAT_IMG_PATH . "/preview/default/{$img_url}" . AppConfig::OPENCHAT_IMG_PREVIEW_SUFFIX . ".webp"
         : getImgPreviewPath($id, $img_url));
 } */
