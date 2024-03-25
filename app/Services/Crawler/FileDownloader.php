@@ -23,6 +23,10 @@ class FileDownloader
         int $retryInterval = 1,
         string $method = 'GET',
     ): string|false {
+        if (!defined('CURL_SSLVERSION_TLSv1_2')) {
+            define('CURL_SSLVERSION_TLSv1_2', 6);
+        }
+        
         $httpClient = HttpClient::create();
         $response = null;
         $options =  [
