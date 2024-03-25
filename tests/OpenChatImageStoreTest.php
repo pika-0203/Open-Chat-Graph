@@ -22,12 +22,7 @@ class OpenChatImageStoreTest extends TestCase
      */
     public function storeOpenChatImg(): void
     {
-        // テストデータの準備
-        $openChatImgIdentifier = '0h6tJf8QWOaVt3H0eLAsEWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnOQ';
-
-        foreach(AppConfig::DEFAULT_OPENCHAT_IMG_URL as $url) {
-            $result = $this->downloader->downloadAndStoreOpenChatImage(1, $url);
-        }
+        $result = $this->downloader->downloadAndStoreOpenChatImage(1000000, '0htjheC_jkK0VVHDxFyOxUEmtKdmsubzJXKGQmI3UZcHB6LTtEO3M0dHUadCV-KmkVPipsISdPISArLz4');
 
         // テスト対象の実行
 
