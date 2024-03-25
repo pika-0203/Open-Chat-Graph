@@ -2,38 +2,32 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Services\Admin\AdminTool;
-use App\Services\OpenChat\OpenChatApiDbMerger;
-use App\Services\OpenChat\Store\OpenChatImageStore;
+
+use App\Services\OpenChat\Updater\OpenChatImageStoreUpdater;
 use Shadow\DB;
 
 set_time_limit(3600 * 10);
 
 /**
- * @var OpenChatImageStore $img
+ * @var UpdateOpenChatRepositoryInterface $oc
  */
-$img = app(OpenChatImageStore::class);
+$oc = app(UpdateOpenChatRepositoryInterface::class);
+/**
+ * @var OpenChatImageStoreUpdater $img
+ */
+$img = app(OpenChatImageStoreUpdater::class);
+
 try {
-    AdminTool::sendLineNofity('start');
-
-    $ocs = DB::fetchAll("SELECT id FROM open_chat ORDER BY id ASC");
-
-    foreach ($ocs as $i => $oc) {
-        OpenChatApiDbMerger::checkKillFlag();
-        $id = $oc['id'];
-        $img_url = DB::fetchColumn("SELECT img_url FROM open_chat WHERE id = {$id}");
-
-        $result = $img->downloadAndStoreOpenChatImage($id, $img_url);
-        if ($i % 10000 === 0) {
-            AdminTool::sendLineNofity("key: {$i}");
+    AdminTool::sendLineNofity('oc start');
+    foreach ($oc->getOpenChatImgAll(false) as $oc) {
+        if (!file_exists(publicDir(getImgPath($oc['id'], $oc['local_img_url'])))) {
+            $img->updateImage($oc['id'], $oc['img_url']);
         }
-
-        $result && DB::execute(
-            "UPDATE open_chat SET local_img_url = '{$result}' WHERE id = {$id}"
-        );
     }
 
-    AdminTool::sendLineNofity('done');
+    AdminTool::sendLineNofity('oc done');
 } catch (\Throwable $e) {
     addCronLog($e->__toString());
     AdminTool::sendLineNofity($e->__toString());

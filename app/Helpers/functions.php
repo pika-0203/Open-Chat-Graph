@@ -153,7 +153,7 @@ function cache()
     header('Cache-Control: private');
 }
 
-function imgUrl(int $id, string $img_url): string
+/* function imgUrl(int $id, string $img_url): string
 {
     return "https://obs.line-scdn.net/{$img_url}";
 }
@@ -161,32 +161,39 @@ function imgUrl(int $id, string $img_url): string
 function imgPreviewUrl(int $id, string $img_url): string
 {
     return "https://obs.line-scdn.net/{$img_url}/preview";
-}
-
-/* function imgUrl(int $id, string $img_url): string
-{
-    return '/' . (in_array(
-        $img_url,
-        AppConfig::DEFAULT_OPENCHAT_IMG_URL_HASH
-    ) ? AppConfig::OPENCHAT_IMG_PATH . "/default/{$img_url}.webp" : getImgPath($id, $img_url));
-}
-
-function imgPreviewUrl(int $id, string $img_url): string
-{
-    return '/' . (in_array(
-        $img_url,
-        AppConfig::DEFAULT_OPENCHAT_IMG_URL_HASH
-    ) ? AppConfig::OPENCHAT_IMG_PATH . "/preview/default/{$img_url}" . AppConfig::OPENCHAT_IMG_PREVIEW_SUFFIX . ".webp"
-        : getImgPreviewPath($id, $img_url));
 } */
+
+function imgUrl(int $id, string $local_img_url): string
+{
+    return url((in_array(
+        $local_img_url,
+        AppConfig::DEFAULT_OPENCHAT_IMG_URL_HASH
+    ) ? AppConfig::OPENCHAT_IMG_PATH . "/default/{$local_img_url}.webp" : getImgPath($id, $local_img_url)));
+}
+
+function imgPreviewUrl(int $id, string $local_img_url): string
+{
+    return url((
+        in_array($local_img_url, AppConfig::DEFAULT_OPENCHAT_IMG_URL_HASH)
+        ? AppConfig::OPENCHAT_IMG_PATH . '/' . AppConfig::OPENCHAT_IMG_PREVIEW_PATH . "/default/{$local_img_url}" . AppConfig::OPENCHAT_IMG_PREVIEW_SUFFIX . ".webp"
+        : getImgPreviewPath($id, $local_img_url)
+    ));
+}
+
+function apiImgUrl(int $id, string $local_img_url): string
+{
+    return (
+        in_array($local_img_url, AppConfig::DEFAULT_OPENCHAT_IMG_URL_HASH) ? "default" : filePathNumById($id)
+    ) . "/{$local_img_url}";
+}
 
 /**
  * @return string oc-img/{$idPath}/{$imgUrl}.webp
  */
 function getImgPath(int $open_chat_id, string $imgUrl): string
 {
-    $subDir = '/' . filePathNumById($open_chat_id);
-    return AppConfig::OPENCHAT_IMG_PATH . "{$subDir}/{$imgUrl}.webp";
+    $subDir = filePathNumById($open_chat_id);
+    return AppConfig::OPENCHAT_IMG_PATH . "/{$subDir}/{$imgUrl}.webp";
 }
 
 /**
@@ -194,8 +201,8 @@ function getImgPath(int $open_chat_id, string $imgUrl): string
  */
 function getImgPreviewPath(int $open_chat_id, string $imgUrl): string
 {
-    $subDir = '/' . filePathNumById($open_chat_id);
-    return AppConfig::OPENCHAT_IMG_PREVIEW_PATH . "{$subDir}/{$imgUrl}" . AppConfig::OPENCHAT_IMG_PREVIEW_SUFFIX . ".webp";
+    $subDir = filePathNumById($open_chat_id);
+    return AppConfig::OPENCHAT_IMG_PATH . '/' . AppConfig::OPENCHAT_IMG_PREVIEW_PATH . "/{$subDir}/{$imgUrl}" . AppConfig::OPENCHAT_IMG_PREVIEW_SUFFIX . ".webp";
 }
 
 function filePathNumById(int $id): string

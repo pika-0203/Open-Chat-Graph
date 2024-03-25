@@ -14,7 +14,7 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
             "SELECT
                 oc.id,
                 oc.name,
-                oc.img_url,
+                oc.local_img_url AS img_url,
                 oc.description,
                 oc.member,
                 oc.api_created_at,

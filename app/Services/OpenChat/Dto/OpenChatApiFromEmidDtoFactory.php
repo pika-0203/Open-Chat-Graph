@@ -19,7 +19,7 @@ class OpenChatApiFromEmidDtoFactory
         $dto = new OpenChatDto;
 
         try {
-            $dto->setApiDataInvitationTicket(Validator::str($response['invitationTicket'], e: $exceptionClass));
+            $dto->invitationTicket = Validator::str($response['invitationTicket'], e: $exceptionClass);
             $dto->emid = Validator::str($response['square']['squareEmid'], e: $exceptionClass);
             $dto->name = Validator::str($response['square']['name'], emptyAble: true, e: $exceptionClass);
             $dto->desc = Validator::str($response['square']['desc'], emptyAble: true, e: $exceptionClass);

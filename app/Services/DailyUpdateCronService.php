@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
 use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Services\OpenChat\OpenChatDailyCrawling;
@@ -56,6 +57,7 @@ class DailyUpdateCronService
 
         addCronLog('openChatCrawling done: ' . $result);
         unset($outOfRankId);
+        OpenChatDataForUpdaterWithCacheRepository::clearCache();
 
         addCronLog('syncSubCategoriesAll start');
         $categoryResult = $this->openChatSubCategorySynchronizer->syncSubCategoriesAll();

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\OpenChat;
 
 use App\Config\AppConfig;
+use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepository;
 use App\Models\Repositories\ParallelDownloadOpenChatStateRepositoryInterface;
 use App\Services\OpenChat\Enum\RankingType;
 use App\Services\OpenChat\Updater\Process\OpenChatApiDbMergerProcess;
@@ -63,14 +64,14 @@ class OpenChatApiDbMergerWithParallelDownloader
         $flag = false;
         while (!$flag) {
             sleep(10);
-            OpenChatApiDataParallelDownloader::checkKillFlag();
-
             foreach ([RankingType::Ranking, RankingType::Rising] as $type)
                 foreach ($categoryReverse as $category)
                     $this->mergeProcess($type, $category);
 
             $flag = $this->stateRepository->isCompletedAll();
         }
+
+        OpenChatDataForUpdaterWithCacheRepository::clearCache();
     }
 
     /**
@@ -90,6 +91,8 @@ class OpenChatApiDbMergerWithParallelDownloader
     {
         if (!$this->stateRepository->isDownloaded($type, $category)) return;
 
+        OpenChatApiDataParallelDownloader::checkKillFlag();
+        
         $dtos = match ($type) {
             RankingType::Rising => $this->risingStore->getStorageData((string)$category)[1],
             RankingType::Ranking => $this->rankingStore->getStorageData((string)$category)[1],

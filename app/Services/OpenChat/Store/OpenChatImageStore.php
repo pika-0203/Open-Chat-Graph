@@ -36,7 +36,7 @@ class OpenChatImageStore
     {
         $subDir = '/' . filePathNumById($open_chat_id);
         mkdirIfNotExists(publicDir(AppConfig::OPENCHAT_IMG_PATH . $subDir));
-        mkdirIfNotExists(publicDir(AppConfig::OPENCHAT_IMG_PREVIEW_PATH . $subDir));
+        mkdirIfNotExists(publicDir(AppConfig::OPENCHAT_IMG_PATH . '/' . AppConfig::OPENCHAT_IMG_PREVIEW_PATH . $subDir));
     }
 
     /** @return string|false imgUrlHash */
@@ -64,9 +64,9 @@ class OpenChatImageStore
         }
     }
 
-    function deleteImage(int $open_chat_id, string $fileName): void
+    function deleteImage(int $open_chat_id, string $imgUrl): void
     {
-        $path = $this->getImgPath($open_chat_id, $fileName);
+        $path = $this->getImgPath($open_chat_id, $imgUrl);
 
         $path && array_map(fn (string $p) => file_exists($p) && unlink($p), $path);
     }

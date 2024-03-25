@@ -7,8 +7,6 @@ namespace App\Controllers\Pages;
 use App\Config\AppConfig;
 use App\Models\CommentRepositories\DeleteCommentRepositoryInterface;
 use App\Models\Repositories\DeleteOpenChatRepositoryInterface;
-use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
-use App\Models\SQLite\Repositories\RankingPosition\SqliteRankingPositionHourRepository;
 use App\Services\UpdateRankingService;
 use App\Services\StaticData\StaticDataGenerator;
 use App\Services\Admin\AdminAuthService;

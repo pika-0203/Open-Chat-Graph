@@ -14,7 +14,7 @@ class AppConfig
     const LINE_URL = 'https://line.me/ti/g2/';
 
     const OPENCHAT_IMG_PATH = 'oc-img';
-    const OPENCHAT_IMG_PREVIEW_PATH = 'oc-img/preview';
+    const OPENCHAT_IMG_PREVIEW_PATH = 'preview';
     const OPENCHAT_IMG_PREVIEW_SUFFIX = '_p';
 
     const OPEN_CHAT_LIST_LIMIT = 100;
@@ -79,6 +79,8 @@ class AppConfig
         '3y6jWliwCg1',
         '4DceVI1KwU1k',
     ];
+
+    const ADD_OPEN_CHAT_DEFAULT_OPENCHAT_IMG_URL_HASH = '2AtTNcODU67';
 
     const OPEN_CHAT_API_DB_MERGER_KILL_FLAG_PATH = __DIR__ . '/../../storage/cron_state/open_chat_api_db_merger_kill_flag.dat';
     const OPEN_CHAT_API_CRAWLING_KILL_FLAG_PATH = __DIR__ . '/../../storage/cron_state/open_chat_crawling_kill_flag.dat';
