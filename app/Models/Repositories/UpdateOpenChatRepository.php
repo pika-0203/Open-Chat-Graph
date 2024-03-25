@@ -23,6 +23,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
                 name,
                 description,
                 img_url,
+                local_img_url,
                 member,
                 api_created_at,
                 category,

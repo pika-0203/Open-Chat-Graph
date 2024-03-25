@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\OpenChat;
 
-use App\Config\AppConfig;
 use App\Services\OpenChat\Crawler\OpenChatApiRankingDownloader;
 use App\Services\OpenChat\Crawler\OpenChatApiRankingDownloaderProcess;
 use App\Services\OpenChat\Crawler\OpenChatApiRisingDownloaderProcess;
@@ -110,20 +109,19 @@ class OpenChatApiDataParallelDownloader
         return $resultCount;
     }
 
+    /** @throws ApplicationException */
     static function checkKillFlag()
     {
-        if (file_get_contents(AppConfig::OPEN_CHAT_API_DB_MERGER_KILL_FLAG_PATH) === '1') {
-            throw new ApplicationException('OpenChatApiDbMerger: 強制終了しました');
-        }
+        OpenChatApiDbMerger::checkKillFlag();
     }
 
-    static function disableKillFlag()
+    static function disableKillFlag(): void
     {
-        file_put_contents(AppConfig::OPEN_CHAT_API_DB_MERGER_KILL_FLAG_PATH, '0');
+        OpenChatApiDbMerger::disableKillFlag();
     }
 
-    static function enableKillFlag()
+    static function enableKillFlag(): void
     {
-        file_put_contents(AppConfig::OPEN_CHAT_API_DB_MERGER_KILL_FLAG_PATH, '1');
+        OpenChatApiDbMerger::enableKillFlag();
     }
 }
