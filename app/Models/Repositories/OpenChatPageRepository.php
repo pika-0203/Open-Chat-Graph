@@ -21,6 +21,7 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
                 oc.emblem,
                 oc.category,
                 oc.emid,
+                oc.url,
                 UNIX_TIMESTAMP(oc.created_at) AS created_at,
                 UNIX_TIMESTAMP(oc.updated_at) AS updated_at
             FROM

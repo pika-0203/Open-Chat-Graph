@@ -28,7 +28,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
 
         <div class="openchat-header-right">
-          <a title="LINEで開く" rel="external" target="_blank" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] ?>" class="h1-link unset">
+          <a title="LINEで開く" rel="external" target="_blank" href="<?php echo $oc['url'] ? (AppConfig::LINE_URL . $oc['url']) : (AppConfig::LINE_OPEN_URL . $oc['emid']) ?>" class="h1-link unset">
             <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span></h1>
             <div class="link-mark"><span class="link-title">LINEで開く</span><span class="line-link-icon"></span></div>
           </a>
