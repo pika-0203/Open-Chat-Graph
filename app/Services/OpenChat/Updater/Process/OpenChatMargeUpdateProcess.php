@@ -31,7 +31,7 @@ class OpenChatMargeUpdateProcess
 
         $updaterDto = $this->openChatUpdaterDtoFactory->mapToDto($repoDto, $ocDto, $updateMember);
         if ($updaterDto->profileImageObsHash) {
-            $this->openChatImageStore->downloadAndStoreOpenChatImage($updaterDto->open_chat_id, $updaterDto->profileImageObsHash);
+            //$this->openChatImageStore->downloadAndStoreOpenChatImage($updaterDto->open_chat_id, $updaterDto->profileImageObsHash);
             $this->updateRepository->updateOpenChatRecord($updaterDto);
             $this->openChatImageStore->deleteImage($repoDto->open_chat_id, $repoDto->profileImageObsHash);
         } else {
