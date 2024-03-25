@@ -26,12 +26,6 @@ class StaticDataGenerator
         $dto->popularList = $this->openChatListRepository->findMemberCountRanking(5);
         $dto->recentCommentList = [];
 
-        // 説明文の文字数を詰める
-        trimOpenChatListDescriptions($dto->hourlyList);
-        trimOpenChatListDescriptions($dto->dailyList);
-        trimOpenChatListDescriptions($dto->weeklyList);
-        trimOpenChatListDescriptions($dto->popularList);
-
         $dto->hourlyUpdatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME));
         $dto->dailyUpdatedAt = new \DateTime(file_get_contents(AppConfig::DAILY_CRON_UPDATED_AT_DATE));
 

@@ -35,8 +35,6 @@ class RecentOpenChatPageController
 
         $isAdmin = $adminAuthService->auth();
 
-        trimOpenChatListDescriptions($rankingList['openChatList']);
-
         // ページネーションのselect要素
         [$title, $_select, $_label] = $this->pagination->geneSelectElementPagerAsc(
             $path,

@@ -10,6 +10,8 @@ interface LogRepositoryInterface
 
     public function logAddOpenChatError(string $ip, string $ua, string $message): void;
 
+    public function logOpenChatImageStoreError(string $imgIdentifier, string $message): void;
+
     public function logUpdateOpenChatError(int $open_chat_id, string $message): void;
     
     public function getNumAddOpenChatPerMinute(string $ip): int;

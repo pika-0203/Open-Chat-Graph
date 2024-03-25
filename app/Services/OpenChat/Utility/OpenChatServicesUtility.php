@@ -3,6 +3,7 @@
 namespace App\Services\OpenChat\Utility;
 
 use App\Config\AppConfig;
+use App\Services\OpenChat\Dto\OpenChatDto;
 
 class OpenChatServicesUtility
 {
@@ -11,7 +12,7 @@ class OpenChatServicesUtility
     /**
      * @return bool 収集を拒否している場合は true
      */
-    static function containsHashtagNolog(string $desc): bool
+    static function containsHashtagNolog(OpenChatDto $dto): bool
     {
         //return strpos($desc, '#nolog') !== false;
         return false;

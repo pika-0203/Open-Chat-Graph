@@ -8,6 +8,15 @@ class OpenChatCrawlerConfig
     const LINE_URL_MATCH_PATTERN = '{(?<=https:\/\/openchat\.line\.me\/jp\/cover\/).+?(?=\?|$)}';
 
     const LINE_IMG_URL = 'https://obs.line-scdn.net/';
+    const LINE_IMG_PREVIEW_PATH = '/preview';
+    const IMG_MIME_TYPE = [
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/gif' => 'gif',
+        'image/webp' => 'webp',
+    ];
+
+    const STORE_IMG_QUALITY = 50;
 
     const OPEN_CHAT_API_OC_DATA_FROM_EMID_DOWNLOADER_HEADER = [
         "X-Line-Seo-User: x9bfc33ffe50854cf0d446a6013cf1824",

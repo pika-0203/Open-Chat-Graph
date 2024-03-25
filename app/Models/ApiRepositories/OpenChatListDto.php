@@ -10,7 +10,7 @@ class OpenChatListDto
     {
         $this->id = $oc['id'];
         $this->name = $oc['name'];
-        $this->desc = mb_strimwidth($oc['description'], 0, self::DESC_LEN, '…');
+        $this->desc = $oc['description'];
         $this->member = $oc['member'];
         $this->img = $oc['img_url'];
         $this->emblem = $oc['emblem'] ?? 0;

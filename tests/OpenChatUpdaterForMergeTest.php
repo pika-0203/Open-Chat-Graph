@@ -74,7 +74,7 @@ class OpenChatUpdaterForMergeTest extends TestCase
                 }
 
                 // 収集拒否の場合
-                if (OpenChatServicesUtility::containsHashtagNolog($apiDto->desc)) {
+                if (OpenChatServicesUtility::containsHashtagNolog($apiDto)) {
                     return null;
                 }
 

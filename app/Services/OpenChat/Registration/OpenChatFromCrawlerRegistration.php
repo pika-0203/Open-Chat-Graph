@@ -11,6 +11,7 @@ use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Services\OpenChat\Crawler\OpenChatApiFromEmidDownloader;
 use App\Services\OpenChat\Crawler\OpenChatUrlChecker;
 use App\Services\OpenChat\Dto\OpenChatDto;
+use App\Services\OpenChat\Store\OpenChatImageStore;
 use Shared\Exceptions\ThrottleRequestsException;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
@@ -22,6 +23,7 @@ class OpenChatFromCrawlerRegistration
         private OpenChatApiFromEmidDownloader $openChatDtoFetcher,
         private OpenChatUrlChecker $openChatUrlChecker,
         private LogRepositoryInterface $logRepository,
+        private OpenChatImageStore $openChatImageStore,
     ) {
     }
 
@@ -62,9 +64,9 @@ class OpenChatFromCrawlerRegistration
             return $ocDto;
         }
 
-        if (OpenChatServicesUtility::containsHashtagNolog($ocDto->desc)) {
+        if (OpenChatServicesUtility::containsHashtagNolog($ocDto)) {
             $this->logAddOpenChatError('収集拒否: ' . $emid);
-            return $this->returnMessage('拒否: 説明文に「#nolog」が含まれています');
+            return $this->returnMessage('収集拒否');
         }
 
         return $this->registerRecordProcess($ocDto);
@@ -76,6 +78,8 @@ class OpenChatFromCrawlerRegistration
         if (!$open_chat_id) {
             return $this->returnMessage('ネットワークエラーが発生しました');
         }
+
+        $this->openChatImageStore->downloadAndStoreOpenChatImage($open_chat_id, $ocDto->profileImageObsHash);
 
         $this->logRepository->logAddOpenChat($open_chat_id, getIP(), getUA());
 
