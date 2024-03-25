@@ -5,9 +5,15 @@ declare(strict_types=1);
 namespace App\Services\OpenChat\Crawler;
 
 use App\Config\OpenChatCrawlerConfig;
+use App\Services\Crawler\FileDownloader;
 
 class OpenChatImgDownloader
 {
+    function __construct(
+        private FileDownloader $fileDownloader
+    ) {
+    }
+
     /**
      * オープンチャットの画像をダウンロードする
      * 
@@ -46,30 +52,20 @@ class OpenChatImgDownloader
 
     private function store(string $url, string $destPath, int $quality): void
     {
-        $tempFilePath = tempnam(sys_get_temp_dir(), 'prefix');
-
         try {
-            $ch = curl_init($url);
-            $fp = fopen($tempFilePath, 'w');
-            curl_setopt($ch, CURLOPT_FILE, $fp);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_exec($ch);
-            curl_close($ch);
-            fclose($fp);
+            $data = $this->fileDownloader->downloadFile($url, OpenChatCrawlerConfig::USER_AGENT);
+            if ($data === false) {
+                throw new \RuntimeException('画像のダウンロードに失敗: 404');
+            }
 
-            $source = imagecreatefromjpeg($tempFilePath);
+            $source = imagecreatefromstring($data);
             if ($source === false) {
-                unlink($tempFilePath);
                 throw new \RuntimeException('JPEGファイルの読み込み中にエラーが発生しました');
             }
 
-            if (!imagewebp($source, $tempFilePath, $quality)) {
-                unlink($tempFilePath);
+            if (!imagewebp($source, $destPath, $quality)) {
                 throw new \RuntimeException('WebPへの変換中にエラーが発生しました');
             }
-
-            chmod($tempFilePath, 0666);
-            rename($tempFilePath, $destPath);
         } catch (\Throwable $e) {
             throw new \RuntimeException($e->getMessage());
         }
