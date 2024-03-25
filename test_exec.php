@@ -16,13 +16,21 @@ $img = app(OpenChatImageStore::class);
 try {
     AdminTool::sendLineNofity('start');
 
-    $ocs = DB::fetchAll("SELECT id, img_url FROM open_chat WHERE id > 16530");
+    $ocs = DB::fetchAll("SELECT id FROM open_chat");
+
     foreach ($ocs as $i => $oc) {
         OpenChatApiDbMerger::checkKillFlag();
-        $img->downloadAndStoreOpenChatImage($oc['id'], $oc['img_url']);
+        $id = $oc['id'];
+        $img_url = DB::fetchColumn("SELECT img_url FROM open_chat WHERE id = {$id}");
+
+        $result = $img->downloadAndStoreOpenChatImage($id, $img_url);
         if ($i % 10000 === 0) {
             AdminTool::sendLineNofity("key: {$i}");
         }
+
+        $result && DB::execute(
+            "UPDATE open_chat SET local_img_url = '{$img_url}' WHERE id = {$id}"
+        );
     }
 
     AdminTool::sendLineNofity('done');
