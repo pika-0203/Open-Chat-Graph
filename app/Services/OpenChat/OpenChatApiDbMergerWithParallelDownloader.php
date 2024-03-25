@@ -62,7 +62,7 @@ class OpenChatApiDbMergerWithParallelDownloader
 
         $flag = false;
         while (!$flag) {
-            sleep(3);
+            sleep(10);
             OpenChatApiDataParallelDownloader::checkKillFlag();
 
             foreach ([RankingType::Ranking, RankingType::Rising] as $type)
