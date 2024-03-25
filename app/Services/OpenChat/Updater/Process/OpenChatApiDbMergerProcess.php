@@ -61,7 +61,6 @@ class OpenChatApiDbMergerProcess
             return;
         }
 
-        $open_chat_id = $this->openChatRepository->addOpenChatFromDto($apiDto);
-        //$open_chat_id && $this->openChatImageStore->downloadAndStoreOpenChatImage($open_chat_id, $apiDto->profileImageObsHash);
+        $this->openChatRepository->addOpenChatFromDto($apiDto);
     }
 }

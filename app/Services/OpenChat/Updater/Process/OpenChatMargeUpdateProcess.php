@@ -25,18 +25,12 @@ class OpenChatMargeUpdateProcess
         if ($ocDto === false || OpenChatServicesUtility::containsHashtagNolog($ocDto)) {
             $updaterDto = $this->openChatUpdaterDtoFactory->mapToDeleteOpenChatDto($repoDto->open_chat_id);
             $this->updateRepository->updateOpenChatRecord($updaterDto);
-            $this->openChatImageStore->deleteImage($repoDto->open_chat_id, $repoDto->profileImageObsHash);
+            $this->openChatImageStore->deleteImage($repoDto->open_chat_id, $repoDto->getLocalImgUrl());
             return false;
         }
 
         $updaterDto = $this->openChatUpdaterDtoFactory->mapToDto($repoDto, $ocDto, $updateMember);
-        if ($updaterDto->profileImageObsHash) {
-            //$this->openChatImageStore->downloadAndStoreOpenChatImage($updaterDto->open_chat_id, $updaterDto->profileImageObsHash);
-            $this->updateRepository->updateOpenChatRecord($updaterDto);
-            $this->openChatImageStore->deleteImage($repoDto->open_chat_id, $repoDto->profileImageObsHash);
-        } else {
-            $this->updateRepository->updateOpenChatRecord($updaterDto);
-        }
+        $this->updateRepository->updateOpenChatRecord($updaterDto);
 
         return true;
     }

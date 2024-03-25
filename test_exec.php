@@ -3,6 +3,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Services\Admin\AdminTool;
+use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Services\OpenChat\Store\OpenChatImageStore;
 use Shadow\DB;
 
@@ -17,6 +18,7 @@ try {
 
     $ocs = DB::fetchAll("SELECT id, img_url FROM open_chat WHERE id > 16530");
     foreach ($ocs as $i => $oc) {
+        OpenChatApiDbMerger::checkKillFlag();
         $img->downloadAndStoreOpenChatImage($oc['id'], $oc['img_url']);
         if ($i % 10000 === 0) {
             AdminTool::sendLineNofity("key: {$i}");

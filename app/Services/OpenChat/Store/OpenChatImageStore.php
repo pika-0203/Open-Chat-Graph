@@ -53,6 +53,7 @@ class OpenChatImageStore
 
             return true;
         } catch (\RuntimeException $e) {
+            // 再接続
             DB::$pdo = null;
             $this->logRepository->logOpenChatImageStoreError($imgUrl, $e->getMessage());
 
