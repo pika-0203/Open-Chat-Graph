@@ -26,7 +26,7 @@ class CommentPostApiController
         string $name,
         string $text
     ) {
-        $score = $googleReCaptcha->validate($token, 0.5);
+        $score = $googleReCaptcha->validate($token, 0.3);
 
         if ($open_chat_id && !$openChatPageRepository->isExistsOpenChat($open_chat_id)) {
             return false;
