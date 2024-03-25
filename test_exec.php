@@ -2,22 +2,26 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
 use App\Services\Admin\AdminTool;
+use App\Services\OpenChat\Store\OpenChatImageStore;
 use Shadow\DB;
 
 /**
- * @var StatisticsRepositoryInterface $inst
+ * @var OpenChatImageStore $img
  */
-$inst = app(StatisticsRepositoryInterface::class);
+$img = app(OpenChatImageStore::class);
 try {
     AdminTool::sendLineNofity('start');
 
-    $r = DB::fetchAll("SELECT id AS open_chat_id, member, DATE(created_at) AS date FROM open_chat WHERE created_at >= '2024-02-20 00:00:00'");
+    $ocs = DB::fetchAll("SELECT id, img_url FROM open_chat");
+    foreach ($ocs as $i => $oc) {
+        $img->downloadAndStoreOpenChatImage($oc['id'], $oc['img_url']);
+        if ($i % 10000 === 0) {
+            AdminTool::sendLineNofity("key: {$i}");
+        }
+    }
 
-    $inst->insertMember($r);
-
-    AdminTool::sendLineNofity('done: ' . count($r));
+    AdminTool::sendLineNofity('done');
 } catch (\Throwable $e) {
     addCronLog($e->__toString());
     AdminTool::sendLineNofity($e->__toString());

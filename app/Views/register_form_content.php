@@ -26,7 +26,7 @@
             <sup class="add-openchat-message success" id="add-openchat-describedby"><?php echo h(session('message')) ?></sup>
             <div class="openchat-item add-openchat-form-item">
                 <a class="link-overlay unset" href="<?php echo url('/oc/' . $requestOpenChat['id']) ?>" tabindex="-1"></a>
-                <img alt class="openchat-item-img" src="<?php echo imgPreviewUrl($requestOpenChat['img_url']) ?>" <?php echo getImgSetErrorTag() ?>>
+                <img alt class="openchat-item-img" src="<?php echo imgPreviewUrl($requestOpenChat['id'], $requestOpenChat['img_url']) ?>" <?php echo getImgSetErrorTag() ?>>
                 <h2 class="unset">
                     <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $requestOpenChat['id']) ?>"><?php echo $requestOpenChat['name'] ?></a>
                 </h2>

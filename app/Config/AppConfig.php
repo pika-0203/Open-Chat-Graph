@@ -12,7 +12,10 @@ class AppConfig
     const DEVICE_COOKIE_EXPIRES = 60 * 60 * 24 * 30;
 
     const LINE_URL = 'https://line.me/ti/g2/';
-    const LINE_IMG_PREVIEW_SUFFIX = '_p';
+
+    const OPENCHAT_IMG_PATH = 'oc-img';
+    const OPENCHAT_IMG_PREVIEW_PATH = 'oc-img/preview';
+    const OPENCHAT_IMG_PREVIEW_SUFFIX = '_p';
 
     const OPEN_CHAT_LIST_LIMIT = 100;
     const MY_LIST_LIMIT = 50;
@@ -62,11 +65,11 @@ class AppConfig
     ];
 
     const DEFAULT_OPENCHAT_IMG_URL = [
-        '1' => '0h6tJf0hQsaVt3H0eLAsAWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnOA',
-        '2' => '0h6tJf8QWOaVt3H0eLAsEWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnOQ',
-        '3' => '0h6tJfJfGJaVt3H0eLAsAWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnPg',
-        '4' => '0h6tJfahRYaVt3H0eLAsAWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnPQ',
-        '5' => '0h6tJfzfJQaVt3H0eLAsAWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnPw',
+        '0h6tJf0hQsaVt3H0eLAsAWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnOA',
+        '0h6tJf8QWOaVt3H0eLAsEWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnOQ',
+        '0h6tJfJfGJaVt3H0eLAsAWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnPg',
+        '0h6tJfahRYaVt3H0eLAsAWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnPQ',
+        '0h6tJfzfJQaVt3H0eLAsAWDFheczgHd3wTCTx2eApNKSoefHNVGRdwfgxbdgUMLi8MSngnPFMeNmpbLi8MSngnPFMeNmpbLi8MSngnPw',
     ];
 
     const OPEN_CHAT_API_DB_MERGER_KILL_FLAG_PATH = __DIR__ . '/../../storage/cron_state/open_chat_api_db_merger_kill_flag.dat';

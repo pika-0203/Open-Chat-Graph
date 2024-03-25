@@ -13,12 +13,6 @@ RewriteRule ^wp-.* - [R=404,L]
 #RewriteRule ^(.*)/index/?$  https://openchat-review.me/$1 [R=301,L]
 #RewriteRule ^index/?$ https://openchat-review.me [R=301,L]
 
-#RewriteRule ^oc-img/([0-9]+)/((?!.*\.webp).+)/preview$ public/oc-img/$1/preview/$2_p.webp [L,NC]
-#RewriteRule ^oc-img/([0-9]+)/((?!.*\.webp).+)$ public/oc-img/$1/$2.webp [L,NC]
-
-RewriteRule ^oc-img/([0-9]+)/((?!.*\.webp).+)/preview$ https://openchat-review.me/oc-img/$1/preview/$2_p.webp [L,NC]
-RewriteRule ^oc-img/([0-9]+)/((?!.*\.webp).+)$ https://openchat-review.me/oc-img/$1/$2.webp [L,NC]
-
 RewriteRule ^oc-img/(.*)$ https://openchat-review.me/oc-img/$1 [R=301,L]
 
 RewriteRule ^(.*)$ public/$1 [QSA,L]

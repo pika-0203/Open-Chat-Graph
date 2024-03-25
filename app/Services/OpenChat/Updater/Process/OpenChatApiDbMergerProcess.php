@@ -8,6 +8,7 @@ use App\Services\OpenChat\Crawler\OpenChatApiFromEmidDownloader;
 use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepositoryInterface;
 use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatDto;
+use App\Services\OpenChat\Store\OpenChatImageStore;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use Shadow\DB;
 
@@ -18,6 +19,7 @@ class OpenChatApiDbMergerProcess
         private OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatDataWithCache,
         private OpenChatMargeUpdateProcess $openChatMargeUpdateProcess,
         private OpenChatRepositoryInterface $openChatRepository,
+        private OpenChatImageStore $openChatImageStore,
     ) {
     }
 
@@ -55,10 +57,11 @@ class OpenChatApiDbMergerProcess
     private function add(OpenChatDto $apiDto): void
     {
         // 収集拒否の場合
-        if (OpenChatServicesUtility::containsHashtagNolog($apiDto->desc)) {
+        if (OpenChatServicesUtility::containsHashtagNolog($apiDto)) {
             return;
         }
 
-        $this->openChatRepository->addOpenChatFromDto($apiDto);
+        $open_chat_id = $this->openChatRepository->addOpenChatFromDto($apiDto);
+        $open_chat_id && $this->openChatImageStore->downloadAndStoreOpenChatImage($open_chat_id, $apiDto->profileImageObsHash);
     }
 }
