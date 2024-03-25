@@ -8,6 +8,7 @@ use App\Services\OpenChat\Dto\OpenChatUpdaterDtoFactory;
 use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Services\OpenChat\Dto\OpenChatRepositoryDto;
+use App\Services\OpenChat\Dto\OpenChatUpdaterDto;
 use App\Services\OpenChat\Store\OpenChatImageStore;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
@@ -20,7 +21,7 @@ class OpenChatMargeUpdateProcess
     ) {
     }
 
-    function mergeUpdateOpenChat(OpenChatRepositoryDto $repoDto, OpenChatDto|false $ocDto, bool $updateMember = true): bool
+    function mergeUpdateOpenChat(OpenChatRepositoryDto $repoDto, OpenChatDto|false $ocDto, bool $updateMember = true): OpenChatUpdaterDto|false
     {
         if ($ocDto === false || OpenChatServicesUtility::containsHashtagNolog($ocDto)) {
             $updaterDto = $this->openChatUpdaterDtoFactory->mapToDeleteOpenChatDto($repoDto->open_chat_id);
@@ -32,6 +33,6 @@ class OpenChatMargeUpdateProcess
         $updaterDto = $this->openChatUpdaterDtoFactory->mapToDto($repoDto, $ocDto, $updateMember);
         $this->updateRepository->updateOpenChatRecord($updaterDto);
 
-        return true;
+        return $updaterDto;
     }
 }

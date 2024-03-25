@@ -53,7 +53,7 @@ class OpenChatStatsRankingApiRepository
             oc.name,
             oc.description,
             oc.member,
-            oc.img_url,
+            oc.local_img_url AS img_url,
             oc.emblem,
             oc.category,
             sr.diff_member,
@@ -165,7 +165,7 @@ class OpenChatStatsRankingApiRepository
             oc.name,
             oc.description,
             oc.member,
-            oc.img_url,
+            oc.local_img_url AS img_url,
             oc.emblem,
             oc.category,
             oc.api_created_at

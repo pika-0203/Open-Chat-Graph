@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shadow\File;
 
-use App\Services\OpenChat\Updater\OpenChatUpdaterWithFetch;
-use App\Services\OpenChat\Crawler\OpenChatCrawler;
+use App\Services\OpenChat\Updater\OpenChatUpdaterFromApi;
 use PHPUnit\Framework\TestCase;
 
 class OpenChatUpdaterWithFetchTest extends TestCase
@@ -13,12 +12,12 @@ class OpenChatUpdaterWithFetchTest extends TestCase
     public function test(): void
     {
         /**
-         * @var OpenChatUpdaterWithFetch $updater
+         * @var OpenChatUpdaterFromApi $updater
          */
-        $updater = app(OpenChatUpdaterWithFetch::class);
+        $updater = app(OpenChatUpdaterFromApi::class);
 
 
-        $result = $updater->updateOpenChat(1, app(OpenChatCrawler::class));
+        $result = $updater->fetchUpdateOpenChat(139335);
         $this->assertTrue($result);
     }
 }

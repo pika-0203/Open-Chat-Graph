@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Repositories;
 
+use App\Config\AppConfig;
 use Shadow\DB;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
@@ -42,7 +43,8 @@ class OpenChatRepository implements OpenChatRepositoryInterface
                     emid,
                     category,
                     api_created_at,
-                    emblem
+                    emblem,
+                    url
                 )
             VALUES
                 (
@@ -56,19 +58,21 @@ class OpenChatRepository implements OpenChatRepositoryInterface
                     :emid,
                     :category,
                     :api_created_at,
-                    :emblem
+                    :emblem,
+                    :url
                 )",
             [
                 'name' => $dto->name,
                 'description' => $dto->desc,
                 'img_url' => $dto->profileImageObsHash,
-                'local_img_url' => base62Hash($dto->profileImageObsHash),
+                'local_img_url' => AppConfig::ADD_OPEN_CHAT_DEFAULT_OPENCHAT_IMG_URL_HASH,
                 'member' => $dto->memberCount,
                 'emid' => $dto->emid,
                 'created_at' => $dto->registered_created_at,
                 'api_created_at' => $dto->createdAt,
                 'category' => $dto->category,
                 'emblem' => $dto->emblem,
+                'url' => $dto->invitationTicket,
             ]
         );
 

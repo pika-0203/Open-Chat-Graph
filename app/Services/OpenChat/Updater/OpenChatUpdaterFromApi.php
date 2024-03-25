@@ -25,7 +25,8 @@ class OpenChatUpdaterFromApi
         private LogRepositoryInterface $logRepository,
         private OpenChatApiFromEmidDownloader $openChatDtoFetcher,
         private OpenChatUrlChecker $openChatUrlChecker,
-        private OpenChatMargeUpdateProcess $openChatMargeUpdateProcess
+        private OpenChatMargeUpdateProcess $openChatMargeUpdateProcess,
+        private OpenChatImageStoreUpdater $openChatImageStoreUpdater,
     ) {
         $this->date = OpenChatServicesUtility::getCronModifiedStatsMemberDate();
     }
@@ -45,7 +46,7 @@ class OpenChatUpdaterFromApi
             $ocDto = $this->openChatDtoFetcher->fetchOpenChatDto($repoDto->emid);
             if ($ocDto) {
                 $ocDto =
-                    $this->openChatUrlChecker->isOpenChatUrlAvailable($ocDto->getApiDataInvitationTicket())
+                    $this->openChatUrlChecker->isOpenChatUrlAvailable($ocDto->invitationTicket)
                     ? $ocDto
                     : false;
             }
@@ -64,9 +65,9 @@ class OpenChatUpdaterFromApi
 
     private function updateDelete(OpenChatRepositoryDto $repoDto, OpenChatDto|false $ocDto)
     {
-        $result = $this->openChatMargeUpdateProcess->mergeUpdateOpenChat($repoDto, $ocDto);
+        $updaterDto = $this->openChatMargeUpdateProcess->mergeUpdateOpenChat($repoDto, $ocDto);
         // 削除の場合
-        if ($result === false) {
+        if ($updaterDto === false) {
             return;
         }
 

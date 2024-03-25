@@ -15,6 +15,7 @@ class OpenChatRepositoryDto
     public ?int $createdAt;
     public ?int $category;
     public ?int $emblem;
+    public ?string $invitationTicket;
     private string $local_img_url;
 
     /**
@@ -31,6 +32,8 @@ class OpenChatRepositoryDto
         $this->createdAt = $openChatData['api_created_at'];
         $this->category = $openChatData['category'];
         $this->emblem = $openChatData['emblem'];
+        $this->invitationTicket = $openChatData['url'];
+
         $this->local_img_url = $openChatData['local_img_url'];
     }
 

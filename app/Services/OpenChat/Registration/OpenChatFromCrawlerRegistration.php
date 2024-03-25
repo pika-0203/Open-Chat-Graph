@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\OpenChat\Registration;
 
+use App\Config\AppConfig;
 use App\Config\OpenChatCrawlerConfig;
 use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Models\Repositories\Log\LogRepositoryInterface;
@@ -12,6 +13,7 @@ use App\Services\OpenChat\Crawler\OpenChatApiFromEmidDownloader;
 use App\Services\OpenChat\Crawler\OpenChatUrlChecker;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Services\OpenChat\Store\OpenChatImageStore;
+use App\Services\OpenChat\Updater\OpenChatImageStoreUpdater;
 use Shared\Exceptions\ThrottleRequestsException;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
@@ -23,7 +25,7 @@ class OpenChatFromCrawlerRegistration
         private OpenChatApiFromEmidDownloader $openChatDtoFetcher,
         private OpenChatUrlChecker $openChatUrlChecker,
         private LogRepositoryInterface $logRepository,
-        private OpenChatImageStore $openChatImageStore,
+        private OpenChatImageStoreUpdater $openChatImageStoreUpdater,
     ) {
     }
 
@@ -79,7 +81,7 @@ class OpenChatFromCrawlerRegistration
             return $this->returnMessage('ネットワークエラーが発生しました');
         }
 
-        $this->openChatImageStore->downloadAndStoreOpenChatImage($open_chat_id, $ocDto->profileImageObsHash);
+        $this->openChatImageStoreUpdater->updateImage($open_chat_id, $ocDto->profileImageObsHash);
 
         $this->logRepository->logAddOpenChat($open_chat_id, getIP(), getUA());
 
@@ -98,7 +100,7 @@ class OpenChatFromCrawlerRegistration
         if (
             $ocDto === false
             || $ocDto->memberCount < 1
-            || !$this->openChatUrlChecker->isOpenChatUrlAvailable($ocDto->getApiDataInvitationTicket())
+            || !$this->openChatUrlChecker->isOpenChatUrlAvailable($ocDto->invitationTicket)
         ) {
             $this->logAddOpenChatError('404 Not found: ' . $emid);
             return $this->returnMessage('無効なURLです');

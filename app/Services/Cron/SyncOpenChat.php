@@ -10,6 +10,8 @@ use App\Services\OpenChat\OpenChatApiDbMergerWithParallelDownloader;
 use App\Services\DailyUpdateCronService;
 use App\Services\OpenChat\OpenChatApiDataParallelDownloader;
 use App\Services\OpenChat\OpenChatDailyCrawling;
+use App\Services\OpenChat\OpenChatHourlyInvitationTicketUpdater;
+use App\Services\OpenChat\OpenChatImageUpdater;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistenceLastHourChecker;
 use App\Services\SitemapGenerator;
@@ -25,7 +27,9 @@ class SyncOpenChat
         private RankingPositionHourPersistence $rankingPositionHourPersistence,
         private RankingPositionHourPersistenceLastHourChecker $rankingPositionHourChecker,
         private UpdateHourlyMemberRankingService $hourlyMemberRanking,
-        private UpdateHourlyMemberColumnService $hourlyMemberColumn
+        private UpdateHourlyMemberColumnService $hourlyMemberColumn,
+        private OpenChatImageUpdater $OpenChatImageUpdater,
+        private OpenChatHourlyInvitationTicketUpdater $invitationTicketUpdater,
     ) {
         set_exception_handler($this->exceptionHandler(...));
     }
@@ -110,6 +114,8 @@ class SyncOpenChat
         }
 
         $this->hourlyMemberRankingUpdate();
+        $this->hourlyImageUpdate();
+        $this->hourlyInvitationTicketUpdate();
     }
 
     private function hourlyMerge()
@@ -129,6 +135,20 @@ class SyncOpenChat
         $this->hourlyMemberRanking->update();
     }
 
+    private function hourlyImageUpdate()
+    {
+        addCronLog('Start hourlyImageUpdate');
+        $this->OpenChatImageUpdater->hourlyImageUpdate();
+        addCronLog('Done hourlyImageUpdate');
+    }
+
+    private function hourlyInvitationTicketUpdate()
+    {
+        addCronLog('Start hourlyInvitationTicketUpdate');
+        $this->invitationTicketUpdater->updateInvitationTicketAll();
+        addCronLog('Done hourlyInvitationTicketUpdate');
+    }
+
     function dailyTask()
     {
         $this->state->isDailyTaskActive = true;
@@ -144,6 +164,14 @@ class SyncOpenChat
 
         $this->state->isDailyTaskActive = false;
         $this->state->update();
+        $this->dailyImageUpdate();
+    }
+
+    private function dailyImageUpdate()
+    {
+        addCronLog('Start dailyImageUpdate');
+        $this->OpenChatImageUpdater->imageUpdateAll();
+        addCronLog('Done dailyImageUpdate');
     }
 
     function finalize(): void

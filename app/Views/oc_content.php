@@ -24,14 +24,13 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <!-- オープンチャット表示ヘッダー -->
       <header class="openchat-header unset">
         <div class="talkroom_banner_img_area">
-          <img class="talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>" >
+          <img class="talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
         </div>
 
         <div class="openchat-header-right">
-          <a rel="external" target="_blank" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] ?>" class="h1-link unset">
-            <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span>
-              <div class="link-mark"><span class="link-title">LINEオープンチャット公式サイト</span><span class="line-link-icon"></span></div>
-            </h1>
+          <a title="LINEで開く" rel="external" target="_blank" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] ?>" class="h1-link unset">
+            <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span></h1>
+            <div class="link-mark"><span class="link-title">LINEで開く</span><span class="line-link-icon"></span></div>
           </a>
 
           <div class="talkroom_description_box close" id="talkroom_description_box">
@@ -40,11 +39,11 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <?php echo nl2brReplace($oc['description']) ?>
               </span>
               <br>
-              <button id="talkroom-description-close-btn">一部を表示</button>
+              <button id="talkroom-description-close-btn" title="一部を表示">一部を表示</button>
             </p>
             <div class="more" id="read_more_btn">
               <div class="more-separater">&nbsp;</div>
-              <button class="unset more-text">…もっと見る</button>
+              <button class="unset more-text" title="もっと見る">…もっと見る</button>
             </div>
           </div>
 
