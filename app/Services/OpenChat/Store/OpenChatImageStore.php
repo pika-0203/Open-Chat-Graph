@@ -7,6 +7,7 @@ namespace App\Services\OpenChat\Store;
 use App\Config\AppConfig;
 use App\Services\OpenChat\Crawler\OpenChatImgDownloader;
 use App\Models\Repositories\Log\LogRepositoryInterface;
+use Shadow\DB;
 
 class OpenChatImageStore
 {
@@ -31,7 +32,7 @@ class OpenChatImageStore
         ];
     }
 
-    private function mkDir($open_chat_id) :void
+    private function mkDir($open_chat_id): void
     {
         $subDir = '/' . filePathNumById($open_chat_id);
         mkdirIfNotExists(publicDir(AppConfig::OPENCHAT_IMG_PATH . $subDir));
@@ -52,6 +53,7 @@ class OpenChatImageStore
 
             return true;
         } catch (\RuntimeException $e) {
+            DB::$pdo = null;
             $this->logRepository->logOpenChatImageStoreError($imgUrl, $e->getMessage());
 
             return false;

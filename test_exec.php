@@ -6,6 +6,8 @@ use App\Services\Admin\AdminTool;
 use App\Services\OpenChat\Store\OpenChatImageStore;
 use Shadow\DB;
 
+set_time_limit(3600 * 10);
+
 /**
  * @var OpenChatImageStore $img
  */
@@ -13,7 +15,7 @@ $img = app(OpenChatImageStore::class);
 try {
     AdminTool::sendLineNofity('start');
 
-    $ocs = DB::fetchAll("SELECT id, img_url FROM open_chat");
+    $ocs = DB::fetchAll("SELECT id, img_url FROM open_chat WHERE id > 16530");
     foreach ($ocs as $i => $oc) {
         $img->downloadAndStoreOpenChatImage($oc['id'], $oc['img_url']);
         if ($i % 10000 === 0) {
