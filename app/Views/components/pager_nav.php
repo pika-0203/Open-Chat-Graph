@@ -7,18 +7,18 @@
 
     use App\Views\SelectElementPagination;
 
-    if ($pageNumber > 1) : ?>
+    if ($pageNumber < $maxPageNumber) : ?>
         <div class="button01 prev">
-            <a href="<?php echo SelectElementPagination::pagerUrl($path, $pageNumber - 1) . ($_queryString ?? '') ?>">
-                <?php echo $pageNumber - 1 ?>
+            <a href="<?php echo SelectElementPagination::pagerUrl($path, $pageNumber + 1, $maxPageNumber) . ($_queryString ?? '') ?>">
+                <?php echo $pageNumber + 1 ?>
                 ページへ
             </a>
         </div>
     <?php endif ?>
     <span class="button01label"><?php echo $pageNumber . ' / ' . $maxPageNumber ?></span>
-    <?php if ($pageNumber < $maxPageNumber) : ?>
+    <?php if ($pageNumber > 1) : ?>
         <div class="button01 next">
-            <a href="<?php echo SelectElementPagination::pagerUrl($path, $pageNumber + 1) . ($_queryString ?? '') ?>">次のページへ</a>
+            <a href="<?php echo SelectElementPagination::pagerUrl($path, $pageNumber - 1, $maxPageNumber) . ($_queryString ?? '') ?>">前のページへ</a>
         </div>
     <?php endif ?>
 </nav>

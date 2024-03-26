@@ -9,6 +9,7 @@ use App\Config\AppConfig;
 use App\Services\Admin\AdminAuthService;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 use App\Views\SelectElementPagination;
+use Shadow\Kernel\Reception;
 
 class RecentOpenChatPageController
 {
@@ -19,17 +20,18 @@ class RecentOpenChatPageController
     ) {
     }
 
-    function index(?int $recent_page_number, AdminAuthService $adminAuthService)
+    function index(AdminAuthService $adminAuthService)
     {
-        $recent_page_number = $recent_page_number ?: 1;
-        $rankingList = $this->openChatStatsRecent->getAllOrderByRegistrationDate($recent_page_number, AppConfig::OPEN_CHAT_LIST_LIMIT);
+        $recentPage = Reception::input('recently-registered-page');
+        $recentPage = $recentPage ?: 0;
+        $rankingList = $this->openChatStatsRecent->getAllOrderByRegistrationDate($recentPage, AppConfig::OPEN_CHAT_LIST_LIMIT);
 
         if (!$rankingList) {
             // 最大ページ数を超えてる場合は404
             return false;
         }
 
-        $path = '/oc?recent_page_number=';
+        $path = '/oc?recently-registered-page=';
         $pageTitle = '最近登録されたオープンチャット';
         $_css = ['room_list', 'site_header', 'site_footer'];
 
@@ -39,14 +41,14 @@ class RecentOpenChatPageController
         [$title, $_select, $_label] = $this->pagination->geneSelectElementPagerAsc(
             $path,
             '',
-            $recent_page_number,
+            $rankingList['pageNumber'],
             $rankingList['totalRecords'],
             AppConfig::OPEN_CHAT_LIST_LIMIT,
             $rankingList['maxPageNumber'],
             $rankingList['labelArray']
         );
 
-        $subTitle = $recent_page_number === 1 ? '' : "({$recent_page_number}ページ目)";
+        $subTitle = $recentPage === 0 ? '' : "({$recentPage}ページ目)";
         $_meta = meta()->setTitle($pageTitle . $subTitle);
 
         $_breadcrumbsShema = $this->breadcrumbsShema->generateSchema('最近登録されたオープンチャット', 'oc');

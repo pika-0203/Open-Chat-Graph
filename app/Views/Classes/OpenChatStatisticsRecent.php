@@ -22,12 +22,12 @@ class OpenChatStatisticsRecent
      */
     public function getAllOrderByRegistrationDate(int $pageNumber): array|false
     {
-        $labelArray = $this->openChatListRepository->findAllOrderByIdAscCreatedAtColumn();
+        $labelArray = $this->openChatListRepository->findAllOrderByIdCreatedAtColumn();
 
         return $this->get(
             $pageNumber,
             count($labelArray),
-            $this->openChatListRepository->findAllOrderByIdDesc(...),
+            $this->openChatListRepository->findAllOrderById(...),
             $labelArray
         );
     }
@@ -42,6 +42,10 @@ class OpenChatStatisticsRecent
         // ページの最大数を取得する
         $maxPageNumber = $this->calcMaxPages($totalRecords, $limit);
 
+        if(!$pageNumber) {
+            $pageNumber = $maxPageNumber;
+        }
+
         if ($pageNumber > $maxPageNumber) {
             // 現在のページ番号が最大ページ番号を超えている場合
             return false;
@@ -50,7 +54,7 @@ class OpenChatStatisticsRecent
         $repoArgs = [$this->calcOffset($pageNumber, $limit), $limit * $pageNumber];
 
         // リストを取得する
-        $openChatList = $repository(...$repoArgs);
+        $openChatList = array_reverse($repository(...$repoArgs));
 
         return compact(
             'pageNumber',

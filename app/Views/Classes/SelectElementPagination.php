@@ -18,22 +18,22 @@ class SelectElementPagination
             $startLabel = $labelArray[$start - 1] ?? '';
             $endLabel = $labelArray[$end - 1] ?? '';
 
-            return "<option value='{$url}' {$selected}>{$endLabel} ~ {$startLabel} ({$end} ~ {$start})</option>";
+            return "<option value='{$url}' {$selected}>{$startLabel} ~ {$endLabel} ({$start} ~ {$end})</option>";
         };
 
         // 選択されたページに対して"selected"属性を返す
         $selected = fn ($i) => ($i === $pageNumber) ? "selected='selected'" : '';
 
         // ページ番号に応じて、そのページの最初のインデックスを計算する
-        $startNum = fn ($i) => ($i === 1) ? $totalRecords : $totalRecords - (($i - 1) * $itemsPerPage);
+        $startNum = fn ($i) => ($i - 1) * $itemsPerPage + 1;
 
         // ページ番号に応じて、そのページの最後のインデックスを計算する
-        $endNum = fn ($i) => ($i === $maxPage) ? 1 : $totalRecords - ($i * $itemsPerPage) + 1;
+        $endNum = fn ($i) => ($i === $maxPage) ? $totalRecords : ($i * $itemsPerPage);
 
         // 各ページ番号の要素を生成する
-        $_selectElement = '';
+        $selectElement = [];
         for ($i = 1; $i <= $maxPage; $i++) {
-            $_selectElement .= $getElement($this->pagerUrl($pagePath, $i) . $queryString, $selected($i), $startNum($i), $endNum($i), $i) . "\n";
+            $selectElement[] = $getElement($this->pagerUrl($pagePath, $i, $maxPage) . $queryString, $selected($i), $startNum($i), $endNum($i), $i) . "\n";
         }
 
         // ラベルの番号を取得する
@@ -44,18 +44,17 @@ class SelectElementPagination
         $labelEnd = $labelArray[$labelEndNum - 1] ?? '';
 
         // select要素のラベルを生成する
-        $_label = "{$labelEnd} ~ {$labelStart}<br>({$labelEndNum} ~ {$labelStartNum})";
+        $_label = "{$labelStart} ~ {$labelEnd}<br>({$labelStartNum} ~ {$labelEndNum})";
 
         // タイトル用の文字列
-        $title = "{$labelEndNum} ~ {$labelStartNum}";
+        $title = "{$labelStartNum} ~ {$labelEndNum}";
 
-        return [$title, $_selectElement, $_label];
+        return [$title, implode("\n", array_reverse($selectElement)), $_label];
     }
 
-    static function pagerUrl(string $path, int $pageNumber, string $defaultPath = '/oc'): string
+    static function pagerUrl(string $path, int $pageNumber, int $maxPage): string
     {
-        $secondPath = ($pageNumber > 1) ? (string) $pageNumber : '';
-        $path = ($pageNumber > 1) ? (string) $path : $defaultPath;
-        return \Shadow\Kernel\Dispatcher\ReceptionInitializer::getDomainAndHttpHost() . $path . $secondPath;
+        $secondPath = $pageNumber === $maxPage ? '/oc' : $path . $pageNumber;
+        return \Shadow\Kernel\Dispatcher\ReceptionInitializer::getDomainAndHttpHost() . $secondPath;
     }
 }
