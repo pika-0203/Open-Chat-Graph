@@ -448,6 +448,30 @@ main hr {
 .top-list .openchat-item-desc,
 .top-ranking .openchat-item-desc {
   -webkit-line-clamp: 1;
+  margin-bottom: 0.4rem;
+  font-size: 12px;
+}
+
+.top-list .openchat-item h3,
+.top-ranking .openchat-item h3 {
+  min-width: unset;
+  max-width: unset;
+}
+
+.top-list .openchat-item-title,
+.top-ranking .openchat-item-title {
+  font-size: 15px;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  white-space: unset;
+}
+
+.top-list .openchat-item-lower,
+.top-ranking .openchat-item-lower,
+.top-list .openchat-item-mui-chip-outer,
+.top-ranking .openchat-item-mui-chip-outer {
+  font-size: 11.5px;
+  margin: 0
 }
 
 .top-ranking-readMore {
