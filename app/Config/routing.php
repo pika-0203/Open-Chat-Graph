@@ -73,7 +73,7 @@ Route::path(
 )
     ->matchStr('url', 'post', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
     ->middleware([VerifyCsrfToken::class], 'post')
-    ->matchNum('recent_page_number', 'get', emptyAble: true)
+    ->matchNum('recently-registered-page', 'get', emptyAble: true)
     ->match(cache(...), 'get');
 
 Route::path('admin/cookie')

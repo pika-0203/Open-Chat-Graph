@@ -29,7 +29,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
         )->fetchColumn();
     }
 
-    public function findAllOrderByIdDesc(
+    public function findAllOrderById(
         int $startId,
         int $endId,
     ): array {
@@ -48,7 +48,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
             WHERE
                 api_created_at IS NOT NULL
             ORDER BY
-                id DESC
+                id ASC
             LIMIT
                 :startId, :limit';
 
@@ -56,7 +56,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
         return DB::fetchAll($query, compact('startId', 'limit'));
     }
 
-    public function findAllOrderByIdAscCreatedAtColumn(): array
+    public function findAllOrderByIdCreatedAtColumn(): array
     {
         $date = date('Y-m-d');
 
