@@ -472,6 +472,7 @@ main hr {
   line-height: 1.4;
   margin-bottom: 0.4rem;
   white-space: unset;
+  color: #111;
 }
 
 .top-list .openchat-list-title-area,
