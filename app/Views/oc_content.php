@@ -115,7 +115,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
               <?php endif ?>
             </div>
           </span>
-          <small style="margin-top: 0.5rem; display:block"><a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" style="font-size: 11px; color: #b7b7b7;">人数統計CSVファイル</a></small>
+          <small style="margin-top: 0.5rem; display:block"><a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" style="font-size: 11px; color: #b7b7b7;">統計CSVファイル</a></small>
         </div>
       </footer>
 

@@ -14,7 +14,7 @@ class OcPageSchema
         $dataset = Schema::dataset()
             ->name("LINEオープンチャット「{$sanitizedName}」のメンバー数推移")
             ->description(
-                "オープンチャット「{$sanitizedName}」のメンバー数の推移を日毎に記録しています。URLにアクセスすると、グラフで表示されます。CSV形式でダウンロードできます。CSVファイルは日付、メンバー数の2カラムの全期間データになっています。"
+                "オープンチャット「{$sanitizedName}」のメンバー数・LINE公式ランキングの推移を日毎に記録しています。URLにアクセスするとグラフで表示されます。CSV形式でダウンロード可能です。CSVファイルは日付、メンバー数、各ランキングの代表値からなる全期間のデータになっています。"
             )
             ->author(
                 Schema::organization()
@@ -46,7 +46,6 @@ class OcPageSchema
                     ->contentUrl($siteUrl . '/oc/' . $open_chat_id . '/csv')
             )
             ->measurementTechnique('LINEオープンチャットの公式サイトから人数データを記録');
-
 
         // JSON-LDのマークアップを生成
         return $dataset->toScript();
