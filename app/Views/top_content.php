@@ -5,13 +5,6 @@
 <body class="body">
     <?php viewComponent('site_header') ?>
     <main>
-        <header>
-            <span class="main-header-title">OPENCHAT GRAPH</span>
-            <span class="main-header-title-desc">メンバー数の増加をグラフで分析</span>
-            <small style="font-size: 11px; color:#777"><a href="/policy" style="font-size: inherit; color: inherit">オプチャグラフについてのコメント欄</a>を開設しました</small>
-        </header>
-
-        <hr>
         <?php if ($myList) : ?>
             <article class="top-mylist">
                 <div class="refresh-time openchat-list-date">
@@ -25,9 +18,10 @@
         <?php endif ?>
 
         <article class="top-list" style="margin-bottom: 2rem;">
-            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all&order=desc&sort=member') ?>">
+            <a class="top-ranking-readMore unset ranking-url" style="margin-bottom: 9px;" href="<?php echo url('ranking?list=all&order=desc&sort=member') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
+            <small style="font-size: 11px; color:#777; display: flex; justify-content: center; margin-bottom: 12px;"><a href="/policy" style="font-size: inherit; color: inherit">オプチャグラフについてのコメント欄</a>を開設しました</small>
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
