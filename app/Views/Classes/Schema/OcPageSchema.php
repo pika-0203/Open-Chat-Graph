@@ -12,7 +12,7 @@ class OcPageSchema
         $sanitizedName = h($name);
 
         $dataset = Schema::dataset()
-            ->name("LINEオープンチャット「{$sanitizedName}」のメンバー数推移")
+            ->name("LINEオープンチャット「{$sanitizedName}」のメンバー数・LINE公式ランキングの推移")
             ->description(
                 "オープンチャット「{$sanitizedName}」のメンバー数・LINE公式ランキングの推移を日毎に記録しています。URLにアクセスするとグラフで表示されます。CSV形式でダウンロード可能です。CSVファイルは日付、メンバー数、各ランキングの代表値からなる全期間のデータになっています。"
             )
