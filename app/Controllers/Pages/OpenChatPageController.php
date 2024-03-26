@@ -109,7 +109,7 @@ class OpenChatPageController
             return false;
         }
 
-        $downloadCsvService->sendCsv($open_chat_id, $oc['name']);
+        $downloadCsvService->sendCsv($open_chat_id, $oc['category'] ?? 0, $oc['name']);
         exit;
     }
 }
