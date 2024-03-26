@@ -16,17 +16,14 @@
                 <p>・オープンチャットの管理者が成長傾向を把握し、比較できる事で運営に役立つ</p>
                 <p>・ユーザーがオープンチャットを見つけて参加する機会を作る</p>
                 <h2>オープンチャットの掲載条件</h2>
-                <p>LINEオープンチャット公式サイトに掲載されているランキングを基にオープンチャットを記録します。掲載が終了したオープンチャットはオプチャグラフから削除されます。</p>
+                <p>LINEオープンチャット公式サイトに掲載されているランキングを基にオープンチャットを記録します。<br>掲載が終了したオープンチャットはオプチャグラフから削除されます。</p>
                 <p style="font-size: 11px; color: #b7b7b7;">LINEオープンチャット公式サイト: <a rel="external nofollow noopener" href="https://openchat.line.me/jp" target="_blank">https://openchat.line.me/jp</a></p>
                 <p style="font-size: 11px; color: #b7b7b7;">LINEオープンチャット利用規約: <a rel="external nofollow noopener" href="https://terms.line.me/line_Square_TOU_JP?lang=ja" target="_blank">https://terms.line.me/line_Square_TOU_JP?lang=ja</a></p>
-                <!-- <p>オープンチャットがオプチャグラフに表示されないようにするには、オープンチャットの説明文に #nolog を含めます。</p>
-                <p>既に登録済みのオープンチャットはデータ更新時に #nolog を検出すると削除されます。</p> -->
                 <h2 style="border:none; margin-bottom:0;">コメント欄</h2>
                 <div id="comment-root" style="margin: 0;"></div>
-                <h2>お問い合わせ窓口</h2>
-                <p>E-mail: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>
-                <h2>リンク</h2>
-                <p>Gihub: <a rel="external nofollow noopener" href="https://github.com/pika-0203/Open-Chat-Graph" target="_blank">https://github.com/pika-0203/Open-Chat-Graph</a></p>
+                <br>
+                <p style="font-size: 11px; color: #b7b7b7;">お問い合わせ窓口: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>
+                <p style="font-size: 11px; color: #b7b7b7;">Gihub: <a rel="external nofollow noopener" href="https://github.com/pika-0203/Open-Chat-Graph" target="_blank">https://github.com/pika-0203/Open-Chat-Graph</a></p>
             </article>
         </main>
         <footer>

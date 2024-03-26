@@ -21,7 +21,6 @@
             <a class="top-ranking-readMore unset ranking-url" style="margin-bottom: 1rem;" href="<?php echo url('ranking?list=all&order=desc&sort=member') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
-            <small style="font-size: 12px; color:#b7b7b7; display: flex; justify-content: center; margin-bottom: 1rem;"><a href="/policy" style="font-size: inherit; color: inherit">オプチャグラフについてのコメント欄</a>を開設しました</small>
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
