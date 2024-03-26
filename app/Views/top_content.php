@@ -25,6 +25,9 @@
         <?php endif ?>
 
         <article class="top-list" style="margin-bottom: 2rem;">
+            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all&order=desc&sort=member') ?>">
+                <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
+            </a>
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
@@ -37,7 +40,6 @@
             </header>
             <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
             viewComponent('open_chat_list', ['openChatList' => $dto->recentCommentList]) ?>
-
         </article>
 
         <article class="top-ranking" style="margin-bottom: -1rem;">
