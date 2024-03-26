@@ -950,4 +950,20 @@ main hr {
   .top-small-desc {
     font-size: 13.5px;
   }
+
+  .top-ranking .openchat-item-desc {
+    font-size: 13px;
+  }
+
+  .top-list .openchat-item-desc {
+    font-size: 13px;
+  }
+
+  .top-list .openchat-item-title {
+    font-size: 15px;
+  }
+
+  .top-ranking .openchat-item-title {
+    font-size: 16px;
+  }
 }
