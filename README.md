@@ -20,20 +20,6 @@ https://openchat-review.me
 増加率: `増加数 / 前日 or 前週のメンバー数`  
 ランク付け: `増加数 + 増加率 × 10`  
 
-## PHPフレームワーク  
+## フレームワーク  
 MimimalCMS  
 https://github.com/mimimiku778/MimimalCMS
-
-## ランキングUI  
-Open-Chat-Graph-Frontend  
-https://github.com/mimimiku778/Open-Chat-Graph-Frontend
-
-## グラフUI  
-Open-Chat-Graph-Frontend-Stats-Graph  
-https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph
-
-## コメント機能  
-Open-Chat-Graph-Comments  
-https://github.com/mimimiku778/Open-Chat-Graph-Comments
-
-###### mimimiku778 と pika-0203 は同一人物です
