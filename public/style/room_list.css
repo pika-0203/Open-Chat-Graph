@@ -473,6 +473,8 @@ main hr {
   margin-bottom: 0.4rem;
   white-space: unset;
   color: #111;
+  text-overflow: unset;
+  overflow: unset;
 }
 
 .top-list .openchat-list-title-area,
@@ -804,6 +806,12 @@ main hr {
 .top-small-desc a {
   color: #b7b7b7;
   font-size: 13px;
+}
+
+@media screen and (max-width: 375px) {
+  .openchat-item {
+    margin-right: 0.5rem;
+  }
 }
 
 @media screen and (max-width: 359px) {
