@@ -137,15 +137,17 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       const talkroomDesc = document.getElementById('talkroom-description')
       const talkroomDescBox = document.getElementById('talkroom_description_box')
 
+      const closeId = 'talkroom-description-close-btn'
+
       if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
         talkroomDescBox.classList.add('hidden')
       } else {
-        const open = document.getElementById('talkroom-description-btn')
+        const open = document.getElementById(closeId)
         const close = document.getElementById('talkroom-description-close-btn')
 
         readMoreBtn.style.visibility = "visible"
-        open.addEventListener('click', () => talkroomDescBox.classList.remove('close'))
-        readMoreBtn.addEventListener('click', () => talkroomDescBox.classList.remove('close'))
+        talkroomDesc.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
+        readMoreBtn.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
         close.addEventListener('click', () => talkroomDescBox.classList.add('close'))
       }
     })()
