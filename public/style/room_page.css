@@ -184,15 +184,12 @@ hr {
 
 .talkroom_description_box.close .talkroom_description {
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-align: unset;
 }
 
-.talkroom_description_box.close .talkroom_description br {
-  display: none;
-}
 
 .talkroom_description_box.close.hidden {
   cursor: unset;
