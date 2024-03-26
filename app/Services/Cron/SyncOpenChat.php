@@ -115,7 +115,7 @@ class SyncOpenChat
 
         $this->hourlyMemberRankingUpdate();
         $this->hourlyImageUpdate();
-        //$this->hourlyInvitationTicketUpdate();
+        $this->hourlyInvitationTicketUpdate();
     }
 
     private function hourlyMerge()
