@@ -263,6 +263,8 @@ main hr {
 .refresh-time span {
   font-size: 13px;
   line-height: normal;
+  color: #111;
+  font-weight: bold;
 }
 
 .openchat-list-title-area p {
@@ -495,6 +497,10 @@ main hr {
   margin: 0;
 }
 
+.top-ranking.created-at .blue {
+  color: #aaa;
+}
+
 .top-ranking-readMore {
   cursor: pointer;
   height: 42px;
@@ -517,6 +523,7 @@ main hr {
   margin: auto;
   line-height: 24px;
   color: #07b53b;
+  font-weight: bold;
 }
 
 .top-list .ranking-readMore {
@@ -529,8 +536,8 @@ main hr {
   margin-left: 3px;
   width: 6px;
   height: 6px;
-  border-top: 1px solid #07b53b;
-  border-right: 1px solid #07b53b;
+  border-top: 2px solid #07b53b;
+  border-right: 2px solid #07b53b;
   transform: rotate(45deg);
   margin-bottom: 2px;
 }

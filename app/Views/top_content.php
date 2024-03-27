@@ -8,7 +8,7 @@
         <?php if ($myList) : ?>
             <article class="top-mylist">
                 <div class="refresh-time openchat-list-date">
-                    <span>ピン留め (1日毎に更新)</span>
+                    <span style="font-weight: normal; color:#b7b7b7;">ピン留め (1日ごとに更新)</span>
                 </div>
                 <div style="margin: -4px 0 -4px 0;">
                     <?php viewComponent('open_chat_list', ['openChatList' => $myList]) ?>
@@ -49,7 +49,7 @@
             <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
             viewComponent('open_chat_list', ['openChatList' => $dto->hourlyList, 'isHourly' => true]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=hourly') ?>">
-                <span class="ranking-readMore">もっと見る</span>
+                <span class="ranking-readMore">ランキングをもっと見る</span>
             </a>
         </article>
 
@@ -66,7 +66,7 @@
             </header>
             <?php viewComponent('open_chat_list', ['openChatList' => $dto->dailyList]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=daily') ?>">
-                <span class="ranking-readMore">もっと見る</span>
+                <span class="ranking-readMore">ランキングをもっと見る</span>
             </a>
         </article>
 
@@ -83,11 +83,11 @@
             </header>
             <?php viewComponent('open_chat_list', ['openChatList' => $dto->weeklyList]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=weekly') ?>">
-                <span class="ranking-readMore">もっと見る</span>
+                <span class="ranking-readMore">ランキングをもっと見る</span>
             </a>
         </article>
 
-        <article class="top-ranking" style="margin-bottom: -1rem; padding-top: 1.5rem;">
+        <article class="top-ranking created-at" style="margin-bottom: -1rem; padding-top: 1.5rem;">
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
@@ -100,7 +100,7 @@
             </header>
             <?php viewComponent('open_chat_list', ['openChatList' => $dto->popularList]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all') ?>">
-                <span class="ranking-readMore">もっと見る</span>
+                <span class="ranking-readMore">ランキングをもっと見る</span>
             </a>
         </article>
 
