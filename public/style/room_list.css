@@ -433,6 +433,13 @@ main hr {
   margin-left: 1.5rem;
 }
 
+.top-list .openchat-item {
+  min-height: 58px;
+  margin: 20px 0;
+  padding-left: 65px;
+  margin-right: 1.5rem;
+}
+
 .top-ranking .openchat-item::before {
   width: 1rem;
   content: counter(openchat-counter);
@@ -459,13 +466,6 @@ main hr {
   line-height: 1.4;
 }
 
-.top-list .openchat-item-desc {
-  -webkit-line-clamp: 3;
-  margin-bottom: 0.3rem;
-  font-size: 13.5px;
-  color: #111;
-}
-
 .top-list .openchat-item h3,
 .top-ranking .openchat-item h3 {
   min-width: unset;
@@ -484,19 +484,6 @@ main hr {
   white-space: unset;
   text-overflow: unset;
   overflow: unset;
-}
-
-.top-list .openchat-item-title {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  white-space: unset;
-  overflow: hidden;
-  word-break: break-all;
-  margin-bottom: 0.2rem;
-  font-size: 12px;
-  -webkit-line-clamp: 1;
-  color: #777;
-  font-weight: 600;
 }
 
 .top-list .openchat-item-lower,
@@ -953,14 +940,6 @@ main hr {
 
   .top-ranking .openchat-item-desc {
     font-size: 13px;
-  }
-
-  .top-list .openchat-item-desc {
-    font-size: 14px;
-  }
-
-  .top-list .openchat-item-title {
-    font-size: 12.4px;
   }
 
   .top-ranking .openchat-item-title {
