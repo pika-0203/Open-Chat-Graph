@@ -454,11 +454,6 @@ main hr {
   text-align: center;
 }
 
-.top-ranking .blue,
-.top-ranking .positive .openchat-item-stats {
-  color: #aaa;
-}
-
 .top-ranking .openchat-item-desc {
   -webkit-line-clamp: 3;
   margin-bottom: 0.2rem;
