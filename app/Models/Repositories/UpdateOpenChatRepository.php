@@ -149,8 +149,8 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
                 img_url,
                 local_img_url
             FROM
-                open_chat" .
-            ($date ? "WHERE
+                open_chat
+            " . ($date ? "WHERE
                 updated_at >= '{$date}'" : "");
 
         return DB::fetchAll($query);

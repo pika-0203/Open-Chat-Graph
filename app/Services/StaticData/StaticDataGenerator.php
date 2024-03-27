@@ -20,10 +20,10 @@ class StaticDataGenerator
     {
         // トップページのキャッシュファイルを生成する
         $dto = new StaticTopPageDto;
-        $dto->hourlyList = $this->openChatListRepository->findMemberStatsHourlyRanking(0, 5);
-        $dto->dailyList = $this->openChatListRepository->findMemberStatsDailyRanking(0, 5);
-        $dto->weeklyList = $this->openChatListRepository->findMemberStatsPastWeekRanking(0, 5);
-        $dto->popularList = $this->openChatListRepository->findMemberCountRanking(5);
+        $dto->hourlyList = $this->openChatListRepository->findMemberStatsHourlyRanking(0, AppConfig::TOP_RANKING_LIST_LIMIT);
+        $dto->dailyList = $this->openChatListRepository->findMemberStatsDailyRanking(0, AppConfig::TOP_RANKING_LIST_LIMIT);
+        $dto->weeklyList = $this->openChatListRepository->findMemberStatsPastWeekRanking(0, AppConfig::TOP_RANKING_LIST_LIMIT);
+        $dto->popularList = $this->openChatListRepository->findMemberCountRanking(AppConfig::TOP_RANKING_LIST_LIMIT, AppConfig::TOP_MENBER_RANKING_EXCLUDE_ID);
         $dto->recentCommentList = [];
 
         $dto->hourlyUpdatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME));
