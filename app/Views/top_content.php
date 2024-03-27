@@ -8,7 +8,7 @@
         <?php if ($myList) : ?>
             <article class="top-mylist">
                 <div class="refresh-time openchat-list-date">
-                    <span style="font-weight: normal; color:#b7b7b7;">ピン留め (1日ごとに更新)</span>
+                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">ピン留め (1日ごとに更新)</span>
                 </div>
                 <div style="margin: -4px 0 -4px 0;">
                     <?php viewComponent('open_chat_list', ['openChatList' => $myList]) ?>
