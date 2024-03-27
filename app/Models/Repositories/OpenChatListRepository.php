@@ -162,8 +162,10 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
         return DB::fetchAll($query, compact('startId', 'endId'));
     }
 
-    function findMemberCountRanking(int $limit): array
+    function findMemberCountRanking(int $limit, array $whereIdNotIn): array
     {
+        $excludeId = implode(",", $whereIdNotIn);
+
         $query =
             "SELECT
                 id,
@@ -177,6 +179,8 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 api_created_at
             FROM
                 open_chat
+            WHERE 
+                id NOT IN({$excludeId}) 
             ORDER BY
                 member DESC
             LIMIT

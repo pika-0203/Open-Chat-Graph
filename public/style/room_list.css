@@ -231,6 +231,10 @@ main hr {
   flex-wrap: wrap;
 }
 
+.openchat-list-date.ranking-url {
+  align-items: center;
+}
+
 @media screen and (max-width: 374px) {
   .openchat-list-date {
     font-size: 11px;
@@ -430,7 +434,7 @@ main hr {
 
 .top-ranking .openchat-item {
   min-height: 56px;
-  margin: 2rem 0;
+  margin: 24px 0;
   margin-right: 1rem;
   margin-left: 1.5rem;
 }

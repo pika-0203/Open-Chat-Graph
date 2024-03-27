@@ -20,6 +20,9 @@ class AppConfig
     const OPEN_CHAT_LIST_LIMIT = 100;
     const MY_LIST_LIMIT = 50;
 
+    const TOP_RANKING_LIST_LIMIT = 5;
+    const TOP_MENBER_RANKING_EXCLUDE_ID = [145145, 3454];
+
     const CRON_EXECUTE_COUNT = 500;
 
     const CRON_START_MINUTE = 30;

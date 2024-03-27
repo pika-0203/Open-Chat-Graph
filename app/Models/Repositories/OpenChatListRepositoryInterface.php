@@ -66,7 +66,7 @@ interface OpenChatListRepositoryInterface
         int $endId,
     ): array;
 
-    public function findMemberCountRanking(int $limit): array;
+    function findMemberCountRanking(int $limit, array $whereIdNotIn): array;
 
     /**
      * @return array{ id: int, updated_at: string }[]

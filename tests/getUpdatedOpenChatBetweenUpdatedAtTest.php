@@ -20,6 +20,7 @@ class getUpdatedOpenChatBetweenUpdatedAtTest extends TestCase
         $end = OpenChatServicesUtility::getModifiedCronTime(strtotime('+1hour'));
 
         $res = $inst->getUpdatedOpenChatBetweenUpdatedAt($start, $end);
+        $res = $inst->getOpenChatImgAll();
         debug($res);
 
         $this->assertTrue(true);
