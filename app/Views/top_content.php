@@ -96,7 +96,7 @@
                     <div class="refresh-time">
                         <span>メンバー数ランキング</span>
                     </div>
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">※LINE運営を除く</span>
+                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">※公式運営を除く</span>
                 </div>
             </header>
             <?php viewComponent('open_chat_list', ['openChatList' => $dto->popularList]) ?>
