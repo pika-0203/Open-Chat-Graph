@@ -2,6 +2,8 @@
 
 namespace Shared\Exceptions;
 
+use App\Controllers\Pages\NotFoundPageController;
+
 /**
  * ErrorPage class to handle displaying error message and generating Github URLs for error lines
  */
@@ -276,7 +278,7 @@ $_css = ['room_list', 'site_header', 'site_footer'];
 <html lang="ja">
 <?php viewComponent('head', compact('_css', '_meta')) ?>
 
-<body>
+<body class="body">
     <style>
         /* Increase size of the main heading */
         h1 {
@@ -301,21 +303,26 @@ $_css = ['room_list', 'site_header', 'site_footer'];
             word-break: break-all;
         }
 
-        main {
+        .main {
             max-width: var(--width);
         }
     </style>
 
     <!-- 固定ヘッダー -->
-    <main>
+    <main class="main">
         <div style="margin: 0 -1rem; ">
             <?php viewComponent('site_header') ?>
         </div>
         <header>
-            <h1><?php echo $httpCode ?? '' ?></h1>
-            <h2><?php echo $httpStatusMessage ?? '' ?></h2>
-            <br>
-            <p>お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。</p>
+            <?php if ($httpCode != 404 || !strpos(path(), 'oc/')) : ?>
+                <h1><?php echo $httpCode ?? '' ?></h1>
+                <h2><?php echo $httpStatusMessage ?? '' ?></h2>
+                <br>
+                <p>お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。</p>
+            <?php else : ?>
+                <br>
+                <p>このオープンチャットは登録されていないか、削除されました🙀</p>
+            <?php endif ?>
         </header>
         <?php if ($detailsMessage) : ?>
             <!-- Display error message if it exists -->
@@ -356,8 +363,17 @@ $_css = ['room_list', 'site_header', 'site_footer'];
             <p></p>
         <?php endif ?>
     </main>
-
-    <footer style="margin-top: 3rem;">
+    <?php if ($httpCode == 404) : ?>
+        <?php /** @var NotFoundPageController $c */
+        try {
+            $c = app(NotFoundPageController::class);
+            $c->index()->render();
+        } catch (\Throwable $e) {
+            echo 'データ取得エラー';
+        }
+        ?>
+    <?php endif ?>
+    <footer>
         <?php viewComponent('footer_inner') ?>
     </footer>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
