@@ -50,7 +50,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         }
 
         $columnsToSet = [
-            'updated_at' => date('Y-m-d H:i:s', $dto->updated_at),
+            'updated_at' => isset($dto->updated_at) ? date('Y-m-d H:i:s', $dto->updated_at) : null,
             'emid' => $dto->emid ?? null,
             'name' => $dto->name ?? null,
             'description' => $dto->desc ?? null,

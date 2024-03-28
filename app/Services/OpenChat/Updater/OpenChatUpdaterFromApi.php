@@ -65,12 +65,22 @@ class OpenChatUpdaterFromApi
 
     private function updateDelete(OpenChatRepositoryDto $repoDto, OpenChatDto|false $ocDto)
     {
-        $updaterDto = $this->openChatMargeUpdateProcess->mergeUpdateOpenChat($repoDto, $ocDto);
-        // 削除の場合
-        if ($updaterDto === false) {
+        if (!$ocDto) {
+            $this->openChatMargeUpdateProcess->mergeUpdateOpenChat($repoDto, $ocDto);
             return;
         }
 
-        $this->statisticsRepository->insertDailyStatistics($repoDto->open_chat_id, $ocDto->memberCount, $this->date);
+        $updaterDto = true;
+        if (
+            $repoDto->name !== $ocDto->name
+            || $repoDto->desc !== $ocDto->desc
+            || $repoDto->profileImageObsHash !== $ocDto->profileImageObsHash
+            || $repoDto->invitationTicket !== $ocDto->invitationTicket
+            || $repoDto->memberCount !== $ocDto->memberCount
+        ) {
+            $updaterDto = !!$this->openChatMargeUpdateProcess->mergeUpdateOpenChat($repoDto, $ocDto);
+        }
+
+        $updaterDto && $this->statisticsRepository->insertDailyStatistics($repoDto->open_chat_id, $ocDto->memberCount, $this->date);
     }
 }

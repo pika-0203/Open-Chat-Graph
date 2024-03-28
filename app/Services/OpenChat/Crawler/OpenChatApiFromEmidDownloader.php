@@ -24,22 +24,8 @@ class OpenChatApiFromEmidDownloader
      */
     private function fetchFromEmid(string $emid): array|false
     {
-        /**
-         *  @var string $url 公式サイトのオープンチャット取得API
-         *                   https://openchat.line.me/api/square/{$emid}?limit=1
-         */
         $url = OpenChatCrawlerConfig::generateOpenChatApiOcDataFromEmidUrl($emid);
-
-        /**
-         *  @var array $headers データ取得時に必要なヘッダー情報
-         *                      X-Line-Seo-User: x9bfc33ffe50854cf0d446a6013cf1824
-         */
         $headers = OpenChatCrawlerConfig::OPEN_CHAT_API_OC_DATA_FROM_EMID_DOWNLOADER_HEADER;
-
-        /**
-         *  @var string $ua クローリング用のユーザーエージェント
-         *                  Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)
-         */
         $ua = OpenChatCrawlerConfig::USER_AGENT;
 
         $response = $this->crawlerFactory->createCrawler($url, $ua, customHeaders: $headers, getCrawler: false);
