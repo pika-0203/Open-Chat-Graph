@@ -15,24 +15,13 @@ class OpenChatImgDownloader
     }
 
     /**
-     * オープンチャットの画像をダウンロードする
-     * 
      * @return bool 成功した場合はtrue、 404の場合はfalse
      * 
      * @throws \RuntimeException
      */
     function storeOpenChatImg(string $openChatImgIdentifier, string $destPath, string $previewDestPath): bool
     {
-        /**
-         *  @var string $url オープンチャットの画像取得URL
-         *                   https://obs.line-scdn.net/{$profileImageObsHash}
-         */
         $url = OpenChatCrawlerConfig::LINE_IMG_URL . $openChatImgIdentifier;
-
-        /**
-         *  @var string $previewUrl プレビュー画像取得URL
-         *                          https://obs.line-scdn.net/{$profileImageObsHash}/preview
-         */
         $previewUrl = $url . OpenChatCrawlerConfig::LINE_IMG_PREVIEW_PATH;
 
         $this->store(

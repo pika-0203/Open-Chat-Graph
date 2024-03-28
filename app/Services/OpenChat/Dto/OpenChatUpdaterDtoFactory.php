@@ -15,7 +15,7 @@ class OpenChatUpdaterDtoFactory
                 continue;
             }
 
-            if($prop === 'memberCount' && !$updateMember) {
+            if ($prop === 'memberCount' && !$updateMember) {
                 $updaterDto->memberCount = null;
                 continue;
             }
@@ -25,6 +25,16 @@ class OpenChatUpdaterDtoFactory
             }
 
             $updaterDto->$prop = $apiDto->$prop;
+        }
+
+        if (
+            $updaterDto->name
+            || $updaterDto->desc
+            || $updaterDto->emblem
+            || $updaterDto->category
+            || $updaterDto->profileImageObsHash
+        ) {
+            $updaterDto->rewriteUpdateAtTime();
         }
 
         return $updaterDto;

@@ -22,16 +22,7 @@ class OpenChatApiSubCategoryDownloader
      */
     function fetchOpenChatApiSubCategory(string $category): array|false
     {
-        /**
-         *  @var string $url 公式サイトのランキングAPI
-         *                   https://openchat.line.me/api/category/{$category}?sort=RANKING&limit=40&ct=0
-         */
         $url = OpenChatCrawlerConfig::generateOpenChatApiRankigDataUrl($category, '0');
-
-        /**
-         *  @var string $ua クローリング用のユーザーエージェント
-         *                  Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)
-         */
         $ua = OpenChatCrawlerConfig::USER_AGENT;
 
         $response = $this->crawlerFactory->createCrawler($url, $ua, getCrawler: false);

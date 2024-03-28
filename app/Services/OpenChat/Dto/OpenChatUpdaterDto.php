@@ -6,9 +6,9 @@ namespace App\Services\OpenChat\Dto;
 
 class OpenChatUpdaterDto
 {
-    public int $updated_at;
     public int $open_chat_id;
     public bool $delete_flag = false;
+    public ?int $updated_at = null;
 
     public ?string $emid = null;
     public ?string $name = null;
@@ -22,7 +22,11 @@ class OpenChatUpdaterDto
 
     function __construct(int $open_chat_id)
     {
-        $this->updated_at = time();
         $this->open_chat_id = $open_chat_id;
+    }
+
+    function rewriteUpdateAtTime()
+    {
+        $this->updated_at = time();
     }
 }
