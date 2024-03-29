@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
+use App\Models\Repositories\OpenChatListRepositoryInterface;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\Statistics\DownloadCsvService;
 use App\Services\Statistics\StatisticsChartArrayService;
@@ -13,6 +14,7 @@ use App\Views\Meta\OcPageMeta;
 use App\Views\Schema\OcPageSchema;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 use App\Views\StatisticsViewUtility;
+use Shadow\DB;
 
 class OpenChatPageController
 {
@@ -84,6 +86,35 @@ class OpenChatPageController
             strtotime($_statsDto->endDate)
         );
 
+        $table = ['statistics_ranking_hour', 'statistics_ranking_day', 'statistics_ranking_week'];
+        $order = ['ranking.id ASC', 'oc.member DESC'];
+        $tableName = $table[array_rand($table)];
+        $orderBy = $order[array_rand($order)];
+
+        $recCategory = $_chartArgDto->categoryKey ? ('oc.category = ' . $_chartArgDto->categoryKey) : 1;
+        $recomend = DB::fetchAll(
+            "SELECT
+                oc.id,
+                oc.name,
+                oc.local_img_url AS img_url,
+                oc.member
+            FROM
+                open_chat AS oc
+                JOIN (
+                    SELECT
+                        *
+                    FROM
+                        {$tableName}
+                ) AS ranking ON oc.id = ranking.open_chat_id
+            WHERE
+                {$recCategory}
+                AND NOT oc.id = {$open_chat_id}
+            ORDER BY
+                {$orderBy}
+            LIMIT
+                12"
+        );
+
         return view('oc_content', compact(
             '_meta',
             '_css',
@@ -95,7 +126,8 @@ class OpenChatPageController
             '_commentArgDto',
             '_breadcrumbsShema',
             '_ocPageSchema',
-            '_schema'
+            '_schema',
+            'recomend'
         ));
     }
 

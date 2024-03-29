@@ -119,6 +119,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
       </footer>
 
+      <?php viewComponent('recommend_list', compact('recomend', 'category')) ?>
+
     </article>
 
     <div id="comment-root" style="margin: 1rem;"></div>

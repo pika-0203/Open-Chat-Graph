@@ -23,7 +23,7 @@
         </a>
     </article>
 
-    <article class="top-ranking" style="margin-bottom: -1rem; padding-top: 1.5rem;">
+    <article class="top-ranking">
         <header class="openchat-list-title-area unset">
             <div class="openchat-list-date unset ranking-url">
                 <h2 class="unset">
@@ -40,7 +40,7 @@
         </a>
     </article>
 
-    <article class="top-ranking" style="margin-bottom: -1rem; padding-top: 1.5rem;">
+    <article class="top-ranking">
         <header class="openchat-list-title-area unset">
             <div class="openchat-list-date unset ranking-url">
                 <h2 class="unset">
@@ -57,7 +57,7 @@
         </a>
     </article>
 
-    <article class="top-ranking created-at" style="margin-bottom: -1rem; padding-top: 1.5rem;">
+    <article class="top-ranking created-at">
         <header class="openchat-list-title-area unset">
             <div class="openchat-list-date unset ranking-url">
                 <h2 class="unset">

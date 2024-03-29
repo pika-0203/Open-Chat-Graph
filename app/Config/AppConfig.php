@@ -20,7 +20,7 @@ class AppConfig
     const OPEN_CHAT_LIST_LIMIT = 100;
     const MY_LIST_LIMIT = 50;
 
-    const TOP_RANKING_LIST_LIMIT = 5;
+    const TOP_RANKING_LIST_LIMIT = 10;
     const TOP_MENBER_RANKING_EXCLUDE_ID = [145145, 3454];
 
     const CRON_EXECUTE_COUNT = 500;
@@ -89,6 +89,7 @@ class AppConfig
     const OPEN_CHAT_API_CRAWLING_KILL_FLAG_PATH = __DIR__ . '/../../storage/cron_state/open_chat_crawling_kill_flag.dat';
 
     const OPEN_CHAT_SUB_CATEGORIES_FILE_PATH = __DIR__ . '/../../storage/open_chat_sub_categories/subcategories.json';
+    const OPEN_CHAT_SUB_CATEGORIES_TAG_FILE_PATH = __DIR__ . '/../../storage/open_chat_sub_categories/subcategories_tag.json';
 
     const OPEN_CHAT_RANKING_POSITION_DIR = __DIR__ . '/../../storage/ranking_position/ranking';
     const OPEN_CHAT_RISING_POSITION_DIR = __DIR__ . '/../../storage/ranking_position/rising';
