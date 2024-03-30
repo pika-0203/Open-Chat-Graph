@@ -79,35 +79,48 @@ class RecommendGenarator
         $tag = DB::fetchColumn("SELECT tag FROM oc_tag WHERE id = {$open_chat_id}");
         if (!$tag) {
             $tag = $this->getRecommendTag($open_chat_id);
-            $tag2 = false;
-        } else {
-            $tag2 = DB::fetchColumn("SELECT tag FROM oc_tag2 WHERE id = {$open_chat_id}");
-            if (!$tag2) $tag2 = $this->getRecommendTag($open_chat_id);
-            if ($tag2 === $tag) $tag2 = false;
         }
 
-        if (!$tag) {
+        $tag2 = DB::fetchColumn("SELECT tag FROM oc_tag2 WHERE id = {$open_chat_id}");
+        if (!$tag2) $tag2 = $this->getRecommendTag($open_chat_id);
+        if ($tag2 === $tag) $tag2 = false;
+
+        if (!$tag2 && !$tag) {
             $category = $this->getCategory($open_chat_id);
             $tag = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
             $tag = "「{$tag}」カテゴリー";
             return [$this->getCategoryRanking($open_chat_id, $category), $tag, [], ''];
         }
 
-        $r1 = $this->getRanking($open_chat_id, $tag);
-        $tag = $geneTag($tag);
-        $tag = "「{$tag}」タグ";
+        $r1 = [];
+        if ($tag) {
+            $r1 = $this->getRanking($open_chat_id, $tag);
+            $tag = $geneTag($tag);
+            $tag = "「{$tag}」タグ";
+        }
 
+        $r2 = [];
         if ($tag2) {
             $r2 = $this->getRanking($open_chat_id, $tag2);
             $tag2 = $geneTag($tag2);
             $tag2 = "「{$tag2}」タグ";
-        } else {
-            $category = $this->getCategory($open_chat_id);
-            $r2 = $this->getCategoryRanking($open_chat_id, $category);
-            $tag2 = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
-            $tag2 = "「{$tag2}」カテゴリー";
+            if (!$r1) {
+                $category = $this->getCategory($open_chat_id);
+                $r1 = $this->getCategoryRanking($open_chat_id, $category);
+                $tag = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
+                $tag = "「{$tag}」カテゴリー";
+                return [$r2, $tag2, $r1, $tag];
+            }
+            return [$r1, $tag, $r2, $tag2];
         }
 
-        return [$r1, $tag, $r2, $tag2];
+        if (!$r1) {
+            $category = $this->getCategory($open_chat_id);
+            $r1 = $this->getCategoryRanking($open_chat_id, $category);
+            $tag = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
+            $tag = "「{$tag}」カテゴリー";
+        }
+
+        return [$r1, $tag, $r2 ?: [], $tag2 ?: ''];
     }
 }
