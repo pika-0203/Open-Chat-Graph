@@ -132,11 +132,11 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <?php if ($recommend[0]) : ?>
         <hr>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'category' => $recommend[1]]) ?>
-        <hr style="margin-top: 0;">
+        <hr style="margin-top: 2px;">
       <?php endif ?>
       <?php if ($recommend[2]) : ?>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[2], 'category' => $recommend[3]]) ?>
-        <hr style="margin-top: 0;">
+        <hr style="margin-top: 2px;">
       <?php endif ?>
 
     </article>

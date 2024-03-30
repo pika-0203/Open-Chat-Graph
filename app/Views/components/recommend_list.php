@@ -15,7 +15,7 @@
             max-width: 100px;
             margin: 0;
             padding: 0;
-            margin: 10px 3px;
+            padding: 13px 3px;
         }
 
         .recommend-list::-webkit-scrollbar {
@@ -79,6 +79,8 @@
                         display: flex;
                         flex-direction: column;
                         align-items: center;
+                        height: 100%;
+                        justify-content: space-between;
                     " href="<?php echo url('/oc/' . $roc['id']) ?>">
                     <img style="display: block; width: 50px; height: 50px; border-radius: 50%;" loading="lazy" alt="オープンチャット「<?php echo $roc['name'] ?>」のアイコン" src="<?php echo imgPreviewUrl($roc['id'], $roc['img_url']) ?>" />
                     <h4 style=" 
@@ -88,13 +90,13 @@
                 -webkit-line-clamp: 3;
                 overflow: hidden;
                 word-break: break-all;
-                margin: 4px 0;
+                margin: 6px 0 4px 0;
                 text-align: center;
                 line-height: 125%;
               ">
                         <?php echo $roc['name'] ?>
                     </h4>
-                    <div style="font-size: 11px; color: #aaa">
+                    <div style="font-size: 11px; color: #aaa;">
                         <span>メンバー <?php echo $roc['member'] ?></span>
                     </div>
                 </a>
