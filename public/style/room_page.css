@@ -255,12 +255,20 @@ hr {
   flex-wrap: wrap;
 }
 
-.number-box.weekly .openchat-item-stats {
-  color: #07b53b;
+.number-box .openchat-item-stats {
+  color: #777;
+  font-weight: 500;
 }
 
+.number-box.weekly .openchat-item-stats {
+  color: #777;
+  font-weight: 500;
+}
+
+.number-box.weekly.negative .openchat-item-stats,
 .negative .openchat-item-stats {
   color: #aaa;
+  font-weight: normal;
 }
 
 .my-list-form {
