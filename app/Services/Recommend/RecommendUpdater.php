@@ -110,7 +110,7 @@ class RecommendUpdater
     /** @return array{ string:string[] }  */
     private function getReplacedTagsDesc(string $column): array
     {
-        $this->tags = json_decode((file_get_contents(AppConfig::OPEN_CHAT_SUB_CATEGORIES_FILE_PATH)), true);
+        $this->tags = json_decode((file_get_contents(AppConfig::OPEN_CHAT_SUB_CATEGORIES_TAG_FILE_PATH)), true);
 
         return [
             array_map(fn ($a) => array_map(fn ($str) => $this->replace($str, $column), $a), $this->tags),
@@ -227,9 +227,11 @@ class RecommendUpdater
             ['start' => $this->start, 'end' => $this->end]
         );
 
+        clearstatcache();
+
         $delete('recommend');
-        $this->updateDescription('oc.name', 'recommend');
         $this->updateName();
+        $this->updateDescription('oc.name', 'recommend');
         $this->updateDescription();
 
         $delete('oc_tag');
