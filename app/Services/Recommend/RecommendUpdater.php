@@ -29,6 +29,7 @@ class RecommendUpdater
         "地雷系_OR_地雷_OR_量産型_OR_量産",
         "メンヘラ",
         "すとぷり",
+        "からぴち",
         "ホロライブ",
         "にじさんじ",
         "レスバ_OR_アンチ_OR_喧嘩_OR_下あり_OR_下ネタ",
@@ -54,8 +55,7 @@ class RecommendUpdater
         "精神疾患_OR_精神障害",
         "発達障害_OR_ADHD_OR_ASD",
         "障害者",
-        "ネッ友_OR_ネ友",
-        "オリキャラ",
+        "ネッ友_OR_ネ友"
     ];
 
     /** @var string[] $tags */

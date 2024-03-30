@@ -61,12 +61,14 @@
         }
     </style>
     <div class="btn-wrapper">
-        <h3 style="all: unset;
-        font-weight: bold;
-        font-size: 13px;
-        color: #777;
-        margin-left: 1rem;
-    "><?php echo $category ?>の注目オプチャ</h3>
+        <div style="display: flex; flex-direction: row; align-items: center; margin-left: 1rem;">
+            <div aria-hidden="true" style="font-size: 12px; user-select: none;">🏷️</div>
+            <h3 style="all: unset;
+                font-weight: bold;
+                font-size: 13px;
+                color: #777;
+            "><?php echo $category ?>の注目オプチャ</h3>
+        </div>
         <button type="button" class="read-more-list-btn" onclick="this.textContent = this.parentElement.nextElementSibling.classList.toggle('show-all') ? '一部を表示' : 'もっと見る';">もっと見る</button>
     </div>
     <ul class="recommend-list">
@@ -93,6 +95,7 @@
                 margin: 6px 0 4px 0;
                 text-align: center;
                 line-height: 125%;
+                overflow-wrap: anywhere;
               ">
                         <?php echo $roc['name'] ?>
                     </h4>
