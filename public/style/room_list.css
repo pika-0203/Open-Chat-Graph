@@ -487,12 +487,12 @@ article.top-list {
 .top-list .openchat-item-desc {
   font-size: 13px;
   margin-top: 0px;
-  font-weight: bold;
   color: #111;
+  font-weight: bold;
 }
 
 .top-list:has(.registration-date) .openchat-item-desc {
-  margin-right: 30px;
+  margin-right: 48px;
 }
 
 .top-list .openchat-item h3,
@@ -503,8 +503,8 @@ article.top-list {
 
 .top-list .openchat-item-title {
   font-size: 12px;
-  font-weight: normal;
-  color: #777;
+  color: #aaa;
+  font-weight: bold;
 }
 
 .top-ranking .openchat-item-title {
@@ -547,6 +547,10 @@ article.top-list {
 .top-list .openchat-item-mui-chip-outer {
   font-size: 11px;
   margin: 0;
+}
+
+.top-list .registration-date {
+  color: #aaa;
 }
 
 .top-ranking.created-at .blue {
@@ -1020,6 +1024,7 @@ article.top-list {
 
   .top-list .openchat-item-title {
     font-size: 13px;
+    font-weight: 500;
   }
 
   .refresh-time span {

@@ -81,19 +81,30 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
       </header>
       <hr>
+      <div style="display: flex; flex-direction: row; align-items: center;">
+        <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px">📈</div>
+        <h2 style="
+        font-weight: bold;
+        font-size: 13px;
+        color: #111;
+        margin: 0;
+        margin-bottom: 8px;
+        ">メンバー数・ランキング順位の推移グラフ</h2>
+      </div>
       <!-- グラフセクション -->
       <div class="chart-canvas-box" id="dummy-canvas"></div>
       <div id="app"></div>
 
       <footer class="unset">
-        <form class="my-list-form">
+        <nav class="my-list-form">
           <?php if (count($myList) - 1 < AppConfig::MY_LIST_LIMIT || isset($myList[$oc['id']])) : ?>
             <label class="checkbox-label" for="my-list-checkbox">
               <input type="checkbox" id="my-list-checkbox" <?php if (isset($myList[$oc['id']])) echo 'checked' ?>>
               <span>トップにピン留め</span>
             </label>
           <?php endif ?>
-        </form>
+          <small style="display:block"><a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" style="font-size: 11px; color: #b7b7b7;">統計CSVファイル</a></small>
+        </nav>
         <div>
           <span class="openchat-list-date" style="flex-direction: row;">
             <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px; line-height: 1.5;">
@@ -115,11 +126,18 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
               <?php endif ?>
             </div>
           </span>
-          <small style="margin-top: 0.5rem; display:block"><a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" style="font-size: 11px; color: #b7b7b7;">統計CSVファイル</a></small>
         </div>
       </footer>
 
-      <?php viewComponent('recommend_list', compact('recomend', 'category')) ?>
+      <?php if ($recommend[0]) : ?>
+        <hr>
+        <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'category' => $recommend[1]]) ?>
+        <hr>
+      <?php endif ?>
+      <?php if ($recommend[2]) : ?>
+        <?php viewComponent('recommend_list', ['recommend' => $recommend[2], 'category' => $recommend[3]]) ?>
+        <hr>
+      <?php endif ?>
 
     </article>
 

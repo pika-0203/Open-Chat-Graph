@@ -2,30 +2,20 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Services\Admin\AdminTool;
-
-use App\Services\OpenChat\Updater\OpenChatImageStoreUpdater;
-use Shadow\DB;
+use App\Services\Recommend\RecommendUpdater;
 
 set_time_limit(3600 * 10);
 
 /**
- * @var UpdateOpenChatRepositoryInterface $oc
+ * @var RecommendUpdater $oc
  */
-$oc = app(UpdateOpenChatRepositoryInterface::class);
-/**
- * @var OpenChatImageStoreUpdater $img
- */
-$img = app(OpenChatImageStoreUpdater::class);
+$oc = app(RecommendUpdater::class);
 
 try {
     AdminTool::sendLineNofity('oc start');
-    foreach ($oc->getOpenChatImgAll(false) as $oc) {
-        if (!file_exists(publicDir(getImgPath($oc['id'], $oc['local_img_url'])))) {
-            $img->updateImage($oc['id'], $oc['img_url']);
-        }
-    }
+
+    $oc->updateRecommendTables();
 
     AdminTool::sendLineNofity('oc done');
 } catch (\Throwable $e) {

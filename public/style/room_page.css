@@ -16,12 +16,12 @@ hr {
   margin: 0 auto;
   padding: 0 1rem;
   padding-top: 12px;
-  padding-bottom: 1.5rem;
+  padding-bottom: 0;
   font-family: var(--font-family);
 }
 
 .openchat footer {
-  padding-top: 2rem;
+  padding-top: 1.5rem;
   display: flex;
   justify-content: space-around;
   gap: 2px;
@@ -190,7 +190,6 @@ hr {
   text-align: unset;
 }
 
-
 .talkroom_description_box.close.hidden {
   cursor: unset;
   user-select: unset;
@@ -261,14 +260,9 @@ hr {
 .my-list-form {
   all: unset;
   display: flex;
-  font-size: 13px;
-  align-items: center;
-}
-
-@media screen and (max-width: 359px) {
-  .my-list-form {
-    font-size: 12px;
-  }
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .my-list-form .checkbox-label {

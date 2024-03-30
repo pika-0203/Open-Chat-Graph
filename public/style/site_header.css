@@ -270,12 +270,12 @@ body {
   all: unset;
   display: flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 1px;
   cursor: pointer;
   user-select: none;
   box-sizing: border-box;
   color: #303030;
-  font-size: 13px;
+  font-size: 11px;
 }
 
 .checkbox-label input {

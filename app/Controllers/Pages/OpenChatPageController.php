@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
-use App\Models\Repositories\OpenChatListRepositoryInterface;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
+use App\Services\Recommend\RecommendGenarator;
 use App\Services\Statistics\DownloadCsvService;
 use App\Services\Statistics\StatisticsChartArrayService;
 use App\Views\Dto\RankingPositionChartArgDto;
@@ -25,6 +25,7 @@ class OpenChatPageController
         StatisticsViewUtility $statisticsViewUtility,
         PageBreadcrumbsListSchema $breadcrumbsShema,
         OcPageSchema $ocPageSchema,
+        RecommendGenarator $recommendGenarator,
         int $open_chat_id
     ) {
         $oc = $ocRepo->getOpenChatById($open_chat_id);
@@ -92,28 +93,8 @@ class OpenChatPageController
         $orderBy = $order[array_rand($order)];
 
         $recCategory = $_chartArgDto->categoryKey ? ('oc.category = ' . $_chartArgDto->categoryKey) : 1;
-        $recomend = DB::fetchAll(
-            "SELECT
-                oc.id,
-                oc.name,
-                oc.local_img_url AS img_url,
-                oc.member
-            FROM
-                open_chat AS oc
-                JOIN (
-                    SELECT
-                        *
-                    FROM
-                        {$tableName}
-                ) AS ranking ON oc.id = ranking.open_chat_id
-            WHERE
-                {$recCategory}
-                AND NOT oc.id = {$open_chat_id}
-            ORDER BY
-                {$orderBy}
-            LIMIT
-                12"
-        );
+
+        $recommend = $recommendGenarator->getRecommend($oc['id']);
 
         return view('oc_content', compact(
             '_meta',
@@ -127,7 +108,7 @@ class OpenChatPageController
             '_breadcrumbsShema',
             '_ocPageSchema',
             '_schema',
-            'recomend'
+            'recommend',
         ));
     }
 
