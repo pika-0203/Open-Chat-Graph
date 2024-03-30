@@ -43,8 +43,7 @@ class RecommendUpdater
         "発達障害_OR_ADHD_OR_ASD",
         "障害者",
         "ネッ友_OR_ネ友",
-        "ゆるなり_OR_緩也",
-        "なりきり_OR_全也_OR_nrkr_OR_全 也_OR_#也",
+        "なりきり_OR_全也_OR_nrkr_OR_全 也_OR_#也_OR_全緩也_D也_ゆるなり_緩也",
         "オリキャラ",
     ];
 
@@ -56,8 +55,6 @@ class RecommendUpdater
         "発達障害_OR_ADHD_OR_ASD",
         "障害者",
         "ネッ友_OR_ネ友",
-        "ゆるなり_OR_緩也",
-        "なりきり_OR_全也_OR_nrkr_OR_全 也_OR_#也",
         "オリキャラ",
     ];
 
