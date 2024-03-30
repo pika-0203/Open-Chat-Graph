@@ -256,13 +256,11 @@ hr {
 }
 
 .number-box .openchat-item-stats {
-  color: #777;
-  font-weight: 500;
+  color: #aaa;
 }
 
 .number-box.weekly .openchat-item-stats {
-  color: #777;
-  font-weight: 500;
+  color: #aaa;
 }
 
 .number-box.weekly.negative .openchat-item-stats,
