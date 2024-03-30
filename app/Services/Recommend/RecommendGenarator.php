@@ -114,13 +114,10 @@ class RecommendGenarator
             return [$r1, $tag, $r2, $tag2];
         }
 
-        if (!$r1) {
-            $category = $this->getCategory($open_chat_id);
-            $r1 = $this->getCategoryRanking($open_chat_id, $category);
-            $tag = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
-            $tag = "「{$tag}」カテゴリー";
-        }
-
-        return [$r1, $tag, $r2 ?: [], $tag2 ?: ''];
+        $category = $this->getCategory($open_chat_id);
+        $r3 = $this->getCategoryRanking($open_chat_id, $category);
+        $tag3 = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
+        $tag3 = "「{$tag3}」カテゴリー";
+        return [$r1 ?: $r3, $tag ?: $tag3, $r1 ? $r3 : [], $r1 ? $tag3 : ''];
     }
 }
