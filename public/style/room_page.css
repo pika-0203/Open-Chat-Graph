@@ -20,8 +20,16 @@ hr {
   font-family: var(--font-family);
 }
 
+.openchat .graph-title {
+  font-weight: bold;
+  font-size: 16px;
+  color: #111;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
 .openchat footer {
-  padding-top: 1.5rem;
+  padding-top: 1rem;
   display: flex;
   justify-content: space-around;
   gap: 2px;
@@ -60,7 +68,6 @@ hr {
   margin-left: 2.89017%;
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
 .h1-link {
@@ -94,7 +101,7 @@ hr {
   font-size: 12px;
   display: block;
   width: fit-content;
-  color: #b7b7b7;
+  color: #07b53b;
 }
 
 /* メンバー数 */
@@ -104,25 +111,25 @@ hr {
 
 .number_of_members {
   display: block;
-  color: #111;
-  font-weight: 700;
+  color: #777;
+  font-weight: 500;
+  font-size: 12px;
 }
 
 .zero-stats {
-  color: var(--color-text-secondary);
+  color: #aaa;
 }
 
 .openchat-itme-stats-title {
-  color: var(--color-text-secondary);
-  color: #111;
-  font-size: 13px;
+  color: #aaa;
+  font-size: 11px;
   margin-right: 2px;
 }
 
 /* オープンチャットの詳細エリア */
 .talkroom_description_box {
   font-size: 12px;
-  margin-top: 6px;
+  margin: 6px 0;
   position: relative;
   background-color: white;
 }
@@ -233,16 +240,12 @@ hr {
 .talkroom_number_of_stats {
   display: flex;
   flex-direction: row;
-  font-size: 13px;
+  font-size: 11px;
   justify-content: flex-start;
   width: fit-content;
   align-items: flex-start;
   gap: 8px;
   margin-top: 2px;
-}
-
-.talkroom_number_of_stats * {
-  font-weight: 700;
 }
 
 .talkroom_number_of_stats .number-box {
@@ -256,8 +259,8 @@ hr {
   color: #07b53b;
 }
 
-.number-box.weekly.negative .openchat-item-stats {
-  color: #ff5d6d;
+.negative .openchat-item-stats {
+  color: #aaa;
 }
 
 .my-list-form {
@@ -283,6 +286,10 @@ body > footer {
 
   .openchat-bottom {
     justify-content: space-between;
+  }
+
+  .openchat .graph-title {
+    font-size: 14px;
   }
 }
 
@@ -314,11 +321,20 @@ body > footer {
 
   .openchat-header,
   .talkroom_description_box {
-    font-size: 13.5px;
+    font-size: 13px;
+  }
+
+  .number_of_members {
+    font-size: 13px;
   }
 
   .openchat-list-date {
     font-size: 12px;
+  }
+
+  .openchat .graph-title {
+    font-size: 1rem;
+    margin-bottom: 12px;
   }
 
   .talkroom_description_box .more,

@@ -16,26 +16,11 @@
             </article>
             <hr class="ht-top-mylist">
         <?php endif ?>
-
-        <article class="top-list">
+            
+        <article class="top-ranking">
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all&order=desc&sort=member') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
-            <header class="openchat-list-title-area unset">
-                <div class="openchat-list-date unset ranking-url">
-                    <h2 class="unset">
-                        <span class="openchat-list-title">Comments</span>
-                    </h2>
-                    <div class="refresh-time">
-                        <span>最近のコメント投稿</span>
-                    </div>
-                </div>
-            </header>
-            <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
-            viewComponent('open_chat_list_ranking', ['openChatList' => $dto->recentCommentList]) ?>
-        </article>
-
-        <article class="top-ranking">
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
@@ -103,6 +88,21 @@
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all') ?>">
                 <span class="ranking-readMore">メンバー数ランキングを詳しく見る</span>
             </a>
+        </article>
+
+        <article class="top-list">
+            <header class="openchat-list-title-area unset">
+                <div class="openchat-list-date unset ranking-url">
+                    <h2 class="unset">
+                        <span class="openchat-list-title">Comments</span>
+                    </h2>
+                    <div class="refresh-time">
+                        <span>最近のコメント投稿</span>
+                    </div>
+                </div>
+            </header>
+            <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
+            viewComponent('open_chat_list_ranking', ['openChatList' => $dto->recentCommentList]) ?>
         </article>
 
         <p style="padding-top:8px">

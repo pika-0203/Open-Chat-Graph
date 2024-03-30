@@ -48,7 +48,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           </div>
 
           <div class="talkroom_number_of_members">
-            <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?></span>
+            <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?>人</span>
           </div>
           <?php if (isset($oc['diff_member'])) : ?>
             <div class="talkroom_number_of_stats">
@@ -56,7 +56,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
                   <span class="openchat-itme-stats-title">昨日</span>
                   <div>
-                    <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?></span>
+                    <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?>人</span>
                     <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
                   </div>
                 <?php elseif ($oc['diff_member'] === 0) : ?>
@@ -68,7 +68,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <?php if ($oc['diff_member2'] ?? 0 !== 0) : ?>
                   <span class="openchat-itme-stats-title">1週間</span>
                   <div>
-                    <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?></span>
+                    <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?>人</span>
                     <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
                   </div>
                 <?php elseif ($oc['diff_member2'] === 0) : ?>
@@ -83,13 +83,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <hr>
       <div style="display: flex; flex-direction: row; align-items: center;">
         <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>
-        <h2 style="
-        font-weight: bold;
-        font-size: 13px;
-        color: #111;
-        margin: 0;
-        margin-bottom: 8px;
-        ">メンバー数・ランキング順位の推移グラフ</h2>
+        <h2 class="graph-title">メンバー数・ランキング順位の推移グラフ</h2>
       </div>
       <!-- グラフセクション -->
       <div class="chart-canvas-box" id="dummy-canvas"></div>
