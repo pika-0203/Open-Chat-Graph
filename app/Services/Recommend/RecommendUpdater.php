@@ -56,6 +56,7 @@ class RecommendUpdater
         "25卒",
         "24卒",
         "23卒",
+        "パチスロ_OR_パチンコ_OR_スロット",
     ];
 
     const DESC_STRONG_TAG = [
@@ -69,7 +70,8 @@ class RecommendUpdater
         "精神疾患_OR_精神障害",
         "発達障害_OR_ADHD_OR_ASD",
         "障害者",
-        "ネッ友_OR_ネ友"
+        "ネッ友_OR_ネ友",
+        "パチスロ_OR_パチンコ_OR_スロット",
     ];
 
     /** @var string[] $tags */
