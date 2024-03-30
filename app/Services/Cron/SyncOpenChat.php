@@ -14,6 +14,7 @@ use App\Services\OpenChat\OpenChatHourlyInvitationTicketUpdater;
 use App\Services\OpenChat\OpenChatImageUpdater;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistenceLastHourChecker;
+use App\Services\Recommend\RecommendUpdater;
 use App\Services\SitemapGenerator;
 use App\Services\UpdateHourlyMemberColumnService;
 use App\Services\UpdateHourlyMemberRankingService;
@@ -30,6 +31,7 @@ class SyncOpenChat
         private UpdateHourlyMemberColumnService $hourlyMemberColumn,
         private OpenChatImageUpdater $OpenChatImageUpdater,
         private OpenChatHourlyInvitationTicketUpdater $invitationTicketUpdater,
+        private RecommendUpdater $recommendUpdater,
     ) {
         set_exception_handler($this->exceptionHandler(...));
     }
@@ -133,6 +135,7 @@ class SyncOpenChat
     {
         $this->hourlyMemberColumn->update();
         $this->hourlyMemberRanking->update();
+        $this->recommendUpdater->updateRecommendTables();
     }
 
     private function hourlyImageUpdate()

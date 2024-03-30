@@ -15,7 +15,7 @@ $oc = app(RecommendUpdater::class);
 try {
     AdminTool::sendLineNofity('oc start');
 
-    $oc->updateRecommendTables();
+    $oc->updateRecommendTables(false);
 
     AdminTool::sendLineNofity('oc done');
 } catch (\Throwable $e) {
