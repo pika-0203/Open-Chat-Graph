@@ -82,7 +82,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </header>
       <hr>
       <div style="display: flex; flex-direction: row; align-items: center;">
-        <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px">📈</div>
+        <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>
         <h2 style="
         font-weight: bold;
         font-size: 13px;
@@ -132,11 +132,11 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <?php if ($recommend[0]) : ?>
         <hr>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'category' => $recommend[1]]) ?>
-        <hr>
+        <hr style="margin-top: 0;">
       <?php endif ?>
       <?php if ($recommend[2]) : ?>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[2], 'category' => $recommend[3]]) ?>
-        <hr>
+        <hr style="margin-top: 0;">
       <?php endif ?>
 
     </article>

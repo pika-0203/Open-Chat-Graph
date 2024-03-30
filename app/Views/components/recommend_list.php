@@ -15,7 +15,11 @@
             max-width: 100px;
             margin: 0;
             padding: 0;
-            padding: 10px 3px;
+            margin: 10px 3px;
+        }
+
+        .recommend-list::-webkit-scrollbar {
+            display: none;
         }
 
         .btn-wrapper {
