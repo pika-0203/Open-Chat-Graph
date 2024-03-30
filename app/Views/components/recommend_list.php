@@ -40,11 +40,11 @@
                 justify-content: space-evenly;
             }
 
-            .recommend-list li:nth-child(n+6) {
+            .recommend-list li:nth-child(n+11) {
                 display: none;
             }
 
-            .recommend-list.show-all li:nth-child(n+6) {
+            .recommend-list.show-all li:nth-child(n+11) {
                 display: block;
             }
 
