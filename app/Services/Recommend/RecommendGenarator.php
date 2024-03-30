@@ -52,10 +52,7 @@ class RecommendGenarator
 
     function getCategoryRanking(int $id, int $category)
     {
-        $cate = $category ? "oc.category = {$category}" : "oc.category IS NULL";
-        $table = $category ? 'statistics_ranking_hour' : "statistics_ranking_day";
-
-        return DB::fetchAll(
+        return $category ? DB::fetchAll(
             "SELECT
                 oc.id,
                 oc.name,
@@ -63,16 +60,16 @@ class RecommendGenarator
                 oc.member
             FROM
                 open_chat AS oc
-                JOIN {$table} AS ranking ON oc.id = ranking.id
+                JOIN statistics_ranking_hour AS ranking ON oc.id = ranking.id
             WHERE
-                {$cate}
+                oc.category = :category
                 AND NOT oc.id = :id
             ORDER BY
                 ranking.id ASC
             LIMIT
                  20",
-            compact('id')
-        );
+            compact('id', 'category')
+        ) : [];
     }
 
     function getRecommend(int $open_chat_id): array
@@ -91,7 +88,7 @@ class RecommendGenarator
 
         if (!$tag) {
             $category = $this->getCategory($open_chat_id);
-            $tag = $category ? array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] : 'その他';
+            $tag = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
             $tag = "「{$tag}」カテゴリー";
             return [$this->getCategoryRanking($open_chat_id, $category), $tag, [], ''];
         }
@@ -107,7 +104,7 @@ class RecommendGenarator
         } else {
             $category = $this->getCategory($open_chat_id);
             $r2 = $this->getCategoryRanking($open_chat_id, $category);
-            $tag2 = $category ? array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] : 'その他';
+            $tag2 = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
             $tag2 = "「{$tag2}」カテゴリー";
         }
 
