@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Recommend;
 
 use App\Config\AppConfig;
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use Shadow\DB;
 
 class RecommendUpdater
@@ -15,6 +16,7 @@ class RecommendUpdater
         "イケボ",
         "カワボ",
         "独り言",
+        "カラオケ",
         "愚痴",
         "毒親",
         "恋愛",
@@ -23,9 +25,11 @@ class RecommendUpdater
         "ヒカマニ",
         "セミナー",
         "MBTI",
+        "バウンティラッシュ_OR_バウンティ",
         "地雷系_OR_地雷_OR_量産型_OR_量産",
         "メンヘラ",
         "すとぷり",
+        "ホロライブ",
         "レスバ_OR_アンチ_OR_喧嘩_OR_下あり_OR_下ネタ",
         "東方",
         "ちいかわ",
@@ -38,9 +42,9 @@ class RecommendUpdater
         "発達障害_OR_ADHD_OR_ASD",
         "障害者",
         "ネッ友_OR_ネ友",
-        "オリキャラ",
         "ゆるなり_OR_緩也",
         "なりきり_OR_全也_OR_nrkr_OR_全 也_OR_#也",
+        "オリキャラ",
     ];
 
     const DESC_STRONG_TAG = [
@@ -51,13 +55,15 @@ class RecommendUpdater
         "発達障害_OR_ADHD_OR_ASD",
         "障害者",
         "ネッ友_OR_ネ友",
-        "オリキャラ",
         "ゆるなり_OR_緩也",
         "なりきり_OR_全也_OR_nrkr_OR_全 也_OR_#也",
+        "オリキャラ",
     ];
 
     /** @var string[] $tags */
     public array $tags;
+    private string $start;
+    private string $end;
 
     private function replace(string $str, string $column): string
     {
@@ -96,9 +102,10 @@ class RecommendUpdater
                     oc.id,
                     '{$tag}'
                 FROM
-                    open_chat AS oc
+                    (SELECT * FROM open_chat WHERE updated_at BETWEEN :start AND :end) AS oc
                 WHERE
-                    {$search}"
+                    {$search}",
+                ['start' => $this->start, 'end' => $this->end]
             );
         }
     }
@@ -125,10 +132,10 @@ class RecommendUpdater
                 oc.id,
                 '{$tag}'
             FROM
-                open_chat AS oc
+                (SELECT * FROM open_chat WHERE category = {$category} AND updated_at BETWEEN :start AND :end) AS oc
             WHERE
-                {$search}
-                AND category = {$category}"
+                {$search}",
+            ['start' => $this->start, 'end' => $this->end]
         );
 
         foreach ($tags as $category => $array) {
@@ -157,7 +164,7 @@ class RecommendUpdater
                     oc.id,
                     '{$tag}'
                 FROM
-                    open_chat AS oc
+                    (SELECT * FROM open_chat WHERE updated_at BETWEEN :start AND :end) AS oc
                 WHERE
                     {$search}
                     AND NOT EXISTS (
@@ -167,8 +174,9 @@ class RecommendUpdater
                             oc_tag
                         WHERE
                             id = oc.id
-                            AND tag = '{$tag}'        
-                    )"
+                            AND tag = '{$tag}'
+                    )",
+                ['start' => $this->start, 'end' => $this->end]
             );
         }
     }
@@ -184,10 +192,9 @@ class RecommendUpdater
                 oc.id,
                 '{$tag}'
             FROM
-                open_chat AS oc
+                (SELECT * FROM open_chat WHERE category = {$category} AND updated_at BETWEEN :start AND :end) AS oc
             WHERE
                 {$search}
-                AND category = {$category}
                 AND NOT EXISTS (
                     SELECT
                         id
@@ -196,7 +203,8 @@ class RecommendUpdater
                     WHERE
                         id = oc.id
                         AND tag = '{$tag}'        
-                )"
+                )",
+            ['start' => $this->start, 'end' => $this->end]
         );
 
         foreach ($tags as $category => $array) {
@@ -212,25 +220,30 @@ class RecommendUpdater
         }
     }
 
-    function updateRecommendTables()
+    function updateRecommendTables(bool $betweenUpdateTime = true)
     {
-        DB::transaction(function () {
-            DB::execute("DELETE FROM recommend");
-            $this->updateDescription('oc.name', 'recommend');
-            $this->updateName();
-            $this->updateDescription();
+        $this->start = $betweenUpdateTime ? OpenChatServicesUtility::getModifiedCronTime('now')->format('Y-m-d H:i:s') : '2023/10/16 00:00:00';
+        $this->end = $betweenUpdateTime ? OpenChatServicesUtility::getModifiedCronTime(strtotime('+1hour'))->format('Y-m-d H:i:s') : '2100/10/16 00:00:00';
 
-            DB::execute("DELETE FROM oc_tag");
-            $this->updateDescription('oc.name', 'oc_tag');
-            $this->updateDescription(table: 'oc_tag');
-            $this->updateName(table: 'oc_tag');
-            $this->updateName('oc.description', 'oc_tag');
+        $delete = fn (string $table) => DB::execute(
+            "DELETE FROM {$table} WHERE id IN (SELECT id FROM open_chat WHERE updated_at BETWEEN :start AND :end)",
+            ['start' => $this->start, 'end' => $this->end]
+        );
 
-            DB::execute("DELETE FROM oc_tag2");
-            $this->updateDescription2('oc.name');
-            $this->updateDescription2();
-            $this->updateName2();
-            $this->updateName2('oc.description');
-        });
+        $delete('recommend');
+        $this->updateDescription('oc.name', 'recommend');
+        $this->updateName();
+        $this->updateDescription();
+
+        $delete('oc_tag');
+        $this->updateDescription('oc.name', 'oc_tag');
+        $this->updateDescription(table: 'oc_tag');
+        $this->updateName(table: 'oc_tag');
+        $this->updateName('oc.description', 'oc_tag');
+
+        $delete('oc_tag2');
+        $this->updateDescription2('oc.name');
+        $this->updateDescription2();
+        $this->updateName2();
     }
 }

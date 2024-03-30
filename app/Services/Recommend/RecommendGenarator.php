@@ -60,7 +60,7 @@ class RecommendGenarator
                 oc.member
             FROM
                 open_chat AS oc
-                JOIN statistics_ranking_hour AS ranking ON oc.id = ranking.id
+                JOIN statistics_ranking_hour AS ranking ON oc.id = ranking.open_chat_id
             WHERE
                 oc.category = :category
                 AND NOT oc.id = :id

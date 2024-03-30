@@ -13,7 +13,7 @@ class RecommendUpdaterTest extends TestCase
     {
         $this->inst = app(RecommendUpdater::class);
 
-        $this->inst->updateRecommendTables();
+        $this->inst->updateRecommendTables(false);
 
         $this->assertTrue(true);
     }
