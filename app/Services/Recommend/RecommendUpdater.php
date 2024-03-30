@@ -43,7 +43,7 @@ class RecommendUpdater
         "発達障害_OR_ADHD_OR_ASD",
         "障害者",
         "ネッ友_OR_ネ友",
-        "なりきり_OR_全也_OR_nrkr_OR_全 也_OR_#也_OR_全緩也_D也_ゆるなり_緩也",
+        "なりきり_OR_全也_OR_nrkr_OR_全 也_OR_#也_OR_全緩也_OR_D也_OR_ゆるなり_OR_緩也_OR_全夢也",
         "オリキャラ",
     ];
 
@@ -65,6 +65,7 @@ class RecommendUpdater
     private function replace(string $str, string $column): string
     {
         $count = 0;
+        $column = "{$column} COLLATE utf8mb4_general_ci";
         $str3 = "{$column} LIKE '%" . str_replace(' ', "%' AND {$column} LIKE '%", $str, $count) . "%'";
         if ($count) return $str3;
 
@@ -238,11 +239,11 @@ class RecommendUpdater
         $this->updateDescription('oc.name', 'oc_tag');
         $this->updateDescription(table: 'oc_tag');
         $this->updateName(table: 'oc_tag');
-        $this->updateName('oc.description', 'oc_tag');
 
         $delete('oc_tag2');
         $this->updateDescription2('oc.name');
         $this->updateDescription2();
         $this->updateName2();
+        $this->updateName2('oc.description');
     }
 }
