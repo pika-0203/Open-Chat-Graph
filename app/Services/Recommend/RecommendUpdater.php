@@ -198,7 +198,7 @@ class RecommendUpdater
                 FROM
                     (SELECT * FROM open_chat WHERE updated_at BETWEEN :start AND :end) AS oc
                 WHERE
-                    {$search}
+                    ({$search})
                     AND NOT EXISTS (
                         SELECT
                             id
@@ -206,7 +206,7 @@ class RecommendUpdater
                             oc_tag
                         WHERE
                             id = oc.id
-                            AND tag = '{$tag}'
+                            AND tag COLLATE utf8mb4_general_ci = '{$tag}'
                     )",
                 ['start' => $this->start, 'end' => $this->end]
             );
@@ -226,7 +226,7 @@ class RecommendUpdater
             FROM
                 (SELECT * FROM open_chat WHERE category = {$category} AND updated_at BETWEEN :start AND :end) AS oc
             WHERE
-                {$search}
+                ({$search})
                 AND NOT EXISTS (
                     SELECT
                         id
@@ -234,7 +234,7 @@ class RecommendUpdater
                         oc_tag
                     WHERE
                         id = oc.id
-                        AND tag = '{$tag}'        
+                        AND tag COLLATE utf8mb4_general_ci = '{$tag}' 
                 )",
             ['start' => $this->start, 'end' => $this->end]
         );
