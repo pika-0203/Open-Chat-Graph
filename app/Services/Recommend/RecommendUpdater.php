@@ -45,7 +45,9 @@ class RecommendUpdater
         "発達障害_OR_ADHD_OR_ASD",
         "障害者",
         "ネッ友_OR_ネ友",
-        "オリキャラ_OR_折恋",
+        "オリキャラ恋愛_OR_折恋_OR_折 恋",
+        "オリキャラ",
+        "LGBT_OR_ゲイ_OR_バイ",
         "なりきり_OR_全也_OR_nrkr_OR_#也_OR_D也_OR_ゆるなり_OR_緩也_OR_全夢也",
         "ChatGPT_OR_チャットGPT",
         "春から入学_OR_年度入学",
@@ -72,6 +74,7 @@ class RecommendUpdater
         "障害者",
         "ネッ友_OR_ネ友",
         "パチスロ_OR_パチンコ_OR_スロット",
+        "オリキャラ恋愛_OR_折恋_OR_折 恋",
     ];
 
     /** @var string[] $tags */
