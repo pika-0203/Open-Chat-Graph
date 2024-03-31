@@ -12,11 +12,13 @@ class RecommendUpdater
 {
     const NAME_STRONG_TAG = [
         "なりきり_OR_全也_OR_nrkr_OR_#也_OR_D也_OR_ゆるなり_OR_緩也_OR_夢也_OR_夢 也",
-        "春から入学_OR_年度入学_年度新入生",
+        "新入生同士の情報交換_OR_年度入学_OR_年度新入生_OR_新入生同士",
         "就活情報_OR_就活生情報_OR_選考対策・企業研究_OR_就活選考対策_OR_就活対策グループ_OR_就活テスト対策グループ",
         "オリキャラ恋愛_OR_折恋_OR_折 恋",
         "バウンティラッシュ_OR_バウンティ",
         "スピリチュアル",
+        "占い師",
+        "占い_OR_霊視",
         "ボイメ_AND_歌",
         "ヒカマニ",
         "イケボ",
@@ -24,7 +26,9 @@ class RecommendUpdater
         "独り言",
         "カラオケ",
         "セミナー",
-        "MBTI",
+        "SNS",
+        "インスタ",
+        "MBTI_ISTJ_OR_ISFJ_OR_INFJ_OR_INTJ_OR_ISTP_OR_ISFP_OR_INFP_OR_INTP_OR_ESTP_OR_ESFP_OR_ENFP_OR_ENTP_OR_ESTJ_OR_ESFJ_OR_ENFJ_OR_ENTJ",
         "ぷにぷに",
         "地雷系_OR_地雷_OR_量産型_OR_量産",
         "メンヘラ",
@@ -66,6 +70,7 @@ class RecommendUpdater
     const DESC_STRONG_TAG = [
         "@jobhunt_OR_#nolog",
         "#unistyle",
+        "新入生同士の情報交換_OR_年度入学_OR_年度新入生_OR_新入生同士",
         "春から_AND_大学",
         "ポイ活",
         "復縁",
@@ -77,6 +82,7 @@ class RecommendUpdater
         "オリキャラ恋愛_OR_折恋_OR_折 恋",
         "K也_OR_🇰🇷 也_OR_𝐊 也",
         "ネッ友_OR_ネ友",
+        "MBTI_ISTJ_OR_ISFJ_OR_INFJ_OR_INTJ_OR_ISTP_OR_ISFP_OR_INFP_OR_INTP_OR_ESTP_OR_ESFP_OR_ENFP_OR_ENTP_OR_ESTJ_OR_ESFJ_OR_ENFJ_OR_ENTJ",
     ];
 
     /** @var string[] $tags */
