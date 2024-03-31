@@ -108,7 +108,7 @@
         <?php foreach ($recommend as $roc) : ?>
             <li>
                 <a href="<?php echo url('/oc/' . $roc['id']) ?>">
-                    <img loading="lazy" alt="オープンチャット「<?php echo $roc['name'] ?>」のアイコン" src="<?php echo imgPreviewUrl($roc['id'], $roc['img_url']) ?>" />
+                    <img loading="lazy" alt="オープンチャット「<?php echo $roc['name'] ?>」のアイコン" src="<?php echo imgUrl($roc['id'], $roc['img_url']) ?>" />
                     <h4 style=" 
                 font-size: 12px;
                 display: -webkit-box;
@@ -125,7 +125,7 @@
               ">
                         <?php echo $roc['name'] ?>
                     </h4>
-                    <div style="font-size: 12px; color: #aaa; line-height: 125%; margin-top: 3px;">
+                    <div style="font-size: 12px; color: #777; line-height: 125%; margin-top: 3px;">
                         <span>メンバー <?php echo number_format($roc['member']) ?>人</span>
                     </div>
                 </a>

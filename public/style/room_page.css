@@ -127,7 +127,7 @@ hr {
 
 /* オープンチャットの詳細エリア */
 .talkroom_description_box {
-  font-size: 12px;
+  font-size: 13px;
   margin: 6px 0;
   position: relative;
   background-color: white;
@@ -144,7 +144,7 @@ hr {
   right: 0;
   display: flex;
   visibility: hidden;
-  color: #aaa;
+  color: #b7b7b7;
 }
 
 .more-text {
