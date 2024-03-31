@@ -47,7 +47,7 @@ class RecommendUpdater
         "ネッ友_OR_ネ友",
         "オリキャラ恋愛_OR_折恋_OR_折 恋",
         "オリキャラ",
-        "LGBT_OR_ゲイ_OR_バイ",
+        "ゲイ_AND_バイ",
         "なりきり_OR_全也_OR_nrkr_OR_#也_OR_D也_OR_ゆるなり_OR_緩也_OR_夢也_OR_夢 也",
         "ChatGPT_OR_チャットGPT",
         "春から入学_OR_年度入学_年度新入生",

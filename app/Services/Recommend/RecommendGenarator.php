@@ -548,7 +548,7 @@ class RecommendGenarator
 
     function getRecommend(int $open_chat_id): array
     {
-        $geneTag = fn ($s) => mb_strstr($s, '_OR_', true) ?: $s;
+        $geneTag = fn ($s) => str_replace('_AND_', ' ', mb_strstr($s, '_OR_', true) ?: $s);
 
         $tag = DB::fetchColumn("SELECT tag FROM oc_tag WHERE id = {$open_chat_id}");
         if (!$tag) {
