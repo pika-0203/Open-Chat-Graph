@@ -17,7 +17,7 @@ class RecommendGenarator
         $ranking = $this->getRankingTable($id, $tag, $limit, 'statistics_ranking_hour');
         shuffle($ranking);
         $count = count($ranking);
-        if ($count >= $limit) return $ranking;
+        if ($count >= $limit) $limit += self::LIST_LIMIT;
 
         $ranking = array_merge($ranking, $this->getRankingTableByExceptTable(
             $id,
@@ -28,7 +28,7 @@ class RecommendGenarator
         ));
         shuffle($ranking);
         $count = count($ranking);
-        if ($count >= $limit) return $ranking;
+        if ($count >= $limit) $limit += self::LIST_LIMIT;
 
         $week = $this->getRankingTableByExceptTable2(
             $id,
@@ -43,7 +43,7 @@ class RecommendGenarator
         $ranking = array_merge($ranking, $week);
         //shuffle($ranking);
         $count = count($ranking);
-        if ($count >= $limit) return $ranking;
+        if ($count >= $limit) $limit += 20;
 
         $member = $this->getTagTableOrderByMember(
             $id,
