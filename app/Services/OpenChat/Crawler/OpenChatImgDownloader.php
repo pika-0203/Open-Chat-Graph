@@ -33,7 +33,7 @@ class OpenChatImgDownloader
         $this->store(
             $previewUrl,
             $previewDestPath,
-            OpenChatCrawlerConfig::STORE_IMG_QUALITY,
+            80,
         );
 
         return true;

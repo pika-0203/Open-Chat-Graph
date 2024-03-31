@@ -84,7 +84,7 @@
                         height: 160px;
                         justify-content: space-around;
                     " href="<?php echo url('/oc/' . $roc['id']) ?>">
-                    <img style="display: block; width: 100%; aspect-ratio: 1; border-radius: 22.5%; object-fit: cover;" loading="lazy" alt="オープンチャット「<?php echo $roc['name'] ?>」のアイコン" src="<?php echo imgUrl($roc['id'], $roc['img_url']) ?>" />
+                    <img style="display: block; width: 100%; aspect-ratio: 1; border-radius: 22.5%; object-fit: cover;" loading="lazy" alt="オープンチャット「<?php echo $roc['name'] ?>」のアイコン" src="<?php echo imgPreviewUrl($roc['id'], $roc['img_url']) ?>" />
                     <h4 style=" 
                 font-size: 12px;
                 display: -webkit-box;
