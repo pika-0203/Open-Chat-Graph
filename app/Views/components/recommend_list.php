@@ -100,7 +100,7 @@
                 font-weight: bold;
                 font-size: 13px;
                 color: #777;
-            "><?php echo $category ?>の注目オプチャ</h3>
+            "><?php echo $category ?>に関連するいま人気のオプチャ</h3>
         </div>
         <button type="button" class="read-more-list-btn" onclick="this.textContent = this.parentElement.nextElementSibling.classList.toggle('show-all') ? '一部を表示' : 'もっと見る';">もっと見る</button>
     </div>
