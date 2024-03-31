@@ -83,6 +83,7 @@ hr {
   font-weight: 700;
   color: #111;
   display: block;
+  white-space: break-spaces;
 }
 
 .link-mark {

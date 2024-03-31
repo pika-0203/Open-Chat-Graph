@@ -38,10 +38,10 @@ class RecommendGenarator
             'statistics_ranking_day',
             'statistics_ranking_hour',
         );
-        //shuffle($week);
+        shuffle($week);
 
         $ranking = array_merge($ranking, $week);
-        shuffle($ranking);
+        //shuffle($ranking);
         $count = count($ranking);
         if ($count >= $limit) return $ranking;
 
@@ -318,11 +318,11 @@ class RecommendGenarator
             'statistics_ranking_day',
             'statistics_ranking_hour',
         );
-        //shuffle($week);
+        shuffle($week);
 
         $ranking = array_merge($ranking, $week);
         $count = count($ranking);
-        shuffle($ranking);
+        //shuffle($ranking);
         if ($count >= $limit) return $ranking;
 
         $member = $this->getCategoryOrderByMember(
