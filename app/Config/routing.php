@@ -31,6 +31,7 @@ Route::path('policy')
 
 Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
     ->matchNum('open_chat_id', min: 1)
+    ->match(cache(...))
     ->middleware([VerifyCsrfToken::class]);
 
 Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
@@ -61,7 +62,8 @@ Route::path(
     ->matchStr('sort', regex: ['ranking', 'rising']);
 
 Route::path('/')
-    ->middleware([RedirectLineWebBrowser::class]);
+    ->middleware([RedirectLineWebBrowser::class])
+    ->match(cache(...));
 
 Route::path('register')
     ->middleware([VerifyCsrfToken::class]);
