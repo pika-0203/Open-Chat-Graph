@@ -75,6 +75,8 @@ class RecommendUpdater
     ];
 
     const DESC_STRONG_TAG = [
+        "unistyle",
+        "jobhunt",
         "にじさんじ",
         "新入生同士の情報交換_OR_年度入学_OR_年度新入生_OR_新入生同士",
         "春から_AND_大学",
