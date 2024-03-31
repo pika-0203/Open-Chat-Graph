@@ -15,7 +15,6 @@ class RecommendGenarator
     {
         $limit = self::LIST_LIMIT;
         $ranking = $this->getRankingTable($id, $tag, $limit, 'statistics_ranking_hour');
-        shuffle($ranking);
         $count = count($ranking);
         if ($count >= ($limit - 10)) $limit += self::LIST_LIMIT;
 
