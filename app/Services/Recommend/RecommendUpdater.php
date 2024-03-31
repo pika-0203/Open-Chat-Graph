@@ -93,6 +93,7 @@ class RecommendUpdater
         "オリキャラ恋愛_OR_折恋_OR_折 恋",
         "K也_OR_🇰🇷 也_OR_𝐊 也",
         "ネッ友_OR_ネ友",
+        "ライブトーク",
         "MBTI_OR_ISTJ_OR_ISFJ_OR_INFJ_OR_INTJ_OR_ISTP_OR_ISFP_OR_INFP_OR_INTP_OR_ESTP_OR_ESFP_OR_ENFP_OR_ENTP_OR_ESTJ_OR_ESFJ_OR_ENFJ_OR_ENTJ",
     ];
 
