@@ -9,6 +9,8 @@ use Shadow\DB;
 
 class RecommendGenarator
 {
+    private const LIST_LIMIT = 100;
+
     function getRanking(int $id, string $tag, string $table = 'recommend')
     {
         return DB::fetchAll(
@@ -52,6 +54,51 @@ class RecommendGenarator
 
     function getCategoryRanking(int $id, int $category)
     {
+        if (!$category) return [];
+
+        $limit = self::LIST_LIMIT;
+        $ranking = DB::fetchAll(
+            "SELECT
+                oc.id,
+                oc.name,
+                oc.local_img_url AS img_url,
+                oc.member
+            FROM
+                (
+                    SELECT
+                        *
+                    FROM
+                        open_chat
+                    WHERE
+                        category = :category
+                        AND NOT id = :id
+                ) AS oc
+                JOIN (
+                    SELECT
+                        *
+                    FROM
+                        statistics_ranking_hour
+                    WHERE
+                        diff_member >= 2
+                    ORDER BY
+                        id ASC
+                    LIMIT
+                        :limit
+                ) AS ranking ON oc.id = ranking.open_chat_id
+            ORDER BY
+                ranking.id ASC",
+            compact('id', 'category', 'limit')
+        );
+
+        $count = count($ranking);
+        if ($count >= $limit) return $ranking;
+
+        $n = $limit - $count;
+        return array_merge($ranking, $this->getCategoryOrderByMember($id, $category, $n));
+    }
+
+    function getCategoryOrderByMember(int $id, int $category, int $limit)
+    {
         return $category ? DB::fetchAll(
             "SELECT
                 oc.id,
@@ -60,15 +107,23 @@ class RecommendGenarator
                 oc.member
             FROM
                 open_chat AS oc
-                JOIN statistics_ranking_hour AS ranking ON oc.id = ranking.open_chat_id
+                LEFT JOIN (
+                    SELECT
+                        *
+                    FROM
+                        statistics_ranking_hour
+                    WHERE
+                        diff_member >= 2
+                ) AS st ON oc.id = st.open_chat_id
             WHERE
                 oc.category = :category
                 AND NOT oc.id = :id
+                AND st.id IS NULL
             ORDER BY
-                ranking.id ASC
+                oc.member DESC
             LIMIT
-                 100",
-            compact('id', 'category')
+                :limit",
+            compact('id', 'category', 'limit')
         ) : [];
     }
 
