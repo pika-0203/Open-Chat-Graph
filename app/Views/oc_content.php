@@ -36,7 +36,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <div class="talkroom_description_box close" id="talkroom_description_box">
             <p class="talkroom_description" id="talkroom-description">
               <span id="talkroom-description-btn">
-                <?php echo nl2brReplace($oc['description']) ?>
+                <?php echo nl2brReplace(trim(preg_replace("/(\r\n){3,}|\r{3,}|\n{3,}/", "\n\n", $oc['description']))) ?>
               </span>
               <br>
               <button id="talkroom-description-close-btn" title="一部を表示">一部を表示</button>
