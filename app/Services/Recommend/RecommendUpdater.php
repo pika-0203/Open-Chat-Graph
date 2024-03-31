@@ -72,6 +72,7 @@ class RecommendUpdater
         "恋愛",
         "宣伝",
         "太鼓の達人",
+        "ブルーアーカイブ_OR_ブルアカ",
     ];
 
     const DESC_STRONG_TAG = [
