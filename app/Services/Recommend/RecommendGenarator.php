@@ -32,7 +32,7 @@ class RecommendGenarator
                     ORDER BY
                         ranking_id ASC
                     LIMIT
-                        50
+                        100
                 ) AS ranking ON oc.id = ranking.id
             ORDER BY
                 ranking.ranking_id ASC",
@@ -67,7 +67,7 @@ class RecommendGenarator
             ORDER BY
                 ranking.id ASC
             LIMIT
-                 50",
+                 100",
             compact('id', 'category')
         ) : [];
     }

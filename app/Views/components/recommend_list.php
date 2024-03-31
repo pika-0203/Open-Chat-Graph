@@ -11,8 +11,8 @@
 
         .recommend-list li {
             all: unset;
-            min-width: 100px;
-            max-width: 100px;
+            min-width: 110px;
+            max-width: 110px;
             margin: 0;
             padding: 0;
             padding: 13px 3px;
@@ -66,7 +66,7 @@
             <h3 style="all: unset;
                 font-weight: bold;
                 font-size: 13px;
-                color: #777;
+                color: #111;
             "><?php echo $category ?>の注目オプチャ</h3>
         </div>
         <button type="button" class="read-more-list-btn" onclick="this.textContent = this.parentElement.nextElementSibling.classList.toggle('show-all') ? '一部を表示' : 'もっと見る';">もっと見る</button>
@@ -81,26 +81,28 @@
                         display: flex;
                         flex-direction: column;
                         align-items: center;
-                        height: 100%;
-                        justify-content: space-between;
+                        height: 160px;
+                        justify-content: space-around;
                     " href="<?php echo url('/oc/' . $roc['id']) ?>">
-                    <img style="display: block; width: 50px; height: 50px; border-radius: 50%;" loading="lazy" alt="オープンチャット「<?php echo $roc['name'] ?>」のアイコン" src="<?php echo imgPreviewUrl($roc['id'], $roc['img_url']) ?>" />
+                    <img style="display: block; width: 100%; aspect-ratio: 1; border-radius: 22.5%; object-fit: cover;" loading="lazy" alt="オープンチャット「<?php echo $roc['name'] ?>」のアイコン" src="<?php echo imgUrl($roc['id'], $roc['img_url']) ?>" />
                     <h4 style=" 
-                font-size: 11px;
+                font-size: 12px;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
-                -webkit-line-clamp: 3;
+                -webkit-line-clamp: 2;
                 overflow: hidden;
                 word-break: break-all;
-                margin: 6px 0 4px 0;
+                margin: 0;
+                margin-top: 6px;
+                font-weight: normal;
                 text-align: center;
-                line-height: 125%;
+                line-height: 120%;
                 overflow-wrap: anywhere;
               ">
                         <?php echo $roc['name'] ?>
                     </h4>
-                    <div style="font-size: 11px; color: #aaa;">
-                        <span>メンバー <?php echo $roc['member'] ?></span>
+                    <div style="font-size: 12px; color: #aaa; line-height: 120%; margin-top: 3px;">
+                        <span>メンバー <?php echo number_format($roc['member']) ?>人</span>
                     </div>
                 </a>
             </li>
