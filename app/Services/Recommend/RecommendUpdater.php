@@ -12,6 +12,7 @@ class RecommendUpdater
 {
     const NAME_STRONG_TAG = [
         "なりきり_OR_全也_OR_nrkr_OR_#也_OR_D也_OR_ゆるなり_OR_緩也_OR_夢也_OR_夢 也",
+        "IT資格_OR_基本情報技術者_OR_応用情報技術者_OR_ITパスポート_OR_情報処理試験_OR_ITストラテジ",
         "新入生同士の情報交換_OR_年度入学_OR_年度新入生_OR_新入生同士",
         "就活情報_OR_就活生情報_OR_選考対策・企業研究_OR_就活選考対策_OR_就活対策グループ_OR_就活テスト対策グループ",
         "オリキャラ恋愛_OR_折恋_OR_折 恋",
@@ -46,9 +47,9 @@ class RecommendUpdater
         "ポイ活",
         "不登校",
         "精神疾患_OR_精神障害",
+        "知的障害_OR_境界知能",
         "発達障害_OR_ADHD_OR_ASD",
         "障害者",
-        "知的障害_境界知能",
         "ネッ友_OR_ネ友",
         "ゲイ_AND_バイ",
         "K也_OR_🇰🇷 也_OR_𝐊 也",
@@ -68,20 +69,18 @@ class RecommendUpdater
         "毒親",
         "恋愛",
         "宣伝",
-        "太鼓の達人"
+        "太鼓の達人",
     ];
 
     const DESC_STRONG_TAG = [
         "にじさんじ",
-        "@jobhunt_OR_#nolog",
-        "#unistyle",
         "新入生同士の情報交換_OR_年度入学_OR_年度新入生_OR_新入生同士",
         "春から_AND_大学",
         "ポイ活",
         "ゲイ_AND_バイ",
         "復縁",
         "不登校",
-        "知的障害_境界知能",
+        "知的障害_OR_境界知能",
         "精神疾患_OR_精神障害",
         "発達障害_OR_ADHD_OR_ASD",
         "障害者",
