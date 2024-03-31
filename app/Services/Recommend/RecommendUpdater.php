@@ -58,6 +58,7 @@ class RecommendUpdater
         "25卒",
         "24卒",
         "23卒",
+        "PTA_OR_ＰＴＡ",
         "パチスロ_OR_パチンコ_OR_スロット",
     ];
 
