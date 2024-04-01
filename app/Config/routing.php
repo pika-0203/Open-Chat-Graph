@@ -15,6 +15,7 @@ use App\Controllers\Api\RankingPositionApiController;
 use App\Controllers\Pages\OpenChatPageController;
 use App\Controllers\Pages\ReactRankingPageController;
 use App\Controllers\Pages\RecentOpenChatPageController;
+use App\Controllers\Pages\RecommendOpenChatPageController;
 use App\Middleware\VerifyCsrfToken;
 
 Route::middlewareGroup(RedirectLineWebBrowser::class)
@@ -24,7 +25,6 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
 
     ->path('ranking', [ReactRankingPageController::class, 'ranking'])
     ->match(cache(...));
-
 
 Route::path('policy')
     ->middleware([VerifyCsrfToken::class]);
@@ -36,6 +36,9 @@ Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
 
 Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
     ->matchNum('open_chat_id', min: 1);
+
+Route::path('recommend', [RecommendOpenChatPageController::class, 'index'])
+    ->match(cache(...));
 
 Route::path('oclist', [OpenChatRankingPageApiController::class, 'index']);
 
@@ -62,7 +65,6 @@ Route::path(
     ->matchStr('sort', regex: ['ranking', 'rising']);
 
 Route::path('/')
-    ->middleware([RedirectLineWebBrowser::class])
     ->match(cache(...));
 
 Route::path('register')
