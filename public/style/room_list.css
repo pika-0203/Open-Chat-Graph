@@ -6,8 +6,6 @@ header,
 main {
   margin: 0 auto;
   padding: 0rem 1rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0rem;
 }
 
 .ht-top-header {
@@ -17,7 +15,7 @@ main {
 
 .ht-top-mylist {
   background-color: var(--border-color);
-  margin: 0;
+  margin: 0 0 1rem 0;
 }
 
 .visually-hidden {
@@ -888,6 +886,20 @@ article.top-list {
 }
 
 @media screen and (max-width: 359px) {
+  header,
+  main {
+    padding: 0rem 8px;
+  }
+
+  .top-ranking .openchat-item-lower-outer {
+    flex-direction: column;
+    gap: 0px;
+  }
+
+  .top-ranking .openchat-item-lower {
+    margin-right: 5px;
+  }
+
   .top-list .openchat-item,
   .top-ranking .openchat-item,
   .openchat-item {
@@ -905,10 +917,6 @@ article.top-list {
 }
 
 @media screen and (min-width: 512px) {
-  main {
-    padding-top: 1rem;
-  }
-
   main header {
     margin-bottom: 13px;
   }

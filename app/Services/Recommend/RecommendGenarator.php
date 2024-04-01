@@ -11,7 +11,7 @@ class RecommendGenarator
 {
     private const LIST_LIMIT = 50;
 
-    function getRanking(int $id, string $tag)
+    function getRanking(int $id, string $tag, bool $shuffle = true)
     {
         $limit = self::LIST_LIMIT;
         $ranking = $this->getRankingTable($id, $tag, $limit, 'statistics_ranking_hour');
@@ -25,7 +25,7 @@ class RecommendGenarator
             'statistics_ranking_day',
             'statistics_ranking_hour'
         ));
-        shuffle($ranking);
+        $shuffle && shuffle($ranking);
         $count = count($ranking);
         if ($count >= ($limit - 10)) $limit += self::LIST_LIMIT;
 
@@ -37,7 +37,7 @@ class RecommendGenarator
             'statistics_ranking_day',
             'statistics_ranking_hour',
         );
-        shuffle($week);
+        $shuffle && shuffle($week);
 
         $ranking = array_merge($ranking, $week);
         //shuffle($ranking);
@@ -49,7 +49,7 @@ class RecommendGenarator
             $tag,
             $limit - $count,
         );
-        shuffle($member);
+        $shuffle && shuffle($member);
         $ranking = array_merge($ranking, $member);
         return $ranking;
     }
@@ -288,13 +288,13 @@ class RecommendGenarator
         return DB::fetchColumn("SELECT tag FROM recommend WHERE id = {$id}");
     }
 
-    function getCategoryRanking(int $id, int $category)
+    function getCategoryRanking(int $id, int $category, bool $shuffle = true)
     {
         if (!$category) return [];
 
         $limit = self::LIST_LIMIT;
         $ranking = $this->getCategoryRankingTable($id, $category, $limit, 'statistics_ranking_hour');
-        shuffle($ranking);
+        $shuffle && shuffle($ranking);
         $count = count($ranking);
         if ($count >= $limit) return $ranking;
 
@@ -305,7 +305,7 @@ class RecommendGenarator
             'statistics_ranking_day',
             'statistics_ranking_hour'
         ));
-        shuffle($ranking);
+        $shuffle && shuffle($ranking);
         $count = count($ranking);
         if ($count >= $limit) return $ranking;
 
@@ -317,7 +317,7 @@ class RecommendGenarator
             'statistics_ranking_day',
             'statistics_ranking_hour',
         );
-        shuffle($week);
+        $shuffle && shuffle($week);
 
         $ranking = array_merge($ranking, $week);
         $count = count($ranking);
@@ -329,7 +329,7 @@ class RecommendGenarator
             $category,
             $limit - $count,
         );
-        shuffle($member);
+        $shuffle && shuffle($member);
         $ranking = array_merge($ranking, $member);
         return $ranking;
     }
@@ -545,7 +545,7 @@ class RecommendGenarator
         );
     }
 
-    function getRecommend(int $open_chat_id): array
+    function getRecommend(int $open_chat_id, bool $shuffle = false): array
     {
         $geneTag = fn ($s) => str_replace('_AND_', ' ', mb_strstr($s, '_OR_', true) ?: $s);
 
@@ -562,24 +562,24 @@ class RecommendGenarator
             $category = $this->getCategory($open_chat_id);
             $tag = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
             $tag = "「{$tag}」カテゴリー";
-            return [$this->getCategoryRanking($open_chat_id, $category), $tag, [], ''];
+            return [$this->getCategoryRanking($open_chat_id, $category, $shuffle), $tag, [], ''];
         }
 
         $r1 = [];
         if ($tag) {
-            $r1 = $this->getRanking($open_chat_id, $tag);
+            $r1 = $this->getRanking($open_chat_id, $tag, $shuffle);
             $tag = $geneTag($tag);
             $tag = "「{$tag}」関連";
         }
 
         $r2 = [];
         if ($tag2) {
-            $r2 = $this->getRanking($open_chat_id, $tag2);
+            $r2 = $this->getRanking($open_chat_id, $tag2, $shuffle);
             $tag2 = $geneTag($tag2);
             $tag2 = "「{$tag2}」関連";
             if (!$r1) {
                 $category = $this->getCategory($open_chat_id);
-                $r1 = $this->getCategoryRanking($open_chat_id, $category);
+                $r1 = $this->getCategoryRanking($open_chat_id, $category, $shuffle);
                 $tag = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
                 $tag = "「{$tag}」カテゴリー";
                 return [$r2, $tag2, $r1, $tag];
@@ -588,7 +588,7 @@ class RecommendGenarator
         }
 
         $category = $this->getCategory($open_chat_id);
-        $r3 = $this->getCategoryRanking($open_chat_id, $category);
+        $r3 = $this->getCategoryRanking($open_chat_id, $category, $shuffle);
         $tag3 = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
         $tag3 = "「{$tag3}」カテゴリー";
         return [$r1 ?: $r3, $r1 ? $tag : $tag3, $r1 ? $r3 : [], $r1 ? $tag3 : ''];

@@ -30,7 +30,7 @@ hr {
 .openchat footer {
   padding-top: 1rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   gap: 2px;
   min-height: 3rem;
 }
@@ -101,7 +101,11 @@ hr {
   font-size: 12px;
   display: block;
   width: fit-content;
-  color: #07b53b;
+  background: -webkit-linear-gradient(332deg, #0dc95a, #11d871 23.96%, #11d593 55.46%, #12cfcd 83.85%, #16c2c1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #978170;
 }
 
 /* メンバー数 */
@@ -145,7 +149,7 @@ hr {
   right: 0;
   display: flex;
   visibility: hidden;
-  color: #b7b7b7;
+  color: #aaa;
 }
 
 .more-text {
@@ -219,6 +223,7 @@ hr {
   white-space: nowrap;
   align-items: center;
   gap: 4px;
+  margin-right: 5px;
 }
 
 .openchat-list-date.inner {
@@ -274,11 +279,21 @@ hr {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+
+.my-list-form a {
+  font-size: 10px;
+  color: #b7b7b7;
 }
 
 .my-list-form .checkbox-label {
+  margin-top: 0px;
   height: fit-content;
+  border: 1px solid #efefef;
+  padding: 4px 6px;
+  margin-right: 19px;
+  border-radius: 3px;
 }
 
 body > footer {
@@ -296,6 +311,11 @@ body > footer {
 
   .openchat .graph-title {
     font-size: 14px;
+  }
+
+  .my-list-form .checkbox-label {
+    font-size: 11px;
+    margin-right: 0px;
   }
 }
 
@@ -342,6 +362,16 @@ body > footer {
   .talkroom_description_box .more,
   .talkroom_description {
     line-height: 140%;
+  }
+
+  .my-list-form a {
+    font-size: 12px;
+    color: #b7b7b7;
+  }
+
+  .openchat footer {
+    justify-content: center;
+    gap: 2rem;
   }
 }
 

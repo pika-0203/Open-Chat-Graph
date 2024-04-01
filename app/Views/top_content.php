@@ -17,7 +17,7 @@
             <hr class="ht-top-mylist">
         <?php endif ?>
 
-        <article class="top-ranking">
+        <article class="top-ranking" style="padding-top: 0; margin-top: 0;">
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all&order=desc&sort=member') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>

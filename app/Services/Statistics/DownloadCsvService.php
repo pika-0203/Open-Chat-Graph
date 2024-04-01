@@ -23,22 +23,17 @@ class DownloadCsvService
         [$column, $result] = $this->{$category ? 'buildData' : 'buildDataNoCategory'}($open_chat_id, $category);
 
         $filename = '[OC_Graph]' . $this->sanitizeFileName($name);
-        header('Content-Type: text/csv; charset=UTF-16LE');
+        header('Content-Type: text/csv');
         header("Content-Disposition: attachment; filename*=UTF-8''" . $filename . '.csv');
 
         $output = fopen('php://output', 'wb');
 
-        // UTF-16LEのBOMを出力
-        fwrite($output, pack('C*', 0xFF, 0xFE));
-
         // カラムヘッダーのエンコーディング変換と出力
-        $encoded_column = mb_convert_encoding(implode("\t", $column) . "\r\n", 'UTF-16LE', 'UTF-8');
-        fwrite($output, $encoded_column);
+        fputcsv($output, $column);
 
         // 各行のデータのエンコーディング変換と出力
         foreach ($result as $row) {
-            $encoded_row = mb_convert_encoding(implode("\t", $row) . "\r\n", 'UTF-16LE', 'UTF-8');
-            fwrite($output, $encoded_row);
+            fputcsv($output, $row);
         }
 
         fclose($output);
@@ -63,17 +58,17 @@ class DownloadCsvService
         $column = [
             '日付',
             'メンバー数',
-            array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '_公式急上昇順位_中央値',
-            array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '_公式急上昇順位_中央値_時間帯',
-            array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '_公式急上昇順位_中央値_全体件数',
-            array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '_公式ランキング順位_中央値',
-            array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '_公式ランキング順位_中央値_時間帯',
-            array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '_公式ランキング順位_中央値_全体件数',
-            '全カテゴリ_公式急上昇順位_最頻値',
-            '全カテゴリ_公式急上昇順位_最頻値_時間帯',
-            '全カテゴリ_公式急上昇順位_最頻値_全体件数',
-            '全カテゴリ_公式ランキング順位_中央値',
-            '全カテゴリ_公式ランキング順位_中央値_全体件数',
+            array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '_急上昇_最頻値',
+            array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '_急上昇_最頻値_時間帯',
+            array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '_急上昇_最頻値_全体件数',
+            array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '_ランキング_中央値',
+            array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '_ランキング_中央値_時間帯',
+            array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category] . '_ランキング_中央値_全体件数',
+            'すべて_急上昇_最頻値',
+            'すべて_急上昇_最頻値_時間帯',
+            'すべて_急上昇_最頻値_全体件数',
+            'すべて_ランキング_中央値',
+            'すべて_ランキング_中央値_全体件数',
         ];
 
         $result = [];
