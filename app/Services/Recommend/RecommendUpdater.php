@@ -17,6 +17,8 @@ class RecommendUpdater
         "就活情報_OR_就活生情報_OR_選考対策・企業研究_OR_就活選考対策_OR_就活対策グループ_OR_就活テスト対策グループ",
         "AI画像生成_OR_AIイラスト_OR_ばりぐっどくん_OR_AI絵画_OR_AI絵師",
         "ポイ活",
+        ["全国 雑談", ["全国_AND_オプチャ", "全国_AND_雑談",]],
+        "ケアマネージャー_OR_ケアマネ",
         "BLTトレードシステムサポートオプチャ",
         "Crypto_AND_Academy",
         "オリキャラ恋愛_OR_折恋_OR_折 恋",
@@ -77,7 +79,6 @@ class RecommendUpdater
         "猫ミーム",
         "ブルーアーカイブ_OR_ブルアカ",
         "レスバ_OR_喧嘩_OR_下あり_OR_下ネタ",
-        ["全国 雑談", ["全国_AND_オプチャ", "全国_AND_雑談",]],
     ];
 
     const DESC_STRONG_TAG = [
