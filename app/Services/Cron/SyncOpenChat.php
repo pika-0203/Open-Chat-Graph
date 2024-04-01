@@ -115,8 +115,8 @@ class SyncOpenChat
             $this->hourlyRankingPosition();
         }
 
-        $this->hourlyMemberRankingUpdate();
         $this->hourlyImageUpdate();
+        $this->hourlyMemberRankingUpdate();
         $this->hourlyInvitationTicketUpdate();
     }
 

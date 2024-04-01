@@ -12,6 +12,9 @@ class RecommendUpdater
 {
     const NAME_STRONG_TAG = [
         "下ネタ_OR_下あり_OR_下○タ_OR_下系",
+        "ネッ友_OR_ネ友",
+        "MBTI_OR_ISTJ_OR_ISFJ_OR_INFJ_OR_INTJ_OR_ISTP_OR_ISFP_OR_INFP_OR_INTP_OR_ESTP_OR_ESFP_OR_ENFP_OR_ENTP_OR_ESTJ_OR_ESFJ_OR_ENFJ_OR_ENTJ",
+        ["LGBT", ["ゲイ_AND_バイ", "同性愛_OR_LGBT_OR_ゲイ学生_OR_Xジェンダー_OR_トランスジェンダー_OR_セクマイ_OR_ノンセク_OR_レズビアン"]],
         "IT資格_OR_基本情報技術者_OR_応用情報技術者_OR_ITパスポート_OR_情報処理試験_OR_ITストラテジ",
         "新入生同士の情報交換_OR_年度入学_OR_年度新入生_OR_新入生同士",
         "就活情報_OR_就活生向け情報_OR_就活生情報_OR_選考対策・企業研究_OR_就活選考対策_OR_就活対策グループ_OR_就活テスト対策グループ_OR_志望者向けグループ_OR_業界志望者向け_OR_就活の情報_OR_就活会議_OR_就活生向け_OR_就活対策用_OR_就活生の情報交換_OR_unistyle_OR_就活の情報共有",
@@ -47,7 +50,6 @@ class RecommendUpdater
         "セミナー",
         "SNS",
         "インスタ",
-        "MBTI_OR_ISTJ_OR_ISFJ_OR_INFJ_OR_INTJ_OR_ISTP_OR_ISFP_OR_INFP_OR_INTP_OR_ESTP_OR_ESFP_OR_ENFP_OR_ENTP_OR_ESTJ_OR_ESFJ_OR_ENFJ_OR_ENTJ",
         "ぷにぷに",
         "メンヘラ",
         "すとぷり",
@@ -61,6 +63,8 @@ class RecommendUpdater
         "カーパーキング",
         "にじさんじ",
         "東方",
+        "対荒らし_OR_対荒_OR_白夜総会_OR_ヤブ医者_OR_拓也集落_OR_植民地",
+        "レスバ_OR_喧嘩",
         "女性限定",
         "男性限定",
         "男子限定",
@@ -80,9 +84,7 @@ class RecommendUpdater
         "精神疾患_OR_精神障害",
         "知的障害_OR_境界知能",
         "障害者",
-        "ネッ友_OR_ネ友",
         "なりきり_OR_全也_OR_nrkr_OR_#也_OR_D也_OR_ゆるなり_OR_緩也_OR_夢也_OR_夢 也",
-        ["LGBT", ["ゲイ_AND_バイ", "同性愛_OR_LGBT_OR_ゲイ学生_OR_Xジェンダー_OR_トランスジェンダー_OR_セクマイ_OR_ノンセク_OR_レズビアン"]],
         "K也_OR_🇰🇷 也_OR_𝐊 也",
         "ChatGPT_OR_チャットGPT",
         "28卒",
@@ -103,8 +105,6 @@ class RecommendUpdater
         "太鼓の達人",
         "猫ミーム",
         "ブルーアーカイブ_OR_ブルアカ",
-        "レスバ_OR_喧嘩",
-        "対荒らし_OR_対荒_OR_白夜総会_OR_ヤブ医者_OR_拓也集落_OR_植民地",
     ];
 
     const DESC_STRONG_TAG = [
@@ -133,7 +133,6 @@ class RecommendUpdater
         "男子限定",
         "女子限定",
         "学生限定",
-        ["全国 雑談", ["全国_AND_オプチャ", "全国_AND_雑談",]],
     ];
 
     /** @var string[] $tags */
