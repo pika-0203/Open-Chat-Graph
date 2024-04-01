@@ -95,7 +95,7 @@
     </style>
     <div class="btn-wrapper">
         <div style="display: flex; flex-direction: row; /* align-items: center; */ margin-left: 1rem;">
-            <div aria-hidden="true" style="font-size: 12px; user-select: none;">🏷️</div>
+            <div aria-hidden="true" style="font-size: 12px; user-select: none;">🎖</div>
             <h3 style="all: unset;
                 font-weight: bold;
                 font-size: 13px;
@@ -103,7 +103,7 @@
                 display: flex;
                 align-items: center;
                 gap: 3px;
-            "><?php echo $category ?>の注目オプチャ<small style="font-size: 11px; font-weight:normal; color:#b7b7b7;">(リアルタイム)</small></h3>
+            "><?php echo $category ?>のおすすめ<small style="font-size: 11px; font-weight:normal; color:#b7b7b7;">最新</small></h3>
         </div>
         <button type="button" class="read-more-list-btn" onclick="this.textContent = this.parentElement.nextElementSibling.classList.toggle('show-all') ? '一部を表示' : 'もっと見る';">もっと見る</button>
     </div>
@@ -111,7 +111,7 @@
         <?php foreach ($recommend as $roc) : ?>
             <li>
                 <a href="<?php echo url('/oc/' . $roc['id']) ?>">
-                    <img loading="lazy" alt="オープンチャット「<?php echo $roc['name'] ?>」のアイコン" src="<?php echo imgUrl($roc['id'], $roc['img_url']) ?>" />
+                    <img loading="lazy" alt="<?php echo $roc['name'] ?>" src="<?php echo imgUrl($roc['id'], $roc['img_url']) ?>" />
                     <h4 style=" 
                         font-size: 12px;
                         display: -webkit-box;

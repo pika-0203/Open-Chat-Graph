@@ -569,14 +569,14 @@ class RecommendGenarator
         if ($tag) {
             $r1 = $this->getRanking($open_chat_id, $tag);
             $tag = $geneTag($tag);
-            $tag = "「{$tag}」タグ";
+            $tag = "「{$tag}」関連";
         }
 
         $r2 = [];
         if ($tag2) {
             $r2 = $this->getRanking($open_chat_id, $tag2);
             $tag2 = $geneTag($tag2);
-            $tag2 = "「{$tag2}」タグ";
+            $tag2 = "「{$tag2}」関連";
             if (!$r1) {
                 $category = $this->getCategory($open_chat_id);
                 $r1 = $this->getCategoryRanking($open_chat_id, $category);

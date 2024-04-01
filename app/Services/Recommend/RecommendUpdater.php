@@ -39,6 +39,7 @@ class RecommendUpdater
         "ミニ四駆",
         "イナズマイレブン_OR_イナイレ",
         "吃音",
+        "ぽっちゃり",
         "カラオケ",
         "セミナー",
         "SNS",
@@ -93,14 +94,17 @@ class RecommendUpdater
         "太鼓の達人",
         "猫ミーム",
         "ブルーアーカイブ_OR_ブルアカ",
-        "レスバ_OR_喧嘩_OR_下あり_OR_下ネタ_OR_下○タ",
+        "下ネタ_OR_下あり_OR_下○タ_OR_下系",
+        "レスバ_OR_喧嘩",
     ];
 
     const DESC_STRONG_TAG = [
         "unistyle",
         "jobhunt",
+        ["LGBT", ["ゲイ_AND_バイ", "同性愛_OR_LGBT_OR_ゲイ学生_OR_Xジェンダー_OR_トランスジェンダー_OR_セクマイ_OR_ノンセク_OR_レズビアン"]],
         "Produce 101 Japan_OR_PRODUCE 101_OR_PRODUCE101_OR_日プガールズ",
         "新入生同士の情報交換_OR_年度入学_OR_年度新入生_OR_新入生同士",
+        "地雷系_OR_地雷_OR_量産型_OR_量産",
         "春から_AND_大学",
         "ポイ活",
         "復縁",

@@ -37,9 +37,6 @@ Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
 Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
     ->matchNum('open_chat_id', min: 1);
 
-Route::path('recommend', [RecommendOpenChatPageController::class, 'index'])
-    ->match(cache(...));
-
 Route::path('oclist', [OpenChatRankingPageApiController::class, 'index']);
 
 Route::path(
@@ -69,6 +66,9 @@ Route::path('/')
 
 Route::path('register')
     ->middleware([VerifyCsrfToken::class]);
+
+Route::path('recommend', [RecommendOpenChatPageController::class, 'index'])
+    ->match(cache(...));
 
 Route::path(
     'oc@post@get',

@@ -25,15 +25,15 @@ class RecommendOpenChatPageController
             return false;
         }
 
-        $pageTitle = '最近登録されたオープンチャット';
+        $pageTitle = '【最新】「なりきり」関連のおすすめ人気オープンチャット50件';
         $_css = ['room_list', 'site_header', 'site_footer'];
 
         $_meta = meta()->setTitle($pageTitle);
 
-        $_breadcrumbsShema = $this->breadcrumbsShema->generateSchema('最近登録されたオープンチャット', 'oc');
+        $_breadcrumbsShema = $this->breadcrumbsShema->generateSchema('おすすめのオプチャ', 'recommend');
 
         return view(
-            'recent_content',
+            'recommend_content',
             compact('_meta', '_css', '_breadcrumbsShema') + $rankingList
         );
     }
