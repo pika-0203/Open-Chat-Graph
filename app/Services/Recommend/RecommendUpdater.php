@@ -15,8 +15,10 @@ class RecommendUpdater
         "IT資格_OR_基本情報技術者_OR_応用情報技術者_OR_ITパスポート_OR_情報処理試験_OR_ITストラテジ",
         "新入生同士の情報交換_OR_年度入学_OR_年度新入生_OR_新入生同士",
         "就活情報_OR_就活生情報_OR_選考対策・企業研究_OR_就活選考対策_OR_就活対策グループ_OR_就活テスト対策グループ",
+        "AI画像生成_OR_AIイラスト_OR_ばりぐっどくん_OR_AI絵画_OR_AI絵師",
         "ポイ活",
         "BLTトレードシステムサポートオプチャ",
+        "Crypto_AND_Academy",
         "オリキャラ恋愛_OR_折恋_OR_折 恋",
         "バウンティラッシュ_OR_バウンティ",
         "スピリチュアル",
@@ -47,12 +49,13 @@ class RecommendUpdater
         "ブルーロック",
         "ラブライブ_OR_ラブライバー",
         "不登校",
+        "発達障害_OR_ADHD_OR_自閉症_OR_カサンドラ_OR_軽度知的障害_OR_アスペルガー_OR_双極性障害",
+        "うつ病_OR_鬱病",
         "精神疾患_OR_精神障害",
         "知的障害_OR_境界知能",
-        "発達障害_OR_ADHD_OR_ASD",
         "障害者",
         "ネッ友_OR_ネ友",
-        "ゲイ_AND_バイ",
+        ["LGBT", ["ゲイ_AND_バイ", "同性愛_OR_LGBT_OR_ゲイ学生_OR_Xジェンダー_OR_トランスジェンダー_OR_セクマイ_OR_ノンセク_OR_レズビアン"]],
         "K也_OR_🇰🇷 也_OR_𝐊 也",
         "ChatGPT_OR_チャットGPT",
         "28卒",
@@ -67,33 +70,35 @@ class RecommendUpdater
         "復縁",
         "愚痴",
         "毒親",
+        "恋愛相談",
         "恋愛",
         "宣伝",
         "太鼓の達人",
+        "猫ミーム",
         "ブルーアーカイブ_OR_ブルアカ",
         "レスバ_OR_喧嘩_OR_下あり_OR_下ネタ",
+        ["全国 雑談", ["全国_AND_オプチャ", "全国_AND_雑談",]],
     ];
 
     const DESC_STRONG_TAG = [
         "unistyle",
         "jobhunt",
         "Produce 101 Japan_OR_PRODUCE 101_OR_PRODUCE101_OR_日プガールズ",
-        "にじさんじ",
         "新入生同士の情報交換_OR_年度入学_OR_年度新入生_OR_新入生同士",
         "春から_AND_大学",
         "ポイ活",
-        "ゲイ_AND_バイ",
         "復縁",
         "不登校",
+        "発達障害_OR_ADHD_OR_自閉症_OR_カサンドラ_OR_軽度知的障害_OR_アスペルガー_OR_双極性障害",
+        "うつ病_OR_鬱病",
         "知的障害_OR_境界知能",
         "精神疾患_OR_精神障害",
-        "発達障害_OR_ADHD_OR_ASD",
         "障害者",
         "オリキャラ恋愛_OR_折恋_OR_折 恋",
         "K也_OR_🇰🇷 也_OR_𝐊 也",
         "ネッ友_OR_ネ友",
-        "ライブトーク",
         "MBTI_OR_ISTJ_OR_ISFJ_OR_INFJ_OR_INTJ_OR_ISTP_OR_ISFP_OR_INFP_OR_INTP_OR_ESTP_OR_ESFP_OR_ENFP_OR_ENTP_OR_ESTJ_OR_ESFJ_OR_ENFJ_OR_ENTJ",
+        ["全国 雑談", ["全国_AND_オプチャ", "全国_AND_雑談",]],
     ];
 
     /** @var string[] $tags */
@@ -101,21 +106,26 @@ class RecommendUpdater
     private string $start;
     private string $end;
 
-    private function replace(string $str, string $column): string
+    function replace(string|array $word, string $column): string
     {
-        $count = 0;
-        $column = "{$column} COLLATE utf8mb4_general_ci";
-        $str3 = "{$column} LIKE '%" . str_replace('_AND_', "%' AND {$column} LIKE '%", $str, $count) . "%'";
-        if ($count) return $str3;
+        $like = "{$column} COLLATE utf8mb4_general_ci LIKE";
 
-        $str2 = "{$column} LIKE '%" . str_replace('_OR_', "%' OR {$column} LIKE '%", $str, $count) . "%'";
-        return $count ? $str2 : $str3;
+        $rep = function ($str) use ($like) {
+            $str = str_replace('_AND_', "%' AND {$like} '%", $str);
+            return "{$like} '%" . str_replace('_OR_', "%' OR {$like} '%", $str) . "%'";
+        };
+
+        if (is_array($word)) {
+            return "(" . implode(") OR (", array_map(fn ($str) => $rep($str), $word[1])) . ")";
+        }
+
+        return $rep($word);
     }
 
     /** @return string[] */
     private function getReplacedTags(string $column): array
     {
-        $this->tags = array_merge(
+        $tags = array_merge(
             self::NAME_STRONG_TAG,
             array_merge(...json_decode(
                 file_get_contents(AppConfig::OPEN_CHAT_SUB_CATEGORIES_TAG_FILE_PATH),
@@ -123,7 +133,9 @@ class RecommendUpdater
             ))
         );
 
-        return array_map(fn ($str) => $this->replace($str, $column), $this->tags);
+        $this->tags = array_map(fn ($el) => is_array($el) ? $el[0] : $el, $tags);
+
+        return array_map(fn ($str) => $this->replace($str, $column), $tags);
     }
 
     function updateName(string $column = 'oc.name', string $table = 'recommend')
@@ -178,11 +190,13 @@ class RecommendUpdater
         foreach ($tags as $category => $array) {
             foreach ($strongTags as $key => $search) {
                 $tag = self::DESC_STRONG_TAG[$key];
+                $tag = is_array($tag) ? $tag[0] : $tag;
                 $excute($table, $tag, $search, $category);
             }
 
             foreach ($array as $key => $search) {
                 $tag = $this->tags[$category][$key];
+                $tag = is_array($tag) ? $tag[0] : $tag;
                 $excute($table, $tag, $search, $category);
             }
         }
@@ -247,11 +261,13 @@ class RecommendUpdater
         foreach ($tags as $category => $array) {
             foreach ($strongTags as $key => $search) {
                 $tag = self::DESC_STRONG_TAG[$key];
+                $tag = is_array($tag) ? $tag[0] : $tag;
                 $excute($table, $tag, $search, $category);
             }
 
             foreach ($array as $key => $search) {
                 $tag = $this->tags[$category][$key];
+                $tag = is_array($tag) ? $tag[0] : $tag;
                 $excute($table, $tag, $search, $category);
             }
         }
