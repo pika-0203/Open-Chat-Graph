@@ -94,7 +94,16 @@ class OpenChatPageController
 
         $recCategory = $_chartArgDto->categoryKey ? ('oc.category = ' . $_chartArgDto->categoryKey) : 1;
 
+        $recommendTag = $recommendGenarator->geneTag($recommendGenarator->getRecommendTag($oc['id']) ?: '');
         $recommend = $recommendGenarator->getRecommend($oc['id']);
+
+        $buldRecommendMaxNum = function ($i1, $i2, $i3) use (&$recommend, $oc, $recommendTag) {
+            $recommend[$i1] = $recommend[$i2] ? max(array_column($recommend[$i2], 'member')) : 0;
+            $recommend[$i1] = $recommend[$i1] > $oc['member'] ? $recommend[$i1] : ("「{$recommendTag}」関連" === $recommend[$i3] ? 0 : $recommend[$i1]);
+        };
+
+        $buldRecommendMaxNum(5, 0, 1);
+        $buldRecommendMaxNum(6, 2, 3);
 
         return view('oc_content', compact(
             '_meta',

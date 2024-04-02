@@ -16,17 +16,18 @@ class RecommendGenarator
         $limit = self::LIST_LIMIT;
         $ranking = $this->getRankingTable($id, $tag, $limit, 'statistics_ranking_hour');
         $count = count($ranking);
+        $shuffle && shuffle($ranking);
         if ($count >= ($limit - 10)) $limit += self::LIST_LIMIT;
 
-        $ranking = array_merge($ranking, $this->getRankingTableByExceptTable(
+        $ranking2 = $this->getRankingTableByExceptTable(
             $id,
             $tag,
             $limit - $count,
             'statistics_ranking_day',
             'statistics_ranking_hour'
-        ));
-        $shuffle && shuffle($ranking);
-        $count = count($ranking);
+        );
+
+        $count = count($ranking2) + $count;
         if ($count >= ($limit - 10)) $limit += self::LIST_LIMIT;
 
         $week = $this->getRankingTableByExceptTable2(
@@ -37,11 +38,9 @@ class RecommendGenarator
             'statistics_ranking_day',
             'statistics_ranking_hour',
         );
-        $shuffle && shuffle($week);
-
-        $ranking = array_merge($ranking, $week);
-        //shuffle($ranking);
-        $count = count($ranking);
+        $middle = array_merge($ranking2, $week);
+        $shuffle && shuffle($middle);
+        $count = count($week) + $count;
         if ($count >= ($limit - 10)) $limit += 20;
 
         $member = $this->getTagTableOrderByMember(
@@ -50,7 +49,9 @@ class RecommendGenarator
             $limit - $count,
         );
         $shuffle && shuffle($member);
-        $ranking = array_merge($ranking, $member);
+
+        $ranking = array_merge($ranking, $middle, $member);
+
         return $ranking;
     }
 
@@ -61,7 +62,8 @@ class RecommendGenarator
                 oc.id,
                 oc.name,
                 oc.local_img_url AS img_url,
-                oc.member
+                oc.member,
+                '{$table}' AS table_name
             FROM
                 open_chat AS oc
                 JOIN (
@@ -76,7 +78,7 @@ class RecommendGenarator
                                 {$table}
                             WHERE
                                 open_chat_id != :id
-                                AND diff_member >= 2
+                                AND diff_member >= 3
                         ) AS t1
                         JOIN recommend AS t2 ON t1.open_chat_id = t2.id
                     WHERE
@@ -99,7 +101,8 @@ class RecommendGenarator
                 oc.id,
                 oc.name,
                 oc.local_img_url AS img_url,
-                oc.member
+                oc.member,
+                '{$table}' AS table_name
             FROM
                 open_chat AS oc
                 JOIN (
@@ -118,7 +121,7 @@ class RecommendGenarator
                                         {$table}
                                     WHERE
                                         open_chat_id != :id
-                                        AND diff_member >= 2
+                                        AND diff_member >= 3
                                 ) AS sr1
                                 LEFT JOIN (
                                     SELECT
@@ -128,7 +131,7 @@ class RecommendGenarator
                                         {$exceptTable}
                                     WHERE
                                         open_chat_id != :id
-                                        AND diff_member >= 2
+                                        AND diff_member >= 3
                                 ) AS sr2 ON sr1.open_chat_id = sr2.open_chat_id
                             WHERE
                                 sr2.id IS NULL
@@ -160,7 +163,8 @@ class RecommendGenarator
                 oc.id,
                 oc.name,
                 oc.local_img_url AS img_url,
-                oc.member
+                oc.member,
+                '{$table}' AS table_name
             FROM
                 open_chat AS oc
                 JOIN (
@@ -179,7 +183,7 @@ class RecommendGenarator
                                         {$table}
                                     WHERE
                                         open_chat_id != :id
-                                        AND diff_member >= 2
+                                        AND diff_member >= 3
                                 ) AS sr1
                                 LEFT JOIN (
                                     SELECT
@@ -189,7 +193,7 @@ class RecommendGenarator
                                         {$exceptTable}
                                     WHERE
                                         open_chat_id != :id
-                                        AND diff_member >= 2
+                                        AND diff_member >= 3
                                 ) AS sr2 ON sr1.open_chat_id = sr2.open_chat_id
                                 LEFT JOIN (
                                     SELECT
@@ -199,7 +203,7 @@ class RecommendGenarator
                                         {$exceptTable2}
                                     WHERE
                                         open_chat_id != :id
-                                        AND diff_member >= 2
+                                        AND diff_member >= 3
                                 ) AS sr3 ON sr1.open_chat_id = sr3.open_chat_id
                             WHERE
                                 sr2.id IS NULL
@@ -226,7 +230,8 @@ class RecommendGenarator
                 oc.id,
                 oc.name,
                 oc.local_img_url AS img_url,
-                oc.member
+                oc.member,
+                'open_chat' AS table_name
             FROM
                 open_chat AS oc
                 JOIN (
@@ -248,7 +253,7 @@ class RecommendGenarator
                             FROM
                                 statistics_ranking_hour
                             WHERE
-                                diff_member >= 2
+                                diff_member >= 3
                         ) AS st1 ON r.id = st1.open_chat_id
                         LEFT JOIN (
                             SELECT
@@ -256,7 +261,7 @@ class RecommendGenarator
                             FROM
                                 statistics_ranking_day
                             WHERE
-                                diff_member >= 2
+                                diff_member >= 3
                         ) AS st2 ON r.id = st2.open_chat_id
                         LEFT JOIN (
                             SELECT
@@ -264,7 +269,7 @@ class RecommendGenarator
                             FROM
                                 statistics_ranking_week
                             WHERE
-                                diff_member >= 2
+                                diff_member >= 3
                         ) AS st3 ON r.id = st3.open_chat_id
                     WHERE
                         st1.id IS NULL
@@ -298,16 +303,16 @@ class RecommendGenarator
         $count = count($ranking);
         if ($count >= $limit) return $ranking;
 
-        $ranking = array_merge($ranking, $this->getCategoryRankingTableByExceptTable(
+        $ranking2 = $this->getCategoryRankingTableByExceptTable(
             $id,
             $category,
             $limit - $count,
             'statistics_ranking_day',
             'statistics_ranking_hour'
-        ));
-        $shuffle && shuffle($ranking);
-        $count = count($ranking);
-        if ($count >= $limit) return $ranking;
+        );
+        $shuffle && shuffle($ranking2);
+        $count = count($ranking2) + $count;
+        if ($count >= $limit) return array_merge($ranking, $ranking2);
 
         $week = $this->getCategoryRankingTableByExceptTable2(
             $id,
@@ -317,12 +322,10 @@ class RecommendGenarator
             'statistics_ranking_day',
             'statistics_ranking_hour',
         );
-        $shuffle && shuffle($week);
-
-        $ranking = array_merge($ranking, $week);
-        $count = count($ranking);
-        //shuffle($ranking);
-        if ($count >= $limit) return $ranking;
+        $count = count($week) + $count;
+        $ranking2 = array_merge($ranking2, $week);
+        $shuffle && shuffle($ranking2);
+        if ($count >= $limit) return array_merge($ranking, $ranking2);
 
         $member = $this->getCategoryOrderByMember(
             $id,
@@ -330,7 +333,7 @@ class RecommendGenarator
             $limit - $count,
         );
         $shuffle && shuffle($member);
-        $ranking = array_merge($ranking, $member);
+        $ranking = array_merge($ranking, $ranking2, $member);
         return $ranking;
     }
 
@@ -341,7 +344,8 @@ class RecommendGenarator
                 oc.id,
                 oc.name,
                 oc.local_img_url AS img_url,
-                oc.member
+                oc.member,
+                '{$table}' AS table_name
             FROM
                 (
                     SELECT
@@ -358,7 +362,7 @@ class RecommendGenarator
                     FROM
                         {$table}
                     WHERE
-                        diff_member >= 2
+                        diff_member >= 3
                     ORDER BY
                         id ASC
                     LIMIT
@@ -377,7 +381,8 @@ class RecommendGenarator
                 oc.id,
                 oc.name,
                 oc.local_img_url AS img_url,
-                oc.member
+                oc.member,
+                '{$table}' AS table_name
             FROM
                 (
                     SELECT
@@ -398,7 +403,7 @@ class RecommendGenarator
                             FROM
                                 {$table}
                             WHERE
-                                diff_member >= 2
+                                diff_member >= 3
                         ) AS sr1
                         LEFT JOIN (
                             SELECT
@@ -407,7 +412,7 @@ class RecommendGenarator
                             FROM
                                 {$exceptTable}
                             WHERE
-                                diff_member >= 2
+                                diff_member >= 3
                         ) AS sr2 ON sr1.open_chat_id = sr2.open_chat_id
                     WHERE
                         sr2.id IS NULL
@@ -435,7 +440,8 @@ class RecommendGenarator
                 oc.id,
                 oc.name,
                 oc.local_img_url AS img_url,
-                oc.member
+                oc.member,
+                '{$table}' AS table_name
             FROM
                 (
                     SELECT
@@ -456,7 +462,7 @@ class RecommendGenarator
                             FROM
                                 {$table}
                             WHERE
-                                diff_member >= 2
+                                diff_member >= 3
                         ) AS sr1
                         LEFT JOIN (
                             SELECT
@@ -465,7 +471,7 @@ class RecommendGenarator
                             FROM
                                 {$exceptTable}
                             WHERE
-                                diff_member >= 2
+                                diff_member >= 3
                         ) AS sr2 ON sr1.open_chat_id = sr2.open_chat_id
                         LEFT JOIN (
                             SELECT
@@ -474,7 +480,7 @@ class RecommendGenarator
                             FROM
                                 {$exceptTable2}
                             WHERE
-                                diff_member >= 2
+                                diff_member >= 3
                         ) AS sr3 ON sr1.open_chat_id = sr3.open_chat_id
                     WHERE
                         sr2.id IS NULL
@@ -498,7 +504,8 @@ class RecommendGenarator
                 oc.id,
                 oc.name,
                 oc.local_img_url AS img_url,
-                oc.member
+                oc.member,
+                'open_chat' AS table_name
             FROM
                 (
                     SELECT
@@ -515,7 +522,7 @@ class RecommendGenarator
                     FROM
                         statistics_ranking_hour
                     WHERE
-                        diff_member >= 2
+                        diff_member >= 3
                 ) AS st1 ON oc.id = st1.open_chat_id
                 LEFT JOIN (
                     SELECT
@@ -523,7 +530,7 @@ class RecommendGenarator
                     FROM
                         statistics_ranking_day
                     WHERE
-                        diff_member >= 2
+                        diff_member >= 3
                 ) AS st2 ON oc.id = st2.open_chat_id
                 LEFT JOIN (
                     SELECT
@@ -531,7 +538,7 @@ class RecommendGenarator
                     FROM
                         statistics_ranking_week
                     WHERE
-                        diff_member >= 2
+                        diff_member >= 3
                 ) AS st3 ON oc.id = st3.open_chat_id
             WHERE
                 st1.id IS NULL
@@ -545,17 +552,22 @@ class RecommendGenarator
         );
     }
 
-    function getRecommend(int $open_chat_id, bool $shuffle = false): array
+    function geneTag($s)
     {
-        $geneTag = fn ($s) => str_replace('_AND_', ' ', mb_strstr($s, '_OR_', true) ?: $s);
+        return str_replace('_AND_', ' ', mb_strstr($s, '_OR_', true) ?: $s);
+    }
+
+    function getRecommend(int $open_chat_id, bool $shuffle = true): array
+    {
+        $recommendTag = $this->getRecommendTag($open_chat_id);
 
         $tag = DB::fetchColumn("SELECT tag FROM oc_tag WHERE id = {$open_chat_id}");
         if (!$tag) {
-            $tag = $this->getRecommendTag($open_chat_id);
+            $tag = $recommendTag;
         }
 
         $tag2 = DB::fetchColumn("SELECT tag FROM oc_tag2 WHERE id = {$open_chat_id}");
-        if (!$tag2) $tag2 = $this->getRecommendTag($open_chat_id);
+        if (!$tag2) $tag2 = $recommendTag;
         if ($tag2 === $tag) $tag2 = false;
 
         if (!$tag2 && !$tag) {
@@ -568,14 +580,14 @@ class RecommendGenarator
         $r1 = [];
         if ($tag) {
             $r1 = $this->getRanking($open_chat_id, $tag, $shuffle);
-            $tag = $geneTag($tag);
+            $tag = $this->geneTag($tag);
             $tag = "「{$tag}」関連";
         }
 
         $r2 = [];
         if ($tag2) {
             $r2 = $this->getRanking($open_chat_id, $tag2, $shuffle);
-            $tag2 = $geneTag($tag2);
+            $tag2 = $this->geneTag($tag2);
             $tag2 = "「{$tag2}」関連";
             if (!$r1) {
                 $category = $this->getCategory($open_chat_id);

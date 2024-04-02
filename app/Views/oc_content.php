@@ -24,7 +24,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <!-- オープンチャット表示ヘッダー -->
       <header class="openchat-header unset">
         <div class="talkroom_banner_img_area">
-          <img class="talkroom_banner_img" aria-hidden="true" alt="オープンチャット「<?php echo $oc['name'] ?>」のメイン画像" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
+          <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
         </div>
 
         <div class="openchat-header-right">
@@ -123,13 +123,13 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
       </footer>
 
+      <hr>
       <?php if ($recommend[0]) : ?>
-        <hr>
-        <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'category' => $recommend[1]]) ?>
+        <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'category' => $recommend[1], 'max' => $recommend[5]]) ?>
         <hr style="margin-top: 2px;">
       <?php endif ?>
       <?php if ($recommend[2]) : ?>
-        <?php viewComponent('recommend_list', ['recommend' => $recommend[2], 'category' => $recommend[3]]) ?>
+        <?php viewComponent('recommend_list', ['recommend' => $recommend[2], 'category' => $recommend[3], 'max' => $recommend[6]]) ?>
         <hr style="margin-top: 2px;">
       <?php endif ?>
 

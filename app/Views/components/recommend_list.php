@@ -110,7 +110,7 @@
     <ul class="recommend-list">
         <?php foreach ($recommend as $roc) : ?>
             <li>
-                <a href="<?php echo url('/oc/' . $roc['id']) ?>">
+                <a href="<?php echo url('/oc/' . $roc['id']) . ($roc['table_name'] === 'statistics_ranking_hour' ? '?limit=hour' : '') ?>">
                     <img loading="lazy" alt="<?php echo $roc['name'] ?>" src="<?php echo imgUrl($roc['id'], $roc['img_url']) ?>" />
                     <h4 style=" 
                         font-size: 12px;
@@ -128,8 +128,24 @@
                     ">
                         <?php echo $roc['name'] ?>
                     </h4>
-                    <div style="font-size: 12px; color: #777; line-height: 125%; margin-top: 3px;">
-                        <span>メンバー <?php echo number_format($roc['member']) ?>人</span>
+                    <div style="font-size: 11px; color: #777; line-height: 125%; margin-top: 3px; white-space: nowrap;">
+                        <span>
+                            <?php if ($roc['member'] === $max) : ?>
+                                <span aria-hidden="true" style="margin: 0 -2px; font-size: 9px; user-select: none;">🏆</span>
+                                <span style="font-weight: bold;">メンバー <?php echo formatMember($roc['member']) ?>人</span>
+                            <?php else : ?>
+                                <span>メンバー <?php echo formatMember($roc['member']) ?>人</span>
+                            <?php endif ?>
+                            <?php if ($roc['table_name'] === 'statistics_ranking_hour') : ?>
+                                <span aria-hidden="true" style="margin: 0 -3px; font-size: 11px; user-select: none;">🚀</span>
+                            <?php endif ?>
+                            <?php if ($roc['table_name'] === 'statistics_ranking_day') : ?>
+                                <span aria-hidden="true" style="margin: 0 -3px; font-size: 9px; user-select: none;">🔥</span>
+                            <?php endif ?>
+                            <?php if ($roc['table_name'] === 'statistics_ranking_week') : ?>
+                                <span aria-hidden="true" style="margin: 0 -3px; font-size: 9px; user-select: none;">📈</span>
+                            <?php endif ?>
+                        </span>
                     </div>
                 </a>
             </li>

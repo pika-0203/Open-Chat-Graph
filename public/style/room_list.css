@@ -851,8 +851,11 @@ article.top-list {
   z-index: 3;
 }
 
-.top-list .openchat-item-desc,
 .top-mylist .openchat-item-desc {
+  -webkit-line-clamp: 3;
+}
+
+.top-list .openchat-item-desc {
   -webkit-line-clamp: 3;
 }
 

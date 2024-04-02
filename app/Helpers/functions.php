@@ -298,3 +298,8 @@ function localCORS()
         }
     }
 }
+
+function formatMember(int $n)
+{
+    return $n < 1000 ? $n : ($n >= 10000 ? (floor($n / 1000) / 10 . '万') : number_format($n));
+}

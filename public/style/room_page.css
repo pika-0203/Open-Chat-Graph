@@ -32,7 +32,7 @@ hr {
   display: flex;
   justify-content: space-evenly;
   gap: 2px;
-  min-height: 3rem;
+  min-height: 4rem;
 }
 
 .openchat-header {
@@ -223,7 +223,6 @@ hr {
   white-space: nowrap;
   align-items: center;
   gap: 4px;
-  margin-right: 5px;
 }
 
 .openchat-list-date.inner {
@@ -292,7 +291,6 @@ hr {
   height: fit-content;
   border: 1px solid #efefef;
   padding: 4px 6px;
-  margin-right: 19px;
   border-radius: 3px;
 }
 
