@@ -9,54 +9,13 @@ use Shadow\DB;
 
 class RecommendGenarator
 {
-    private const LIST_LIMIT = 50;
+    private const LIST_LIMIT = 25;
+    private const MAX_LIST_LEN = 80;
+    private const MAX_DIFF = 3;
 
-    function getRanking(int $id, string $tag, bool $shuffle = true)
+    function getRankingTable(int $id, string $tag, string $table, int $limit)
     {
-        $limit = self::LIST_LIMIT;
-        $ranking = $this->getRankingTable($id, $tag, $limit, 'statistics_ranking_hour');
-        $count = count($ranking);
-        $shuffle && shuffle($ranking);
-        if ($count >= ($limit - 10)) $limit += self::LIST_LIMIT;
-
-        $ranking2 = $this->getRankingTableByExceptTable(
-            $id,
-            $tag,
-            $limit - $count,
-            'statistics_ranking_day',
-            'statistics_ranking_hour'
-        );
-
-        $count = count($ranking2) + $count;
-        if ($count >= ($limit - 10)) $limit += self::LIST_LIMIT;
-
-        $week = $this->getRankingTableByExceptTable2(
-            $id,
-            $tag,
-            $limit - $count,
-            'statistics_ranking_week',
-            'statistics_ranking_day',
-            'statistics_ranking_hour',
-        );
-        $middle = array_merge($ranking2, $week);
-        $shuffle && shuffle($middle);
-        $count = count($week) + $count;
-        if ($count >= ($limit - 10)) $limit += 20;
-
-        $member = $this->getTagTableOrderByMember(
-            $id,
-            $tag,
-            $limit - $count,
-        );
-        $shuffle && shuffle($member);
-
-        $ranking = array_merge($ranking, $middle, $member);
-
-        return $ranking;
-    }
-
-    function getRankingTable(int $id, string $tag, int $limit, string $table)
-    {
+        $diff = self::MAX_DIFF;
         return DB::fetchAll(
             "SELECT
                 oc.id,
@@ -78,24 +37,26 @@ class RecommendGenarator
                                 {$table}
                             WHERE
                                 open_chat_id != :id
-                                AND diff_member >= 3
+                                AND diff_member >= {$diff}
                         ) AS t1
                         JOIN recommend AS t2 ON t1.open_chat_id = t2.id
                     WHERE
                         t2.tag = :tag
                     ORDER BY
                         ranking_id ASC
-                    LIMIT
-                        :limit
                 ) AS ranking ON oc.id = ranking.id
             ORDER BY
-                ranking.ranking_id ASC",
+                ranking.ranking_id ASC
+            LIMIT
+                :limit",
             compact('tag', 'id', 'limit')
         );
     }
 
-    function getRankingTableByExceptTable(int $id, string $tag, int $limit, string $table, string $exceptTable)
+    function getRankingTableByExceptId(int $id, string $tag, array $idArray, string $table, int $limit)
     {
+        $diff = self::MAX_DIFF;
+        $ids = implode(",", $idArray) ?: 0;
         return DB::fetchAll(
             "SELECT
                 oc.id,
@@ -121,110 +82,28 @@ class RecommendGenarator
                                         {$table}
                                     WHERE
                                         open_chat_id != :id
-                                        AND diff_member >= 3
+                                        AND diff_member >= {$diff}
                                 ) AS sr1
-                                LEFT JOIN (
-                                    SELECT
-                                        id,
-                                        open_chat_id
-                                    FROM
-                                        {$exceptTable}
-                                    WHERE
-                                        open_chat_id != :id
-                                        AND diff_member >= 3
-                                ) AS sr2 ON sr1.open_chat_id = sr2.open_chat_id
-                            WHERE
-                                sr2.id IS NULL
                         ) AS t1
                         JOIN recommend AS t2 ON t1.open_chat_id = t2.id
                     WHERE
                         t2.tag = :tag
                     ORDER BY
                         ranking_id ASC
-                    LIMIT
-                        :limit
                 ) AS ranking ON oc.id = ranking.id
+            WHERE
+                oc.id NOT IN ({$ids})
             ORDER BY
-                ranking.ranking_id ASC",
+                ranking.ranking_id ASC
+            LIMIT
+                :limit",
             compact('tag', 'id', 'limit')
         );
     }
 
-    function getRankingTableByExceptTable2(
-        int $id,
-        string $tag,
-        int $limit,
-        string $table,
-        string $exceptTable,
-        string $exceptTable2
-    ) {
-        return DB::fetchAll(
-            "SELECT
-                oc.id,
-                oc.name,
-                oc.local_img_url AS img_url,
-                oc.member,
-                '{$table}' AS table_name
-            FROM
-                open_chat AS oc
-                JOIN (
-                    SELECT
-                        t2.id,
-                        t1.id AS ranking_id
-                    FROM
-                        (
-                            SELECT
-                                sr1.*
-                            FROM
-                                (
-                                    SELECT
-                                        *
-                                    FROM
-                                        {$table}
-                                    WHERE
-                                        open_chat_id != :id
-                                        AND diff_member >= 3
-                                ) AS sr1
-                                LEFT JOIN (
-                                    SELECT
-                                        id,
-                                        open_chat_id
-                                    FROM
-                                        {$exceptTable}
-                                    WHERE
-                                        open_chat_id != :id
-                                        AND diff_member >= 3
-                                ) AS sr2 ON sr1.open_chat_id = sr2.open_chat_id
-                                LEFT JOIN (
-                                    SELECT
-                                        id,
-                                        open_chat_id
-                                    FROM
-                                        {$exceptTable2}
-                                    WHERE
-                                        open_chat_id != :id
-                                        AND diff_member >= 3
-                                ) AS sr3 ON sr1.open_chat_id = sr3.open_chat_id
-                            WHERE
-                                sr2.id IS NULL
-                        ) AS t1
-                        JOIN recommend AS t2 ON t1.open_chat_id = t2.id
-                    WHERE
-                        t2.tag = :tag
-                    ORDER BY
-                        ranking_id ASC
-                    LIMIT
-                        :limit
-                ) AS ranking ON oc.id = ranking.id
-            ORDER BY
-                ranking.ranking_id ASC",
-            compact('tag', 'id', 'limit')
-        );
-    }
-
-
-    function getTagTableOrderByMember(int $id, string $tag, int $limit)
+    function getTagTableOrderByMember(int $id, string $tag, array $idArray, int $limit)
     {
+        $ids = implode(",", $idArray) ?: 0;
         return DB::fetchAll(
             "SELECT
                 oc.id,
@@ -247,35 +126,9 @@ class RecommendGenarator
                                 tag = :tag
                                 AND NOT id = :id
                         ) AS r
-                        LEFT JOIN (
-                            SELECT
-                                *
-                            FROM
-                                statistics_ranking_hour
-                            WHERE
-                                diff_member >= 3
-                        ) AS st1 ON r.id = st1.open_chat_id
-                        LEFT JOIN (
-                            SELECT
-                                *
-                            FROM
-                                statistics_ranking_day
-                            WHERE
-                                diff_member >= 3
-                        ) AS st2 ON r.id = st2.open_chat_id
-                        LEFT JOIN (
-                            SELECT
-                                *
-                            FROM
-                                statistics_ranking_week
-                            WHERE
-                                diff_member >= 3
-                        ) AS st3 ON r.id = st3.open_chat_id
-                    WHERE
-                        st1.id IS NULL
-                        AND st2.id IS NULL
-                        AND st3.id IS NULL
                 ) AS reco ON oc.id = reco.id
+            WHERE
+                oc.id NOT IN ({$ids})
             ORDER BY
                 oc.member DESC
             LIMIT
@@ -283,62 +136,39 @@ class RecommendGenarator
             compact('tag', 'id', 'limit')
         );
     }
-    function getCategory(int $id)
-    {
-        return DB::fetchColumn("SELECT category FROM open_chat WHERE id = {$id}") ?? 0;
-    }
 
-    function getRecommendTag(int $id)
+    function getRanking(int $id, string $tag, bool $shuffle = true)
     {
-        return DB::fetchColumn("SELECT tag FROM recommend WHERE id = {$id}");
-    }
-
-    function getCategoryRanking(int $id, int $category, bool $shuffle = true)
-    {
-        if (!$category) return [];
-
         $limit = self::LIST_LIMIT;
-        $ranking = $this->getCategoryRankingTable($id, $category, $limit, 'statistics_ranking_hour');
-        $shuffle && shuffle($ranking);
-        $count = count($ranking);
-        if ($count >= $limit) return $ranking;
 
-        $ranking2 = $this->getCategoryRankingTableByExceptTable(
-            $id,
-            $category,
-            $limit - $count,
-            'statistics_ranking_day',
-            'statistics_ranking_hour'
-        );
-        $shuffle && shuffle($ranking2);
-        $count = count($ranking2) + $count;
-        if ($count >= $limit) return array_merge($ranking, $ranking2);
-
-        $week = $this->getCategoryRankingTableByExceptTable2(
-            $id,
-            $category,
-            $limit - $count,
-            'statistics_ranking_week',
-            'statistics_ranking_day',
-            'statistics_ranking_hour',
-        );
-        $count = count($week) + $count;
-        $ranking2 = array_merge($ranking2, $week);
-        $shuffle && shuffle($ranking2);
-        if ($count >= $limit) return array_merge($ranking, $ranking2);
-
-        $member = $this->getCategoryOrderByMember(
-            $id,
-            $category,
-            $limit - $count,
-        );
-        $shuffle && shuffle($member);
-        $ranking = array_merge($ranking, $ranking2, $member);
-        return $ranking;
+        $ranking = $this->getRankingTable($id, $tag, 'statistics_ranking_hour', $limit);
+        
+        $idArray = array_column($ranking, 'id');
+        $ranking2 = $this->getRankingTableByExceptId($id, $tag, $idArray, 'statistics_ranking_day', $limit);
+        
+        $idArray = array_column(array_merge($ranking, $ranking2), 'id');
+        $ranking3 = $this->getRankingTableByExceptId($id, $tag, $idArray, 'statistics_ranking_week', $limit);
+        
+        $idArray = array_column(array_merge($ranking, $ranking2, $ranking3), 'id');
+        $ranking4 = $this->getTagTableOrderByMember($id, $tag, $idArray, min(self::MAX_LIST_LEN - count($idArray), self::LIST_LIMIT));
+        
+        if($shuffle) {
+            shuffle($ranking);
+            shuffle($ranking2);
+            shuffle($ranking3);
+            shuffle($ranking4);
+            $ranking5 = array_merge($ranking2, $ranking3);
+            shuffle($ranking5);
+            return array_merge($ranking, $ranking5, $ranking4);
+        }
+        
+        return array_merge($ranking, $ranking2, $ranking3, $ranking4);
     }
 
-    function getCategoryRankingTable(int $id, int $category, int $limit, string $table)
+
+    function getCategoryRankingTable(int $id, int $category, string $table, int $limit)
     {
+        $diff = self::MAX_DIFF;
         return DB::fetchAll(
             "SELECT
                 oc.id,
@@ -362,20 +192,20 @@ class RecommendGenarator
                     FROM
                         {$table}
                     WHERE
-                        diff_member >= 3
-                    ORDER BY
-                        id ASC
-                    LIMIT
-                        :limit
+                        diff_member >= {$diff}
                 ) AS ranking ON oc.id = ranking.open_chat_id
             ORDER BY
-                ranking.id ASC",
+                ranking.id ASC
+            LIMIT
+                :limit",
             compact('id', 'category', 'limit')
         );
     }
 
-    function getCategoryRankingTableByExceptTable(int $id, int $category, int $limit, string $table, string $exceptTable)
+    function getCategoryRankingTableByExceptId(int $id, int $category, array $idArray, string $table, int $limit)
     {
+        $diff = self::MAX_DIFF;
+        $ids = implode(",", $idArray) ?: 0;
         return DB::fetchAll(
             "SELECT
                 oc.id,
@@ -403,102 +233,22 @@ class RecommendGenarator
                             FROM
                                 {$table}
                             WHERE
-                                diff_member >= 3
+                                diff_member >= {$diff}
                         ) AS sr1
-                        LEFT JOIN (
-                            SELECT
-                                id,
-                                open_chat_id
-                            FROM
-                                {$exceptTable}
-                            WHERE
-                                diff_member >= 3
-                        ) AS sr2 ON sr1.open_chat_id = sr2.open_chat_id
-                    WHERE
-                        sr2.id IS NULL
-                    ORDER BY
-                        sr1.id ASC
-                    LIMIT
-                        :limit
                 ) AS ranking ON oc.id = ranking.open_chat_id
+            WHERE
+                oc.id NOT IN ({$ids})
             ORDER BY
-                ranking.id ASC",
+                ranking.id ASC
+            LIMIT
+                :limit",
             compact('id', 'category', 'limit')
         );
     }
 
-    function getCategoryRankingTableByExceptTable2(
-        int $id,
-        int $category,
-        int $limit,
-        string $table,
-        string $exceptTable,
-        string $exceptTable2
-    ) {
-        return DB::fetchAll(
-            "SELECT
-                oc.id,
-                oc.name,
-                oc.local_img_url AS img_url,
-                oc.member,
-                '{$table}' AS table_name
-            FROM
-                (
-                    SELECT
-                        *
-                    FROM
-                        open_chat
-                    WHERE
-                        category = :category
-                        AND NOT id = :id
-                ) AS oc
-                JOIN (
-                    SELECT
-                        sr1.*
-                    FROM
-                        (
-                            SELECT
-                                *
-                            FROM
-                                {$table}
-                            WHERE
-                                diff_member >= 3
-                        ) AS sr1
-                        LEFT JOIN (
-                            SELECT
-                                id,
-                                open_chat_id
-                            FROM
-                                {$exceptTable}
-                            WHERE
-                                diff_member >= 3
-                        ) AS sr2 ON sr1.open_chat_id = sr2.open_chat_id
-                        LEFT JOIN (
-                            SELECT
-                                id,
-                                open_chat_id
-                            FROM
-                                {$exceptTable2}
-                            WHERE
-                                diff_member >= 3
-                        ) AS sr3 ON sr1.open_chat_id = sr3.open_chat_id
-                    WHERE
-                        sr2.id IS NULL
-                        AND sr3.id IS NULL
-                    ORDER BY
-                        sr1.id ASC
-                    LIMIT
-                        :limit
-                ) AS ranking ON oc.id = ranking.open_chat_id
-            ORDER BY
-                ranking.id ASC",
-            compact('id', 'category', 'limit')
-        );
-    }
-
-
-    function getCategoryOrderByMember(int $id, int $category, int $limit)
+    function getCategoryOrderByMember(int $id, int $category, array $idArray, int $limit)
     {
+        $ids = implode(",", $idArray) ?: 0;
         return DB::fetchAll(
             "SELECT
                 oc.id,
@@ -507,49 +257,55 @@ class RecommendGenarator
                 oc.member,
                 'open_chat' AS table_name
             FROM
-                (
-                    SELECT
-                        *
-                    FROM
-                        open_chat
-                    WHERE
-                        category = :category
-                        AND NOT id = :id
-                ) AS oc
-                LEFT JOIN (
-                    SELECT
-                        *
-                    FROM
-                        statistics_ranking_hour
-                    WHERE
-                        diff_member >= 3
-                ) AS st1 ON oc.id = st1.open_chat_id
-                LEFT JOIN (
-                    SELECT
-                        *
-                    FROM
-                        statistics_ranking_day
-                    WHERE
-                        diff_member >= 3
-                ) AS st2 ON oc.id = st2.open_chat_id
-                LEFT JOIN (
-                    SELECT
-                        *
-                    FROM
-                        statistics_ranking_week
-                    WHERE
-                        diff_member >= 3
-                ) AS st3 ON oc.id = st3.open_chat_id
+                open_chat AS oc
             WHERE
-                st1.id IS NULL
-                AND st2.id IS NULL
-                AND st3.id IS NULL
+                oc.category = :category
+                AND oc.id NOT IN ({$ids})
+                AND NOT oc.id = :id
             ORDER BY
                 oc.member DESC
             LIMIT
                 :limit",
             compact('id', 'category', 'limit')
         );
+    }
+
+    function getCategoryRanking(int $id, int $category, bool $shuffle = true)
+    {
+        $limit = self::LIST_LIMIT;
+
+        $ranking = $this->getCategoryRankingTable($id, $category, 'statistics_ranking_hour', $limit);
+
+        $idArray = array_column($ranking, 'id');
+        $ranking2 = $this->getCategoryRankingTableByExceptId($id, $category, $idArray, 'statistics_ranking_day', $limit);
+
+        $idArray = array_column(array_merge($ranking, $ranking2), 'id');
+        $ranking3 = $this->getCategoryRankingTableByExceptId($id, $category, $idArray, 'statistics_ranking_week', $limit);
+
+        $idArray = array_column(array_merge($ranking, $ranking2, $ranking3), 'id');
+        $ranking4 = $this->getCategoryOrderByMember($id, $category, $idArray, min(self::MAX_LIST_LEN - count($idArray), self::LIST_LIMIT));
+
+        if ($shuffle) {
+            shuffle($ranking);
+            shuffle($ranking2);
+            shuffle($ranking3);
+            shuffle($ranking4);
+            $ranking5 = array_merge($ranking2, $ranking3);
+            shuffle($ranking5);
+            return array_merge($ranking, $ranking5, $ranking4);
+        }
+
+        return array_merge($ranking, $ranking2, $ranking3, $ranking4);
+    }
+
+    function getCategory(int $id)
+    {
+        return DB::fetchColumn("SELECT category FROM open_chat WHERE id = {$id}") ?? 0;
+    }
+
+    function getRecommendTag(int $id)
+    {
+        return DB::fetchColumn("SELECT tag FROM recommend WHERE id = {$id}");
     }
 
     function geneTag($s)
