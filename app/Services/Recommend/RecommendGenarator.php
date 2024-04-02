@@ -142,17 +142,17 @@ class RecommendGenarator
         $limit = self::LIST_LIMIT;
 
         $ranking = $this->getRankingTable($id, $tag, 'statistics_ranking_hour', $limit);
-        
+
         $idArray = array_column($ranking, 'id');
         $ranking2 = $this->getRankingTableByExceptId($id, $tag, $idArray, 'statistics_ranking_day', $limit);
-        
+
         $idArray = array_column(array_merge($ranking, $ranking2), 'id');
         $ranking3 = $this->getRankingTableByExceptId($id, $tag, $idArray, 'statistics_ranking_week', $limit);
-        
+
         $idArray = array_column(array_merge($ranking, $ranking2, $ranking3), 'id');
-        $ranking4 = $this->getTagTableOrderByMember($id, $tag, $idArray, min(self::MAX_LIST_LEN - count($idArray), self::LIST_LIMIT));
-        
-        if($shuffle) {
+        $ranking4 = $this->getTagTableOrderByMember($id, $tag, $idArray, self::MAX_LIST_LEN - count($idArray));
+
+        if ($shuffle) {
             shuffle($ranking);
             shuffle($ranking2);
             shuffle($ranking3);
@@ -161,7 +161,7 @@ class RecommendGenarator
             shuffle($ranking5);
             return array_merge($ranking, $ranking5, $ranking4);
         }
-        
+
         return array_merge($ranking, $ranking2, $ranking3, $ranking4);
     }
 
@@ -283,7 +283,7 @@ class RecommendGenarator
         $ranking3 = $this->getCategoryRankingTableByExceptId($id, $category, $idArray, 'statistics_ranking_week', $limit);
 
         $idArray = array_column(array_merge($ranking, $ranking2, $ranking3), 'id');
-        $ranking4 = $this->getCategoryOrderByMember($id, $category, $idArray, min(self::MAX_LIST_LEN - count($idArray), self::LIST_LIMIT));
+        $ranking4 = $this->getCategoryOrderByMember($id, $category, $idArray, self::MAX_LIST_LEN - count($idArray));
 
         if ($shuffle) {
             shuffle($ranking);

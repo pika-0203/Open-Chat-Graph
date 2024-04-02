@@ -61,8 +61,8 @@
             fill: currentcolor;
             flex-shrink: 0;
             color: rgb(7, 181, 59);
-            font-size: 12px;
-            margin: -1px -3px;
+            font-size: 13px;
+            margin: -1px -4px;
         }
 
         @media screen and (min-width: 512px) {
@@ -149,10 +149,10 @@
                                 <span>メンバー <?php echo formatMember($roc['member']) ?>人</span>
                             <?php endif ?>
                             <?php if ($roc['table_name'] === 'statistics_ranking_hour') : ?>
-                                <span aria-hidden="true" style="margin: 0 -2px; font-size: 8px; user-select: none;">🔥</span>
+                                <span aria-hidden="true" style="margin: 0 -3px; font-size: 10px; user-select: none;">🔥</span>
                             <?php endif ?>
                             <?php if ($roc['table_name'] === 'statistics_ranking_day') : ?>
-                                <span aria-hidden="true" style="margin: 0 -2px; font-size: 9px; user-select: none;">🚀</span>
+                                <span aria-hidden="true" style="margin: 0 -2px; font-size: 11px; user-select: none;">🚀</span>
                             <?php endif ?>
                             <?php if ($roc['table_name'] === 'statistics_ranking_week') : ?>
                                 <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium show-north css-162gv95" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NorthIcon">
