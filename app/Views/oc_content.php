@@ -125,17 +125,21 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
       <hr>
       <?php if ($recommend[0]) : ?>
-        <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'category' => $recommend[1], 'max' => $recommend[5]]) ?>
+        <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2]]) ?>
         <hr style="margin-top: 2px;">
       <?php endif ?>
-      <?php if ($recommend[2]) : ?>
-        <?php viewComponent('recommend_list', ['recommend' => $recommend[2], 'category' => $recommend[3], 'max' => $recommend[6]]) ?>
+      <?php if ($recommend[1]) : ?>
+        <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2]]) ?>
         <hr style="margin-top: 2px;">
       <?php endif ?>
-
     </article>
-
-    <div id="comment-root" style="margin: 1rem;"></div>
+    <section>
+      <div style="display: flex; flex-direction: row; align-items: center;" class="openchat">
+        <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
+        <h2 class="graph-title">オープンチャットについてのコメント</h2>
+      </div>
+      <div id="comment-root" style="margin: 1rem;"></div>
+    </section>
     <footer>
       <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
       <?php viewComponent('footer_inner') ?>

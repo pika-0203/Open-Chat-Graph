@@ -40,7 +40,7 @@ class OpenChatPageController
 
         $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($_statsDto);
 
-        $_css = ['site_header', 'site_footer', 'room_page', 'react/OpenChat', 'graph_page'];
+        $_css = ['site_header', 'site_footer', 'room_page', 'react/OpenChat', 'graph_page', 'recommend_list'];
 
         $_meta = $meta->generateMetadata($open_chat_id, $oc);
 
@@ -87,23 +87,7 @@ class OpenChatPageController
             strtotime($_statsDto->endDate)
         );
 
-        $table = ['statistics_ranking_hour', 'statistics_ranking_day', 'statistics_ranking_week'];
-        $order = ['ranking.id ASC', 'oc.member DESC'];
-        $tableName = $table[array_rand($table)];
-        $orderBy = $order[array_rand($order)];
-
-        $recCategory = $_chartArgDto->categoryKey ? ('oc.category = ' . $_chartArgDto->categoryKey) : 1;
-
-        $recommendTag = $recommendGenarator->geneTag($recommendGenarator->getRecommendTag($oc['id']) ?: '');
         $recommend = $recommendGenarator->getRecommend($oc['id']);
-
-        $buldRecommendMaxNum = function ($i1, $i2, $i3) use (&$recommend, $oc, $recommendTag) {
-            $recommend[$i1] = $recommend[$i2] ? max(array_column($recommend[$i2], 'member')) : 0;
-            $recommend[$i1] = $recommend[$i1] > $oc['member'] ? $recommend[$i1] : ("「{$recommendTag}」関連" === $recommend[$i3] ? 0 : $recommend[$i1]);
-        };
-
-        $buldRecommendMaxNum(5, 0, 1);
-        $buldRecommendMaxNum(6, 2, 3);
 
         return view('oc_content', compact(
             '_meta',

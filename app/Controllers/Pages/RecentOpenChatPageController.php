@@ -32,7 +32,7 @@ class RecentOpenChatPageController
         }
 
         $path = '/oc?recently-registered-page=';
-        $pageTitle = '最近登録されたオープンチャット';
+        $pageTitle = 'オプチャグラフに最近登録されたオープンチャット';
         $_css = ['room_list', 'site_header', 'site_footer'];
 
         $isAdmin = $adminAuthService->auth();

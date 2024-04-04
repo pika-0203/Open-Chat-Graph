@@ -12,7 +12,9 @@ class RegisterPageController
     {
         $view = [
             '_css' => ['room_list', 'site_header', 'site_footer'],
-            '_meta' => meta()->setTitle('オープンチャットを登録する'),
+            '_meta' => meta()
+                ->setTitle('オプチャグラフにオープンチャットを手動で登録する')
+                ->setDescription('公式ランキングに未掲載のオープンチャットをオプチャグラフに手動で登録するフォームです。'),
         ];
 
         $viewBeforeRegister = fn () => view('register_form_content', $view);

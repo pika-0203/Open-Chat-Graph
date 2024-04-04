@@ -102,7 +102,7 @@ class View implements ViewInterface
 
             if (is_array($value)) {
                 $output[$key] = $this->sanitizeArray($value);
-            } elseif (is_object($value)) {
+            } elseif (!$value instanceof \UnitEnum && is_object($value)) {
                 $output[$key] = $this->sanitizeObject($value);
             } elseif (is_string($value)) {
                 $output[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
@@ -131,7 +131,7 @@ class View implements ViewInterface
                 $input->$key = $value->getRenderCache();
             } elseif (is_array($value)) {
                 $input->$key = $this->sanitizeArray($value);
-            } elseif (is_object($value)) {
+            } elseif (!$value instanceof \UnitEnum && is_object($value)) {
                 $input->$key = $this->sanitizeObject($value);
             } elseif (is_string($value)) {
                 $input->$key = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');

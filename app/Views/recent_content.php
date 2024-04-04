@@ -20,18 +20,30 @@
             margin-top: 1.75rem;
             padding-bottom: 0.85rem;
         }
+
+        .p-small {
+            font-size: 13px;
+            color: #777;
+                
+        }
     </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
-    <main class="ranking-page-main">
+    <main class="ranking-page-main" style="margin-top: 8px; padding-top: 0;">
         <article>
             <header class="openchat-list-title-area unset">
                 <div style="flex-direction: column;">
-                    <h2>
-                        <span class="list-title">最近登録されたオープンチャット</span>
+                    <h2 class="list-title">
+                        オプチャグラフに最近登録されたオープンチャット
                     </h2>
                     <p>
-                        <small style="font-size: 13px; color:#777">公式ランキングにランクインされた順で表示</small>
+                        <small class="p-small">このページではオプチャグラフに登録されたオープンチャットを登録日時順で表示します。</small>
+                    </p>
+                    <p>
+                        <small class="p-small"><a style="color:#777" rel="external nofollow noopener" href="https://openchat.line.me/jp/explore" target="_blank">LINEサイト公式のランキング<span class="line-link-icon777"></span></a>にランクインしたオープンチャットは、オプチャグラフに随時登録されます。</small>
+                    </p>
+                    <p>
+                        <small class="p-small">LINE公式サイトのランキングは1時間毎に更新されており、オプチャグラフもその時間帯に合わせて公式サイトからデータを取得しています。<br>ランキングの内容はアプリのオプチャで表示されるランキングと同様のものです。</small>
                     </p>
                 </div>
             </header>

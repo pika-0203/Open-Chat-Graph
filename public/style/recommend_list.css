@@ -1,0 +1,144 @@
+.btn-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-wrapper h3 {
+  all: unset;
+  font-weight: bold;
+  font-size: 13px;
+  color: #777;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.recommend-list {
+  overflow-x: scroll;
+  flex-wrap: nowrap;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.recommend-list li {
+  all: unset;
+  min-width: 115px;
+  max-width: 115px;
+  margin: 0;
+  padding: 0;
+  padding: 13px 3px;
+}
+
+.recommend-list h4 {
+  font-size: 12px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-break: break-all;
+  margin: 0;
+  margin-top: 6px;
+  font-weight: bold;
+  /* text-align: center; */
+  line-height: 125%;
+  overflow-wrap: anywhere;
+  color: #111;
+}
+
+.recommend-desc {
+  font-size: 10.5px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-break: break-all;
+  margin: 0;
+  margin-top: 2px;
+  line-height: 125%;
+  overflow-wrap: anywhere;
+  color: #777;
+}
+
+.recommend-list::-webkit-scrollbar {
+  display: none;
+}
+
+.read-more-list-btn {
+  display: none;
+}
+
+.recommend-list a {
+  cursor: pointer;
+  text-decoration: none;
+  color: #111;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  height: 200px;
+  justify-content: space-evenly;
+}
+
+.recommend-list img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 22.5%;
+  object-fit: cover;
+}
+
+.css-162gv95 {
+  user-select: none;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  fill: currentcolor;
+  flex-shrink: 0;
+  color: rgb(7, 181, 59);
+  font-size: 11px;
+  margin: -1px -4px;
+}
+
+@media screen and (min-width: 512px) {
+  .recommend-list {
+    overflow-x: unset;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+  .recommend-list li {
+    padding: 8px 3px;
+  }
+
+  .recommend-list li:nth-child(n + 11) {
+    display: none;
+  }
+
+  .recommend-list.show-all li:nth-child(n + 11) {
+    display: block;
+  }
+
+  .read-more-list-btn {
+    display: inline-block;
+    margin: 0;
+    height: 36px;
+    border: 1px solid #efefef;
+    border-radius: 9rem;
+    background-color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .recommend-list a {
+    height: 174px;
+  }
+
+  .recommend-list img {
+    width: 100px;
+    margin: 0 auto;
+  }
+}

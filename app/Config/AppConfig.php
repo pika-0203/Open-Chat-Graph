@@ -4,6 +4,11 @@ namespace App\Config;
 
 class AppConfig
 {
+    const RankingHourTable = 'statistics_ranking_hour';
+    const RankingDayTable = 'statistics_ranking_day';
+    const RankingWeekTable = 'statistics_ranking_week';
+    const OpenChatTable = 'open_chat';
+
     const SITE_ICON_FILE_PATH = 'assets/icon-192x192.png';
     const DEFAULT_OGP_IMAGE_FILE_PATH = 'assets/ogp.png';
 

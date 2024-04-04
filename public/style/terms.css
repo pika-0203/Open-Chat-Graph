@@ -39,6 +39,10 @@ h1 {
   color: #333;
 }
 
+.terms h3 {
+  color: #333;
+}
+
 .terms > ol p {
   margin: 0;
 }

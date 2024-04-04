@@ -3,12 +3,23 @@
 <?php viewComponent('head', compact('_css', '_meta')) ?>
 
 <body class="body">
+    <style>
+        .list-title {
+            color: #111;
+            all: unset;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
     <?php viewComponent('site_header') ?>
-    <main>
-        <hr>
-        <hr>
-        <small class="top-small-desc" style="font-size: 1rem;"><b>オープンチャットを手動で登録する</b></small>
-
+    <main style="margin-top: 8px;">
+        <h2 style="all:unset"><span class="list-title">オプチャグラフにオープンチャットを手動で登録する</span></h2>
+        <p>
+            <small class="top-small-desc" style="font-size: 14px; color: #616161">通常、メンバー数が10人を超えたオープンチャットは公式ランキングに一度掲載されるため、オプチャグラフへ自動的に登録されます。</small>
+        </p>
+        <p>
+            <small class="top-small-desc" style="font-size: 14px; color: #616161">以下の手順は公式ランキングに未掲載のオープンチャットをオプチャグラフに手動で登録する方法です。</small>
+        </p>
         <small class="top-small-desc" style="font-size: 14px; color: #616161">
             <ul>
                 <li><a href="https://openchat.line.me/jp" rel="external" target="_blank" style="font-size: 14px; color: #616161">LINEオープンチャット公式サイト</a>を開く</li>
@@ -17,7 +28,15 @@
                 <li>下記フォームに貼り付けて登録する</li>
             </ul>
         </small>
-        <small class="top-small-desc" style="font-size: 14px; color: #616161">公式サイトに掲載されていないオープンチャットは登録できません。</small>
+        <p>
+            <small class="top-small-desc" style="font-size: 14px; color: #616161">公式サイトに掲載されていないオープンチャットは登録できません。</small>
+        </p>
+        <p>
+            <small class="top-small-desc" style="font-size: 14px; color: #616161">公式サイトの検索でヒットしない場合、Google検索で「site:openchat.line.me/jp/cover 部屋名」を検索すると見つかるかもしれません。</small>
+        </p>
+        <p>
+            <small class="top-small-desc" style="font-size: 14px; color: #616161">登録に使用できるURLは招待用のURLではなく、公式サイトのURLです。</small>
+        </p>
         </p>
         <!-- 送信後のレスポンス -->
         <?php if (session()->has('id')) : ?>
@@ -45,7 +64,6 @@
             <hr class="ht-top-header">
             <div style="font-size: 17px; margin: 1rem;" class="add-openchat-message false" id="add-openchat-describedby"><?php echo h($error['message']) ?></div>
         <?php endforeach ?>
-        <hr>
         <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">
             <label for="add-openchat-input-url">公式サイトのURL</label>
             <input name="url" id="add-openchat-input-url" placeholder="https://openchat.line.me/jp/cover/..." spellcheck="false" type="text" aria-describedby="add-openchat-describedby" autocomplete="off">

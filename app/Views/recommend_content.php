@@ -9,49 +9,81 @@
             margin: 12px 0;
         }
 
-        .list-title {
-            color: #111;
-            all: unset;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .page-select {
-            margin-top: 1.75rem;
-            padding-bottom: 0.85rem;
-        }
-
         .ranking-page-main {
             padding-top: 0;
         }
 
-        .openchat-list-title-area h2 {
-            margin: 0;
+        .header-img {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            margin: 1rem 0 1rem 0;
         }
 
-        .ranking-page-main .openchat-list-title-area p {
-            margin: 0;
+        .header-img img {
+            display: block;
+            width: calc(100% / 4);
+            object-fit: cover;
+            display: flex;
+            border-radius: 50%;
+            aspect-ratio: 1;
+            padding: 2px;
         }
 
-        @media screen and (max-width: 512px) {
-            .list-title {
-                font-size: 17.5px;
+        .recommend-header {
+            text-align: left;
+        }
+
+        .recommend-header h2 {
+            margin: 1rem 0;
+            color: #111;
+            font-size: 23px;
+        }
+
+        .recommend-desc {
+            line-height: normal;
+            font-size: 1rem;
+            color: #111;
+        }
+
+        @media screen and (min-width: 512px) {
+            .header-img {
+                margin: 2rem 0;
             }
+
+            .recommend-header h2 {
+                color: #111;
+                font-size: 1.8rem;
+            }
+        }
+
+        .recommend-desc2 {
+            font-size: 13px;
+            color: #777;
         }
     </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
     <main class="ranking-page-main">
         <article>
-            <header class="openchat-list-title-area unset">
-                <div style="flex-direction: column;">
-                    <h2>
-                        <span class="list-title">【最新】「なりきり」関連のおすすめ人気オープンチャット50件</span>
-                    </h2>
-                    <p>
-                        <small style="font-size: 13px; color:#777">公式ランキングにランクインされた順で表示</small>
-                    </p>
+            <header class="recommend-header">
+                <div class="header-img">
+                    <?php foreach (array_slice($openChatList, 0, 8) as $oc) : ?>
+                        <img alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
+                    <?php endforeach ?>
                 </div>
+                <h2>【最新】「なりきり」関連のおすすめ人気オープンチャット50件</h2>
+                <p class="recommend-desc">
+                    「なりきり」に関連するオープンチャットがここに集結！
+                </p>
+                <p class="recommend-desc2">
+                    オプチャグラフ独自の参加人数統計をもとに、勢いのあるLINEオープンチャットの最新リストをお届けします。
+                </p>
+                <p class="recommend-desc2">
+                    オープンチャットには生活の役に立つ・楽しいトークルームが数多くあります。
+                    <br>
+                    気になるトークルームを見つけたらまずは気軽に参加してみましょう！
+                </p>
             </header>
             <hr>
             <?php viewComponent('open_chat_list', compact('openChatList')) ?>
