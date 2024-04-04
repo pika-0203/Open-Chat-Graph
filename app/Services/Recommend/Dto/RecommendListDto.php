@@ -19,9 +19,8 @@ class RecommendListDto
         public array $week,
         public array $member,
     ) {
-        $this->maxMemberCount = max(
-            array_column(array_merge($hour, $day, $week, $member), 'member')
-        );
+        $elements = array_column(array_merge($hour, $day, $week, $member), 'member');
+        $this->maxMemberCount = $elements ? max($elements) : 0;
     }
 
     function getList(bool $shuffle = true)

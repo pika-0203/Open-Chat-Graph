@@ -90,6 +90,6 @@ class RecommendGenarator
             ? $this->getRecomendRanking($open_chat_id, $tag2)
             : $this->getCategoryRanking($open_chat_id);
 
-        return [$result1, $result2, $this->formatTag($recommendTag)];
+        return [$result1, $result2, $recommendTag ? $this->formatTag($recommendTag) : ''];
     }
 }
