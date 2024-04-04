@@ -47,10 +47,16 @@ class RecommendGenarator
         return new RecommendListDto($type, $listName, $ranking, $ranking2, $ranking3, $ranking4);
     }
 
-    function getRecomendRanking(int $open_chat_id, string $tag): RecommendListDto
+    function formatTag(string $tag): string
     {
         $listName = mb_strstr($tag, '_OR_', true) ?: $tag;
         $listName = str_replace('_AND_', ' ', $listName);
+        return $listName;
+    }
+
+    function getRecomendRanking(int $open_chat_id, string $tag): RecommendListDto
+    {
+        $listName = $this->formatTag($tag);
         return $this->getRanking(RecommendListType::Tag, $open_chat_id, $tag, $listName);
     }
 
@@ -84,6 +90,6 @@ class RecommendGenarator
             ? $this->getRecomendRanking($open_chat_id, $tag2)
             : $this->getCategoryRanking($open_chat_id);
 
-        return [$result1, $result2, $recommendTag];
+        return [$result1, $result2, $this->formatTag($recommendTag)];
     }
 }

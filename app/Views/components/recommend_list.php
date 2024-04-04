@@ -35,7 +35,7 @@ use App\Services\Recommend\Enum\RecommendListType;
                         <?php echo $roc['name'] ?>
                     </h4>
                     <div class="recommend-desc"><?php echo $roc['description'] ?></div>
-                    <div style="font-size: 11px; color: #aaa; line-height: 125%; margin-top: 4px; white-space: nowrap;">
+                    <div class="recommend-member">
                         <span>
                             <?php if ($roc['member'] === $recommend->maxMemberCount && ($tag !== $recommend->listName || $recommend->maxMemberCount >= $member)) : ?>
                                 <span aria-hidden="true" style="margin: 0 -2px; font-size: 9px; user-select: none;">🏆</span>
