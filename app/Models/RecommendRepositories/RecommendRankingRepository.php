@@ -25,7 +25,7 @@ class RecommendRankingRepository implements RecommendRankingRepositoryInterface
                 JOIN (
                     SELECT
                         t2.id,
-                        t1.id AS ranking_id
+                        t1.diff_member AS diff_member
                     FROM
                         (
                             SELECT
@@ -39,11 +39,9 @@ class RecommendRankingRepository implements RecommendRankingRepositoryInterface
                         JOIN recommend AS t2 ON t1.open_chat_id = t2.id
                     WHERE
                         t2.tag = :tag
-                    ORDER BY
-                        ranking_id ASC
                 ) AS ranking ON oc.id = ranking.id
             ORDER BY
-                ranking.ranking_id ASC
+                ranking.diff_member DESC
             LIMIT
                 :limit",
             compact('tag', 'id', 'limit', 'minDiffMember')
@@ -69,7 +67,7 @@ class RecommendRankingRepository implements RecommendRankingRepositoryInterface
                 JOIN (
                     SELECT
                         t2.id,
-                        t1.id AS ranking_id
+                        t1.diff_member AS diff_member
                     FROM
                         (
                             SELECT
@@ -88,13 +86,11 @@ class RecommendRankingRepository implements RecommendRankingRepositoryInterface
                         JOIN recommend AS t2 ON t1.open_chat_id = t2.id
                     WHERE
                         t2.tag = :tag
-                    ORDER BY
-                        ranking_id ASC
                 ) AS ranking ON oc.id = ranking.id
             WHERE
                 oc.id NOT IN ({$ids})
             ORDER BY
-                ranking.ranking_id ASC
+                ranking.diff_member DESC
             LIMIT
                 :limit",
             compact('tag', 'id', 'limit', 'minDiffMember')

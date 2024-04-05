@@ -39,7 +39,7 @@ class CategoryRankingRepository implements RecommendRankingRepositoryInterface
                         diff_member >= :minDiffMember
                 ) AS ranking ON oc.id = ranking.open_chat_id
             ORDER BY
-                ranking.id ASC
+                ranking.diff_member DESC
             LIMIT
                 :limit",
             compact('id', 'category', 'minDiffMember', 'limit')
@@ -86,7 +86,7 @@ class CategoryRankingRepository implements RecommendRankingRepositoryInterface
             WHERE
                 oc.id NOT IN ({$ids})
             ORDER BY
-                ranking.id ASC
+                ranking.diff_member DESC
             LIMIT
                 :limit",
             compact('id', 'category', 'minDiffMember', 'limit')

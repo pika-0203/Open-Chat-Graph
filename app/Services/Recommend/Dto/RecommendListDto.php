@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Recommend\Dto;
 
+use App\Config\AppConfig;
 use App\Services\Recommend\Enum\RecommendListType;
 
 class RecommendListDto
@@ -36,14 +37,19 @@ class RecommendListDto
     }
 
     /** @return array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int }[] */
-    function getPreviewList(): array
+    function getPreviewList(int $len): array
     {
         $ranking5 = array_merge($this->day, $this->week, $this->hour);
         shuffle($ranking5);
 
         $member = $this->member;
         shuffle($member);
-        return array_merge($ranking5, $member);
+
+        $result = array_merge($ranking5, $member);
+        if(count($result) <= $len) return $result;
+
+        $result = array_filter($result, fn ($el) => !in_array($el['img_url'], AppConfig::DEFAULT_OPENCHAT_IMG_URL_HASH));
+        return array_slice($result, 0, $len);
     }
 
     function getCount(): int

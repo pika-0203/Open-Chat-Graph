@@ -1,26 +1,16 @@
 <!-- @param array $openChatList -->
 <!-- @param bool $isHourly -->
 <style>
-  .css-162gv95 {
-    user-select: none;
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    fill: currentcolor;
-    flex-shrink: 0;
-    color: rgb(7, 181, 59);
-    font-size: 11px;
-    margin: -1px -4px;
-  }
-
   .openchat-item {
     padding-left: 72px;
     margin: 22px 0;
+    min-height: 60px;
   }
 
   .openchat-item-img {
     width: 60px;
     height: 60px;
+    top: 0;
   }
 
   .openchat-item-desc {
@@ -41,12 +31,12 @@
 
   foreach ($recommend->getList(false) as $oc) : ?>
     <li class="openchat-item unset">
-      <a class="link-overlay unset" href="<?php echo url('/oc/' . $oc['id'] . (($isHourly ?? false) && ($oc['diff_member'] ?? null) !== null ? '?limit=hour' : '')) ?>" tabindex="-1" aria-hidden="true">
+      <a class="link-overlay unset" href="<?php echo url('/oc/' . $oc['id']) . ($oc['table_name'] === AppConfig::RankingHourTable ? '?limit=hour' : '') ?>" tabindex="-1" aria-hidden="true">
         <span class="visually-hidden"><?php echo $oc['name'] ?></span>
       </a>
       <img alt="<?php echo $oc['name'] ?>" class="openchat-item-img" loading="lazy" src="<?php echo imgPreviewUrl($oc['id'], $oc['img_url']) ?>">
       <h3 class="unset">
-        <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $oc['id'] . (($isHourly ?? false) && ($oc['diff_member'] ?? null) !== null ? '?limit=hour' : '')) ?>"><?php if (($oc['emblem'] ?? 0) === 1) : ?><span class="super-icon sp"></span><?php elseif (($oc['emblem'] ?? 0) === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></a>
+        <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $oc['id']) . ($oc['table_name'] === AppConfig::RankingHourTable ? '?limit=hour' : '') ?>"><?php if (($oc['emblem'] ?? 0) === 1) : ?><span class="super-icon sp"></span><?php elseif (($oc['emblem'] ?? 0) === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></a>
       </h3>
       <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
       <footer class="openchat-item-lower-outer">
