@@ -22,7 +22,7 @@ class RecommendGenarator
     ) {
     }
 
-    function getRanking(RecommendListType $type, int $id, string $entity, string $listName): RecommendListDto
+    function getRanking(RecommendListType $type, int $id, string $entity, string $listName): RecommendListDto|false
     {
         $limit = self::LIST_LIMIT;
         $minDiffMember = self::MIN_MEMBER_DIFF;
@@ -44,20 +44,13 @@ class RecommendGenarator
         $idArray = array_column(array_merge($ranking, $ranking2, $ranking3), 'id');
         $ranking4 = $repository->getListOrderByMemberDesc($id, $entity, $idArray, $limit);
 
-        return new RecommendListDto($type, $listName, $ranking, $ranking2, $ranking3, $ranking4);
+        $dto = new RecommendListDto($type, $listName, $ranking, $ranking2, $ranking3, $ranking4);
+        return $dto->maxMemberCount ? $dto : false;
     }
 
-    function formatTag(string $tag): string
+    function getRecomendRanking(int $open_chat_id, string $tag): RecommendListDto|false
     {
-        $listName = mb_strstr($tag, '_OR_', true) ?: $tag;
-        $listName = str_replace('_AND_', ' ', $listName);
-        return $listName;
-    }
-
-    function getRecomendRanking(int $open_chat_id, string $tag): RecommendListDto
-    {
-        $listName = $this->formatTag($tag);
-        return $this->getRanking(RecommendListType::Tag, $open_chat_id, $tag, $listName);
+        return $this->getRanking(RecommendListType::Tag, $open_chat_id, $tag, $tag);
     }
 
     function getCategoryRanking(int $open_chat_id): RecommendListDto|false
@@ -65,7 +58,7 @@ class RecommendGenarator
         $category = $this->categoryRankingRepository->getCategory($open_chat_id);
         if (!$category) return false;
 
-        $listName = array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category];
+        $listName = getCategoryName($category);
         return $this->getRanking(RecommendListType::Category, $open_chat_id, (string)$category, $listName);
     }
 
@@ -90,6 +83,10 @@ class RecommendGenarator
             ? $this->getRecomendRanking($open_chat_id, $tag2)
             : $this->getCategoryRanking($open_chat_id);
 
-        return [$result1, $result2, $recommendTag ? $this->formatTag($recommendTag) : ''];
+        return [
+            $result1,
+            $result2,
+            $recommendTag ?: ''
+        ];
     }
 }

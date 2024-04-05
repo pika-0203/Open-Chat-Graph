@@ -68,16 +68,16 @@
         <article>
             <header class="recommend-header">
                 <div class="header-img">
-                    <?php foreach (array_slice($openChatList, 0, 8) as $oc) : ?>
+                    <?php foreach (array_slice($recommend->getPreviewList(), 0, 8) as $oc) : ?>
                         <img alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
                     <?php endforeach ?>
                 </div>
-                <h2>【最新】「なりきり」関連のおすすめ人気オープンチャット50件</h2>
+                <h2>「<?php echo $tag ?>」関連のおすすめ人気オープンチャット50選【最新】</h2>
                 <p class="recommend-desc">
-                    「なりきり」に関連するオープンチャットがここに集結！
+                    マッチ度が高い「<?php echo $tag ?>」に関するオープンチャットがここに集結！
                 </p>
                 <p class="recommend-desc2">
-                    オプチャグラフ独自の参加人数統計をもとに、勢いのあるLINEオープンチャットの最新リストをお届けします。
+                    あなたがお探しのテーマにマッチする厳選LINEオープンチャット最新リストを、直近のメンバー数増加が多い順でお届けします。
                 </p>
                 <p class="recommend-desc2">
                     オープンチャットには生活の役に立つ・楽しいトークルームが数多くあります。
@@ -86,7 +86,7 @@
                 </p>
             </header>
             <hr>
-            <?php viewComponent('open_chat_list', compact('openChatList')) ?>
+            <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
         </article>
     </main>
     <footer>

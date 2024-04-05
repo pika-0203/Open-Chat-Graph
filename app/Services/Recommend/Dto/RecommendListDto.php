@@ -10,7 +10,7 @@ class RecommendListDto
 {
     public int $maxMemberCount;
 
-    /** @var array{ id:int,name:string,img_url:string,member:int,table_name:string } $list */
+    /** @var array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int } $list */
     function __construct(
         public RecommendListType $type,
         public string $listName,
@@ -23,7 +23,8 @@ class RecommendListDto
         $this->maxMemberCount = $elements ? max($elements) : 0;
     }
 
-    function getList(bool $shuffle = true)
+    /** @return array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int }[] */
+    function getList(bool $shuffle = true): array
     {
         if (!$shuffle) return array_merge($this->hour, $this->day, $this->week, $this->member);
 
@@ -32,5 +33,16 @@ class RecommendListDto
         shuffle($this->hour);
         shuffle($this->member);
         return array_merge($this->hour, $ranking5, $this->member);
+    }
+
+    /** @return array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int }[] */
+    function getPreviewList(): array
+    {
+        $ranking5 = array_merge($this->day, $this->week, $this->hour);
+        shuffle($ranking5);
+        
+        $member = $this->member;
+        shuffle($member);
+        return array_merge($ranking5, $member);
     }
 }

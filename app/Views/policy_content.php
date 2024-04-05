@@ -59,7 +59,7 @@
                 <p style="font-size: 12px; color: #777;">データ収集は公式サイトの robots.txt を尊重して行います。<br>LINE側の公式サイトによるオープンチャットの掲載条件は非公開となっております。</p>
                 <p style="font-size: 12px; color: #777;">LINEオープンチャット公式サイト: <a href="https://openchat.line.me/jp" target="_blank">https://openchat.line.me/jp</a></p>
                 <p style="font-size: 12px; color: #777;">LINEオープンチャット利用規約: <a href="https://terms.line.me/line_Square_TOU_JP?lang=ja" target="_blank">https://terms.line.me/line_Square_TOU_JP?lang=ja</a></p>
-                <h2 style="margin-bottom: 2rem;">オプチャグラフに関する情報共通・連絡掲示板</h2>
+                <h2 style="margin-bottom: 2rem;">オプチャグラフに関する情報共有・連絡掲示板</h2>
                 <div id="comment-root"></div>
                 <br>
                 <p style="font-size: 12px; color: #777;">オプチャグラフお問い合わせ窓口: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>

@@ -120,22 +120,30 @@
 
   .recommend-list li {
     padding: 8px 3px;
+    min-width: 149px;
+    max-width: 149px;
   }
 
-  .recommend-list li:nth-child(n + 11) {
+  .recommend-list h4 {
+    margin-top: 8px;
+    font-size: 13px;
+  }
+
+  .recommend-list li:nth-child(n + 9) {
     display: none;
   }
 
-  .recommend-list.show-all li:nth-child(n + 11) {
+  .recommend-list.show-all li:nth-child(n + 9) {
     display: block;
   }
 
   .recommend-desc {
-    margin-top: 4px;
+    margin-top: 5px;
+    font-size: 12px;
   }
 
   .recommend-member {
-    font-size: 11.5px;
+    font-size: 12.5px;
   }
 
   .read-more-list-btn {
@@ -150,7 +158,7 @@
   }
 
   .recommend-list a {
-    height: 186px;
+    height: 228px;
   }
 
   .recommend-list img {

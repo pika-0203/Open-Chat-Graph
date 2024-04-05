@@ -6,7 +6,7 @@ use Spatie\SchemaOrg\Schema;
 
 class PageBreadcrumbsListSchema
 {
-    function generateSchema(string $listItemName, string $path): string
+    function generateSchema(string $listItemName, string $path, string $secondName = '', string $secondPath = ''): string
     {
         // BreadcrumbListのインスタンスを作成
         $breadcrumbList = Schema::breadcrumbList();
@@ -21,6 +21,13 @@ class PageBreadcrumbsListSchema
                 ->name($listItemName)
                 ->item(url($path)),
         ];
+
+        if ($secondName && $secondPath) {
+            $itemListElement[] = Schema::listItem()
+                ->position(3)
+                ->name($secondName)
+                ->item(url($path . '/' . $secondPath));
+        }
 
         // リストの要素を追加
         $breadcrumbList->itemListElement($itemListElement);

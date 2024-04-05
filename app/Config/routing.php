@@ -17,6 +17,7 @@ use App\Controllers\Pages\ReactRankingPageController;
 use App\Controllers\Pages\RecentOpenChatPageController;
 use App\Controllers\Pages\RecommendOpenChatPageController;
 use App\Middleware\VerifyCsrfToken;
+use Shadow\Kernel\Validator;
 
 Route::middlewareGroup(RedirectLineWebBrowser::class)
     ->path('ranking/{category}', [ReactRankingPageController::class, 'ranking'])
@@ -67,8 +68,12 @@ Route::path('/')
 Route::path('register')
     ->middleware([VerifyCsrfToken::class]);
 
-Route::path('recommend', [RecommendOpenChatPageController::class, 'index'])
-    ->match(cache(...));
+Route::path('recommend/{tag}', [RecommendOpenChatPageController::class, 'index'])
+    ->match(function (string $tag) {
+        cache(...);
+        $tag = Validator::str($tag) ? (Validator::str(urldecode($tag), maxLen: 20) ?: false) : false;
+        return $tag ? compact('tag') : false;
+    });
 
 Route::path(
     'oc@post@get',

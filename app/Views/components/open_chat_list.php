@@ -17,7 +17,7 @@
             <span class="registration-date blue"><?php echo ($isAdmin ?? false) ? convertDatetime($oc['datetime'], true) : getCronModifiedDateTime($oc['datetime']) ?></span>
           <?php endif ?>
           <?php if (isset($oc['member'])) : ?>
-            <span>メンバー <?php echo number_format($oc['member']) ?></span>
+            <span>メンバー <?php echo formatMember($oc['member']) ?></span>
           <?php endif ?>
           <?php if (isset($oc['api_created_at'])) : ?>
             <span class="registration-date blue">作成 <?php echo convertDatetime($oc['api_created_at'], false) ?></span>

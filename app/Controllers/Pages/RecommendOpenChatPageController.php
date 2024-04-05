@@ -7,34 +7,33 @@ namespace App\Controllers\Pages;
 use App\Views\OpenChatStatisticsRecent;
 use App\Config\AppConfig;
 use App\Services\Admin\AdminAuthService;
+use App\Services\Recommend\RecommendGenarator;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 
 class RecommendOpenChatPageController
 {
     function __construct(
-        private OpenChatStatisticsRecent $openChatStatsRecent,
         private PageBreadcrumbsListSchema $breadcrumbsShema
     ) {
     }
 
-    function index(AdminAuthService $adminAuthService)
+    function index(RecommendGenarator $recommendGenarator, string $tag)
     {
-        $rankingList = $this->openChatStatsRecent->getAllOrderByRegistrationDate(1, AppConfig::OPEN_CHAT_LIST_LIMIT);
-        if (!$rankingList) {
-            // 最大ページ数を超えてる場合は404
+        $recommend = $recommendGenarator->getRecomendRanking(0, $tag);
+        if (!$recommend) {
             return false;
         }
 
-        $pageTitle = '【最新】「なりきり」関連のおすすめ人気オープンチャット50件';
+        $pageTitle = "「{$tag}」のオープンチャットおすすめ50選【最新】";
         $_css = ['room_list', 'site_header', 'site_footer'];
 
         $_meta = meta()->setTitle($pageTitle);
 
-        $_breadcrumbsShema = $this->breadcrumbsShema->generateSchema('おすすめのオプチャ', 'recommend');
+        $_breadcrumbsShema = $this->breadcrumbsShema->generateSchema('おすすめ', 'recommend', $tag, urlencode($tag));
 
         return view(
             'recommend_content',
-            compact('_meta', '_css', '_breadcrumbsShema') + $rankingList
+            compact('_meta', '_css', '_breadcrumbsShema', 'recommend', 'tag')
         );
     }
 }

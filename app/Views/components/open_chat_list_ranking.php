@@ -17,7 +17,7 @@
             <span class="registration-date blue"><?php echo ($isAdmin ?? false) ? convertDatetime($oc['datetime'], true) : getCronModifiedDateTime($oc['datetime']) ?></span>
           <?php endif ?>
           <?php if (isset($oc['member'])) : ?>
-            <span>メンバー <?php echo number_format($oc['member']) ?>人</span>
+            <span>メンバー <?php echo formatMember($oc['member']) ?>人</span>
           <?php endif ?>
           <?php if (($oc['diff_member'] ?? 0) !== 0) : ?>
             <span>

@@ -14,7 +14,6 @@ use App\Views\Meta\OcPageMeta;
 use App\Views\Schema\OcPageSchema;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 use App\Views\StatisticsViewUtility;
-use Shadow\DB;
 
 class OpenChatPageController
 {
@@ -64,7 +63,7 @@ class OpenChatPageController
             'openChatId' => $oc['id']
         ];
 
-        $_breadcrumbsShema = $breadcrumbsShema->generateSchema('オープンチャット', 'oc');
+        $_breadcrumbsShema = $breadcrumbsShema->generateSchema('オプチャ', 'oc', $oc['name'], (string)$open_chat_id);
 
         $_schema = $breadcrumbsShema->generateStructuredDataWebPage(
             $_meta->title,
