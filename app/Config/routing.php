@@ -70,7 +70,7 @@ Route::path('register')
 
 Route::path('recommend/{tag}', [RecommendOpenChatPageController::class, 'index'])
     ->match(function (string $tag) {
-        cache(...);
+        cache();
         $tag = Validator::str($tag) ? (Validator::str(urldecode($tag), maxLen: 20) ?: false) : false;
         return $tag ? compact('tag') : false;
     });

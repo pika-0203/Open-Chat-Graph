@@ -10,19 +10,29 @@ use App\Services\Recommend\Enum\RecommendListType;
     <div class="btn-wrapper">
         <div style="display: flex; flex-direction: row; /* align-items: center; */ margin: 0 1rem;">
             <div aria-hidden="true" style="font-size: 12px; user-select: none;">🎖</div>
-            <h3>
-                <span>
-                    「<?php echo $recommend->listName ?>」
-                </span>
-                <div>
-                    <?php if ($recommend->type === RecommendListType::Category) : ?>
+            <?php if ($recommend->type === RecommendListType::Category) : ?>
+                <h3>
+                    <span>
+                        「<?php echo $recommend->listName ?>」
+                    </span>
+                    <div>
                         <span>カテゴリーのおすすめ</span>
-                    <?php elseif ($recommend->type === RecommendListType::Tag) : ?>
-                        <span>関連のおすすめ</span>
-                    <?php endif ?>
+                    </div>
                     <small style="font-size: 11px; font-weight:normal; color:#b7b7b7; margin-left: 4px;">最新</small>
-                </div>
-            </h3>
+                </h3>
+            <?php else : ?>
+                <a class="unset" style="cursor: pointer;" href="<?php echo url("recommend/" . urlencode($recommend->listName)) ?>">
+                    <h3>
+                        <span style="text-decoration: underline; text-decoration-color: #777;">
+                            「<?php echo $recommend->listName ?>」
+                        </span>
+                        <div style="text-decoration: underline; text-decoration-color: #777;">
+                            <span>関連のおすすめ</span>
+                        </div>
+                        <small style="font-size: 11px; font-weight:normal; color:#b7b7b7; margin-left: 4px;">最新</small>
+                    </h3>
+                </a>
+            <?php endif ?>
         </div>
         <button type="button" class="read-more-list-btn" onclick="this.textContent = this.parentElement.nextElementSibling.classList.toggle('show-all') ? '一部を表示' : 'もっと見る';">もっと見る</button>
     </div>
