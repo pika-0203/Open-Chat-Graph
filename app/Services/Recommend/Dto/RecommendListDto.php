@@ -40,9 +40,14 @@ class RecommendListDto
     {
         $ranking5 = array_merge($this->day, $this->week, $this->hour);
         shuffle($ranking5);
-        
+
         $member = $this->member;
         shuffle($member);
         return array_merge($ranking5, $member);
+    }
+
+    function getCount(): int
+    {
+        return count($this->hour) + count($this->day) + count($this->week) + count($this->member);
     }
 }

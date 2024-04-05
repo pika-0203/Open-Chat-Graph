@@ -24,7 +24,8 @@ class RecommendOpenChatPageController
             return false;
         }
 
-        $pageTitle = "「{$tag}」のオープンチャットおすすめ50選【最新】";
+        $count = $recommend->getCount();
+        $pageTitle = "「{$tag}」のオープンチャットおすすめ{$count}選【最新】";
         $_css = ['room_list', 'site_header', 'site_footer'];
 
         $_meta = meta()->setTitle($pageTitle);
@@ -33,7 +34,7 @@ class RecommendOpenChatPageController
 
         return view(
             'recommend_content',
-            compact('_meta', '_css', '_breadcrumbsShema', 'recommend', 'tag')
+            compact('_meta', '_css', '_breadcrumbsShema', 'recommend', 'tag', 'count')
         );
     }
 }

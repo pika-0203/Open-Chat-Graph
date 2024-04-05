@@ -72,7 +72,7 @@
                         <img alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
                     <?php endforeach ?>
                 </div>
-                <h2>「<?php echo $tag ?>」関連のおすすめ人気オープンチャット50選【最新】</h2>
+                <h2>「<?php echo $tag ?>」関連のおすすめ人気オープンチャット<?php echo $count ?>選【最新】</h2>
                 <p class="recommend-desc">
                     マッチ度が高い「<?php echo $tag ?>」に関するオープンチャットがここに集結！
                 </p>
