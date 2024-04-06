@@ -57,16 +57,17 @@ time {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  gap: 6px;
   margin: 1rem 0 1rem 0;
 }
 
 .header-img img {
   display: block;
-  width: calc(100% / 4);
+  width: calc(100% / 4 - 6px);
   object-fit: cover;
   display: flex;
   aspect-ratio: 1;
-  padding: 1.2%;
+  border-radius: 4px;
 }
 
 .recommend-header {

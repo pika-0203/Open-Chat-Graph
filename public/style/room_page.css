@@ -7,8 +7,7 @@ html {
 }
 
 hr {
-  border-bottom: solid 1px var(--border-color);
-  margin: 12px 0;
+  margin: 16px 0;
 }
 
 .openchat {
@@ -370,6 +369,10 @@ body > footer {
   .openchat footer {
     justify-content: center;
     gap: 2rem;
+  }
+
+  .talkroom_banner_img {
+    border-radius: 4px;
   }
 }
 

@@ -26,8 +26,8 @@
 
 .recommend-list li {
   all: unset;
-  min-width: 115px;
-  max-width: 115px;
+  min-width: 131px;
+  max-width: 131px;
   margin: 0;
   padding: 0;
   padding: 13px 3px;
@@ -42,11 +42,11 @@
   word-break: break-all;
   margin: 0;
   margin-top: 6px;
-  font-weight: bold;
   /* text-align: center; */
   line-height: 125%;
   overflow-wrap: anywhere;
   color: #111;
+  font-weight: 500;
 }
 
 .recommend-desc {
@@ -87,16 +87,22 @@
   display: flex;
   flex-direction: column;
   /* align-items: center; */
-  height: 200px;
+  height: 170px;
   justify-content: space-evenly;
+  border: 1px solid #efefef;
+  border-radius: 4px;
+  padding: 6px;
+  text-align: center;
 }
 
 .recommend-list img {
   display: block;
-  width: 100%;
+  width: 60px;
+  height: 60px;
   aspect-ratio: 1;
-  border-radius: 22.5%;
+  border-radius: 50%;
   object-fit: cover;
+  margin: 0 auto;
 }
 
 .css-162gv95 {
@@ -111,17 +117,15 @@
   margin: -1px -4px;
 }
 
+.recommend-list .img-pc {
+  display: none;
+}
+
 @media screen and (min-width: 512px) {
   .recommend-list {
     overflow-x: unset;
     flex-wrap: wrap;
     justify-content: space-evenly;
-  }
-
-  .recommend-list li {
-    padding: 8px 3px;
-    min-width: 149px;
-    max-width: 149px;
   }
 
   .recommend-list h4 {
@@ -158,11 +162,26 @@
   }
 
   .recommend-list a {
-    height: 228px;
+    height: 197px;
+    border: 0;
+    padding: 0;
+  }
+
+  .recommend-list .img-mobile {
+    display: none;
+  }
+
+  .recommend-list .img-pc {
+    display: block;
   }
 
   .recommend-list img {
-    width: 87.5%;
+    display: block;
+    width: 100%;
+    height: 100px;
+    aspect-ratio: unset;
+    border-radius: 4px;
+    object-fit: cover;
     margin: 0 auto;
   }
 

@@ -122,7 +122,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           </span>
         </div>
       </footer>
-
       <hr>
       <?php if ($recommend[0]) : ?>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2]]) ?>
@@ -130,8 +129,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <?php endif ?>
       <?php if ($recommend[1]) : ?>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2]]) ?>
-        <hr style="margin-top: 2px;">
       <?php endif ?>
+      <hr style="margin-top: 2px;">
     </article>
     <section>
       <div style="display: flex; flex-direction: row; align-items: center;" class="openchat">

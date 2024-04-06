@@ -40,7 +40,8 @@ use App\Services\Recommend\Enum\RecommendListType;
         <?php foreach ($recommend->getList() as $roc) : ?>
             <li>
                 <a href="<?php echo url('/oc/' . $roc['id']) . ($roc['table_name'] === AppConfig::RankingHourTable ? '?limit=hour' : '') ?>">
-                    <img loading="lazy" alt="<?php echo $roc['name'] ?>" src="<?php echo imgUrl($roc['id'], $roc['img_url']) ?>" />
+                    <img class="img-mobile" loading="lazy" alt="<?php echo $roc['name'] ?>" src="<?php echo imgPreviewUrl($roc['id'], $roc['img_url']) ?>" />
+                    <img class="img-pc" loading="lazy" alt="<?php echo $roc['name'] ?>" src="<?php echo imgUrl($roc['id'], $roc['img_url']) ?>" />
                     <h4>
                         <?php echo $roc['name'] ?>
                     </h4>
