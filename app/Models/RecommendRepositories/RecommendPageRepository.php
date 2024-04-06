@@ -39,8 +39,8 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                                 AND diff_member >= :minDiffMember
                         ) AS t1
                         JOIN recommend AS t2 ON t1.open_chat_id = t2.id
-                        JOIN oc_tag AS t3 ON t1.open_chat_id = t3.id
-                        JOIN oc_tag2 AS t4 ON t1.open_chat_id = t4.id
+                        LEFT JOIN oc_tag AS t3 ON t1.open_chat_id = t3.id
+                        LEFT JOIN oc_tag2 AS t4 ON t1.open_chat_id = t4.id
                     WHERE
                         t2.tag = :tag
                 ) AS ranking ON oc.id = ranking.id
@@ -90,8 +90,8 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                                 ) AS sr1
                         ) AS t1
                         JOIN recommend AS t2 ON t1.open_chat_id = t2.id
-                        JOIN oc_tag AS t3 ON t1.open_chat_id = t3.id
-                        JOIN oc_tag2 AS t4 ON t1.open_chat_id = t4.id
+                        LEFT JOIN oc_tag AS t3 ON t1.open_chat_id = t3.id
+                        LEFT JOIN oc_tag2 AS t4 ON t1.open_chat_id = t4.id
                     WHERE
                         t2.tag = :tag
                 ) AS ranking ON oc.id = ranking.id
@@ -134,8 +134,8 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                                 tag = :tag
                                 AND NOT id = :id
                         ) AS r
-                        JOIN oc_tag AS t3 ON r.id = t3.id
-                        JOIN oc_tag2 AS t4 ON r.id = t4.id
+                        LEFT JOIN oc_tag AS t3 ON r.id = t3.id
+                        LEFT JOIN oc_tag2 AS t4 ON r.id = t4.id
                 ) AS ranking ON oc.id = ranking.id
             WHERE
                 oc.id NOT IN ({$ids})
