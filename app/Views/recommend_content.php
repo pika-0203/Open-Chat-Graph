@@ -27,7 +27,7 @@
             </header>
             <div class="recommend-p">
                 <p class="recommend-desc">
-                    LINEオープンチャットにて特に人気のルームから、「<?php echo $tag ?>」にマッチするルームを毎時更新でご紹介！
+                    LINEオープンチャットにて特に人気のルームから、「<?php echo $tag ?>」のテーマに関するルームを毎時更新でご紹介！
                 </p>
                 <p class="recommend-desc2">
                     気になるルームを見つけたら気軽に参加してみましょう！
