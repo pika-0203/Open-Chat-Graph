@@ -66,7 +66,7 @@ class AdminPageController
         echo 'done';
     }
 
-    private function genesitemap(SitemapGenerator $sitemapGenerator)
+    function genesitemap(SitemapGenerator $sitemapGenerator)
     {
         $sitemapGenerator->generate();
         echo 'done';

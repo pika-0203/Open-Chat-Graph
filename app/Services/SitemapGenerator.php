@@ -26,8 +26,6 @@ class SitemapGenerator
 
     function generate()
     {
-        array_map('unlink', glob(self::SITEMAP_DIR . '*.xml'));
-
         $index = new SitemapIndex();
         $index->addItem($this->generateSitemap1(), new \DateTime);
 
@@ -40,19 +38,22 @@ class SitemapGenerator
 
     private function generateSitemap1(): string
     {
+        $date = file_get_contents(AppConfig::DAILY_CRON_UPDATED_AT_DATE);
+        $datetime = file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME);
+
         $sitemap = new Sitemap();
         $sitemap->addItem(rtrim(self::SITE_URL, "/"), changeFreq: ChangeFreq::DAILY, lastmod: new \DateTime);
         $sitemap->addItem(self::SITE_URL . 'oc');
         $sitemap->addItem(self::SITE_URL . 'policy');
         $sitemap->addItem(self::SITE_URL . 'register');
-        $sitemap->addItem(self::SITE_URL . 'ranking');
+        $sitemap->addItem(self::SITE_URL . 'ranking', lastmod: $date);
 
         foreach (AppConfig::OPEN_CHAT_CATEGORY as $category) {
-            $category && $sitemap->addItem(self::SITE_URL . 'ranking/' . $category);
+            $category && $sitemap->addItem(self::SITE_URL . 'ranking/' .$category, lastmod: $date);
         }
-        
-        foreach($this->recommendUpdater->getAllTagNames() as $tag) {
-            $sitemap->addItem(self::SITE_URL . 'recommend?tag=' . urlencode($tag));
+
+        foreach ($this->recommendUpdater->getAllTagNames() as $tag) {
+            $sitemap->addItem(self::SITE_URL . 'recommend?tag=' . urlencode($tag), lastmod: $datetime);
         }
 
         return $this->saveXml($sitemap, 1);
