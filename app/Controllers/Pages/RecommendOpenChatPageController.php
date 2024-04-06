@@ -83,7 +83,7 @@ class RecommendOpenChatPageController
 
         if (!$recommend) {
             header('HTTP/1.1 503 Service Temporarily Unavailable', true, 503);
-            header('Retry-After: ' . (10 * 60));
+            header('Retry-After: ' . (20 * 60));
 
             /** @var RecommendUpdater $recommendUpdater */
             $recommendUpdater = app(RecommendUpdater::class);

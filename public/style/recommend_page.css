@@ -66,8 +66,7 @@ time {
   object-fit: cover;
   display: flex;
   aspect-ratio: 1;
-  padding: 1px;
-  border-radius: 50%;
+  padding: 1.2%;
 }
 
 .recommend-header {
