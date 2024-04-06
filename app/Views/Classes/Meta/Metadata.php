@@ -32,9 +32,9 @@ class Metadata
         $this->image_url = url(\App\Config\AppConfig::DEFAULT_OGP_IMAGE_FILE_PATH);
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(string $title, bool $includeSiteTitle = true): static
     {
-        $this->title = h($title) . '｜' . $this->title;
+        $this->title = h($title) . ($includeSiteTitle ? ('｜' . $this->title) : '');
         return $this;
     }
 

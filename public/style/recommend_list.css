@@ -165,4 +165,8 @@
     width: 87.5%;
     margin: 0 auto;
   }
+
+  .btn-wrapper h3 {
+    font-size: 14.5px;
+  }
 }

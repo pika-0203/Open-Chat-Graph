@@ -69,7 +69,8 @@ Route::path('register')
     ->middleware([VerifyCsrfToken::class]);
 
 Route::path('recommend', [RecommendOpenChatPageController::class, 'index'])
-    ->matchStr('tag', maxLen: 100);
+    ->matchStr('tag', maxLen: 100)
+    ->match(cache(...));
 
 Route::path(
     'oc@post@get',

@@ -303,3 +303,20 @@ function formatMember(int $n)
 {
     return $n < 1000 ? $n : ($n >= 10000 ? (floor($n / 1000) / 10 . '万') : number_format($n));
 }
+
+function sortAndUniqueArray($array)
+{
+    // 各要素の出現回数をカウント
+    $counts = array_count_values($array);
+
+    // 出現回数の多い順にソート（同じ出現回数の場合は元の順序を保持）
+    uksort($counts, function ($a, $b) use ($counts) {
+        if ($counts[$a] === $counts[$b]) {
+            return 0;
+        }
+        return $counts[$a] < $counts[$b] ? 1 : -1;
+    });
+
+    // キーのみを抽出（重複排除）
+    return array_keys($counts);
+}

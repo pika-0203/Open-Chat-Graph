@@ -4,105 +4,7 @@
 
 <body class="body">
     <style>
-        hr {
-            border-bottom: solid 1px var(--border-color);
-            margin: 12px 0;
-        }
 
-        time {
-            font-size: 14px;
-            color: #888;
-        }
-
-        .ranking-page-main {
-            padding-top: 0;
-        }
-
-        .header-img {
-            display: flex;
-            flex-wrap: wrap;
-            width: 100%;
-            margin: 1rem 0 1rem 0;
-        }
-
-        .header-img img {
-            display: block;
-            width: calc(100% / 4);
-            object-fit: cover;
-            display: flex;
-            aspect-ratio: 1;
-            padding: 1px;
-            border-radius: 50%;
-        }
-
-        .recommend-header {
-            text-align: left;
-        }
-
-        .recommend-header h2 {
-            margin: 1rem 0;
-            color: #111;
-            font-size: 23px;
-        }
-
-        .recommend-desc {
-            line-height: normal;
-            color: #616161;
-            font-size: 1rem;
-        }
-
-        .recommend-desc2 {
-            color: #616161;
-            font-size: 1rem;
-        }
-
-        .list-aside {
-            all: unset;
-            display: block;
-        }
-
-        .list-aside details {
-            margin: 0;
-            font-size: 13px;
-            color: #aaa;
-            font-weight: normal;
-        }
-
-        .list-aside-details {
-            margin-top: 4px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .list-aside-desc {
-            font-size: 13px;
-            color: #555;
-            display: block;
-        }
-
-        .css-162gv95 {
-            user-select: none;
-            width: 1em;
-            height: 1em;
-            display: inline-block;
-            fill: currentcolor;
-            flex-shrink: 0;
-            color: rgb(7, 181, 59);
-            font-size: 11px;
-            margin: -1px -4px;
-        }
-
-        @media screen and (min-width: 512px) {
-            .header-img {
-                margin: 2rem 0;
-            }
-
-            .recommend-header h2 {
-                color: #111;
-                font-size: 1.8rem;
-            }
-        }
     </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
@@ -115,15 +17,33 @@
                     <?php endforeach ?>
                 </div>
                 <h2>「<?php echo $tag ?>」関連のおすすめ人気オープンチャット<?php echo $count ?>選【最新】</h2>
-                <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>">🕛 <?php echo $_updatedAt->format('Y年m月d日 h:i') ?></time>
+                <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><span aria-hidden="true" style="user-select: none;">🕛 </span><?php echo $_updatedAt->format('Y年m月d日 h:i') ?></time>
                 <p class="recommend-desc">
                     LINEオープンチャットにて特に人気のルームから、「<?php echo $tag ?>」にマッチするルームをご紹介！
                 </p>
                 <p class="recommend-desc2">
                     気になるルームを見つけたら気軽に参加してみましょう！
                 </p>
-                <p style="font-size: 12px; color: #b7b7b7">オプチャグラフ独自の自動タグ付けルールと、メンバー数統計データに基づきおすすめのオープンチャットを選出しています。</p>
             </header>
+            <aside class="list-aside">
+                <h3 class="list-title">
+                    <span>関連性の高いタグ</span>
+                    <!-- <button class="tag-btn close-btn"></button> -->
+                </h3>
+                <section class="tag-list-section">
+                    <ul class="tag-list">
+                        <?php foreach (array_slice($tags, 0, 10) as $key => $word) : ?>
+                            <li>
+                                <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode($word)) ?>">
+                                    <?php echo $word ?>
+                                </a>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
+                </section>
+            </aside>
+            <h3 class="list-title">「<?php echo $tag ?>」にマッチするルーム</h3>
+            <p style="font-size: 12px; color: #b7b7b7">オプチャグラフ独自の自動タグ付けルールと、メンバー数統計データに基づきおすすめのオープンチャットを選出しています。</p>
             <hr>
             <aside class="list-aside">
                 <details>

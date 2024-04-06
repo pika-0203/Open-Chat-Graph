@@ -15,6 +15,17 @@ interface RecommendRankingRepositoryInterface
         oc.emblem
     ";
 
+    const SelectPage = "
+        oc.id,
+        oc.name,
+        oc.local_img_url AS img_url,
+        oc.member,
+        oc.description,
+        oc.emblem,
+        ranking.tag1,
+        ranking.tag2
+    ";
+
     function getRanking(
         int $id,
         string $entity,

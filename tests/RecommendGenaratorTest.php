@@ -13,7 +13,7 @@ class RecommendGenaratorTest extends TestCase
     {
         $this->inst = app(RecommendGenarator::class);
 
-        $this->inst->getRecommend(2);
+        $this->inst->getRecomendRanking(2);
 
         $this->assertTrue(true);
     }

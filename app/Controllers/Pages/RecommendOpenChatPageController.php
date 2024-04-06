@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
-use App\Services\Recommend\RecommendGenarator;
+use App\Models\RecommendRepositories\RecommendPageRepository;
+use App\Services\Recommend\Enum\RecommendListType;
+use App\Services\Recommend\RecommendRankingBuilder;
 use App\Services\StaticData\StaticDataFile;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 
@@ -15,18 +17,67 @@ class RecommendOpenChatPageController
     ) {
     }
 
-    function index(RecommendGenarator $recommendGenarator, StaticDataFile $staticDataFile, string $tag)
-    {
-        $recommend = $recommendGenarator->getRecomendRanking(0, $tag);
+    const TagFilter = [
+        'スマホ',
+        '営業',
+        '大人',
+        'スタンプ',
+        'SNS',
+        'Instagram（インスタ）',
+        '知的財産',
+        "東京",
+        "宣伝",
+        "北海道",
+        "神奈川",
+        "愛知",
+        "京都",
+        "大阪",
+        "兵庫",
+        "福岡",
+        "関東",
+        "関西",
+        "九州",
+        "沖縄",
+        "即承認",
+        "海外",
+        "全国 雑談",
+        "70代",
+    ];
+
+    function index(
+        RecommendRankingBuilder $recommendRankingBuilder,
+        RecommendPageRepository $recommendPageRepository,
+        StaticDataFile $staticDataFile,
+        string $tag
+    ) {
+        $recommend = $recommendRankingBuilder->getRanking(
+            RecommendListType::Tag,
+            0,
+            $tag,
+            $tag,
+            $recommendPageRepository
+        );
+
         if (!$recommend) {
             return false;
         }
 
+        $recommendList = $recommend->getList(false);
+
+        $tags = sortAndUniqueArray(
+            array_merge(
+                array_column($recommendList, 'tag1'),
+                array_column($recommendList, 'tag2')
+            )
+        );
+
+        $tags = array_filter($tags, fn ($e) => !(in_array($e, self::TagFilter) || $e === $tag));
+
         $count = $recommend->getCount();
         $pageTitle = "「{$tag}」関連の人気オープンチャット{$count}選【最新】";
-        $_css = ['room_list', 'site_header', 'site_footer'];
+        $_css = ['room_list', 'site_header', 'site_footer', 'recommend_page'];
 
-        $_meta = meta()->setTitle($pageTitle)->setDescription("最新の人気オープンチャットの中から、「{$tag}」にマッチ度が高いトークルームをご紹介！");
+        $_meta = meta()->setTitle($pageTitle, false)->setDescription("最新の人気オープンチャットの中から、「{$tag}」にマッチ度が高いトークルームをご紹介！");
 
         $rankingDto = $staticDataFile->getRankingArgDto();
 
@@ -52,7 +103,18 @@ class RecommendOpenChatPageController
 
         return view(
             'recommend_content',
-            compact('_meta', '_css', '_breadcrumbsShema', 'recommend', 'tag', 'count', '_schema', '_updatedAt', 'canonical')
+            compact(
+                '_meta',
+                '_css',
+                '_breadcrumbsShema',
+                'recommend',
+                'tag',
+                'count',
+                '_schema',
+                '_updatedAt',
+                'canonical',
+                'tags'
+            )
         );
     }
 }

@@ -7,50 +7,27 @@ namespace App\Services\Recommend;
 use App\Config\AppConfig;
 use App\Models\RecommendRepositories\CategoryRankingRepository;
 use App\Models\RecommendRepositories\RecommendRankingRepository;
-use App\Models\RecommendRepositories\RecommendRankingRepositoryInterface;
 use App\Services\Recommend\Dto\RecommendListDto;
 use App\Services\Recommend\Enum\RecommendListType;
 
 class RecommendGenarator
 {
-    private const LIST_LIMIT = 50;
-    private const MIN_MEMBER_DIFF = 3;
-
     function __construct(
         private RecommendRankingRepository $recommendRankingRepository,
         private CategoryRankingRepository $categoryRankingRepository,
+        private RecommendRankingBuilder $recommendRankingBuilder,
     ) {
-    }
-
-    function getRanking(RecommendListType $type, int $id, string $entity, string $listName): RecommendListDto|false
-    {
-        $limit = self::LIST_LIMIT;
-        $minDiffMember = self::MIN_MEMBER_DIFF;
-
-        /** @var RecommendRankingRepositoryInterface $repository */
-        $repository = match ($type) {
-            $type::Category => $this->categoryRankingRepository,
-            $type::Tag => $this->recommendRankingRepository
-        };
-
-        $ranking = $repository->getRanking($id, $entity, AppConfig::RankingHourTable, $minDiffMember, $limit);
-
-        $idArray = array_column($ranking, 'id');
-        $ranking2 = $repository->getRankingByExceptId($id, $entity, AppConfig::RankingDayTable, $minDiffMember, $idArray, $limit);
-
-        $idArray = array_column(array_merge($ranking, $ranking2), 'id');
-        $ranking3 = $repository->getRankingByExceptId($id, $entity, AppConfig::RankingWeekTable, $minDiffMember, $idArray, $limit);
-
-        $idArray = array_column(array_merge($ranking, $ranking2, $ranking3), 'id');
-        $ranking4 = $repository->getListOrderByMemberDesc($id, $entity, $idArray, $limit);
-
-        $dto = new RecommendListDto($type, $listName, $ranking, $ranking2, $ranking3, $ranking4);
-        return $dto->maxMemberCount ? $dto : false;
     }
 
     function getRecomendRanking(int $open_chat_id, string $tag): RecommendListDto|false
     {
-        return $this->getRanking(RecommendListType::Tag, $open_chat_id, $tag, $tag);
+        return $this->recommendRankingBuilder->getRanking(
+            RecommendListType::Tag,
+            $open_chat_id,
+            $tag,
+            $tag,
+            $this->recommendRankingRepository
+        );
     }
 
     function getCategoryRanking(int $open_chat_id): RecommendListDto|false
@@ -59,7 +36,14 @@ class RecommendGenarator
         if (!$category) return false;
 
         $listName = getCategoryName($category);
-        return $this->getRanking(RecommendListType::Category, $open_chat_id, (string)$category, $listName);
+
+        return $this->recommendRankingBuilder->getRanking(
+            RecommendListType::Category,
+            $open_chat_id,
+            (string)$category,
+            $listName,
+            $this->categoryRankingRepository
+        );
     }
 
     /** @return array{0:RecommendListDto|false,1:RecommendListDto|false,2:string|false} */
