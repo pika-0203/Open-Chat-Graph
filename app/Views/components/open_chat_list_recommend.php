@@ -15,12 +15,12 @@
 
   .openchat-item-desc {
     -webkit-line-clamp: 1;
-    margin-top: 3px;
+    margin-top: 3.5px;
     color: #555;
   }
 
-  .openchat-item-lower-outer {
-    margin-top: 2px;
+  .openchat-item-lower {
+    margin-top: 1px;
     color: #777;
   }
 </style>

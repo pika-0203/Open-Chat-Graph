@@ -16,8 +16,8 @@
                         <img alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
                     <?php endforeach ?>
                 </div>
-                <h2>「<?php echo $tag ?>」関連のおすすめ人気オープンチャット<?php echo $count ?>選【最新】</h2>
-                <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><span aria-hidden="true" style="user-select: none;">🕛 </span><?php echo $_updatedAt->format('Y年m月d日 h:i') ?></time>
+                <h2>「<?php echo $tag ?>」関連のおすすめ人気オプチャ<?php echo $count ?>選【最新】</h2>
+                <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><span aria-hidden="true" style="user-select: none;">🕛 </span><?php echo $_updatedAt->format('Y年m月d日 H:i') ?></time>
                 <p class="recommend-desc">
                     LINEオープンチャットにて特に人気のルームから、「<?php echo $tag ?>」にマッチするルームをご紹介！
                 </p>
@@ -42,34 +42,36 @@
                     </ul>
                 </section>
             </aside>
-            <h3 class="list-title">「<?php echo $tag ?>」にマッチするルーム</h3>
-            <p style="font-size: 12px; color: #b7b7b7">オプチャグラフ独自の自動タグ付けルールと、メンバー数統計データに基づきおすすめのオープンチャットを選出しています。</p>
+            <section style="all:unset; display:block;">
+                <h3 class="list-title oc-list">「<?php echo $tag ?>」関連のルーム <?php echo $count ?>件</h3>
+                <aside class="list-aside">
+                    <details>
+                        <summary>メンバー数のアイコンについて</summary>
+                        <div class="list-aside-details">
+                            <small class="list-aside-desc">🔥：直近1時間のメンバー数が急上昇</small>
+                            <small class="list-aside-desc">🚀：直近24時間のメンバー数が急上昇</small>
+                            <small class="list-aside-desc">
+                                <span style="margin: 0 4px;">
+                                    <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium show-north css-162gv95" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NorthIcon">
+                                        <path d="m5 9 1.41 1.41L11 5.83V22h2V5.83l4.59 4.59L19 9l-7-7-7 7z"></path>
+                                    </svg>
+                                </span>：直近1週間のメンバー数が急上昇
+                            </small>
+                            <small class="list-aside-desc">🏆：リスト内で最もメンバー数が多いトークルーム</small>
+                        </div>
+                    </details>
+                </aside>
+                <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
+            </section>
             <hr>
-            <aside class="list-aside">
-                <details>
-                    <summary>メンバー数のアイコンについて</summary>
-                    <div class="list-aside-details">
-                        <small class="list-aside-desc">🔥：直近1時間のメンバー数が急上昇</small>
-                        <small class="list-aside-desc">🚀：直近24時間のメンバー数が急上昇</small>
-                        <small class="list-aside-desc">
-                            <span style="margin: 0 4px;">
-                                <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium show-north css-162gv95" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NorthIcon">
-                                    <path d="m5 9 1.41 1.41L11 5.83V22h2V5.83l4.59 4.59L19 9l-7-7-7 7z"></path>
-                                </svg>
-                            </span>：直近1週間のメンバー数が急上昇
-                        </small>
-                        <small class="list-aside-desc">🏆：リスト内で最もメンバー数が多いトークルーム</small>
-                    </div>
-                </details>
+            <aside style="all: unset; display:block; margin: 20px 0 8px 0;">
+                <p class="recommend-desc">
+                    オープンチャットには生活の役に立つ・楽しいルームがいっぱい！
+                </p>
+                <p class="recommend-desc2">
+                    気になるルームを見つけたら気軽に参加してみましょう！
+                </p>
             </aside>
-            <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
-            <hr>
-            <p class="recommend-desc">
-                オープンチャットには生活の役に立つ・楽しいルームがいっぱい！
-            </p>
-            <p class="recommend-desc2">
-                気になるルームを見つけたら気軽に参加してみましょう！
-            </p>
         </article>
     </main>
     <footer>

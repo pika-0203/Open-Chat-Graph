@@ -10,7 +10,7 @@ li {
 .tag-list-section {
   all: unset;
   display: block;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 time {
@@ -72,7 +72,7 @@ time {
 
 .recommend-header {
   text-align: left;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .recommend-header h2 {
@@ -83,13 +83,17 @@ time {
 
 .recommend-desc {
   line-height: normal;
-  color: #111;
+  color: #555;
   font-size: 1rem;
 }
 
 .recommend-desc2 {
-  color: #111;
+  color: #555;
   font-size: 1rem;
+}
+
+section aside:hover {
+  all: unset;
 }
 
 .list-aside {
@@ -106,10 +110,15 @@ time {
   justify-content: space-between;
 }
 
+.list-title.oc-list {
+  margin-bottom: 14px;
+  margin-left: -6px;
+}
+
 .list-aside details {
   margin: 0;
   font-size: 13px;
-  color: #aaa;
+  color: #777;
   font-weight: normal;
 }
 

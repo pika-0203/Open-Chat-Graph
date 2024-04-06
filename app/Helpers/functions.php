@@ -304,7 +304,7 @@ function formatMember(int $n)
     return $n < 1000 ? $n : ($n >= 10000 ? (floor($n / 1000) / 10 . '万') : number_format($n));
 }
 
-function sortAndUniqueArray($array)
+function sortAndUniqueArray(array $array)
 {
     // 各要素の出現回数をカウント
     $counts = array_count_values(array_filter($array, fn ($el) => is_string($el)));
