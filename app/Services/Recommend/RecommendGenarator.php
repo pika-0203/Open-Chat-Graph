@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Recommend;
 
-use App\Config\AppConfig;
 use App\Models\RecommendRepositories\CategoryRankingRepository;
 use App\Models\RecommendRepositories\RecommendRankingRepository;
 use App\Services\Recommend\Dto\RecommendListDto;

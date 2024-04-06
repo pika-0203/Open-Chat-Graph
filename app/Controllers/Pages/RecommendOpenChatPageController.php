@@ -7,6 +7,7 @@ namespace App\Controllers\Pages;
 use App\Models\RecommendRepositories\RecommendPageRepository;
 use App\Services\Recommend\Enum\RecommendListType;
 use App\Services\Recommend\RecommendRankingBuilder;
+use App\Services\Recommend\RecommendUpdater;
 use App\Services\StaticData\StaticDataFile;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 
@@ -56,6 +57,22 @@ class RecommendOpenChatPageController
         StaticDataFile $staticDataFile,
         string $tag
     ) {
+        $_updatedAt = new \DateTime($staticDataFile->getRankingArgDto()->hourlyUpdatedAt);
+        $count = 0;
+        $pageTitle = "「{$tag}」関連のおすすめ人気オプチャ【最新】";
+
+        $_meta = meta()
+            ->setTitle($pageTitle, false)
+            ->setDescription(
+                "LINEオープンチャットにて特に人気のルームから、「{$tag}」にマッチするルームを毎時更新でご紹介！気になるルームを見つけたら気軽に参加してみましょう！"
+            );
+
+        $_css = ['room_list', 'site_header', 'site_footer', 'recommend_page'];
+        $_breadcrumbsShema = $this->breadcrumbsShema
+            ->generateSchema('おすすめ', 'recommend', $tag, 'recommend?tag=' . urlencode($tag), true);
+
+        $canonical = url('recommend?tag=' . $tag);
+
         $recommend = $recommendRankingBuilder->getRanking(
             RecommendListType::Tag,
             0,
@@ -65,7 +82,22 @@ class RecommendOpenChatPageController
         );
 
         if (!$recommend) {
-            return false;
+            /** @var RecommendUpdater $recommendUpdater */
+            $recommendUpdater = app(RecommendUpdater::class);
+            $tags = $recommendUpdater->getAllTagNames();
+            $result = in_array($tag, $tags);
+            $_schema = '';
+            $_schema = '';
+            return $result ? view('recommend_content', compact(
+                '_meta',
+                '_css',
+                '_breadcrumbsShema',
+                'tag',
+                'count',
+                '_schema',
+                '_updatedAt',
+                'canonical',
+            )) : false;
         }
 
         $recommendList = $recommend->getList(false);
@@ -76,18 +108,9 @@ class RecommendOpenChatPageController
                 array_column($recommendList, 'tag2')
             )
         );
-
         $tags = array_filter($tags, fn ($e) => !(in_array($e, self::TagFilter) || $e === $tag));
-
         $count = $recommend->getCount();
-        $pageTitle = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】";
-        $_css = ['room_list', 'site_header', 'site_footer', 'recommend_page'];
-
-        $_meta = meta()->setTitle($pageTitle, false)->setDescription("LINEオープンチャットにて特に人気のルームから、「{$tag}」にマッチするルームを毎時更新でご紹介！気になるルームを見つけたら気軽に参加してみましょう！");
-
-        $rankingDto = $staticDataFile->getRankingArgDto();
-
-        $_updatedAt = new \DateTime($rankingDto->hourlyUpdatedAt);
+        $_meta->title = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】";
 
         $_schema = $this->breadcrumbsShema->generateStructuredDataWebPage(
             $_meta->title,
@@ -103,24 +126,17 @@ class RecommendOpenChatPageController
             $_updatedAt,
         );
 
-        $_breadcrumbsShema = $this->breadcrumbsShema->generateSchema('おすすめ', 'recommend', $tag, 'recommend?tag=' . urlencode($tag), true);
-
-        $canonical = url('recommend?tag=' . $tag);
-
-        return view(
-            'recommend_content',
-            compact(
-                '_meta',
-                '_css',
-                '_breadcrumbsShema',
-                'recommend',
-                'tag',
-                'count',
-                '_schema',
-                '_updatedAt',
-                'canonical',
-                'tags'
-            )
-        );
+        return view('recommend_content', compact(
+            '_meta',
+            '_css',
+            '_breadcrumbsShema',
+            'recommend',
+            'tag',
+            'count',
+            '_schema',
+            '_updatedAt',
+            'canonical',
+            'tags'
+        ));
     }
 }

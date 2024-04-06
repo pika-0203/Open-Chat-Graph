@@ -94,7 +94,7 @@ class RecommendUpdater
         ["ハイキュー!!", ["ハイキュー"]],
         ["東方Project", ["東方"]],
         "対荒らし_OR_対荒_OR_白夜総会_OR_ヤブ医者_OR_拓也集落_OR_植民地",
-        ["ツイステッドワンダーランド（ツイステ）", ["ツイステッドワンダーランド_OR_ツイステ"]],
+        ["ツイステッドワンダーランド", ["ツイステッドワンダーランド_OR_ツイステ"]],
         ["ブルーアーカイブ（ブルアカ）", ["ブルーアーカイブ_OR_ブルアカ"]],
         ["なりきり（全也）", ["なりきり_OR_ぜんゆる_OR_全也_OR_nrkr_OR_#也_OR_D也_OR_ゆるなり_OR_緩也_OR_夢也_OR_夢 也_OR_歌い手也_OR_実況者也_OR_全伽羅"]],
         "レスバ_OR_喧嘩",
@@ -450,5 +450,23 @@ class RecommendUpdater
         $this->updateDescription2();
         $this->updateName2();
         $this->updateName2('oc.description');
+    }
+
+    function getAllTagNames(): array
+    {
+        $tags = array_merge(
+            array_merge(...self::BEFORE_CATEGORY_NAME),
+            self::NAME_STRONG_TAG,
+            self::DESC_STRONG_TAG,
+            self::AFTER_DESC_STRONG_TAG,
+            array_merge(...json_decode(
+                file_get_contents(AppConfig::OPEN_CHAT_SUB_CATEGORIES_TAG_FILE_PATH),
+                true
+            ))
+        );
+
+        $tags = array_map(fn ($el) => is_array($el) ? $el[0] : $el, $tags);
+        $tags = array_map(fn ($el) => $this->formatTag($el), $tags);
+        return array_unique($tags);
     }
 }

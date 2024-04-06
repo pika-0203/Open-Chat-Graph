@@ -13,7 +13,8 @@ class RecommendUpdaterTest extends TestCase
     {
         $this->inst = app(RecommendUpdater::class);
 
-        $this->inst->updateRecommendTables(false);
+        $r = $this->inst->getAllTagName();
+        debug($r);
 
         $this->assertTrue(true);
     }
