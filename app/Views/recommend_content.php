@@ -19,7 +19,7 @@
                 <h2>「<?php echo $tag ?>」関連のおすすめ人気オプチャ<?php echo $count ?>選【最新】</h2>
                 <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><span aria-hidden="true" style="user-select: none;">🕛 </span><?php echo $_updatedAt->format('Y年m月d日 H:i') ?></time>
                 <p class="recommend-desc">
-                    LINEオープンチャットにて特に人気のルームから、「<?php echo $tag ?>」にマッチするルームをご紹介！
+                    LINEオープンチャットにて特に人気のルームから、「<?php echo $tag ?>」にマッチするルームを毎時更新ご紹介！
                 </p>
                 <p class="recommend-desc2">
                     気になるルームを見つけたら気軽に参加してみましょう！
@@ -27,8 +27,7 @@
             </header>
             <aside class="list-aside">
                 <h3 class="list-title">
-                    <span>関連性の高いタグ</span>
-                    <!-- <button class="tag-btn close-btn"></button> -->
+                    <span>関連性が高いタグ</span>
                 </h3>
                 <section class="tag-list-section">
                     <ul class="tag-list">

@@ -83,7 +83,7 @@ class RecommendOpenChatPageController
         $pageTitle = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】";
         $_css = ['room_list', 'site_header', 'site_footer', 'recommend_page'];
 
-        $_meta = meta()->setTitle($pageTitle, false)->setDescription("LINEオープンチャットにて特に人気のルームから、「{$tag}」にマッチするルームをご紹介！気になるルームを見つけたら気軽に参加してみましょう！");
+        $_meta = meta()->setTitle($pageTitle, false)->setDescription("LINEオープンチャットにて特に人気のルームから、「{$tag}」にマッチするルームを毎時更新でご紹介！気になるルームを見つけたら気軽に参加してみましょう！");
 
         $rankingDto = $staticDataFile->getRankingArgDto();
 
