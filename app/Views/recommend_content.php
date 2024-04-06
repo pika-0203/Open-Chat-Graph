@@ -32,7 +32,7 @@
                 </h3>
                 <section class="tag-list-section">
                     <ul class="tag-list">
-                        <?php foreach (array_slice($tags, 0, 10) as $key => $word) : ?>
+                        <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
                             <li>
                                 <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode($word)) ?>">
                                     <?php echo $word ?>

@@ -42,6 +42,12 @@ class RecommendOpenChatPageController
         "海外",
         "全国 雑談",
         "70代",
+        "60代",
+        "50代",
+        "加工",
+        "フェス",
+        "自衛隊",
+        "レスバ",
     ];
 
     function index(
