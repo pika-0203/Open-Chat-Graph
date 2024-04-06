@@ -370,10 +370,6 @@ body > footer {
     justify-content: center;
     gap: 2rem;
   }
-
-  .talkroom_banner_img {
-    border-radius: 4px;
-  }
 }
 
 .grecaptcha-badge {
