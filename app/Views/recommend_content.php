@@ -24,13 +24,15 @@
                     <h2>「<?php echo $tag ?>」関連のおすすめ人気オプチャ【最新】</h2>
                 <?php endif ?>
                 <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><span aria-hidden="true" style="user-select: none;">🕛 </span><?php echo $_updatedAt->format('Y年m月d日 H:i') ?></time>
+            </header>
+            <div class="recommend-p">
                 <p class="recommend-desc">
                     LINEオープンチャットにて特に人気のルームから、「<?php echo $tag ?>」にマッチするルームを毎時更新でご紹介！
                 </p>
                 <p class="recommend-desc2">
                     気になるルームを見つけたら気軽に参加してみましょう！
                 </p>
-            </header>
+            </div>
             <?php if (isset($tags)) : ?>
                 <aside class="list-aside">
                     <h3 class="list-title">
@@ -77,6 +79,24 @@
                 <?php endif ?>
             </section>
             <hr>
+            <?php if (isset($tags)) : ?>
+                <aside class="list-aside">
+                    <h3 class="list-title">
+                        <span>関連性が高いタグ</span>
+                    </h3>
+                    <section class="tag-list-section">
+                        <ul class="tag-list">
+                            <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
+                                <li>
+                                    <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode($word)) ?>">
+                                        <?php echo $word ?>
+                                    </a>
+                                </li>
+                            <?php endforeach ?>
+                        </ul>
+                    </section>
+                </aside>
+            <?php endif ?>
             <aside style="all: unset; display:block; margin: 20px 0 8px 0;">
                 <p class="recommend-desc">
                     オープンチャットには生活の役に立つ・楽しいルームがいっぱい！

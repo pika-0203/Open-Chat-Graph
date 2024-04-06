@@ -72,13 +72,17 @@ time {
 
 .recommend-header {
   text-align: left;
-  margin-bottom: 2rem;
 }
 
 .recommend-header h2 {
   margin: 1rem 0;
   color: #111;
   font-size: 23px;
+}
+
+.recommend-p {
+  text-align: left;
+  margin-bottom: 2rem;
 }
 
 .recommend-desc {

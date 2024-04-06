@@ -45,7 +45,7 @@
             <span>
               <?php if ($oc['member'] === $recommend->maxMemberCount) : ?>
                 <span aria-hidden="true" style="font-size: 9px; user-select: none;">🏆</span>
-                <span>メンバー <?php echo formatMember($oc['member']) ?>人</span>
+                <span style="font-weight: bold;">メンバー <?php echo formatMember($oc['member']) ?>人</span>
               <?php else : ?>
                 <span>メンバー <?php echo formatMember($oc['member']) ?>人</span>
               <?php endif ?>

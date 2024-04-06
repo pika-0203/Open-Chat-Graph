@@ -71,7 +71,7 @@ class RecommendOpenChatPageController
         $_breadcrumbsShema = $this->breadcrumbsShema
             ->generateSchema('おすすめ', 'recommend', $tag, 'recommend?tag=' . urlencode($tag), true);
 
-        $canonical = url('recommend?tag=' . $tag);
+        $canonical = url('recommend?tag=' . urlencode($tag));
 
         $recommend = $recommendRankingBuilder->getRanking(
             RecommendListType::Tag,
@@ -82,12 +82,14 @@ class RecommendOpenChatPageController
         );
 
         if (!$recommend) {
+            header('HTTP/1.1 503 Service Temporarily Unavailable', true, 503);
+            header('Retry-After: ' . (10 * 60));
+
             /** @var RecommendUpdater $recommendUpdater */
             $recommendUpdater = app(RecommendUpdater::class);
             $tags = $recommendUpdater->getAllTagNames();
             $result = in_array($tag, $tags);
-            $_schema = '';
-            $_schema = '';
+            $_schema = $this->schema($_meta, $_updatedAt, $tag);
             return $result ? view('recommend_content', compact(
                 '_meta',
                 '_css',
@@ -100,6 +102,8 @@ class RecommendOpenChatPageController
             )) : false;
         }
 
+        cache();
+
         $recommendList = $recommend->getList(false);
 
         $tags = sortAndUniqueArray(
@@ -111,20 +115,7 @@ class RecommendOpenChatPageController
         $tags = array_filter($tags, fn ($e) => !(in_array($e, self::TagFilter) || $e === $tag));
         $count = $recommend->getCount();
         $_meta->title = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】";
-
-        $_schema = $this->breadcrumbsShema->generateStructuredDataWebPage(
-            $_meta->title,
-            $_meta->description,
-            url("recommend/" . urlencode($tag)),
-            url('assets/ogp.png'),
-            'pika-0203',
-            'https://github.com/pika-0203',
-            'https://avatars.githubusercontent.com/u/132340402?v=4',
-            'オプチャグラフ',
-            url('assets/icon-192x192.png'),
-            new \DateTime('2024-04-06 08:00:00'),
-            $_updatedAt,
-        );
+        $_schema = $this->schema($_meta, $_updatedAt, $tag);
 
         return view('recommend_content', compact(
             '_meta',
@@ -138,5 +129,22 @@ class RecommendOpenChatPageController
             'canonical',
             'tags'
         ));
+    }
+
+    private function schema($_meta, $_updatedAt, $tag)
+    {
+        return $this->breadcrumbsShema->generateStructuredDataWebPage(
+            $_meta->title,
+            $_meta->description,
+            url("recommend/" . urlencode($tag)),
+            url('assets/ogp.png'),
+            'pika-0203',
+            'https://github.com/pika-0203',
+            'https://avatars.githubusercontent.com/u/132340402?v=4',
+            'オプチャグラフ',
+            url('assets/icon-192x192.png'),
+            new \DateTime('2024-04-06 08:00:00'),
+            $_updatedAt,
+        );
     }
 }
