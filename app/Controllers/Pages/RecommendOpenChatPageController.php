@@ -64,7 +64,7 @@ class RecommendOpenChatPageController
         $_meta = meta()
             ->setTitle($pageTitle, false)
             ->setDescription(
-                "LINEオープンチャットにて特に人気のルームから、「{$tag}」のテーマに関するルームを毎時更新でご紹介！気になるルームを見つけたら気軽に参加してみましょう！"
+                "LINEオープンチャットでいま人気のルームから、「{$tag}」に関する厳選ルームを毎時更新でご紹介！気になるルームを見つけたら気軽に参加してみましょう！"
             );
 
         $_css = ['room_list', 'site_header', 'site_footer', 'recommend_page'];
