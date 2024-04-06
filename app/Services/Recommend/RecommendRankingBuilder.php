@@ -11,7 +11,7 @@ use App\Services\Recommend\Enum\RecommendListType;
 
 class RecommendRankingBuilder
 {
-    private const LIST_LIMIT = 50;
+    private const LIST_LIMIT = 10;
     private const MIN_MEMBER_DIFF = 3;
 
     function getRanking(
@@ -52,8 +52,14 @@ class RecommendRankingBuilder
             $limit
         );
 
+        $count = count($ranking) + count($ranking2) + count($ranking3);
         $idArray = array_column(array_merge($ranking, $ranking2, $ranking3), 'id');
-        $ranking4 = $repository->getListOrderByMemberDesc($id, $entity, $idArray, $limit);
+        $ranking4 = $repository->getListOrderByMemberDesc(
+            $id,
+            $entity,
+            $idArray,
+            $count < self::LIST_LIMIT * 3 ? self::LIST_LIMIT * 3 - $count : 0
+        );
 
         $dto = new RecommendListDto(
             $type,
