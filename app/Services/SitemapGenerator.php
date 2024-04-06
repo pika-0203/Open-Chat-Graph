@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Config\AppConfig;
 use Asika\Sitemap\Sitemap;
 use Asika\Sitemap\ChangeFreq;
 use Asika\Sitemap\SitemapIndex;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
+use App\Services\Recommend\RecommendUpdater;
 
 class SitemapGenerator
 {
@@ -17,7 +19,8 @@ class SitemapGenerator
     const INDEX_SITEMAP = __DIR__ . '/../../public/sitemap.xml';
 
     function __construct(
-        private OpenChatListRepositoryInterface $ocRepo
+        private OpenChatListRepositoryInterface $ocRepo,
+        private RecommendUpdater $recommendUpdater,
     ) {
     }
 
@@ -32,14 +35,25 @@ class SitemapGenerator
             $index->addItem($this->genarateOpenChatSitemap($openChat, $i + 2), new \DateTime);
         }
 
-        file_put_contents(self::INDEX_SITEMAP, $index->render());
+        safeFileRewrite(self::INDEX_SITEMAP, $index->render(), 0755);
     }
 
     private function generateSitemap1(): string
     {
         $sitemap = new Sitemap();
         $sitemap->addItem(rtrim(self::SITE_URL, "/"), changeFreq: ChangeFreq::DAILY, lastmod: new \DateTime);
+        $sitemap->addItem(self::SITE_URL . 'oc');
+        $sitemap->addItem(self::SITE_URL . 'policy');
+        $sitemap->addItem(self::SITE_URL . 'register');
         $sitemap->addItem(self::SITE_URL . 'ranking');
+
+        foreach (AppConfig::OPEN_CHAT_CATEGORY as $category) {
+            $category && $sitemap->addItem(self::SITE_URL . 'ranking/' . $category);
+        }
+        
+        foreach($this->recommendUpdater->getAllTagNames() as $tag) {
+            $sitemap->addItem(self::SITE_URL . 'recommend?tag=' . urlencode($tag));
+        }
 
         return $this->saveXml($sitemap, 1);
     }
@@ -66,7 +80,7 @@ class SitemapGenerator
     private function saveXml(Sitemap $sitemap, int $n): string
     {
         $fileName = "sitemap{$n}.xml";
-        file_put_contents(self::SITEMAP_DIR . $fileName, $sitemap->render());
+        safeFileRewrite(self::SITEMAP_DIR . $fileName, $sitemap->render(), 0755);
 
         return self::SITEMAP_URL . $fileName;
     }

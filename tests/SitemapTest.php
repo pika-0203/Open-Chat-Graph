@@ -12,9 +12,8 @@ class SitemapTest extends TestCase
 
     public function test()
     {
-        debug(OpenChatServicesUtility::getModifiedCronTime('now'));
-        debug(OpenChatServicesUtility::getModifiedCronTime(strtotime('hour')));
-
+        $this->site = app(SitemapGenerator::class);
+        $this->site->generate();
         $this->assertTrue(true);
     }
 }
