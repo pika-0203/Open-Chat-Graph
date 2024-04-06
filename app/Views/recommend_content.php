@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="ja">
-<?php viewComponent('head', compact('_css', '_meta')) ?>
+<?php viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
 <body class="body">
     <style>
         hr {
             border-bottom: solid 1px var(--border-color);
             margin: 12px 0;
+        }
+
+        time {
+            font-size: 14px;
+            color: #888;
         }
 
         .ranking-page-main {
@@ -25,9 +30,9 @@
             width: calc(100% / 4);
             object-fit: cover;
             display: flex;
-            border-radius: 50%;
             aspect-ratio: 1;
-            padding: 2px;
+            padding: 1px;
+            border-radius: 50%;
         }
 
         .recommend-header {
@@ -42,31 +47,38 @@
 
         .recommend-desc {
             line-height: normal;
+            color: #616161;
             font-size: 1rem;
-            color: #111;
         }
 
         .recommend-desc2 {
-            font-size: 14px;
-            color: #555;
+            color: #616161;
+            font-size: 1rem;
         }
 
         .list-aside {
             all: unset;
             display: block;
-            margin-bottom: -6px;
         }
 
         .list-aside details {
             margin: 0;
-            font-size: 11.5px;
+            font-size: 13px;
             color: #aaa;
             font-weight: normal;
+        }
+
+        .list-aside-details {
+            margin-top: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .list-aside-desc {
             font-size: 13px;
             color: #555;
+            display: block;
         }
 
         .css-162gv95 {
@@ -103,25 +115,22 @@
                     <?php endforeach ?>
                 </div>
                 <h2>「<?php echo $tag ?>」関連のおすすめ人気オープンチャット<?php echo $count ?>選【最新】</h2>
+                <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>">🕛 <?php echo $_updatedAt->format('Y-m-d h:i') ?></time>
                 <p class="recommend-desc">
-                    マッチ度が高い「<?php echo $tag ?>」に関するオープンチャットがここに集結！
+                    LINEオープンチャットにて特に人気のルームから、「<?php echo $tag ?>」にマッチするルームをご紹介！
                 </p>
                 <p class="recommend-desc2">
-                    あなたがお探しのテーマにマッチする厳選LINEオープンチャット最新リストを、直近のメンバー増加が多い順でお届けします。
+                    気になるルームを見つけたら気軽に参加してみましょう！
                 </p>
-                <p class="recommend-desc2">
-                    気になるトークルームを見つけたらまずは気軽に参加してみましょう！
-                </p>
+                <p style="font-size: 12px; color: #b7b7b7">オプチャグラフ独自の自動タグ付けルールと、メンバー数統計データに基づきおすすめのオープンチャットを選出しています。</p>
             </header>
             <hr>
             <aside class="list-aside">
                 <details>
                     <summary>メンバー数のアイコンについて</summary>
-                    <div style="margin-top: 4px;">
+                    <div class="list-aside-details">
                         <small class="list-aside-desc">🔥：直近1時間のメンバー数が急上昇</small>
-                        <br>
                         <small class="list-aside-desc">🚀：直近24時間のメンバー数が急上昇</small>
-                        <br>
                         <small class="list-aside-desc">
                             <span style="margin: 0 4px;">
                                 <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium show-north css-162gv95" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NorthIcon">
@@ -129,17 +138,17 @@
                                 </svg>
                             </span>：直近1週間のメンバー数が急上昇
                         </small>
-                        <br>
                         <small class="list-aside-desc">🏆：リスト内で最もメンバー数が多いトークルーム</small>
                     </div>
                 </details>
             </aside>
             <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
+            <hr>
             <p class="recommend-desc">
                 オープンチャットには生活の役に立つ・楽しいトークルームがいっぱい！
             </p>
             <p class="recommend-desc2">
-                気になるトークルームを見つけたらまずは気軽に参加してみましょう！
+                気になるトークルームを見つけたら気軽に参加してみましょう！
             </p>
         </article>
     </main>
