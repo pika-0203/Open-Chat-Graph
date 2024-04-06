@@ -53,7 +53,7 @@
             <?php endif ?>
             <section style="all:unset; display:block;">
                 <?php if ($count) : ?>
-                    <h3 class="list-title oc-list">「<?php echo $tag ?>」関連のルーム <?php echo $count ?>件</h3>
+                    <h3 class="list-title oc-list">「<?php echo $tag ?>」関連のおすすめ <?php echo $count ?>件</h3>
                     <aside class="list-aside">
                         <details>
                             <summary>メンバー数のアイコンについて</summary>
