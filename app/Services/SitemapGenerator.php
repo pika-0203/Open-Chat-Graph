@@ -53,7 +53,7 @@ class SitemapGenerator
         }
 
         foreach ($this->recommendUpdater->getAllTagNames() as $tag) {
-            $sitemap->addItem(self::SITE_URL . 'recommend?tag=' . urlencode($tag), lastmod: $datetime);
+            $sitemap->addItem(self::SITE_URL . 'recommend?tag=' . urlencode($tag), lastmod: $date);
         }
 
         return $this->saveXml($sitemap, 1);

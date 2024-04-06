@@ -37,7 +37,7 @@ use App\Services\Recommend\Enum\RecommendListType;
         <button type="button" class="read-more-list-btn" onclick="this.textContent = this.parentElement.nextElementSibling.classList.toggle('show-all') ? '一部を表示' : 'もっと見る';">もっと見る</button>
     </div>
     <ul class="recommend-list">
-        <?php foreach ($recommend->getList() as $roc) : ?>
+        <?php foreach ($recommend->getList(false) as $roc) : ?>
             <li>
                 <a href="<?php echo url('/oc/' . $roc['id']) . ($roc['table_name'] === AppConfig::RankingHourTable ? '?limit=hour' : '') ?>">
                     <img class="img-mobile" loading="lazy" alt="<?php echo $roc['name'] ?>" src="<?php echo imgPreviewUrl($roc['id'], $roc['img_url']) ?>" />

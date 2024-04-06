@@ -29,11 +29,11 @@ class RecommendListDto
     {
         if (!$shuffle) return array_merge($this->hour, $this->day, $this->week, $this->member);
 
-        $ranking5 = array_merge($this->hour, $this->day, $this->week);
+        $ranking5 = array_merge($this->day, $this->week);
         shuffle($ranking5);
         $ranking6 = $this->member;
         shuffle($ranking6);
-        return array_merge($ranking5, $ranking6);
+        return array_merge($this->hour, $ranking5, $ranking6);
     }
 
     /** @return array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int }[] */

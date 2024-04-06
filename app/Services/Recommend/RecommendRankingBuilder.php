@@ -11,7 +11,7 @@ use App\Services\Recommend\Enum\RecommendListType;
 
 class RecommendRankingBuilder
 {
-    private const LIST_LIMIT = 19;
+    private const LIST_LIMIT = 20;
     private const MIN_MEMBER_DIFF = 3;
 
     function getRanking(
@@ -28,7 +28,7 @@ class RecommendRankingBuilder
             $id,
             $entity,
             AppConfig::RankingHourTable,
-            $limit + 2,
+            $minDiffMember + 1,
             $limit
         );
 
