@@ -21,7 +21,7 @@ use App\Services\Recommend\Enum\RecommendListType;
                     <small style="font-size: 11px; font-weight:normal; color:#b7b7b7; margin-left: 4px;">最新</small>
                 </h3>
             <?php else : ?>
-                <a class="unset" style="cursor: pointer;" href="<?php echo url("recommend/" . urlencode($recommend->listName)) ?>">
+                <a class="unset" style="cursor: pointer;" href="<?php echo url("recommend?tag=" . urlencode($recommend->listName)) ?>">
                     <h3>
                         <span style="text-decoration: underline; text-decoration-color: #777;">
                             「<?php echo $recommend->listName ?>」

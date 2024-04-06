@@ -12,7 +12,11 @@
         <link rel="stylesheet" href="<?php echo fileUrl("style/{$css}.css") ?>">
     <?php endforeach ?>
     <link rel="icon" type="image/png" href="<?php echo url(\App\Config\AppConfig::SITE_ICON_FILE_PATH) ?>">
-    <link rel="canonical" hrefs="<?php echo url(strstr(path(), '?', true) ?: path()) ?>">
+    <?php if (isset($canonical)) : ?>
+        <link rel="canonical" hrefs="<?php echo $canonical ?>">
+    <?php else : ?>
+        <link rel="canonical" hrefs="<?php echo url(strstr(path(), '?', true) ?: path()) ?>">
+    <?php endif ?>
     <?php if (isset($_schema)) : ?>
         <?php echo $_schema ?>
     <?php endif ?>

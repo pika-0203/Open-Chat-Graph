@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-<?php viewComponent('head', compact('_css', '_meta', '_schema')) ?>
+<?php viewComponent('head', compact('_css', '_meta', '_schema', 'canonical')) ?>
 
 <body class="body">
     <style>
@@ -115,7 +115,7 @@
                     <?php endforeach ?>
                 </div>
                 <h2>「<?php echo $tag ?>」関連のおすすめ人気オープンチャット<?php echo $count ?>選【最新】</h2>
-                <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>">🕛 <?php echo $_updatedAt->format('Y-m-d h:i') ?></time>
+                <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>">🕛 <?php echo $_updatedAt->format('Y年m月d日 h:i') ?></time>
                 <p class="recommend-desc">
                     LINEオープンチャットにて特に人気のルームから、「<?php echo $tag ?>」にマッチするルームをご紹介！
                 </p>
@@ -145,10 +145,10 @@
             <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
             <hr>
             <p class="recommend-desc">
-                オープンチャットには生活の役に立つ・楽しいトークルームがいっぱい！
+                オープンチャットには生活の役に立つ・楽しいルームがいっぱい！
             </p>
             <p class="recommend-desc2">
-                気になるトークルームを見つけたら気軽に参加してみましょう！
+                気になるルームを見つけたら気軽に参加してみましょう！
             </p>
         </article>
     </main>

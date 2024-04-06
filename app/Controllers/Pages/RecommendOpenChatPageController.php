@@ -21,6 +21,7 @@ class RecommendOpenChatPageController
         if (!$recommend) {
             return false;
         }
+
         $count = $recommend->getCount();
         $pageTitle = "「{$tag}」関連の人気オープンチャット{$count}選【最新】";
         $_css = ['room_list', 'site_header', 'site_footer'];
@@ -45,11 +46,13 @@ class RecommendOpenChatPageController
             $_updatedAt,
         );
 
-        $_breadcrumbsShema = $this->breadcrumbsShema->generateSchema('おすすめ', 'recommend', $tag, urlencode($tag));
+        $_breadcrumbsShema = $this->breadcrumbsShema->generateSchema('おすすめ', 'recommend', $tag, 'recommend?tag=' . urlencode($tag), true);
+
+        $canonical = url('recommend?tag=' . $tag);
 
         return view(
             'recommend_content',
-            compact('_meta', '_css', '_breadcrumbsShema', 'recommend', 'tag', 'count', '_schema', '_updatedAt')
+            compact('_meta', '_css', '_breadcrumbsShema', 'recommend', 'tag', 'count', '_schema', '_updatedAt', 'canonical')
         );
     }
 }

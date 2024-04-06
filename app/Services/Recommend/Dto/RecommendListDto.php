@@ -39,17 +39,9 @@ class RecommendListDto
     /** @return array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int }[] */
     function getPreviewList(int $len): array
     {
-        $ranking5 = array_merge($this->day, $this->week, $this->hour);
-        shuffle($ranking5);
-
-        $member = $this->member;
-        shuffle($member);
-
-        $result = array_merge($ranking5, $member);
-        if(count($result) <= $len) return $result;
-
-        $result = array_filter($result, fn ($el) => !in_array($el['img_url'], AppConfig::DEFAULT_OPENCHAT_IMG_URL_HASH));
-        return array_slice($result, 0, $len);
+        $ranking5 = array_merge($this->hour, $this->day, $this->week, $this->member);
+        if (count($ranking5) <= $len) return $ranking5;
+        return array_slice($ranking5, 0, $len);
     }
 
     function getCount(): int
