@@ -57,7 +57,7 @@ hr {
 .talkroom_banner_img {
   object-fit: cover;
   display: flex;
-  border-radius: 22.5%;
+  border-radius: 4px;
   aspect-ratio: 1;
   height: 100%;
 }
