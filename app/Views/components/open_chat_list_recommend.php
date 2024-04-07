@@ -2,26 +2,8 @@
 <!-- @param bool $isHourly -->
 <style>
   .openchat-item {
-    padding-left: 72px;
-    margin: 22px 0;
-    min-height: 60px;
-  }
-
-  .openchat-item-img {
-    width: 60px;
-    height: 60px;
-    top: 0;
-  }
-
-  .openchat-item-desc {
-    -webkit-line-clamp: 1;
-    margin-top: 3.5px;
-    color: #555;
-  }
-
-  .openchat-item-lower {
-    margin-top: 1px;
-    color: #777;
+    margin: 20px 0;
+    margin-right: 1.5rem;
   }
 </style>
 <ol class="openchat-item-list unset">

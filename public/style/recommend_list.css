@@ -26,15 +26,15 @@
 
 .recommend-list li {
   all: unset;
-  min-width: 131px;
-  max-width: 131px;
+  min-width: 136px;
+  max-width: 136px;
   margin: 0;
   padding: 0;
   padding: 13px 3px;
 }
 
 .recommend-list h4 {
-  font-size: 12px;
+  font-size: 13px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -64,10 +64,10 @@
 }
 
 .recommend-member {
-  font-size: 11px;
+  font-size: 12px;
   color: #aaa;
   line-height: 125%;
-  margin-top: 4px;
+  margin-top: 2px;
   white-space: nowrap;
 }
 
@@ -87,7 +87,7 @@
   display: flex;
   flex-direction: column;
   /* align-items: center; */
-  height: 154px;
+  height: 166px;
   justify-content: space-evenly;
   border: 1px solid #efefef;
   border-radius: 4px;
@@ -97,8 +97,8 @@
 
 .recommend-list img {
   display: block;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   aspect-ratio: 1;
   border-radius: 50%;
   object-fit: cover;
