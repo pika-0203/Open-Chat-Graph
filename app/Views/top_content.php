@@ -18,7 +18,7 @@
         <?php endif ?>
 
         <article class="top-ranking" style="padding-top: 0; margin-top: 0;">
-            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all&order=desc&sort=member') ?>">
+            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
             <header class="openchat-list-title-area unset">
@@ -100,7 +100,7 @@
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->popularList]) ?>
-            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all') ?>">
+            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">メンバー数ランキングを詳しく見る</span>
             </a>
         </article>
