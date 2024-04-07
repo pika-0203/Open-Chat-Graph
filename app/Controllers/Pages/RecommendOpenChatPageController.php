@@ -27,7 +27,6 @@ class RecommendOpenChatPageController
         'Instagram（インスタ）',
         '知的財産',
         "東京",
-        "宣伝",
         "北海道",
         "神奈川",
         "愛知",

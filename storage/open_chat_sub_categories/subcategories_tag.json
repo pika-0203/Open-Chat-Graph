@@ -846,9 +846,33 @@
         "イラスト"
     ],
     "11": [
-        "WEB系_OR_JavaScript_OR_TypeScript_OR_React_OR_HTML_OR_CSS_OR_PHP_OR_Ruby",
+        [
+            "Webエンジニア・プログラミング",
+            [
+                "WEB系_OR_JavaScript_OR_TypeScript_OR_React_OR_CSS_OR_PHP_OR_Webエンジニア_OR_Webディレクター_OR_laravel",
+                "Ruby_AND_on_AND_Rails"
+            ]
+        ],
+        [
+            "WEBデザイナー・デザイン",
+            [
+                "WEBデザイナー_OR_WEBデザイン"
+            ]
+        ],
+        "フリーランス",
+        [
+            "プログラミング",
+            [
+                "プログラマー_OR_プログラミング"
+            ]
+        ],
+        [
+            "ITエンジニア",
+            [
+                "エンジニア"
+            ]
+        ],
         "電子工作_OR_マイコン",
-        "プログラミング",
         [
             "小学生・中学生・高校生限定",
             [
@@ -919,9 +943,32 @@
         "ドライバー",
         "保育士",
         "職人",
+        [
+            "Webエンジニア・プログラミング",
+            [
+                "WEB系_OR_JavaScript_OR_TypeScript_OR_React_OR_CSS_OR_PHP_OR_Webエンジニア_OR_Webディレクター_OR_laravel",
+                "Ruby_AND_on_AND_Rails"
+            ]
+        ],
+        [
+            "WEBデザイナー・デザイン",
+            [
+                "WEBデザイナー_OR_WEBデザイン"
+            ]
+        ],
         "フリーランス",
-        "WEBデザイナー",
-        "エンジニア",
+        [
+            "プログラミング",
+            [
+                "プログラマー_OR_プログラミング"
+            ]
+        ],
+        [
+            "ITエンジニア",
+            [
+                "エンジニア"
+            ]
+        ],
         "デザイナー",
         "アパレル",
         [
