@@ -122,30 +122,32 @@
     overflow-x: unset;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    padding: 0;
   }
 
   .recommend-list li {
-    padding: 6px 6px;
-    border: 1px solid #efefee;
-    border-radius: 4px;
-    margin: 7px 0;
+    padding: 0;
+    border: 0;
+    margin: 6px 0;
+    min-width: 44%;
+    max-width: 44%;
   }
 
   .recommend-list h4 {
-    margin-top: 8px;
     font-size: 13px;
+    -webkit-line-clamp: 1;
   }
 
-  .recommend-list li:nth-child(n + 9) {
+  .recommend-list li:nth-child(n + 5) {
     display: none;
   }
 
-  .recommend-list.show-all li:nth-child(n + 9) {
+  .recommend-list.show-all li:nth-child(n + 5) {
     display: block;
   }
 
   .recommend-desc {
-    margin-top: 5px;
+    margin-top: 3px;
     font-size: 12px;
   }
 
@@ -156,23 +158,29 @@
   .read-more-list-btn {
     display: inline-block;
     margin: 0;
-    height: 36px;
+    height: 32px;
     border: 1px solid #efefef;
     border-radius: 9rem;
     background-color: #fff;
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
+    padding: 0 12px;
   }
 
   .recommend-list a {
-    height: 159px;
+    height: fit-content;
     border: 0;
     padding: 0;
+    text-align: unset;
+    position: relative;
+    padding-left: 62px;
   }
 
   .recommend-list img {
-    width: 60px;
-    height: 60px;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: 0;
   }
 
   .btn-wrapper h3 {
