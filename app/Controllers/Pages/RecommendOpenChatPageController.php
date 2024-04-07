@@ -50,6 +50,7 @@ class RecommendOpenChatPageController
         "フェス",
         "自衛隊",
         "レスバ",
+        "unistyle",
     ];
 
     function index(
@@ -83,9 +84,6 @@ class RecommendOpenChatPageController
         );
 
         if (!$recommend) {
-            header('HTTP/1.1 503 Service Temporarily Unavailable', true, 503);
-            header('Retry-After: ' . (20 * 60));
-
             /** @var RecommendUpdater $recommendUpdater */
             $recommendUpdater = app(RecommendUpdater::class);
             $tags = $recommendUpdater->getAllTagNames();

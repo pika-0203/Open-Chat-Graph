@@ -180,6 +180,17 @@ section aside:hover {
   margin-bottom: 3px;
 }
 
+.ranking-page-main .openchat-item-lower-outer {
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 2px;
+  align-items: center;
+}
+
+.ranking-page-main .openchat-item-mui-chip-outer {
+  margin-top: 0;
+}
+
 @media screen and (min-width: 512px) {
   .header-img {
     margin: 2rem 0;
