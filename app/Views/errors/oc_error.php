@@ -49,18 +49,25 @@
         <div style="margin: 0 -1rem; ">
             <?php viewComponent('site_header') ?>
         </div>
-        <header>
-            <p style="font-weight: bold;">このオープンチャットは削除されました😇</p>
+        <header style="padding: 6rem 0; text-align: center">
+            <p style="font-weight: bold; color: #777">このオープンチャットは削除されました😇</p>
+            <p style="color: #aaa; font-size: 12px">LINEオープンチャット内でトークルームが削除されました。</p>
         </header>
+        <?php if ($recommend[0]) : ?>
+            <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => 0, 'tag' => $recommend[2]]) ?>
+            <hr style="margin: 1rem 0;">
+        <?php endif ?>
+        <?php if ($recommend[1]) : ?>
+            <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => 0, 'tag' => $recommend[2]]) ?>
+        <?php endif ?>
+        <hr style="margin: .5rem 0;">
+        <article class="top-list">
+            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all&order=desc&sort=member') ?>">
+                <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
+            </a>
+            <hr style="margin: .5rem 0;">
+        </article>
     </main>
-    <?php /** @var \App\Controllers\Pages\NotFoundPageController $c */
-    try {
-        $c = app(\App\Controllers\Pages\NotFoundPageController::class);
-        $c->index($recommend)->render();
-    } catch (\Throwable $e) {
-        echo 'データ取得エラー';
-    }
-    ?>
     <footer>
         <?php viewComponent('footer_inner') ?>
     </footer>
