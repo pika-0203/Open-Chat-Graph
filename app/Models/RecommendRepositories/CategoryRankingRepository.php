@@ -119,7 +119,7 @@ class CategoryRankingRepository implements RecommendRankingRepositoryInterface
         );
     }
 
-    function getCategory(int $id): int|null
+    function getCategory(int $id): int|null|false
     {
         return DB::fetchColumn("SELECT category FROM open_chat WHERE id = {$id}");
     }

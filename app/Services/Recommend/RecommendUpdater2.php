@@ -6,7 +6,7 @@ namespace App\Services\Recommend;
 
 use Shadow\DB;
 
-class RecommendUpdaterTest extends RecommendUpdater
+class RecommendUpdater2 extends RecommendUpdater
 {
     function formatTag(string $tag): string
     {

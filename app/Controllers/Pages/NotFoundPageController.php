@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Services\Recommend\Dto\RecommendListDto;
 use App\Services\StaticData\StaticDataFile;
 use Shadow\Kernel\ViewInterface;
 
@@ -14,13 +15,10 @@ class NotFoundPageController
     ) {
     }
 
-    function index(): ViewInterface
+    /** @param null|array{0:RecommendListDto|false, 1:RecommendListDto|false, 2:string|false} $recommend */
+    function index(?array $recommend = null): ViewInterface
     {
         $dto = $this->staticDataGeneration->getTopPageData();
-
-        $dto->dailyUpdatedAt->modify('-7day');
-        $weeklyStart = $dto->dailyUpdatedAt->format('n月j日');
-        $weeklyRange =  "{$weeklyStart} 〜 昨日";
 
         $hourlyEnd = $dto->hourlyUpdatedAt->format('G:i');
         $dto->hourlyUpdatedAt->modify('-1hour');
@@ -30,7 +28,7 @@ class NotFoundPageController
         return view('components/not_found_list', compact(
             'dto',
             'hourlyRange',
-            'weeklyRange',
+            'recommend'
         ));
     }
 }

@@ -1,4 +1,13 @@
 <main>
+    <?php if ($recommend[0]) : ?>
+        <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => 0, 'tag' => $recommend[2]]) ?>
+        <hr style="margin: 1rem 0;">
+    <?php endif ?>
+    <?php if ($recommend[1]) : ?>
+        <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => 0, 'tag' => $recommend[2]]) ?>
+    <?php endif ?>
+    <hr style="margin: .5rem 0;">
+
     <article class="top-list">
         <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all&order=desc&sort=member') ?>">
             <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>

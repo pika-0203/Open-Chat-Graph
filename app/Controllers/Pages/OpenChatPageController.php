@@ -27,9 +27,18 @@ class OpenChatPageController
         RecommendGenarator $recommendGenarator,
         int $open_chat_id
     ) {
+        $recommend = $recommendGenarator->getRecommend($open_chat_id);
         $oc = $ocRepo->getOpenChatById($open_chat_id);
-        if (!$oc) {
+
+        if (!$oc && !$recommend[2]) {
             return false;
+        } elseif (!$oc) {
+            $_meta = meta()->setTitle("削除されたオープンチャット")
+                ->setDescription('お探しのオープンチャットは削除されました。')
+                ->setOgpDescription('お探しのオープンチャットは削除されました。');
+            $_css = ['room_list', 'site_header', 'site_footer', 'recommend_list'];
+            http_response_code(404);
+            return view('errors/oc_error', compact('_meta', '_css', 'recommend'));
         }
 
         $_statsDto = $statisticsChartArrayService->buildStatisticsChartArray($open_chat_id);
@@ -85,8 +94,6 @@ class OpenChatPageController
             $oc['created_at'],
             strtotime($_statsDto->endDate)
         );
-
-        $recommend = $recommendGenarator->getRecommend($oc['id']);
 
         return view('oc_content', compact(
             '_meta',
