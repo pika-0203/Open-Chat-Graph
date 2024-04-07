@@ -22,6 +22,7 @@ interface RecommendRankingRepositoryInterface
         oc.member,
         oc.description,
         oc.emblem,
+        oc.category,
         ranking.tag1,
         ranking.tag2
     ";

@@ -79,6 +79,11 @@ class RecommendUpdater2 extends RecommendUpdater
     {
         clearstatcache();
 
+        $delete = fn (string $table) => DB::execute(
+            "DELETE FROM {$table} WHERE id IN (SELECT id FROM recovery)"
+        );
+
+        $delete('recommend');
         $this->updateName();
         $this->updateDescription('oc.name', 'recommend');
         $this->updateDescription();

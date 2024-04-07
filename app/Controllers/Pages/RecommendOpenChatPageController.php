@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Config\AppConfig;
 use App\Models\RecommendRepositories\RecommendPageRepository;
+use App\Services\Recommend\Dto\RecommendListDto;
 use App\Services\Recommend\Enum\RecommendListType;
 use App\Services\Recommend\RecommendRankingBuilder;
 use App\Services\Recommend\RecommendUpdater;
@@ -88,7 +90,7 @@ class RecommendOpenChatPageController
             $recommendUpdater = app(RecommendUpdater::class);
             $tags = $recommendUpdater->getAllTagNames();
             $result = in_array($tag, $tags);
-            $_schema = $this->schema($_meta, $_updatedAt, $tag);
+            $_schema = '';
             return $result ? view('recommend_content', compact(
                 '_meta',
                 '_css',
@@ -112,9 +114,20 @@ class RecommendOpenChatPageController
             )
         );
         $tags = array_filter($tags, fn ($e) => !(in_array($e, self::TagFilter) || $e === $tag));
+
+        $tagCategory = sortAndUniqueArray(array_column($recommendList, 'category'));
+
+
         $count = $recommend->getCount();
         $_meta->title = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】";
-        $_schema = $this->schema($_meta, $_updatedAt, $tag);
+        $_schema = $this->schema(
+            $_meta,
+            $_updatedAt,
+            $tag,
+            $tags,
+            $recommendList,
+            (isset($tagCategory[0]) && $tagCategory[0]) ? (array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$tagCategory[0]]) : ''
+        );
 
         return view('recommend_content', compact(
             '_meta',
@@ -130,12 +143,12 @@ class RecommendOpenChatPageController
         ));
     }
 
-    private function schema($_meta, $_updatedAt, $tag)
+    private function schema($_meta, $_updatedAt, $tag, $tags, $recommend, $tagCategory)
     {
-        return $this->breadcrumbsShema->generateStructuredDataWebPage(
+        return $this->breadcrumbsShema->generateRecommend(
             $_meta->title,
             $_meta->description,
-            url("recommend/" . urlencode($tag)),
+            url("recommend?tag=" . urlencode($tag)),
             url('assets/ogp.png'),
             'pika-0203',
             'https://github.com/pika-0203',
@@ -144,6 +157,10 @@ class RecommendOpenChatPageController
             url('assets/icon-192x192.png'),
             new \DateTime('2024-04-06 08:00:00'),
             $_updatedAt,
+            $tag,
+            $tags,
+            $tagCategory,
+            $recommend
         );
     }
 }

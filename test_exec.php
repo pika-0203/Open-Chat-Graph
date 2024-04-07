@@ -4,6 +4,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Services\Admin\AdminTool;
 use App\Services\Recommend\RecommendUpdater;
+use App\Services\Recommend\RecommendUpdater2;
 
 set_time_limit(3600 * 10);
 
@@ -12,10 +13,16 @@ set_time_limit(3600 * 10);
  */
 $oc = app(RecommendUpdater::class);
 
+/**
+ * @var RecommendUpdater2 $oc2
+ */
+$oc2 = app(RecommendUpdater2::class);
+
 try {
     AdminTool::sendLineNofity('oc start');
 
     $oc->updateRecommendTables(false);
+    $oc2->updateRecommendTables(false);
 
     AdminTool::sendLineNofity('oc done');
 } catch (\Throwable $e) {

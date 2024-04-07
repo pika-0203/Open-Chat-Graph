@@ -307,7 +307,7 @@ function formatMember(int $n)
 function sortAndUniqueArray(array $array)
 {
     // 各要素の出現回数をカウント
-    $counts = array_count_values(array_filter($array, fn ($el) => is_string($el)));
+    $counts = array_count_values(array_filter($array, fn ($el) => is_string($el) || is_int($el)));
 
     // 出現回数の多い順にソート（同じ出現回数の場合は元の順序を保持）
     uksort($counts, function ($a, $b) use ($counts) {
