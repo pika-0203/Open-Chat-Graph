@@ -42,6 +42,20 @@
         .main {
             max-width: var(--width);
         }
+
+        @media screen and (min-width: 512px) {
+            .main .recommend-list li:nth-child(n + 5) {
+                display: block;
+            }
+
+            .main .recommend-list li:nth-child(n + 9) {
+                display: none;
+            }
+
+            .main .recommend-list.show-all li:nth-child(n + 9) {
+                display: block;
+            }
+        }
     </style>
 
     <!-- 固定ヘッダー -->
@@ -51,7 +65,7 @@
         </div>
         <header style="padding: 6rem 0; text-align: center">
             <p style="font-weight: bold; color: #777">このオープンチャットは削除されました😇</p>
-            <p style="color: #aaa; font-size: 12px">LINEオープンチャット内でトークルームが削除されました。</p>
+            <p style="color: #aaa; font-size: 12px">LINEオープンチャット内でトークルームが削除されました</p>
         </header>
         <?php if ($recommend[0]) : ?>
             <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => 0, 'tag' => $recommend[2]]) ?>
