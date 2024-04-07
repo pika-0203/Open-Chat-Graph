@@ -117,7 +117,6 @@ class RecommendOpenChatPageController
 
         $tagCategory = sortAndUniqueArray(array_column($recommendList, 'category'));
 
-
         $count = $recommend->getCount();
         $_meta->title = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】";
         $_schema = $this->schema(
@@ -126,7 +125,7 @@ class RecommendOpenChatPageController
             $tag,
             $tags,
             $recommendList,
-            (isset($tagCategory[0]) && $tagCategory[0]) ? (array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$tagCategory[0]]) : ''
+            isset($tagCategory[0]) ? (array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$tagCategory[0]]) : ''
         );
 
         return view('recommend_content', compact(
