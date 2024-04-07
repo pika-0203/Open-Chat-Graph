@@ -195,8 +195,8 @@ class RecommendUpdater
 
     /** @var string[] $tags */
     public array $tags;
-    private string $start;
-    private string $end;
+    protected string $start;
+    protected string $end;
 
     function replace(string|array $word, string $column): string
     {
@@ -215,7 +215,7 @@ class RecommendUpdater
     }
 
     /** @return string[] */
-    private function getReplacedTags(string $column): array
+    protected function getReplacedTags(string $column): array
     {
         $tags = array_merge(
             self::NAME_STRONG_TAG,
@@ -259,7 +259,7 @@ class RecommendUpdater
     }
 
     /** @return array{ string:string[] }  */
-    private function getReplacedTagsDesc(string $column): array
+    protected function getReplacedTagsDesc(string $column): array
     {
         $this->tags = json_decode((file_get_contents(AppConfig::OPEN_CHAT_SUB_CATEGORIES_TAG_FILE_PATH)), true);
 
