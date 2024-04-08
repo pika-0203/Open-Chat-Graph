@@ -143,7 +143,6 @@ class PageBreadcrumbsListSchema
             ->image(Schema::imageObject()->url($image))
             ->author(Schema::person()->name($authorName)->image($authorImage)->sameAs($authorUrl))
             ->publisher(Schema::organization()->name($publisherName)->logo(Schema::imageObject()->url($publisherLogo)))
-            ->datePublished($datePublished)
             ->dateModified($dateModified)
             ->articleSection([$tagCategory, ...array_slice($tags, 0, 5)])
             ->about(Schema::thing()->name($tag))
