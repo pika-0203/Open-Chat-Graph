@@ -6,6 +6,17 @@ use Spatie\SchemaOrg\Schema;
 
 class PageBreadcrumbsListSchema
 {
+    const AuthorName = 'pika-0203(mimimiku778)';
+    const AuthorUrl = ['https://github.com/pika-0203', 'https://github.com/mimimiku778'];
+    const AuthorImage = 'https://avatars.githubusercontent.com/u/132340402?v=4';
+    const PublisherName = 'オプチャグラフ';
+    public string $publisherLogo;
+
+    function __construct()
+    {
+        $this->publisherLogo = url('assets/icon-192x192.png');
+    }
+
     function generateSchema(string $listItemName, string $path, string $secondName = '', string $secondPath = '', bool $fullPath = false): string
     {
         // BreadcrumbListのインスタンスを作成
@@ -41,20 +52,21 @@ class PageBreadcrumbsListSchema
         string $description,
         string $url,
         string $image,
-        string $authorName,
-        string $authorUrl,
-        string $authorImage,
-        string $publisherName,
-        string $publisherLogo,
         \DateTimeInterface $datePublished,
         \DateTimeInterface $dateModified
     ): string {
+        $authorName = self::AuthorName;
+        $authorUrl = self::AuthorUrl;
+        $authorImage = self::AuthorImage;
+        $publisherName = self::PublisherName;
+        $publisherLogo = $this->publisherLogo;
+
         $webSite = Schema::webSite()
             ->headline($siteName)
             ->description($description)
             ->mainEntityOfPage(Schema::webPage()->id($url))
             ->image(Schema::imageObject()->url($image))
-            ->author(Schema::person()->name($authorName)->image($authorImage)->url($authorUrl))
+            ->author(Schema::person()->name($authorName)->image($authorImage)->sameAs($authorUrl))
             ->publisher(Schema::organization()->name($publisherName)->logo(Schema::imageObject()->url($publisherLogo)))
             ->datePublished($datePublished)
             ->dateModified($dateModified);
@@ -67,20 +79,21 @@ class PageBreadcrumbsListSchema
         string $description,
         string $url,
         string $image,
-        string $authorName,
-        string $authorUrl,
-        string $authorImage,
-        string $publisherName,
-        string $publisherLogo,
         \DateTimeInterface $datePublished,
         \DateTimeInterface $dateModified
     ): string {
+        $authorName = self::AuthorName;
+        $authorUrl = self::AuthorUrl;
+        $authorImage = self::AuthorImage;
+        $publisherName = self::PublisherName;
+        $publisherLogo = $this->publisherLogo;
+
         $webSite = Schema::webPage()
             ->headline($title)
             ->description($description)
             ->mainEntityOfPage(Schema::webPage()->id($url))
             ->image(Schema::imageObject()->url($image))
-            ->author(Schema::person()->name($authorName)->image($authorImage)->url($authorUrl))
+            ->author(Schema::person()->name($authorName)->image($authorImage)->sameAs($authorUrl))
             ->publisher(Schema::organization()->name($publisherName)->logo(Schema::imageObject()->url($publisherLogo)))
             ->datePublished($datePublished)
             ->dateModified($dateModified);
@@ -93,11 +106,6 @@ class PageBreadcrumbsListSchema
         string $description,
         string $url,
         string $image,
-        string $authorName,
-        string $authorUrl,
-        string $authorImage,
-        string $publisherName,
-        string $publisherLogo,
         \DateTimeInterface $datePublished,
         \DateTimeInterface $dateModified,
         string $tag,
@@ -105,8 +113,11 @@ class PageBreadcrumbsListSchema
         string $tagCategory,
         array $rooms // オープンチャットルームの情報を配列で追加
     ): string {
-        // CollectionPage としてメインエンティティを定義
-        $mainEntityOfPage = Schema::collectionPage()->id($url);
+        $authorName = self::AuthorName;
+        $authorUrl = self::AuthorUrl;
+        $authorImage = self::AuthorImage;
+        $publisherName = self::PublisherName;
+        $publisherLogo = $this->publisherLogo;
 
         // 各オープンチャットルームをItemListとして追加
         $itemList = Schema::itemList();
@@ -115,7 +126,7 @@ class PageBreadcrumbsListSchema
             $listArray[] = Schema::listItem()
                 ->position($index + 1)
                 ->item(
-                    Schema::thing()
+                    Schema::webPage()
                         ->name($room['name'])
                         ->description($room['description'])
                         ->url(url('oc/' . $room['id']))
@@ -128,15 +139,15 @@ class PageBreadcrumbsListSchema
         $webSite = Schema::article()
             ->headline($title)
             ->description($description)
-            ->mainEntityOfPage($mainEntityOfPage)
+            ->mainEntityOfPage(Schema::collectionPage()->id($url))
             ->image(Schema::imageObject()->url($image))
-            ->author(Schema::person()->name($authorName)->image($authorImage)->url($authorUrl))
+            ->author(Schema::person()->name($authorName)->image($authorImage)->sameAs($authorUrl))
             ->publisher(Schema::organization()->name($publisherName)->logo(Schema::imageObject()->url($publisherLogo)))
             ->datePublished($datePublished)
             ->dateModified($dateModified)
             ->articleSection([$tagCategory, ...array_slice($tags, 0, 5)])
             ->about(Schema::thing()->name($tag))
-            ->hasPart($itemList); // ItemListをhasPartプロパティを通じて追加
+            ->mainEntity($itemList); // ItemListをhasPartプロパティを通じて追加
 
         return $webSite->toScript();
     }

@@ -39,11 +39,6 @@ class IndexPageController
             $_meta->description,
             url(),
             url('assets/ogp.png'),
-            'pika-0203',
-            'https://github.com/pika-0203',
-            'https://avatars.githubusercontent.com/u/132340402?v=4',
-            'オプチャグラフ',
-            url('assets/icon-192x192.png'),
             new DateTime('2023-05-06 00:00:00'),
             $dto->hourlyUpdatedAt
         );

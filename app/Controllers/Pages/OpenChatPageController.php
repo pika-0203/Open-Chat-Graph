@@ -79,11 +79,6 @@ class OpenChatPageController
             $_meta->description,
             url("oc/{$open_chat_id}"),
             url('assets/ogp.png'),
-            'pika-0203',
-            'https://github.com/pika-0203',
-            'https://avatars.githubusercontent.com/u/132340402?v=4',
-            'オプチャグラフ',
-            url('assets/icon-192x192.png'),
             new \DateTime('@' . $oc['created_at']),
             new \DateTime($_statsDto->endDate),
         );
