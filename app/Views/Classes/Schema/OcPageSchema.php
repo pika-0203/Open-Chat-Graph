@@ -33,7 +33,7 @@ class OcPageSchema
             ])
             ->provider(
                 Schema::organization()
-                    ->name('LINE Corporation')
+                    ->name('LINE (LY Corporation)')
                     ->url('https://line.me/ja/')
             )
             ->license('https://creativecommons.org/licenses/by/4.0/legalcode')

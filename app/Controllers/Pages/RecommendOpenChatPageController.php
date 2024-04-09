@@ -60,6 +60,7 @@ class RecommendOpenChatPageController
         string $tag
     ) {
         $_updatedAt = new \DateTime($staticDataFile->getRankingArgDto()->hourlyUpdatedAt);
+        $updatedAtDate = new \DateTime($staticDataFile->getRankingArgDto()->rankingUpdatedAt);
         $count = 0;
         $pageTitle = "「{$tag}」関連のおすすめ人気オプチャ【最新】";
 
@@ -119,7 +120,7 @@ class RecommendOpenChatPageController
         $_meta->title = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】";
         $_schema = $this->schema(
             $_meta,
-            $_updatedAt,
+            $updatedAtDate,
             $tag,
             $tags,
             $recommendList,

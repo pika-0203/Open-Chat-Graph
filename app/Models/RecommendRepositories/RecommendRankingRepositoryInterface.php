@@ -23,6 +23,11 @@ interface RecommendRankingRepositoryInterface
         oc.description,
         oc.emblem,
         oc.category,
+        oc.emid,
+        oc.url,
+        oc.api_created_at,
+        oc.created_at,
+        oc.updated_at,
         ranking.tag1,
         ranking.tag2
     ";
