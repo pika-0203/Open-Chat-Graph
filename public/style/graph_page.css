@@ -1,5 +1,5 @@
 #app {
-  min-height: 101px;
+  min-height: 133px;
 }
 
 .limit-btns .MuiTab-fullWidth {
@@ -7,7 +7,7 @@
   padding: 0;
 }
 
-.chart-canvas-box { 
+.chart-canvas-box {
   aspect-ratio: 1.8 / 1;
   width: 100%;
   margin: 0 auto;
@@ -16,6 +16,10 @@
   -webkit-user-select: none;
   position: relative;
   margin-bottom: -16px;
+}
+
+.chart-canvas-box canvas {
+  overflow: hidden;
 }
 
 .touch-pan-y {

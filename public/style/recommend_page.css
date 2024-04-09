@@ -33,7 +33,7 @@ time {
 }
 
 .tag-btn {
-  all: unset;
+  text-decoration: none;
   cursor: pointer;
   align-items: center;
   background-color: #fff;

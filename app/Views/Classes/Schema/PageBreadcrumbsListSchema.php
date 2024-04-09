@@ -6,8 +6,8 @@ use Spatie\SchemaOrg\Schema;
 
 class PageBreadcrumbsListSchema
 {
-    const AuthorName = 'pika-0203(mimimiku778)';
-    const AuthorUrl = ['https://github.com/pika-0203', 'https://github.com/mimimiku778'];
+    const AuthorName = 'pika-0203(mimimiku778)(ずんだもん@オプチャグラフのバイト)';
+    const AuthorUrl = ['https://github.com/pika-0203', 'https://github.com/mimimiku778', 'https://twitter.com/KTetrahydro'];
     const AuthorImage = 'https://avatars.githubusercontent.com/u/132340402?v=4';
     const PublisherName = 'オプチャグラフ';
     public string $publisherLogo;

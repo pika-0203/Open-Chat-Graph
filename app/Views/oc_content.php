@@ -83,11 +83,13 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <hr>
       <div style="display: flex; flex-direction: row; align-items: center;">
         <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>
-        <h2 class="graph-title">メンバー数・ランキング順位の推移グラフ</h2>
+        <h2 class="graph-title">メンバー数の推移グラフ</h2>
       </div>
       <!-- グラフセクション -->
-      <div class="chart-canvas-box" id="dummy-canvas"></div>
-      <div id="app"></div>
+      <div style="position: relative;">
+        <div class="chart-canvas-box" id="dummy-canvas"></div>
+        <div id="app"></div>
+      </div>
 
       <footer class="unset">
         <nav class="my-list-form">

@@ -63,7 +63,7 @@ class RecommendOpenChatPageController
         $count = 0;
         $pageTitle = "「{$tag}」関連のおすすめ人気オプチャ【最新】";
 
-        $pageDesc = "LINEオープンチャットでいま人気のルームから、「{$tag}」に関する厳選ルームを毎時更新でご紹介！気になるルームを見つけたら気軽に参加してみましょう！";
+        $pageDesc = "LINEオープンチャットでいま人気のルームから、「{$tag}」に関する厳選ルームをご紹介！気になるルームを見つけたら気軽に参加してみましょう！";
         $_meta = meta()
             ->setTitle($pageTitle, false)
             ->setDescription($pageDesc)
