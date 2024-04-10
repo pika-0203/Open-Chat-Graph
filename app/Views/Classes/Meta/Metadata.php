@@ -19,6 +19,7 @@ class Metadata
     public string $image_url;
     public string $site_url;
     public string $og_type;
+    public string $thumbnail;
 
     public function __construct()
     {
@@ -58,6 +59,8 @@ class Metadata
 
     public function generateTags(): string
     {
+        if(!isset($this->thumbnail)) $this->thumbnail = $this->image_url;
+
         $tags = '';
         $tags .= '<title>' . $this->title . '</title>' . "\n";
         $tags .= '<meta name="description" content="' . $this->description . '">' . "\n";
@@ -68,7 +71,8 @@ class Metadata
         $tags .= '<meta property="og:description" content="' . $this->ogpDescription . '">' . "\n";
         $tags .= '<meta property="og:image" content="' . $this->image_url . '">' . "\n";
         $tags .= '<meta property="og:site_name" content="' . $this->site_name . '">' . "\n";
-        $tags .= '<meta name="twitter:card"  content="summary">' . "\n";
+        $tags .= '<meta name="twitter:card" content="summary">' . "\n";
+        $tags .= '<meta name="thumbnail" content="' . $this->thumbnail . '">' . "\n";
 
         return $tags;
     }
