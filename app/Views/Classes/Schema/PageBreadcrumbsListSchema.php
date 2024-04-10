@@ -3,22 +3,25 @@
 namespace App\Views\Schema;
 
 use App\Config\AppConfig;
+use App\Config\OpenChatCrawlerConfig;
 use App\Views\Meta\Metadata;
 use Spatie\SchemaOrg\DiscussionForumPosting;
 use Spatie\SchemaOrg\Schema;
 
 class PageBreadcrumbsListSchema
 {
-    const AuthorName = 'pika-0203(mimimiku778)(ずんだもん@オプチャグラフのバイト)';
+    const AuthorName = ['pika-0203', 'mimimiku778', 'ずんだもん@オプチャグラフのバイト'];
     const AuthorUrl = ['https://github.com/pika-0203', 'https://github.com/mimimiku778', 'https://twitter.com/KTetrahydro'];
-    const AuthorImage = 'https://avatars.githubusercontent.com/u/132340402?v=4';
+    const AuthorImage = ['https://avatars.githubusercontent.com/u/132340402?v=4', 'https://avatars.githubusercontent.com/u/116529486?v=4', 'https://pbs.twimg.com/profile_images/1767178994347397120/9u-TS_lj_400x400.jpg'];
     const PublisherName = 'オプチャグラフ';
     public string $publisherLogo;
+    public string $siteImg;
 
     function __construct(
         private Metadata $metadata
     ) {
         $this->publisherLogo = url('assets/icon-192x192.png');
+        $this->siteImg = url('assets/ogp.png');
     }
 
     function generateSchema(string $listItemName, string $path, string $secondName = '', string $secondPath = '', bool $fullPath = false): string
@@ -30,7 +33,7 @@ class PageBreadcrumbsListSchema
             Schema::listItem()
                 ->position(1)
                 ->name('トップ')
-                ->item(url()),
+                ->item(rtrim(url(), '/')),
             Schema::listItem()
                 ->position(2)
                 ->name($listItemName)
@@ -62,10 +65,21 @@ class PageBreadcrumbsListSchema
                     ->url($publisherLogo)
             )
             ->explanationPage()
-            ->url(url())
+            ->url(rtrim(url(), '/'))
             ->description($this->metadata->description)
             ->email('support@openchat-review.me')
             ->sameAs(url('policy'));
+    }
+
+    function person()
+    {
+        $authorName = self::AuthorName;
+        $authorUrl = self::AuthorUrl;
+        $authorImage = self::AuthorImage;
+        return Schema::person()
+            ->name($authorName)
+            ->image($authorImage)
+            ->sameAs($authorUrl);
     }
 
     function generateStructuredDataWebSite(
@@ -76,17 +90,12 @@ class PageBreadcrumbsListSchema
         \DateTimeInterface $datePublished,
         \DateTimeInterface $dateModified
     ): string {
-        $authorName = self::AuthorName;
-        $authorUrl = self::AuthorUrl;
-        $authorImage = self::AuthorImage;
-
-
         $webSite = Schema::webSite()
             ->headline($siteName)
             ->description($description)
             ->mainEntityOfPage(Schema::webPage()->id($url))
             ->image(Schema::imageObject()->url($image))
-            ->author(Schema::person()->name($authorName)->image($authorImage)->sameAs($authorUrl))
+            ->author($this->person())
             ->publisher($this->publisher())
             ->datePublished($datePublished)
             ->dateModified($dateModified);
@@ -102,16 +111,12 @@ class PageBreadcrumbsListSchema
         \DateTimeInterface $datePublished,
         \DateTimeInterface $dateModified
     ): string {
-        $authorName = self::AuthorName;
-        $authorUrl = self::AuthorUrl;
-        $authorImage = self::AuthorImage;
-
         $webSite = Schema::webPage()
             ->headline($title)
             ->description($description)
             ->mainEntityOfPage(Schema::webPage()->id($url))
             ->image(Schema::imageObject()->url($image))
-            ->author(Schema::person()->name($authorName)->image($authorImage)->sameAs($authorUrl))
+            ->author($this->person())
             ->publisher($this->publisher())
             ->datePublished($datePublished)
             ->dateModified($dateModified);
@@ -119,30 +124,69 @@ class PageBreadcrumbsListSchema
         return $webSite->toScript();
     }
 
-    private function room(array $room): DiscussionForumPosting
+    function lineOcOrganization()
+    {
+        return Schema::organization()
+            ->name('LINEオープンチャット')
+            ->alternateName('オプチャ')
+            ->url('https://openchat.line.me/jp')
+            ->sameAs([
+                'https://openchat-jp.line.me/',
+                'https://twitter.com/LINEOpenChat_JP',
+                'https://www.facebook.com/people/LINE-OpenChat-Japan/100030725126645/',
+                'https://www.youtube.com/channel/UCCH9pcP4VK4OIY1bId-KXhw',
+            ])
+            ->logo(
+                Schema::imageObject()
+                    ->url('https://openchat.line.me/og_tag_default_image.png')
+            );
+    }
+
+    function lineOrganization()
+    {
+        return Schema::organization()
+            ->name('LINE (LY Corporation)')
+            ->url('https://line.me/ja/')
+            ->sameAs([
+                'https://twitter.com/LINEjp_official',
+                'https://www.youtube.com/@LINE_jp',
+                'https://www.facebook.com/jpn.LINE'
+            ])
+            ->logo('https://line.me/static/a83a28aa13ec25daa7b25a9d20e55d66/aca38/og.png');
+    }
+
+
+    function room(array $room): DiscussionForumPosting
     {
         return Schema::discussionForumPosting()
             ->headline($room['name'])
             ->description($room['description'])
             ->url(url('oc/' . $room['id']))
-            ->sameAs([AppConfig::LINE_OPEN_URL . $room['emid'], AppConfig::LINE_URL . $room['url']])
-            ->numberOfParticipants($room['member'])
-            ->image(imgPreviewUrl($room['id'], $room['img_url']))
+            ->sameAs([
+                AppConfig::LINE_OPEN_URL . $room['emid'] . AppConfig::LINE_OPEN_URL_SUFFIX,
+                $room['url'] ? AppConfig::LINE_APP_URL . $room['url'] . AppConfig::LINE_APP_SUFFIX : ''
+            ])
+            ->interactionStatistic(
+                Schema::interactionCounter()
+                    ->interactionType('https://schema.org/FollowAction')
+                    ->userInteractionCount($room['member'])
+            )
+            ->image([
+                imgUrl($room['id'], $room['img_url']),
+                imgPreviewUrl($room['id'], $room['img_url']),
+                OpenChatCrawlerConfig::LINE_IMG_URL . $room['api_img_url'],
+                OpenChatCrawlerConfig::LINE_IMG_URL . $room['api_img_url'] . '/preview',
+                OpenChatCrawlerConfig::LINE_IMG_URL . $room['api_img_url'] . '/preview.100x100',
+            ])
             ->datePublished(new \DateTime($room['api_created_at'] ? '@' . $room['api_created_at'] : $room['created_at']))
             ->dateModified(new \DateTime($room['updated_at']))
+            ->organization(
+                $this->lineOcOrganization()
+            )
             ->author(
-                Schema::organization()
-                    ->name('LINE (LY Corporation)')
-                    ->url('https://line.me/ja/')
+                Schema::person()
+                    ->name('匿名ユーザー')
             );
-    }
-
-    function potentialAction()
-    {
-        return Schema::InteractAction()
-            ->target(Schema::entryPoint()->urlTemplate(AppConfig::LINE_URL))
-            ->name('参加')
-            ->description('LINEアプリで参加する');
     }
 
     function actionApplication()
@@ -150,30 +194,43 @@ class PageBreadcrumbsListSchema
         return Schema::softwareApplication()
             ->name('LINE')
             ->publisher(
-                Schema::organization()
-                    ->name('LINE (LY Corporation)')
-                    ->url('https://line.me/ja/')
+                $this->lineOrganization()
             )
             ->operatingSystem('iOS/Android/Windows/macOS')
-            ->url('https://line.me/ja/')
-            ->sameAs(['https://play.google.com/store/apps/details?id=jp.naver.line.android', 'https://apps.apple.com/jp/app/line/id443904275'])
+            ->url('https://line.me/download')
+            ->sameAs(
+                [
+                    'https://apps.apple.com/jp/app/line/id443904275',
+                    'https://play.google.com/store/apps/details?id=jp.naver.line.android',
+                    'https://line-android-universal-download.line-scdn.net/line-apk-download.html',
+                    'https://apps.microsoft.com/store/detail/line-desktop/XPFCC4CD725961',
+                    'https://apps.apple.com/jp/app/line/id539883307?mt=12',
+                ]
+            )
             ->applicationCategory('https://www.wikidata.org/wiki/Q615985')
-            ->applicationCategory('social software')
             ->genre('https://www.wikidata.org/wiki/Q2715623')
-            ->genre('social networking')
             ->price(0)
             ->priceCurrency('JPY')
-            ->eligibleRegion(
+            ->areaServed(
                 Schema::country()
                     ->name('JP')
+            );
+    }
+
+    function potentialAction()
+    {
+        return Schema::InteractAction()
+            ->target(Schema::entryPoint()->urlTemplate(AppConfig::LINE_APP_URL))
+            ->interactionType('https://schema.org/FollowAction')
+            ->name('LINEで開く')
+            ->description('LINEアプリでオープンチャットに参加する')
+            ->price(0)
+            ->priceCurrency('JPY')
+            ->organization(
+                $this->lineOcOrganization()
             )
-            ->offers(
-                Schema::offer()
-                    ->name('LINEオープンチャット')
-                    ->url('https://openchat.line.me/jp')
-                    ->description('オープンチャットは、興味関心事や日常生活に密着した話題についてトークルームの中で会話や情報交換が楽しめます。ゲームの攻略情報、就活や恋愛の悩み相談、スポーツのリアルタイム応援などなど様々なテーマで毎日を楽しく！ ')
-                    ->price(0)
-                    ->priceCurrency('JPY')
+            ->actionApplication(
+                $this->actionApplication()
             );
     }
 
@@ -181,32 +238,23 @@ class PageBreadcrumbsListSchema
         string $title,
         string $description,
         string $url,
-        string $image,
         \DateTimeInterface $datePublished,
         \DateTimeInterface $dateModified,
         string $tag,
-        array $tags,
-        string $tagCategory,
         array $rooms // オープンチャットルームの情報を配列で追加
     ): string {
-        $authorName = self::AuthorName;
-        $authorUrl = self::AuthorUrl;
-        $authorImage = self::AuthorImage;
-
+        $count = count($rooms);
         // 各オープンチャットルームをItemListとして追加
         $itemList = Schema::itemList()
-            ->potentialAction(
+            ->name($title)
+            ->description($description)
+            ->offers(
                 $this->potentialAction()
-            )
-            ->actionApplication(
-                $this->actionApplication()
             );
 
         $listArray = [];
-        $rooms = array_slice($rooms, 0, 3);
         foreach ($rooms as $index => $room) {
             $listArray[] = Schema::listItem()
-                ->name("「{$tag}」関連のおすすめオープンチャット")
                 ->position($index + 1)
                 ->item($this->room($room));
         }
@@ -218,12 +266,15 @@ class PageBreadcrumbsListSchema
             ->headline($title)
             ->description($description)
             ->mainEntityOfPage(Schema::collectionPage()->id($url))
-            ->image(Schema::imageObject()->url($image))
-            ->author(Schema::person()->name($authorName)->image($authorImage)->sameAs($authorUrl))
+            ->image([
+                imgUrl($rooms[0]['id'], $rooms[0]['img_url']),
+                imgPreviewUrl($rooms[0]['id'], $rooms[0]['img_url']),
+            ])
+            ->author($this->person())
             ->publisher($this->publisher())
             ->datePublished($datePublished)
             ->dateModified($dateModified)
-            ->articleSection(["「{$tag}」関連の人気おすすめオープンチャットを１時間毎の更新で紹介", 'カテゴリー:' . $tagCategory, '関連のタグ', ...array_slice($tags, 0, 5)])
+            ->articleSection(["「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】", '関連性が高いタグ', "「{$tag}」関連のおすすめ {$count}件", "メンバー数のアイコンについて（おすすめ基準）"])
             ->about(Schema::thing()->name($tag))
             ->mainEntity($itemList); // ItemListをhasPartプロパティを通じて追加
 

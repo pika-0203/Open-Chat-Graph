@@ -2,52 +2,105 @@
 
 namespace App\Views\Schema;
 
+use App\Config\AppConfig;
 use Spatie\SchemaOrg\Schema;
+use App\Services\Recommend\Dto\RecommendListDto;
+use App\Services\Recommend\Enum\RecommendListType;
 
 class OcPageSchema
 {
-    function generateSchema(int $open_chat_id, string $name, int $created_at, int $updated_at): string
-    {
-        $siteUrl = rtrim(url(), '/');
-        $sanitizedName = h($name);
+    function __construct(
+        private PageBreadcrumbsListSchema $schema
+    ) {
+    }
 
+    /**
+     * @param array{0: RecommendListDto|false, 1: RecommendListDto|false, 2: string|false} $recommend
+     */
+    function generateSchema(
+        string $title,
+        string $description,
+        \DateTimeInterface $datePublished,
+        \DateTimeInterface $dateModified,
+        array $recommend,
+        array $oc
+    ): string {
+        $name = $oc['name'];
         $dataset = Schema::dataset()
-            ->name("LINEオープンチャット「{$sanitizedName}」のメンバー数・LINE公式ランキング順位の推移")
+            ->name("LINEオープンチャット「{$name}」のメンバー数推移")
             ->description(
-                "オープンチャット「{$sanitizedName}」のメンバー数・LINE公式ランキング順位の推移を日毎に記録しています。URLにアクセスするとグラフで表示されます。CSV形式でダウンロード可能です。CSVファイルは日付、メンバー数、各ランキングの代表値からなる全期間のデータになっています。"
+                "オープンチャット「{$name}」のメンバー数推移を日毎に記録しています。URLにアクセスするとグラフで表示されます。CSV形式でダウンロード可能です。CSVファイルは日付、メンバー数からなる全期間のデータになっています。"
             )
             ->author(
-                Schema::organization()
-                    ->name('オプチャグラフ')
-                    ->url($siteUrl)
+                $this->schema->publisher()
             )
             ->creator(
-                Schema::person()
-                    ->name('pika-0203')
-                    ->url('https://github.com/pika-0203')
+                $this->schema->person()
             )
             ->keywords([
-                "チャットルーム統計",
-                "リアルタイムデータ",
-                "ユーザー人数"
+                "LINEオープンチャット",
+                "参加者数",
+                "統計",
             ])
+            ->alternateName('オプチャ')
             ->provider(
-                Schema::organization()
-                    ->name('LINE (LY Corporation)')
-                    ->url('https://line.me/ja/')
+                $this->schema->lineOcOrganization()
             )
             ->license('https://creativecommons.org/licenses/by/4.0/legalcode')
-            ->url($siteUrl . '/oc/' . $open_chat_id)
-            ->datePublished(new \DateTime('@' . $created_at))
-            ->dateModified(new \DateTime('@' . $updated_at))
+            ->url(url('oc/' . $oc['id']))
+            ->datePublished($datePublished)
+            ->dateModified($dateModified)
+            ->image([
+                imgUrl($oc['id'], $oc['img_url']),
+                imgPreviewUrl($oc['id'], $oc['img_url']),
+            ])
             ->distribution(
                 Schema::dataDownload()
                     ->encodingFormat('CSV')
-                    ->contentUrl($siteUrl . '/oc/' . $open_chat_id . '/csv')
+                    ->contentUrl(url('oc/' . $oc['id'] . '/csv'))
             )
-            ->measurementTechnique('LINEオープンチャットの公式サイトから人数データを記録');
+            ->variableMeasured(
+                Schema::interactionCounter()
+                    ->interactionType('http://schema.org/FollowAction')
+            )
+            ->about(
+                $this->schema->room($oc)
+            )
+            ->measurementTechnique('LINEオープンチャットの公式サイトからメンバー数データを記録');
+
+        $tags = array_filter(
+            $recommend,
+            fn ($r) => $r instanceof RecommendListDto ? ($r->type === RecommendListType::Tag ? $r->listName : false) : false,
+        );
+
+        $recommendSection = array_map(fn (RecommendListDto $r) => "「{$r->listName}」関連のおすすめ", $tags);
+
+        // WebPageの構築
+        $webPage = Schema::article()
+            ->author($this->schema->person())
+            ->publisher($this->schema->publisher())
+            ->headline($title)
+            ->description($description)
+            ->image($this->schema->siteImg)
+            ->datePublished($datePublished)
+            ->dateModified($dateModified)
+            ->articleSection(
+                [
+                    $name,
+                    'メンバー数の推移グラフ',
+                    'ランキング・急上昇の順位表示',
+                    ...$recommendSection,
+                    'オープンチャットについてのコメント',
+                    'コメントする',
+                ]
+            )
+            ->mainEntity($this->schema->room($oc))
+            ->mainEntityOfPage($dataset)
+            ->offers(
+                $this->schema->potentialAction()
+            );
 
         // JSON-LDのマークアップを生成
-        return $dataset->toScript();
+        return $webPage->toScript();
     }
 }

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
-use App\Config\AppConfig;
 use App\Models\RecommendRepositories\RecommendPageRepository;
-use App\Services\Recommend\Dto\RecommendListDto;
 use App\Services\Recommend\Enum\RecommendListType;
 use App\Services\Recommend\RecommendRankingBuilder;
 use App\Services\Recommend\RecommendUpdater;
@@ -118,13 +116,14 @@ class RecommendOpenChatPageController
 
         $count = $recommend->getCount();
         $_meta->title = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】";
-        $_schema = $this->schema(
-            $_meta,
-            $updatedAtDate,
+        $_schema = $this->breadcrumbsShema->generateRecommend(
+            $_meta->title,
+            $_meta->description,
+            url("recommend?tag=" . urlencode($tag)),
+            new \DateTime('2024-04-06 08:00:00'),
+            $_updatedAt,
             $tag,
-            $tags,
-            $recommendList,
-            isset($tagCategory[0]) ? (array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$tagCategory[0]]) : ''
+            $recommendList
         );
 
         return view('recommend_content', compact(
@@ -139,21 +138,5 @@ class RecommendOpenChatPageController
             'canonical',
             'tags'
         ));
-    }
-
-    private function schema($_meta, $_updatedAt, $tag, $tags, $recommend, $tagCategory)
-    {
-        return $this->breadcrumbsShema->generateRecommend(
-            $_meta->title,
-            $_meta->description,
-            url("recommend?tag=" . urlencode($tag)),
-            url('assets/ogp.png'),
-            new \DateTime('2024-04-06 08:00:00'),
-            $_updatedAt,
-            $tag,
-            $tags,
-            $tagCategory,
-            $recommend
-        );
     }
 }

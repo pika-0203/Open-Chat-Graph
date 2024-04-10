@@ -74,20 +74,13 @@ class OpenChatPageController
 
         $_breadcrumbsShema = $breadcrumbsShema->generateSchema('オプチャ', 'oc', $oc['name'], (string)$open_chat_id);
 
-        $_schema = $breadcrumbsShema->generateStructuredDataWebPage(
+        $_schema = $ocPageSchema->generateSchema(
             $_meta->title,
             $_meta->description,
-            url("oc/{$open_chat_id}"),
-            url('assets/ogp.png'),
-            new \DateTime('@' . $oc['created_at']),
+            new \DateTime($oc['created_at']),
             new \DateTime($_statsDto->endDate),
-        );
-
-        $_ocPageSchema = $ocPageSchema->generateSchema(
-            $oc['id'],
-            $oc['name'],
-            $oc['created_at'],
-            strtotime($_statsDto->endDate)
+            $recommend,
+            $oc,
         );
 
         return view('oc_content', compact(
@@ -100,7 +93,6 @@ class OpenChatPageController
             '_statsDto',
             '_commentArgDto',
             '_breadcrumbsShema',
-            '_ocPageSchema',
             '_schema',
             'recommend',
         ));
@@ -116,7 +108,7 @@ class OpenChatPageController
             return false;
         }
 
-        $downloadCsvService->sendCsv($open_chat_id, $oc['category'] ?? 0, $oc['name']);
+        $downloadCsvService->sendCsv($open_chat_id, $oc['name']);
         exit;
     }
 }

@@ -57,7 +57,7 @@ hr {
 .talkroom_banner_img {
   object-fit: cover;
   display: flex;
-  border-radius: 4px;
+  border-radius: 7px;
   aspect-ratio: 1;
   height: 100%;
 }
@@ -297,6 +297,38 @@ body > footer {
   border-top: solid 1px var(--border-color);
 }
 
+.open-btn {
+  margin: 19px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.openchat_link {
+  background: linear-gradient(-332deg, #0dc95a, #11d871 23.96%, #11d593 55.46%, #12cfcd 83.85%, #16c2c1);
+  border-radius: 7px;
+  box-sizing: border-box;
+  color: #fff;
+  font-weight: 700;
+  height: 51px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  text-decoration: none;
+  width: 100%;
+}
+
+.openchat_link .text {
+  line-height: 1;
+}
+
+.app_link {
+  font-size: 10px;
+  color: #b7b7b7;
+}
+
 @media screen and (max-width: 359px) {
   .talkroom_number_of_stats {
     margin-right: -0.5rem;
@@ -320,6 +352,26 @@ body > footer {
 }
 
 @media screen and (min-width: 512px) {
+  .open-btn {
+    gap: 15px;
+  }
+
+  .app_link {
+    font-size: 13px;
+  }
+
+  .openchat_link {
+    height: 64px;
+  }
+
+  .openchat_link .text {
+    align-items: center;
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+    line-height: 24px;
+  }
+
   .h1-link:hover .talkroom_link_h1 {
     -webkit-text-decoration: underline 2px currentColor;
     text-decoration: underline 2px currentColor;

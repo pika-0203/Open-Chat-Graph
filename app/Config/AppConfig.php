@@ -18,6 +18,9 @@ class AppConfig
 
     const LINE_URL = 'https://line.me/ti/g2/';
 
+    const LINE_APP_URL = 'line://ti/g2/';
+    const LINE_APP_SUFFIX = '?utm_source=line-openchat-seo&utm_medium=category&utm_campaign=default';
+
     const OPENCHAT_IMG_PATH = 'oc-img';
     const OPENCHAT_IMG_PREVIEW_PATH = 'preview';
     const OPENCHAT_IMG_PREVIEW_SUFFIX = '_p';
@@ -35,6 +38,7 @@ class AppConfig
     const CRON_MERGER_HOUR_RANGE_END = 0;
 
     const LINE_OPEN_URL = 'https://openchat.line.me/jp/cover/';
+    const LINE_OPEN_URL_SUFFIX = '?utm_source=line-openchat-seo&utm_medium=category&utm_campaign=default';
 
     const SITEMAP_DIR = __DIR__ . '/../../public/sitemap.xml';
 

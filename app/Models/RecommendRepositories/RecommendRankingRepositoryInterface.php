@@ -19,6 +19,7 @@ interface RecommendRankingRepositoryInterface
         oc.id,
         oc.name,
         oc.local_img_url AS img_url,
+        oc.img_url AS api_img_url,
         oc.member,
         oc.description,
         oc.emblem,

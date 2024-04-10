@@ -15,15 +15,17 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
                 oc.id,
                 oc.name,
                 oc.local_img_url AS img_url,
+                oc.img_url AS api_img_url,
                 oc.description,
                 oc.member,
                 oc.api_created_at,
                 oc.emblem,
                 oc.category,
                 oc.emid,
+                oc.updated_at,
                 oc.url,
-                UNIX_TIMESTAMP(oc.created_at) AS created_at,
-                UNIX_TIMESTAMP(oc.updated_at) AS updated_at
+                oc.created_at,
+                oc.updated_at
             FROM
                 open_chat AS oc
             WHERE

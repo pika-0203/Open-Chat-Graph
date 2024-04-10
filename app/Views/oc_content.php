@@ -22,15 +22,15 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     <article class="openchat unset">
 
       <!-- オープンチャット表示ヘッダー -->
-      <header class="openchat-header unset">
+      <section class="openchat-header unset">
         <div class="talkroom_banner_img_area">
           <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
         </div>
 
         <div class="openchat-header-right">
-          <a title="LINEアプリで参加する" rel="external" target="_blank" href="<?php echo $oc['url'] ? (AppConfig::LINE_URL . $oc['url']) : (AppConfig::LINE_OPEN_URL . $oc['emid']) ?>" class="h1-link unset">
+          <a title="<?php echo $oc['name'] ?>" rel="external" target="_blank" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] . AppConfig::LINE_OPEN_URL_SUFFIX ?>" class="h1-link unset">
             <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span></h1>
-            <div class="link-mark"><span class="link-title">LINEアプリで参加する</span><span class="line-link-icon"></span></div>
+            <div class="link-mark"><span class="link-title"><span aria-hidden="true" style="font-size: 10px; margin-right:4px;">🔗</span>LINEオープンチャット公式サイト</span></div>
           </a>
 
           <div class="talkroom_description_box close" id="talkroom_description_box">
@@ -79,8 +79,17 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
             </div>
           <?php endif ?>
         </div>
-      </header>
-      <hr>
+      </section>
+      <section class="open-btn">
+        <?php if ($oc['url']) : ?>
+          <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
+            <span class="text">LINEで開く</span>
+          </a>
+          <a href="https://line.me/download" class="app_link">
+            <span class="text">LINEアプリをダウンロード</span>
+          </a>
+        <?php endif ?>
+      </section>
       <div style="display: flex; flex-direction: row; align-items: center;">
         <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>
         <h2 class="graph-title">メンバー数の推移グラフ</h2>
@@ -147,7 +156,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     </footer>
   </div>
   <?php echo $_breadcrumbsShema ?>
-  <?php echo $_ocPageSchema ?>
   <script>
     ;
     (function() {
