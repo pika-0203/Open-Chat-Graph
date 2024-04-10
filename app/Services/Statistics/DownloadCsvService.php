@@ -22,10 +22,11 @@ class DownloadCsvService
         header("Content-Disposition: attachment; filename*=UTF-8''" . $filename . '.csv');
 
         $output = fopen('php://output', 'w');
-        fputcsv($output, ['date', 'member_count']);
+        fputcsv($output, ['Date', 'FollowAction']);
 
         foreach ($statisticsData as $row) {
-            $data = [$row['date'], $row['member']];
+            $date = new \DateTime($row['date']);
+            $data = [$date->format(\DateTime::ATOM), $row['member']];
             fputcsv($output, $data);
         }
     }
