@@ -1,4 +1,4 @@
-# Open-Chat-Graph
+# オプチャグラフ
 https://openchat-review.me
 
 ## プロジェクトの概要
