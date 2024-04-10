@@ -60,10 +60,7 @@ class PageBreadcrumbsListSchema
         $publisherLogo = $this->publisherLogo;
         return Schema::organization()
             ->name($publisherName)
-            ->logo(
-                Schema::imageObject()
-                    ->url($publisherLogo)
-            )
+            ->logo($publisherLogo)
             ->explanationPage()
             ->url(rtrim(url(), '/'))
             ->description($this->metadata->description)
@@ -94,35 +91,22 @@ class PageBreadcrumbsListSchema
         \DateTimeInterface $dateModified
     ): string {
         $webSite = Schema::webSite()
-            ->headline($siteName)
+            ->name($siteName)
             ->description($description)
-            ->mainEntityOfPage(Schema::webPage()->id($url))
-            ->image(Schema::imageObject()->url($image))
-            ->author($this->person())
+            ->image($image)
             ->publisher($this->publisher())
-            ->datePublished($datePublished)
-            ->dateModified($dateModified);
-
-        return $webSite->toScript();
-    }
-
-    function generateStructuredDataWebPage(
-        string $title,
-        string $description,
-        string $url,
-        string $image,
-        \DateTimeInterface $datePublished,
-        \DateTimeInterface $dateModified
-    ): string {
-        $webSite = Schema::webPage()
-            ->headline($title)
-            ->description($description)
-            ->mainEntityOfPage(Schema::webPage()->id($url))
-            ->image(Schema::imageObject()->url($image))
             ->author($this->person())
-            ->publisher($this->publisher())
+            ->url($url)
             ->datePublished($datePublished)
-            ->dateModified($dateModified);
+            ->dateModified($dateModified)
+            ->potentialAction(
+                Schema::searchAction()
+                    ->target(
+                        Schema::entryPoint()
+                            ->urlTemplate(url('ranking?keyword={search_term_string}'))
+                    )
+                    ->{'query-input'}('required name=search_term_string')
+            );
 
         return $webSite->toScript();
     }
@@ -139,10 +123,7 @@ class PageBreadcrumbsListSchema
                 'https://www.facebook.com/people/LINE-OpenChat-Japan/100030725126645/',
                 'https://www.youtube.com/channel/UCCH9pcP4VK4OIY1bId-KXhw',
             ])
-            ->logo(
-                Schema::imageObject()
-                    ->url('https://openchat.line.me/og_tag_default_image.png')
-            );
+            ->logo('https://openchat.line.me/og_tag_default_image.png');
     }
 
     function lineOrganization()
