@@ -2,7 +2,7 @@
 <!-- @param bool $isHourly -->
 <ol class="openchat-item-list unset">
   <?php foreach ($openChatList as $oc) : ?>
-    <li class="openchat-item unset  <?php echo isset($oc['archived_at']) ? 'registration' : '' ?>">
+    <li class="openchat-item unset">
       <a class="link-overlay unset" href="<?php echo url('/oc/' . $oc['id'] . (($isHourly ?? false) && ($oc['diff_member'] ?? null) !== null ? '?limit=hour' : '')) ?>" tabindex="-1" aria-hidden="true">
         <span class="visually-hidden"><?php echo $oc['name'] ?></span>
       </a>
@@ -13,9 +13,6 @@
       <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
       <footer class="openchat-item-lower-outer">
         <div class="openchat-item-lower unset <?php echo ($oc['diff_member'] ?? 1) > 0 ? 'positive' : 'negative' ?>">
-          <?php if (isset($oc['datetime'])) : ?>
-            <span class="registration-date blue"><?php echo ($isAdmin ?? false) ? convertDatetime($oc['datetime'], true) : getCronModifiedDateTime($oc['datetime']) ?></span>
-          <?php endif ?>
           <?php if (isset($oc['member'])) : ?>
             <span>メンバー <?php echo formatMember($oc['member']) ?>人</span>
           <?php endif ?>
@@ -25,9 +22,6 @@
             </span>
           <?php elseif (($oc['diff_member'] ?? 1) === 0) : ?>
             <span>±0人</span>
-          <?php endif ?>
-          <?php if (isset($oc['time'])) : ?>
-            <span class="registration-date blue"><?php echo timeElapsedString($oc['time']) ?></span>
           <?php endif ?>
         </div>
         <?php if (isset($oc['category']) && $oc['category']) : ?>

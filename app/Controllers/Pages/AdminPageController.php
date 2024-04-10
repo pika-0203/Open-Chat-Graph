@@ -40,6 +40,15 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'exec', 'message' => $path . ' を実行しました。']);
     }
 
+    function test2()
+    {
+        $path = AppConfig::ROOT_PATH . 'cron_daily.php';
+
+        exec("/usr/bin/php8.2 {$path} >/dev/null 2>&1 &");
+
+        return view('admin/admin_message_page', ['title' => 'exec', 'message' => $path . ' を実行しました。']);
+    }
+
     function deleteoc(?string $oc, DeleteOpenChatRepositoryInterface $deleteOpenChatRepository)
     {
         if (!($oc = Validator::num($oc))) return false;

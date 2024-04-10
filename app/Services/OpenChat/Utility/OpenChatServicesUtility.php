@@ -34,11 +34,11 @@ class OpenChatServicesUtility
     {
         $date->setTimeZone(new \DateTimeZone('Asia/Tokyo'));
 
-        if ((int)$date->format('H') < AppConfig::CRON_MERGER_HOUR_RANGE_START) {
+        /* if ((int)$date->format('H') < AppConfig::CRON_MERGER_HOUR_RANGE_START) {
             $date->modify('-1 day');
         } else if ((int)$date->format('i') < AppConfig::CRON_START_MINUTE) {
             $date->modify('-1 day');
-        }
+        } */
 
         return $date;
     }
