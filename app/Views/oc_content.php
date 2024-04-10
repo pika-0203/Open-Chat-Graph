@@ -85,9 +85,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
             <span class="text">LINEで開く</span>
           </a>
-          <a href="https://line.me/download" class="app_link">
-            <span class="text">LINEアプリをダウンロード</span>
-          </a>
         <?php endif ?>
       </section>
       <div style="display: flex; flex-direction: row; align-items: center;">
@@ -100,7 +97,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <div id="app"></div>
       </div>
 
-      <footer class="unset">
+      <nav class="oc-desc-nav">
         <nav class="my-list-form">
           <?php if (count($myList) - 1 < AppConfig::MY_LIST_LIMIT || isset($myList[$oc['id']])) : ?>
             <label class="checkbox-label" for="my-list-checkbox">
@@ -132,7 +129,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
             </div>
           </span>
         </aside>
-      </footer>
+      </nav>
       <hr>
       <?php if ($recommend[0]) : ?>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2]]) ?>
@@ -151,6 +148,14 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <div id="comment-root" style="margin: 1rem;"></div>
     </section>
     <footer>
+      <aside class="open-btn">
+        <a href="https://openchat-jp.line.me/other/beginners_guide" class="app_link">
+          <span class="text">はじめてのLINEオープンチャットガイド</span>
+        </a>
+        <a href="https://line.me/download" class="app_link">
+          <span class="text">LINEアプリをダウンロード</span>
+        </a>
+      </aside>
       <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
       <?php viewComponent('footer_inner') ?>
     </footer>
