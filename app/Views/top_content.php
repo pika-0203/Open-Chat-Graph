@@ -27,7 +27,7 @@
                         <span class="openchat-list-title">Hourly</span>
                     </h2>
                     <div class="refresh-time">
-                        <span>1時間ランキング (<?php echo $hourlyRange ?>)</span>
+                        <span>1時間ランキング (<?php echo $_hourlyRange ?>)</span>
                     </div>
                 </div>
             </header>

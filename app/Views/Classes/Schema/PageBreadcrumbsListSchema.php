@@ -158,9 +158,6 @@ class PageBreadcrumbsListSchema
             ->image([
                 imgUrl($room['id'], $room['img_url']),
                 imgPreviewUrl($room['id'], $room['img_url']),
-                OpenChatCrawlerConfig::LINE_IMG_URL . $room['api_img_url'],
-                OpenChatCrawlerConfig::LINE_IMG_URL . $room['api_img_url'] . '/preview',
-                OpenChatCrawlerConfig::LINE_IMG_URL . $room['api_img_url'] . '/preview.100x100',
             ])
             ->datePublished(new \DateTime($room['api_created_at'] ? '@' . $room['api_created_at'] : $room['created_at']))
             ->dateModified(new \DateTime($room['updated_at']))
@@ -172,9 +169,8 @@ class PageBreadcrumbsListSchema
                     ->name('匿名ユーザー')
                     ->url(AppConfig::LINE_OPEN_URL . $room['emid'] . AppConfig::LINE_OPEN_URL_SUFFIX)
                     ->image([
-                        OpenChatCrawlerConfig::LINE_IMG_URL . $room['api_img_url'],
-                        OpenChatCrawlerConfig::LINE_IMG_URL . $room['api_img_url'] . '/preview',
-                        OpenChatCrawlerConfig::LINE_IMG_URL . $room['api_img_url'] . '/preview.100x100',
+                        imgUrl($room['id'], $room['img_url']),
+                        imgPreviewUrl($room['id'], $room['img_url']),
                     ])
             );
     }

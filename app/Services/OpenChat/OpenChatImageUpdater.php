@@ -28,9 +28,11 @@ class OpenChatImageUpdater
 
     function imageUpdateAll(bool $forToday = true)
     {
-        $this->update($this->updateOpenChatRepository->getOpenChatImgAll(
-            $forToday ? OpenChatServicesUtility::getCronModifiedStatsMemberDate() : null
-        ));
+        if (!$forToday)  $this->update($this->updateOpenChatRepository->getOpenChatImgAll());
+
+        $date = new \DateTime(OpenChatServicesUtility::getCronModifiedStatsMemberDate());
+        $date->modify('- 1day');
+        $this->update($this->updateOpenChatRepository->getOpenChatImgAll($date->format('Y-m-d')));
     }
 
     private function update(array $ocArray)

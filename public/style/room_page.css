@@ -97,13 +97,14 @@ hr {
 }
 
 .link-mark .link-title {
-  font-size: 12px;
+  font-size: 11px;
   display: block;
   width: fit-content;
-  background: -webkit-linear-gradient(116deg, #0dc95a, #11d871 23.96%, #11d593 55.46%, #12cfcd 83.85%, #16c2c1);
+  background: -webkit-linear-gradient(98deg, #0dc95a, #11d871 23.96%, #11d593 55.46%, #12cfcd 83.85%, #16c2c1);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-top: 1px;
   color: #978170;
 }
 
@@ -298,7 +299,11 @@ body > footer {
 }
 
 .open-btn {
-  margin: 19px 0 32px 0;
+  margin: 19px 0 19px 0;
+}
+
+.open-btn.pc-btn {
+  display: none;
 }
 
 .open-btn2 {
@@ -306,20 +311,20 @@ body > footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 1rem;
 }
 
 .openchat_link {
-  background: linear-gradient(-369deg, #0dc95a, #11d871 23.96%, #11d593 55.46%, #12cfcd 83.85%, #16c2c1);
+  background: linear-gradient(-156deg, #0dc95a, #11d871 23.96%, #11d593 55.46%, #12cfcd 83.85%, #16c2c1);
   border-radius: 7px;
   box-sizing: border-box;
   color: #fff;
   font-weight: 700;
-  height: 48px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 15px;
   text-decoration: none;
   width: 100%;
 }
@@ -329,8 +334,8 @@ body > footer {
 }
 
 .app_link {
-  font-size: 11px;
-  color: #b7b7b7;
+  font-size: 13px;
+  color: #777;
 }
 
 @media screen and (max-width: 359px) {
@@ -356,17 +361,41 @@ body > footer {
 }
 
 @media screen and (min-width: 512px) {
-  .open-btn {
-    margin-top: 19px;
+  .open-btn.sp-btn {
+    display: none;
+  }
+
+  .open-btn.pc-btn {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 0;
+  }
+  
+  .openchat_link {
+    height: 38px;
+    width: fit-content;
+    padding: 0 2rem;
+  }
+
+  .openchat_link .text {
+    font-size: 15px;
+  }
+
+  .link-mark .link-title {
+    font-size: 13px;
+  }
+
+  .talkroom_link_h1 {
+    font-size: 24px;
+    line-height: 140%;
+  }
+
+  .openchat-header {
     margin-bottom: 2rem;
   }
 
   .app_link {
     font-size: 13px;
-  }
-
-  .openchat_link .text {
-    font-size: 17px;
   }
 
   .h1-link:hover .talkroom_link_h1 {

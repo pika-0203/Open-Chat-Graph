@@ -47,21 +47,26 @@ class SyncOpenChat
     {
         $this->init();
 
-        $this->hourlyTask();
+        if (isDailyUpdateTime()) {
+            $this->dailyTask();
+        } else if ($this->isFailedDailyUpdate()) {
+            addCronLog('Retry dailyTask');
+            AdminTool::sendLineNofity('Retry dailyTask');
+            OpenChatDailyCrawling::enableKillFlag();
+            sleep(3);
+            $this->dailyTask();
+            AdminTool::sendLineNofity('Done retrying dailyTask');
+        } else {
+            $this->hourlyTask();
+        }
 
         $this->finalize();
     }
 
-    function isFailedDailyUpdate()
+    private function isFailedDailyUpdate(): bool
     {
-        if (!$this->state->isDailyTaskActive) return;
-
-        addCronLog('Retry dailyTask');
-        AdminTool::sendLineNofity('Retry dailyTask');
-        OpenChatDailyCrawling::enableKillFlag();
-        sleep(3);
-        $this->dailyTask();
-        AdminTool::sendLineNofity('Done retrying dailyTask');
+        return isDailyUpdateTime(new \DateTime('-2 hour'))
+            && $this->state->isDailyTaskActive;
     }
 
     function handleHalfHourCheck()
@@ -151,6 +156,8 @@ class SyncOpenChat
     {
         $this->state->isDailyTaskActive = true;
         $this->state->update();
+
+        $this->hourlyTask();
 
         set_time_limit(5400);
 

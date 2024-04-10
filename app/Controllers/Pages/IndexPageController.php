@@ -47,17 +47,19 @@ class IndexPageController
         $weeklyStart = $dto->dailyUpdatedAt->format('n月j日');
         $weeklyRange =  "{$weeklyStart} 〜 昨日";
 
+        $hourlyTime = $dto->hourlyUpdatedAt->format(\DateTime::ATOM);
         $hourlyEnd = $dto->hourlyUpdatedAt->format('G:i');
         $dto->hourlyUpdatedAt->modify('-1hour');
         $hourlyStart = $dto->hourlyUpdatedAt->format('G:i');
-        $hourlyRange = "{$hourlyStart} 〜 {$hourlyEnd}";
+
+        $_hourlyRange = $hourlyStart . ' 〜 <time datetime="' . $hourlyTime . '">' . $hourlyEnd . '</time>';
 
         return view('top_content', compact(
             'dto',
             '_meta',
             '_css',
             'myList',
-            'hourlyRange',
+            '_hourlyRange',
             'weeklyRange',
             '_schema'
         ));

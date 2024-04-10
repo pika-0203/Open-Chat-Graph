@@ -30,9 +30,6 @@ class OpenChatUpdaterDtoFactory
         if (
             $updaterDto->name !== null
             || $updaterDto->desc !== null
-            || $updaterDto->emblem !== null
-            || $updaterDto->category !== null
-            || $updaterDto->profileImageObsHash
         ) {
             $updaterDto->rewriteUpdateAtTime();
         }

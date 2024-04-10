@@ -86,6 +86,8 @@ class OpenChatPageController
             $oc,
         );
 
+        $updatedAt = new \DateTime($oc['updated_at']);
+
         return view('oc_content', compact(
             '_meta',
             '_css',
@@ -98,6 +100,7 @@ class OpenChatPageController
             '_breadcrumbsShema',
             '_schema',
             'recommend',
+            'updatedAt',
         ));
     }
 

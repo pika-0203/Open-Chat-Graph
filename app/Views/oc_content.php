@@ -4,6 +4,10 @@
 
 use App\Config\AppConfig;
 
+/**
+ * @var \DateTime $updatedAt
+ */
+
 viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
 <body>
@@ -30,7 +34,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <div class="openchat-header-right">
           <a title="<?php echo $oc['name'] ?>" rel="external" target="_blank" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] . AppConfig::LINE_OPEN_URL_SUFFIX ?>" class="h1-link unset">
             <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span></h1>
-            <div class="link-mark"><span class="link-title"><span aria-hidden="true" style="font-size: 10px; margin-right:4px;">🔗</span>LINEオープンチャット公式サイト</span></div>
+            <div class="link-mark"><span class="link-title"><span aria-hidden="true" style="font-size: 10px; margin-right:2px;">🔗</span>LINEオープンチャット公式サイト</span></div>
           </a>
 
           <div class="talkroom_description_box close" id="talkroom_description_box">
@@ -50,17 +54,20 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <div class="talkroom_number_of_members">
             <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?>人</span>
           </div>
+
           <?php if (isset($oc['diff_member'])) : ?>
             <div class="talkroom_number_of_stats">
               <div class="number-box <?php echo $oc['diff_member'] > 0 ? 'positive' : 'negative' ?>">
-                <?php if ($oc['diff_member'] ?? 0 !== 0) : ?>
-                  <span class="openchat-itme-stats-title">昨日</span>
+                <?php if ($updatedAt->format('Y-m-d') !== date("Y-m-d")) : ?>
+                  <span class="openchat-itme-stats-title">最終更新: <time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>"><?php echo $updatedAt->format('Y/m/d') ?></time></span>
+                <?php elseif (($oc['diff_member'] ?? 0) !== 0) : ?>
+                  <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">今日</time></span>
                   <div>
                     <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?>人</span>
                     <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
                   </div>
                 <?php elseif ($oc['diff_member'] === 0) : ?>
-                  <span class="openchat-itme-stats-title">昨日</span>
+                  <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">今日</time></span>
                   <span class="zero-stats">±0</span>
                 <?php endif ?>
               </div>
@@ -78,9 +85,17 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
               </div>
             </div>
           <?php endif ?>
+
+          <section class="open-btn pc-btn">
+            <?php if ($oc['url']) : ?>
+              <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
+                <span class="text">LINEで開く</span>
+              </a>
+            <?php endif ?>
+          </section>
         </div>
       </section>
-      <section class="open-btn">
+      <section class="open-btn sp-btn">
         <?php if ($oc['url']) : ?>
           <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
             <span class="text">LINEで開く</span>

@@ -94,7 +94,10 @@ class OcPageSchema
             )
             ->mainEntity($this->schema->room($oc))
             ->mainEntityOfPage($dataset)
-            ->potentialAction($this->schema->potentialAction());
+            ->offers(
+                Schema::offer()
+                    ->potentialAction($this->schema->potentialAction())
+            );
 
         // JSON-LDのマークアップを生成
         return $webPage->toScript();

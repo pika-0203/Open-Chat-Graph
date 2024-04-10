@@ -22,6 +22,10 @@ class UpdateHourlyMemberColumnService
     function update(): void
     {
         $inRankIdMember = $this->rankingPositionHourRepository->getHourlyMemberColumn($this->time);
-        $this->memberColumnUpdater->updateMemberColumn($inRankIdMember);
+        
+        $this->memberColumnUpdater->updateMemberColumn(
+            $inRankIdMember,
+            isDailyUpdateTime() ? $this->time : null
+        );
     }
 }
