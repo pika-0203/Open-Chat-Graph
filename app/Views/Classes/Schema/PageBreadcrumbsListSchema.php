@@ -99,10 +99,6 @@ class PageBreadcrumbsListSchema
             ->url($url)
             ->datePublished($datePublished)
             ->dateModified($dateModified)
-            ->codeRepository(
-                Schema::code()
-                    ->name('')
-            )
             ->potentialAction(
                 Schema::searchAction()
                     ->target(
@@ -168,12 +164,18 @@ class PageBreadcrumbsListSchema
             ])
             ->datePublished(new \DateTime($room['api_created_at'] ? '@' . $room['api_created_at'] : $room['created_at']))
             ->dateModified(new \DateTime($room['updated_at']))
-            ->organization(
+            ->provider(
                 $this->lineOcOrganization()
             )
             ->author(
                 Schema::person()
                     ->name('匿名ユーザー')
+                    ->url(AppConfig::LINE_OPEN_URL . $room['emid'] . AppConfig::LINE_OPEN_URL_SUFFIX)
+                    ->image([
+                        OpenChatCrawlerConfig::LINE_IMG_URL . $room['api_img_url'],
+                        OpenChatCrawlerConfig::LINE_IMG_URL . $room['api_img_url'] . '/preview',
+                        OpenChatCrawlerConfig::LINE_IMG_URL . $room['api_img_url'] . '/preview.100x100',
+                    ])
             );
     }
 
@@ -196,29 +198,22 @@ class PageBreadcrumbsListSchema
                 ]
             )
             ->applicationCategory('https://www.wikidata.org/wiki/Q615985')
-            ->genre('https://www.wikidata.org/wiki/Q2715623')
-            ->price(0)
-            ->priceCurrency('JPY')
-            ->areaServed(
-                Schema::country()
-                    ->name('JP')
-            );
+            ->genre('https://www.wikidata.org/wiki/Q2715623');
     }
 
     function potentialAction()
     {
         return Schema::InteractAction()
-            ->target(Schema::entryPoint()->urlTemplate(AppConfig::LINE_APP_URL))
-            ->interactionType('https://schema.org/FollowAction')
+            ->target(
+                Schema::entryPoint()
+                    ->urlTemplate(AppConfig::LINE_APP_URL . '{invitationTicket}' . AppConfig::LINE_APP_SUFFIX)
+                    ->actionApplication($this->actionApplication())
+            )
+            ->additionalType('https://schema.org/FollowAction')
             ->name('LINEで開く')
             ->description('LINEアプリでオープンチャットに参加する')
-            ->price(0)
-            ->priceCurrency('JPY')
-            ->organization(
+            ->agent(
                 $this->lineOcOrganization()
-            )
-            ->actionApplication(
-                $this->actionApplication()
             );
     }
 
@@ -235,10 +230,7 @@ class PageBreadcrumbsListSchema
         // 各オープンチャットルームをItemListとして追加
         $itemList = Schema::itemList()
             ->name($title)
-            ->description($description)
-            ->offers(
-                $this->potentialAction()
-            );
+            ->description($description);
 
         $listArray = [];
         foreach ($rooms as $index => $room) {
@@ -253,7 +245,6 @@ class PageBreadcrumbsListSchema
         $webSite = Schema::article()
             ->headline($title)
             ->description($description)
-            ->mainEntityOfPage(Schema::collectionPage()->id($url))
             ->image([
                 imgUrl($rooms[0]['id'], $rooms[0]['img_url']),
                 imgPreviewUrl($rooms[0]['id'], $rooms[0]['img_url']),
@@ -264,7 +255,14 @@ class PageBreadcrumbsListSchema
             ->dateModified($dateModified)
             ->articleSection(["「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】", '関連性が高いタグ', "「{$tag}」関連のおすすめ {$count}件", "メンバー数のアイコンについて（おすすめ基準）"])
             ->about(Schema::thing()->name($tag))
-            ->mainEntity($itemList); // ItemListをhasPartプロパティを通じて追加
+            ->mainEntityOfPage(
+                Schema::collectionPage()
+                    ->id($url)
+                    ->offers(
+                        Schema::offer()
+                            ->potentialAction($this->potentialAction())
+                    )
+            )->mainEntity($itemList);
 
         return $webSite->toScript();
     }

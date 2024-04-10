@@ -6,6 +6,7 @@ use App\Config\AppConfig;
 use Spatie\SchemaOrg\Schema;
 use App\Services\Recommend\Dto\RecommendListDto;
 use App\Services\Recommend\Enum\RecommendListType;
+use Spatie\SchemaOrg\Offer;
 
 class OcPageSchema
 {
@@ -31,7 +32,7 @@ class OcPageSchema
             ->description(
                 "オープンチャット「{$name}」のメンバー数推移を日毎に記録しています。URLにアクセスするとグラフで表示されます。CSV形式でダウンロード可能です。CSVファイルは日付、メンバー数からなる全期間のデータになっています。"
             )
-            ->author(
+            ->publisher(
                 $this->schema->publisher()
             )
             ->creator(
@@ -59,10 +60,7 @@ class OcPageSchema
                     ->encodingFormat('CSV')
                     ->contentUrl(url('oc/' . $oc['id'] . '/csv'))
             )
-            ->variableMeasured(
-                Schema::interactionCounter()
-                    ->interactionType('http://schema.org/FollowAction')
-            )
+            ->variableMeasured('http://schema.org/FollowAction')
             ->about(
                 $this->schema->room($oc)
             )
@@ -96,9 +94,7 @@ class OcPageSchema
             )
             ->mainEntity($this->schema->room($oc))
             ->mainEntityOfPage($dataset)
-            ->offers(
-                $this->schema->potentialAction()
-            );
+            ->potentialAction($this->schema->potentialAction());
 
         // JSON-LDのマークアップを生成
         return $webPage->toScript();
