@@ -99,6 +99,10 @@ class PageBreadcrumbsListSchema
             ->url($url)
             ->datePublished($datePublished)
             ->dateModified($dateModified)
+            ->codeRepository(
+                Schema::code()
+                    ->name('')
+            )
             ->potentialAction(
                 Schema::searchAction()
                     ->target(
