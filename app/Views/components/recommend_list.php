@@ -6,7 +6,7 @@ use App\Config\AppConfig;
 use App\Services\Recommend\Enum\RecommendListType;
 
 ?>
-<div style="margin: 0 -1rem;">
+<aside style="margin: 0 -1rem;">
     <div class="btn-wrapper">
         <div style="display: flex; flex-direction: row; /* align-items: center; */ margin: 0 1rem;">
             <div aria-hidden="true" style="font-size: 12px; user-select: none;">🎖</div>
@@ -70,4 +70,4 @@ use App\Services\Recommend\Enum\RecommendListType;
             </li>
         <?php endforeach ?>
     </ul>
-</div>
+</aside>

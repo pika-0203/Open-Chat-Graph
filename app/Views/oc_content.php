@@ -110,7 +110,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <?php endif ?>
           <small style="display:block; margin-bottom: 2px;"><a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>">統計CSVファイル</a></small>
         </nav>
-        <div>
+        <aside>
           <span class="openchat-list-date" style="flex-direction: row;">
             <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px; line-height: 1.5;">
               <?php if (is_int($oc['api_created_at'])) : ?>
@@ -131,7 +131,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
               <?php endif ?>
             </div>
           </span>
-        </div>
+        </aside>
       </footer>
       <hr>
       <?php if ($recommend[0]) : ?>
