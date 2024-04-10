@@ -77,8 +77,8 @@ class OcPageSchema
 
         // WebPageの構築
         $webPage = Schema::article()
-            ->author($this->schema->person())
             ->publisher($this->schema->publisher())
+            ->author($this->schema->person())
             ->headline($title)
             ->description($description)
             ->image($this->schema->siteImg)

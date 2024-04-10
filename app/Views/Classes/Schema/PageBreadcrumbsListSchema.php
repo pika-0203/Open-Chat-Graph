@@ -10,8 +10,8 @@ use Spatie\SchemaOrg\Schema;
 
 class PageBreadcrumbsListSchema
 {
-    const AuthorName = ['pika-0203', 'mimimiku778', 'ずんだもん@オプチャグラフのバイト'];
-    const AuthorUrl = ['https://github.com/pika-0203', 'https://github.com/mimimiku778', 'https://twitter.com/KTetrahydro'];
+    const AuthorName = 'pika-0203';
+    const AuthorUrl = ['https://github.com/mimimiku778', 'https://twitter.com/KTetrahydro'];
     const AuthorImage = ['https://avatars.githubusercontent.com/u/132340402?v=4', 'https://avatars.githubusercontent.com/u/116529486?v=4', 'https://pbs.twimg.com/profile_images/1767178994347397120/9u-TS_lj_400x400.jpg'];
     const PublisherName = 'オプチャグラフ';
     public string $publisherLogo;
@@ -79,6 +79,9 @@ class PageBreadcrumbsListSchema
         return Schema::person()
             ->name($authorName)
             ->image($authorImage)
+            ->jobTitle('オプチャグラフの開発者')
+            ->affiliation('オプチャグラフ')
+            ->url('https://github.com/pika-0203')
             ->sameAs($authorUrl);
     }
 
@@ -270,8 +273,8 @@ class PageBreadcrumbsListSchema
                 imgUrl($rooms[0]['id'], $rooms[0]['img_url']),
                 imgPreviewUrl($rooms[0]['id'], $rooms[0]['img_url']),
             ])
-            ->author($this->person())
             ->publisher($this->publisher())
+            ->author($this->person())
             ->datePublished($datePublished)
             ->dateModified($dateModified)
             ->articleSection(["「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】", '関連性が高いタグ', "「{$tag}」関連のおすすめ {$count}件", "メンバー数のアイコンについて（おすすめ基準）"])
