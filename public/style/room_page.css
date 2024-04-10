@@ -157,7 +157,7 @@ hr {
 
 .talkroom_description_box .more-separater {
   width: 4rem;
-  background-image: linear-gradient(90deg , rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 }
 
 /* オープンチャットの説明 */
@@ -298,6 +298,10 @@ body > footer {
 }
 
 .open-btn {
+  margin: 19px 0 32px 0;
+}
+
+.open-btn2 {
   margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
@@ -325,7 +329,7 @@ body > footer {
 }
 
 .app_link {
-  font-size: 12px;
+  font-size: 11px;
   color: #b7b7b7;
 }
 
@@ -353,7 +357,8 @@ body > footer {
 
 @media screen and (min-width: 512px) {
   .open-btn {
-    gap: 15px;
+    margin-top: 19px;
+    margin-bottom: 2rem;
   }
 
   .app_link {

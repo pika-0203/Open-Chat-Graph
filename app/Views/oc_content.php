@@ -148,7 +148,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <div id="comment-root" style="margin: 1rem;"></div>
     </section>
     <footer>
-      <aside class="open-btn">
+      <aside class="open-btn2">
         <a href="https://openchat-jp.line.me/other/beginners_guide" class="app_link">
           <span class="text">はじめてのLINEオープンチャットガイド</span>
         </a>
