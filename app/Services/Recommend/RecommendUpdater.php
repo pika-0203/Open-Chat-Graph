@@ -21,12 +21,10 @@ class RecommendUpdater
         "41" => [
             ["イラスト等の依頼", ["依頼"]],
         ],
-        "26" => [
-            "かまいたち",
-        ],
     ];
 
     const NAME_STRONG_TAG = [
+        ["かまいたち", ["MUSiC_AND_KAMMER", "かまいたち"]],
         "下ネタ_OR_下あり_OR_下○タ_OR_下系",
         "ネッ友_OR_ネ友",
         "MBTI_OR_ISTJ_OR_ISFJ_OR_INFJ_OR_INTJ_OR_ISTP_OR_ISFP_OR_INFP_OR_INTP_OR_ESTP_OR_ESFP_OR_ENFP_OR_ENTP_OR_ESTJ_OR_ESFJ_OR_ENFJ_OR_ENTJ",
