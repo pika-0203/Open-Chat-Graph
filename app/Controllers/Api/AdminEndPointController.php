@@ -32,8 +32,8 @@ class AdminEndPointController
         $id = Reception::input('ocId');
         $tag = Reception::input('ocTag');
 
-        if (!DB::fetchColumn('SELECT id FROM recommend WHERE id = ' . $id))
-            throw new BadRequestException("存在しないID: ", $id);
+        if (!DB::fetchColumn('SELECT id FROM open_chat WHERE id = ' . $id))
+            throw new BadRequestException("存在しないID: " . $id);
 
         /** @var RecommendUpdater $recommendUpdater */
         $recommendUpdater = app(RecommendUpdater::class);
@@ -46,7 +46,8 @@ class AdminEndPointController
                 ON DUPLICATE KEY UPDATE id = {$id}, tag = '{$tag}'"
         );
         DB::execute(
-            "UPDATE recommend SET tag = '{$tag}' WHERE id = {$id}"
+            "INSERT INTO recommend VALUES({$id}, '{$tag}') 
+                ON DUPLICATE KEY UPDATE id = {$id}, tag = '{$tag}'"
         );
 
         return redirect("oc/{$id}");
