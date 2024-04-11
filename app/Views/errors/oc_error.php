@@ -41,6 +41,7 @@
 
         .main {
             max-width: var(--width);
+            margin-left: 0;
         }
 
         @media screen and (min-width: 512px) {

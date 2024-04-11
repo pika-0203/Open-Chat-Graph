@@ -42,7 +42,7 @@
                         <ul class="tag-list">
                             <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
                                 <li>
-                                    <a class="tag-btn" href="<?php echo url('recommend?tag=' .urlencode(htmlspecialchars_decode($word))) ?>">
+                                    <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
                                         <?php echo $word ?>
                                     </a>
                                 </li>
@@ -55,7 +55,7 @@
                 <?php if ($count) : ?>
                     <h3 class="list-title oc-list">「<?php echo $tag ?>」関連のおすすめ <?php echo $count ?>件</h3>
                     <aside class="list-aside">
-                        <details>
+                        <details class="icon-desc">
                             <summary>メンバー数のアイコンについて</summary>
                             <div class="list-aside-details">
                                 <small class="list-aside-desc">🔥：直近1時間のメンバー数が急上昇</small>

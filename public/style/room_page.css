@@ -370,7 +370,7 @@ body > footer {
     margin-top: 12px;
     margin-bottom: 0;
   }
-  
+
   .openchat_link {
     height: 38px;
     width: fit-content;
@@ -426,7 +426,7 @@ body > footer {
   }
 
   .openchat-list-date {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .openchat .graph-title {
@@ -447,6 +447,16 @@ body > footer {
   .openchat footer {
     justify-content: center;
     gap: 2rem;
+  }
+
+  .talkroom_number_of_members,
+  .openchat-itme-stats-title,
+  .talkroom_number_of_stats {
+    font-size: 13px;
+  }
+
+  .openchat .oc-desc-nav {
+    padding-top: 1.5rem;
   }
 }
 

@@ -8,8 +8,6 @@ main {
   padding: 0rem 1rem;
 }
 
-
-
 .ht-top-header {
   background-color: var(--border-color);
   margin: 0rem -1rem 0rem -1rem;
@@ -1055,5 +1053,12 @@ article.top-list {
   }
   .openchat-list-title {
     font-size: 22px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  main {
+    max-width: 600px;
+    margin-left: 4rem;
   }
 }

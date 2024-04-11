@@ -122,15 +122,15 @@
     overflow-x: unset;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    padding: 0;
+    padding: 0px 6%;
   }
 
   .recommend-list li {
     padding: 0;
     border: 0;
     margin: 6px 0;
-    min-width: 44%;
-    max-width: 44%;
+    min-width: 46%;
+    max-width: 46%;
   }
 
   .recommend-list h4 {

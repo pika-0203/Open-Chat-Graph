@@ -53,7 +53,7 @@ class OpenChatPageController
         $_meta = $meta->generateMetadata($open_chat_id, $oc)
             ->setImageUrl(imgUrl($oc['id'], $oc['img_url']));
 
-        $_meta->thumbnail = imgPreviewUrl($oc['id'], $oc['img_url']);
+        $_meta->thumbnail = imgUrl($oc['id'], $oc['img_url']);
 
         $myList = json_decode(cookie('myList') ?? '', true);
         if (!is_array($myList)) {
@@ -77,16 +77,16 @@ class OpenChatPageController
 
         $_breadcrumbsShema = $breadcrumbsShema->generateSchema('オプチャ', 'oc', $oc['name'], (string)$open_chat_id);
 
+        $updatedAt = new \DateTime($oc['updated_at']);
         $_schema = $ocPageSchema->generateSchema(
             $_meta->title,
             $_meta->description,
             new \DateTime($oc['created_at']),
-            new \DateTime($_statsDto->endDate),
+            $updatedAt,
             $recommend,
             $oc,
         );
 
-        $updatedAt = new \DateTime($oc['updated_at']);
 
         return view('oc_content', compact(
             '_meta',

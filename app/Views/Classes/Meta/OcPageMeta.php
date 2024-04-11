@@ -10,7 +10,7 @@ class OcPageMeta
     {
         $name = $oc['name'];
 
-        $desc = $oc['description'];
+        $desc = "オープンチャット「{$name}」の人数・ランキング推移などの分析情報が見れます。コメント機能で意見交換ができます。";
 
         return meta()
             ->setTitle($name)

@@ -43,7 +43,6 @@ class OcPageSchema
                 "参加者数",
                 "統計",
             ])
-            ->alternateName('オプチャ')
             ->provider(
                 $this->schema->lineOcOrganization()
             )
@@ -53,7 +52,6 @@ class OcPageSchema
             ->dateModified($dateModified)
             ->image([
                 imgUrl($oc['id'], $oc['img_url']),
-                imgPreviewUrl($oc['id'], $oc['img_url']),
             ])
             ->distribution(
                 Schema::dataDownload()
@@ -61,9 +59,6 @@ class OcPageSchema
                     ->contentUrl(url('oc/' . $oc['id'] . '/csv'))
             )
             ->variableMeasured('http://schema.org/FollowAction')
-            ->about(
-                $this->schema->room($oc)
-            )
             ->measurementTechnique('LINEオープンチャットの公式サイトからメンバー数データを記録');
 
         $tags = array_filter(
@@ -79,7 +74,7 @@ class OcPageSchema
             ->author($this->schema->person())
             ->headline($title)
             ->description($description)
-            ->image($this->schema->siteImg)
+            ->image(imgUrl($oc['id'], $oc['img_url']))
             ->datePublished($datePublished)
             ->dateModified($dateModified)
             ->articleSection(
@@ -94,10 +89,7 @@ class OcPageSchema
             )
             ->mainEntity($this->schema->room($oc))
             ->mainEntityOfPage($dataset)
-            ->offers(
-                Schema::offer()
-                    ->potentialAction($this->schema->potentialAction())
-            );
+            ->potentialAction($this->schema->potentialAction());
 
         // JSON-LDのマークアップを生成
         return $webPage->toScript();

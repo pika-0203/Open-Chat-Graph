@@ -49,10 +49,6 @@ time {
   padding: 0 12px;
 }
 
-.ranking-page-main {
-  padding-top: 0;
-}
-
 .header-img {
   display: flex;
   flex-wrap: wrap;
@@ -207,5 +203,22 @@ section aside:hover {
 
   .tag-btn {
     font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .ranking-page-main {
+    max-width: 100%;
+    padding-top: 0;
+    margin: 0 auto;
+  }
+
+  .ranking-page-main .openchat-item-list {
+    margin: 0;
+    margin-left: 2rem;
+  }
+
+  .list-aside .icon-desc {
+    padding-left: 1rem;
   }
 }
