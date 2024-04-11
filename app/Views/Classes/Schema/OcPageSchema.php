@@ -76,7 +76,7 @@ class OcPageSchema
             ->description($description)
             ->image(imgUrl($oc['id'], $oc['img_url']))
             ->datePublished($datePublished)
-            ->dateModified($dateModified)
+            ->dateModified(new \DateTime($oc['updated_at']))
             ->articleSection(
                 [
                     $name,

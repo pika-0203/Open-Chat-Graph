@@ -379,6 +379,10 @@ body > footer {
     margin-bottom: 0;
   }
 
+  .open-btn2 {
+    margin-top: 2rem;
+  }
+
   .openchat_link {
     height: 38px;
     width: fit-content;
