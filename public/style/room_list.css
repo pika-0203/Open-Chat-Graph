@@ -500,7 +500,7 @@ article.top-list {
 }
 
 .top-list:has(.registration-date) .openchat-item-desc {
-  margin-right: 48px;
+  margin-right: 51px;
 }
 
 .top-list .openchat-item h3,

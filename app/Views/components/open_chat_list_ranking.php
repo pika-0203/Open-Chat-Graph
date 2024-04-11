@@ -23,6 +23,9 @@
           <?php elseif (($oc['diff_member'] ?? 1) === 0) : ?>
             <span>±0人</span>
           <?php endif ?>
+          <?php if (isset($oc['time'])) : ?>
+            <span class="registration-date blue"><?php echo timeElapsedString($oc['time']) ?></span>
+          <?php endif ?>
         </div>
         <?php if (isset($oc['category']) && $oc['category']) : ?>
           <div class="openchat-item-mui-chip-outer">

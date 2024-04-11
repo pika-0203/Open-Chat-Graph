@@ -118,6 +118,8 @@ class RecommendOpenChatPageController
 
         $count = $recommend->getCount();
         $_meta->title = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】";
+        $_meta->setImageUrl(imgUrl($recommendList[0]['id'], $recommendList[0]['img_url']));
+
         $_schema = $this->breadcrumbsShema->generateRecommend(
             $_meta->title,
             $_meta->description,
@@ -127,6 +129,8 @@ class RecommendOpenChatPageController
             $tag,
             $recommendList
         );
+
+        $_meta = $_meta->generateTags(true);
 
         return view('recommend_content', compact(
             '_meta',

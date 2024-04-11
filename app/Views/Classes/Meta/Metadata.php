@@ -57,15 +57,18 @@ class Metadata
         return $this;
     }
 
-    public function generateTags(): string
+    public function generateTags(bool $query = false): string
     {
-        if(!isset($this->thumbnail)) $this->thumbnail = $this->image_url;
+        if (!isset($this->thumbnail)) $this->thumbnail = $this->image_url;
+
+        $url = $query ? rtrim(url(path()), '/')
+            : rtrim(url(strstr(path(), '?', true) ?: path()), '/');
 
         $tags = '';
         $tags .= '<title>' . $this->title . '</title>' . "\n";
         $tags .= '<meta name="description" content="' . $this->description . '">' . "\n";
         $tags .= '<meta property="og:locale" content="' . $this->locale . '">' . "\n";
-        $tags .= '<meta property="og:url" content="' . rtrim(url(strstr(path(), '?', true) ?: path()), '/') . '">' . "\n";
+        $tags .= '<meta property="og:url" content="' . $url . '">' . "\n";
         $tags .= '<meta property="og:type" content="' . $this->og_type . '">' . "\n";
         $tags .= '<meta property="og:title" content="' . $this->title . '">' . "\n";
         $tags .= '<meta property="og:description" content="' . $this->ogpDescription . '">' . "\n";

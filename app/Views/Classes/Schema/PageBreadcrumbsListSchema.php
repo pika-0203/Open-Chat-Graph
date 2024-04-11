@@ -197,10 +197,7 @@ class PageBreadcrumbsListSchema
         $webSite = Schema::article()
             ->headline($title)
             ->description($description)
-            ->image([
-                imgUrl($rooms[0]['id'], $rooms[0]['img_url']),
-                imgPreviewUrl($rooms[0]['id'], $rooms[0]['img_url']),
-            ])
+            ->image(imgUrl($rooms[0]['id'], $rooms[0]['img_url']))
             ->publisher($this->publisher())
             ->author($this->person())
             ->datePublished($datePublished)
