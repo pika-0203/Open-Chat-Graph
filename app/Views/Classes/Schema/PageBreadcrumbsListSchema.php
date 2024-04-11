@@ -187,7 +187,6 @@ class PageBreadcrumbsListSchema
                         ->image(imgPreviewUrl($room['id'], $room['img_url']))
                         ->url(url('oc/' . $room['id']))
                         ->position($index + 1)
-                        ->publisher($this->publisher())
                         ->author($this->person())
                 );
         }

@@ -49,6 +49,8 @@ class RecommendOpenChatPageController
         "自衛隊",
         "レスバ",
         "unistyle",
+        "jobhunt",
+        "邦画",
     ];
 
     function index(
