@@ -1055,6 +1055,12 @@ article.top-list {
   .openchat-list-title {
     font-size: 22px;
   }
+
+  .top-ranking .super-icon {
+    scale: 90%;
+    margin-right: 4px;
+    margin-top: -2px;
+  }
 }
 
 @media screen and (min-width: 600px) {
