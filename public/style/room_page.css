@@ -179,20 +179,17 @@ hr {
   display: none;
 }
 
-.talkroom_description > button {
-  padding: 0.5rem 1rem;
-  font-size: 14px;
-  background-color: #1f1f1f;
-  color: #fff;
-  border-radius: 99px;
-  border: 0;
-  font-weight: 500;
-  user-select: none;
-  margin-top: 1rem;
+.talkroom_description_box .close-btn {
+  margin-left: auto;
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
   cursor: pointer;
+  background: inherit;
+  border: 0;
 }
 
-.talkroom_description_box.close .talkroom_description > button {
+.talkroom_description_box.close .close-btn {
   display: none;
 }
 
@@ -404,7 +401,7 @@ body > footer {
   }
 
   .talkroom_description_box.close:not(.hidden):hover {
-    background-color: #f1f9f6;
+    background-color: #f1f9f6ab;
   }
 
   hr {

@@ -42,9 +42,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
               <span id="talkroom-description-btn">
                 <?php echo nl2brReplace(trim(preg_replace("/(\r\n){3,}|\r{3,}|\n{3,}/", "\n\n", $oc['description']))) ?>
               </span>
-              <br>
-              <button id="talkroom-description-close-btn" title="一部を表示">一部を表示</button>
             </p>
+            <button id="talkroom-description-close-btn" class="close-btn" title="一部を表示">一部を表示</button>
             <div class="more" id="read_more_btn">
               <div class="more-separater">&nbsp;</div>
               <button class="unset more-text" title="もっと見る">…もっと見る</button>
