@@ -2,6 +2,7 @@
 
 namespace App\Config;
 
+use App\Controllers\Api\AdminEndPointController;
 use App\Controllers\Api\CommentLikePostApiController;
 use App\Controllers\Api\CommentListApiController;
 use App\Controllers\Api\CommentPostApiController;
@@ -16,8 +17,8 @@ use App\Controllers\Pages\OpenChatPageController;
 use App\Controllers\Pages\ReactRankingPageController;
 use App\Controllers\Pages\RecentOpenChatPageController;
 use App\Controllers\Pages\RecommendOpenChatPageController;
+use App\Middleware\AdminCookieValidation;
 use App\Middleware\VerifyCsrfToken;
-use Shadow\Kernel\Validator;
 
 Route::middlewareGroup(RedirectLineWebBrowser::class)
     ->path('ranking/{category}', [ReactRankingPageController::class, 'ranking'])
@@ -33,7 +34,10 @@ Route::path('policy')
 Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
     ->matchNum('open_chat_id', min: 1)
     ->match(cache(...))
-    ->middleware([VerifyCsrfToken::class]);
+    ->middleware([
+        AdminCookieValidation::class,
+        VerifyCsrfToken::class,
+    ]);
 
 Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
     ->matchNum('open_chat_id', min: 1);
@@ -126,15 +130,9 @@ Route::path(
     ->matchNum('comment_id', min: 1)
     ->matchStr('token');
 
-// 旧URLからのリダイレクト先
-Route::path('search')
-    ->matchStr('q', maxLen: 40, emptyAble: true)
-    ->match(fn (string $q) => redirect('ranking/?' . http_build_query(['keyword' => $q, 'list' => 'all']), 301));
-
-Route::path('react-test')
-    ->match(redirect('ranking'));
-
-Route::path('react-test/{category}')
-    ->match(fn ($category) => redirect('ranking/' . $category . strstr($_SERVER['REQUEST_URI'] ?? '', '?')));
+Route::path(
+    'admin-api@post',
+    [AdminEndPointController::class, 'index']
+);
 
 Route::run();

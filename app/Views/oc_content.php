@@ -101,6 +101,17 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           </a>
         <?php endif ?>
       </section>
+
+      <?php if (cookie()->has('admin') && cookie()->has('admin-enable')) : ?>
+        <form onsubmit="return confirm('変更しますか？')" action="/admin-api" method="POST" style="margin: 1rem 0;">
+          <b>タグ: <?php echo $recommend[2] ?: '無し' ?></b>
+          <label>タグ変更</label>
+          <input type="text" name="ocTag">
+          <input type="hidden" name="ocId" value="<?php echo $oc['id'] ?>">
+          <input type="submit">
+        </form>
+      <?php endif ?>
+
       <div style="display: flex; flex-direction: row; align-items: center;">
         <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>
         <h2 class="graph-title">メンバー数の推移グラフ</h2>
