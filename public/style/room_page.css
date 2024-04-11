@@ -335,6 +335,11 @@ body > footer {
   color: #777;
 }
 
+#comment-root {
+  margin: 1rem;
+  max-width: 680px;
+}
+
 @media screen and (max-width: 359px) {
   .talkroom_number_of_stats {
     margin-right: -0.5rem;
@@ -358,6 +363,11 @@ body > footer {
 }
 
 @media screen and (min-width: 512px) {
+  #comment-root {
+    margin: auto;
+    margin-top: 1rem;
+  }
+
   .open-btn.sp-btn {
     display: none;
   }

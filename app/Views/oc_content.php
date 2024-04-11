@@ -159,7 +159,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
         <h2 class="graph-title">オープンチャットについてのコメント</h2>
       </div>
-      <div id="comment-root" style="margin: 1rem;"></div>
+      <div id="comment-root"></div>
     </section>
     <footer>
       <aside class="open-btn2">
