@@ -364,8 +364,9 @@ body > footer {
 
 @media screen and (min-width: 512px) {
   #comment-root {
+    padding: 0 1rem;
     margin: auto;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
   }
 
   .open-btn.sp-btn {

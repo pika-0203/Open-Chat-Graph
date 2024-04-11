@@ -106,7 +106,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <h2 class="graph-title">メンバー数の推移グラフ</h2>
       </div>
       <!-- グラフセクション -->
-      <div style="position: relative; max-width: 712px; margin: auto;">
+      <div style="position: relative; max-width: 680px; margin: auto;">
         <div class="chart-canvas-box" id="dummy-canvas"></div>
         <div id="app"></div>
       </div>
