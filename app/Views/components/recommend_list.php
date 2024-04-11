@@ -8,8 +8,7 @@ use App\Services\Recommend\Enum\RecommendListType;
 ?>
 <aside style="margin: 0 -1rem;">
     <div class="btn-wrapper">
-        <div style="display: flex; flex-direction: row; /* align-items: center; */ margin: 0 1rem;">
-            <div aria-hidden="true" style="font-size: 12px; user-select: none;">🎖</div>
+        <div class="inner">
             <?php if ($recommend->type === RecommendListType::Category) : ?>
                 <h3>
                     <span>
@@ -21,16 +20,13 @@ use App\Services\Recommend\Enum\RecommendListType;
                     <small style="font-size: 11px; font-weight:normal; color:#b7b7b7; margin-left: 4px;">最新</small>
                 </h3>
             <?php else : ?>
-                <a class="unset" style="cursor: pointer;" href="<?php echo url("recommend?tag=" . urlencode(htmlspecialchars_decode($recommend->listName))) ?>">
+                <a class="unset" href="<?php echo url("recommend?tag=" . urlencode(htmlspecialchars_decode($recommend->listName))) ?>">
                     <h3>
-                        <span style="text-decoration: underline; text-decoration-color: #777;">
-                            「<?php echo $recommend->listName ?>」
+                        <span style="text-decoration-color: #111; text-wrap: wrap;">
+                            「<?php echo $recommend->listName ?>」関連のおすすめ
                         </span>
-                        <div style="text-decoration: underline; text-decoration-color: #777;">
-                            <span>関連のおすすめ</span>
-                        </div>
-                        <small style="font-size: 11px; font-weight:normal; color:#b7b7b7; margin-left: 4px;">最新</small>
                     </h3>
+                    <small style="font-size: 14px; font-weight:normal; color:#777; margin-left: 4px; text-wrap: nowrap; word-break: keep-all;" aria-hidden="true">すべて見る</small>
                 </a>
             <?php endif ?>
         </div>

@@ -8,8 +8,8 @@
 .btn-wrapper h3 {
   all: unset;
   font-weight: bold;
-  font-size: 13px;
-  color: #777;
+  font-size: 14px;
+  color: #111;
   align-items: center;
   display: flex;
   flex-wrap: wrap;
@@ -117,7 +117,42 @@
   margin: -1px -4px;
 }
 
+.btn-wrapper a {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  text-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.btn-wrapper .inner {
+  display: flex;
+  flex-direction: row; /* align-items: center; */
+  margin: 0 1rem;
+  width: 100%;
+}
+
 @media screen and (min-width: 512px) {
+  .btn-wrapper a {
+    cursor: pointer;
+    display: flex;
+    width: unset;
+    text-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .btn-wrapper a h3 {
+    text-decoration: underline;
+  }
+
+  .btn-wrapper a small{
+    display: none;
+  } 
+
+  .btn-wrapper .inner {
+    width: unset;
+  }
+
   .recommend-list {
     overflow-x: unset;
     flex-wrap: wrap;

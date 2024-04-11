@@ -537,6 +537,7 @@ article.top-list {
 .top-ranking .super-icon {
   scale: 74%;
   margin: -2px;
+  margin-right: 1px;
 }
 
 .top-list .openchat-item-lower,
