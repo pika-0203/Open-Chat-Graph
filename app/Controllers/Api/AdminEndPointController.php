@@ -35,20 +35,30 @@ class AdminEndPointController
         if (!DB::fetchColumn('SELECT id FROM open_chat WHERE id = ' . $id))
             throw new BadRequestException("存在しないID: " . $id);
 
-        /** @var RecommendUpdater $recommendUpdater */
-        $recommendUpdater = app(RecommendUpdater::class);
-        $tags = $recommendUpdater->getAllTagNames();
-        if (!in_array($tag, $tags))
-            throw new BadRequestException('存在しないタグ: ' . $tag);;
+        if ($tag) {
+            /** @var RecommendUpdater $recommendUpdater */
+            $recommendUpdater = app(RecommendUpdater::class);
+            $tags = $recommendUpdater->getAllTagNames();
+            if (!in_array($tag, $tags)) throw new BadRequestException('存在しないタグ: ' . $tag);;
 
-        DB::execute(
-            "INSERT INTO modify_recommend VALUES({$id}, '{$tag}') 
-                ON DUPLICATE KEY UPDATE id = {$id}, tag = '{$tag}'"
-        );
-        DB::execute(
-            "INSERT INTO recommend VALUES({$id}, '{$tag}') 
-                ON DUPLICATE KEY UPDATE id = {$id}, tag = '{$tag}'"
-        );
+            DB::execute(
+                "INSERT INTO modify_recommend VALUES({$id}, '{$tag}') 
+                    ON DUPLICATE KEY UPDATE id = {$id}, tag = '{$tag}'"
+            );
+            DB::execute(
+                "INSERT INTO recommend VALUES({$id}, '{$tag}') 
+                    ON DUPLICATE KEY UPDATE id = {$id}, tag = '{$tag}'"
+            );
+        } else {
+            DB::execute(
+                "INSERT INTO modify_recommend VALUES({$id}, '') 
+                    ON DUPLICATE KEY UPDATE id = {$id}, tag = ''"
+            );
+            DB::execute(
+                "DELETE FROM recommend WHERE id = {$id}"
+            );
+        }
+
 
         return redirect("oc/{$id}");
     }
