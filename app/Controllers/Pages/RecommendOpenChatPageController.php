@@ -62,11 +62,11 @@ class RecommendOpenChatPageController
         $_updatedAt = new \DateTime($staticDataFile->getRankingArgDto()->hourlyUpdatedAt);
         $updatedAtDate = new \DateTime($staticDataFile->getRankingArgDto()->rankingUpdatedAt);
         $count = 0;
-        $pageTitle = "「{$tag}」関連のおすすめ人気オプチャ【最新】";
+        $pageTitle = "「{$tag}」関連のおすすめ人気オプチャ【最新】|";
 
         $pageDesc = "LINEオープンチャットでいま人気のルームから、「{$tag}」に関する厳選ルームをご紹介！気になるルームを見つけたら気軽に参加してみましょう！";
         $_meta = meta()
-            ->setTitle($pageTitle, false)
+            ->setTitle($pageTitle)
             ->setDescription($pageDesc)
             ->setOgpDescription($pageDesc);
 
@@ -117,7 +117,7 @@ class RecommendOpenChatPageController
         $tagCategory = sortAndUniqueArray(array_column($recommendList, 'category'));
 
         $count = $recommend->getCount();
-        $_meta->title = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】";
+        $_meta->title = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】 | オプチャグラフ";
         $_meta->setImageUrl(imgUrl($recommendList[0]['id'], $recommendList[0]['img_url']));
 
         $_schema = $this->breadcrumbsShema->generateRecommend(
@@ -129,8 +129,6 @@ class RecommendOpenChatPageController
             $tag,
             $recommendList
         );
-
-        $_meta = $_meta->generateTags(true);
 
         return view('recommend_content', compact(
             '_meta',

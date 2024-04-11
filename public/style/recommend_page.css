@@ -183,6 +183,11 @@ section aside:hover {
   align-items: center;
 }
 
+.ranking-page-main {
+  border: 0;
+  margin-bottom: 0;
+}
+
 .ranking-page-main .openchat-item-mui-chip-outer {
   margin-top: 0;
 }
