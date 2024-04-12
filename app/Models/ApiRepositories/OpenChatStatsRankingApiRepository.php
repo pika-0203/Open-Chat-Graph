@@ -20,7 +20,7 @@ class OpenChatStatsRankingApiRepository
     {
         return array_map(
             fn ($oc) => new OpenChatListDto($oc),
-            $this->getStatsRanking('statistics_ranking_day', $args)
+            $this->getStatsRanking('statistics_ranking_hour24', $args)
         );
     }
 

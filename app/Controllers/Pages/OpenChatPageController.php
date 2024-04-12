@@ -7,6 +7,7 @@ namespace App\Controllers\Pages;
 use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\Recommend\RecommendGenarator;
+use App\Services\Recommend\RecommendRankingBuilder;
 use App\Services\Statistics\DownloadCsvService;
 use App\Services\Statistics\StatisticsChartArrayService;
 use App\Views\Dto\RankingPositionChartArgDto;
@@ -87,7 +88,7 @@ class OpenChatPageController
             $oc,
         );
 
-        if ($oc['rh_diff_member']) {
+        if (isset($oc['rh_diff_member']) && $oc['rh_diff_member'] > RecommendRankingBuilder::MIN_MEMBER_DIFF) {
             $hourlyUpdatedAt =  new \DateTime(file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME));
 
             $hourlyTime = $hourlyUpdatedAt->format(\DateTime::ATOM);

@@ -8,7 +8,7 @@
         <?php if ($myList) : ?>
             <article>
                 <div class="refresh-time openchat-list-date">
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">ピン留め (1日ごとに更新)</span>
+                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">ピン留め (過去24時間の増減)</span>
                 </div>
                 <div style="margin: -4px 0 -4px 0;">
                     <?php viewComponent('open_chat_list', ['openChatList' => $myList]) ?>
@@ -22,10 +22,12 @@
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
             <header class="openchat-list-title-area unset">
-                <h2 class="openchat-list-date unset ranking-url">
-                    <span class="openchat-list-title">1時間の人数増加ランキング</span>
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">(<?php echo $_hourlyRange ?>)</span>
-                </h2>
+                <div class="openchat-list-date unset ranking-url">
+                    <h2 class="unset">
+                        <span class="openchat-list-title">1時間の人数増加ランキング</span>
+                    </h2>
+                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0"><?php echo $_hourlyRange ?></span>
+                </div>
             </header>
             <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
             viewComponent('open_chat_list_ranking', ['openChatList' => $dto->hourlyList, 'isHourly' => true]) ?>
@@ -40,6 +42,7 @@
                     <h2 class="unset">
                         <span class="openchat-list-title">24時間の人数増加ランキング</span>
                     </h2>
+                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">1時間ごとに更新</span>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->dailyList]) ?>

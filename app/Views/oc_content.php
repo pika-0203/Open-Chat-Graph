@@ -3,7 +3,6 @@
 <?php
 
 use App\Config\AppConfig;
-use App\Services\Recommend\RecommendRankingBuilder;
 
 /**
  * @var \DateTime $updatedAt
@@ -58,51 +57,44 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
             <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?>人</span>
           </div>
 
-          <?php if (isset($oc['diff_member'])) : ?>
+          <?php if (isset($_hourlyRange)) : ?>
+            <div class="talkroom_number_of_stats" style="line-height: 135%; margin-top: 1px; margin-bottom: 2px">
+              <div class="number-box">
+                <span aria-hidden="true" style="margin-right: 2px; font-size: 9px; user-select: none;">🔥</span>
+                <span style="color: #777; font-weight: 500; margin-right: 4px;" class="openchat-itme-stats-title"><?php echo $_hourlyRange ?></span>
+                <div>
+                  <span style="color: #777; font-weight: 500;" class="openchat-item-stats"><?php echo signedNumF($oc['rh_diff_member']) ?>人</span>
+                  <span style="color: #777; font-weight: 500;" class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['rh_percent_increase'] * 10) / 10) ?>%)</span>
+                </div>
+              </div>
+            </div>
+          <?php endif ?>
+
+          <?php if (isset($oc['rh24_diff_member'])) : ?>
             <div class="talkroom_number_of_stats">
-              <div class="number-box <?php echo $oc['diff_member'] > 0 ? 'positive' : 'negative' ?>">
-                <?php if ($updatedAt->format('Y-m-d') !== date("Y-m-d", strtotime('-1day'))) : ?>
-                  <span class="openchat-itme-stats-title">最終更新: <time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>"><?php echo $updatedAt->format('Y/m/d') ?></time></span>
-                <?php elseif (($oc['diff_member'] ?? 0) !== 0) : ?>
-                  <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">前日</time></span>
+              <div class="number-box" style="margin-right: 4px;">
+                <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">24時間</time></span>
+                <?php if (($oc['rh24_diff_member'] ?? 0) !== 0) : ?>
                   <div>
-                    <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?>人</span>
-                    <span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
+                    <span class="openchat-item-stats"><?php echo signedNumF($oc['rh24_diff_member']) ?>人</span>
+                    <span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['rh24_percent_increase'] * 10) / 10) ?>%)</span>
                   </div>
-                <?php elseif ($oc['diff_member'] === 0) : ?>
-                  <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">前日</time></span>
+                <?php elseif ($oc['rh24_diff_member'] === 0) : ?>
                   <span class="zero-stats">±0</span>
                 <?php endif ?>
               </div>
 
-              <div class="number-box weekly <?php echo $oc['diff_member2'] > 0 ? 'positive' : 'negative' ?>">
-                <?php if ($updatedAt->format('Y-m-d') !== date("Y-m-d", strtotime('-1day'))) : ?>
-                  <span class="openchat-itme-stats-title">(データ更新中)</span>
-                <?php elseif ($oc['diff_member2'] ?? 0 !== 0) : ?>
+              <div class="number-box weekly">
+                <?php if (isset($oc['diff_member2']) && $oc['diff_member2'] !== 0) : ?>
                   <span class="openchat-itme-stats-title">1週間</span>
                   <div>
                     <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?>人</span>
                     <span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
                   </div>
-                <?php elseif ($oc['diff_member2'] === 0) : ?>
+                <?php elseif (isset($oc['diff_member2']) && $oc['diff_member2'] === 0) : ?>
                   <span class="openchat-itme-stats-title">1週間</span>
                   <span class="zero-stats">±0</span>
                 <?php endif ?>
-              </div>
-            </div>
-          <?php endif ?>
-
-          <?php if (isset($_hourlyRange)) : ?>
-            <div class="talkroom_number_of_stats" style="line-height: 135%;">
-              <div class="number-box">
-                <?php if ($oc['rh_diff_member'] > RecommendRankingBuilder::MIN_MEMBER_DIFF) : ?>
-                  <span aria-hidden="true" style="margin-right: 2px; font-size: 9px; user-select: none;">🔥</span>
-                <?php endif ?>
-                <span style="font-weight: bold; margin-right: 4px" class="openchat-itme-stats-title"><?php echo $_hourlyRange ?></span>
-                <div>
-                  <span style="font-weight: bold;" class="openchat-item-stats"><?php echo signedNumF($oc['rh_diff_member']) ?>人</span>
-                  <span style="font-weight: bold;" class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['rh_percent_increase'] * 10) / 10) ?>%)</span>
-                </div>
               </div>
             </div>
           <?php endif ?>
