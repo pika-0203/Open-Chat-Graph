@@ -348,8 +348,8 @@ body > footer {
   fill: currentcolor;
   flex-shrink: 0;
   color: rgb(7, 181, 59);
-  font-size: 12px;
-  margin: -1px -1px;
+  font-size: 11px;
+  margin: 0px 0px 1px 0px;
 }
 
 @media screen and (max-width: 359px) {
