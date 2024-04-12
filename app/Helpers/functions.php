@@ -228,14 +228,17 @@ function addCronLog(string|array $log)
 
 function isDailyUpdateTime(
     DateTime $currentTime = new DateTime,
-    array $start = [0, AppConfig::CRON_START_MINUTE],
-    array $end = [1, AppConfig::CRON_START_MINUTE],
+    array $start = [23, AppConfig::CRON_START_MINUTE],
+    array $end = [0, AppConfig::CRON_START_MINUTE],
     DateTime $nowStart = new DateTime,
     DateTime $nowEnd = new DateTime,
 ): bool {
     $startTime = $nowStart->setTime(...$start);
     $endTime = $nowEnd->setTime(...$end);
-    return $currentTime > $startTime && $currentTime < $endTime;
+
+    if ($currentTime > $startTime) return true;
+    if ($currentTime < $endTime) return true;
+    return false;
 }
 
 function checkLineSiteRobots(int $retryLimit = 3, int $retryInterval = 1): string
