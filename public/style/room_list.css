@@ -1061,6 +1061,17 @@ article.top-list {
     margin-right: 4px;
     margin-top: -2px;
   }
+
+  .top-ranking .ranking-readMore,
+  .top-list .ranking-readMore {
+    font-size: 14px;
+  }
+
+  .top-ranking .top-ranking-readMore,
+  .top-list .top-ranking-readMore {
+    margin: 0.75rem 0 0.75rem 0;
+    height: 38px;
+  }
 }
 
 @media screen and (min-width: 600px) {
