@@ -27,14 +27,14 @@
                         <span class="openchat-list-title">Hourly</span>
                     </h2>
                     <div class="refresh-time">
-                        <span>1時間ランキング (<?php echo $_hourlyRange ?>)</span>
+                        <span>人数増加ランキング(<?php echo $_hourlyRange ?>)</span>
                     </div>
                 </div>
             </header>
             <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
             viewComponent('open_chat_list_ranking', ['openChatList' => $dto->hourlyList, 'isHourly' => true]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=hourly') ?>">
-                <span class="ranking-readMore">1時間ランキングを詳しく見る</span>
+                <span class="ranking-readMore">人数増加ランキングを詳しく見る</span>
             </a>
         </article>
 
@@ -45,13 +45,13 @@
                         <span class="openchat-list-title">Daily</span>
                     </h2>
                     <div class="refresh-time">
-                        <span>24時間ランキング</span>
+                        <span>人数増加ランキング(1日)</span>
                     </div>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->dailyList]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=daily') ?>">
-                <span class="ranking-readMore">24時間ランキングを詳しく見る</span>
+                <span class="ranking-readMore">人数増加ランキング(1日) を詳しく見る</span>
             </a>
         </article>
 
@@ -62,13 +62,13 @@
                         <span class="openchat-list-title">Weekly</span>
                     </h2>
                     <div class="refresh-time">
-                        <span>1週間ランキング</span>
+                        <span>人数増加ランキング(1週間)</span>
                     </div>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->weeklyList]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=weekly') ?>">
-                <span class="ranking-readMore">1週間ランキングを詳しく見る</span>
+                <span class="ranking-readMore">人数増加ランキング(1週間) を詳しく見る</span>
             </a>
         </article>
 
@@ -94,14 +94,14 @@
                         <span class="openchat-list-title">Popular</span>
                     </h2>
                     <div class="refresh-time">
-                        <span>メンバー数ランキング</span>
+                        <span>人数ランキング</span>
                     </div>
                     <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">※公式運営を除く</span>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->popularList]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-                <span class="ranking-readMore">メンバー数ランキングを詳しく見る</span>
+                <span class="ranking-readMore">人数ランキングを詳しく見る</span>
             </a>
         </article>
 

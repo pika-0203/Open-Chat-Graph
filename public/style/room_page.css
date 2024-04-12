@@ -126,8 +126,12 @@ hr {
 
 .openchat-itme-stats-title {
   color: #aaa;
-  font-size: 11px;
+  font-size: 11.5px;
   margin-right: 2px;
+}
+
+.openchat-item-stats.percent {
+  font-size: 10.5px;
 }
 
 /* オープンチャットの詳細エリア */
@@ -241,7 +245,7 @@ hr {
 .talkroom_number_of_stats {
   display: flex;
   flex-direction: row;
-  font-size: 11px;
+  font-size: 11.5px;
   justify-content: flex-start;
   width: fit-content;
   align-items: flex-start;
@@ -477,6 +481,10 @@ body > footer {
   .openchat-itme-stats-title,
   .talkroom_number_of_stats {
     font-size: 13px;
+  }
+
+  .openchat-item-stats.percent {
+    font-size: 12px;
   }
 
   .openchat .oc-desc-nav {

@@ -52,7 +52,7 @@ class IndexPageController
         $dto->hourlyUpdatedAt->modify('-1hour');
         $hourlyStart = $dto->hourlyUpdatedAt->format('G:i');
 
-        $_hourlyRange = $hourlyStart . ' 〜 <time datetime="' . $hourlyTime . '">' . $hourlyEnd . '</time>';
+        $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hourlyEnd . '</time>';
 
         return view('top_content', compact(
             'dto',
