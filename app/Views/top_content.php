@@ -45,7 +45,7 @@
                     <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">1時間ごとに更新</span>
                 </div>
             </header>
-            <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->dailyList]) ?>
+            <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->dailyList, 'isHourly' => true]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=daily') ?>">
                 <span class="ranking-readMore">24時間の人数増加ランキングを詳しく見る</span>
             </a>
@@ -57,6 +57,7 @@
                     <h2 class="unset">
                         <span class="openchat-list-title">1週間の人数増加ランキング</span>
                     </h2>
+                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">1日ごとに更新</span>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->weeklyList]) ?>
@@ -69,7 +70,7 @@
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
-                        <span class="openchat-list-title" style="color: #111; -webkit-text-fill-color:unset; background: unset;">最近のコメント投稿</span>
+                        <span class="openchat-list-title">最近のコメント投稿</span>
                     </h2>
                 </div>
             </header>

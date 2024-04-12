@@ -118,7 +118,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
         int $startId,
         int $endId,
     ): array {
-        return $this->findMemberStatsRanking($startId, $endId, 'statistics_ranking_day');
+        return $this->findMemberStatsRanking($startId, $endId, 'statistics_ranking_hour24');
     }
 
     public function findMemberStatsPastWeekRanking(

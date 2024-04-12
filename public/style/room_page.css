@@ -35,7 +35,6 @@ hr {
 }
 
 .openchat-header {
-  font-size: 13px;
   display: flex;
 }
 
@@ -108,30 +107,29 @@ hr {
   color: #978170;
 }
 
+#read_more_btn {
+  line-height: 130%;
+}
+
 /* メンバー数 */
 .talkroom_number_of_members {
   margin-top: 0px;
+  color: #aaa;
 }
 
 .number_of_members {
   display: block;
   color: #777;
   font-weight: 500;
-  font-size: 12px;
-}
-
-.zero-stats {
-  color: #aaa;
+  font-size: 13px;
 }
 
 .openchat-itme-stats-title {
-  color: #aaa;
-  font-size: 11.5px;
   margin-right: 2px;
 }
 
 .openchat-item-stats.percent {
-  font-size: 10.5px;
+  font-size: 10px;
 }
 
 /* オープンチャットの詳細エリア */
@@ -190,6 +188,7 @@ hr {
   font-weight: bold;
   cursor: pointer;
   background: inherit;
+  color: #111;
   border: 0;
 }
 
@@ -245,11 +244,10 @@ hr {
 .talkroom_number_of_stats {
   display: flex;
   flex-direction: row;
-  font-size: 11.5px;
   justify-content: flex-start;
   width: fit-content;
   align-items: flex-start;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .talkroom_number_of_stats .number-box {
@@ -257,19 +255,17 @@ hr {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
-
-.number-box .openchat-item-stats {
+  font-size: 11.5px;
   color: #aaa;
 }
 
-.number-box.weekly .openchat-item-stats {
-  color: #aaa;
+.number-box.bold {
+  font-weight: 500;
+  color: #777;
 }
 
 .number-box.weekly.negative .openchat-item-stats,
 .negative .openchat-item-stats {
-  color: #aaa;
   font-weight: normal;
 }
 
@@ -443,12 +439,23 @@ body > footer {
     height: 16px;
   }
 
+  .number-box.bold {
+    font-weight: normal;
+    color: #777;
+  }
+
   .openchat-header,
   .talkroom_description_box {
     font-size: 13px;
   }
 
+  .openchat-item-stats,
   .number_of_members {
+    font-size: 13px;
+  }
+
+  .openchat-item-stats.percent {
+    margin-left: 1px;
     font-size: 13px;
   }
 
@@ -480,10 +487,6 @@ body > footer {
   .openchat-itme-stats-title,
   .talkroom_number_of_stats {
     font-size: 13px;
-  }
-
-  .openchat-item-stats.percent {
-    font-size: 12px;
   }
 
   .openchat .oc-desc-nav {

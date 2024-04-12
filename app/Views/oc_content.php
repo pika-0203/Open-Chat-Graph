@@ -3,6 +3,7 @@
 <?php
 
 use App\Config\AppConfig;
+use App\Services\Recommend\RecommendRankingBuilder;
 
 /**
  * @var \DateTime $updatedAt
@@ -58,54 +59,66 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           </div>
 
           <?php if (isset($_hourlyRange)) : ?>
-            <div class="talkroom_number_of_stats" style="line-height: 135%; margin-top: 1px; margin-bottom: 2px">
-              <div class="number-box">
+            <div class="talkroom_number_of_stats" style="line-height: 135%;">
+              <div class="number-box bold">
                 <span aria-hidden="true" style="margin-right: 2px; font-size: 9px; user-select: none;">🔥</span>
-                <span style="color: #777; font-weight: 500; margin-right: 4px;" class="openchat-itme-stats-title"><?php echo $_hourlyRange ?></span>
+                <span style="margin-right: 4px;" class="openchat-itme-stats-title"><?php echo $_hourlyRange ?></span>
                 <div>
-                  <span style="color: #777; font-weight: 500;" class="openchat-item-stats"><?php echo signedNumF($oc['rh_diff_member']) ?>人</span>
-                  <span style="color: #777; font-weight: 500;" class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['rh_percent_increase'] * 10) / 10) ?>%)</span>
+                  <span class="openchat-item-stats"><?php echo signedNumF($oc['rh_diff_member']) ?>人</span><span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['rh_percent_increase'] * 10) / 10) ?>%)</span>
                 </div>
               </div>
             </div>
           <?php endif ?>
 
-          <?php if (isset($oc['rh24_diff_member'])) : ?>
-            <div class="talkroom_number_of_stats">
-              <div class="number-box" style="margin-right: 4px;">
-                <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">24時間</time></span>
-                <?php if (($oc['rh24_diff_member'] ?? 0) !== 0) : ?>
-                  <div>
-                    <span class="openchat-item-stats"><?php echo signedNumF($oc['rh24_diff_member']) ?>人</span>
-                    <span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['rh24_percent_increase'] * 10) / 10) ?>%)</span>
+          <div class="talkroom_number_of_stats">
+            <?php if (isset($oc['rh24_diff_member'])) : ?>
+              <?php if ($oc['rh24_diff_member'] >= RecommendRankingBuilder::MIN_MEMBER_DIFF) : ?>
+                <div class="number-box bold" style="margin-right: 6px;">
+                  <span aria-hidden="true" style="margin-right: 2px; font-size: 9px; user-select: none;">🚀</span>
+                <?php else : ?>
+                  <div class="number-box" style="margin-right: 6px;">
+                  <?php endif ?>
+                  <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">24時間</time></span>
+                  <?php if (($oc['rh24_diff_member'] ?? 0) !== 0) : ?>
+                    <div>
+                      <span class="openchat-item-stats"><?php echo signedNumF($oc['rh24_diff_member']) ?>人</span><span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['rh24_percent_increase'] * 10) / 10) ?>%)</span>
+                    </div>
+                  <?php elseif ($oc['rh24_diff_member'] === 0) : ?>
+                    <span class="zero-stats">±0</span>
+                  <?php endif ?>
                   </div>
-                <?php elseif ($oc['rh24_diff_member'] === 0) : ?>
-                  <span class="zero-stats">±0</span>
                 <?php endif ?>
-              </div>
 
-              <div class="number-box weekly">
-                <?php if (isset($oc['diff_member2']) && $oc['diff_member2'] !== 0) : ?>
-                  <span class="openchat-itme-stats-title">1週間</span>
-                  <div>
-                    <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?>人</span>
-                    <span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
-                  </div>
-                <?php elseif (isset($oc['diff_member2']) && $oc['diff_member2'] === 0) : ?>
-                  <span class="openchat-itme-stats-title">1週間</span>
-                  <span class="zero-stats">±0</span>
-                <?php endif ?>
-              </div>
-            </div>
-          <?php endif ?>
+                <?php if (isset($oc['diff_member2'])) : ?>
+                  <?php if ($oc['diff_member2'] >= RecommendRankingBuilder::MIN_MEMBER_DIFF) : ?>
+                    <div class="number-box bold weekly">
+                      <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium show-north css-162gv95" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NorthIcon">
+                        <path d="m5 9 1.41 1.41L11 5.83V22h2V5.83l4.59 4.59L19 9l-7-7-7 7z"></path>
+                      </svg>
+                    <?php else : ?>
+                      <div class="number-box weekly">
+                      <?php endif ?>
 
-          <section class="open-btn pc-btn">
-            <?php if ($oc['url']) : ?>
-              <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
-                <span class="text">LINEで開く</span>
-              </a>
-            <?php endif ?>
-          </section>
+                      <?php if (isset($oc['diff_member2']) && $oc['diff_member2'] !== 0) : ?>
+                        <span class="openchat-itme-stats-title">1週間</span>
+                        <div>
+                          <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?>人</span><span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
+                        </div>
+                      <?php elseif (isset($oc['diff_member2']) && $oc['diff_member2'] === 0) : ?>
+                        <span class="openchat-itme-stats-title">1週間</span>
+                        <span class="zero-stats">±0</span>
+                      <?php endif ?>
+                      </div>
+                    <?php endif ?>
+                    </div>
+
+                    <section class="open-btn pc-btn">
+                      <?php if ($oc['url']) : ?>
+                        <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
+                          <span class="text">LINEで開く</span>
+                        </a>
+                      <?php endif ?>
+                    </section>
       </section>
       <section class="open-btn sp-btn">
         <?php if ($oc['url']) : ?>

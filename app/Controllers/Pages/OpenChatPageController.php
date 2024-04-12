@@ -92,11 +92,9 @@ class OpenChatPageController
             $hourlyUpdatedAt =  new \DateTime(file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME));
 
             $hourlyTime = $hourlyUpdatedAt->format(\DateTime::ATOM);
-            $hourlyEnd = $hourlyUpdatedAt->format('G:i');
             $hourlyUpdatedAt->modify('-1hour');
-            $hourlyStart = $hourlyUpdatedAt->format('G:i');
 
-            $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hourlyEnd . '</time>';
+            $_hourlyRange = '<time datetime="' . $hourlyTime . '">' . '1時間' . '</time>';
         } else {
             $_hourlyRange = null;
         }

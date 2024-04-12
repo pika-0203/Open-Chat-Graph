@@ -58,16 +58,16 @@
                         <details class="icon-desc">
                             <summary>メンバー数のアイコンについて</summary>
                             <div class="list-aside-details">
-                                <small class="list-aside-desc">🔥：直近1時間でメンバー数が急上昇</small>
-                                <small class="list-aside-desc">🚀：直近24時間のメンバー数が急上昇</small>
+                                <small class="list-aside-desc">🔥：直近1時間で人数が急増</small>
+                                <small class="list-aside-desc">🚀：直近24時間で人数が急増</small>
                                 <small class="list-aside-desc">
                                     <span style="margin: 0 4px;">
                                         <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium show-north css-162gv95" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NorthIcon">
                                             <path d="m5 9 1.41 1.41L11 5.83V22h2V5.83l4.59 4.59L19 9l-7-7-7 7z"></path>
                                         </svg>
-                                    </span>：直近1週間のメンバー数が急上昇
+                                    </span>：直近1週間で人数が急増
                                 </small>
-                                <small class="list-aside-desc">🏆：リスト内で最もメンバー数が多いトークルーム</small>
+                                <small class="list-aside-desc">🏆：リスト内で最も人数が多いトークルーム</small>
                             </div>
                         </details>
                     </aside>
