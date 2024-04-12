@@ -57,21 +57,24 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <?php if (isset($oc['diff_member'])) : ?>
             <div class="talkroom_number_of_stats">
               <div class="number-box <?php echo $oc['diff_member'] > 0 ? 'positive' : 'negative' ?>">
-                <?php if ($updatedAt->format('Y-m-d') !== date("Y-m-d")) : ?>
+                <?php if ($updatedAt->format('Y-m-d') !== date("Y-m-d", strtotime('-1day'))) : ?>
                   <span class="openchat-itme-stats-title">最終更新: <time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>"><?php echo $updatedAt->format('Y/m/d') ?></time></span>
                 <?php elseif (($oc['diff_member'] ?? 0) !== 0) : ?>
-                  <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">今日</time></span>
+                  <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">前日</time></span>
                   <div>
                     <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?>人</span>
                     <span class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['percent_increase'] * 10) / 10) ?>%)</span>
                   </div>
                 <?php elseif ($oc['diff_member'] === 0) : ?>
-                  <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">今日</time></span>
+                  <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">前日</time></span>
                   <span class="zero-stats">±0</span>
                 <?php endif ?>
               </div>
+
               <div class="number-box weekly <?php echo $oc['diff_member2'] > 0 ? 'positive' : 'negative' ?>">
-                <?php if ($oc['diff_member2'] ?? 0 !== 0) : ?>
+                <?php if ($updatedAt->format('Y-m-d') !== date("Y-m-d", strtotime('-1day'))) : ?>
+                  <span class="openchat-itme-stats-title">(データ更新中)</span>
+                <?php elseif ($oc['diff_member2'] ?? 0 !== 0) : ?>
                   <span class="openchat-itme-stats-title">1週間</span>
                   <div>
                     <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?>人</span>

@@ -33,7 +33,7 @@ class AdminPageController
 
     function test()
     {
-        $path = AppConfig::ROOT_PATH . 'test_exec.php';
+        $path = AppConfig::ROOT_PATH . 'test_exec2.php';
 
         exec("/usr/bin/php8.2 {$path} >/dev/null 2>&1 &");
 
