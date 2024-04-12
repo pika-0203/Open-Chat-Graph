@@ -17,7 +17,7 @@ class UpdateHourlyMemberRankingServiceTest extends TestCase
         $this->inst2 = app(StaticDataGenerator::class);
         $this->inst = app(UpdateHourlyMemberRankingService::class);
 
-        $this->inst2->updateStaticData();
+        $this->inst->update();
 
         $this->assertTrue(true);
     } 

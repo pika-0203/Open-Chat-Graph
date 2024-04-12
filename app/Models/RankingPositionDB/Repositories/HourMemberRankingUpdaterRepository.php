@@ -18,22 +18,31 @@ class HourMemberRankingUpdaterRepository implements HourMemberRankingUpdaterRepo
 
     public function updateHourRankingTable(\DateTime $dateTime, array $filters): int
     {
-        $data = $this->buildRankingData($dateTime, $filters);
+        $data = $this->buildRankingData($dateTime, $filters, '-1hour');
         if (!$data) {
             return 0;
         }
 
         DB::execute("TRUNCATE TABLE statistics_ranking_hour");
-        return $this->inserter->import(DB::connect(), 'statistics_ranking_hour', $data);
+        $result = $this->inserter->import(DB::connect(), 'statistics_ranking_hour', $data);
+
+        $data = $this->buildRankingData($dateTime, $filters, '-24hour');
+        if (!$data) {
+            return $result;
+        }
+
+        DB::execute("TRUNCATE TABLE statistics_ranking_hour24");
+        $result += $this->inserter->import(DB::connect(), 'statistics_ranking_hour24', $data);
+        return $result;
     }
 
     /**
      * @param int[] $filters
      * @return array{ id: int, open_chat_id: int, diff_member: int, percent_increase: float }[]
      */
-    public function buildRankingData(\DateTime $dateTime, array $filters): array
+    public function buildRankingData(\DateTime $dateTime, array $filters, string $modifier): array
     {
-        $data = $this->getHourRanking($dateTime);
+        $data = $this->getHourRanking($dateTime, $modifier);
         $result = [];
         $counter = 1; // 連番のカウンタ
 
@@ -51,10 +60,10 @@ class HourMemberRankingUpdaterRepository implements HourMemberRankingUpdaterRepo
     /**
      * @return array{ open_chat_id: int, diff_member: int, percent_increase: float, index1: float }[]
      */
-    public function getHourRanking(\DateTime $dateTime): array
+    public function getHourRanking(\DateTime $dateTime, string $modifier): array
     {
         $dateTime2 = new \DateTime($dateTime->format('Y-m-d H:i:s'));
-        $dateTime2->modify('-1 hour');
+        $dateTime2->modify($modifier);
 
         $timeString = $dateTime->format('Y-m-d H:i:s');
         $timeString2 = $dateTime2->format('Y-m-d H:i:s');
