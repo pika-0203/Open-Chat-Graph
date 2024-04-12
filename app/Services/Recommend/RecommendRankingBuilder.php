@@ -12,7 +12,7 @@ use App\Services\Recommend\Enum\RecommendListType;
 class RecommendRankingBuilder
 {
     private const LIST_LIMIT = 20;
-    private const MIN_MEMBER_DIFF = 3;
+    public const MIN_MEMBER_DIFF = 3;
 
     function getRanking(
         RecommendListType $type,

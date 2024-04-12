@@ -86,6 +86,8 @@ class OpenChatPageController
             $recommend,
             $oc,
         );
+        
+        $hourlyUpdatedAt = $oc['rh_diff_member'] ? new \DateTime(file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME)) : null;
 
         return view('oc_content', compact(
             '_meta',
@@ -100,6 +102,7 @@ class OpenChatPageController
             '_schema',
             'recommend',
             'updatedAt',
+            'hourlyUpdatedAt',
         ));
     }
 

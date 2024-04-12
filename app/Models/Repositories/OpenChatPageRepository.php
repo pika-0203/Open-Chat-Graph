@@ -25,9 +25,12 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
                 oc.updated_at,
                 oc.url,
                 oc.created_at,
-                oc.updated_at
+                oc.updated_at,
+                rh.diff_member AS rh_diff_member,
+                rh.percent_increase AS rh_percent_increase
             FROM
                 open_chat AS oc
+                LEFT JOIN statistics_ranking_hour AS rh ON oc.id = rh.open_chat_id
             WHERE
                 oc.id = :id";
 

@@ -340,6 +340,18 @@ body > footer {
   max-width: 680px;
 }
 
+.number-box .css-162gv95 {
+  user-select: none;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  fill: currentcolor;
+  flex-shrink: 0;
+  color: rgb(7, 181, 59);
+  font-size: 12px;
+  margin: -1px -1px;
+}
+
 @media screen and (max-width: 359px) {
   .talkroom_number_of_stats {
     margin-right: -0.5rem;

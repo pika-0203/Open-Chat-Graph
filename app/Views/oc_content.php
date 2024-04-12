@@ -3,9 +3,13 @@
 <?php
 
 use App\Config\AppConfig;
+use App\Services\Recommend\RecommendRankingBuilder;
 
 /**
  * @var \DateTime $updatedAt
+ */
+/**
+ * @var \DateTime $hourlyUpdatedAt
  */
 
 viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
@@ -60,6 +64,9 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <?php if ($updatedAt->format('Y-m-d') !== date("Y-m-d", strtotime('-1day'))) : ?>
                   <span class="openchat-itme-stats-title">最終更新: <time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>"><?php echo $updatedAt->format('Y/m/d') ?></time></span>
                 <?php elseif (($oc['diff_member'] ?? 0) !== 0) : ?>
+                  <?php if (($oc['diff_member'] ?? 0) >= RecommendRankingBuilder::MIN_MEMBER_DIFF) : ?>
+                    <span aria-hidden="true" style="margin-right: 3px; font-size: 9px; user-select: none;">🚀</span>
+                  <?php endif ?>
                   <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">前日</time></span>
                   <div>
                     <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member']) ?>人</span>
@@ -75,6 +82,11 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <?php if ($updatedAt->format('Y-m-d') !== date("Y-m-d", strtotime('-1day'))) : ?>
                   <span class="openchat-itme-stats-title">(データ更新中)</span>
                 <?php elseif ($oc['diff_member2'] ?? 0 !== 0) : ?>
+                  <?php if (($oc['diff_member2'] ?? 0) >= RecommendRankingBuilder::MIN_MEMBER_DIFF) : ?>
+                    <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium show-north css-162gv95" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NorthIcon">
+                      <path d="m5 9 1.41 1.41L11 5.83V22h2V5.83l4.59 4.59L19 9l-7-7-7 7z"></path>
+                    </svg>
+                  <?php endif ?>
                   <span class="openchat-itme-stats-title">1週間</span>
                   <div>
                     <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?>人</span>
@@ -88,6 +100,21 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
             </div>
           <?php endif ?>
 
+          <?php if (isset($hourlyUpdatedAt) && $oc['rh_diff_member'] > 0) : ?>
+            <div class="talkroom_number_of_stats" style="line-height: 135%;">
+              <div class="number-box">
+                <?php if ($oc['rh_diff_member'] > RecommendRankingBuilder::MIN_MEMBER_DIFF) : ?>
+                  <span aria-hidden="true" style="margin-right: 3px; font-size: 9px; user-select: none;">🔥</span>
+                <?php endif ?>
+                <span style="font-weight: bold; margin-right: 4px" class="openchat-itme-stats-title"><time datetime="<?php echo $hourlyUpdatedAt->format(\DateTime::ATOM) ?>"><?php echo $hourlyUpdatedAt->format('H:i') ?></time></span>
+                <div>
+                  <span style="font-weight: bold;" class="openchat-item-stats"><?php echo signedNumF($oc['rh_diff_member']) ?>人</span>
+                  <span style="font-weight: bold;" class="openchat-item-stats">(<?php echo signedNum(signedCeil($oc['rh_percent_increase'] * 10) / 10) ?>%)</span>
+                </div>
+              </div>
+            </div>
+          <?php endif ?>
+
           <section class="open-btn pc-btn">
             <?php if ($oc['url']) : ?>
               <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
@@ -95,7 +122,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
               </a>
             <?php endif ?>
           </section>
-        </div>
       </section>
       <section class="open-btn sp-btn">
         <?php if ($oc['url']) : ?>
