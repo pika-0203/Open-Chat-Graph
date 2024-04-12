@@ -40,7 +40,17 @@ function validateStringNotEmpty(str) {
       if (!flag) return
       flag = false
 
-      const url = `https://${location.hostname}${location.pathname}`
+      const location = new URL(document.location)
+      const params = location.searchParams
+      const tag = params.get('tag')
+
+      let url = ''
+      if(tag) {
+        url = location.href
+      } else {
+        url = `https://${location.hostname}${location.pathname}`
+      }
+      
       const text = document.title + '\n' + url
 
       try {
