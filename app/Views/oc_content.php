@@ -92,13 +92,13 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
             </div>
           <?php endif ?>
 
-          <?php if (isset($hourlyUpdatedAt) && $oc['rh_diff_member'] > 0) : ?>
+          <?php if (isset($_hourlyRange)) : ?>
             <div class="talkroom_number_of_stats" style="line-height: 135%;">
               <div class="number-box">
                 <?php if ($oc['rh_diff_member'] > RecommendRankingBuilder::MIN_MEMBER_DIFF) : ?>
                   <span aria-hidden="true" style="margin-right: 2px; font-size: 9px; user-select: none;">🔥</span>
                 <?php endif ?>
-                <span style="font-weight: bold; margin-right: 4px" class="openchat-itme-stats-title"><time datetime="<?php echo $hourlyUpdatedAt->format(\DateTime::ATOM) ?>"><?php echo $hourlyUpdatedAt->format('H:i') ?></time></span>
+                <span style="font-weight: bold; margin-right: 4px" class="openchat-itme-stats-title"><?php echo $_hourlyRange ?></span>
                 <div>
                   <span style="font-weight: bold;" class="openchat-item-stats"><?php echo signedNumF($oc['rh_diff_member']) ?>人</span>
                   <span style="font-weight: bold;" class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['rh_percent_increase'] * 10) / 10) ?>%)</span>

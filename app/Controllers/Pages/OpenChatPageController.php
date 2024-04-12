@@ -86,8 +86,19 @@ class OpenChatPageController
             $recommend,
             $oc,
         );
-        
-        $hourlyUpdatedAt = $oc['rh_diff_member'] ? new \DateTime(file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME)) : null;
+
+        if ($oc['rh_diff_member']) {
+            $hourlyUpdatedAt =  new \DateTime(file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME));
+
+            $hourlyTime = $hourlyUpdatedAt->format(\DateTime::ATOM);
+            $hourlyEnd = $hourlyUpdatedAt->format('G:i');
+            $hourlyUpdatedAt->modify('-1hour');
+            $hourlyStart = $hourlyUpdatedAt->format('G:i');
+
+            $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hourlyEnd . '</time>';
+        } else {
+            $_hourlyRange = null;
+        }
 
         return view('oc_content', compact(
             '_meta',
@@ -102,7 +113,7 @@ class OpenChatPageController
             '_schema',
             'recommend',
             'updatedAt',
-            'hourlyUpdatedAt',
+            '_hourlyRange',
         ));
     }
 
