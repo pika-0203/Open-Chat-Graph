@@ -129,7 +129,7 @@ hr {
 }
 
 .openchat-item-stats.percent {
-  font-size: 10px;
+  margin-left: 1px;
 }
 
 /* オープンチャットの詳細エリア */
@@ -260,8 +260,7 @@ hr {
 }
 
 .number-box.bold {
-  font-weight: 500;
-  color: #777;
+  font-weight: bold;
 }
 
 .number-box.weekly.negative .openchat-item-stats,
