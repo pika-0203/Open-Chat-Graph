@@ -197,7 +197,7 @@ main header {
 
 .openchat-list-title {
   all: unset;
-  font-size: 19px;
+  font-size: 17px;
   font-weight: bold;
   background: -webkit-linear-gradient(45deg, rgb(253, 18, 226) 20%, rgb(164, 67, 221), rgb(84, 126, 255) 90%);
   background-clip: text;
@@ -1054,6 +1054,10 @@ article.top-list {
   }
   .openchat-list-title {
     font-size: 22px;
+  }
+
+  .openchat-list-title-area h2 {
+    margin: 0.5rem 0;
   }
 
   .top-ranking .super-icon {

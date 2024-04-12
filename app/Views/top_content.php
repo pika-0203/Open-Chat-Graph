@@ -22,19 +22,15 @@
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
             <header class="openchat-list-title-area unset">
-                <div class="openchat-list-date unset ranking-url">
-                    <h2 class="unset">
-                        <span class="openchat-list-title">Hourly</span>
-                    </h2>
-                    <div class="refresh-time">
-                        <span>人数増加ランキング(<?php echo $_hourlyRange ?>)</span>
-                    </div>
-                </div>
+                <h2 class="openchat-list-date unset ranking-url">
+                    <span class="openchat-list-title">1時間の人数増加ランキング</span>
+                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">(<?php echo $_hourlyRange ?>)</span>
+                </h2>
             </header>
             <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
             viewComponent('open_chat_list_ranking', ['openChatList' => $dto->hourlyList, 'isHourly' => true]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=hourly') ?>">
-                <span class="ranking-readMore">人数増加ランキングを詳しく見る</span>
+                <span class="ranking-readMore">1時間の人数増加ランキングを詳しく見る</span>
             </a>
         </article>
 
@@ -42,16 +38,13 @@
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
-                        <span class="openchat-list-title">Daily</span>
+                        <span class="openchat-list-title">24時間の人数増加ランキング</span>
                     </h2>
-                    <div class="refresh-time">
-                        <span>人数増加ランキング(1日)</span>
-                    </div>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->dailyList]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=daily') ?>">
-                <span class="ranking-readMore">人数増加ランキング(1日) を詳しく見る</span>
+                <span class="ranking-readMore">24時間の人数増加ランキングを詳しく見る</span>
             </a>
         </article>
 
@@ -59,16 +52,13 @@
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
-                        <span class="openchat-list-title">Weekly</span>
+                        <span class="openchat-list-title">1週間の人数増加ランキング</span>
                     </h2>
-                    <div class="refresh-time">
-                        <span>人数増加ランキング(1週間)</span>
-                    </div>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->weeklyList]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=weekly') ?>">
-                <span class="ranking-readMore">人数増加ランキング(1週間) を詳しく見る</span>
+                <span class="ranking-readMore">1週間の人数増加ランキングを詳しく見る</span>
             </a>
         </article>
 
@@ -76,11 +66,8 @@
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
-                        <span class="openchat-list-title">Comments</span>
+                        <span class="openchat-list-title" style="color: #111; -webkit-text-fill-color:unset; background: unset;">最近のコメント投稿</span>
                     </h2>
-                    <div class="refresh-time">
-                        <span>最近のコメント投稿</span>
-                    </div>
                 </div>
             </header>
             <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
@@ -91,11 +78,8 @@
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
-                        <span class="openchat-list-title">Popular</span>
+                        <span class="openchat-list-title">人数ランキング</span>
                     </h2>
-                    <div class="refresh-time">
-                        <span>人数ランキング</span>
-                    </div>
                     <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">※公式運営を除く</span>
                 </div>
             </header>
