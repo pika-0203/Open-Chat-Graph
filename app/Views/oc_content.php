@@ -72,7 +72,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
           <div class="talkroom_number_of_stats">
             <?php if (isset($oc['rh24_diff_member'])) : ?>
-              <?php if ($oc['rh24_diff_member'] >= RecommendRankingBuilder::MIN_MEMBER_DIFF) : ?>
+              <?php if ($oc['rh24_diff_member'] >= AppConfig::MIN_MEMBER_DIFF_H24) : ?>
                 <div class="number-box bold" style="margin-right: 6px;">
                   <span aria-hidden="true" style="margin-right: 1px; font-size: 9px; user-select: none;">🚀</span>
                 <?php else : ?>

@@ -11,9 +11,6 @@ use App\Services\Recommend\Enum\RecommendListType;
 
 class RecommendRankingBuilder
 {
-    private const LIST_LIMIT = 20;
-    public const MIN_MEMBER_DIFF = 3;
-
     function getRanking(
         RecommendListType $type,
         int $id,
@@ -21,14 +18,13 @@ class RecommendRankingBuilder
         string $listName,
         RecommendRankingRepositoryInterface $repository
     ): RecommendListDto|false {
-        $limit = self::LIST_LIMIT;
-        $minDiffMember = self::MIN_MEMBER_DIFF;
+        $limit = AppConfig::RECOMMEND_LIST_LIMIT;
 
         $ranking = $repository->getRanking(
             $id,
             $entity,
             AppConfig::RankingHourTable,
-            $minDiffMember + 1,
+            AppConfig::MIN_MEMBER_DIFF_HOUR,
             $limit
         );
 
@@ -37,17 +33,18 @@ class RecommendRankingBuilder
             $id,
             $entity,
             AppConfig::RankingDayTable,
-            $minDiffMember,
+            AppConfig::MIN_MEMBER_DIFF_H24,
             $idArray,
             $limit
         );
 
+        $count = count($ranking) + count($ranking2);
         $idArray = array_column(array_merge($ranking, $ranking2), 'id');
         $ranking3 = $repository->getRankingByExceptId(
             $id,
             $entity,
             AppConfig::RankingWeekTable,
-            $minDiffMember,
+            AppConfig::MIN_MEMBER_DIFF_WEEK,
             $idArray,
             $limit
         );
@@ -58,7 +55,7 @@ class RecommendRankingBuilder
             $id,
             $entity,
             $idArray,
-            $count < self::LIST_LIMIT * 3 ? self::LIST_LIMIT * 3 - $count : 3
+            $count < AppConfig::RECOMMEND_LIST_LIMIT ? min(AppConfig::RECOMMEND_LIST_LIMIT - $count, 10) : 3
         );
 
         $dto = new RecommendListDto(

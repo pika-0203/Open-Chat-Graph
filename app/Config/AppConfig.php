@@ -8,6 +8,11 @@ class AppConfig
     const RankingDayTable = 'statistics_ranking_hour24';
     const RankingWeekTable = 'statistics_ranking_week';
     const OpenChatTable = 'open_chat';
+    
+    const RECOMMEND_LIST_LIMIT = 50;
+    const MIN_MEMBER_DIFF_HOUR = 4;
+    const MIN_MEMBER_DIFF_H24 = 8;
+    const MIN_MEMBER_DIFF_WEEK = 10;
 
     const SITE_ICON_FILE_PATH = 'assets/icon-192x192.png';
     const DEFAULT_OGP_IMAGE_FILE_PATH = 'assets/ogp.png';

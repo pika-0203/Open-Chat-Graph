@@ -88,7 +88,7 @@ class OpenChatPageController
             $oc,
         );
 
-        if (isset($oc['rh_diff_member']) && $oc['rh_diff_member'] > RecommendRankingBuilder::MIN_MEMBER_DIFF) {
+        if (isset($oc['rh_diff_member']) && $oc['rh_diff_member'] >= AppConfig::MIN_MEMBER_DIFF_HOUR) {
             $hourlyUpdatedAt =  new \DateTime(file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME));
 
             $hourlyTime = $hourlyUpdatedAt->format(\DateTime::ATOM);
