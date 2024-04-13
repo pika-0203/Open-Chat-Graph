@@ -20,4 +20,7 @@
     <?php if (isset($_schema)) : ?>
         <?php echo $_schema ?>
     <?php endif ?>
+    <?php if (isset($noindex)) : ?>
+        <meta name="robots" content="noindex, nofollow">
+    <?php endif ?>
 </head>

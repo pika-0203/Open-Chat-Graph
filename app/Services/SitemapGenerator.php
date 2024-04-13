@@ -43,9 +43,7 @@ class SitemapGenerator
 
         $sitemap = new Sitemap();
         $sitemap->addItem(rtrim(self::SITE_URL, "/"), changeFreq: ChangeFreq::DAILY, lastmod: new \DateTime);
-        $sitemap->addItem(self::SITE_URL . 'oc');
         $sitemap->addItem(self::SITE_URL . 'policy');
-        $sitemap->addItem(self::SITE_URL . 'register');
         $sitemap->addItem(self::SITE_URL . 'ranking', lastmod: $date);
 
         foreach (AppConfig::OPEN_CHAT_CATEGORY as $category) {

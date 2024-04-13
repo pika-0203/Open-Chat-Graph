@@ -97,7 +97,7 @@
             <small class="top-small-desc" style="display: block;">オプチャグラフは<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">公式ランキング</a>に掲載中のオープンチャットを自動的に登録して集計します。</small>
         </p>
         <p style="padding-top:8px">
-            <a class="recent-oc-btn" href="<?php echo url('oc') ?>">最近登録されたオープンチャット</a>
+            <a class="recent-oc-btn" href="<?php echo url('recently-registered') ?>">最近登録されたオープンチャット</a>
         </p>
         <p style="padding-top:8px">
             <a class="recent-oc-btn" href="<?php echo url('register') ?>">オープンチャットを手動で登録する</a>

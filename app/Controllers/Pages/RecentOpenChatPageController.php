@@ -22,7 +22,7 @@ class RecentOpenChatPageController
 
     function index(AdminAuthService $adminAuthService)
     {
-        $recentPage = Reception::input('recently-registered-page');
+        $recentPage = Reception::input('page');
         $recentPage = $recentPage ?: 0;
         $rankingList = $this->openChatStatsRecent->getAllOrderByRegistrationDate($recentPage, AppConfig::OPEN_CHAT_LIST_LIMIT);
 
@@ -31,7 +31,7 @@ class RecentOpenChatPageController
             return false;
         }
 
-        $path = '/oc?recently-registered-page=';
+        $path = '/recently-registered/';
         $pageTitle = 'オプチャグラフに最近登録されたオープンチャット';
         $_css = ['room_list', 'site_header', 'site_footer'];
 

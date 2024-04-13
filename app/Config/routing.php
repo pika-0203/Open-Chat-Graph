@@ -76,14 +76,24 @@ Route::path('recommend', [RecommendOpenChatPageController::class, 'index'])
     ->matchStr('tag', maxLen: 100);
 
 Route::path(
-    'oc@post@get',
-    [OpenChatRegistrationApiController::class, 'register', 'post'],
-    [RecentOpenChatPageController::class, 'index', 'get'],
+    'oc@post',
+    [OpenChatRegistrationApiController::class, 'register'],
 )
-    ->matchStr('url', 'post', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
-    ->middleware([VerifyCsrfToken::class], 'post')
-    ->matchNum('recently-registered-page', 'get', emptyAble: true)
-    ->match(cache(...), 'get');
+    ->matchStr('url', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
+    ->middleware([VerifyCsrfToken::class]);
+
+Route::path(
+    'recently-registered/{page}@get',
+    [RecentOpenChatPageController::class, 'index'],
+)
+    ->matchNum('page')
+    ->match(cache(...));
+
+Route::path(
+    'recently-registered@get',
+    [RecentOpenChatPageController::class, 'index'],
+)
+    ->match(cache(...));
 
 Route::path('admin/cookie')
     ->match(function (AdminAuthService $adminAuthService, ?string $key) {

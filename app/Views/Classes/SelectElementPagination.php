@@ -54,7 +54,7 @@ class SelectElementPagination
 
     static function pagerUrl(string $path, int $pageNumber, int $maxPage): string
     {
-        $secondPath = $pageNumber === $maxPage ? '/oc' : $path . $pageNumber;
+        $secondPath = $pageNumber === $maxPage ? '/recently-registered' : $path . $pageNumber;
         return \Shadow\Kernel\Dispatcher\ReceptionInitializer::getDomainAndHttpHost() . $secondPath;
     }
 }
