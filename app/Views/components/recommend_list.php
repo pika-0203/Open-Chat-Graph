@@ -35,7 +35,7 @@ use App\Services\Recommend\Enum\RecommendListType;
     <ul class="recommend-list">
         <?php foreach ($recommend->getList(false) as $roc) : ?>
             <li>
-                <a href="<?php echo url('/oc/' . $roc['id']) . ($roc['table_name'] === AppConfig::RankingHourTable ? '?limit=hour' : '') ?>">
+                <a href="<?php echo url('/oc/' . $roc['id']) . ($oc['table_name'] === AppConfig::RankingHourTable || $oc['table_name'] === AppConfig::RankingDayTable ? '?limit=hour' : '') ?>">
                     <img loading="lazy" alt="<?php echo $roc['name'] ?>" src="<?php echo imgPreviewUrl($roc['id'], $roc['img_url']) ?>" />
                     <h4>
                         <?php echo $roc['name'] ?>
