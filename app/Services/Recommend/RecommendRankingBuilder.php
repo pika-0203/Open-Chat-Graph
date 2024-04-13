@@ -55,7 +55,7 @@ class RecommendRankingBuilder
             $id,
             $entity,
             $idArray,
-            $count < AppConfig::RECOMMEND_LIST_LIMIT ? min(AppConfig::RECOMMEND_LIST_LIMIT - $count, 10) : 3
+            $count < AppConfig::RECOMMEND_LIST_LIMIT ? ($count < floor(AppConfig::RECOMMEND_LIST_LIMIT / 3) ? min(AppConfig::RECOMMEND_LIST_LIMIT - $count, 10) : 5) : 3
         );
 
         $dto = new RecommendListDto(

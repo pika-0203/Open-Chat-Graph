@@ -107,15 +107,15 @@ class RecommendRankingRepository implements RecommendRankingRepositoryInterface
         $select = RecommendRankingRepositoryInterface::Select;
         return DB::fetchAll(
             "SELECT
-                {$select},
-                'open_chat' AS table_name
+                t1.*
             FROM
-                open_chat AS oc
-                JOIN (
+                (
                     SELECT
-                        r.*
+                        {$select},
+                        'open_chat' AS table_name
                     FROM
-                        (
+                        open_chat AS oc
+                        JOIN (
                             SELECT
                                 *
                             FROM
@@ -123,14 +123,17 @@ class RecommendRankingRepository implements RecommendRankingRepositoryInterface
                             WHERE
                                 tag = :tag
                                 AND NOT id = :id
-                        ) AS r
-                ) AS reco ON oc.id = reco.id
-            WHERE
-                oc.id NOT IN ({$ids})
+                        ) AS ranking ON oc.id = ranking.id
+                    WHERE
+                        oc.id NOT IN ({$ids})
+                    ORDER BY
+                        oc.member DESC
+                    LIMIT
+                        :limit
+                ) AS t1
+                LEFT JOIN statistics_ranking_hour24 AS t2 ON t1.id = t2.open_chat_id
             ORDER BY
-                oc.member DESC
-            LIMIT
-                :limit",
+                t2.diff_member DESC, t1.member DESC",
             compact('tag', 'id', 'limit')
         );
     }
