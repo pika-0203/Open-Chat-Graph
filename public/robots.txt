@@ -28,5 +28,7 @@ User-agent: SeznamBot
 Disallow: /
 User-agent: dotbot
 Disallow: /
+User-agent: SemrushBot
+Disallow: /
 
 Sitemap: https://openchat-review.me/sitemap.xml
