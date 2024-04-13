@@ -30,5 +30,7 @@ User-agent: dotbot
 Disallow: /
 User-agent: SemrushBot
 Disallow: /
+User-agent: Bytespider
+Disallow: /
 
 Sitemap: https://openchat-review.me/sitemap.xml

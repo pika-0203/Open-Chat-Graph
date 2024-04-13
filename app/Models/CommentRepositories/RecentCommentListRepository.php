@@ -66,7 +66,59 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
 
         $result = [];
         foreach ($oc as $i => $el) {
-            $result[] = $el + ['time' => $comments[$i]['time'],'description' => $comments[$i]['text']];
+            $result[] = $el + ['time' => $comments[$i]['time'], 'description' => $comments[$i]['text']];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array{ id:int,name:string,img_url:string,description:string,member:int,emblem:int,category:int,time:string }[]
+     */
+    public function findRecentCommentOpenChatAll(int $offset, int $limit): array
+    {
+        $query =
+            "SELECT
+                open_chat_id,
+                time,
+                text
+            FROM
+                comment
+            WHERE
+                open_chat_id > 0
+            ORDER BY
+                time DESC
+            LIMIT
+                :offset, :limit;";
+
+        $comments = CommentDB::fetchAll($query, compact('offset', 'limit'));
+
+        $ids = array_unique(array_column($comments, 'open_chat_id'));
+        $ids = implode(',', $ids);
+
+        $ocQuery =
+            "SELECT
+                oc.id,
+                oc.name,
+                oc.local_img_url AS img_url,
+                --oc.category,
+                oc.emblem
+            FROM
+                open_chat AS oc
+            WHERE
+                id IN ({$ids})";
+
+
+        $oc = DB::fetchAll($ocQuery);
+
+        $idArray = array_column($oc, 'id');
+
+        $result = [];
+        foreach ($comments as $i => $el) {
+            $key = array_search($el['open_chat_id'], $idArray);
+            if ($key === false) continue;
+            $el['description'] = $el['text'];
+            $result[] = array_merge($el, $oc[$key]);
         }
 
         return $result;

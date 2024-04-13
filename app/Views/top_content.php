@@ -36,6 +36,18 @@
             </a>
         </article>
 
+        <article class="top-list">
+            <header class="openchat-list-title-area unset">
+                <div class="openchat-list-date unset ranking-url">
+                    <h2 class="unset">
+                        <span class="openchat-list-title">最近のコメント投稿</span>
+                    </h2>
+                </div>
+            </header>
+            <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
+            viewComponent('open_chat_list_ranking', ['openChatList' => $dto->recentCommentList]) ?>
+        </article>
+
         <article class="top-ranking">
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
@@ -64,18 +76,6 @@
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=weekly') ?>">
                 <span class="ranking-readMore">1週間の人数増加ランキングを詳しく見る</span>
             </a>
-        </article>
-
-        <article class="top-list">
-            <header class="openchat-list-title-area unset">
-                <div class="openchat-list-date unset ranking-url">
-                    <h2 class="unset">
-                        <span class="openchat-list-title">最近のコメント投稿</span>
-                    </h2>
-                </div>
-            </header>
-            <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
-            viewComponent('open_chat_list_ranking', ['openChatList' => $dto->recentCommentList]) ?>
         </article>
 
         <article class="top-ranking created-at">

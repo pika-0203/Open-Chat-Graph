@@ -468,7 +468,7 @@ article.top-list {
 
 .top-list .openchat-item {
   min-height: 40px;
-  margin: 1rem 0;
+  margin: 20px 0;
   padding-left: 50px;
 }
 
@@ -493,10 +493,10 @@ article.top-list {
 }
 
 .top-list .openchat-item-desc {
-  font-size: 13px;
+  font-size: 12px;
   margin-top: 0px;
   color: #111;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 .top-list:has(.registration-date) .openchat-item-desc {
@@ -857,7 +857,7 @@ article.top-list {
 }
 
 .top-list .openchat-item-desc {
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
 }
 
 .top-mylist .openchat-item {
@@ -1027,8 +1027,8 @@ article.top-list {
 
   .top-list .openchat-item-desc {
     margin-top: 2px;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: normal;
   }
 
   .top-list .openchat-item-lower,
