@@ -76,11 +76,12 @@ Route::path('recommend', [RecommendOpenChatPageController::class, 'index'])
     ->matchStr('tag', maxLen: 100);
 
 Route::path(
-    'oc@post',
-    [OpenChatRegistrationApiController::class, 'register'],
+    'oc@post@get',
+    [OpenChatRegistrationApiController::class, 'register', 'post'],
 )
-    ->matchStr('url', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
-    ->middleware([VerifyCsrfToken::class]);
+    ->matchStr('url', 'post', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
+    ->middleware([VerifyCsrfToken::class], 'post')
+    ->match(redirect('recently-registered', 301), 'get');
 
 Route::path(
     'recently-registered/{page}@get',
