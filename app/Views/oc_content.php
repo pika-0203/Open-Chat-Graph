@@ -78,7 +78,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <?php else : ?>
                   <div class="number-box" style="margin-right: 6px;">
                   <?php endif ?>
-                  <span class="openchat-itme-stats-title"><time datetime="<?php echo $updatedAt->format(\DateTime::ATOM) ?>">24時間</time></span>
+                  <span class="openchat-itme-stats-title">24時間</span>
                   <?php if (($oc['rh24_diff_member'] ?? 0) !== 0) : ?>
                     <div>
                       <span class="openchat-item-stats"><?php echo signedNumF($oc['rh24_diff_member']) ?>人</span><span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['rh24_percent_increase'] * 10) / 10) ?>%)</span>
