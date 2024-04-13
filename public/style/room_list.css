@@ -468,7 +468,7 @@ article.top-list {
 
 .top-list .openchat-item {
   min-height: 40px;
-  margin: 20px 0;
+  margin: 16px 0;
   padding-left: 50px;
 }
 
@@ -493,13 +493,18 @@ article.top-list {
 }
 
 .top-list .openchat-item-desc {
-  font-size: 12px;
-  margin-top: 0px;
+  font-size: 13px;
+  margin-top: 2px;
   color: #111;
   font-weight: normal;
+  line-height: 150%;
 }
 
 .top-list:has(.registration-date) .openchat-item-desc {
+  margin-right: 51px;
+}
+
+.top-list:has(.registration-date) .openchat-item h3 {
   margin-right: 51px;
 }
 
@@ -512,7 +517,7 @@ article.top-list {
 .top-list .openchat-item-title {
   font-size: 12px;
   color: #aaa;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .top-ranking .openchat-item-title {
@@ -857,7 +862,7 @@ article.top-list {
 }
 
 .top-list .openchat-item-desc {
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
 }
 
 .top-mylist .openchat-item {
@@ -1026,7 +1031,7 @@ article.top-list {
   }
 
   .top-list .openchat-item-desc {
-    margin-top: 2px;
+    margin-top: 3px;
     font-size: 13px;
     font-weight: normal;
   }
