@@ -423,8 +423,8 @@ class RecommendUpdater
 
     function updateRecommendTables(bool $betweenUpdateTime = true)
     {
-        $this->start = $betweenUpdateTime ? OpenChatServicesUtility::getModifiedCronTime('-1hour')->format('Y-m-d H:i:s') : '2023/10/16 00:00:00';
-        $this->end = $betweenUpdateTime ? OpenChatServicesUtility::getModifiedCronTime(strtotime('+1hour'))->format('Y-m-d H:i:s') : '2100/10/16 00:00:00';
+        $this->start = $betweenUpdateTime ? OpenChatServicesUtility::getModifiedCronTime(strtotime('-1hour'))->format('Y-m-d H:i:s') : '2023-10-16 00:00:00';
+        $this->end = $betweenUpdateTime ? OpenChatServicesUtility::getModifiedCronTime(strtotime('+1hour'))->format('Y-m-d H:i:s') : '2033-10-16 00:00:00';
 
         $delete = fn (string $table) => DB::execute(
             "DELETE FROM {$table} WHERE id IN (SELECT id FROM open_chat WHERE updated_at BETWEEN :start AND :end)",
@@ -451,6 +451,11 @@ class RecommendUpdater
         $this->updateDescription2();
         $this->updateName2();
         $this->updateName2('oc.description');
+    }
+
+    function modifyRecommendTags()
+    {
+        DB::execute("UPDATE recommend AS t1 JOIN modify_recommend AS t2 ON t1.id = t2.id SET t1.tag = t2.tag");
     }
 
     function getAllTagNames(): array

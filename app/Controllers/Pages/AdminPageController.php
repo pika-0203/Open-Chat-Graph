@@ -31,7 +31,7 @@ class AdminPageController
         }
     }
 
-    private function test()
+    function test()
     {
         $path = AppConfig::ROOT_PATH . 'test_exec.php';
 
