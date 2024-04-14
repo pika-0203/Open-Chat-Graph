@@ -1141,6 +1141,7 @@ article.top-list {
   all: unset;
   list-style: none;
   display: block;
+  margin-top: calc(0.5rem - 5px);
 }
 
 .tag-list li {
@@ -1171,6 +1172,7 @@ article.top-list {
 @media screen and (min-width: 512px) {
   .tag-list {
     margin-bottom: 4px;
+    margin-top: calc(0.5rem - 5px + 9px);
   }
 
   .tag-list li {
