@@ -56,7 +56,7 @@ class IndexPageController
 
         $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hourlyEnd . '</time>';
 
-        $tags = $topPageRecommendList->getList(20);
+        $tags = $topPageRecommendList->getList(30);
 
         return view('top_content', compact(
             'dto',
@@ -65,6 +65,7 @@ class IndexPageController
             'myList',
             '_hourlyRange',
             'weeklyRange',
+            'hourlyEnd',
             '_schema',
             'tags'
         ));

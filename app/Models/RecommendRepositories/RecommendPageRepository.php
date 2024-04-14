@@ -95,10 +95,11 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                     WHERE
                         t2.tag = :tag
                 ) AS ranking ON oc.id = ranking.id
+                LEFT JOIN statistics_ranking_hour AS rh ON rh.open_chat_id = oc.id
             WHERE
                 oc.id NOT IN ({$ids})
             ORDER BY
-                ranking.diff_member DESC
+                rh.diff_member DESC, ranking.diff_member DESC
             LIMIT
                 :limit",
             compact('tag', 'id', 'limit', 'minDiffMember')
@@ -149,7 +150,7 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                     LIMIT
                         :limit
                 ) AS t1
-                LEFT JOIN statistics_ranking_hour24 AS t2 ON t1.id = t2.open_chat_id
+                LEFT JOIN statistics_ranking_hour AS t2 ON t1.id = t2.open_chat_id
             ORDER BY
                 t2.diff_member DESC, t1.member DESC",
             compact('tag', 'id', 'limit')

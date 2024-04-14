@@ -22,9 +22,14 @@
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
             <div>
-                <h2 class="unset">
-                    <span class="openchat-list-title">いま話題のキーワード</span>
-                </h2>
+                <header class="openchat-list-title-area unset">
+                    <div class="openchat-list-date unset ranking-url">
+                        <h2 class="unset">
+                            <span class="openchat-list-title">いま話題のキーワード</span>
+                        </h2>
+                        <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0"><?php echo $hourlyEnd ?></span>
+                    </div>
+                </header>
                 <ul class="tag-list">
                     <?php foreach ($tags as $key => $word) : ?>
                         <li>
