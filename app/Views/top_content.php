@@ -23,7 +23,7 @@
             </a>
             <div>
                 <h2 class="unset">
-                    <span class="openchat-list-title">いま上昇中のキーワード</span>
+                    <span class="openchat-list-title">いま話題のキーワード</span>
                 </h2>
                 <ul class="tag-list">
                     <?php foreach ($tags as $key => $word) : ?>
