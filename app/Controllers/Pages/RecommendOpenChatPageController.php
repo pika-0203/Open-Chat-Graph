@@ -110,11 +110,12 @@ class RecommendOpenChatPageController
             array_merge(
                 array_column($recommendList, 'tag1'),
                 array_column($recommendList, 'tag2')
-            )
+            ),
+            1
         );
         $tags = array_filter($tags, fn ($e) => !(in_array($e, self::TagFilter) || $e === $tag));
 
-        $tagCategory = sortAndUniqueArray(array_column($recommendList, 'category'));
+        $tagCategory = sortAndUniqueArray(array_column($recommendList, 'category'), 1);
 
         $count = $recommend->getCount();
         $_meta->title = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】 | オプチャグラフ";

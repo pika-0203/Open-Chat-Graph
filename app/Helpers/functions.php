@@ -304,22 +304,26 @@ function formatMember(int $n)
     return $n < 1000 ? $n : ($n >= 10000 ? (floor($n / 1000) / 10 . '万') : number_format($n));
 }
 
-function sortAndUniqueArray(array $array)
+function sortAndUniqueArray(array $array, int $min = 2)
 {
     // 各要素の出現回数をカウント
     $counts = array_count_values(array_filter($array, fn ($el) => is_string($el) || is_int($el) || $el));
 
+    // 出現回数が2以上の要素のみを保持
+    $filteredCounts = array_filter($counts, fn ($count) => $count >= $min);
+
     // 出現回数の多い順にソート（同じ出現回数の場合は元の順序を保持）
-    uksort($counts, function ($a, $b) use ($counts) {
-        if ($counts[$a] === $counts[$b]) {
+    uksort($filteredCounts, function ($a, $b) use ($filteredCounts) {
+        if ($filteredCounts[$a] === $filteredCounts[$b]) {
             return 0;
         }
-        return $counts[$a] < $counts[$b] ? 1 : -1;
+        return $filteredCounts[$a] < $filteredCounts[$b] ? 1 : -1;
     });
 
     // キーのみを抽出（重複排除）
-    return array_keys($counts);
+    return array_keys($filteredCounts);
 }
+
 
 function extractTag(string $str): string
 {
