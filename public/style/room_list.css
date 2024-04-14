@@ -206,7 +206,7 @@ main header {
   color: #978170;
   display: inline-block;
   width: fit-content;
-  line-height: 1;
+  line-height: 125%;
 }
 
 .openchat-list-title-result {
@@ -1134,5 +1134,50 @@ article.top-list {
   main {
     max-width: 600px;
     margin-left: 4rem;
+  }
+}
+
+.tag-list {
+  all: unset;
+  list-style: none;
+  display: block;
+}
+
+.tag-list li {
+  all: unset;
+  display: inline-block;
+  margin: 5px 0 0 5px;
+  max-width: calc(100% - 5px);
+  vertical-align: top;
+}
+
+.tag-btn {
+  text-decoration: none;
+  cursor: pointer;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  box-sizing: border-box;
+  color: #111;
+  display: inline-flex;
+  font-size: 12px;
+  height: 31px;
+  letter-spacing: -0.3px;
+  line-height: 15px;
+  padding: 0 12px;
+}
+
+@media screen and (min-width: 512px) {
+  .tag-list {
+    margin-bottom: 4px;
+  }
+
+  .tag-list li {
+    margin: 8px 0 0 8px;
+  }
+
+  .tag-btn {
+    font-size: 14px;
   }
 }

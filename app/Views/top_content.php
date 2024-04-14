@@ -17,10 +17,27 @@
             <hr class="ht-top-mylist">
         <?php endif ?>
 
-        <article class="top-ranking" style="padding-top: 0; margin-top: 0;">
-            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
+        <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem">
+            <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
+            <div>
+                <h2 class="unset">
+                    <span style="font-size: 13px; color:#111; font-weight: bold">トレンドキーワード</span>
+                </h2>
+                <ul class="tag-list">
+                    <?php foreach ($tags as $key => $word) : ?>
+                        <li>
+                            <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
+                                <?php echo extractTag($word) ?>
+                            </a>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+        </article>
+
+        <article class="top-ranking" style="padding-top: 0; margin-top: 0;">
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">

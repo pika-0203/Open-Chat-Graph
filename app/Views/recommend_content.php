@@ -47,7 +47,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                             <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
                                 <li>
                                     <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
-                                        <?php echo $word ?>
+                                        <?php echo extractTag($word) ?>
                                     </a>
                                 </li>
                             <?php endforeach ?>

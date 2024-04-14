@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
+use App\Services\Recommend\TopPageRecommendList;
 use App\Services\User\MyOpenChatList;
 use App\Services\StaticData\StaticDataFile;
 use App\Views\Schema\PageBreadcrumbsListSchema;
@@ -15,7 +16,8 @@ class IndexPageController
     function index(
         StaticDataFile $staticDataGeneration,
         RecentCommentListRepositoryInterface $recentCommentListRepository,
-        PageBreadcrumbsListSchema $pageBreadcrumbsListSchema
+        PageBreadcrumbsListSchema $pageBreadcrumbsListSchema,
+        TopPageRecommendList $topPageRecommendList
     ) {
         $dto = $staticDataGeneration->getTopPageData();
         $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChatAll(0, 5);
@@ -54,6 +56,8 @@ class IndexPageController
 
         $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hourlyEnd . '</time>';
 
+        $tags = $topPageRecommendList->getList(10);
+
         return view('top_content', compact(
             'dto',
             '_meta',
@@ -61,7 +65,8 @@ class IndexPageController
             'myList',
             '_hourlyRange',
             'weeklyRange',
-            '_schema'
+            '_schema',
+            'tags'
         ));
     }
 }
