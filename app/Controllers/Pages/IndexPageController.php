@@ -56,7 +56,7 @@ class IndexPageController
 
         $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hourlyEnd . '</time>';
 
-        $tags = $topPageRecommendList->getList(10);
+        $tags = $topPageRecommendList->getList(15);
 
         return view('top_content', compact(
             'dto',

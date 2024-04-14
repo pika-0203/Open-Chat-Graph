@@ -45,6 +45,7 @@ class TopPageRecommendList
         '競艇予想',
         '競馬予想',
         'サークル',
+        '高校生',
     ];
 
     function getList(int $limit)
@@ -55,12 +56,12 @@ class TopPageRecommendList
                 t3.tag AS tag2,
                 t4.tag AS tag3
             FROM
-                statistics_ranking_hour AS t1
+                statistics_ranking_hour24 AS t1
                 JOIN recommend AS t2 ON t1.open_chat_id = t2.id
                 JOIN oc_tag AS t3 ON t1.open_chat_id = t3.id
                 JOIN oc_tag2 AS t4 ON t1.open_chat_id = t4.id
             WHERE
-                t1.diff_member >= 3
+                t1.diff_member >= 4
             ORDER BY
                 t1.id ASC"
         );
