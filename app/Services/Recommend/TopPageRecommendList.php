@@ -26,12 +26,8 @@ class TopPageRecommendList
         '医療',
         '通信',
         '投資',
-        '薬学',
-        '試験',
         'ゴルフ',
         '国家試験',
-        '化学',
-        '勉強',
         '中国語',
         '受験',
         '起業',
@@ -46,39 +42,41 @@ class TopPageRecommendList
         '競馬予想',
         'サークル',
         '高校生',
+        'FX',
+        '副業',
+        '仮想通貨',
+        '投資',
+        'お金',
+        'ポイ活',
+        '株式投資',
+        '韓国',
+        '韓国語',
+        '占い師',
+        'パチンコ・スロット（パチスロ）',
+        'Coin',
     ];
 
     function getList(int $limit)
     {
         $tags = DB::fetchAll(
             "SELECT
-                t2.tag AS tag1,
-                t3.tag AS tag2,
-                t4.tag AS tag3
+                t2.tag
             FROM
-                statistics_ranking_hour24 AS t1
+                statistics_ranking_hour AS t1
                 JOIN recommend AS t2 ON t1.open_chat_id = t2.id
-                JOIN oc_tag AS t3 ON t1.open_chat_id = t3.id
-                JOIN oc_tag2 AS t4 ON t1.open_chat_id = t4.id
             WHERE
-                t1.diff_member >= 4
+                t1.diff_member >= 3
             ORDER BY
                 t1.id ASC"
         );
 
-        $tags = array_merge(
-            array_column($tags, 'tag1'),
-        );
+        $tags = array_column($tags, 'tag');
 
         $filter = array_merge(RecommendOpenChatPageController::TagFilter, self::ExtraTagFilter);
 
-        $tags = array_filter($tags, fn ($e) => !in_array($e, $filter) && $e);
-        $tags = array_filter($tags, fn ($e) => !str_contains($e, '限定'));
-        $tags = array_filter($tags, fn ($e) => !str_contains($e, '学生'));
         $tags = sortAndUniqueArray($tags);
-        $tags = array_slice($tags, 0, 50);
+        $tags = array_filter($tags, fn ($e) => $e && !in_array($e, $filter));
 
-        shuffle($tags);
         return array_slice($tags, 0, $limit);
     }
 }
