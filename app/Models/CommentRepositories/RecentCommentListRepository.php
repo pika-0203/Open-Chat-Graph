@@ -81,11 +81,10 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
             "SELECT
                 open_chat_id,
                 time,
+                name,
                 text
             FROM
                 comment
-            WHERE
-                open_chat_id > 0
             ORDER BY
                 time DESC
             LIMIT
@@ -114,11 +113,31 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
         $idArray = array_column($oc, 'id');
 
         $result = [];
-        foreach ($comments as $i => $el) {
+        foreach ($comments as $el) {
+            if ($el['open_chat_id'] === 0) {
+                $result[] = [
+                    'id' => 0,
+                    'user' => ($el['name'] ?: '匿名'),
+                    'name' => 'オプチャグラフについて',
+                    'img_url' => 'siteicon',
+                    'emblem' => 0,
+                    'description' => $el['text'],
+                    'time' => $el['time']
+                ];
+            }
+
             $key = array_search($el['open_chat_id'], $idArray);
             if ($key === false) continue;
-            $el['description'] = $el['text'];
-            $result[] = array_merge($el, $oc[$key]);
+
+            $result[] = [
+                'id' => $el['open_chat_id'],
+                'user' => ($el['name']  ?: '匿名'),
+                'name' => $oc[$key]['name'],
+                'img_url' => $oc[$key]['img_url'],
+                'emblem' => $oc[$key]['emblem'],
+                'description' => $el['text'],
+                'time' => $el['time']
+            ];
         }
 
         return $result;

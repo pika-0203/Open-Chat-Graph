@@ -197,7 +197,7 @@ main header {
 
 .openchat-list-title {
   all: unset;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: bold;
   background: -webkit-linear-gradient(45deg, rgb(253, 18, 226) 20%, rgb(164, 67, 221), rgb(84, 126, 255) 90%);
   background-clip: text;
@@ -305,7 +305,7 @@ article.top-list {
 
 .top-list .openchat-item-list {
   margin-bottom: -1rem;
-  margin-top: -1rem;
+  margin-top: -0.5rem;
   width: 100%;
 }
 
@@ -358,7 +358,7 @@ article.top-list {
 .top-list .openchat-item-img {
   width: 40px;
   height: 40px;
-  top: 0;
+  top: 8px;
 }
 
 .openchat-item h3 {
@@ -468,7 +468,8 @@ article.top-list {
 
 .top-list .openchat-item {
   min-height: 40px;
-  margin: 16px 0;
+  margin: 0;
+  padding: 8px 0;
   padding-left: 50px;
 }
 
@@ -494,36 +495,73 @@ article.top-list {
 
 .top-list .openchat-item-desc {
   font-size: 13px;
-  margin-top: 2px;
+  margin-top: 3px;
   color: #111;
   font-weight: normal;
   line-height: 150%;
 }
 
-.top-list:has(.registration-date) .openchat-item-desc {
-  margin-right: 51px;
-}
-
-.top-list:has(.registration-date) .openchat-item h3 {
-  margin-right: 51px;
-}
-
-.top-list .openchat-item h3,
 .top-ranking .openchat-item h3 {
   min-width: unset;
   max-width: unset;
 }
 
+.top-list .openchat-item h3 {
+  display: block;
+  min-width: 0px;
+  max-width: min-content;
+}
+
 .top-list .openchat-item-title {
-  font-size: 12px;
-  color: #aaa;
-  font-weight: 500;
+  font-size: 13px;
+  display: flex;
 }
 
 .top-ranking .openchat-item-title {
   font-size: 13px;
   font-weight: 700;
   color: #111;
+}
+
+.openchat-item .comment-user {
+  z-index: 1;
+  cursor: pointer;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  min-width: max-content;
+  color: #aaa;
+  font-weight: bold;
+}
+
+.openchat-item-title .comment-name {
+  z-index: 1;
+  cursor: pointer;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #aaa;
+  font-weight: bold;
+  margin-left: 2px;
+  margin-right: 9px;
+}
+
+.openchat-item-title .comment-time:before {
+  content: '';
+  position: absolute;
+  top: 7.5px;
+  left: -6px;
+  width: 2px;
+  height: 2px;
+  background-color: #aaa;
+}
+
+.openchat-item-title .comment-time {
+  font-weight: normal;
+  position: relative;
+  color: #aaa;
 }
 
 .top-ranking .openchat-item-title {
@@ -584,9 +622,9 @@ article.top-list {
 .top-ranking .top-ranking-readMore,
 .top-list .top-ranking-readMore {
   margin: 0;
-  height: 36px;
+  height: 42px;
   border: 1px solid #efefef;
-  border-radius: 9rem;
+  border-radius: 7px;
 }
 
 .ranking-readMore {
@@ -601,7 +639,7 @@ article.top-list {
 
 .top-ranking .ranking-readMore,
 .top-list .ranking-readMore {
-  font-size: 12px;
+  font-size: 13px;
   line-height: unset;
   font-weight: normal;
 }
@@ -964,6 +1002,15 @@ article.top-list {
   .openchat-item:hover .openchat-item-title {
     -webkit-text-decoration: underline 2px currentColor;
     text-decoration: underline 2px currentColor;
+  }
+
+  .top-list .openchat-item:hover .openchat-item-title {
+    -webkit-text-decoration: unset;
+    text-decoration: unset;
+  }
+
+  .top-list .openchat-item:hover {
+    background: var(--hover);
   }
 
   main summary:hover {

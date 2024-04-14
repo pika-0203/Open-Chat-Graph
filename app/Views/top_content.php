@@ -26,7 +26,7 @@
                     <h2 class="unset">
                         <span class="openchat-list-title">1時間の人数増加ランキング</span>
                     </h2>
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0"><?php echo $_hourlyRange ?></span>
+                    <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0"><?php echo $_hourlyRange ?></span>
                 </div>
             </header>
             <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
@@ -45,7 +45,7 @@
                 </div>
             </header>
             <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
-            viewComponent('open_chat_list_ranking', ['openChatList' => $dto->recentCommentList]) ?>
+            viewComponent('open_chat_list_ranking_comment', ['openChatList' => $dto->recentCommentList]) ?>
         </article>
 
         <article class="top-ranking">
@@ -54,7 +54,7 @@
                     <h2 class="unset">
                         <span class="openchat-list-title">24時間の人数増加ランキング</span>
                     </h2>
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">1時間ごとに更新</span>
+                    <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0">1時間ごとに更新</span>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->dailyList, 'isHourly' => true]) ?>
@@ -69,7 +69,7 @@
                     <h2 class="unset">
                         <span class="openchat-list-title">1週間の人数増加ランキング</span>
                     </h2>
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">1日ごとに更新</span>
+                    <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0">1日ごとに更新</span>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->weeklyList]) ?>
@@ -84,7 +84,7 @@
                     <h2 class="unset">
                         <span class="openchat-list-title">人数ランキング</span>
                     </h2>
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">※公式運営を除く</span>
+                    <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0">※公式運営を除く</span>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->popularList]) ?>

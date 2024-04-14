@@ -11,19 +11,8 @@
         <main>
             <article class="terms">
                 <h1 style="letter-spacing: 0px;">オプチャグラフについて</h1>
-                <p>オプチャグラフはLINEオープンチャット公式サイトのデータを自動的に記録し、グラフ等に視覚化することで新たな知見を得ることができます。</p>
-                <p>※オプチャグラフは個人開発によるLINE非公式のサービスです。
-                    <br>
-                    <span style="font-size: 12px; color: #777;">Gihub バックエンド: <a style="color: #777;" href="https://github.com/pika-0203/Open-Chat-Graph" target="_blank">https://github.com/pika-0203/Open-Chat-Graph</a></span>
-                    <br>
-                    <span style="font-size: 12px; color: #777;">Gihub バックエンドFW: <a style="color: #777;" href="https://github.com/mimimiku778/MimimalCMS" target="_blank">https://github.com/mimimiku778/MimimalCMS</a></span>
-                    <br>
-                    <span style="font-size: 12px; color: #777;">Gihub フロント(ランキングページ): <a style="color: #777;" href="https://github.com/mimimiku778/Open-Chat-Graph-Frontend" target="_blank">https://github.com/mimimiku778/Open-Chat-Graph-Frontend</a></span>
-                    <br>
-                    <span style="font-size: 12px; color: #777;">Gihub フロント(グラフ表示): <a style="color: #777;" href="https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph" target="_blank">https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph</a></span>
-                    <br>
-                    <span style="font-size: 12px; color: #777;">Gihub フロント(コメント機能): <a style="color: #777;" href="https://github.com/mimimiku778/Open-Chat-Graph-Comments" target="_blank">https://github.com/mimimiku778/Open-Chat-Graph-Comments</a></span>
-                </p>
+                <p>オプチャグラフは興味があるオープンチャットを見つけて、成長傾向をグラフで見ることができる場所です。</p>
+                <p>※オプチャグラフは個人開発によるLINE非公式のサービスです。 </p>
                 <h2>サイトの目的</h2>
                 <p>・ユーザーがオープンチャットを見つけて参加する機会を作る</p>
                 <p>・オープンチャットの管理者が成長傾向を把握し、比較できる事で運営に役立つ</p>
@@ -54,23 +43,36 @@
                 <p>
                     例えば、ランキングの順位はデータの並び順をカウントしてそのまま順位として表示したものであり、誰でも公式サイトで見ることができる情報に過ぎません。
                 </p>
+                <br>
                 <p>
-                    <br>
                     オープンチャットの参加経路拡大に寄与するため、オプチャグラフもSEOを考慮した設計を行っています。
                 </p>
                 <p>
                     参考ページ: <a href="https://openchat-jp.line.me/other/notice_webmain_3gf87gs1" target="_blank">Webブラウザ版メイン画面公開と検索エンジン対応のお知らせ | LINEオープンチャット</a>
                 </p>
+                <p style="font-size: 12px; color: #777;">LINEオープンチャット利用規約: <a href="https://terms.line.me/line_Square_TOU_JP?lang=ja" target="_blank">https://terms.line.me/line_Square_TOU_JP?lang=ja</a>
+                    <br>
+                    データ収集は公式サイトの robots.txt を尊重して行います。
+                </p>
                 <h2>オープンチャットの掲載条件</h2>
                 <p>LINEオープンチャット公式サイトに掲載されているランキングを基にオープンチャットの情報を記録して掲載します。</p>
                 <p>公式サイトにて掲載が終了したオープンチャットはオプチャグラフからも削除されます。</p>
-                <p style="font-size: 12px; color: #777;">データ収集は公式サイトの robots.txt を尊重して行います。<br>LINE側の公式サイトによるオープンチャットの掲載条件は非公開となっております。</p>
-                <p style="font-size: 12px; color: #777;">LINEオープンチャット公式サイト: <a href="https://openchat.line.me/jp" target="_blank">https://openchat.line.me/jp</a></p>
-                <p style="font-size: 12px; color: #777;">LINEオープンチャット利用規約: <a href="https://terms.line.me/line_Square_TOU_JP?lang=ja" target="_blank">https://terms.line.me/line_Square_TOU_JP?lang=ja</a></p>
-                <h2 style="margin-bottom: 2rem;">オプチャグラフに関する情報共有・連絡掲示板</h2>
+                <p style="font-size: 12px; color: #777;" id="comments">LINE公式での掲載条件は非公開となっています。</p>
+                <h2 style="margin-bottom: 2rem;">オプチャグラフに関する情報共有・コメント</h2>
                 <div id="comment-root"></div>
-                <br>
+                <h2>お問い合わせ・ソースコード</h2>
                 <p style="font-size: 12px; color: #777;">オプチャグラフお問い合わせ窓口: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>
+                <p>
+                    <span style="font-size: 12px; color: #777;">Gihub バックエンド: <a style="color: #777;" href="https://github.com/pika-0203/Open-Chat-Graph" target="_blank">https://github.com/pika-0203/Open-Chat-Graph</a></span>
+                    <br>
+                    <span style="font-size: 12px; color: #777;">Gihub バックエンドFW: <a style="color: #777;" href="https://github.com/mimimiku778/MimimalCMS" target="_blank">https://github.com/mimimiku778/MimimalCMS</a></span>
+                    <br>
+                    <span style="font-size: 12px; color: #777;">Gihub フロント(ランキングページ): <a style="color: #777;" href="https://github.com/mimimiku778/Open-Chat-Graph-Frontend" target="_blank">https://github.com/mimimiku778/Open-Chat-Graph-Frontend</a></span>
+                    <br>
+                    <span style="font-size: 12px; color: #777;">Gihub フロント(グラフ表示): <a style="color: #777;" href="https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph" target="_blank">https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph</a></span>
+                    <br>
+                    <span style="font-size: 12px; color: #777;">Gihub フロント(コメント機能): <a style="color: #777;" href="https://github.com/mimimiku778/Open-Chat-Graph-Comments" target="_blank">https://github.com/mimimiku778/Open-Chat-Graph-Comments</a></span>
+                </p>
             </article>
         </main>
         <footer>
