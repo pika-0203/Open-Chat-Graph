@@ -41,7 +41,6 @@ class TopPageRecommendList
         '競艇予想',
         '競馬予想',
         'サークル',
-        '高校生',
         'FX',
         '副業',
         '仮想通貨',
