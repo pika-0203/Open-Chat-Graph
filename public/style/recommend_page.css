@@ -152,13 +152,13 @@ section aside:hover {
   margin: -1px -4px;
 }
 
-.tag-list li:nth-child(n + 13) {
+/* .tag-list li:nth-child(n + 13) {
   display: none;
 }
 
 .tag-list.open-tag li:nth-child(n + 13) {
   display: block;
-}
+} */
 
 .tag-btn.close-btn {
   border-radius: 99rem;

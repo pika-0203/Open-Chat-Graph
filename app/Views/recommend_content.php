@@ -110,7 +110,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     </h3>
                     <section class="tag-list-section">
                         <ul class="tag-list">
-                            <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
+                            <?php foreach ($tags as $key => $word) : ?>
                                 <li>
                                     <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
                                         <?php echo \App\Services\Recommend\RecommendUtility::extractTag($word) ?>

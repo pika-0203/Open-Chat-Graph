@@ -13,6 +13,7 @@ class RecommendPageList
     const TagFilter = [
         'スマホ',
         '営業',
+        '対荒らし',
         '大人',
         'スタンプ',
         'SNS',
@@ -86,6 +87,14 @@ class RecommendPageList
             1
         );
 
-        return array_filter($tags, fn ($e) => !in_array($e, self::TagFilter) && $e !== $tag);
+        $tags = array_filter($tags, fn ($e) => !in_array($e, self::TagFilter) && $e !== $tag);
+
+        $tags2 = array_map(fn ($t) => RecommendUtility::extractTag($t), $tags);
+        $tag2 = RecommendUtility::extractTag($tag);
+        uksort($tags, function ($a) use ($tag2, $tags2) {
+            return str_contains($tags2[$a], $tag2) ? -1 : 1;
+        });
+
+        return $tags;
     }
 }

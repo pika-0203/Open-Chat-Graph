@@ -1170,11 +1170,11 @@ article.top-list {
   padding: 0 12px;
 }
 
-.tag-list li:nth-child(n + 16) {
+.top-ranking .tag-list li:nth-child(n + 16) {
   display: none;
 }
 
-.open.tag-list li:nth-child(n + 16) {
+.top-ranking .open.tag-list li:nth-child(n + 16) {
   display: inline-flex;
 }
 
