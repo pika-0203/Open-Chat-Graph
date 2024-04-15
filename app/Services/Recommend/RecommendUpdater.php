@@ -33,8 +33,12 @@ class RecommendUpdater
         "28" => [
             ["子供服 フリマ", ["子供服_AND_フリマ"]],
         ],
+        "26" => [
+            ["PRODUCE 101 JAPAN THE GIRLS（日プ女子）", ["PRODUCE 101 JAPAN THE GIRLS_OR_日プガールズ_OR_日プ女子_OR_ME:I_OR_日プ3"]],
+        ],
         "22" => [
             ["名探偵コナン", ["コナン"]],
+            ["ONE PIECE（ワンピース）", ["ワンピース", "ONE_AND_PIECE"]],
         ]
     ];
 
@@ -61,7 +65,6 @@ class RecommendUpdater
         "BLTトレードシステムサポートオプチャ",
         "Crypto_AND_Academy",
         ["モンスターストライク（モンスト）", ["モンスト"]],
-        ["オリキャラ恋愛", ["オリキャラ恋愛_OR_折恋_OR_折 恋", "オリキャラ_AND_恋愛", "折伽羅_AND_恋愛"]],
         ["地雷系", ["地雷系_OR_量産型_OR_ぴえん系", "地雷_AND_量産"]],
         ["片目界隈・自撮り界隈", ["片目界隈_OR_自撮り界隈"]],
         ["偽カップル（偽カプ）", ["偽カップル_OR_偽カプ"]],
@@ -98,6 +101,7 @@ class RecommendUpdater
         ["莉犬くん", ["莉犬"]],
         "すとぷり",
         "シクフォニ",
+        ["原神なりきり", ["原神_AND_なりきり", "原神_AND_也", "原神_AND_nrkr"]],
         "原神",
         "ポーランドボール",
         ["AMPTAKxCOLORS（アンプタックカラーズ）", ["AMPTAK_OR_アンプタック"]],
@@ -107,23 +111,28 @@ class RecommendUpdater
         "ちろぴの",
         "マッシュル",
         "呪術廻戦",
+        ["文ストなりきり", ["文スト_AND_なりきり", "文スト_AND_也", "文スト_AND_nrkr", "文スト_AND_ゆるなり", "文スト_AND_固定", "文ｽﾄ_AND_なりきり"]],
         ["文豪ストレイドッグス（文スト）", ["文豪ストレイドッグス_OR_文スト"]],
         ["転生したらスライムだった件（転スラ）", ["転生したらスライムだった件_OR_転スラ"]],
         ["ヒプノシスマイク（ヒプマイ）", ["ヒプノシスマイク_OR_ヒプマイ"]],
         "ホロライブ",
         "カーパーキング",
         ["名探偵コナン", ["名探偵コナン"]],
+        ["にじさんじなりきり", ["にじさんじ_AND_なりきり", "にじさんじ_AND_也", "にじさんじ_AND_nrkr", "2434_AND_也", "🌈🕒_AND_也"]],
         "にじさんじ",
+        ["ハイキューなりきり", ["ハイキュー_AND_なりきり", "ハイキュー_AND_也", "ハイキュー_AND_nrkr"]],
         ["ハイキュー!!", ["ハイキュー"]],
         ["東方Project", ["東方"]],
+        ["プロセカなりきり", ["プロセカ_AND_なりきり", "プロセカ_AND_也", "プロセカ_AND_nrkr", "ぷせゆる", "プセゆる"]],
         ["プロジェクトセカイ（プロセカ）", ["プロセカ"]],
         "対荒らし_OR_対荒_OR_白夜総会_OR_ヤブ医者_OR_拓也集落_OR_植民地",
+        ["ツイステなりきり", ["ツイステ_AND_なりきり", "ツイステ_AND_也", "ツイステ_AND_nrkr"]],
         ["ツイステッドワンダーランド", ["ツイステッドワンダーランド_OR_ツイステ"]],
         ["ブルーアーカイブ（ブルアカ）", ["ブルーアーカイブ_OR_ブルアカ"]],
         ["めろんぱーかー（めろぱか）", ["めろんぱーかー_OR_めろぱか_OR_めろりす"]],
-        ["あんさんぶるスターズ!（あんスタ）", ["あんスタ_OR_あんさんぶるスターズ_OR_めろりす_OR_enst"]],
+        ["あんスタなりきり", ["あんスタ_AND_なりきり", "あんスタ_AND_也", "enst_AND_なりきり", "enst_AND_也", "あんスタ_AND_nrkr", "あんスタ_AND_ゆるなり", "あんすた_AND_ゆるなり", "あんスタ_AND_固定"]],
+        ["あんさんぶるスターズ!（あんスタ）", ["あんスタ_OR_あんさんぶるスターズ_OR_enst"]],
         "レスバ_OR_喧嘩",
-        "K也_OR_🇰🇷 也_OR_𝐊 也",
         "女性限定",
         "男性限定",
         "男子限定",
@@ -135,6 +144,7 @@ class RecommendUpdater
         "高校生限定",
         "学生限定",
         "ちいかわ",
+        "あのちゃん",
         "アオのハコ",
         ["葬送のフリーレン", ["フリーレン"]],
         "スジ公開",
@@ -159,12 +169,15 @@ class RecommendUpdater
         ["パチンコ・スロット（パチスロ）", ["パチスロ_OR_パチンコ_OR_スロット"]],
         ["競馬予想", ["競馬"]],
         ["競艇予想", ["競艇"]],
-        "オリキャラ_OR_折伽羅",
         "失恋_OR_復縁",
         ["歌い手のトークルーム", ["歌い手"]],
         ["YouTuber", ["YouTube_AND_宣伝"]],
         "実況者",
+        ["STPRなりきり", ["STPR_AND_なりきり", "STPR_AND_也", "STPR_AND_nrkr"]],
+        "K也_OR_🇰🇷 也_OR_𝐊 也_OR_k也",
         ["なりきり", ["なりきり_OR_ぜんゆる_OR_nrkr_OR_#也_OR_D也_OR_ゆるなり_OR_緩也_OR_夢也_OR_夢 也_OR_歌い手也_OR_実況者也_OR_全伽羅_OR_全緩_OR_全ゆる_OR_全夢", "全_AND_緩_AND_也", "全_AND_也"]],
+        ["オリキャラ BL", ["BL_AND_折", "BL_AND_オリキャラ", "薔薇_AND_オリキャラ", "折_AND_薔_AND_薇"]],
+        ["オリキャラ恋愛", ["オリキャラ恋愛_OR_折恋_OR_折 恋", "オリキャラ_AND_恋愛", "折伽羅_AND_恋愛"]],
         "声優",
         "愚痴",
         "毒親",
@@ -181,6 +194,7 @@ class RecommendUpdater
         ["オプチャ サポート", ["Admins_AND_公式"]],
         "恋愛相談",
         "恋愛",
+        "WePlay（ウィプレー）"
     ];
 
     const DESC_STRONG_TAG = [
@@ -191,7 +205,7 @@ class RecommendUpdater
         "jobhunt",
         "ポイ活",
         ["LGBT", ["ゲイ_AND_バイ", "同性愛_OR_LGBT_OR_ゲイ学生_OR_Xジェンダー_OR_トランスジェンダー_OR_セクマイ_OR_ノンセク_OR_レズビアン"]],
-        "Produce 101 Japan_OR_PRODUCE 101_OR_PRODUCE101_OR_日プガールズ",
+        ["PRODUCE 101 JAPAN THE GIRLS（日プ女子）", ["PRODUCE 101 JAPAN THE GIRLS_OR_日プガールズ_OR_日プ女子_OR_ME:I_OR_日プ3"]],
         ["地雷系", ["地雷系_OR_量産型_OR_ぴえん系", "地雷_AND_量産"]],
         ["片目界隈・自撮り界隈", ["片目界隈_OR_自撮り界隈"]],
         "失恋_OR_復縁",
@@ -205,8 +219,7 @@ class RecommendUpdater
         "精神疾患_OR_精神障害",
         "障害者",
         "ネッ友_OR_ネ友",
-        ["オリキャラ恋愛", ["オリキャラ恋愛_OR_折恋_OR_折 恋", "オリキャラ_AND_恋愛", "折伽羅_AND_恋愛"]],
-        "K也_OR_🇰🇷 也_OR_𝐊 也",
+        "K也_OR_🇰🇷 也_OR_𝐊 也_OR_K也",
         "MBTI_OR_ISTJ_OR_ISFJ_OR_INFJ_OR_INTJ_OR_ISTP_OR_ISFP_OR_INFP_OR_INTP_OR_ESTP_OR_ESFP_OR_ENFP_OR_ENTP_OR_ESTJ_OR_ESFJ_OR_ENFJ_OR_ENTJ",
         ["偽カップル（偽カプ）", ["偽カップル_OR_偽カプ"]],
         "女性限定",
@@ -230,9 +243,9 @@ class RecommendUpdater
 
     function replace(string|array $word, string $column): string
     {
-        $like = "{$column} COLLATE utf8mb4_general_ci LIKE";
-
-        $rep = function ($str) use ($like) {
+        $rep = function ($str) use ($column) {
+            $collation = preg_match('/[\xF0-\xF7][\x80-\xBF][\x80-\xBF][\x80-\xBF]/', $str) ? 'utf8mb4_bin' : 'utf8mb4_general_ci';
+            $like = "{$column} COLLATE {$collation} LIKE";
             $str = str_replace('_AND_', "%' AND {$like} '%", $str);
             return "{$like} '%" . str_replace('_OR_', "%' OR {$like} '%", $str) . "%'";
         };
