@@ -126,6 +126,7 @@ class RecommendRankingRepository implements RecommendRankingRepositoryInterface
                         ) AS ranking ON oc.id = ranking.id
                     WHERE
                         oc.id NOT IN ({$ids})
+                        AND oc.member >= 15
                     ORDER BY
                         oc.member DESC
                     LIMIT

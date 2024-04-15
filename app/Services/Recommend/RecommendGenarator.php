@@ -63,12 +63,14 @@ class RecommendGenarator
 
         $result1 = $this->getRecomendRanking($open_chat_id, $tag);
         $result2 = $tag2
-            ? $this->getRecomendRanking($open_chat_id, $tag2)
-            : ($this->getCategoryRanking($open_chat_id)
-                ?: ($recommendTag && $recommendTag !== $tag
-                    ?  $this->getRecomendRanking($open_chat_id, $recommendTag)
-                    : false
-                ));
+            ? ($this->getRecomendRanking($open_chat_id, $tag2) ?: $this->getCategoryRanking($open_chat_id))
+            : ($recommendTag && $recommendTag !== $tag
+                ? (
+                    $this->getRecomendRanking($open_chat_id, $recommendTag) ?: $this->getCategoryRanking($open_chat_id)
+                ) : (
+                    $this->getCategoryRanking($open_chat_id)
+                )
+            );
 
         return [
             $result1,

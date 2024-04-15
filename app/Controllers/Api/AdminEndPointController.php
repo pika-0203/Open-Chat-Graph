@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controllers\Api;
 
+use App\Models\CommentRepositories\DeleteCommentRepositoryInterface;
 use App\Services\Admin\AdminAuthService;
 use App\Services\Recommend\RecommendUpdater;
 use Shadow\DB;
 use Shadow\Kernel\Reception;
+use Shadow\Kernel\Validator;
 use Shared\Exceptions\BadRequestException;
 use Shared\Exceptions\NotFoundException;
 
@@ -20,18 +22,8 @@ class AdminEndPointController
         }
     }
 
-    function index(Reception $r)
+    function modifyTag(string $id, string $tag)
     {
-        if ($r->has('ocTag') && $r->has('ocId')) {
-            return $this->modifyTag();
-        }
-    }
-
-    private function modifyTag()
-    {
-        $id = Reception::input('ocId');
-        $tag = Reception::input('ocTag');
-
         if (!DB::fetchColumn('SELECT id FROM open_chat WHERE id = ' . $id))
             throw new BadRequestException("存在しないID: " . $id);
 
@@ -61,5 +53,17 @@ class AdminEndPointController
 
 
         return redirect("oc/{$id}");
+    }
+
+    function deletecomment(DeleteCommentRepositoryInterface $deleteCommentRepository)
+    {
+        $id = Reception::input('ocId');
+        $commentId = Reception::input('commentId');
+
+        $result = $deleteCommentRepository->deleteCommentByOcId($id, $commentId);
+
+        return $result
+            ? view('admin/admin_message_page', ['title' => 'コメント削除', 'message' => '削除されたコメントはありません'])
+            : redirect("oc/{$id}");
     }
 }
