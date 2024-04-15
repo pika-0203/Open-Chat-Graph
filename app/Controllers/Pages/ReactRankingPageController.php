@@ -36,7 +36,7 @@ class ReactRankingPageController
         $_argDto = $staticDataFile->getRankingArgDto();
 
         $_breadcrumbsShema = $breadcrumbsShema->generateSchema(
-            '参加人数のランキング',
+            'ランキング',
             'ranking',
             $category ? $categoryNames[$category] : '',
             $category ? (string)$category : ''

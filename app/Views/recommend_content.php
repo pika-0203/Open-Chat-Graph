@@ -38,7 +38,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     気になるルームを見つけたら気軽に参加してみましょう！
                 </p>
             </div>
-            <?php if (isset($tags)) : ?>
+            <?php if (isset($tags) && $tags) : ?>
                 <aside class="list-aside">
                     <h3 class="list-title">
                         <span>関連性が高いタグ</span>
@@ -103,7 +103,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php endif ?>
             </section>
             <hr>
-            <?php if (isset($tags)) : ?>
+            <?php if (isset($tags) && $tags) : ?>
                 <aside class="list-aside">
                     <h3 class="list-title">
                         <span>関連性が高いタグ</span>
