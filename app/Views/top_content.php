@@ -39,7 +39,7 @@
                                 </a>
                             </li>
                         <?php endforeach ?>
-                        <?php if (count($tags) > 20) : ?>
+                        <?php if (count($tags) > 15) : ?>
                             <li id="open-btn-li">
                                 <button class="unset tag-btn open-btn" onclick="this.parentElement.parentElement.classList.toggle('open')"></button>
                             </li>

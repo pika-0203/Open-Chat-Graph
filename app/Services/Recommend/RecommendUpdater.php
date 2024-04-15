@@ -164,7 +164,7 @@ class RecommendUpdater
         ["歌い手のトークルーム", ["歌い手"]],
         ["YouTuber", ["YouTube_AND_宣伝"]],
         "実況者",
-        ["なりきり（全也）", ["なりきり_OR_ぜんゆる_OR_全也_OR_nrkr_OR_#也_OR_D也_OR_ゆるなり_OR_緩也_OR_夢也_OR_夢 也_OR_歌い手也_OR_実況者也_OR_全伽羅", "全_AND_緩_AND_也"]],
+        ["なりきり", ["なりきり_OR_ぜんゆる_OR_nrkr_OR_#也_OR_D也_OR_ゆるなり_OR_緩也_OR_夢也_OR_夢 也_OR_歌い手也_OR_実況者也_OR_全伽羅_OR_全緩_OR_全ゆる_OR_全夢", "全_AND_緩_AND_也", "全_AND_也"]],
         "声優",
         "愚痴",
         "毒親",

@@ -34,7 +34,7 @@ class AdminEndPointController
             if (!in_array($tag, $tags)) throw new BadRequestException('存在しないタグ: ' . $tag);;
 
             DB::execute(
-                "INSERT INTO modify_recommend VALUES({$id}, '{$tag}') 
+                "INSERT INTO modify_recommend (id, tag) VALUES({$id}, '{$tag}') 
                     ON DUPLICATE KEY UPDATE id = {$id}, tag = '{$tag}'"
             );
             DB::execute(
@@ -43,7 +43,7 @@ class AdminEndPointController
             );
         } else {
             DB::execute(
-                "INSERT INTO modify_recommend VALUES({$id}, '') 
+                "INSERT INTO modify_recommend (id, tag) VALUES({$id}, '') 
                     ON DUPLICATE KEY UPDATE id = {$id}, tag = ''"
             );
             DB::execute(

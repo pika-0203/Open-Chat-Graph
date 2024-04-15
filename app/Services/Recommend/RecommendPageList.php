@@ -17,7 +17,7 @@ class RecommendPageList
         'スタンプ',
         'SNS',
         'Instagram（インスタ）',
-        '知的財産',
+        '著作権（知的財産権）',
         "東京",
         "北海道",
         "神奈川",
@@ -86,6 +86,6 @@ class RecommendPageList
             1
         );
 
-        return array_filter($tags, fn ($e) => !(in_array($e, self::TagFilter) || $e === $tag));
+        return array_filter($tags, fn ($e) => !in_array($e, self::TagFilter) && $e !== $tag);
     }
 }
