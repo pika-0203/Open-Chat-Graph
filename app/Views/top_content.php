@@ -129,7 +129,7 @@
             <a class="recent-oc-btn" href="<?php echo url('recently-registered') ?>">最近登録されたオープンチャット</a>
         </p>
         <p style="padding-top:8px">
-            <a class="recent-oc-btn" href="<?php echo url('register') ?>">オープンチャットを手動で登録する</a>
+            <a class="recent-oc-btn" href="<?php echo url('oc') ?>">オープンチャットを手動で登録する</a>
         </p>
     </main>
     <footer>

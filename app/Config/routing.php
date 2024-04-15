@@ -17,6 +17,7 @@ use App\Controllers\Pages\OpenChatPageController;
 use App\Controllers\Pages\ReactRankingPageController;
 use App\Controllers\Pages\RecentOpenChatPageController;
 use App\Controllers\Pages\RecommendOpenChatPageController;
+use App\Controllers\Pages\RegisterOpenChatPageController;
 use App\Middleware\AdminCookieValidation;
 use App\Middleware\VerifyCsrfToken;
 
@@ -69,19 +70,16 @@ Route::path(
 Route::path('/')
     ->match(cache(...));
 
-Route::path('register')
-    ->middleware([VerifyCsrfToken::class]);
-
 Route::path('recommend', [RecommendOpenChatPageController::class, 'index'])
     ->matchStr('tag', maxLen: 100);
 
 Route::path(
     'oc@post@get',
     [OpenChatRegistrationApiController::class, 'register', 'post'],
+    [RegisterOpenChatPageController::class, 'index', 'get'],
 )
-    ->matchStr('url', 'post', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN)
-    ->middleware([VerifyCsrfToken::class], 'post')
-    ->match(redirect('recently-registered', 301), 'get');
+    ->middleware([VerifyCsrfToken::class])
+    ->matchStr('url', 'post', regex: OpenChatCrawlerConfig::LINE_URL_MATCH_PATTERN);
 
 Route::path(
     'recently-registered/{page}@get',

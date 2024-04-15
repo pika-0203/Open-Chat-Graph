@@ -5,16 +5,20 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
+use App\Views\Schema\PageBreadcrumbsListSchema;
 
-class RegisterPageController
+class RegisterOpenChatPageController
 {
-    function index(OpenChatPageRepositoryInterface $openChatRepository)
-    {
+    function index(
+        OpenChatPageRepositoryInterface $openChatRepository,
+        PageBreadcrumbsListSchema $breadcrumbsShema,
+    ) {
         $view = [
             '_css' => ['room_list', 'site_header', 'site_footer'],
             '_meta' => meta()
-                ->setTitle('オプチャグラフにオープンチャットを手動で登録する')
-                ->setDescription('公式ランキングに未掲載のオープンチャットをオプチャグラフに手動で登録するフォームです。'),
+                ->setTitle('オープンチャットを登録する')
+                ->setDescription('オプチャグラフは公式ランキングからオプチャを自動で登録します。このフォームは公式ランキングに未掲載のオプチャを手動で登録できます。'),
+            '_breadcrumbsShema' => $breadcrumbsShema->generateSchema('オプチャ', 'oc')
         ];
 
         $viewBeforeRegister = fn () => view('register_form_content', $view);
