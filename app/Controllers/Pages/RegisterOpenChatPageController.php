@@ -6,6 +6,7 @@ namespace App\Controllers\Pages;
 
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Views\Schema\PageBreadcrumbsListSchema;
+use Shadow\Kernel\Reception;
 
 class RegisterOpenChatPageController
 {
@@ -13,6 +14,8 @@ class RegisterOpenChatPageController
         OpenChatPageRepositoryInterface $openChatRepository,
         PageBreadcrumbsListSchema $breadcrumbsShema,
     ) {
+        if (Reception::input('recently-registered-page')!== null) return false;
+
         $view = [
             '_css' => ['room_list', 'site_header', 'site_footer'],
             '_meta' => meta()
