@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Recommend;
 
-use App\Controllers\Pages\RecommendOpenChatPageController;
 use Shadow\DB;
 
 class TopPageRecommendList
@@ -48,8 +47,6 @@ class TopPageRecommendList
         'お金',
         'ポイ活',
         '株式投資',
-        '韓国',
-        '韓国語',
         '占い師',
         'パチンコ・スロット（パチスロ）',
         'Coin',
@@ -71,7 +68,7 @@ class TopPageRecommendList
 
         $tags = array_column($tags, 'tag');
 
-        $filter = array_merge(RecommendOpenChatPageController::TagFilter, self::ExtraTagFilter);
+        $filter = array_merge(RecommendPageList::TagFilter, self::ExtraTagFilter);
 
         $tags = sortAndUniqueArray($tags);
         $tags = array_filter($tags, fn ($e) => $e && !in_array($e, $filter));

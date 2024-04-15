@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Recommend\Dto;
 
-use App\Config\AppConfig;
 use App\Services\Recommend\Enum\RecommendListType;
 
 class RecommendListDto

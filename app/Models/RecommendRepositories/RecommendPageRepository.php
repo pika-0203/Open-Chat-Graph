@@ -169,4 +169,23 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
         $tag2 = DB::fetchColumn("SELECT tag FROM oc_tag2 WHERE id = {$id}");
         return [$tag, $tag2];
     }
+
+    /** @return array{ hour:?int,hour24:?int,week:?int } */
+    function getTagDiffMember(string $tag)
+    {
+        $query =
+            "SELECT
+                sum(t2.diff_member) AS `hour`,
+                sum(t3.diff_member) AS hour24,
+                sum(t4.diff_member) AS `week`
+            FROM
+                (SELECT tag, id FROM recommend WHERE tag = :tag) AS t1
+                LEFT JOIN statistics_ranking_hour AS t2 ON t1.id = t2.open_chat_id
+                LEFT JOIN statistics_ranking_hour24 AS t3 ON t1.id = t3.open_chat_id
+                LEFT JOIN statistics_ranking_week AS t4 ON t1.id = t4.open_chat_id
+            GROUP BY
+                t1.tag";
+
+        return DB::fetch($query, compact('tag'));
+    }
 }

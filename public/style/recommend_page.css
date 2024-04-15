@@ -192,6 +192,20 @@ section aside:hover {
   margin-top: 0;
 }
 
+.diff-member {
+  all: unset;
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: #888;
+}
+
+.diff-member div {
+  padding: 2px 4px;
+  border: 1px solid #efefef;
+  border-radius: 4px;
+}
+
 @media screen and (min-width: 512px) {
   .header-img {
     margin: 2rem 0;

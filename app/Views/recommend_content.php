@@ -4,6 +4,7 @@
 
 use App\Config\AppConfig;
 
+/** @var array{ hour:?int,hour24:?int,week:?int } $diffMember */
 viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_meta->generateTags(true)]) ?>
 
 <body class="body">
@@ -47,7 +48,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                             <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
                                 <li>
                                     <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
-                                        <?php echo extractTag($word) ?>
+                                        <?php echo \App\Services\Recommend\RecommendUtility::extractTag($word) ?>
                                     </a>
                                 </li>
                             <?php endforeach ?>
@@ -57,7 +58,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php endif ?>
             <section style="all:unset; display:block;">
                 <?php if ($count) : ?>
-                    <h3 class="list-title oc-list">「<?php echo $tag ?>」関連のおすすめ <?php echo $count ?>件</h3>
+                    <h2 class="list-title oc-list">「<?php echo $tag ?>」関連のおすすめ <?php echo $count ?>件</h2>
                     <aside class="list-aside">
                         <details class="icon-desc">
                             <summary>メンバー数のアイコンについて</summary>
@@ -76,7 +77,26 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                         </details>
                     </aside>
                 <?php else : ?>
-                    <h3 class="list-title oc-list">只今サーバー内でリスト更新中です…</h3>
+                    <h2 class="list-title oc-list">只今サーバー内でリスト更新中です…</h2>
+                <?php endif ?>
+                <?php if (isset($diffMember)) : ?>
+                    <aside class="list-aside">
+                        <span>全体の増減</span>
+                        <section class="diff-member">
+                            <div>
+                                <span>1時間</span>
+                                <span><?php echo signedNumF($diffMember['hour']) ?>人</span>
+                            </div>
+                            <div>
+                                <span>24時間</span>
+                                <span><?php echo signedNumF($diffMember['hour24']) ?>人</span>
+                            </div>
+                            <div>
+                                <span>1週間</span>
+                                <span><?php echo signedNumF($diffMember['week']) ?>人</span>
+                            </div>
+                        </section>
+                    </aside>
                 <?php endif ?>
                 <?php if (isset($recommend)) : ?>
                     <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
@@ -93,7 +113,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                             <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
                                 <li>
                                     <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
-                                        <?php echo extractTag($word) ?>
+                                        <?php echo \App\Services\Recommend\RecommendUtility::extractTag($word) ?>
                                     </a>
                                 </li>
                             <?php endforeach ?>
