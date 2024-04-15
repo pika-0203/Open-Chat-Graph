@@ -196,7 +196,7 @@ class RecommendUpdater
         ["オプチャ サポート", ["Admins_AND_公式"]],
         "恋愛相談",
         "恋愛",
-        "WePlay（ウィプレー）"
+        ["WePlay（ウィプレー）", ["WePlay"]]
     ];
 
     const DESC_STRONG_TAG = [
