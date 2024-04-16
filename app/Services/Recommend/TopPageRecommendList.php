@@ -54,7 +54,7 @@ class TopPageRecommendList
 
     function getList(int $limit)
     {
-        $tags = DB::fetchAll(
+        $hour = DB::fetchAll(
             "SELECT
                 t2.tag
             FROM
@@ -63,16 +63,27 @@ class TopPageRecommendList
             WHERE
                 t1.diff_member >= 3
             ORDER BY
-                t1.id ASC"
+                t1.id ASC",
+            args: [\PDO::FETCH_COLUMN, 0]
         );
 
-        $tags = array_column($tags, 'tag');
+        $hour24 = DB::fetchAll(
+            "SELECT
+                t2.tag
+            FROM
+                statistics_ranking_hour24 AS t1
+                JOIN recommend AS t2 ON t1.open_chat_id = t2.id
+            WHERE
+                t1.diff_member >= 12
+            ORDER BY
+                t1.id ASC",
+            args: [\PDO::FETCH_COLUMN, 0]
+        );
 
         $filter = array_merge(RecommendPageList::TagFilter, self::ExtraTagFilter);
+        $tags1 = array_filter(sortAndUniqueArray($hour), fn ($e) => $e && !in_array($e, $filter));
+        $tags2 = array_filter(sortAndUniqueArray($hour24), fn ($e) => $e && !in_array($e, $filter) && !in_array($e, $tags1));
 
-        $tags = sortAndUniqueArray($tags);
-        $tags = array_filter($tags, fn ($e) => $e && !in_array($e, $filter));
-
-        return array_slice($tags, 0, $limit);
+        return ['hour' => array_slice($tags1, 0, $limit), 'hour24' => array_slice($tags2, 0, $limit)];
     }
 }

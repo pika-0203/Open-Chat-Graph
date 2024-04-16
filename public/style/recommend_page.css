@@ -18,32 +18,32 @@ time {
   color: #888;
 }
 
-.tag-list {
+.list-aside .tag-list {
   all: unset;
   list-style: none;
   display: block;
 }
 
-.tag-list li {
+.list-aside .tag-list li {
   all: unset;
   display: inline-block;
-  margin: 5px 0 0 5px;
+  margin: 7px 0 0 2px;
   max-width: calc(100% - 5px);
   vertical-align: top;
 }
 
-.tag-btn {
+.list-aside .tag-btn {
   text-decoration: none;
   cursor: pointer;
   align-items: center;
   background-color: #fff;
   border: 1px solid #e8e8e8;
-  border-radius: 16px;
+  border-radius: 36px;
   box-sizing: border-box;
   color: #111;
   display: inline-flex;
-  font-size: 12px;
-  height: 31px;
+  font-size: 13px;
+  height: 36px;
   letter-spacing: -0.3px;
   line-height: 15px;
   padding: 0 12px;
@@ -140,7 +140,7 @@ section aside:hover {
   display: block;
 }
 
-.css-162gv95 {
+.openchat-item-list .css-162gv95 {
   user-select: none;
   width: 1em;
   height: 1em;
@@ -152,20 +152,12 @@ section aside:hover {
   margin: -1px -4px;
 }
 
-/* .tag-list li:nth-child(n + 13) {
-  display: none;
-}
-
-.tag-list.open-tag li:nth-child(n + 13) {
-  display: block;
-} */
-
-.tag-btn.close-btn {
+.list-aside .tag-btn.close-btn {
   border-radius: 99rem;
   display: block;
 }
 
-.tag-btn.close-btn::after {
+.list-aside .tag-btn.close-btn::after {
   display: inline-block;
   content: '';
   width: 6px;
@@ -216,11 +208,11 @@ section aside:hover {
     font-size: 1.8rem;
   }
 
-  .tag-list li {
+  .list-aside .tag-list li {
     margin: 8px 0 0 8px;
   }
 
-  .tag-btn {
+  .list-aside .tag-btn {
     font-size: 14px;
   }
 }

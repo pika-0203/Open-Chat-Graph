@@ -324,9 +324,12 @@ class RecommendUpdater
                             LEFT JOIN {$table} AS t ON t.id = oc.id
                         WHERE
                             t.id IS NULL
+                            AND oc.updated_at BETWEEN :start
+                            AND :end
                     ) AS oc
                 WHERE
-                    {$search}"
+                    {$search}",
+                ['start' => $this->start, 'end' => $this->end]
             );
         }
     }
@@ -365,9 +368,12 @@ class RecommendUpdater
                         WHERE
                             t.id IS NULL
                             AND oc.category = {$category}
+                            AND oc.updated_at BETWEEN :start
+                            AND :end
                     ) AS oc
                 WHERE
-                    {$search}"
+                    {$search}",
+                ['start' => $this->start, 'end' => $this->end]
             );
         };
 
@@ -414,9 +420,12 @@ class RecommendUpdater
                         WHERE
                             t.id IS NULL
                             AND oc.category = {$category}
+                            AND oc.updated_at BETWEEN :start
+                            AND :end
                     ) AS oc
                 WHERE
-                    {$search}"
+                    {$search}",
+                ['start' => $this->start, 'end' => $this->end]
             );
         };
 
@@ -448,20 +457,16 @@ class RecommendUpdater
                         FROM
                             open_chat AS oc
                             LEFT JOIN {$table} AS t ON t.id = oc.id
+                            LEFT JOIN oc_tag AS t2 ON t2.id = oc.id
                         WHERE
                             t.id IS NULL
+                            AND NOT t2.tag = '{$tag}'
+                            AND oc.updated_at BETWEEN :start
+                            AND :end
                     ) AS oc
                 WHERE
-                    ({$search})
-                    AND NOT EXISTS (
-                        SELECT
-                            id
-                        FROM
-                            oc_tag
-                        WHERE
-                            id = oc.id
-                            AND tag = '{$tag}'
-                    )"
+                    ({$search})",
+                ['start' => $this->start, 'end' => $this->end]
             );
         }
     }
@@ -485,21 +490,17 @@ class RecommendUpdater
                         FROM
                             open_chat AS oc
                             LEFT JOIN {$table} AS t ON t.id = oc.id
+                            LEFT JOIN oc_tag AS t2 ON t2.id = oc.id
                         WHERE
                             t.id IS NULL
+                            AND NOT t2.tag = '{$tag}'
                             AND oc.category = {$category}
+                            AND oc.updated_at BETWEEN :start
+                            AND :end
                     ) AS oc
                 WHERE
-                    ({$search})
-                    AND NOT EXISTS (
-                        SELECT
-                            id
-                        FROM
-                            oc_tag
-                        WHERE
-                            id = oc.id
-                            AND tag = '{$tag}' 
-                    )"
+                    ({$search})",
+                ['start' => $this->start, 'end' => $this->end]
             );
         };
 
@@ -541,7 +542,7 @@ class RecommendUpdater
                         LEFT JOIN modify_recommend AS mr ON mr.id = oc.id
                     WHERE
                         mr.id IS NULL
-                        AND updated_at BETWEEN :start
+                        AND oc.updated_at BETWEEN :start
                         AND :end
                 )",
             ['start' => $this->start, 'end' => $this->end]

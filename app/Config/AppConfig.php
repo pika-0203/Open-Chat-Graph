@@ -10,7 +10,7 @@ class AppConfig
     const OpenChatTable = 'open_chat';
     
     const RECOMMEND_LIST_LIMIT = 50;
-    const MIN_MEMBER_DIFF_HOUR = 4;
+    const MIN_MEMBER_DIFF_HOUR = 3;
     const MIN_MEMBER_DIFF_H24 = 8;
     const MIN_MEMBER_DIFF_WEEK = 10;
 
