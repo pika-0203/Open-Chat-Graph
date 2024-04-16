@@ -15,11 +15,20 @@ class RecommendOpenChatPageController
     ) {
     }
 
+    const Redirect = [
+        'ChatGPT' => '生成AI・ChatGPT',
+        'AI画像・イラスト生成' => '画像生成AI・AIイラスト',
+        'Produce 101 Japan' => 'PRODUCE 101 JAPAN THE GIRLS（日プ女子）',
+        'なりきり（全也）' => 'なりきり',
+    ];
+
     function index(
         StaticDataFile $staticDataFile,
         RecommendPageList $recommendPageList,
         string $tag
     ) {
+        if (isset(self::Redirect[$tag])) return redirect('recommend?tag=' . urlencode(self::Redirect[$tag]), 301);
+
         $_updatedAt = new \DateTime($staticDataFile->getRankingArgDto()->hourlyUpdatedAt);
         $updatedAtDate = new \DateTime($staticDataFile->getRankingArgDto()->rankingUpdatedAt);
 

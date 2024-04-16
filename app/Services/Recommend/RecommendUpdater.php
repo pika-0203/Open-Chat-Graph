@@ -35,6 +35,7 @@ class RecommendUpdater
         ],
         "26" => [
             ["PRODUCE 101 JAPAN THE GIRLS（日プ女子）", ["PRODUCE 101 JAPAN THE GIRLS_OR_日プガールズ_OR_日プ女子_OR_ME:I_OR_日プ3"]],
+            ["PRODUCE 101 JAPAN（日プ）", ["PRODUCE 101 JAPAN_OR_日プ"]],
         ],
         "22" => [
             ["名探偵コナン", ["コナン"]],
@@ -53,7 +54,8 @@ class RecommendUpdater
         ["大学新入生同士の情報交換", ["新入生同士の情報交換_OR_年度入学_OR_度新入生_OR_新入生同士"]],
         ["大学 新入生", ["春から_AND_大学", "新入生_AND_大学"]],
         ["就活生情報・選考対策・企業研究", ["就活情報_OR_就活生向け情報_OR_就活生情報_OR_選考対策・企業研究_OR_就活選考対策_OR_就活対策グループ_OR_選考対策グループ_OR_就活テスト対策グループ_OR_志望者向けグループ_OR_業界志望者向け_OR_就活の情報_OR_就活会議_OR_就活生向け_OR_就活対策用_OR_就活生の情報交換_OR_unistyle_OR_就活の情報共有", "大学生_AND_就活_AND_卒"]],
-        ["AI画像・イラスト生成", ["AI画像生成_OR_AIイラスト_OR_ばりぐっどくん_OR_AI絵画_OR_AI絵師"]],
+        ["生成AI・ChatGPT", ["ChatGPT_OR_チャットGPT_OR_LLM_OR_Claude_OR_Copilot", "Gemini_AND_AI"]],
+        ["画像生成AI・AIイラスト", ["AIイラスト_OR_ばりぐっどくん_OR_AI絵画_OR_AI絵師", "画像_AND_生成_AND_AI"]],
         "ポイ活",
         ["WEBデザイナー・デザイン", ["WEBデザイナー_OR_WEBデザイン"]],
         "フリーランス",
@@ -161,7 +163,6 @@ class RecommendUpdater
         "知的障害_OR_境界知能",
         ["著作権（知的財産権）", ["知的財産_OR_著作権_OR_知財_OR_肖像権"]],
         "太鼓の達人",
-        "ChatGPT_OR_チャットGPT",
         "28卒",
         "27卒",
         "26卒",
@@ -202,6 +203,8 @@ class RecommendUpdater
 
     const DESC_STRONG_TAG = [
         ["パソコン・ガジェット", ["自作PC_OR_ゲーミングPC_OR_デジタルガジェット", "スマホ_AND_ガジェット", "イヤホン_AND_ガジェット"]],
+        ["生成AI・ChatGPT", ["ChatGPT_OR_チャットGPT_OR_LLM_OR_Claude_OR_Copilot", "Gemini_AND_AI"]],
+        ["画像生成AI・AIイラスト", ["AIイラスト_OR_ばりぐっどくん_OR_AI絵画_OR_AI絵師", "画像_AND_生成_AND_AI"]],
         ["オプチャ サポート", ["LINE株式会社オープンチャット事務局"]],
         ["全国 雑談", ["#都内_AND_#田舎", "000102030405"]],
         "unistyle",
@@ -209,6 +212,7 @@ class RecommendUpdater
         "ポイ活",
         ["LGBT", ["ゲイ_AND_バイ", "同性愛_OR_LGBT_OR_ゲイ学生_OR_Xジェンダー_OR_トランスジェンダー_OR_セクマイ_OR_ノンセク_OR_レズビアン"]],
         ["PRODUCE 101 JAPAN THE GIRLS（日プ女子）", ["PRODUCE 101 JAPAN THE GIRLS_OR_日プガールズ_OR_日プ女子_OR_ME:I_OR_日プ3"]],
+        ["PRODUCE 101 JAPAN（日プ）", ["PRODUCE 101 JAPAN_OR_日プ"]],
         ["地雷系", ["地雷系_OR_量産型_OR_ぴえん系", "地雷_AND_量産"]],
         ["片目界隈・自撮り界隈", ["片目界隈_OR_自撮り界隈"]],
         "失恋_OR_復縁",
