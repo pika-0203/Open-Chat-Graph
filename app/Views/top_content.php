@@ -27,6 +27,7 @@
                         <div class="openchat-list-date unset ranking-url">
                             <h2 class="unset">
                                 <span class="openchat-list-title">いま話題のキーワード</span>
+                                <span aria-hidden="true" style="font-size: 9px; user-select: none; margin-bottom: px;margin-left: -3px;">🚀</span>
                             </h2>
                             <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0"><?php echo $hourlyEnd ?></span>
                         </div>
@@ -49,7 +50,7 @@
                                 </a>
                             </li>
                         <?php endforeach ?>
-                        <?php if (count($tags['hour']) + count($tags['hour24']) > 10) : ?>
+                        <?php if (count($tags['hour']) + count($tags['hour24']) > 13) : ?>
                             <li id="open-btn-li">
                                 <button class="unset tag-btn open-btn" onclick="this.parentElement.parentElement.classList.toggle('open')"></button>
                             </li>
