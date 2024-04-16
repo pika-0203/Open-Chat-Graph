@@ -20,6 +20,7 @@ class RecommendOpenChatPageController
         'AI画像・イラスト生成' => '画像生成AI・AIイラスト',
         'Produce 101 Japan' => 'PRODUCE 101 JAPAN THE GIRLS（日プ女子）',
         'なりきり（全也）' => 'なりきり',
+        'クーポン・お得情報' => 'クーポン・無料配布',
     ];
 
     function index(
