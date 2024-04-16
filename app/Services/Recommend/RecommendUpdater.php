@@ -310,16 +310,23 @@ class RecommendUpdater
         foreach ($tags as $key => $search) {
             $tag = $this->formatTag($this->tags[$key]);
             DB::execute(
-                "INSERT IGNORE INTO
+                "INSERT INTO
                     {$table}
                 SELECT
                     oc.id,
                     '{$tag}'
                 FROM
-                    (SELECT * FROM open_chat WHERE updated_at BETWEEN :start AND :end) AS oc
+                    (
+                        SELECT
+                            oc.*
+                        FROM
+                            open_chat AS oc
+                            LEFT JOIN {$table} AS t ON t.id = oc.id
+                        WHERE
+                            t.id IS NULL
+                    ) AS oc
                 WHERE
-                    {$search}",
-                ['start' => $this->start, 'end' => $this->end]
+                    {$search}"
             );
         }
     }
@@ -343,16 +350,24 @@ class RecommendUpdater
         $excute = function ($table, $tag, $search, $category) {
             $tag = $this->formatTag($tag);
             DB::execute(
-                "INSERT IGNORE INTO
+                "INSERT INTO
                     {$table}
                 SELECT
                     oc.id,
                     '{$tag}'
                 FROM
-                    (SELECT * FROM open_chat WHERE category = {$category} AND updated_at BETWEEN :start AND :end) AS oc
+                    (
+                        SELECT
+                            oc.*
+                        FROM
+                            open_chat AS oc
+                            LEFT JOIN {$table} AS t ON t.id = oc.id
+                        WHERE
+                            t.id IS NULL
+                            AND oc.category = {$category}
+                    ) AS oc
                 WHERE
-                    {$search}",
-                ['start' => $this->start, 'end' => $this->end]
+                    {$search}"
             );
         };
 
@@ -384,16 +399,24 @@ class RecommendUpdater
         $excute = function ($table, $tag, $search, $category) {
             $tag = $this->formatTag($tag);
             DB::execute(
-                "INSERT IGNORE INTO
+                "INSERT INTO
                     {$table}
                 SELECT
                     oc.id,
                     '{$tag}'
                 FROM
-                    (SELECT * FROM open_chat WHERE category = {$category} AND updated_at BETWEEN :start AND :end) AS oc
+                    (
+                        SELECT
+                            oc.*
+                        FROM
+                            open_chat AS oc
+                            LEFT JOIN {$table} AS t ON t.id = oc.id
+                        WHERE
+                            t.id IS NULL
+                            AND oc.category = {$category}
+                    ) AS oc
                 WHERE
-                    {$search}",
-                ['start' => $this->start, 'end' => $this->end]
+                    {$search}"
             );
         };
 
@@ -413,13 +436,21 @@ class RecommendUpdater
         foreach ($tags as $key => $search) {
             $tag = $this->formatTag($this->tags[$key]);
             DB::execute(
-                "INSERT IGNORE INTO
+                "INSERT INTO
                     {$table}
                 SELECT
                     oc.id,
                     '{$tag}'
                 FROM
-                    (SELECT * FROM open_chat WHERE updated_at BETWEEN :start AND :end) AS oc
+                    (
+                        SELECT
+                            oc.*
+                        FROM
+                            open_chat AS oc
+                            LEFT JOIN {$table} AS t ON t.id = oc.id
+                        WHERE
+                            t.id IS NULL
+                    ) AS oc
                 WHERE
                     ({$search})
                     AND NOT EXISTS (
@@ -430,8 +461,7 @@ class RecommendUpdater
                         WHERE
                             id = oc.id
                             AND tag = '{$tag}'
-                    )",
-                ['start' => $this->start, 'end' => $this->end]
+                    )"
             );
         }
     }
@@ -443,13 +473,22 @@ class RecommendUpdater
         $excute = function ($table, $tag, $search, $category) {
             $tag = $this->formatTag($tag);
             DB::execute(
-                "INSERT IGNORE INTO
+                "INSERT INTO
                     {$table}
                 SELECT
                     oc.id,
                     '{$tag}'
                 FROM
-                    (SELECT * FROM open_chat WHERE category = {$category} AND updated_at BETWEEN :start AND :end) AS oc
+                    (
+                        SELECT
+                            oc.*
+                        FROM
+                            open_chat AS oc
+                            LEFT JOIN {$table} AS t ON t.id = oc.id
+                        WHERE
+                            t.id IS NULL
+                            AND oc.category = {$category}
+                    ) AS oc
                 WHERE
                     ({$search})
                     AND NOT EXISTS (
@@ -460,8 +499,7 @@ class RecommendUpdater
                         WHERE
                             id = oc.id
                             AND tag = '{$tag}' 
-                    )",
-                ['start' => $this->start, 'end' => $this->end]
+                    )"
             );
         };
 
@@ -492,35 +530,49 @@ class RecommendUpdater
         $this->end = $betweenUpdateTime ? OpenChatServicesUtility::getModifiedCronTime(strtotime('+1hour'))->format('Y-m-d H:i:s') : '2033-10-16 00:00:00';
 
         $delete = fn (string $table) => DB::execute(
-            "DELETE FROM {$table} WHERE id IN (SELECT id FROM open_chat WHERE updated_at BETWEEN :start AND :end)",
+            "DELETE FROM
+                {$table}
+            WHERE
+                id IN (
+                    SELECT
+                        oc.id
+                    FROM
+                        open_chat AS oc
+                        LEFT JOIN modify_recommend AS mr ON mr.id = oc.id
+                    WHERE
+                        mr.id IS NULL
+                        AND updated_at BETWEEN :start
+                        AND :end
+                )",
             ['start' => $this->start, 'end' => $this->end]
         );
 
         clearstatcache();
 
-        $delete('recommend');
-        $this->updateBeforeCategory();
-        $this->updateName();
-        $this->updateDescription('oc.name', 'recommend');
-        $this->updateDescription();
+        DB::transaction(function () use ($delete) {
+            $delete('recommend');
+            $this->updateBeforeCategory();
+            $this->updateName();
+            $this->updateDescription('oc.name', 'recommend');
+            $this->updateDescription();
+        });
 
-        $delete('oc_tag');
-        $this->updateBeforeCategory('oc.name', 'oc_tag');
-        $this->updateBeforeCategory(table: 'oc_tag');
-        $this->updateDescription('oc.name', 'oc_tag');
-        $this->updateDescription(table: 'oc_tag');
-        $this->updateName(table: 'oc_tag');
+        DB::transaction(function () use ($delete) {
+            $delete('oc_tag');
+            $this->updateBeforeCategory('oc.name', 'oc_tag');
+            $this->updateBeforeCategory(table: 'oc_tag');
+            $this->updateDescription('oc.name', 'oc_tag');
+            $this->updateDescription(table: 'oc_tag');
+            $this->updateName(table: 'oc_tag');
+        });
 
-        $delete('oc_tag2');
-        $this->updateDescription2('oc.name');
-        $this->updateDescription2();
-        $this->updateName2();
-        $this->updateName2('oc.description');
-    }
-
-    function modifyRecommendTags()
-    {
-        DB::execute("UPDATE recommend AS t1 JOIN modify_recommend AS t2 ON t1.id = t2.id SET t1.tag = t2.tag");
+        DB::transaction(function () use ($delete) {
+            $delete('oc_tag2');
+            $this->updateDescription2('oc.name');
+            $this->updateDescription2();
+            $this->updateName2();
+            $this->updateName2('oc.description');
+        });
     }
 
     function getAllTagNames(): array

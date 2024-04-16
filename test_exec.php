@@ -22,7 +22,6 @@ try {
     AdminTool::sendLineNofity('oc start');
 
     $oc->updateRecommendTables(false);
-    $oc->modifyRecommendTags();
 
     AdminTool::sendLineNofity('oc done');
 } catch (\Throwable $e) {
