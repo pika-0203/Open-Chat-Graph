@@ -34,8 +34,8 @@ class RecommendUpdater
             ["子供服 フリマ", ["子供服_AND_フリマ"]],
         ],
         "26" => [
-            ["PRODUCE 101 JAPAN THE GIRLS（日プ女子）", ["PRODUCE 101 JAPAN THE GIRLS_OR_日プガールズ_OR_日プ女子_OR_ME:I_OR_日プ3"]],
-            ["PRODUCE 101 JAPAN（日プ）", ["PRODUCE 101 JAPAN_OR_日プ"]],
+            ["PRODUCE 101 JAPAN THE GIRLS（日プ女子）", ["日プガールズ_OR_日プ女子_OR_ME:I_OR_日プ3_OR_ME：I", "PRODUCE_AND_101_AND_JAPAN_AND_THE_AND_GIRLS"]],
+            ["PRODUCE 101 JAPAN（日プ）", ["PRODUCE_AND_101_AND_JAPAN"]],
         ],
         "22" => [
             ["名探偵コナン", ["コナン"]],
@@ -200,8 +200,7 @@ class RecommendUpdater
         ["ポケモンカード（ポケカ）", ["ポケモンカード_OR_ポケカ_OR_ダイキ様"]],
         ["ワンピースカード", ["ワンピースカード"]],
         ["オプチャ サポート", ["Admins_AND_公式"]],
-        "恋愛相談",
-        "恋愛",
+        ["恋愛相談", ["恋愛_AND_相談"]],
         ["WePlay（ウィプレー）", ["WePlay_OR_ウィプレー"]],
         ["KAUCHE（カウシェ）", ["カウシェ"]],
         ["スタバ", ["スタバ_AND_無料", "スタバ_AND_配布", "スタバ_AND_ギフト"]],
@@ -217,8 +216,8 @@ class RecommendUpdater
         "jobhunt",
         "ポイ活",
         ["LGBT", ["ゲイ_AND_バイ", "同性愛_OR_LGBT_OR_ゲイ学生_OR_Xジェンダー_OR_トランスジェンダー_OR_セクマイ_OR_ノンセク_OR_レズビアン"]],
-        ["PRODUCE 101 JAPAN THE GIRLS（日プ女子）", ["PRODUCE 101 JAPAN THE GIRLS_OR_日プガールズ_OR_日プ女子_OR_ME:I_OR_日プ3"]],
-        ["PRODUCE 101 JAPAN（日プ）", ["PRODUCE 101 JAPAN_OR_日プ"]],
+        ["PRODUCE 101 JAPAN THE GIRLS（日プ女子）", ["日プガールズ_OR_日プ女子_OR_ME:I_OR_日プ3_OR_ME：I", "PRODUCE_AND_101_AND_JAPAN_AND_THE_AND_GIRLS"]],
+        ["PRODUCE 101 JAPAN（日プ）", ["PRODUCE_AND_101_AND_JAPAN"]],
         ["地雷系", ["地雷系_OR_量産型_OR_ぴえん系", "地雷_AND_量産"]],
         ["片目界隈・自撮り界隈", ["片目界隈_OR_自撮り界隈"]],
         "失恋_OR_復縁",
@@ -245,7 +244,7 @@ class RecommendUpdater
     ];
 
     const AFTER_DESC_STRONG_TAG = [
-        ["クーポン・無料配布", ["クーポン", "無料_AND_配布"]],
+        ["クーポン・無料配布", ["クーポン"]],
         ["KAUCHE（カウシェ）", ["カウシェ"]],
         "ライブトーク",
         ["なりきり", ["なりきり_OR_ぜんゆる_OR_nrkr_OR_#也_OR_D也_OR_ゆるなり_OR_緩也_OR_夢也_OR_夢 也_OR_歌い手也_OR_実況者也_OR_全伽羅_OR_全緩_OR_全ゆる_OR_全夢", "全_AND_緩_AND_也", "全_AND_也"]],
