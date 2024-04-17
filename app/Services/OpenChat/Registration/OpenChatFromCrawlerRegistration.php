@@ -76,7 +76,13 @@ class OpenChatFromCrawlerRegistration
 
     private function registerRecordProcess(OpenChatDto $ocDto): array
     {
-        $open_chat_id = $this->openChatRepository->addOpenChatFromDto($ocDto);
+        try {
+            $open_chat_id = $this->openChatRepository->addOpenChatFromDto($ocDto);
+        } catch (\PDOException $e) {
+            $this->logAddOpenChatError($e->getMessage());
+            return $this->returnMessage('サーバーのメンテナス中です。数分後に再度お試しください。');
+        }
+
         if (!$open_chat_id) {
             return $this->returnMessage('ネットワークエラーが発生しました');
         }

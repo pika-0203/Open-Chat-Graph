@@ -23,6 +23,7 @@ class RecommendUtility
         '東方Project' => '東方',
         'ツイステッドワンダーランド' => 'ツイステ',
         'ハイキュー!!' => 'ハイキュー',
+        'プロスピA' => 'プロスピ',
     ];
 
     static function extractTag(string $str): string

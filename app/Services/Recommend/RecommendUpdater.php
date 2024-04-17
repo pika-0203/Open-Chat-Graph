@@ -49,6 +49,9 @@ class RecommendUpdater
             "フェス",
             "GLAY",
             "Ado",
+        ],
+        "11" => [
+            ["翻訳", ["LINE_AND_語", "翻訳", "LINE_AND_通訳"]],
         ]
     ];
 
@@ -93,6 +96,8 @@ class RecommendUpdater
         "イケボ",
         "独り言",
         "ミニ四駆",
+        "ガンプラ",
+        "ガンダム",
         ["イナズマイレブン（イナイレ）", ["イナズマイレブン_OR_イナイレ"]],
         "吃音",
         "カラオケ",
@@ -274,10 +279,14 @@ class RecommendUpdater
     function replace(string|array $word, string $column): string
     {
         $rep = function ($str) use ($column) {
-            $collation = preg_match('/[\xF0-\xF7][\x80-\xBF][\x80-\xBF][\x80-\xBF]/', $str) ? 'utf8mb4_bin' : 'utf8mb4_general_ci';
+            $utfbin = mb_strpos($str, 'utfbin_') !== false;
+            $collation = preg_match('/[\xF0-\xF7][\x80-\xBF][\x80-\xBF][\x80-\xBF]/', $str) || $utfbin ? 'utf8mb4_bin' : 'utf8mb4_general_ci';
+
             $like = "{$column} COLLATE {$collation} LIKE";
+            if ($utfbin) $str = str_replace('utfbin_', '', $str);
             $str = str_replace('_AND_', "%' AND {$like} '%", $str);
-            return "{$like} '%" . str_replace('_OR_', "%' OR {$like} '%", $str) . "%'";
+            $str = str_replace('_OR_', "%' OR {$like} '%", $str);
+            return "{$like} '%{$str}%'";
         };
 
         if (is_array($word)) {
@@ -310,7 +319,7 @@ class RecommendUpdater
         return $listName;
     }
 
-    function updateName(string $column = 'oc.name', string $table = 'recommend')
+    protected function updateName(string $column = 'oc.name', string $table = 'recommend')
     {
         $tags = $this->getReplacedTags($column);
 
@@ -353,7 +362,7 @@ class RecommendUpdater
         ];
     }
 
-    function updateDescription(string $column = 'oc.description', string $table = 'recommend')
+    protected function updateDescription(string $column = 'oc.description', string $table = 'recommend')
     {
         [$tags, $strongTags, $afterStrongTags] = $this->getReplacedTagsDesc($column);
 
@@ -405,7 +414,7 @@ class RecommendUpdater
         }
     }
 
-    function updateBeforeCategory(string $column = 'oc.name', string $table = 'recommend')
+    protected function updateBeforeCategory(string $column = 'oc.name', string $table = 'recommend')
     {
         $strongTags = array_map(fn ($a) => array_map(fn ($str) => $this->replace($str, $column), $a), self::BEFORE_CATEGORY_NAME);
 
@@ -445,7 +454,7 @@ class RecommendUpdater
         }
     }
 
-    function updateName2(string $column = 'oc.name', string $table = 'oc_tag2')
+    protected function updateName2(string $column = 'oc.name', string $table = 'oc_tag2')
     {
         $tags = $this->getReplacedTags($column);
 
@@ -478,7 +487,7 @@ class RecommendUpdater
         }
     }
 
-    function updateDescription2(string $column = 'oc.description', string $table = 'oc_tag2')
+    protected function updateDescription2(string $column = 'oc.description', string $table = 'oc_tag2')
     {
         [$tags, $strongTags, $afterStrongTags] = $this->getReplacedTagsDesc($column);
 
