@@ -26,7 +26,7 @@
                     <header class="openchat-list-title-area unset">
                         <div class="openchat-list-date unset ranking-url">
                             <h2 class="unset">
-                                <span class="openchat-list-title">いま話題のキーワード</span>
+                                <span class="openchat-list-title">いま人数増加中のキーワード</span>
                                 <span aria-hidden="true" style="font-size: 9px; user-select: none; margin-bottom: px;margin-left: -3px;">🚀</span>
                             </h2>
                             <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0"><?php echo $hourlyEnd ?></span>

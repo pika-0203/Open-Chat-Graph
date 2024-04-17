@@ -21,6 +21,7 @@ class RecommendOpenChatPageController
         'Produce 101 Japan' => 'PRODUCE 101 JAPAN THE GIRLS（日プ女子）',
         'なりきり（全也）' => 'なりきり',
         'クーポン・お得情報' => 'クーポン・無料配布',
+        'ロック' => '邦ロック',
     ];
 
     function index(
