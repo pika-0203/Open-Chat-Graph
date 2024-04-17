@@ -47,7 +47,7 @@ class TopPageRecommendList
         '翻訳',
         'TEMU',
         'KAUCHE（カウシェ）',
-        'SHIEN',
+        'SHEIN',
     ];
 
     function getList(int $limit)

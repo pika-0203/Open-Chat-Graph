@@ -577,6 +577,7 @@ article.top-list {
   margin: -2px;
 }
 
+.mylist .super-icon,
 .top-ranking .super-icon {
   scale: 74%;
   margin: -2px;
@@ -1134,6 +1135,7 @@ article.top-list {
     margin: 0.5rem 0;
   }
 
+  .mylist .super-icon,
   .top-ranking .super-icon {
     scale: 90%;
     margin-right: 4px;
