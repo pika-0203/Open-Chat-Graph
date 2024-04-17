@@ -22,7 +22,7 @@
             </span>
           <?php elseif (($oc['diff_member'] ?? 1) < 0) : ?>
             <span>
-              <span class="openchat-item-stats">↓ <?php echo $oc['diff_member'] ?>人減少</span>
+              <span class="openchat-item-stats">↓ <?php echo abs($oc['diff_member']) ?>人減少</span>
             </span>
           <?php elseif (($oc['diff_member'] ?? 1) === 0) : ?>
             <span>±0人</span>
