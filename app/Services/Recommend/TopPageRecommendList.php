@@ -91,6 +91,7 @@ class TopPageRecommendList
             WHERE
                 t1.diff_member >= 10
                 OR (t3.diff_member >= 20 AND t1.diff_member >= 0)
+                OR (t3.diff_member >= 50)
             ORDER BY
                 t1.id ASC",
             args: [\PDO::FETCH_COLUMN, 0]
