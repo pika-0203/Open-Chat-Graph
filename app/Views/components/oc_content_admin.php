@@ -11,7 +11,7 @@
     <input type="submit">
 </form>
 <form onsubmit="return confirm('削除しますか？')" action="/admin-api" method="POST" style="margin: 1rem 0;">
-    <b>Modifyタグ: <?php echo $_adminDto->modifyTag ?: '無し' ?></b>
+    <b>Modifyタグ: <?php echo $_adminDto->modifyTag !== false ? ($_adminDto->modifyTag ?: '空文字') : '無し' ?></b>
     <label>タグを削除</label>
     <input type="hidden" name="id" value="<?php echo $_adminDto->id ?>">
     <input type="hidden" name="type" value="deleteModifyTag">

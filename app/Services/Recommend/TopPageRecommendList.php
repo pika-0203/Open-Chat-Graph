@@ -24,7 +24,6 @@ class TopPageRecommendList
         '医療',
         '通信',
         '新入生',
-        '中国語',
         '受験',
         '経済',
         '美容',
