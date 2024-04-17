@@ -78,8 +78,8 @@ class OpenChatFromCrawlerRegistration
             $open_chat_id = $this->openChatRepository->addOpenChatFromDto($ocDto);
         } catch (\PDOException $e) {
             $this->logAddOpenChatError($e->getMessage());
-            $time = OpenChatServicesUtility::getModifiedCronTime('now');
-            $time->modify('+15minutes');
+            $time = new \DateTime();
+            $time->modify('+30minutes');
             $timeStr = $time->format('H:i');
             return $this->returnMessage("サーバーのメンテナス時間帯です。{$timeStr} 以降に再度お試しください。");
         }
