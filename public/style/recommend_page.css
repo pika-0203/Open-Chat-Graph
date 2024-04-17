@@ -14,8 +14,10 @@ li {
 }
 
 time {
-  font-size: 14px;
+  font-size: 11px;
   color: #888;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .list-aside .tag-list {
@@ -49,21 +51,37 @@ time {
   padding: 0 12px;
 }
 
+.hearder-img-outer {
+  margin: 0rem -1rem 0rem -1rem;
+  overflow: hidden;
+  position: relative;
+}
+
 .header-img {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
-  gap: 6px;
-  margin: 1rem 0 1rem 0;
+  width: calc(100% + 4px);
+  gap: 0px;
+  margin: 0rem -2px 0rem -2px;
 }
 
 .header-img img {
-  display: block;
-  width: calc(100% / 4 - 6px);
+  width: calc(100% / 4);
   object-fit: cover;
   display: flex;
   aspect-ratio: 1;
-  border-radius: 4px;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.header-img-title {
+  position: absolute;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.3) 20%, rgba(0, 0, 0, 0.9));
+  z-index: 1;
+  width: 100%;
+  padding: 10% 20px 10px 20px;
+  box-sizing: border-box;
 }
 
 .recommend-header {
@@ -71,25 +89,33 @@ time {
 }
 
 .recommend-header h2 {
-  margin: 1rem 0;
-  color: #111;
-  font-size: 23px;
+  color: #fff;
+  line-height: 29px;
+  font-size: 16px;
+  margin: 0;
+}
+
+.ranking-page-main .share-nav {
+  margin: 12px 0;
+  margin-bottom: 20px;
 }
 
 .recommend-p {
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 1.4rem;
 }
 
 .recommend-desc {
-  line-height: normal;
   color: #555;
-  font-size: 1rem;
+  font-size: 13.541px;
+  line-height: 1.9;
+  margin-top: 0;
 }
 
 .recommend-desc2 {
   color: #555;
-  font-size: 1rem;
+  font-size: 13.541px;
+  line-height: 1.9;
 }
 
 section aside:hover {
@@ -198,16 +224,58 @@ section aside:hover {
   border-radius: 4px;
 }
 
+.app_link {
+  margin: 0.5rem 0;
+}
+
+.app_link a {
+  font-size: 13px;
+  color: #777;
+}
+
 @media screen and (min-width: 512px) {
   .header-img {
-    margin: 2rem 0;
+    margin: 1.3rem 0;
+  }
+
+  time {
+    font-size: 13px;
+    color: #888;
+    justify-content: flex-start;
+  }
+
+  main header {
+    margin-bottom: 1.3rem;
+  }
+
+  .header-img-title {
+    position: static;
+    background: unset;
+    padding: 0;
   }
 
   .recommend-header h2 {
     color: #111;
-    font-size: 1.8rem;
+    font-size: 2rem;
+    line-height: 1.5;
   }
 
+  .recommend-p {
+    margin: 2rem 0;
+  }
+
+  .recommend-desc {
+    font-size: 1rem;
+  }
+
+  .recommend-desc2 {
+    font-size: 1rem;
+  }
+
+  .list-title {
+    margin-top: 1rem;
+    font-size: 17px;
+  }
   .list-aside .tag-list li {
     margin: 8px 0 0 4px;
   }
@@ -220,17 +288,13 @@ section aside:hover {
 
 @media screen and (min-width: 600px) {
   .ranking-page-main {
-    max-width: 100%;
+    max-width: 632px;
     padding-top: 0;
     margin: 0 auto;
   }
 
   .ranking-page-main .openchat-item-list {
     margin: 0;
-    margin-left: 2rem;
-  }
-
-  .list-aside .icon-desc {
-    padding-left: 1rem;
+    margin-left: 0rem;
   }
 }

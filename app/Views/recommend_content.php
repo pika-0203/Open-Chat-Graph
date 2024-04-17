@@ -16,26 +16,62 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <main class="ranking-page-main">
         <article>
             <header class="recommend-header">
-                <div class="header-img">
-                    <?php if (isset($recommend)) : ?>
-                        <?php foreach ($recommend->getPreviewList(8) as $oc) : ?>
-                            <img alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
-                        <?php endforeach ?>
-                    <?php endif ?>
+                <div class="hearder-img-outer">
+                    <div class="header-img">
+                        <?php if (isset($recommend)) : ?>
+                            <?php foreach ($recommend->getPreviewList(8) as $oc) : ?>
+                                <img alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
+                            <?php endforeach ?>
+                        <?php endif ?>
+                    </div>
+                    <div class="header-img-title">
+                        <?php if ($count) : ?>
+                            <h2>【<?php echo $tag ?>】オープンチャット人気ランキングTOP<?php echo $count ?>【毎時更新】</h2>
+                        <?php else : ?>
+                            <h2>【<?php echo $tag ?>】オープンチャット人気ランキング【毎時更新】</h2>
+                        <?php endif ?>
+                    </div>
                 </div>
-                <?php if ($count) : ?>
-                    <h2>「<?php echo $tag ?>」関連のおすすめ人気オプチャ<?php echo $count ?>選【最新】</h2>
-                <?php else : ?>
-                    <h2>「<?php echo $tag ?>」関連のおすすめ人気オプチャ【最新】</h2>
-                <?php endif ?>
-                <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><span aria-hidden="true" style="user-select: none;">🕛 </span><?php echo $_updatedAt->format('Y年m月d日 H:i') ?></time>
             </header>
+            <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><span aria-hidden="true" style="user-select: none;">🕛 </span><?php echo $_updatedAt->format('Y年m月d日 H:i') ?></time>
+            <nav class="share-nav unset">
+                <div class="share-nav-inner">
+                    <div class="share-menu-outer">
+                        <a class="share-menu-item unset" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%2Frecommend%3Ftag%3DZB1%25EF%25BC%2588%25E3%2582%25BC%25E3%2583%25AD%25E3%2583%2599%25E3%2583%25BC%25E3%2582%25B9%25E3%2583%25AF%25E3%2583%25B3%25EF%25BC%258F%25E3%2582%25BC%25E3%2583%2599%25E3%2583%25AF%25E3%2583%25B3%25EF%25BC%2589&amp;text=%E3%80%90ZB1%EF%BC%88%E3%82%BC%E3%83%AD%E3%83%99%E3%83%BC%E3%82%B9%E3%83%AF%E3%83%B3%EF%BC%8F%E3%82%BC%E3%83%99%E3%83%AF%E3%83%B3%EF%BC%89%E3%80%91%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%E3%83%81%E3%83%A3%E3%83%83%E3%83%88%E4%BA%BA%E6%B0%97%E3%83%A9%E3%83%B3%E3%82%AD%E3%83%B3%E3%82%B0TOP30%E3%80%90%E6%AF%8E%E6%99%82%E6%9B%B4%E6%96%B0%E3%80%91+%7C+%E3%82%AA%E3%83%97%E3%83%81%E3%83%A3%E3%82%B0%E3%83%A9%E3%83%95" rel="nofollow noopener" target="_blank" title="Twitterでシェア">
+                            <span class="share-menu-icon-twitter share-menu-icon"></span>
+                        </a>
+                        <a class="share-menu-item unset" href="https://b.hatena.ne.jp/entry/s/localhost/recommend?tag=ZB1%EF%BC%88%E3%82%BC%E3%83%AD%E3%83%99%E3%83%BC%E3%82%B9%E3%83%AF%E3%83%B3%EF%BC%8F%E3%82%BC%E3%83%99%E3%83%AF%E3%83%B3%EF%BC%89" rel="nofollow noopener" target="_blank" title="はてなブックマークでブックマーク">
+                            <span class="share-menu-icon-hatena share-menu-icon"></span>
+                        </a>
+                        <a class="share-menu-item unset" href="https://social-plugins.line.me/lineit/share?url=http%3A%2F%2Flocalhost%2Frecommend%3Ftag%3DZB1%25EF%25BC%2588%25E3%2582%25BC%25E3%2583%25AD%25E3%2583%2599%25E3%2583%25BC%25E3%2582%25B9%25E3%2583%25AF%25E3%2583%25B3%25EF%25BC%258F%25E3%2582%25BC%25E3%2583%2599%25E3%2583%25AF%25E3%2583%25B3%25EF%25BC%2589" rel="nofollow noopener" target="_blank" title="LINEでシェア">
+                            <span class="share-menu-icon-line share-menu-icon"></span>
+                        </a>
+                        <a class="share-menu-item unset" href="https://www.facebook.com/share.php?u=http%3A%2F%2Flocalhost%2Frecommend%3Ftag%3DZB1%25EF%25BC%2588%25E3%2582%25BC%25E3%2583%25AD%25E3%2583%2599%25E3%2583%25BC%25E3%2582%25B9%25E3%2583%25AF%25E3%2583%25B3%25EF%25BC%258F%25E3%2582%25BC%25E3%2583%2599%25E3%2583%25AF%25E3%2583%25B3%25EF%25BC%2589" rel="nofollow noopener" target="_blank" title="Facebookでシェア">
+                            <span class="share-menu-icon-facebook share-menu-icon"></span>
+                        </a>
+                        <div class="copy-btn-outer" id="copy-btn-outer">
+                            <button class="share-menu-item unset" id="copy-btn" title="このページのタイトルとURLをコピーする">
+                                <span class="copy-btn-icon link-icon"></span>
+                            </button>
+                            <div class="description1" id="copy-description">
+                                <div class="copy-btn-inner">
+                                    <span class="copy-btn-icon copy-icon"></span>
+                                    <span>コピーしました</span>
+                                </div>
+                                <hr style="margin: 0.25rem 0 0.45rem 0;">
+                                <div class="copy-btn-text" id="copy-btn-title"></div>
+                                <div class="copy-btn-text" id="copy-btn-url"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
             <div class="recommend-p">
                 <p class="recommend-desc">
-                    LINEオープンチャットでいま人気のルームから、「<?php echo $tag ?>」に関する厳選ルームを1時間毎の更新でご紹介！
+                    2019年のサービス開始以来、累計2000万人以上のユーザーに利用されてきたLINEオープンチャット。<?php echo $tag ?>に関するルームは多くのユーザーによって開設されています。
                 </p>
-                <p class="recommend-desc2">
-                    気になるルームを見つけたら気軽に参加してみましょう！
+                <p class="recommend-desc">
+                    そこでオプチャグラフでは「<?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag) ?>に関するテーマで人数増加が多いルーム」のランキングを作成しました。1時間ごとの更新で新しいルームが随時追加されます。
                 </p>
             </div>
             <?php if (isset($tags) && $tags) : ?>
@@ -58,7 +94,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php endif ?>
             <section style="all:unset; display:block;">
                 <?php if ($count) : ?>
-                    <h2 class="list-title oc-list">「<?php echo $tag ?>」関連のおすすめ <?php echo $count ?>件</h2>
+                    <h2 class="list-title oc-list">「<?php echo $tag ?>」のランキング <?php echo $count ?>件</h2>
                     <aside class="list-aside">
                         <details class="icon-desc">
                             <summary>メンバー数のアイコンについて</summary>
@@ -103,36 +139,20 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php endif ?>
             </section>
             <hr>
-            <?php if (isset($tags) && $tags) : ?>
-                <aside class="list-aside">
-                    <h3 class="list-title">
-                        <span>関連性が高いタグ</span>
-                    </h3>
-                    <section class="tag-list-section">
-                        <ul class="tag-list">
-                            <?php foreach ($tags as $key => $word) : ?>
-                                <li>
-                                    <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
-                                        <?php echo \App\Services\Recommend\RecommendUtility::extractTag($word) ?>
-                                    </a>
-                                </li>
-                            <?php endforeach ?>
-                        </ul>
-                    </section>
-                </aside>
-            <?php endif ?>
-            <aside style="all: unset; display:block; margin: 20px 0 8px 0;">
-                <p class="recommend-desc">
-                    オープンチャットには生活の役に立つ・楽しいルームがいっぱい！
-                </p>
+            <aside style="all: unset; display:block; margin: 20px 0 0 0;">
                 <p class="recommend-desc2">
+                    オープンチャットはLINEに登録している名前とプロフィールが同期されず、高い匿名性で安全に利用できるのが特徴です。
                     気になるルームを見つけたら気軽に参加してみましょう！
                 </p>
+                <div class="app_link">
+                    <a href="https://openchat-jp.line.me/other/beginners_guide">
+                        <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
+                    </a>
+                </div>
             </aside>
         </article>
     </main>
-    <footer>
-        <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
+    <footer style="border-top: 1px solid #efefef; padding-top: 1rem;">
         <?php viewComponent('footer_inner') ?>
     </footer>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>

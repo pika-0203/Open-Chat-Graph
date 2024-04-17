@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Services\Recommend\RecommendPageList;
+use App\Services\Recommend\RecommendUtility;
 use App\Services\StaticData\StaticDataFile;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 
@@ -35,9 +36,10 @@ class RecommendOpenChatPageController
         $updatedAtDate = new \DateTime($staticDataFile->getRankingArgDto()->rankingUpdatedAt);
 
         $count = 0;
-        $pageTitle = "「{$tag}」関連のおすすめ人気オプチャ【最新】|";
+        $pageTitle = "「{$tag}」オープンチャット人気ランキング【毎時更新】 | ";
+        $word = RecommendUtility::extractTag($tag);
         $pageDesc =
-            "LINEオープンチャットでいま人気のルームから、「{$tag}」に関する厳選ルームをご紹介！気になるルームを見つけたら気軽に参加してみましょう！";
+            "2019年のサービス開始以来、累計2000万人以上のユーザーに利用されてきたLINEオープンチャット。そこでオプチャグラフでは「{$word}に関するテーマで人数増加が多いルーム」のランキングを作成しました。1時間ごとの更新で新しいルームが随時追加されます。";
 
         $_meta = meta()
             ->setTitle($pageTitle)
@@ -77,7 +79,7 @@ class RecommendOpenChatPageController
         $recommendList = $recommend->getList(false);
 
         $count = $recommend->getCount();
-        $_meta->title = "「{$tag}」関連のおすすめ人気オプチャ{$count}選【最新】 | オプチャグラフ";
+        $_meta->title = "【{$tag}】オープンチャット人気ランキングTOP{$count}【毎時更新】 | オプチャグラフ";
         $_meta->setImageUrl(imgUrl($recommendList[0]['id'], $recommendList[0]['img_url']));
 
         $_schema = $this->breadcrumbsShema->generateRecommend(

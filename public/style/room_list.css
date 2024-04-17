@@ -1157,7 +1157,6 @@ article.top-list {
 @media screen and (min-width: 600px) {
   main {
     max-width: 600px;
-    margin-left: 4rem;
   }
 }
 
