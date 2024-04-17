@@ -91,7 +91,7 @@ class TopPageRecommendList
                 LEFT JOIN statistics_ranking_week AS t3 ON t3.open_chat_id = t1.open_chat_id
             WHERE
                 t1.diff_member >= 10
-                OR t3.diff_member >= 20
+                OR (t3.diff_member >= 20 AND t1.diff_member >= 0)
             ORDER BY
                 t1.id ASC",
             args: [\PDO::FETCH_COLUMN, 0]

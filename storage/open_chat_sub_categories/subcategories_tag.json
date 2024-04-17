@@ -757,6 +757,18 @@
         ],
         "YouTuber",
         "Vtuber",
+        [
+            "IVE",
+            [
+                "utfbin_IVE_AND_DIVE"
+            ]
+        ],
+        [
+            "K-POP",
+            [
+                "K-POP_OR_KーPOP_OR_KPOP"
+            ]
+        ],
         "アイドル",
         "お笑い",
         "BLACKPINK",
@@ -1014,7 +1026,12 @@
         "YOASOBI",
         "椎名林檎",
         "UVERworld",
-        "K-POP",
+        [
+            "K-POP",
+            [
+                "K-POP_OR_KーPOP_OR_KPOP"
+            ]
+        ],
         "King_AND_Gnu",
         "DISH\/\/",
         "HIPHOP",
@@ -1050,6 +1067,13 @@
                 "STPR_AND_なりきり",
                 "STPR_AND_也",
                 "STPR_AND_nrkr"
+            ]
+        ],
+        [
+            "IVE",
+            [
+                "utfbin_IVE_AND_DIVE",
+                "utfbin_IVE_AND_IZ*ONE"
             ]
         ],
         "いれいす_OR_いれりす",
