@@ -6,6 +6,7 @@ namespace App\Services\StaticData;
 
 use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
+use App\Services\Recommend\TopPageRecommendList;
 use App\Services\StaticData\Dto\StaticTopPageDto;
 use App\Views\Dto\RankingArgDto;
 
@@ -13,6 +14,7 @@ class StaticDataGenerator
 {
     function __construct(
         private OpenChatListRepositoryInterface $openChatListRepository,
+        private TopPageRecommendList $topPageRecommendList
     ) {
     }
 
@@ -25,6 +27,7 @@ class StaticDataGenerator
         $dto->weeklyList = $this->openChatListRepository->findMemberStatsPastWeekRanking(0, AppConfig::TOP_RANKING_LIST_LIMIT);
         $dto->popularList = $this->openChatListRepository->findMemberCountRanking(AppConfig::TOP_RANKING_LIST_LIMIT, AppConfig::TOP_MENBER_RANKING_EXCLUDE_ID);
         $dto->recentCommentList = [];
+        $dto->recommendList = $this->topPageRecommendList->getList(30);
 
         $dto->hourlyUpdatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME));
         $dto->dailyUpdatedAt = new \DateTime(file_get_contents(AppConfig::DAILY_CRON_UPDATED_AT_DATE));

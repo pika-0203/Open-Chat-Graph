@@ -13,7 +13,10 @@ class StaticTopPageDto
 
     /** @var array{ id:int, name:string, img_url:string, description:string, member:int, emblem:int, category:int, time:string }[] $recentCommentList */
     public array $recentCommentList = [];
-    
+
+    /** @var array{ hour:string[],hour24:string[] } $recommendList */
+    public array $recommendList;
+
     public \DateTime $hourlyUpdatedAt;
     public \DateTime $dailyUpdatedAt;
 }
