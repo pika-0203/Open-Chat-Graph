@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\OpenChat\Registration;
 
-use App\Config\AppConfig;
 use App\Config\OpenChatCrawlerConfig;
 use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Models\Repositories\Log\LogRepositoryInterface;
@@ -12,7 +11,6 @@ use App\Models\Repositories\UpdateOpenChatRepositoryInterface;
 use App\Services\OpenChat\Crawler\OpenChatApiFromEmidDownloader;
 use App\Services\OpenChat\Crawler\OpenChatUrlChecker;
 use App\Services\OpenChat\Dto\OpenChatDto;
-use App\Services\OpenChat\Store\OpenChatImageStore;
 use App\Services\OpenChat\Updater\OpenChatImageStoreUpdater;
 use Shared\Exceptions\ThrottleRequestsException;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
@@ -80,7 +78,10 @@ class OpenChatFromCrawlerRegistration
             $open_chat_id = $this->openChatRepository->addOpenChatFromDto($ocDto);
         } catch (\PDOException $e) {
             $this->logAddOpenChatError($e->getMessage());
-            return $this->returnMessage('サーバーのメンテナス中です。数分後に再度お試しください。');
+            $time = OpenChatServicesUtility::getModifiedCronTime('now');
+            $time->modify('+15minutes');
+            $timeStr = $time->format('H:i');
+            return $this->returnMessage("サーバーのメンテナス時間帯です。{$timeStr} 以降に再度お試しください。");
         }
 
         if (!$open_chat_id) {

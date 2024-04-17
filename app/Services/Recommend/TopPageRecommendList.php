@@ -26,12 +26,14 @@ class TopPageRecommendList
         '通信',
         '投資',
         '新入生',
+        '中国語',
         '受験',
         '経済',
         '美容',
         'ヘア',
         'サークル',
         'FX',
+        'クーポン・無料配布',
         '副業',
         '仮想通貨',
         '投資',
@@ -41,6 +43,11 @@ class TopPageRecommendList
         '占い師',
         'パチンコ・スロット（パチスロ）',
         'Coin',
+        'ポイ活',
+        '翻訳',
+        'TEMU',
+        'KAUCHE（カウシェ）',
+        'SHIEN',
     ];
 
     function getList(int $limit)
@@ -51,8 +58,12 @@ class TopPageRecommendList
             FROM
                 statistics_ranking_hour AS t1
                 JOIN recommend AS t2 ON t1.open_chat_id = t2.id
+                LEFT JOIN statistics_ranking_hour24 AS t3 ON t3.open_chat_id = t1.open_chat_id
+                LEFT JOIN statistics_ranking_hour AS t4 ON t4.open_chat_id = t1.open_chat_id
             WHERE
                 t1.diff_member >= 4
+                OR t3.diff_member >= 20
+                OR t4.diff_member >= 10
             ORDER BY
                 t1.id ASC",
             args: [\PDO::FETCH_COLUMN, 0]
@@ -64,7 +75,7 @@ class TopPageRecommendList
             FROM
                 statistics_ranking_hour24 AS t1
                 JOIN recommend AS t2 ON t1.open_chat_id = t2.id
-                JOIN statistics_ranking_week AS t3 ON t3.open_chat_id = t1.open_chat_id
+                LEFT JOIN statistics_ranking_week AS t3 ON t3.open_chat_id = t1.open_chat_id
             WHERE
                 t1.diff_member >= 10
                 OR t3.diff_member >= 20
@@ -74,7 +85,7 @@ class TopPageRecommendList
         );
 
         $filter = array_merge(RecommendPageList::TagFilter, self::ExtraTagFilter);
-        $tags1 = array_filter(sortAndUniqueArray($hour), fn ($e) => $e && !in_array($e, $filter));
+        $tags1 = array_filter(sortAndUniqueArray($hour, 4), fn ($e) => $e && !in_array($e, $filter));
         $tags2 = array_filter(sortAndUniqueArray($hour24, 4), fn ($e) => $e && !in_array($e, $filter) && !in_array($e, $tags1));
 
         return ['hour' => $tags1, 'hour24' => array_slice($tags2, 0, $limit)];
