@@ -19,11 +19,11 @@ class RecommendUtility
         '葬送のフリーレン' => 'フリーレン',
         'クーポン・無料配布' => 'クーポン',
         '片目界隈・自撮り界隈' => '自撮り界隈',
-        '生成AI・ChatGPT' => '生成AI',
         '東方Project' => '東方',
         'ツイステッドワンダーランド' => 'ツイステ',
         'ハイキュー!!' => 'ハイキュー',
         'プロスピA' => 'プロスピ',
+        'ビーファースト' => 'BE:FIRST',
     ];
 
     static function extractTag(string $str): string

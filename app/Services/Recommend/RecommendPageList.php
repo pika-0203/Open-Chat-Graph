@@ -46,6 +46,13 @@ class RecommendPageList
         "邦画",
     ];
 
+    const FilteredTagSort = [
+        'ガンダム' => ['ガンプラ'],
+        'ガンプラ' => ['ガンダム'],
+        'アニメ' => ['アニソン'],
+        '生成AI・ChatGPT' => ['画像生成AI・AIイラスト']
+    ];
+
     function __construct(
         private RecommendPageRepository $recommendPageRepository,
         private RecommendRankingBuilder $recommendRankingBuilder,
@@ -91,8 +98,8 @@ class RecommendPageList
 
         $tags2 = array_map(fn ($t) => RecommendUtility::extractTag($t), $tags);
         $tag2 = RecommendUtility::extractTag($tag);
-        uksort($tags, function ($a) use ($tag2, $tags2) {
-            return str_contains($tags2[$a], $tag2) ? -1 : 1;
+        uksort($tags, function ($a) use ($tag2, $tags2, $tag) {
+            return str_contains($tags2[$a], $tag2) || (isset(self::FilteredTagSort[$tag]) && in_array($tags2[$a], self::FilteredTagSort[$tag])) ? -1 : 1;
         });
 
         return $tags;
