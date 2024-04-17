@@ -140,8 +140,8 @@ Route::path(
     ->matchStr('token');
 
 Route::path(
-    'admin-api/modify-tag@post',
-    [AdminEndPointController::class, 'modifyTag']
+    'admin-api@post',
+    [AdminEndPointController::class, 'index']
 );
 
 Route::run();

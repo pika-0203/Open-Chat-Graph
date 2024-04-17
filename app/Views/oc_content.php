@@ -120,21 +120,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php endif ?>
       </section>
 
-      <?php if (cookie()->has('admin') && cookie()->has('admin-enable')) : ?>
-        <form onsubmit="return confirm('変更しますか？')" action="/admin-api/modify-tag" method="POST" style="margin: 1rem 0;">
-          <b>タグ: <?php echo $recommend[2] ?: '無し' ?></b>
-          <label>タグ変更</label>
-          <input type="text" name="tag">
-          <input type="hidden" name="id" value="<?php echo $oc['id'] ?>">
-          <input type="submit">
-        </form>
-        <form onsubmit="return confirm('削除しますか？')" action="/admin-api" method="POST" style="margin: 1rem 0;">
-          <b>タグ: <?php echo $recommend[2] ?: '無し' ?></b>
-          <label>タグ変更</label>
-          <input type="text" name="id">
-          <input type="hidden" name="" value="<?php echo $oc['id'] ?>">
-          <input type="submit">
-        </form>
+      <?php if (isset($_adminDto)) : ?>
+        <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
       <?php endif ?>
 
       <div style="display: flex; flex-direction: row; align-items: center;">

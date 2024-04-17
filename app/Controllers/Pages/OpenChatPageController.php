@@ -6,6 +6,7 @@ namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
+use App\Services\OpenChatAdmin\AdminOpenChat;
 use App\Services\Recommend\RecommendGenarator;
 use App\Services\Statistics\DownloadCsvService;
 use App\Services\Statistics\StatisticsChartArrayService;
@@ -98,6 +99,14 @@ class OpenChatPageController
             $_hourlyRange = null;
         }
 
+        if (cookie()->has('admin') && cookie()->has('admin-enable')) {
+            /** @var AdminOpenChat $admin */
+            $admin = app(AdminOpenChat::class);
+            $_adminDto = $admin->getDto($open_chat_id);
+        } else {
+            $_adminDto = null;
+        }
+
         return view('oc_content', compact(
             '_meta',
             '_css',
@@ -112,6 +121,7 @@ class OpenChatPageController
             'recommend',
             'updatedAt',
             '_hourlyRange',
+            '_adminDto'
         ));
     }
 

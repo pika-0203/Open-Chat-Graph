@@ -6,11 +6,8 @@ namespace App\Controllers\Api;
 
 use App\Models\CommentRepositories\DeleteCommentRepositoryInterface;
 use App\Services\Admin\AdminAuthService;
-use App\Services\Recommend\RecommendUpdater;
-use Shadow\DB;
+use App\Services\OpenChatAdmin\AdminEndPoint;
 use Shadow\Kernel\Reception;
-use Shadow\Kernel\Validator;
-use Shared\Exceptions\BadRequestException;
 use Shared\Exceptions\NotFoundException;
 
 class AdminEndPointController
@@ -22,36 +19,9 @@ class AdminEndPointController
         }
     }
 
-    function modifyTag(string $id, string $tag)
+    function index(string $type, string $id, AdminEndPoint $adminEndPoint)
     {
-        if (!DB::fetchColumn('SELECT id FROM open_chat WHERE id = ' . $id))
-            throw new BadRequestException("存在しないID: " . $id);
-
-        if ($tag) {
-            /** @var RecommendUpdater $recommendUpdater */
-            $recommendUpdater = app(RecommendUpdater::class);
-            $tags = $recommendUpdater->getAllTagNames();
-            if (!in_array($tag, $tags)) throw new BadRequestException('存在しないタグ: ' . $tag);;
-
-            DB::execute(
-                "INSERT INTO modify_recommend (id, tag) VALUES({$id}, '{$tag}') 
-                    ON DUPLICATE KEY UPDATE id = {$id}, tag = '{$tag}'"
-            );
-            DB::execute(
-                "INSERT INTO recommend VALUES({$id}, '{$tag}') 
-                    ON DUPLICATE KEY UPDATE id = {$id}, tag = '{$tag}'"
-            );
-        } else {
-            DB::execute(
-                "INSERT INTO modify_recommend (id, tag) VALUES({$id}, '') 
-                    ON DUPLICATE KEY UPDATE id = {$id}, tag = ''"
-            );
-            DB::execute(
-                "DELETE FROM recommend WHERE id = {$id}"
-            );
-        }
-
-
+        $adminEndPoint->{$type}($id);
         return redirect("oc/{$id}");
     }
 
