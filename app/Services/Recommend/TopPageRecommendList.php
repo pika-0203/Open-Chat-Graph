@@ -59,11 +59,9 @@ class TopPageRecommendList
                 statistics_ranking_hour AS t1
                 JOIN recommend AS t2 ON t1.open_chat_id = t2.id
                 LEFT JOIN statistics_ranking_hour24 AS t3 ON t3.open_chat_id = t1.open_chat_id
-                LEFT JOIN statistics_ranking_hour AS t4 ON t4.open_chat_id = t1.open_chat_id
             WHERE
                 t1.diff_member >= 4
                 OR t3.diff_member >= 20
-                OR t4.diff_member >= 10
             ORDER BY
                 t1.id ASC",
             args: [\PDO::FETCH_COLUMN, 0]

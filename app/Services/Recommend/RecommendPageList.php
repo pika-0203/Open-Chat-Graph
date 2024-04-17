@@ -50,7 +50,13 @@ class RecommendPageList
         'ガンダム' => ['ガンプラ'],
         'ガンプラ' => ['ガンダム'],
         'アニメ' => ['アニソン'],
-        '生成AI・ChatGPT' => ['画像生成AI・AIイラスト']
+        'にじさんじ' => ['にじさんじなりきり'],
+        'ボイメで歌（歌リレー）' => ['ライブトーク', '歌ってみた', '歌い手のトークルーム', 'VOCALOID（ボーカロイド／ボカロ）', 'イケボ', 'カラオケ', 'ボイストレーニング（ボイトレ）', 'アニソン'],
+        '生成AI・ChatGPT' => ['画像生成AI・AIイラスト'],
+        'オリキャラ恋愛' => ['オリキャラ', 'オリキャラ BL', 'なりきり'],
+        '恋愛相談' => ['恋愛', '垢抜け', '失恋', 'メンタルヘルス'],
+        '失恋' => ['メンタルヘルス'],
+        '不登校' => ['メンタルヘルス', 'ネッ友', 'うつ病', '発達障害', 'HSP'],
     ];
 
     function __construct(
@@ -86,20 +92,22 @@ class RecommendPageList
     /** @return string[] */
     function getFilterdTags(array $recommendList, string $tag): array
     {
+        $tagStr = RecommendUtility::extractTag($tag);
+
         $tags = sortAndUniqueArray(
             array_merge(
                 array_column($recommendList, 'tag1'),
-                array_column($recommendList, 'tag2')
+                array_column($recommendList, 'tag2'),
+                self::FilteredTagSort[$tag] ?? []
             ),
             1
         );
 
         $tags = array_filter($tags, fn ($e) => !in_array($e, self::TagFilter) && $e !== $tag);
 
-        $tags2 = array_map(fn ($t) => RecommendUtility::extractTag($t), $tags);
-        $tag2 = RecommendUtility::extractTag($tag);
-        uksort($tags, function ($a) use ($tag2, $tags2, $tag) {
-            return str_contains($tags2[$a], $tag2) || (isset(self::FilteredTagSort[$tag]) && in_array($tags2[$a], self::FilteredTagSort[$tag])) ? -1 : 1;
+        $tagsStr = array_map(fn ($t) => RecommendUtility::extractTag($t), $tags);
+        uksort($tags, function ($a) use ($tagStr, $tagsStr, $tag, $tags) {
+            return str_contains($tagsStr[$a], $tagStr) || (isset(self::FilteredTagSort[$tag]) && in_array($tags[$a], self::FilteredTagSort[$tag])) ? -1 : 1;
         });
 
         return $tags;
