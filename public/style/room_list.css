@@ -866,48 +866,6 @@ article.top-list {
   border: solid 2px #4d73ff;
 }
 
-.top-mylist .openchat-item::before,
-.top-mylist .openchat-item::after {
-  position: absolute;
-  top: 64%;
-  content: '';
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  background-repeat: no-repeat;
-  background-size: contain;
-  display: block;
-  border-radius: 1rem;
-}
-
-.top-mylist .openchat-item::before {
-  left: 33px;
-  border: solid 1px white;
-  background: linear-gradient(-332deg, #0dc95a, #11d871 21.96%, #11d593 53.46%, #12cfcd 81.85%, #16c2c1);
-  z-index: 2;
-}
-
-.top-mylist .openchat-item::after {
-  left: 35px;
-  width: 16px;
-  height: 16px;
-  background-image: url(/assets/pin.svg);
-  z-index: 3;
-}
-
-.top-mylist .openchat-item-desc {
-  -webkit-line-clamp: 3;
-}
-
-.top-list .openchat-item-desc {
-  -webkit-line-clamp: 3;
-}
-
-.top-mylist .openchat-item {
-  min-height: 56px;
-  margin-left: 0px;
-}
-
 .openchat-item.hidden-changelog {
   display: none;
 }
@@ -960,6 +918,70 @@ article.top-list {
   .add-openchat-form input {
     font-size: 13.5px;
     padding: 0.9rem 0.5rem 0.9rem 0.5rem;
+  }
+}
+
+.mylist .openchat-item {
+  min-height: 56px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.mylist .openchat-item-title {
+  font-size: 13px;
+}
+
+.mylist .openchat-item-desc {
+  -webkit-line-clamp: 1;
+  font-size: 12px;
+}
+
+.mylist .openchat-item-lower {
+  margin-top: 1px;
+  font-size: 11px;
+}
+
+.mylist .openchat-item::before,
+.mylist .openchat-item::after {
+  position: absolute;
+  top: 76%;
+  content: '';
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  border-radius: 1rem;
+}
+
+.mylist .openchat-item::before {
+  left: 33px;
+  border: solid 1px white;
+  background: linear-gradient(-332deg, #0dc95a, #11d871 21.96%, #11d593 53.46%, #12cfcd 81.85%, #16c2c1);
+  z-index: 2;
+}
+
+.mylist .openchat-item::after {
+  left: 35px;
+  width: 16px;
+  height: 16px;
+  background-image: url(/assets/pin.svg);
+  z-index: 3;
+}
+
+@media screen and (min-width: 512px) {
+  .mylist .openchat-item-title {
+    font-size: 14px;
+  }
+
+  .mylist .openchat-item-desc {
+    margin-top: 2px;
+    font-size: 13px;
+  }
+
+  .mylist .openchat-item-lower {
+    font-size: 13px;
   }
 }
 

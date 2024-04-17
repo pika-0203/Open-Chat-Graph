@@ -16,9 +16,13 @@
           <?php if (isset($oc['member'])) : ?>
             <span>メンバー <?php echo formatMember($oc['member']) ?>人</span>
           <?php endif ?>
-          <?php if (($oc['diff_member'] ?? 0) !== 0) : ?>
+          <?php if (($oc['diff_member'] ?? 0) > 0) : ?>
             <span>
               <span class="openchat-item-stats">↑ <?php echo $oc['diff_member'] ?>人増加</span>
+            </span>
+          <?php elseif (($oc['diff_member'] ?? 1) < 0) : ?>
+            <span>
+              <span class="openchat-item-stats">↓ <?php echo $oc['diff_member'] ?>人減少</span>
             </span>
           <?php elseif (($oc['diff_member'] ?? 1) === 0) : ?>
             <span>±0人</span>

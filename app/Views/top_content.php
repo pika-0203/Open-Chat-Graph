@@ -5,18 +5,6 @@
 <body class="body">
     <?php viewComponent('site_header') ?>
     <main>
-        <?php if ($myList) : ?>
-            <article>
-                <div class="refresh-time openchat-list-date">
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:11.5px; margin: 0">ピン留め (過去24時間の増減)</span>
-                </div>
-                <div style="margin: -4px 0 -4px 0;">
-                    <?php viewComponent('open_chat_list', ['openChatList' => $myList]) ?>
-                </div>
-            </article>
-            <hr class="ht-top-mylist">
-        <?php endif ?>
-
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
@@ -59,6 +47,18 @@
                 </div>
             <?php endif ?>
         </article>
+
+        <?php if ($myList) : ?>
+            <article class="mylist">
+                <div class="refresh-time openchat-list-date">
+                    <span style="font-weight: bold; color:#111; font-size:13px; margin: 0">ピン留め (24時間の人数増加)</span>
+                </div>
+                <div style="margin: -4px 0 -4px 0;">
+                    <?php viewComponent('open_chat_list_ranking', ['openChatList' => $myList]) ?>
+                </div>
+            </article>
+            <hr class="ht-top-mylist">
+        <?php endif ?>
 
         <article class="top-ranking" style="padding-top: 0; margin-top: 0;">
             <header class="openchat-list-title-area unset">
