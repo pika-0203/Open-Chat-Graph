@@ -12,17 +12,20 @@
         }
     </style>
     <?php viewComponent('site_header') ?>
-    <main style="margin-top: 8px;">
-        <h2 style="all:unset"><span class="list-title">オプチャグラフにオープンチャットを手動で登録する</span></h2>
+    <main style="border-bottom:1px solid #efefef;">
+        <h2>オプチャグラフにオープンチャットを手動で登録する</h2>
         <p>
-            <small class="top-small-desc" style="font-size: 14px; color: #616161">メンバー数が10人を超えたオープンチャットは公式ランキングに掲載されるため、通常はオプチャグラフに自動登録されます。</small>
+            公式ランキングに掲載されているオープンチャットはオプチャグラフに自動登録されます。<br>ランキング（急上昇を除く）に掲載されるのはメンバーが10人以上のオープンチャットです。
         </p>
-        <section style="all:unset; display:block; margin-top: 1rem; font-size: 14px; color: #616161">
-            <h3 style="margin: 0; font-size: inherit; color: inherit; line-height: 1.7;">
-                以下の手順は公式ランキングに未掲載のオープンチャットをオプチャグラフに手動で登録する方法です。
-            </h3>
+        <section>
+            <p>
+                <b>
+                    以下の手順は公式ランキングに未掲載のオープンチャットをオプチャグラフに手動で登録する方法です。
+                </b>
+            </p>
+
             <ul>
-                <li><a href="https://openchat.line.me/jp" rel="external" target="_blank" style="font-size: inherit; color: inherit">LINEオープンチャット公式サイト</a>を開く</li>
+                <li><a href="https://openchat.line.me/jp" rel="external" target="_blank">LINEオープンチャット公式サイト</a>を開く</li>
                 <li>登録したいオープンチャットを探す</li>
                 <li>ページのURLをアドレスバーからコピーする</li>
                 <li>下記フォームに貼り付けて登録する</li>
@@ -55,19 +58,15 @@
             <div style="font-size: 17px; margin: 1rem;" class="add-openchat-message false" id="add-openchat-describedby"><?php echo h($error['message']) ?></div>
         <?php endforeach ?>
         <form class="add-openchat-form unset" id="add-openchat-form" action="/oc" method="POST">
-            <label for="add-openchat-input-url" style="font-size: 1rem;">公式サイトのURL</label>
+            <labe>公式サイトのURL</labe>
             <input name="url" id="add-openchat-input-url" placeholder="https://openchat.line.me/jp/cover/..." spellcheck="false" type="text" aria-describedby="add-openchat-describedby" autocomplete="off">
             <span class="add-openchat-message" id="add-openchat-describedby">正しいURLを入力してください</span>
-            <small class="top-small-desc" style="font-size: 13px; color: #616161; display: block; margin-top: 1rem;">登録に使用できるのは招待用のURLではなく、公式サイトのURLです。</small>
+            <p>登録に使用できるのは招待用のURLではなく、公式サイトのURLです。</p>
             <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>登録する</button>
         </form>
-        <p style="margin-top: 1rem;">
-            <small class="top-small-desc" style="font-size: 14px; color: #616161">公式サイトに掲載されていないオープンチャットは登録できません。</small>
-        </p>
-        <p style="border-bottom: solid 1px #e8e8e8;
-                padding-bottom: 1rem;
-                margin-bottom: -1rem;">
-            <small class="top-small-desc" style="font-size: 14px; color: #616161">公式サイトの検索でヒットしない場合、Google検索で「site:openchat.line.me/jp/cover 部屋名」を検索すると見つかるかもしれません。</small>
+        <p>公式サイトに掲載されていないオープンチャットは登録できません。</p>
+        <p>
+            公式サイトの検索でヒットしない場合、Googleで「site:openchat.line.me/jp/cover 部屋名」を検索すると見つかるかもしれません。
         </p>
     </main>
     <footer>
