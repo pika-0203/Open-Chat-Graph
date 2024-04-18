@@ -60,9 +60,9 @@ time {
 .header-img {
   display: flex;
   flex-wrap: wrap;
-  width: calc(100% + 4px);
+  width: calc(100% + 3px);
   gap: 0px;
-  margin: 0rem -2px 0rem -2px;
+  margin: 0rem -1.5px 0rem -1.5px;
 }
 
 .header-img img {
@@ -70,8 +70,8 @@ time {
   object-fit: cover;
   display: flex;
   aspect-ratio: 1;
-  border-radius: 6px;
-  padding: 2px;
+  border-radius: 5px;
+  padding: 1.5px;
 }
 
 .header-img-title {
@@ -246,6 +246,16 @@ section aside:hover {
 
   main header {
     margin-bottom: 1.3rem;
+  }
+
+  .header-img {
+    width: calc(100% + 6px);
+    margin: 0rem -3px 0rem -3px;
+  }
+
+  .header-img img {
+    border-radius: 6px;
+    padding: 3px;
   }
 
   .header-img-title {

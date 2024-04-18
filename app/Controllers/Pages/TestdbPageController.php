@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Services\Recommend\RecommendUpdater;
-use Shadow\DB;
 use Shadow\Kernel\Validator;
 
 class TestdbPageController

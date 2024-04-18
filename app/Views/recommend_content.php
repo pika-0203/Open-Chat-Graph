@@ -77,7 +77,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php if (isset($tags) && $tags) : ?>
                 <aside class="list-aside">
                     <h3 class="list-title">
-                        <span>関連性が高いタグ</span>
+                        <span>関連のタグ</span>
                     </h3>
                     <section class="tag-list-section">
                         <ul class="tag-list">
@@ -138,7 +138,24 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
                 <?php endif ?>
             </section>
-            <hr>
+            <?php if (isset($tags) && $tags) : ?>
+                <aside class="list-aside">
+                    <h3 class="list-title">
+                        <span>関連のタグ</span>
+                    </h3>
+                    <section class="tag-list-section" style="margin-bottom: 1rem;">
+                        <ul class="tag-list">
+                            <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
+                                <li>
+                                    <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
+                                        <?php echo \App\Services\Recommend\RecommendUtility::extractTag($word) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach ?>
+                        </ul>
+                    </section>
+                </aside>
+            <?php endif ?>
             <aside style="all: unset; display:block; margin: 20px 0 0 0;">
                 <p class="recommend-desc2">
                     オープンチャットはLINEに登録している名前とプロフィールが同期されず、高い匿名性で安全に利用できるのが特徴です。
