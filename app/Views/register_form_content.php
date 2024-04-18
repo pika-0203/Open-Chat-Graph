@@ -18,7 +18,7 @@
             <small class="top-small-desc" style="font-size: 14px; color: #616161">メンバー数が10人を超えたオープンチャットは公式ランキングに掲載されるため、通常はオプチャグラフに自動登録されます。</small>
         </p>
         <section style="all:unset; display:block; margin-top: 1rem; font-size: 14px; color: #616161">
-            <h3 style="margin: 0; font-size: inherit; color: inherit">
+            <h3 style="margin: 0; font-size: inherit; color: inherit; line-height: 1.7;">
                 以下の手順は公式ランキングに未掲載のオープンチャットをオプチャグラフに手動で登録する方法です。
             </h3>
             <ul>

@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  color: #b7b7b7;
+  color: #777;
 }
 
 .footer-link-inner a {

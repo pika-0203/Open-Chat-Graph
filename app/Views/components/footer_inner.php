@@ -4,7 +4,7 @@
         <a class="unset" href="<?php echo url('policy') ?>">オプチャグラフについて</a>
     </div>
     <div class="footer-link-inner">
-        <a class="unset" href="<?php echo url('ranking') ?>">増加ランキング</a>
+        <a class="unset" href="<?php echo url('ranking') ?>">カテゴリから探す</a>
         <a class="unset" href="https://openchat.line.me/jp/explore" target="_blank">公式ランキング<span class="line-link-icon777"></span></a>
     </div>
 </nav>

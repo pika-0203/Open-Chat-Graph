@@ -4,7 +4,7 @@
 
 <body class="body">
     <?php viewComponent('site_header') ?>
-    <main>
+    <main style="margin-bottom: 0;">
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
@@ -134,15 +134,17 @@
             </a>
         </article>
 
-        <p style="padding-top:8px">
-            <small class="top-small-desc" style="display: block;">オプチャグラフは<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">公式ランキング</a>に掲載中のオープンチャットを自動的に登録して集計します。</small>
-        </p>
-        <p style="padding-top:8px">
-            <a class="recent-oc-btn" href="<?php echo url('recently-registered') ?>">最近登録されたオープンチャット</a>
-        </p>
-        <p style="padding-top:8px">
-            <a class="recent-oc-btn" href="<?php echo url('oc') ?>">オープンチャットを手動で登録する</a>
-        </p>
+        <article class="top-ranking" style="padding-top: 0; margin-top: 0; border: 0">
+            <p style="line-height: 2; margin: 1.5rem 0 0 0;" class="top-small-desc">
+                オプチャグラフではオープンチャットを<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">公式ランキング（LINE公式サイト）</a>から自動的に登録しています。
+            </p>
+            <a style="margin-bottom: 0; margin-top: 10px;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('oc') ?>">
+                <span class="ranking-readMore">オープンチャットを手動で登録する</span>
+            </a>
+            <a style="margin-bottom: 0; margin-top: 10px;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('policy') ?>">
+                <span class="ranking-readMore">オプチャグラフについて</span>
+            </a>
+        </article>
     </main>
     <footer>
         <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>

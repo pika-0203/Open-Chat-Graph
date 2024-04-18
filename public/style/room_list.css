@@ -118,7 +118,7 @@ main header {
 }
 
 .recent-oc-btn {
-  color: #b7b7b7;
+  color: #777;
   text-decoration: underline 1px;
   font-size: 13px;
 }
@@ -887,7 +887,7 @@ article.top-list {
 
 .top-small-desc,
 .top-small-desc a {
-  color: #b7b7b7;
+  color: #777;
   font-size: 13px;
 }
 
