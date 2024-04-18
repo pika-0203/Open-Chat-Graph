@@ -37,16 +37,17 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <nav class="share-nav unset">
                 <div class="share-nav-inner">
                     <div class="share-menu-outer">
-                        <a class="share-menu-item unset" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%2Frecommend%3Ftag%3DZB1%25EF%25BC%2588%25E3%2582%25BC%25E3%2583%25AD%25E3%2583%2599%25E3%2583%25BC%25E3%2582%25B9%25E3%2583%25AF%25E3%2583%25B3%25EF%25BC%258F%25E3%2582%25BC%25E3%2583%2599%25E3%2583%25AF%25E3%2583%25B3%25EF%25BC%2589&amp;text=%E3%80%90ZB1%EF%BC%88%E3%82%BC%E3%83%AD%E3%83%99%E3%83%BC%E3%82%B9%E3%83%AF%E3%83%B3%EF%BC%8F%E3%82%BC%E3%83%99%E3%83%AF%E3%83%B3%EF%BC%89%E3%80%91%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%E3%83%81%E3%83%A3%E3%83%83%E3%83%88%E4%BA%BA%E6%B0%97%E3%83%A9%E3%83%B3%E3%82%AD%E3%83%B3%E3%82%B0TOP30%E3%80%90%E6%AF%8E%E6%99%82%E6%9B%B4%E6%96%B0%E3%80%91+%7C+%E3%82%AA%E3%83%97%E3%83%81%E3%83%A3%E3%82%B0%E3%83%A9%E3%83%95" rel="nofollow noopener" target="_blank" title="Twitterでシェア">
+                        <?php $url = urlencode(url(path())) ?>
+                        <a class="share-menu-item unset" href="https://twitter.com/intent/tweet?url=<?php echo $url ?>&text=<?php echo urlencode($_meta->title) ?>" rel="nofollow noopener" target="_blank" title="Twitterでシェア">
                             <span class="share-menu-icon-twitter share-menu-icon"></span>
                         </a>
-                        <a class="share-menu-item unset" href="https://b.hatena.ne.jp/entry/s/localhost/recommend?tag=ZB1%EF%BC%88%E3%82%BC%E3%83%AD%E3%83%99%E3%83%BC%E3%82%B9%E3%83%AF%E3%83%B3%EF%BC%8F%E3%82%BC%E3%83%99%E3%83%AF%E3%83%B3%EF%BC%89" rel="nofollow noopener" target="_blank" title="はてなブックマークでブックマーク">
+                        <a class="share-menu-item unset" href="https://b.hatena.ne.jp/entry/s/<?php echo getHostAndUri() ?>" rel="nofollow noopener" target="_blank" title="はてなブックマークでブックマーク">
                             <span class="share-menu-icon-hatena share-menu-icon"></span>
                         </a>
-                        <a class="share-menu-item unset" href="https://social-plugins.line.me/lineit/share?url=http%3A%2F%2Flocalhost%2Frecommend%3Ftag%3DZB1%25EF%25BC%2588%25E3%2582%25BC%25E3%2583%25AD%25E3%2583%2599%25E3%2583%25BC%25E3%2582%25B9%25E3%2583%25AF%25E3%2583%25B3%25EF%25BC%258F%25E3%2582%25BC%25E3%2583%2599%25E3%2583%25AF%25E3%2583%25B3%25EF%25BC%2589" rel="nofollow noopener" target="_blank" title="LINEでシェア">
+                        <a class="share-menu-item unset" href="https://social-plugins.line.me/lineit/share?url=<?php echo $url ?>" rel="nofollow noopener" target="_blank" title="LINEでシェア">
                             <span class="share-menu-icon-line share-menu-icon"></span>
                         </a>
-                        <a class="share-menu-item unset" href="https://www.facebook.com/share.php?u=http%3A%2F%2Flocalhost%2Frecommend%3Ftag%3DZB1%25EF%25BC%2588%25E3%2582%25BC%25E3%2583%25AD%25E3%2583%2599%25E3%2583%25BC%25E3%2582%25B9%25E3%2583%25AF%25E3%2583%25B3%25EF%25BC%258F%25E3%2582%25BC%25E3%2583%2599%25E3%2583%25AF%25E3%2583%25B3%25EF%25BC%2589" rel="nofollow noopener" target="_blank" title="Facebookでシェア">
+                        <a class="share-menu-item unset" href="https://www.facebook.com/share.php?u=<?php echo $url ?>" rel="nofollow noopener" target="_blank" title="Facebookでシェア">
                             <span class="share-menu-icon-facebook share-menu-icon"></span>
                         </a>
                         <div class="copy-btn-outer" id="copy-btn-outer">

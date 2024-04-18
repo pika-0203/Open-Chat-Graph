@@ -36,7 +36,7 @@ class RecommendOpenChatPageController
         $updatedAtDate = new \DateTime($staticDataFile->getRankingArgDto()->rankingUpdatedAt);
 
         $count = 0;
-        $pageTitle = "「{$tag}」オープンチャット人気ランキング【毎時更新】 | ";
+        $pageTitle = "「{$tag}」オープンチャット人気ランキング【毎時更新】";
         $word = RecommendUtility::extractTag($tag);
         $pageDesc =
             "2019年のサービス開始以来、累計2000万人以上のユーザーに利用されてきたLINEオープンチャット。そこでオプチャグラフでは「{$word}に関するテーマで人数増加が多いルーム」のランキングを作成しました。1時間ごとの更新で新しいルームが随時追加されます。";
@@ -79,11 +79,12 @@ class RecommendOpenChatPageController
         $recommendList = $recommend->getList(false);
 
         $count = $recommend->getCount();
-        $_meta->title = "【{$tag}】オープンチャット人気ランキングTOP{$count}【毎時更新】 | オプチャグラフ";
+        $headline = "【{$tag}】オープンチャット人気ランキングTOP{$count}【毎時更新】";
+        $_meta->title = "{$headline} | オプチャグラフ";
         $_meta->setImageUrl(imgUrl($recommendList[0]['id'], $recommendList[0]['img_url']));
 
         $_schema = $this->breadcrumbsShema->generateRecommend(
-            $_meta->title,
+            $headline,
             $_meta->description,
             url("recommend?tag=" . urlencode($tag)),
             new \DateTime('2024-04-06 08:00:00'),
