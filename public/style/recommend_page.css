@@ -262,6 +262,7 @@ section aside:hover {
     position: static;
     background: unset;
     padding: 0;
+    margin-top: 1rem;
   }
 
   .recommend-header h2 {
