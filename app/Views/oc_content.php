@@ -142,7 +142,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
               <span>トップにピン留め</span>
             </label>
           <?php endif ?>
-          <small style="display:block; margin-bottom: 2px;"><a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>">統計CSVファイル</a></small>
         </nav>
         <aside>
           <span class="openchat-list-date" style="flex-direction: row;">
@@ -186,11 +185,17 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     </section>
     <footer>
       <aside class="open-btn2">
+        <a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" class="app_link" style="  font-size: 11px;
+          color: #b7b7b7;
+          margin-bottom: .5rem;
+          margin-top: -.5rem;">
+          <span class="text">人数統計CSVをダウンロード</span>
+        </a>
         <a href="https://openchat-jp.line.me/other/beginners_guide" class="app_link">
-          <span class="text">はじめてのLINEオープンチャットガイド</span>
+          <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
         </a>
         <a href="https://line.me/download" class="app_link">
-          <span class="text">LINEアプリをダウンロード</span>
+          <span class="text">LINEアプリをダウンロード（LINE公式）</span>
         </a>
       </aside>
       <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>

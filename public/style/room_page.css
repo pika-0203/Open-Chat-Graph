@@ -273,12 +273,7 @@ hr {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  justify-content: space-between;
-}
-
-.my-list-form a {
-  font-size: 10px;
-  color: #b7b7b7;
+  justify-content: center;
 }
 
 .my-list-form .checkbox-label {
@@ -470,11 +465,6 @@ body > footer {
   .talkroom_description_box .more,
   .talkroom_description {
     line-height: 140%;
-  }
-
-  .my-list-form a {
-    font-size: 12px;
-    color: #b7b7b7;
   }
 
   .openchat footer {

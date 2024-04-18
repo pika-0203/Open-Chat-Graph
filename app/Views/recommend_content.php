@@ -77,7 +77,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php if (isset($tags) && $tags) : ?>
                 <aside class="list-aside">
                     <h3 class="list-title">
-                        <span>関連のタグ</span>
+                        <span>関連のキーワード</span>
                     </h3>
                     <section class="tag-list-section">
                         <ul class="tag-list">
@@ -141,7 +141,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php if (isset($tags) && $tags) : ?>
                 <aside class="list-aside">
                     <h3 class="list-title">
-                        <span>関連のタグ</span>
+                        <span>関連のキーワード</span>
                     </h3>
                     <section class="tag-list-section" style="margin-bottom: 1rem;">
                         <ul class="tag-list">
