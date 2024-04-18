@@ -81,6 +81,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                         <span>関連のキーワード</span>
                     </h3>
                     <section class="tag-list-section">
+                        <p class="recommend-desc">
+                            <span class="small">各ルームは、各ランキングのうちただ1つにしか掲載されません。例えば、恋愛相談のルームは恋愛相談のランキングにしか載りません。探しているルームが見つからない場合は、他のキーワードのランキングも確認してみてください。</span>
+                        </p>
                         <ul class="tag-list">
                             <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
                                 <li>

@@ -96,8 +96,13 @@ time {
 }
 
 .ranking-page-main .share-nav {
-  margin: 12px 0;
-  margin-bottom: 20px;
+  margin: 8px 0;
+  margin-bottom: 12px;
+}
+
+.ranking-page-main .share-menu-outer {
+  scale: 75%;
+  justify-content: space-between;
 }
 
 .recommend-p {
@@ -116,6 +121,10 @@ time {
   color: #555;
   font-size: 13.541px;
   line-height: 1.9;
+}
+
+.small {
+  font-size: 85%;
 }
 
 section aside:hover {
@@ -263,6 +272,22 @@ section aside:hover {
     background: unset;
     padding: 0;
     margin-top: 1rem;
+  }
+
+  .ranking-page-main .share-nav {
+    margin: 11px 0;
+    margin-bottom: -5px;
+  }
+
+  .ranking-page-main .share-nav-inner {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .ranking-page-main .share-menu-outer {
+    width: 40%;
+    scale: 100%;
+    justify-content: space-between;
   }
 
   .recommend-header h2 {
