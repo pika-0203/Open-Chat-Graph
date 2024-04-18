@@ -26,7 +26,6 @@
                     以下の手順は公式ランキングに未掲載のオープンチャットをオプチャグラフに手動で登録する方法です。
                 </b>
             </p>
-
             <ul>
                 <li><a href="https://openchat.line.me/jp" rel="external" target="_blank">LINEオープンチャット公式サイト</a>を開く</li>
                 <li>登録したいオープンチャットを探す</li>
