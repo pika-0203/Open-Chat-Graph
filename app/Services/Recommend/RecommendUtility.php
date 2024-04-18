@@ -24,6 +24,7 @@ class RecommendUtility
         'ハイキュー!!' => 'ハイキュー',
         'プロスピA' => 'プロスピ',
         'ビーファースト' => 'BE:FIRST',
+        '馬場豊' => 'もこう',
     ];
 
     static function extractTag(string $str): string
