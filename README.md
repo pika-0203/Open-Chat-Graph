@@ -10,6 +10,12 @@ https://openchat-review.me
 アクセス可能なオープンチャットを自動収集します。  
 自動更新により、メンバー数の統計、オープンチャットのタイトル・説明文・画像が最新の状態になります。  
 
+- #### クローラー本体
+  - クローラー(symfony/browser-kitのラッパークラス)  
+  https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/CrawlerFactory.php
+  - ファイルダウンローダー(symfony/HttpClientのラッパークラス)  
+  https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/FileDownloader.php
+
 - #### ランキングデータの取得
   - オープンチャット公式サイトの取得URL(公開済みの公式サイト)    
   `https://openchat.line.me/api/category/${category}?sort=RANKING&limit=40&ct=${ct}`
