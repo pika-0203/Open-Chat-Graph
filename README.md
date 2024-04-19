@@ -31,7 +31,8 @@ https://openchat-review.me
   - 画像の取得処理  
     https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatImgDownloader.php
 
-オプチャグラフBotのUA: Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)
+- #### オプチャグラフBotのUA
+  - Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)
 
 ## ランキング表示のアルゴリズム
 元々のメンバー数が少ないオープンチャットであるほど増加率が高くなり、上位に上がりやすくなります。  
