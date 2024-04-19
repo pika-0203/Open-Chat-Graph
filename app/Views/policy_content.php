@@ -52,7 +52,7 @@
                 <p>
                     参考ページ: <a href="https://openchat-jp.line.me/other/notice_webmain_3gf87gs1" target="_blank">Webブラウザ版メイン画面公開と検索エンジン対応のお知らせ | LINEオープンチャット</a>
                 </p>
-                <p style="font-size: 11px; color: #777;">オプチャグラフBotのUA: Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)<br>データ収集は公式サイトの robots.txt を尊重して行います。</p>
+                <p style="font-size: 11px; color: #777;">オプチャグラフBotのUA: Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)<br>公式サイトの <a href="https://webtan.impress.co.jp/g/robotstxt" target="_blank">robots.txt</a> を尊重してクローリングしています<br></p>
                 <p style="font-size: 12px; color: #777;">LINEオープンチャット利用規約: <a href="https://terms.line.me/line_Square_TOU_JP?lang=ja" target="_blank">https://terms.line.me/line_Square_TOU_JP?lang=ja</a></p>
                 <h2 style="margin-bottom: 2rem;" id="comments">オプチャグラフに関する情報共有・コメント</h2>
                 <div id="comment-root"></div>
