@@ -1,6 +1,8 @@
 # オプチャグラフ
 https://openchat-review.me
 
+![Image](/image.jpg)
+
 ## プロジェクトの概要
 オプチャグラフは興味があるオープンチャットを見つけて、成長傾向をグラフで見ることができる場所です。  
 [オプチャグラフとは](https://openchat-review.me/policy)
