@@ -12,7 +12,7 @@
             <article class="terms">
                 <h1 style="letter-spacing: 0px;">オプチャグラフについて</h1>
                 <p>オプチャグラフは興味があるオープンチャットを見つけて、成長傾向をグラフで見ることができる場所です。</p>
-                <p>※オプチャグラフはLINE非公式の<a href="https://github.com/pika-0203/Open-Chat-Graph" target="_blank">pika-0203の個人開発によるオープンソース</a>で開発されているサービスです。 </p>
+                <p>※オプチャグラフはLINE非公式の<a href="https://github.com/pika-0203/Open-Chat-Graph" target="_blank">個人開発(pika-0203)によるオープンソース</a>で開発されているサービスです。 </p>
                 <h2>サイトの目的</h2>
                 <p>・ユーザーがオープンチャットを見つけて参加する機会を作る</p>
                 <p>・オープンチャットの管理者が成長傾向を把握し、比較できる事で運営に役立つ</p>
