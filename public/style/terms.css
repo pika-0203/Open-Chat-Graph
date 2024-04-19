@@ -3,11 +3,13 @@ main {
   color: #616161;
 }
 
+.terms > section > p,
 .terms > p {
   font-size: 14px;
   line-height: 1.9;
 }
 
+.terms > section > p > a,
 .terms > p > a {
   color: inherit;
 }
