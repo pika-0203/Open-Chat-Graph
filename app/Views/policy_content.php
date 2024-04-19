@@ -91,8 +91,6 @@
                 <p>
                     <span style="font-size: 12px; color: #777;">Gihub バックエンド: <a style="color: #777;" href="https://github.com/pika-0203/Open-Chat-Graph" target="_blank">https://github.com/pika-0203/Open-Chat-Graph</a></span>
                     <br>
-                    <span style="font-size: 12px; color: #777;">Gihub バックエンドFW: <a style="color: #777;" href="https://github.com/mimimiku778/MimimalCMS" target="_blank">https://github.com/mimimiku778/MimimalCMS</a></span>
-                    <br>
                     <span style="font-size: 12px; color: #777;">Gihub フロント(ランキングページ): <a style="color: #777;" href="https://github.com/mimimiku778/Open-Chat-Graph-Frontend" target="_blank">https://github.com/mimimiku778/Open-Chat-Graph-Frontend</a></span>
                     <br>
                     <span style="font-size: 12px; color: #777;">Gihub フロント(グラフ表示): <a style="color: #777;" href="https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph" target="_blank">https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph</a></span>
