@@ -1,3 +1,7 @@
+:root {
+  --article-font: font-family: Hiragino Kaku Gothic Pro, ヒラギノ角ゴ Pro W3, 游ゴシック体, YuGothic, 游ゴシック Medium, Yu Gothic Medium, 游ゴシック, Yu Gothic, メイリオ, Meiryo, Helvetica, Arial, sans-serif;
+}
+
 hr {
   border-bottom: solid 1px var(--border-color);
   margin: 12px 0;
@@ -62,6 +66,7 @@ time {
   flex-wrap: wrap;
   width: calc(100% + 3px);
   gap: 0px;
+  aspect-ratio: 2 / 1;
   margin: 0rem -1.5px 0rem -1.5px;
 }
 
@@ -80,7 +85,7 @@ time {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.3) 20%, rgba(0, 0, 0, 0.9));
   z-index: 1;
   width: 100%;
-  padding: 10% 20px 10px 20px;
+  padding: 10% 1rem 10px 1rem;
   box-sizing: border-box;
 }
 
@@ -91,13 +96,14 @@ time {
 .recommend-header h2 {
   color: #fff;
   line-height: 29px;
-  font-size: 16px;
+  font-size: 17.5px;
   margin: 0;
+  font-family: var(--article-font);
 }
 
 .ranking-page-main .share-nav {
   margin: 8px 0;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 
 .ranking-page-main .share-menu-outer {
@@ -112,15 +118,17 @@ time {
 
 .recommend-desc {
   color: #555;
-  font-size: 13.541px;
+  font-size: 15px;
   line-height: 1.9;
   margin-top: 0;
+  font-family: var(--article-font);
 }
 
 .recommend-desc2 {
   color: #555;
-  font-size: 13.541px;
+  font-size: 15px;
   line-height: 1.9;
+  font-family: var(--article-font);
 }
 
 .small {

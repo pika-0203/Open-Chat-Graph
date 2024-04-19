@@ -69,7 +69,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </nav>
             <div class="recommend-p">
                 <p class="recommend-desc">
-                    2019年のサービス開始以来、累計2000万人以上のユーザーに利用されてきたLINEオープンチャット。<?php echo $tag ?>に関するルームは多くのユーザーによって開設されています。
+                    2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャット。<?php echo $tag ?>に関するルームは多くのユーザーによって開設されています。
                 </p>
                 <p class="recommend-desc">
                     そこでオプチャグラフでは「<?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag) ?>に関するテーマで人数増加が多いルーム」のランキングを作成しました。1時間ごとの更新で新しいルームが随時追加されます。
@@ -82,7 +82,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     </h3>
                     <section class="tag-list-section">
                         <p class="recommend-desc">
-                            <span class="small">各ルームは1つのランキングにのみ表示されます。例えば、「ポケモンGO」のルームは「ポケモンGO」のランキングにのみ表示され、「ポケモン」のランキングには表示されません。探しているルームが見つからない場合は、関連のキーワードをチェック！</span>
+                            <span class="small">各ルームは特定のランキングにのみ表示されます。例えば、ポケモンGOのルームは「ポケモンGO」のランキングに表示され、「ポケモン」のランキングには表示されません。探しているルームが見つからない場合は関連のキーワードをチェック！</span>
                         </p>
                         <ul class="tag-list">
                             <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
