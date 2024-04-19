@@ -56,7 +56,7 @@ https://github.com/mimimiku778/Open-Chat-Graph-Frontend
 グラフ表示  
 https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph  
 
-コメント機能
+コメント機能  
 https://github.com/mimimiku778/Open-Chat-Graph-Comments  
 
 ## 連絡先
