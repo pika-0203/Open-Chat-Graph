@@ -21,7 +21,7 @@ https://openchat-review.me
   `https://openchat.line.me/api/category/${category}?sort=RANKING&limit=40&ct=${ct}`
   - ランキングデータの取得処理  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/AbstractOpenChatApiRankingDownloaderProcess.php
-  - ランキングスクロール読み込みを再現してデータを取得する「ランキングデータの取得処理」の上位クラス  
+  - スクロール読み込みを再現して順番にデータを取得する「ランキングデータの取得処理」の上位クラス  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiRankingDownloader.php
   - サブカテゴリデータ(カテゴリ内のキーワード)の取得処理  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiSubCategoryDownloader.php
