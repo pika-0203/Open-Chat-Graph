@@ -39,7 +39,7 @@ class RecommendOpenChatPageController
         $pageTitle = "「{$tag}」オープンチャット人気ランキング【毎時更新】";
         $word = RecommendUtility::extractTag($tag);
         $pageDesc =
-            "2019年のサービス開始以来、累計2000万人以上のユーザーに利用されてきたLINEオープンチャット。そこでオプチャグラフでは「{$word}に関するテーマで人数増加が多いルーム」のランキングを作成しました。1時間ごとの更新で新しいルームが随時追加されます。";
+            "2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャット。「{$tag}」に関するルームは多くのユーザーによって開設されています。";
 
         $_meta = meta()
             ->setTitle($pageTitle)
