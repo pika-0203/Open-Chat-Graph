@@ -68,5 +68,8 @@ https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph
 コメント機能  
 https://github.com/mimimiku778/Open-Chat-Graph-Comments  
 
+## ライセンスについて
+公開しているソースコードはすべて MIT License で公開しています。
+
 ## 連絡先
 [E-MAIL](<mailto:support@openchat-review.me>)  
