@@ -560,7 +560,7 @@ class RecommendUpdater
         $this->start = $betweenUpdateTime ? OpenChatServicesUtility::getModifiedCronTime(strtotime('-1hour'))->format('Y-m-d H:i:s') : '2023-10-16 00:00:00';
         $this->end = $betweenUpdateTime ? OpenChatServicesUtility::getModifiedCronTime(strtotime('+1hour'))->format('Y-m-d H:i:s') : '2033-10-16 00:00:00';
 
-        $delete = fn (string $table) => DB::execute(
+        $deleteRecommend = fn (string $table) => DB::execute(
             "DELETE FROM
                 {$table}
             WHERE
@@ -578,10 +578,26 @@ class RecommendUpdater
             ['start' => $this->start, 'end' => $this->end]
         );
 
+        $delete = fn (string $table) => DB::execute(
+            "DELETE FROM
+                {$table}
+            WHERE
+                id IN (
+                    SELECT
+                        oc.id
+                    FROM
+                        open_chat AS oc
+                    WHERE
+                        oc.updated_at BETWEEN :start
+                        AND :end
+                )",
+            ['start' => $this->start, 'end' => $this->end]
+        );
+
         clearstatcache();
 
-        DB::transaction(function () use ($delete) {
-            $delete('recommend');
+        DB::transaction(function () use ($deleteRecommend) {
+            $deleteRecommend('recommend');
             $this->updateBeforeCategory();
             $this->updateName();
             $this->updateDescription('oc.name', 'recommend');
