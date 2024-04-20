@@ -602,6 +602,7 @@ class RecommendUpdater
             $this->updateName();
             $this->updateDescription('oc.name', 'recommend');
             $this->updateDescription();
+            $this->modifyRecommendTags();
         });
 
         DB::transaction(function () use ($delete) {
@@ -620,6 +621,11 @@ class RecommendUpdater
             $this->updateName2();
             $this->updateName2('oc.description');
         });
+    }
+
+    private function modifyRecommendTags()
+    {
+        DB::execute("UPDATE recommend AS t1 JOIN modify_recommend AS t2 ON t1.id = t2.id SET t1.tag = t2.tag");
     }
 
     function getAllTagNames(): array
