@@ -100,9 +100,6 @@ time {
   margin: 0;
 }
 
-.ranking-page-main {
-}
-
 .ranking-page-main .share-nav {
   margin: 8px 0;
   margin-bottom: 20px;
@@ -180,9 +177,6 @@ _:lang(x) + _:-webkit-full-screen-document,
   color: #555;
   font-size: 13px;
   line-height: 1.9;
-}
-
-.recommend-desc-child {
 }
 
 .recommend-desc2 {
