@@ -58,7 +58,7 @@ https://openchat-review.me
 - バックエンドの主要技術
   - PHP
   - [MimimalCMS](https://github.com/mimimiku778/MimimalCMS)
-  - symfony/browser-kit
+  - Symfony BrowserKit
   - MySQL/MariaDB
   - SQLite
 
