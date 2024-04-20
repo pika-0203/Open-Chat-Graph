@@ -17,9 +17,6 @@
         <p>
             公式ランキングに掲載されているオープンチャットはオプチャグラフに自動登録されます。
         </p>
-        <p>
-            ランキングに掲載されるのはメンバーが10人以上のオープンチャットです。
-        </p>
         <section>
             <p>
                 <b>
@@ -66,10 +63,6 @@
             <p>登録に使用できるのは招待用のURLではなく、公式サイトのURLです。</p>
             <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>登録する</button>
         </form>
-        <p>公式サイトに掲載されていないオープンチャットは登録できません。</p>
-        <p>
-            公式サイトの検索でヒットしない場合、Googleで「site:openchat.line.me/jp/cover 部屋名」を検索すると見つかるかもしれません。
-        </p>
     </main>
     <footer>
         <?php viewComponent('footer_inner') ?>

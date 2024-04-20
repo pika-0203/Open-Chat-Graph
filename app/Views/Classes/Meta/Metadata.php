@@ -9,10 +9,10 @@ class Metadata
     public string $title = 'オプチャグラフ';
 
     public string $description =
-    'オプチャグラフは興味があるオープンチャットを見つけて、成長傾向をグラフで見ることができる場所です。コメント機能で意見交換ができます。';
+    'オプチャグラフはユーザーがオープンチャットを見つけて成長傾向をグラフで比較できる場所です。コメント機能で意見交換ができます。';
 
     public string $ogpDescription =
-    'オプチャグラフは興味があるオープンチャットを見つけて、成長傾向をグラフで見ることができる場所です。コメント機能で意見交換ができます。';
+    'オプチャグラフはユーザーがオープンチャットを見つけて成長傾向をグラフで比較できる場所です。コメント機能で意見交換ができます。';
 
     public string $site_name = 'オプチャグラフ';
     public string $locale = 'ja_JP';
@@ -72,10 +72,10 @@ class Metadata
         $tags .= '<meta property="og:type" content="' . $this->og_type . '">' . "\n";
         $tags .= '<meta property="og:title" content="' . $this->title . '">' . "\n";
         $tags .= '<meta property="og:description" content="' . $this->ogpDescription . '">' . "\n";
-        $tags .= '<meta property="og:image" content="' . $this->image_url . '">' . "\n";
+        if ($this->image_url) $tags .= '<meta property="og:image" content="' . $this->image_url . '">' . "\n";
         $tags .= '<meta property="og:site_name" content="' . $this->site_name . '">' . "\n";
         $tags .= '<meta name="twitter:card" content="summary">' . "\n";
-        $tags .= '<meta name="thumbnail" content="' . $this->thumbnail . '">' . "\n";
+        if ($this->thumbnail) $tags .= '<meta name="thumbnail" content="' . $this->thumbnail . '">' . "\n";
 
         return $tags;
     }
