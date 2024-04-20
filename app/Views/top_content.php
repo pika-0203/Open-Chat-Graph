@@ -136,11 +136,8 @@
 
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; border: 0">
             <p style="line-height: 2; margin: 1.5rem 0 0 0;" class="top-small-desc">
-                オプチャグラフではオープンチャットを<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">公式ランキング（LINE公式サイト）</a>から自動的に登録しています。
+                オプチャグラフは<a href="https://openchat.line.me/jp/" rel="external" target="_blank">LINEオープンチャット公式サイト</a>に掲載されているオープンチャットを記録しています。
             </p>
-            <a style="margin-bottom: 0; margin-top: 10px;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('oc') ?>">
-                <span class="ranking-readMore">オープンチャットを手動で登録する</span>
-            </a>
             <a style="margin-bottom: 0; margin-top: 10px;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('policy') ?>">
                 <span class="ranking-readMore">オプチャグラフについて</span>
             </a>

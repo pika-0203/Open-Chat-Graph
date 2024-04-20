@@ -29,7 +29,7 @@
                 <section style="margin: 2rem 0;">
                     <h3 style="font-size: 14px;">オプチャグラフに掲載される条件</h3>
                     <p>
-                        オプチャグラフのクローラーは<a href="https://openchat.line.me/jp/explore" rel="external" target="_blank">公式サイトのランキング</a>から新しいルームを見つけて登録します。<b>ランキングに掲載されていないルームは登録されません。</b>
+                        オプチャグラフのクローラーは<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">公式サイトのランキング</a>から新しいルームを見つけて登録します。<b>ランキングに掲載されていないルームは登録されません。</b>
                     </p>
                     <p>
                         ただし、一度オプチャグラフに登録されたルームはランキング掲載の有無に関わらず、引き続きオプチャグラフに掲載されます。
@@ -62,7 +62,7 @@
                 <section style="margin: 2rem 0;">
                     <h3 style="font-size: 14px;">情報更新のスケジュール</h3>
                     <p>
-                        オプチャグラフのクローラーは定期巡回によりルームのタイトル、説明文、画像、人数統計、ランキング履歴などを更新します。
+                        オプチャグラフのクローラーは公式サイトを定期巡回してルームのタイトル、説明文、画像、人数統計、ランキング履歴などを更新します。
                     </p>
                     <ul style="font-size: 14px; line-height: 2;">
                         <li>ランキング掲載中のルーム: 1時間毎（毎時30分頃）</li>
