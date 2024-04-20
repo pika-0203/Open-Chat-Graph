@@ -43,6 +43,19 @@ https://openchat-review.me
 - #### オプチャグラフBotのUA
   - Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)
 
+- #### 並行処理
+  exec関数で複数のプロセスを同時実行することで擬似的なマルチスレッド処理をしています。  
+  - オープンチャットのカテゴリ毎のデータ取得を並行処理で実行するクラス  
+  https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDbMergerWithParallelDownloader.php
+  - execから実行される最初のラッパークラス  
+  https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Cron/ParallelDownloadOpenChat.php  
+  - ラッパークラスから呼び出される、「ランキングデータの取得処理クラス」を実行するクラス  
+  https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDataParallelDownloader.php  
+
+クローリングを1URLする毎に全プロセスで共有しているエラーフラグファイルを確認し、エラー時は全てのプロセスが停止します。
+1プロセスが終わる毎にSQLのフラグ用テーブルにフラグを立てることで、親スレッドのループ内で特定のプロセスが完了したことを認識します。
+親スレッドは、SQLをひたすら叩き続けるwhileループの中でダウンロードプロセスが終わったカテゴリを見つけ次第、ダウンロードファイルの解析とDBの更新を行います。
+
 ## ランキング表示のアルゴリズム
 元々のメンバー数が少ないオープンチャットであるほど増加率が高くなり、上位になりやすくなります。  
 
