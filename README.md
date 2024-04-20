@@ -65,11 +65,7 @@ https://openchat-review.me
 - フロントエンドの主要技術
   - TypeScript
   - React
-  - Preact
-  - Vite
   - MUI
-  - Recoil
-  - SWR
   - Chart.js
   - Swiper.js
 
