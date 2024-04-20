@@ -69,6 +69,9 @@ https://openchat-review.me
   - Chart.js
   - Swiper.js
 
+バックエンドはPHPで書かれており、自前の軽量MVCフレームワークとシンプルなリポジトリパターン(主にRaw SQL)で実装されています。  
+国内の高速レスポンス・安価なレンタルサーバーでランニングコストを抑えて稼働しています。  
+  
 ## フロントエンドのリポジトリ  
 ランキングページ  
 https://github.com/mimimiku778/Open-Chat-Graph-Frontend  
