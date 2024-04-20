@@ -60,7 +60,8 @@ https://openchat-review.me
   - [MimimalCMS](https://github.com/mimimiku778/MimimalCMS)
   - Symfony
   - MySQL
-  - SQLite
+  - SQLite  
+
 - フロントエンドの主要技術
   - React
   - Preact
