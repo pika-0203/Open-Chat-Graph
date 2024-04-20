@@ -63,7 +63,6 @@ https://openchat-review.me
   - SQLite
 
 - フロントエンドの主要技術
-  - PHP
   - TypeScript
   - React
   - MUI
