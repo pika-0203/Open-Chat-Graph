@@ -59,18 +59,19 @@ https://openchat-review.me
   - PHP
   - [MimimalCMS](https://github.com/mimimiku778/MimimalCMS)
   - Symfony
-  - MySQL
-  - SQLite  
+  - MySQL/MariaDB
+  - SQLite
 
 - フロントエンドの主要技術
+  - TypeScript/JavaScript
   - React
   - Preact
   - Vite
   - MUI
-  - Chart.js
-  - Swiper.js
   - Recoil
   - SWR
+  - Chart.js
+  - Swiper.js
 
 ## フロントエンドのリポジトリ  
 ランキングページ  
