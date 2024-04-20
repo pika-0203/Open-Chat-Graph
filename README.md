@@ -63,7 +63,7 @@ https://openchat-review.me
   - SQLite
 
 - フロントエンドの主要技術
-  - TypeScript/JavaScript
+  - TypeScript
   - React
   - Preact
   - Vite
