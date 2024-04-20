@@ -66,7 +66,7 @@ https://openchat-review.me
 
 - #### オプチャグラフBotのUA
   クローリングは統一してこのUAで行います。IPはレンサバなので定かではないですが、基本的に固定されていると思います。  
-  誰が見んねんって感じですがこのリポジトリのURLを入れてみました  
+  誰が見んねんって感じですがこのリポジトリのURLを入れてみました。
   - Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)
 
 ## ランキング表示のアルゴリズム
