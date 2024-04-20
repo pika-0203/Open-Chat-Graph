@@ -43,6 +43,7 @@ https://openchat-review.me
 - #### 1時間毎のクローリング時の並行処理
   大体10万件ほどのオープンチャットの処理を2分程度で終えます。  
   exec関数で複数のプロセスを同時実行することで擬似的なマルチスレッド処理をしています。  
+  1つのプロセスにつき2つのオープンチャットカテゴリをダウンロードします。  
 
   - オープンチャットのカテゴリ毎のデータ取得を並行処理で実行するクラス  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDbMergerWithParallelDownloader.php
@@ -52,7 +53,7 @@ https://openchat-review.me
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDataParallelDownloader.php  
 
   1プロセスが終わる毎にSQLのフラグ用テーブルにフラグを立てることで、親スレッドのループ内で特定のプロセスが完了したことを認識します。 
-  
+
   クローリングを1URLする毎に全プロセスで共有しているエラーフラグファイルを確認して、エラー時は全てのプロセスが停止します。  
 
   親スレッドは、SQLをひたすら叩き続けるwhileループの中でダウンロードプロセスが終わったカテゴリを見つけ次第、ダウンロードファイルの解析とDBの更新を行います。 
