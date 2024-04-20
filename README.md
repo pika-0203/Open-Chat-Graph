@@ -28,18 +28,6 @@ https://openchat-review.me
   - サブカテゴリデータ(カテゴリ内のキーワード)の取得処理  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiSubCategoryDownloader.php
 
-- #### オープンチャットの取得
-  - オープンチャット公式サイトの取得URL(公開済みの公式サイト)    
-    `https://openchat.line.me/api/square/${emid}?limit=1`
-  - オープンチャットの取得処理  
-    https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiFromEmidDownloader.php
-
-- #### オープンチャット画像の取得
-  - 画像の取得URL(公開済みの公式サイト)    
-    `https://obs.line-scdn.net/${profileImageObsHash}`
-  - 画像の取得処理  
-    https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatImgDownloader.php
-
 - #### 1時間毎のクローリング時の並行処理
   大体10万件ほどのオープンチャットの処理を2分程度で終えます。  
   exec関数で複数のプロセスを同時実行することで擬似的なマルチスレッド処理をしています。 
@@ -60,6 +48,21 @@ https://openchat-review.me
   親スレッドは、SQLをひたすら叩き続けるwhileループの中でダウンロードプロセスが終わったカテゴリを見つけ次第、ダウンロードファイルの解析とDBの更新を行います。 
  
   SQLに全てのプロセスの完了フラグが立ち、全カテゴリのファイルの更新が終わると処理が終了します。  
+
+- #### オープンチャットの取得
+  ランキングからダウンロードしたデータにはオープンチャットの情報が含まれていますが、新しいオープンチャットを登録する場合は一部の追加データを取得するためにこのURLを使用します。  
+  日次処理でランキング未掲載のオープンチャットの更新を行うときもこのURLを使います。  
+
+  - オープンチャット公式サイトの取得URL(公開済みの公式サイト)    
+    `https://openchat.line.me/api/square/${emid}?limit=1`
+  - オープンチャットの取得処理  
+    https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiFromEmidDownloader.php
+
+- #### オープンチャット画像の取得
+  - 画像の取得URL(公開済みの公式サイト)    
+    `https://obs.line-scdn.net/${profileImageObsHash}`
+  - 画像の取得処理  
+    https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatImgDownloader.php
 
 - #### オプチャグラフBotのUA
   - Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)
