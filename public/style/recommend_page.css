@@ -1,7 +1,3 @@
-:root {
-  --article-font: font-family: Hiragino Kaku Gothic Pro, ヒラギノ角ゴ Pro W3, 游ゴシック体, YuGothic, 游ゴシック Medium, Yu Gothic Medium, 游ゴシック, Yu Gothic, メイリオ, Meiryo, Helvetica, Arial, sans-serif;
-}
-
 hr {
   border-bottom: solid 1px var(--border-color);
   margin: 12px 0;
@@ -55,6 +51,10 @@ time {
   padding: 0 12px;
 }
 
+.list-aside.ranking-desc {
+  margin: 14px 0;
+}
+
 .hearder-img-outer {
   margin: 0rem -1rem 0rem -1rem;
   overflow: hidden;
@@ -98,7 +98,9 @@ time {
   line-height: 29px;
   font-size: 17.5px;
   margin: 0;
-  font-family: var(--article-font);
+}
+
+.ranking-page-main {
 }
 
 .ranking-page-main .share-nav {
@@ -111,24 +113,87 @@ time {
   justify-content: space-between;
 }
 
+.more-separater {
+  width: 4rem;
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+}
+
+.more {
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: none;
+}
+
+.close .more {
+  display: flex;
+}
+
+.more-text {
+  background-color: white;
+  font-weight: bold;
+  color: #555;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+_:lang(x) + _:-webkit-full-screen-document,
+.more {
+  bottom: -4px;
+}
+
+.close-btn {
+  all: unset;
+  margin-left: auto;
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  background: inherit;
+  color: #555;
+  border: 0;
+}
+
+.close .close-btn {
+  display: none;
+}
+
 .recommend-p {
-  text-align: left;
-  margin-bottom: 1.4rem;
+  display: block;
+}
+
+.close {
+  cursor: pointer;
+  user-select: none;
+}
+
+.close .recommend-p {
+  -webkit-line-clamp: unset;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
 }
 
 .recommend-desc {
   color: #555;
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1.9;
-  margin-top: 0;
-  font-family: var(--article-font);
+}
+
+.recommend-desc-child {
 }
 
 .recommend-desc2 {
   color: #555;
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1.9;
-  font-family: var(--article-font);
+}
+
+.ranking-desc .recommend-desc {
+  margin-top: 6px;
+  padding-left: 0.5rem;
 }
 
 .small {
@@ -171,7 +236,8 @@ section aside:hover {
 }
 
 .list-aside-details {
-  margin-top: 4px;
+  padding-left: 0.5rem;
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -262,7 +328,7 @@ section aside:hover {
   }
 
   main header {
-    margin-bottom: 1.3rem;
+    margin-bottom: 1rem;
   }
 
   .header-img {
@@ -300,20 +366,24 @@ section aside:hover {
 
   .recommend-header h2 {
     color: #111;
-    font-size: 2rem;
+    font-size: 27px;
     line-height: 1.5;
   }
 
   .recommend-p {
-    margin: 2rem 0;
+    margin: 1rem 0 1.5rem 0;
   }
 
   .recommend-desc {
-    font-size: 1rem;
+    font-size: 14px;
   }
 
   .recommend-desc2 {
-    font-size: 1rem;
+    font-size: 14px;
+  }
+
+  .ranking-desc .recommend-desc {
+    font-size: 13px;
   }
 
   .list-title {
@@ -327,6 +397,14 @@ section aside:hover {
   .list-aside .tag-btn {
     font-size: 14px;
     font-weight: 500;
+  }
+
+  .more-text {
+    font-size: 14px;
+  }
+
+  .close-btn {
+    font-size: 14px;
   }
 }
 

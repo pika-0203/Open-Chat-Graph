@@ -273,7 +273,7 @@ hr {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-center;
 }
 
 .my-list-form .checkbox-label {

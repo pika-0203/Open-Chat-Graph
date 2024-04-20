@@ -34,56 +34,39 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 </div>
             </header>
             <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><span aria-hidden="true" style="user-select: none;">🕛 </span><?php echo $_updatedAt->format('Y年m月d日 H:i') ?></time>
-            <nav class="share-nav unset">
-                <div class="share-nav-inner">
-                    <div class="share-menu-outer">
-                        <?php $url = urlencode(url(path())) ?>
-                        <a class="share-menu-item unset" href="https://twitter.com/intent/tweet?url=<?php echo $url ?>&text=<?php echo urlencode($_meta->title) ?>" rel="nofollow noopener" target="_blank" title="Twitterでシェア">
-                            <span class="share-menu-icon-twitter share-menu-icon"></span>
-                        </a>
-                        <a class="share-menu-item unset" href="https://b.hatena.ne.jp/entry/s/<?php echo getHostAndUri() ?>" rel="nofollow noopener" target="_blank" title="はてなブックマークでブックマーク">
-                            <span class="share-menu-icon-hatena share-menu-icon"></span>
-                        </a>
-                        <a class="share-menu-item unset" href="https://social-plugins.line.me/lineit/share?url=<?php echo $url ?>" rel="nofollow noopener" target="_blank" title="LINEでシェア">
-                            <span class="share-menu-icon-line share-menu-icon"></span>
-                        </a>
-                        <a class="share-menu-item unset" href="https://www.facebook.com/share.php?u=<?php echo $url ?>" rel="nofollow noopener" target="_blank" title="Facebookでシェア">
-                            <span class="share-menu-icon-facebook share-menu-icon"></span>
-                        </a>
-                        <div class="copy-btn-outer" id="copy-btn-outer">
-                            <button class="share-menu-item unset" id="copy-btn" title="このページのタイトルとURLをコピーする">
-                                <span class="copy-btn-icon link-icon"></span>
-                            </button>
-                            <div class="description1" id="copy-description">
-                                <div class="copy-btn-inner">
-                                    <span class="copy-btn-icon copy-icon"></span>
-                                    <span>コピーしました</span>
-                                </div>
-                                <hr style="margin: 0.25rem 0 0.45rem 0;">
-                                <div class="copy-btn-text" id="copy-btn-title"></div>
-                                <div class="copy-btn-text" id="copy-btn-url"></div>
-                            </div>
-                        </div>
-                    </div>
+            <section class="unset close" style="display: block; position:relative;" id="recommed-desc-box">
+                <p class="recommend-desc recommend-p" id="recommed-desc">
+                    <span class="recommend-desc-child">2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャット。「<?php echo $tag ?>」に関するルームは多くのユーザーによって開設されています。</span>
+                    <br>
+                    <br>
+                    <span class="recommend-desc-child">そこでオプチャグラフでは「<?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag) ?>に関するテーマで人数増加が多いルーム」のランキングを作成しました。1時間ごとの更新で新しいルームが随時追加されます。</span>
+                </p>
+                <button id="recommed-desc-close-btn" class="close-btn" title="一部を表示">一部を表示</button>
+                <div class="more">
+                    <div class="more-separater">&nbsp;</div>
+                    <span class="unset more-text" id="read_more_btn" title="もっと見る">…もっと見る</span>
                 </div>
-            </nav>
-            <div class="recommend-p">
-                <p class="recommend-desc">
-                    2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャット。「<?php echo $tag ?>」に関するルームは多くのユーザーによって開設されています。
-                </p>
-                <p class="recommend-desc">
-                    そこでオプチャグラフでは「<?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag) ?>に関するテーマで人数増加が多いルーム」のランキングを作成しました。1時間ごとの更新で新しいルームが随時追加されます。
-                </p>
-            </div>
+            </section>
+            <aside class="list-aside ranking-desc">
+                <details class="icon-desc">
+                    <summary>ランキングの掲載基準について</summary>
+                    <p class="recommend-desc">
+                        各ルームは1つのランキングにのみ表示されます。<br>例えば、美容室のルームは「美容室」にのみ表示され、「美容」には表示されません。
+                    </p>
+                    <p class="recommend-desc">
+                        オプチャグラフのタグ付け基準に基づき、タイトル・説明文が最も一致するキーワードのランキングに振り分けています。
+                    </p>
+                    <p class="recommend-desc" style="margin-bottom: 1.5rem;">
+                        探しているルームが見つからない場合は関連のキーワードを確認してみましょう。
+                    </p>
+                </details>
+            </aside>
             <?php if (isset($tags) && $tags) : ?>
                 <aside class="list-aside">
                     <h3 class="list-title">
                         <span>関連のキーワード</span>
                     </h3>
                     <section class="tag-list-section">
-                        <p class="recommend-desc" style="margin: 0 0 4px 0; line-height: 135%;">
-                            <span class="small">各ルームは1つのランキングにのみ表示されます。例えば、美容室のルームは「美容室」にのみ表示され、「美容」には表示されません。探しているルームが見つからない場合は関連のキーワードをチェック！</span>
-                        </p>
                         <ul class="tag-list">
                             <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
                                 <li>
@@ -173,12 +156,29 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </aside>
         </article>
     </main>
-    <footer style="border-top: 1px solid #efefef; padding-top: 1rem;">
+    <footer style="padding-top: 1rem;">
+        <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
         <?php viewComponent('footer_inner') ?>
     </footer>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
 
     <?php echo $_breadcrumbsShema ?>
+    <script>
+        // 説明文の続きを読むボタン
+        const talkroomDesc = document.getElementById('recommed-desc')
+        const talkroomDescBox = document.getElementById('recommed-desc-box')
+        const closeId = 'recommed-desc-close-btn'
+        const closeBtn = document.getElementById('recommed-desc-close-btn')
+
+        talkroomDescBox.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
+
+        closeBtn.addEventListener('click', () => {
+            talkroomDescBox.classList.add('close')
+            window.scrollTo({
+                top: 0,
+            });
+        })
+    </script>
 </body>
 
 </html>
