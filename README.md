@@ -54,6 +54,23 @@ https://openchat-review.me
 増加率: `増加数 / 前日 or 前週のメンバー数`  
 ランク付け: `増加数 + 増加率 × 10`  
 
+## 使用技術
+- バックエンドの主要技術
+  - PHP
+  - [MimimalCMS](https://github.com/mimimiku778/MimimalCMS)
+  - Symfony
+  - MySQL
+  - SQLite
+- フロントエンドの主要技術
+  - React
+  - Preact
+  - Vite
+  - MUI
+  - Chart.js
+  - Swiper.js
+  - Recoil
+  - SWR
+
 ## フレームワーク
 MimimalCMS  
 https://github.com/mimimiku778/MimimalCMS
