@@ -72,10 +72,6 @@ https://openchat-review.me
   - Recoil
   - SWR
 
-## フレームワーク
-MimimalCMS  
-https://github.com/mimimiku778/MimimalCMS
-
 ## フロントエンドのリポジトリ  
 ランキングページ  
 https://github.com/mimimiku778/Open-Chat-Graph-Frontend  
