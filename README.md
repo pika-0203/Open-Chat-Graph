@@ -40,10 +40,7 @@ https://openchat-review.me
   - 画像の取得処理  
     https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatImgDownloader.php
 
-- #### オプチャグラフBotのUA
-  - Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)
-
-- #### 並行処理
+- #### 1時間毎のクローリング時の並行処理
   exec関数で複数のプロセスを同時実行することで擬似的なマルチスレッド処理をしています。  
   - オープンチャットのカテゴリ毎のデータ取得を並行処理で実行するクラス  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDbMergerWithParallelDownloader.php
@@ -59,6 +56,9 @@ https://openchat-review.me
  
 SQLに全てのプロセスの完了フラグが立ち、全カテゴリのファイルの更新が終わると処理が終了します。  
 これが１時間毎のクローリング処理の流れですが、大体10万件ほどのオープンチャットの処理を2分程度で終えます。  
+
+- #### オプチャグラフBotのUA
+  - Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)
 
 ## ランキング表示のアルゴリズム
 元々のメンバー数が少ないオープンチャットであるほど増加率が高くなり、上位になりやすくなります。  
