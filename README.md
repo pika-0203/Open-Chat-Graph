@@ -50,7 +50,7 @@ https://openchat-review.me
   親スレッドは、SQLをひたすら叩き続けるwhileループの中でダウンロードプロセスが終わったカテゴリを見つけ次第、ダウンロードファイルの解析とDBの更新を行います。 
  
   SQLに全てのプロセスの完了フラグが立ち、全カテゴリのファイルの更新が終わると処理が終了します。  
-  
+
   1インスタンスのRAMやリソースが決まっているクラウドに比較すると、LAMPのレンサバは平行処理の上限が高くうまくマッチしました。
 
 - #### オープンチャットの取得
@@ -70,7 +70,6 @@ https://openchat-review.me
 
 - #### オプチャグラフBotのUA
   クローリングは統一してこのUAで行います。IPはレンサバなので定かではないですが、基本的に固定されていると思います。  
-  誰が見んねんって感じですがこのリポジトリのURLを入れてみました。
   - Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)
 
 ## ランキング表示のアルゴリズム
