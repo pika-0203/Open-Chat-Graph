@@ -87,7 +87,7 @@ https://openchat-review.me
       - ${profileImageObsHash}: オープンチャットを画像を特定するためのハッシュ。
 
     #### 実装コード:
-    - 画像の取得処理: オープンチャットの画像を取得するための処理です。
+    - 画像の取得処理: オープンチャットの画像を取得するための処理です。  
     [OpenChatImgDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/)  
 
 - ### オプチャグラフBotのUA
