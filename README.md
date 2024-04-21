@@ -15,7 +15,7 @@ https://openchat-review.me
 余談ですが、クローラーやスクレイピングツールなどの開発はプログラミング初心者が学びやすい題材です。  
 ※ただしこのリポジトリのコードは参考にならない（読めない）かもしれないです。  
 
-- #### クローラー本体
+- ### クローラー本体
   このクローラーは、PHPでのウェブページの自動巡回とデータ収集を目的としています。  
   SymfonyのBrowserKitを使用しており、特定のウェブページへのアクセスを試み、エラー応答に応じて再試行します。  
   特に、404エラー（ページが見つからない）以外の場合、設定された回数まで再試行を行い、それを超えるとエラーを報告します。  
@@ -29,15 +29,15 @@ https://openchat-review.me
   [FileDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/FileDownloader.php)
 
 
-- #### ランキングデータの取得
+- ### ランキングデータの取得
   LINEオープンチャットのランキングデータを、フロントエンドのAPI(公開済みの公式サイト)を通じて取得します。  
 
-    ##### APIエンドポイントの構造:
+    #### APIエンドポイントの構造:
     - 取得URL: `https://openchat.line.me/api/category/${category}?sort=RANKING&limit=40&ct=${ct}`
       - ${category}: 取得したいカテゴリを指定します。
       - ${ct} (continuation token): ページングを管理するためのトークンです。最初は0から始め、取得したデータに含まれる次のctを用いて、続くページを順に取得します。
 
-    ##### 実装コード:
+    #### 実装コード:
     - ランキングデータの取得処理: 無限スクロールを模倣してランキングデータを順に取得します。
     [AbstractOpenChatApiRankingDownloaderProcess.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/AbstractOpenChatApiRankingDownloaderProcess.php)
 
@@ -47,7 +47,7 @@ https://openchat-review.me
     - サブカテゴリデータの取得: カテゴリ内のキーワード、すなわちサブカテゴリデータを取得するための処理を担います。
     [OpenChatApiSubCategoryDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiSubCategoryDownloader.php)
 
-- #### 1時間毎のクローリング時の並行処理
+- ### 1時間毎のクローリング時の並行処理
   このプロジェクトでは、公式サイトからランキングデータを高速にダウンロードしてデータベースを更新するシステムを構築しました。  
     - 具体的には、以下の特徴を持つ処理を行っています。
       - 全24カテゴリのランキングデータを、24個の並行プロセスで同時にダウンロードします。  
@@ -65,7 +65,7 @@ https://openchat-review.me
   エラーが発生した場合は、共有されているエラーフラグファイルを通じて全プロセスを停止させることができます。  
   このシステムにより、10万件のデータを約2分で処理できるようになりました。  
 
-- #### オープンチャットの取得
+- ### オープンチャットの取得
   ランキングからダウンロードしたデータにはオープンチャットの情報が含まれていますが、新しいオープンチャットを登録する場合は一部の追加データを取得するためにこのURLを使用します。  
   日次処理でランキング未掲載のオープンチャットの更新を行うときもこのURLを使います。  
 
@@ -74,13 +74,13 @@ https://openchat-review.me
   - オープンチャットの取得処理  
     https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiFromEmidDownloader.php
 
-- #### オープンチャット画像の取得
+- ### オープンチャット画像の取得
   - 画像の取得URL(公開済みの公式サイト)    
     `https://obs.line-scdn.net/${profileImageObsHash}`
   - 画像の取得処理  
     https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatImgDownloader.php
 
-- #### オプチャグラフBotのUA
+- ### オプチャグラフBotのUA
   クローリングは統一してこのUAで行います。IPはレンサバなので定かではないですが、基本的に固定されていると思います。  
   - Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)
 
