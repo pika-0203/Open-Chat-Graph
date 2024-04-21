@@ -57,7 +57,7 @@ https://openchat-review.me
   - 子プロセスのクラスで利用する、「ランキングデータの取得処理クラス」を実行するクラス  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDataParallelDownloader.php  
 
-  エラーが発生した場合は、共有されているエラーフラグファイルを通じて全プロセスを停止させることができます。
+  エラーが発生した場合は、共有されているエラーフラグファイルを通じて全プロセスを停止させることができます。  
   このシステムにより、10万件のデータを約2分で処理できるようになりました。  
 
 - #### オープンチャットの取得
