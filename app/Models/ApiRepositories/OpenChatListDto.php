@@ -17,7 +17,7 @@ class OpenChatListDto
         $this->category = $oc['emblem'] === null ? -1 : ($oc['category'] ?? 0);
 
         if (isset($oc['api_created_at'])) {
-            $this->createdAt = convertDatetime($oc['api_created_at']);
+            //$this->createdAt = convertDatetime($oc['api_created_at']);
         }
 
         if (isset($oc['diff_member'])) {
