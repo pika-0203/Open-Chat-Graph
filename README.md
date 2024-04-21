@@ -29,7 +29,7 @@ https://openchat-review.me
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiSubCategoryDownloader.php
 
 - #### 1時間毎のクローリング時の並行処理
-  大体10万件ほどのオープンチャットの処理を2分程度で終えます。  
+  大体10万件ほどのオープンチャットのダウンロード&DB更新処理を2分程度で終えます。  
   exec関数で複数のプロセスを同時実行することで擬似的なマルチスレッド処理をしています。  
 
   1つのプロセスにつき2つのオープンチャットカテゴリ分のランキングデータをダウンロードします。  
