@@ -132,7 +132,7 @@ LINEオープンチャットのランキングデータを、フロントエン�
     - ${profileImageObsHash}: オープンチャットを画像を特定するためのハッシュ。
 
   #### 実装コード:
-  - 画像の取得処理: オープンチャットの画像を取得するための処理です。失敗時にはエラーを報告しますが、このエラーは呼び出し元で捕捉され、profileImageObsHashなどの情報と共にエラーログに記録されます。  
+  - 画像の取得処理: オープンチャットの画像を取得し、WebP形式に変換して保存します。失敗時にはエラーを報告しますが、このエラーは呼び出し元で捕捉され、profileImageObsHashなどの情報と共にエラーログに記録されます。  
   [OpenChatImgDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatImgDownloader.php)  
 
 ## オプチャグラフBotのUA
