@@ -91,8 +91,13 @@ https://openchat-review.me
     [OpenChatImgDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/)  
 
 - ### オプチャグラフBotのUA
-  クローリングは統一してこのUAで行います。IPはレンサバなので定かではないですが、基本的に固定されていると思います。  
-  - Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)
+  オプチャグラフBotのクローリングは、以下のユーザーエージェント（UA）を使用して統一的に行われます。  
+  IPアドレスについては、レンタルサーバーを使用しているため一定ではありませんが、基本的には固定IPを利用しています。  
+
+  - Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)  
+
+  このユーザーエージェントは、オプチャグラフBotがLINE公式サイトをクローリングする際に使用されます。  
+  LINE公式サイト側では、このユーザーエージェントを識別することで、オプチャグラフBotからのアクセスを確認することができます。  
 
 ## ランキング表示のアルゴリズム
 元々のメンバー数が少ないオープンチャットであるほど増加率が高くなり、上位になりやすくなります。  
