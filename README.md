@@ -23,6 +23,8 @@ https://openchat-review.me
   - ファイルダウンローダー(symfony/HttpClientのラッパークラス)  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/FileDownloader.php
 
+  今回のクローラーはHTMLをパースする必要が無いので、素のCurlかfile_get_contents()だけで事足りるかもしれないです。  
+
 - #### ランキングデータの取得
   ランキングデータのAPIは1クエリ毎に40件分のオープンチャットを返します。無限スクロール画面のページングに対応するものです。  
 
