@@ -41,10 +41,10 @@ https://openchat-review.me
     - ランキングデータの取得処理: 無限スクロールを模倣してランキングデータを順に取得します。
     [AbstractOpenChatApiRankingDownloaderProcess.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/AbstractOpenChatApiRankingDownloaderProcess.php)
 
-    - ランキングデータ取得の上位クラス:
+    - ランキングデータ取得の上位クラス:  
     [OpenChatApiRankingDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiRankingDownloader.php)
 
-    - サブカテゴリデータの取得: カテゴリ内のキーワード、すなわちサブカテゴリデータを取得するための処理を担います。
+    - サブカテゴリデータの取得: カテゴリ内のキーワード、すなわちサブカテゴリデータを取得するための処理を担います。  
     [OpenChatApiSubCategoryDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiSubCategoryDownloader.php)
 
 - ### 1時間毎のクローリング時の並行処理
