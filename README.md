@@ -26,7 +26,7 @@ https://openchat-review.me
   今回のクローラーはHTMLをパースする必要が無いので、素のCurlかfile_get_contents()だけで事足りるかもしれないです。  
 
 - #### ランキングデータの取得
-  ランキングデータのAPIは1クエリ毎に40件分のオープンチャットを返します。無限スクロール画面のページングに対応するものです。  
+  ランキングデータのAPIは1クエリ毎に40件分のオープンチャットをJSONで返します。無限スクロール画面のページングに対応するものです。  
 
   - オープンチャット公式サイトの取得URL(公開済みの公式サイト)    
   `https://openchat.line.me/api/category/${category}?sort=RANKING&limit=40&ct=${ct}`
