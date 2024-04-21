@@ -20,7 +20,11 @@
           </div>
         </a>
       </h3>
-      <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
+      <?php if ($oc['description']) : ?>
+        <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
+      <?php else : ?>
+        <p class="openchat-item-desc unset" style="color: #b7b7b7;">削除されたコメント</p>
+      <?php endif ?>
     </li>
   <?php endforeach ?>
 </ol>

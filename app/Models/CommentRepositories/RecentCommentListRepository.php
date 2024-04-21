@@ -24,7 +24,9 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
                         ORDER BY
                             time DESC
                     ) AS rn,
-                    text
+                    text,
+                    name,
+                    flag
                 FROM
                     comment
                 WHERE
@@ -33,7 +35,9 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
             SELECT
                 open_chat_id,
                 time,
-                text
+                text,
+                name,
+                flag
             FROM
                 RankedComments
             WHERE
@@ -66,7 +70,7 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
 
         $result = [];
         foreach ($oc as $i => $el) {
-            $result[] = $el + ['time' => $comments[$i]['time'], 'description' => $comments[$i]['text']];
+            $result[] = $el + ['time' => $comments[$i]['time'], 'description' => $comments[$i]['flag'] !== 1 ? $comments[$i]['text'] : '削除されたコメント😇'];
         }
 
         return $result;
@@ -82,6 +86,7 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
                 open_chat_id,
                 time,
                 name,
+                flag,
                 text
             FROM
                 comment
@@ -131,11 +136,11 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
 
             $result[] = [
                 'id' => $el['open_chat_id'],
-                'user' => ($el['name']  ?: '匿名'),
+                'user' => $el['flag'] !== 1 ? ($el['name']  ?: '匿名') : '***',
                 'name' => $oc[$key]['name'],
                 'img_url' => $oc[$key]['img_url'],
                 'emblem' => $oc[$key]['emblem'],
-                'description' => $el['text'],
+                'description' => $el['flag'] !== 1 ? $el['text'] : '',
                 'time' => $el['time']
             ];
         }
