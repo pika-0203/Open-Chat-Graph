@@ -6,6 +6,7 @@
     <?php viewComponent('site_header') ?>
     <main style="margin-bottom: 0;">
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem">
+            <div style="font-size: 11px; color: #777">アップデート情報 2024/4/21:<br>①ルーム作成日の表示機能を削除<br>②ルームの並び替えに機能に少ない順を追加</div>
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
