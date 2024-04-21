@@ -13,6 +13,10 @@ https://openchat-review.me
 これにより、オープンチャットの最新の人数データや説明文といった情報をリアルタイムに反映することができています。  
 
 - #### クローラー本体
+  PHPのクローリングでよく使われているsymfony/browser-kitをラップした単純なものです。  
+  404以外のエラー時は指定回数までループで再試行して、限界を超えたらエラーをスローします。  
+  これまでの経験上、LINEのサーバーは稀に404以外の400系のエラーを返すことがありますが、2度以上続いたことはありません。  
+
   - クローラー(symfony/browser-kitのラッパークラス)  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/CrawlerFactory.php
   - ファイルダウンローダー(symfony/HttpClientのラッパークラス)  
