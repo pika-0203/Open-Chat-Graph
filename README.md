@@ -44,6 +44,9 @@ https://openchat-review.me
     - ランキングデータ取得の上位クラス:  
     [OpenChatApiRankingDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiRankingDownloader.php)
 
+    - ダウンロードデータの検証クラス: APIからのデータを検証し、PHPのオブジェクト形式にマッピングする役割を持ちます
+    [OpenChatApiDtoFactory.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Dto/OpenChatApiDtoFactory.php)
+
     - サブカテゴリデータの取得: カテゴリ内のキーワード、すなわちサブカテゴリデータを取得するための処理を担います。  
     [OpenChatApiSubCategoryDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiSubCategoryDownloader.php)
 
@@ -61,7 +64,7 @@ https://openchat-review.me
   - execから実行される子プロセス  
   [ParallelDownloadOpenChat.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Cron/ParallelDownloadOpenChat.php)  
 
-  - 子プロセスのクラスで利用する、「ランキングデータの取得処理クラス」を実行するクラス  
+  - 子プロセスのクラスで利用する、「ランキングデータの取得処理クラス・ダウンロードデータの検証クラス」を実行するクラス  
   [OpenChatApiDataParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDataParallelDownloader.php)  
 
   エラーが発生した場合は、共有されているエラーフラグファイルを通じて全プロセスを停止させることができます。  
