@@ -16,7 +16,7 @@ https://openchat-review.me
   PHPのクローリングでよく使われているsymfony/browser-kitをラップした単純なものです。  
   404以外のは指定回数までループで再試行して、限界を超えたらエラーをスローします。  
 
-  これまでの経験上、LINEのサーバーは稀に404以外の400系のエラーを返すことがありますが、2度以上続いたことはありません。  
+  これまでの経験上、LINEのサーバーは稀に404以外の400系のエラーを1度返すことがありますが、2度以上続いたことはありません。  
 
   - クローラー(symfony/browser-kitのラッパークラス)  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/CrawlerFactory.php
