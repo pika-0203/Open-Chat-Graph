@@ -23,6 +23,20 @@ https://openchat-review.me
 
 具体的には、ウェブページからテキストや画像などのデータを取得し、それを解析して有用な情報を抽出するプロセスです。このプロジェクトでのクローラーの使用も、実質的にはスクレイピングの一種と言えます。  
 
+- 余談ですが、クローラーやスクレイピングツールの開発は、プログラミングの初学者やプログラミングをこれから始める人にとって、非常に良い練習題材となります。  
+
+  例えば、あるウェブサイトから最新のニュース記事のタイトルを自動で集めたい場合、スクレイピングツールを使ってこの作業を自動化できます。  
+  これは、手動でページを開いて、必要な情報をコピー＆ペーストする代わりに、プログラムが自動でその作業を行ってくれるというわけです。  
+
+  プログラミング初心者にとって、クローラーやスクレイピングツールの開発は、以下のような理由で学びやすいと言えます。
+  - 実用性が高い: インターネット上の情報を自動で収集・分析できるため、様々なプロジェクトやアイデアの実現に役立ちます。  
+
+  - 基本的なプログラミング技術を学べる: 文字列処理、ループ、条件分岐、関数などの基礎的なプログラミングの概念を実践的に学べます。  
+
+  - 結果がすぐに見える: コードを書いた後、すぐにウェブサイトから情報が抽出されるのを見ることができるため、達成感を感じやすいです。  
+
+  基本的なコードの書き方やプログラミングの流れを理解し、実際に何かを作り出す楽しさを感じることができるでしょう。
+
 - クローラーやスクレイピングツールを開発する際には、いくつかの重要な注意点があります。以下に主なものを挙げます。
 
   - 法的な観点: ウェブサイトのコンテンツは著作権で保護されていることが多いため、無断でのデータ収集や利用は著作権侵害にあたる可能性があります。また、特定のサイトはスクレイピングを禁止している場合がありますので、利用規約を事前に確認してください。
@@ -34,6 +48,92 @@ https://openchat-review.me
   - robots.txtの尊重: ウェブサイトのルートディレクトリにあるrobots.txtファイルは、クローラーに対してどのページをスクレイピングしてよいか、どのページを避けるべきかの指示を含んでいます。クローラーやスクレイピングツールを開発する際には、このファイルの内容を尊重することが重要です。
 
   クローラーやスクレイピングツールの開発は、多くの面で実用性が高いものですが、上記のような注意点を守りながら、倫理的かつ法的な枠組みの中で行うことが重要です。
+
+
+## クローラー本体
+このプロジェクトのクローラーは、PHPでのウェブページの自動巡回とデータ収集を目的としています。  
+SymfonyのBrowserKitを使用しており、特定のウェブページへのアクセスを試み、エラー応答に応じて再試行します。  
+404エラー（ページが見つからない）以外のエラーの場合、設定された回数まで再試行を行い、それを超えるとエラーを報告します。  
+
+LINEのサーバーからは、稀に400系エラーが返されることがありますが、このクローラーはそのような一時的なエラーに対しても効率的に対応します。  
+
+- クローラー: SymfonyのBrowserKitを基にしたラッパークラス。エラーハンドリングと再試行機構を備えています。  
+[CrawlerFactory.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/CrawlerFactory.php)  
+
+- ファイルダウンローダー: SymfonyのHttpClientを基にしたラッパークラス。効率的なファイルダウンロードを実現します。  
+[FileDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/FileDownloader.php)
+
+
+## ランキングデータの取得
+LINEオープンチャットのランキングデータを、フロントエンドのAPIを通じて取得します。  
+
+  #### APIエンドポイントの構造:
+  - 取得URL: `https://openchat.line.me/api/category/${category}?sort=RANKING&limit=40&ct=${ct}`
+    - ${category}: 取得したいカテゴリを指定します。
+    - ${ct} (continuation token): ページングを管理するためのトークンです。最初は0から始め、取得したデータに含まれる次のctを用いて、続くページを順に取得します。
+
+  #### 実装コード:
+  - ランキングデータの取得処理: 無限スクロールを模倣してランキングデータを順に取得します。
+  [AbstractOpenChatApiRankingDownloaderProcess.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/AbstractOpenChatApiRankingDownloaderProcess.php)
+
+  - ランキングデータ取得の上位クラス: 無限スクロールを模倣するためのループ処理と、1ループ毎に実行する関数を渡す役割を持ちます。  
+  [OpenChatApiRankingDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiRankingDownloader.php)
+
+  - ダウンロードデータの検証クラス: APIからのデータを検証し、オブジェクト形式にマッピングする役割を持ちます。  
+  [OpenChatApiDtoFactory.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Dto/OpenChatApiDtoFactory.php)
+
+  - サブカテゴリデータの取得: カテゴリ内のキーワード、すなわちサブカテゴリデータを取得するための処理です。  
+  [OpenChatApiSubCategoryDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiSubCategoryDownloader.php)
+
+## 1時間毎のクローリング時の並行処理
+このプロジェクトでは、公式サイトからランキングデータを高速にダウンロードしてデータベースを更新するシステムを構築しました。  
+  - 具体的には、以下の特徴を持つ処理を行っています。
+    - 全24カテゴリのランキングデータを、24個の並行プロセスで同時にダウンロードします。  
+    - 各プロセスは、2つのカテゴリ（ランキングと急上昇）のデータを取得します。  
+    - ダウンロードが完了するごとに、SQLのフラグを用いて処理進行を管理します。  
+    - 全プロセスが終了し、全カテゴリのデータ更新が完了すると、全体の処理が終了します。  
+
+- データ取得を並行処理で実行する親プロセス  
+[OpenChatApiDbMergerWithParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDbMergerWithParallelDownloader.php)  
+
+- execから実行される子プロセス  
+[ParallelDownloadOpenChat.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Cron/ParallelDownloadOpenChat.php)  
+
+- 子プロセスのクラスで利用する、「ランキングデータの取得処理クラス・ダウンロードデータの検証クラス」を実行するクラス  
+[OpenChatApiDataParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDataParallelDownloader.php)  
+
+エラーが発生した場合は、共有されているエラーフラグファイルを通じて全プロセスを停止させることができます。  
+このシステムにより、10万件のデータを約2分で処理できるようになりました。  
+
+## オープンチャットの取得
+このセクションでは、個別にオープンチャットの情報を取得するプロセスについて説明します。  
+ランキングからダウンロードしたデータにはオープンチャットの情報が含まれていますが、新しいオープンチャットを登録する場合や、ランキングに掲載されていないオープンチャットの情報を更新する場合には、このAPIから追加のデータ取得が必要です。
+
+  #### APIエンドポイントの構造:
+  - 取得URL: `https://openchat.line.me/api/square/${emid}?limit=1`
+    - ${emid}: オープンチャットを特定するためのID。
+    - limit=1: オープンチャットのページに表示されるおすすめの数を指定します。（最低値は1）
+
+  #### 実装コード:
+  - オープンチャットの取得処理: 特定のオープンチャットの追加データを取得するための処理です。  
+    これは、新規にオープンチャットを登録する際や、日次処理でランキングに掲載されていない既存のオープンチャットの情報を更新する際に使用されます。   
+    [OpenChatApiFromEmidDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiFromEmidDownloader.php)
+
+  - ダウンロードデータの検証クラス: APIからのデータを検証し、オブジェクト形式にマッピングする役割を持ちます。  
+    [OpenChatApiFromEmidDtoFactory.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Dto/OpenChatApiFromEmidDtoFactory.php)
+
+  - メンバー数が0と表示される場合の例外報告: APIからのデータは稀にメンバー数が0の場合があり、これは既知の例外パターンとして報告します。  
+      [InvalidMemberCountException.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Exceptions/InvalidMemberCountException.php)  
+
+
+## オープンチャット画像の取得
+  #### URLの構造:
+  - 取得URL: `https://obs.line-scdn.net/${profileImageObsHash}`
+    - ${profileImageObsHash}: オープンチャットの画像を特定するためのハッシュ。
+
+  #### 実装コード:
+  - 画像の取得処理: オープンチャットの画像を取得し、WebP形式に変換して保存します。  
+  [OpenChatImgDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatImgDownloader.php)  
 
 ## オプチャグラフBotのUA
   オプチャグラフBotのクローリングは、以下のユーザーエージェント（UA）を使用して統一的に行われます。  
