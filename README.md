@@ -77,15 +77,18 @@ https://openchat-review.me
       - limit=1: オープンチャットのページに表示されるおすすめの数を指定します。（最低値は1）
 
     #### 実装コード:
-  - オープンチャットの取得処理: 特定のオープンチャットの追加データを取得するための処理です。  
-    これは、新規にオープンチャットを登録する際や、日次処理でランキングに掲載されていない既存のオープンチャットの情報を更新する際に使用されます。 
-    [OpenChatApiFromEmidDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiFromEmidDownloader.php)
+    - オープンチャットの取得処理: 特定のオープンチャットの追加データを取得するための処理です。  
+      これは、新規にオープンチャットを登録する際や、日次処理でランキングに掲載されていない既存のオープンチャットの情報を更新する際に使用されます。   
+      [OpenChatApiFromEmidDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiFromEmidDownloader.php)
 
 - ### オープンチャット画像の取得
     #### URLの構造:
     - 取得URL: `https://obs.line-scdn.net/${profileImageObsHash}`
-  - 画像の取得処理  
-    https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatImgDownloader.php
+      - ${profileImageObsHash}: オープンチャットを画像を特定するためのハッシュ。
+
+    #### 実装コード:
+    - 画像の取得処理: オープンチャットの画像を取得するための処理です。
+    [OpenChatImgDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/)  
 
 - ### オプチャグラフBotのUA
   クローリングは統一してこのUAで行います。IPはレンサバなので定かではないですが、基本的に固定されていると思います。  
