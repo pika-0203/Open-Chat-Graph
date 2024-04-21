@@ -9,4 +9,6 @@ class AdminOpenChatDto
     public int $id;
     public string|false $recommendTag;
     public string|false $modifyTag;
+    /** @var int[] $commentIdArray */
+    public array $commentIdArray;
 }

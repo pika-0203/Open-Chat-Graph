@@ -144,4 +144,11 @@ Route::path(
     [AdminEndPointController::class, 'index']
 );
 
+Route::path(
+    'admin-api/deletecomment@post',
+    [AdminEndPointController::class, 'deletecomment']
+)
+    ->matchNum('id')
+    ->matchNum('commentId');
+
 Route::run();

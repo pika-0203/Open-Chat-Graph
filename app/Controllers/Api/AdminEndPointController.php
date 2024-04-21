@@ -7,7 +7,6 @@ namespace App\Controllers\Api;
 use App\Models\CommentRepositories\DeleteCommentRepositoryInterface;
 use App\Services\Admin\AdminAuthService;
 use App\Services\OpenChatAdmin\AdminEndPoint;
-use Shadow\Kernel\Reception;
 use Shared\Exceptions\NotFoundException;
 
 class AdminEndPointController
@@ -25,15 +24,13 @@ class AdminEndPointController
         return redirect("oc/{$id}");
     }
 
-    function deletecomment(DeleteCommentRepositoryInterface $deleteCommentRepository)
+    function deletecomment(int $commentId, int $id, DeleteCommentRepositoryInterface $deleteCommentRepository)
     {
-        $id = Reception::input('ocId');
-        $commentId = Reception::input('commentId');
 
         $result = $deleteCommentRepository->deleteCommentByOcId($id, $commentId);
 
         return $result
-            ? view('admin/admin_message_page', ['title' => 'コメント削除', 'message' => '削除されたコメントはありません'])
-            : redirect("oc/{$id}");
+            ? redirect("oc/{$id}")
+            : view('admin/admin_message_page', ['title' => 'コメント削除', 'message' => '削除されたコメントはありません']);
     }
 }

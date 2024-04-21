@@ -16,7 +16,10 @@ class CommentListRepository implements CommentListRepositoryInterface
                 c.id,
                 c.comment_id AS commentId,
                 c.name,
-                c.text,
+                CASE c.flag
+                    WHEN 1 THEN ''
+                    ELSE c.text
+                END AS text,
                 c.time,
                 c.user_id AS userId,
                 IFNULL(l.empathy, 0) AS empathyCount,
@@ -85,5 +88,20 @@ class CommentListRepository implements CommentListRepositoryInterface
                 comment_id = :comment_id";
 
         return CommentDB::fetch($query, compact('comment_id'));
+    }
+
+    function getCommentIdArrayByOpenChatId(int $open_chat_id): array
+    {
+        $query =
+            "SELECT
+                id
+            FROM
+                comment
+            WHERE
+                open_chat_id = :open_chat_id
+            ORDER BY
+                id DESC";
+
+        return CommentDB::fetchAll($query, compact('open_chat_id'), [\PDO::FETCH_COLUMN, 0]);
     }
 }

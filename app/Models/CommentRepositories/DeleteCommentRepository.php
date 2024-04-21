@@ -16,7 +16,7 @@ class DeleteCommentRepository implements DeleteCommentRepositoryInterface
         );
 
         return CommentDB::executeAndCheckResult(
-            "DELETE FROM comment WHERE comment_id = :comment_id",
+            "UPDATE comment SET flag = 1 WHERE comment_id = :comment_id",
             $id
         );
     }

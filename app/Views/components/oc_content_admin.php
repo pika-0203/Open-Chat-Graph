@@ -17,3 +17,13 @@
     <input type="hidden" name="type" value="deleteModifyTag">
     <input type="submit">
 </form>
+<form onsubmit="return confirm('コメントを削除しますか？')" action="/admin-api/deletecomment" method="POST" style="margin: 1rem 0;">
+    <label for="comments-delete">コメントを削除</label>
+    <select name="commentId" id="comments-delete" style="width: 5rem; font-size:1rem">
+        <?php foreach ($_adminDto->commentIdArray as $commentId) : ?>
+            <option value="<?php echo $commentId ?>"><?php echo $commentId ?></option>
+        <?php endforeach ?>
+    </select>
+    <input type="hidden" name="id" value="<?php echo $_adminDto->id ?>">
+    <input type="submit">
+</form>

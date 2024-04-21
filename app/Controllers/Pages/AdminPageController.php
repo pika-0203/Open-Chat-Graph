@@ -56,13 +56,6 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'オープンチャット削除', 'message' => $result ? '削除しました' : '削除されたオープンチャットはありません']);
     }
 
-    function deletecomment(?string $oc, ?string $id, DeleteCommentRepositoryInterface $deleteCommentRepository)
-    {
-        if (!($oc = Validator::num($oc)) || !($id = Validator::num($id))) return false;
-        $result = $deleteCommentRepository->deleteCommentByOcId($oc, $id);
-        return view('admin/admin_message_page', ['title' => 'コメント削除', 'message' => $result ? '削除しました' : '削除されたコメントはありません']);
-    }
-
     function positiondb(RankingPositionHourPersistence $rankingPositionHourPersistence)
     {
         $rankingPositionHourPersistence->persistStorageFileToDb();
