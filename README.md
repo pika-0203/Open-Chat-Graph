@@ -55,12 +55,14 @@ https://openchat-review.me
       - ダウンロードが完了するごとに、SQLのフラグを用いて処理進行を管理します。  
       - 全プロセスが終了し、全カテゴリのデータ更新が完了すると、全体の処理が終了します。  
 
-  - オープンチャットのカテゴリ毎のデータ取得を並行処理で実行する親プロセス  
-  https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDbMergerWithParallelDownloader.php
-  - execから実行される子プロセス    
-  https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Cron/ParallelDownloadOpenChat.php  
+  - データ取得を並行処理で実行する親プロセス  
+  [OpenChatApiDbMergerWithParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDbMergerWithParallelDownloader.php)  
+  
+  - execから実行される子プロセス  
+  [ParallelDownloadOpenChat.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Cron/ParallelDownloadOpenChat.php)  
+
   - 子プロセスのクラスで利用する、「ランキングデータの取得処理クラス」を実行するクラス  
-  https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDataParallelDownloader.php  
+  [OpenChatApiDataParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDataParallelDownloader.php)  
 
   エラーが発生した場合は、共有されているエラーフラグファイルを通じて全プロセスを停止させることができます。  
   このシステムにより、10万件のデータを約2分で処理できるようになりました。  
