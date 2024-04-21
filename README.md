@@ -97,8 +97,6 @@ https://openchat-review.me
 - 子プロセスで利用する、「ランキングデータの取得処理クラス・ダウンロードデータの検証クラス」を実行するクラス  
 [OpenChatApiDataParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDataParallelDownloader.php)  
 
-エラーが発生した場合は、共有されているエラーフラグファイルを通じて全プロセスを停止させることができます。  
-
 ## オプチャグラフBotのUA
   オプチャグラフBotのクローリングは、以下のユーザーエージェント（UA）を使用して統一的に行われます。  
   IPアドレスについては、レンタルサーバーを使用しているため一定ではありませんが、基本的には固定IPを利用しています。  
