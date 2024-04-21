@@ -33,6 +33,7 @@ https://openchat-review.me
   exec関数で複数のプロセスを同時実行することで擬似的なマルチスレッド処理をしています。  
 
   1つのプロセスにつき2つのオープンチャットカテゴリ分のランキングデータをダウンロードします。  
+  LINE側に負担をなるべくかけない配慮として必要のないアクセスは極力排除しています。  
 
   - オープンチャットのカテゴリ毎のデータ取得を並行処理で実行する親プロセス  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDbMergerWithParallelDownloader.php
