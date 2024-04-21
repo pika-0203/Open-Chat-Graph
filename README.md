@@ -16,17 +16,17 @@ https://openchat-review.me
 ※ただしこのリポジトリのコードは参考にならない（読めない）かもしれないです。  
 
 - #### クローラー本体
-  PHPのクローリングでよく使われているsymfony/browser-kitをラップした単純なものです。  
-  404以外は指定回数までループで再試行して、限界を超えたらエラーをスローします。  
+  このクローラーは、PHPでのウェブページの自動巡回とデータ収集を目的としています。  
+  SymfonyのBrowserKitを使用しており、特定のウェブページへのアクセスを試み、エラー応答に応じて再試行します。  
+  特に、404エラー（ページが見つからない）以外の場合、設定された回数まで再試行を行い、それを超えるとエラーを報告します。  
 
-  これまでの経験上LINEのサーバーは稀に404以外の400系エラーを1度返すことがありますが、2度以上続いたことはありません。  
+  LINEのサーバーからは、稀に400系エラーが返されることがありますが、このクローラーはそのような一時的なエラーに対しても効率的に対応します。  
 
-  - クローラー(symfony/browser-kitのラッパークラス)  
+  - クローラー: SymfonyのBrowserKitを基にしたラッパークラス。エラーハンドリングと再試行機構を備えています。  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/CrawlerFactory.php
-  - ファイルダウンローダー(symfony/HttpClientのラッパークラス)  
+  - ファイルダウンローダー: SymfonyのHttpClientを基にしたラッパークラス。効率的ななファイルダウンロードを実現します。  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/FileDownloader.php
 
-  今回のクローラーはHTMLをパースする必要が無いので、素のCurlかfile_get_contents()だけで事足りるかもしれないです。  
 
 - #### ランキングデータの取得
   ランキングデータのAPIは1クエリ毎に40件分のオープンチャットをJSONで返します。無限スクロール画面のページングに対応するものです。  
