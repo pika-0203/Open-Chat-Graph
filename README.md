@@ -47,7 +47,7 @@ https://openchat-review.me
     - ダウンロードデータの検証クラス: APIからのデータを検証し、オブジェクト形式にマッピングする役割を持ちます。  
     [OpenChatApiDtoFactory.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Dto/OpenChatApiDtoFactory.php)
 
-    - サブカテゴリデータの取得: カテゴリ内のキーワード、すなわちサブカテゴリデータを取得するための処理を担います。  
+    - サブカテゴリデータの取得: カテゴリ内のキーワード、すなわちサブカテゴリデータを取得するための処理です。  
     [OpenChatApiSubCategoryDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiSubCategoryDownloader.php)
 
 - ### 1時間毎のクローリング時の並行処理
