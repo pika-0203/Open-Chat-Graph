@@ -119,6 +119,10 @@ LINEオープンチャットのランキングデータを、フロントエン�
     これは、新規にオープンチャットを登録する際や、日次処理でランキングに掲載されていない既存のオープンチャットの情報を更新する際に使用されます。   
     [OpenChatApiFromEmidDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiFromEmidDownloader.php)
 
+  - ダウンロードデータの検証クラス: APIからのデータを検証し、オブジェクト形式にマッピングする役割を持ちます。  
+    [OpenChatApiFromEmidDtoFactory.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Dto/OpenChatApiFromEmidDtoFactory.php)
+
+
 ## オープンチャット画像の取得
   #### URLの構造:
   - 取得URL: `https://obs.line-scdn.net/${profileImageObsHash}`
