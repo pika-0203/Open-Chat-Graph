@@ -24,7 +24,7 @@ https://openchat-review.me
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/FileDownloader.php
 
 - #### ランキングデータの取得
-  ランキングデータのAPIは1クエリ毎に40件分のオープンチャットを返します。無限スクロール画面のページングに対応するものです。
+  ランキングデータのAPIは1クエリ毎に40件分のオープンチャットを返します。無限スクロール画面のページングに対応するものです。  
   ct(continuation token)パラメータは 0 から始まり、取得したデータに含まれる次の Continuation token で2ページ目以降を順に取得します。  
 
   - オープンチャット公式サイトの取得URL(公開済みの公式サイト)    
