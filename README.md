@@ -30,7 +30,7 @@ https://openchat-review.me
 
 
 - ### ランキングデータの取得
-  LINEオープンチャットのランキングデータを、フロントエンドのAPI(公開済みの公式サイト)を通じて取得します。  
+  LINEオープンチャットのランキングデータを、フロントエンドのAPIを通じて取得します。  
 
     #### APIエンドポイントの構造:
     - 取得URL: `https://openchat.line.me/api/category/${category}?sort=RANKING&limit=40&ct=${ct}`
@@ -57,7 +57,7 @@ https://openchat-review.me
 
   - データ取得を並行処理で実行する親プロセス  
   [OpenChatApiDbMergerWithParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDbMergerWithParallelDownloader.php)  
-  
+
   - execから実行される子プロセス  
   [ParallelDownloadOpenChat.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Cron/ParallelDownloadOpenChat.php)  
 
@@ -68,17 +68,22 @@ https://openchat-review.me
   このシステムにより、10万件のデータを約2分で処理できるようになりました。  
 
 - ### オープンチャットの取得
-  ランキングからダウンロードしたデータにはオープンチャットの情報が含まれていますが、新しいオープンチャットを登録する場合は一部の追加データを取得するためにこのURLを使用します。  
-  日次処理でランキング未掲載のオープンチャットの更新を行うときもこのURLを使います。  
+  このセクションでは、LINEオープンチャットの情報を取得するプロセスについて説明します。
+  ランキングからダウンロードしたデータにはオープンチャットの情報が含まれていますが、新しいオープンチャットを登録する場合や、ランキングに掲載されていないオープンチャットの情報を更新する場合には、追加のデータ取得が必要です。
 
-  - オープンチャット公式サイトの取得URL(公開済みの公式サイト)    
-    `https://openchat.line.me/api/square/${emid}?limit=1`
-  - オープンチャットの取得処理  
-    https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiFromEmidDownloader.php
+    #### APIエンドポイントの構造:
+    - 取得URL: `https://openchat.line.me/api/square/${emid}?limit=1`
+      - ${emid}: オープンチャットを特定するためのID。
+      - limit=1: オープンチャットのページに表示されるおすすめの数を指定します。（最低値は1）
+
+    #### 実装コード:
+  - オープンチャットの取得処理: 特定のオープンチャットの追加データを取得するための処理です。
+    これは、新規にオープンチャットを登録する際や、日次処理でランキングに掲載されていない既存のオープンチャットの情報を更新する際に使用されます。 
+    [OpenChatApiFromEmidDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiFromEmidDownloader.php)
 
 - ### オープンチャット画像の取得
-  - 画像の取得URL(公開済みの公式サイト)    
-    `https://obs.line-scdn.net/${profileImageObsHash}`
+    #### URLの構造:
+    - 取得URL: `https://obs.line-scdn.net/${profileImageObsHash}`
   - 画像の取得処理  
     https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatImgDownloader.php
 
