@@ -45,26 +45,6 @@ https://openchat-review.me
 
   LINE公式サイト側では、このユーザーエージェントを識別することで、オプチャグラフBotからのアクセスを確認することができます。  
 
-## 1時間毎のクローリング時の並行処理
-このプロジェクトでは、公式サイトからランキングデータを高速にダウンロードしてデータベースを更新するシステムを構築しました。  
-  - 具体的には、以下の特徴を持つ処理を行っています。
-    - 全24カテゴリのランキングデータを、24個の並行プロセスで同時にダウンロードします。  
-    - 各プロセスは、2つのカテゴリ（ランキングと急上昇）のデータを取得します。  
-    - ダウンロードが完了するごとに、SQLのフラグを用いて処理進行を管理します。  
-    - 全プロセスが終了し、全カテゴリのデータ更新が完了すると、全体の処理が終了します。  
-
-- データ取得を並行処理で実行する親プロセス  
-[OpenChatApiDbMergerWithParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDbMergerWithParallelDownloader.php)  
-
-- execから実行される子プロセス  
-[ParallelDownloadOpenChat.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Cron/ParallelDownloadOpenChat.php)  
-
-- 子プロセスのクラスで利用する、「ランキングデータの取得処理クラス・ダウンロードデータの検証クラス」を実行するクラス  
-[OpenChatApiDataParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDataParallelDownloader.php)  
-
-エラーが発生した場合は、共有されているエラーフラグファイルを通じて全プロセスを停止させることができます。  
-このシステムにより、10万件のデータを約2分で処理できるようになりました。  
-
 ## 人数増加ランキング表示
   ### オプチャグラフのランキング掲載条件
   1. メンバー数の変動: 過去1週間でメンバー数に変動があるオープンチャットのみがランキング対象となります。
@@ -109,6 +89,26 @@ https://openchat-review.me
 ランキングの順位と人数の統計データはSQLiteで管理されています。これはMySQLを使用しているサーバーでは容量の大きさが問題となり、稼働が困難になったためです。SQLiteのデータベースファイルも日次でバックアップされています。
 
 フロントエンドはPHPとCSR(クライアントサイドレンダリング)を行うReactが混在しており、PHPのページ内にReactでモジュール化されたコンポーネントが複数組み込まれています。将来的にはReactやNext.jsへの完全移行も検討されています。
+
+## 1時間毎のクローリング時の並行処理
+このプロジェクトでは、公式サイトからランキングデータを高速にダウンロードしてデータベースを更新するシステムを構築しました。  
+  - 具体的には、以下の特徴を持つ処理を行っています。
+    - 全24カテゴリのランキングデータを、24個の並行プロセスで同時にダウンロードします。  
+    - 各プロセスは、2つのカテゴリ（ランキングと急上昇）のデータを取得します。  
+    - ダウンロードが完了するごとに、SQLのフラグを用いて処理進行を管理します。  
+    - 全プロセスが終了し、全カテゴリのデータ更新が完了すると、全体の処理が終了します。  
+
+- データ取得を並行処理で実行する親プロセス  
+[OpenChatApiDbMergerWithParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDbMergerWithParallelDownloader.php)  
+
+- execから実行される子プロセス  
+[ParallelDownloadOpenChat.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Cron/ParallelDownloadOpenChat.php)  
+
+- 子プロセスのクラスで利用する、「ランキングデータの取得処理クラス・ダウンロードデータの検証クラス」を実行するクラス  
+[OpenChatApiDataParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDataParallelDownloader.php)  
+
+エラーが発生した場合は、共有されているエラーフラグファイルを通じて全プロセスを停止させることができます。  
+このシステムにより、10万件のデータを約2分で処理できるようになりました。  
 
 ## フロントエンドのリポジトリ  
 ランキングページ  
