@@ -122,7 +122,7 @@ LINEオープンチャットのランキングデータを、フロントエン�
   - ダウンロードデータの検証クラス: APIからのデータを検証し、オブジェクト形式にマッピングする役割を持ちます。  
     [OpenChatApiFromEmidDtoFactory.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Dto/OpenChatApiFromEmidDtoFactory.php)
 
-  - メンバー数が0と表示される場合の例外報告: 稀にメンバー数が0となっていることがあり、これは既知の例外パターンとして報告します。  
+  - メンバー数が0と表示される場合の例外報告: 稀にメンバー数が0となる場合があり、これは既知の例外パターンとして報告します。  
       [InvalidMemberCountException.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Exceptions/InvalidMemberCountException.php)  
 
 
