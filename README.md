@@ -88,7 +88,7 @@ https://openchat-review.me
 
     #### 実装コード:
     - 画像の取得処理: オープンチャットの画像を取得するための処理です。  
-    [OpenChatImgDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/)  
+    [OpenChatImgDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatImgDownloader.php)  
 
 - ### オプチャグラフBotのUA
   オプチャグラフBotのクローリングは、以下のユーザーエージェント（UA）を使用して統一的に行われます。  
@@ -100,12 +100,8 @@ https://openchat-review.me
 
   LINE公式サイト側では、このユーザーエージェントを識別することで、オプチャグラフBotからのアクセスを確認することができます。  
 
-## ランキング表示のアルゴリズム
-元々のメンバー数が少ないオープンチャットであるほど増加率が高くなり、上位になりやすくなります。  
-
-* ランキングの掲載対象となるオープンチャットの条件  
-・過去1週間のメンバー数に変動があること  
-・現在のメンバー数と前日 or 前週のメンバー数が10人以上であること
+## オープンチャットのランキング掲載条件
+  1.メンバー数の変動: 過去1週間でメンバー数に変動があるオープンチャットのみがランキング対象となります。
 
 * ランク付けの計算式  
 増加数: `現在のメンバー数 - 前日 or 前週のメンバー数`  
