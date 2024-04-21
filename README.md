@@ -35,16 +35,6 @@ https://openchat-review.me
 
   クローラーやスクレイピングツールの開発は、多くの面で実用性が高いものですが、上記のような注意点を守りながら、倫理的かつ法的な枠組みの中で行うことが重要です。
 
-## オプチャグラフBotのUA
-  オプチャグラフBotのクローリングは、以下のユーザーエージェント（UA）を使用して統一的に行われます。  
-  IPアドレスについては、レンタルサーバーを使用しているため一定ではありませんが、基本的には固定IPを利用しています。  
-
-  - `Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)`  
-
-  このユーザーエージェントは、オプチャグラフBotがLINE公式サイトをクローリングする際に使用されます。  
-
-  LINE公式サイト側では、このユーザーエージェントを識別することで、オプチャグラフBotからのアクセスを確認することができます。  
-
 ## 人数増加ランキング表示
   ### オプチャグラフのランキング掲載条件
   1. メンバー数の変動: 過去1週間でメンバー数に変動があるオープンチャットのみがランキング対象となります。
@@ -110,6 +100,16 @@ https://openchat-review.me
 [OpenChatApiDataParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDataParallelDownloader.php)  
 
 エラーが発生した場合は、共有されているエラーフラグファイルを通じて全プロセスを停止させることができます。  
+
+## オプチャグラフBotのUA
+  オプチャグラフBotのクローリングは、以下のユーザーエージェント（UA）を使用して統一的に行われます。  
+  IPアドレスについては、レンタルサーバーを使用しているため一定ではありませんが、基本的には固定IPを利用しています。  
+
+  - `Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)`  
+
+  このユーザーエージェントは、オプチャグラフBotがLINE公式サイトをクローリングする際に使用されます。  
+
+  LINE公式サイト側では、このユーザーエージェントを識別することで、オプチャグラフBotからのアクセスを確認することができます。  
 
 ## フロントエンドのリポジトリ  
 ランキングページ  
