@@ -27,8 +27,8 @@ https://openchat-review.me
 
   - ファイルダウンローダー: SymfonyのHttpClientを基にしたラッパークラス。効率的なファイルダウンロードを実現します。  
   [FileDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/FileDownloader.php)
-
-
+  
+  
 - ### ランキングデータの取得
   LINEオープンチャットのランキングデータを、フロントエンドのAPI(公開済みの公式サイト)を通じて取得します。  
 
