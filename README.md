@@ -76,7 +76,7 @@ LINEオープンチャットのランキングデータを、フロントエン�
   - ランキングデータの取得処理: 無限スクロールを模倣してランキングデータを順に取得します。
   [AbstractOpenChatApiRankingDownloaderProcess.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/AbstractOpenChatApiRankingDownloaderProcess.php)
 
-  - ランキングデータ取得の上位クラス:  
+  - ランキングデータ取得の上位クラス: 無限スクロールを模倣するためのループ処理と、1ループ毎に実行する関数を渡す役割を持ちます。
   [OpenChatApiRankingDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiRankingDownloader.php)
 
   - ダウンロードデータの検証クラス: APIからのデータを検証し、オブジェクト形式にマッピングする役割を持ちます。  
