@@ -16,7 +16,7 @@ https://openchat-review.me
   PHPのクローリングでよく使われているsymfony/browser-kitをラップした単純なものです。  
   404以外は指定回数までループで再試行して、限界を超えたらエラーをスローします。  
 
-  これまでの経験上、LINEのサーバーは稀に404以外の400系のエラーを1度返すことがありますが、2度以上続いたことはありません。  
+  これまでの経験上LINEのサーバーは稀に404以外の400系エラーを1度返すことがありますが、2度以上続いたことはありません。  
 
   - クローラー(symfony/browser-kitのラッパークラス)  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/CrawlerFactory.php
@@ -29,7 +29,7 @@ https://openchat-review.me
   - オープンチャット公式サイトの取得URL(公開済みの公式サイト)    
   `https://openchat.line.me/api/category/${category}?sort=RANKING&limit=40&ct=${ct}`
   ct(continuation token)パラメータは 0 から始まり、取得したデータに含まれる次の continuation token で2ページ目以降を順に取得します。  
-  
+
   - ランキングデータの取得処理  
   https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/AbstractOpenChatApiRankingDownloaderProcess.php
   - スクロール読み込みを再現して順番にデータを取得する「ランキングデータの取得処理」の上位クラス  
