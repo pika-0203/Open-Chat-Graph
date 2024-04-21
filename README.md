@@ -32,20 +32,20 @@ https://openchat-review.me
 - #### ランキングデータの取得
   LINEオープンチャットのランキングデータを、フロントエンドのAPI(公開済みの公式サイト)を通じて取得します。  
 
-  ##### APIエンドポイントの構造:
-  - 取得URL: `https://openchat.line.me/api/category/${category}?sort=RANKING&limit=40&ct=${ct}`
-    - ${category}: 取得したいカテゴリを指定します。
-    - ${ct} (continuation token): ページングを管理するためのトークンです。最初は0から始め、取得したデータに含まれる次のctを用いて、続くページを順に取得します。
+    ##### APIエンドポイントの構造:
+    - 取得URL: `https://openchat.line.me/api/category/${category}?sort=RANKING&limit=40&ct=${ct}`
+      - ${category}: 取得したいカテゴリを指定します。
+      - ${ct} (continuation token): ページングを管理するためのトークンです。最初は0から始め、取得したデータに含まれる次のctを用いて、続くページを順に取得します。
 
-  ##### 実装コード:
-  - ランキングデータの取得処理: 無限スクロールを模倣してランキングデータを順に取得します。
-  [AbstractOpenChatApiRankingDownloaderProcess.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/AbstractOpenChatApiRankingDownloaderProcess.php)
+    ##### 実装コード:
+    - ランキングデータの取得処理: 無限スクロールを模倣してランキングデータを順に取得します。
+    [AbstractOpenChatApiRankingDownloaderProcess.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/AbstractOpenChatApiRankingDownloaderProcess.php)
 
-  - ランキングデータ取得の上位クラス:
-  [OpenChatApiRankingDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiRankingDownloader.php)
+    - ランキングデータ取得の上位クラス:
+    [OpenChatApiRankingDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiRankingDownloader.php)
 
-  - サブカテゴリデータの取得: カテゴリ内のキーワード、すなわちサブカテゴリデータを取得するための処理を担います。
-  [OpenChatApiSubCategoryDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiSubCategoryDownloader.php)
+    - サブカテゴリデータの取得: カテゴリ内のキーワード、すなわちサブカテゴリデータを取得するための処理を担います。
+    [OpenChatApiSubCategoryDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/Crawler/OpenChatApiSubCategoryDownloader.php)
 
 - #### 1時間毎のクローリング時の並行処理
   このプロジェクトでは、公式サイトからランキングデータを高速にダウンロードしてデータベースを更新するシステムを構築しました。  
