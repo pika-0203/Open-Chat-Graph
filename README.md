@@ -97,6 +97,7 @@ https://openchat-review.me
   - Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36 (compatible; OpenChatStatsbot; +https://github.com/pika-0203/Open-Chat-Graph)  
 
   このユーザーエージェントは、オプチャグラフBotがLINE公式サイトをクローリングする際に使用されます。  
+
   LINE公式サイト側では、このユーザーエージェントを識別することで、オプチャグラフBotからのアクセスを確認することができます。  
 
 ## ランキング表示のアルゴリズム
