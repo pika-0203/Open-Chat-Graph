@@ -49,21 +49,6 @@ https://openchat-review.me
 
   クローラーやスクレイピングツールの開発は、多くの面で実用性が高いものですが、上記のような注意点を守りながら、倫理的かつ法的な枠組みの中で行うことが重要です。
 
-
-## クローラー本体
-このプロジェクトのクローラーは、PHPでのウェブページの自動巡回とデータ収集を目的としています。  
-SymfonyのBrowserKitを使用しており、特定のウェブページへのアクセスを試み、エラー応答に応じて再試行します。  
-404エラー（ページが見つからない）以外のエラーの場合、設定された回数まで再試行を行い、それを超えるとエラーを報告します。  
-
-LINEのサーバーからは、稀に400系エラーが返されることがありますが、このクローラーはそのような一時的なエラーに対しても効率的に対応します。  
-
-- クローラー: SymfonyのBrowserKitを基にしたラッパークラス。エラーハンドリングと再試行機構を備えています。  
-[CrawlerFactory.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/CrawlerFactory.php)  
-
-- ファイルダウンローダー: SymfonyのHttpClientを基にしたラッパークラス。効率的なファイルダウンロードを実現します。  
-[FileDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/Crawler/FileDownloader.php)
-
-
 ## オプチャグラフBotのUA
   オプチャグラフBotのクローリングは、以下のユーザーエージェント（UA）を使用して統一的に行われます。  
   IPアドレスについては、レンタルサーバーを使用しているため一定ではありませんが、基本的には固定IPを利用しています。  
