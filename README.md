@@ -122,7 +122,7 @@ https://openchat-review.me
 - バックエンド:
   - PHP: 幅広い用途に対応し、迅速な開発を可能にする言語。
   - [MimimalCMS](https://github.com/mimimiku778/MimimalCMS): 効率的な開発のためのカスタム軽量MVCフレームワーク。
-  -　MySQL/MariaDB & SQLite: MySQLはオープンチャット情報の保存用、SQLiteはランキングと統計の管理用。
+  - MySQL/MariaDB & SQLite: MySQLはオープンチャット情報の保存用、SQLiteはランキングと統計の管理用。
   - Symfony/browser-kit & Spatie/schema-org: ウェブクローリングとSEO最適化に使用。
 
 - フロントエンド:
