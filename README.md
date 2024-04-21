@@ -86,9 +86,7 @@ https://openchat-review.me
   - 具体的には、以下の特徴を持つ処理を行っています。
     - 全24カテゴリのランキングデータを、24個の並行プロセスで同時にダウンロードします。  
     - 各プロセスは、2つのカテゴリ（ランキングと急上昇）のデータを取得します。  
-    - ダウンロードが完了するごとに、SQLのフラグを用いて処理進行を管理します。  
     - このプロジェクトに最適化された独自のレンダリング技術・データベースの更新技術で高速にデータを更新します。  
-    - 全プロセスが終了し、全カテゴリのデータ更新が完了すると、全体の処理が終了します。  
 
 - データ取得を並行処理で実行する親プロセス  
 [OpenChatApiDbMergerWithParallelDownloader.php](https://github.com/pika-0203/Open-Chat-Graph/blob/main/app/Services/OpenChat/OpenChatApiDbMergerWithParallelDownloader.php)  
