@@ -129,7 +129,7 @@ LINEオープンチャットのランキングデータを、フロントエン�
 ## オープンチャット画像の取得
   #### URLの構造:
   - 取得URL: `https://obs.line-scdn.net/${profileImageObsHash}`
-    - ${profileImageObsHash}: オープンチャットを画像を特定するためのハッシュ。
+    - ${profileImageObsHash}: オープンチャットの画像を特定するためのハッシュ。
 
   #### 実装コード:
   - 画像の取得処理: オープンチャットの画像を取得し、WebP形式に変換して保存します。失敗時にはエラーを報告しますが、このエラーは呼び出し元で捕捉され、profileImageObsHashなどの情報と共にエラーログに記録されます。  
