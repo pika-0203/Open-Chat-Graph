@@ -27,11 +27,10 @@ hr {
 }
 
 .openchat .oc-desc-nav {
-  padding-top: 1rem;
+  padding-top: 1.5rem;
   display: flex;
   justify-content: space-evenly;
   gap: 2px;
-  min-height: 4rem;
 }
 
 .openchat-header {
@@ -273,7 +272,7 @@ hr {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  justify-content: space-center;
+  justify-content: center;
 }
 
 .my-list-form .checkbox-label {

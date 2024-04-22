@@ -1286,3 +1286,34 @@ article.top-list {
   font-size: 11px;
   margin: -1px -4px 0px 2px;
 }
+
+.gradient-bottom {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2rem;
+  width: 100%;
+}
+
+.news-summary {
+  color: #111;
+  user-select: none;
+  font-size: 13px;
+  font-weight: normal;
+  border: 1px solid #efefef;
+  border-radius: 7px;
+  padding-top: 12px;
+  height: 42px;
+  text-align: center;
+}
+
+.news-summary:hover {
+  text-decoration: none;
+}
+
+@media screen and (min-width: 512px) {
+  .news-summary:hover {
+    background-color: var(--hover);
+  }
+}
