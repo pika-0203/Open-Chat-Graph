@@ -75,8 +75,7 @@ time {
   object-fit: cover;
   display: flex;
   aspect-ratio: 1;
-  border-radius: 5px;
-  padding: 1.5px;
+  padding: 0.5px;
 }
 
 .header-img-title {
