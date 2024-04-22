@@ -7,6 +7,7 @@ namespace App\Controllers\Pages;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Services\User\MyOpenChatList;
 use App\Services\StaticData\StaticDataFile;
+use App\Views\Content\TopPageNews;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 use DateTime;
 
@@ -55,6 +56,8 @@ class IndexPageController
         $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hourlyEnd . '</time>';
 
         $tags = $dto->recommendList ?? [];
+        $news = array_reverse(TopPageNews::getTopPageNews());
+
         return view('top_content', compact(
             'dto',
             '_meta',
@@ -64,7 +67,8 @@ class IndexPageController
             'weeklyRange',
             'hourlyEnd',
             '_schema',
-            'tags'
+            'tags',
+            'news'
         ));
     }
 }

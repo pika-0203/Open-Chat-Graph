@@ -6,7 +6,33 @@
     <?php viewComponent('site_header') ?>
     <main style="margin-bottom: 0;">
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem">
-            <div style="font-size: 11px; color: #777">アップデート情報 2024/4/21:<br>①ルーム作成日の表示機能を削除<br>②ルームの並び順に少ない順を追加</div>
+            <aside style="font-size: 13px; display: block;" class="unset">
+                <details style="margin:0 0 0 0; width:100%;">
+                    <summary style="color:#111; user-select:none;">
+                        <span>お知らせ</span>
+                        <span style="color: #777; font-weight:normal"><?php /** @var \App\Views\Content\TopPageNews[] $news */ echo timeElapsedString($news[0]->date->format('Y-m-d H:i:s')) ?></span>
+                    </summary>
+                    <div style="margin: .5rem 0 .5rem 0; max-height: 20rem; overflow-y: auto;">
+                        <?php foreach ($news as $el) : ?>
+                            <div style="margin-bottom: 1rem; border-bottom: 1px solid #efefef; width: 100%;">
+                                <span style="color: #111; font-size: 13px; font-weight: bold"><?php echo $el->title ?></span>
+                                <span style="color: #777; margin-left: 4px"><?php echo $el->date->format('Y/n/j G:i') ?></span>
+                                <?php foreach ($el->body as $body) : ?>
+                                    <?php if (is_array($body)) : ?>
+                                        <ul style="padding-left: 1rem;">
+                                            <?php foreach ($body as $li) : ?>
+                                                <li style="white-space: pre-line;"><?php echo $li ?></li>
+                                            <?php endforeach ?>
+                                        </ul>
+                                    <?php else : ?>
+                                        <p style="white-space: pre-line;"><?php echo $body ?></p>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            </div>
+                        <?php endforeach ?>
+                    </div>
+                </details>
+            </aside>
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
