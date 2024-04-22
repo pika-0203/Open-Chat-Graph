@@ -36,10 +36,10 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><span aria-hidden="true" style="user-select: none;">🕛 </span><?php echo $_updatedAt->format('Y年m月d日 H:i') ?></time>
             <section class="unset close" style="display: block; position:relative;" id="recommed-desc-box">
                 <p class="recommend-desc recommend-p" id="recommed-desc">
-                    <span class="recommend-desc-child">2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャット。「<?php echo $tag ?>」に関するルームは多くのユーザーによって開設されています。</span>
+                    <span class="recommend-desc-child">2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャットでは、「<?php echo $tag ?>」をテーマにしたルームが数多く開設されています。</span>
                     <br>
                     <br>
-                    <span class="recommend-desc-child">そこでオプチャグラフでは「<?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag) ?>に関するテーマで人数増加が多いルーム」のランキングを作成しました。1時間ごとの更新で新しいルームが随時追加されます。</span>
+                    <span class="recommend-desc-child">そこで、オプチャグラフでは、「<?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag) ?>」をテーマにした中で、最近人数が急増しているルームのランキングを作成しました。このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
                 </p>
                 <button id="recommed-desc-close-btn" class="close-btn" title="一部を表示">一部を表示</button>
                 <div class="more">
@@ -53,7 +53,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <p class="recommend-desc">
                         各ルームは特定のランキングでのみ表示されます。たとえば、「美容室」に関連するルームは「美容室」のランキングにしか現れず、「美容」のランキングには表示されません。 </p>
                     <p class="recommend-desc">
-                        ランキングへの振り分けは、オプチャグラフのタグ付け基準に基づき、ルームのタイトルと説明文がどのキーワードに最もマッチするかを自動で判断して行われます。 </p>
+                        ランキングの分け方は、単にキーワードが一致するかどうかだけでなく、文の意味や表現の違いも考慮して自動で決められます。これにより、より正確にテーマに合ったルームを選ぶことができます。 </p>
                     <p class="recommend-desc">
                         これにより、ルーム作成者が選んだカテゴリに依存せず、より広範囲から関連性の高いルームを見つけることが容易になり、従来のカテゴリ別検索よりも効率的です。
                     </p>
@@ -146,8 +146,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php endif ?>
             <aside style="all: unset; display:block; margin: 20px 0 0 0;">
                 <p class="recommend-desc2">
-                    オープンチャットはLINEに登録している名前とプロフィールが同期されず、高い匿名性で安全に利用できるのが特徴です。
-                    気になるルームを見つけたら気軽に参加してみましょう！
+                    オープンチャットは、LINEに登録している名前やプロフィールとは同期されないため、匿名性が高く安全に利用できることが特徴です。気になるルームを見つけたら、気軽に参加してみましょう！
                 </p>
                 <div class="app_link">
                     <a href="https://openchat-jp.line.me/other/beginners_guide">
