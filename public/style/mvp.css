@@ -306,10 +306,6 @@ a i {
   padding: 1rem 2rem;
 }
 
-article aside a {
-  color: var(--color-secondary);
-}
-
 /* Images */
 figure {
   margin: 0;

@@ -56,7 +56,7 @@ class IndexPageController
         $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hourlyEnd . '</time>';
 
         $tags = $dto->recommendList ?? [];
-        $news = array_reverse(TopPageNews::getTopPageNews());
+        $_news = array_reverse(TopPageNews::getTopPageNews());
 
         return view('top_content', compact(
             'dto',
@@ -68,7 +68,7 @@ class IndexPageController
             'hourlyEnd',
             '_schema',
             'tags',
-            'news'
+            '_news'
         ));
     }
 }
