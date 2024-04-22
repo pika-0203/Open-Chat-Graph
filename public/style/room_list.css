@@ -1305,6 +1305,7 @@ article.top-list {
   border-radius: 7px;
   padding-top: 12px;
   height: 42px;
+  line-height: 1rem;
   text-align: center;
 }
 
