@@ -55,13 +55,13 @@ https://openchat-review.me
 
 ## 技術概要
 - バックエンド:
-  - PHP: 幅広い用途に対応し、迅速な開発を可能にする言語。
-  - [MimimalCMS](https://github.com/mimimiku778/MimimalCMS): 効率的な開発のためのカスタム軽量MVCフレームワーク。
+  - PHP
+  - [MimimalCMS](https://github.com/mimimiku778/MimimalCMS): カスタム軽量MVCフレームワーク
   - MySQL/MariaDB & SQLite: MySQLはオープンチャット情報の保存用、SQLiteはランキングと統計の管理用。
   - Symfony/browser-kit & Spatie/schema-org: ウェブクローリングとSEO最適化に使用。
 
 - フロントエンド:
-  - TypeScript & React: 型安全性とコンポーネントベースの開発を実現。
+  - TypeScript & React
   - MUI: 一貫したデザインを提供。
   - Chart.js & Swiper.js: グラフ表示とスライド機能に使用。 
 
@@ -71,11 +71,10 @@ https://openchat-review.me
 
 #### 説明
 バックエンドはPHPで書かれ、古典的なLAMPスタックを使用しています。  
-独自に開発された軽量MVCフレームワークとシンプルなリポジトリパターンを採用し、国内の高レスポンスかつコストパフォーマンスに優れたLAMPサーバーで低コスト運用を実現しています。  
 
 データベースは、複雑なクエリと細かなテーブル結合が多用されるため、全てRaw SQLで管理されています。  
 オープンチャットの情報は基本的にMySQLに保存され、テーブルのAUTO_INCREMENTで発行されるIDとオープンチャットURLの2カラムのみが日次でバックアップされています。
-  
+
 ランキングの順位と人数の統計データはSQLiteで管理されています。これはMySQLを使用しているサーバーでは容量の大きさが問題となり、稼働が困難になったためです。SQLiteのデータベースファイルも日次でバックアップされています。
 
 フロントエンドはPHPとCSR(クライアントサイドレンダリング)を行うReactが混在しており、PHPのページ内にReactでモジュール化されたコンポーネントが複数組み込まれています。将来的にはReactやNext.jsへの完全移行も検討されています。
