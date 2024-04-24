@@ -1258,7 +1258,6 @@ article.top-list {
 @media screen and (min-width: 512px) {
   .tag-list {
     margin-bottom: 4px;
-    margin-top: calc(0.5rem - 5px + 9px);
   }
 
   .tag-list li {
@@ -1319,12 +1318,10 @@ article.top-list {
   }
 }
 
-
 .list-aside {
   all: unset;
   display: block;
 }
-
 
 .list-aside details {
   margin: 0;
@@ -1346,9 +1343,8 @@ article.top-list {
   gap: 4px;
 }
 
-
 .list-aside.ranking-desc {
-  margin: 8px 0;
+  margin: 10px 0 8px 0;
 }
 .ranking-desc .recommend-desc {
   margin-top: 6px;

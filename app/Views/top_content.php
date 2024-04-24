@@ -20,15 +20,17 @@
                             <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0"><?php echo $hourlyEnd ?></span>
                         </div>
                     </header>
-                    <aside class="list-aside ranking-desc" style="margin-bottom: 12px;">
+                    <aside class="list-aside ranking-desc">
                         <details class="icon-desc">
                             <summary>人数増加中のタグとは</summary>
                             <p class="recommend-desc">
                                 同じタグを持つ複数のルームで、参加者が急速に増えている状況を示しています。最新のトレンドや話題の中心を把握したい方は、こちらのタグをチェックしてみてください。
                             </p>
+                            <div>
+                                <?php viewComponent('recommend_tag_desc') ?>
+                            </div>
                         </details>
                     </aside>
-                    <?php viewComponent('recommend_tag_desc') ?>
                     <ul class="tag-list">
                         <?php foreach ($tags['hour'] as $key => $word) : ?>
                             <li>
