@@ -1,11 +1,12 @@
 <!-- @param array $openChatList -->
 <!-- @param bool $isHourly -->
+<?php $count1 = 0;
+$count2 = 0; ?>
 <ol class="openchat-item-list unset">
-  <?php $count = 0; ?>
   <?php foreach ($openChatList as $oc) : ?>
-    <?php if ($count > 5) continue; ?>
+    <?php if ($count1 >= 5) break; ?>
     <?php if (mb_strlen($oc['description']) > 10) : ?>
-      <?php $count++; ?>
+      <?php $count1++ ?>
       <li class="openchat-item unset">
         <a class="link-overlay unset" href="<?php echo  $oc['id'] ? url('/oc/' . $oc['id']) : url('policy#comments') ?>" tabindex="-1" aria-hidden="true">
           <span class="visually-hidden"><?php echo $oc['name'] ?></span>
@@ -26,7 +27,14 @@
         </h3>
         <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
       </li>
+    <?php endif ?>
+  <?php endforeach ?>
+  <?php foreach ($openChatList as $oc) : ?>
+    <?php if ($count2 >= 3) break; ?>
+    <?php if (mb_strlen($oc['description']) > 10) : ?>
+      <?php continue; ?>
     <?php elseif ((mb_strlen($oc['description'] > 0))) : ?>
+      <?php $count2++ ?>
       <li class="unset" style="position: relative; display:block; padding: 8px 0;">
         <a class="link-overlay unset" href="<?php echo  $oc['id'] ? url('/oc/' . $oc['id']) : url('policy#comments') ?>" tabindex="-1" aria-hidden="true">
           <span class="visually-hidden"><?php echo $oc['name'] ?></span>
@@ -46,6 +54,7 @@
         </h3>
       </li>
     <?php else : ?>
+      <?php $count2++ ?>
       <li class="unset" style="position: relative; display:block; padding: 8px 0;">
         <a class="link-overlay unset" href="<?php echo  $oc['id'] ? url('/oc/' . $oc['id']) : url('policy#comments') ?>" tabindex="-1" aria-hidden="true">
           <span class="visually-hidden"><?php echo $oc['name'] ?></span>
