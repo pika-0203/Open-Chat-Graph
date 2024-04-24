@@ -326,14 +326,14 @@ article.top-list {
   margin: 1rem 0 1rem 0;
 }
 
-.openchat-item .link-overlay {
+.link-overlay {
   position: absolute;
   inset: 0px;
   cursor: pointer;
   z-index: 10;
 }
 
-.openchat-item .link-overlay:focus-visible {
+.link-overlay:focus-visible {
   outline: 0;
 }
 
@@ -523,7 +523,7 @@ article.top-list {
   color: #111;
 }
 
-.openchat-item .comment-user {
+.comment-user {
   z-index: 1;
   cursor: pointer;
   display: block;
