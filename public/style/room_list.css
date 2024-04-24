@@ -1318,3 +1318,39 @@ article.top-list {
     background-color: var(--hover);
   }
 }
+
+
+.list-aside {
+  all: unset;
+  display: block;
+}
+
+
+.list-aside details {
+  margin: 0;
+  font-size: 13px;
+  color: #777;
+  font-weight: normal;
+}
+
+.list-aside summary {
+  width: fit-content;
+  user-select: none;
+}
+
+.list-aside-details {
+  padding-left: 0.5rem;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+
+.list-aside.ranking-desc {
+  margin: 8px 0;
+}
+.ranking-desc .recommend-desc {
+  margin-top: 6px;
+  padding-left: 0.5rem;
+}

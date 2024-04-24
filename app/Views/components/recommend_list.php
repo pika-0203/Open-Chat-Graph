@@ -23,7 +23,7 @@ use App\Services\Recommend\Enum\RecommendListType;
                 <a class="unset" href="<?php echo url("recommend?tag=" . urlencode(htmlspecialchars_decode($recommend->listName))) ?>">
                     <h3>
                         <span style="text-decoration-color: #111; text-wrap: wrap;">
-                            「<?php echo $recommend->listName ?>」関連のおすすめ
+                            「<?php echo $recommend->listName ?>」タグのおすすめ
                         </span>
                     </h3>
                     <small style="font-size: 13px; font-weight:normal; color:#777; margin-left: 4px; text-wrap: nowrap; word-break: keep-all;" aria-hidden="true">すべて見る</small>

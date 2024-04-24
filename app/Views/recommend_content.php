@@ -47,25 +47,12 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <span class="unset more-text" id="read_more_btn" title="もっと見る">…もっと見る</span>
                 </div>
             </section>
-            <aside class="list-aside ranking-desc">
-                <details class="icon-desc">
-                    <summary>ランキングの掲載基準について</summary>
-                    <p class="recommend-desc">
-                        各ルームは特定のランキングでのみ表示されます。たとえば、「美容室」に関連するルームは「美容室」のランキングにしか現れず、「美容」のランキングには表示されません。 </p>
-                    <p class="recommend-desc">
-                        ランキングの分類方法は、キーワードの一致だけでなく、文の意味や異なる表現も自動的に考慮します。これにより、テーマにぴったり合うルームをより正確に選定できます。
-                    <p class="recommend-desc">
-                        この分類方法によって、ルーム作成者が選んだカテゴリに頼らずに、より広い範囲から関連性の高いルームを簡単に見つけることができ、従来のカテゴリ別検索よりも効率的になります。 </p>
-                    <p class="recommend-desc" style="margin-bottom: 1.5rem;">
-                        目的のルームが見つからない場合は、関連キーワードをチェックしてみましょう。
-                    </p>
-                </details>
-            </aside>
             <?php if (isset($tags) && $tags) : ?>
                 <aside class="list-aside">
                     <h3 class="list-title">
-                        <span>関連のキーワード</span>
+                        <span>関連のタグ</span>
                     </h3>
+                    <?php viewComponent('recommend_tag_desc') ?>
                     <section class="tag-list-section">
                         <ul class="tag-list">
                             <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
@@ -81,7 +68,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php endif ?>
             <section style="all:unset; display:block;">
                 <?php if ($count) : ?>
-                    <h2 class="list-title oc-list">「<?php echo $tag ?>」のランキング <?php echo $count ?>件</h2>
+                    <h2 class="list-title oc-list">「<?php echo $tag ?>」タグのランキング <?php echo $count ?>件</h2>
                     <aside class="list-aside">
                         <details class="icon-desc">
                             <summary>メンバー数のアイコンについて</summary>
@@ -128,7 +115,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php if (isset($tags) && $tags) : ?>
                 <aside class="list-aside">
                     <h3 class="list-title">
-                        <span>関連のキーワード</span>
+                        <span>関連のタグ</span>
                     </h3>
                     <section class="tag-list-section" style="margin-bottom: 1rem;">
                         <ul class="tag-list">

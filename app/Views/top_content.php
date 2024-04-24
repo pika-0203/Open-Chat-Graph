@@ -14,12 +14,21 @@
                     <header class="openchat-list-title-area unset">
                         <div class="openchat-list-date unset ranking-url">
                             <h2 class="unset">
-                                <span class="openchat-list-title">いま人数増加中のキーワード</span>
+                                <span class="openchat-list-title">いま人数増加中のタグ</span>
                                 <span aria-hidden="true" style="font-size: 9px; user-select: none; margin-bottom: px;margin-left: -3px;">🚀</span>
                             </h2>
                             <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0"><?php echo $hourlyEnd ?></span>
                         </div>
                     </header>
+                    <aside class="list-aside ranking-desc" style="margin-bottom: 12px;">
+                        <details class="icon-desc">
+                            <summary>人数増加中のタグとは</summary>
+                            <p class="recommend-desc">
+                                「いま人数増加中のタグ」とは、最近特に多くの人々が集まっているタグが付けられたルームのことを指します。これは、同じタグを持つ複数のルームで、参加者が急速に増えている状況を示しています。
+                            </p>
+                        </details>
+                    </aside>
+                    <?php viewComponent('recommend_tag_desc') ?>
                     <ul class="tag-list">
                         <?php foreach ($tags['hour'] as $key => $word) : ?>
                             <li>
