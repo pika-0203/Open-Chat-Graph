@@ -19,7 +19,7 @@ class IndexPageController
         PageBreadcrumbsListSchema $pageBreadcrumbsListSchema,
     ) {
         $dto = $staticDataGeneration->getTopPageData();
-        $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChatAll(0, 15);
+        $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChatAll(0, 5);
 
         $myList = [];
         // クッキーにピン留めがある場合
