@@ -40,6 +40,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <br>
                     <br>
                     <span class="recommend-desc-child">そこで、オプチャグラフでは、「<?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag) ?>」をテーマにした中で、最近人数が急増しているルームのランキングを作成しました。このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
+                    <br>
+                    <br>
+                    <span class="recommend-desc-child">オープンチャットの情報を掲載する仕組みにつきましては、<a href="<?php echo url('policy') ?>">オプチャグラフについて</a>をご覧ください。</span>
                 </p>
                 <button id="recommed-desc-close-btn" class="close-btn" title="一部を表示">一部を表示</button>
                 <div class="more">
