@@ -137,17 +137,8 @@
                 <div style="min-height: 400px;">
                     <div id="comment-root"></div>
                 </div>
-                <h2>お問い合わせ・ソースコード</h2>
-                <p style="font-size: 12px; color: #777;">オプチャグラフお問い合わせ窓口: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>
-                <p>
-                    <span style="font-size: 12px; color: #777;">Gihub バックエンド: <a style="color: #777;" href="https://github.com/pika-0203/Open-Chat-Graph" target="_blank">https://github.com/pika-0203/Open-Chat-Graph</a></span>
-                    <br>
-                    <span style="font-size: 12px; color: #777;">Gihub フロント(ランキングページ): <a style="color: #777;" href="https://github.com/mimimiku778/Open-Chat-Graph-Frontend" target="_blank">https://github.com/mimimiku778/Open-Chat-Graph-Frontend</a></span>
-                    <br>
-                    <span style="font-size: 12px; color: #777;">Gihub フロント(グラフ表示): <a style="color: #777;" href="https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph" target="_blank">https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph</a></span>
-                    <br>
-                    <span style="font-size: 12px; color: #777;">Gihub フロント(コメント機能): <a style="color: #777;" href="https://github.com/mimimiku778/Open-Chat-Graph-Comments" target="_blank">https://github.com/mimimiku778/Open-Chat-Graph-Comments</a></span>
-                </p>
+                <h2>メールでのお問い合わせ先</h2>
+                <p>オプチャグラフお問い合わせ窓口: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>
             </article>
         </main>
         <footer>
