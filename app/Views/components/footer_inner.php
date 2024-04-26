@@ -2,6 +2,7 @@
     <div class="footer-link-inner">
         <a class="unset" href="<?php echo url('') ?>">トップ</a>
         <a class="unset" href="<?php echo url('policy') ?>">オプチャグラフについて</a>
+        <a class="unset" href="<?php echo url('policy/privacy') ?>">プライバシーポリシー</a>
     </div>
     <div class="footer-link-inner">
         <a class="unset" href="<?php echo url('ranking') ?>">カテゴリから探す</a>
