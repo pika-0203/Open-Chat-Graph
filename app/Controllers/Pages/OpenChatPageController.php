@@ -76,7 +76,12 @@ class OpenChatPageController
             'openChatId' => $oc['id']
         ];
 
-        $_breadcrumbsShema = $breadcrumbsShema->generateSchema('オプチャ', 'oc', $oc['name'], (string)$open_chat_id);
+        $_breadcrumbsShema = $breadcrumbsShema->generateSchema(
+            'オプチャ',
+            'oc',
+            $recommend[2] ? $recommend[2] : $category,
+            (string)$open_chat_id
+        );
 
         $updatedAt = new \DateTime($_statsDto->endDate);
         $_schema = $ocPageSchema->generateSchema(

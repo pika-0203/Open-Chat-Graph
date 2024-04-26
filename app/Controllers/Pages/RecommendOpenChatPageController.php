@@ -51,8 +51,8 @@ class RecommendOpenChatPageController
         $_breadcrumbsShema = $this->breadcrumbsShema->generateSchema(
             'おすすめ',
             'recommend',
-            $tag,
-            'recommend?tag=' . urlencode($tag),
+            $word,
+            'recommend/?tag=' . urlencode($tag),
             true
         );
 
