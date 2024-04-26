@@ -225,7 +225,6 @@ section aside:hover {
 
 .list-aside summary {
   width: fit-content;
-  user-select: none;
 }
 
 .list-aside-details {

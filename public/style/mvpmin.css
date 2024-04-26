@@ -33,3 +33,12 @@ hr {
 .unset:focus-visible {
   outline: -webkit-focus-ring-color auto 1px;
 }
+
+details {
+  margin: 1.3rem 0;
+}
+
+details summary {
+  font-weight: bold;
+  cursor: pointer;
+}

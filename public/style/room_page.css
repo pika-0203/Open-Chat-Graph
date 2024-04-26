@@ -480,6 +480,11 @@ body > footer {
   .openchat .oc-desc-nav {
     padding-top: 1.5rem;
   }
+
+  summary:hover {
+    -webkit-text-decoration: underline 2px currentColor;
+    text-decoration: underline 2px currentColor;
+  }
 }
 
 .grecaptcha-badge {
@@ -492,4 +497,40 @@ body > footer {
 
 #comment-root .comment-term-text-color {
   color: #b7b7b7;
+}
+
+.list-aside {
+  all: unset;
+  display: block;
+  padding: 0 1rem;
+}
+
+.list-aside details {
+  margin: 0;
+  font-weight: normal;
+  font-size: 13px;
+  color: #777;
+}
+
+.list-aside summary h3 {
+  all: unset;
+}
+
+.list-aside summary {
+  width: fit-content;
+}
+
+.list-aside .summary-p {
+  margin: 0.75rem 0;
+  padding: 0;
+  width: 100%;
+  margin-top: 6px;
+  padding-left: 0.5rem;
+  font-size: 13px;
+  color: #777;
+  line-height: 1.8;
+}
+
+.comment-aside {
+  margin-bottom: 1rem;
 }

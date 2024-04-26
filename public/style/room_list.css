@@ -1332,7 +1332,6 @@ article.top-list {
 
 .list-aside summary {
   width: fit-content;
-  user-select: none;
 }
 
 .list-aside-details {
@@ -1343,10 +1342,33 @@ article.top-list {
   gap: 4px;
 }
 
+.list-aside summary h3 {
+  all: unset;
+}
+
 .list-aside.ranking-desc {
   margin: 10px 0 11px 0;
 }
+
 .ranking-desc .recommend-desc {
   margin-top: 6px;
   padding-left: 0.5rem;
+}
+
+.list-aside .summary-p {
+  margin-top: 6px;
+  padding-left: 0.5rem;
+}
+
+.list-aside details ol {
+  margin: 0;
+  padding: 0 0 0 1rem;
+}
+
+.list-aside details li {
+  padding: 0;
+}
+
+.list-aside details b {
+  color: inherit;
 }

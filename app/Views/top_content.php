@@ -98,6 +98,7 @@
                     </h2>
                 </div>
             </header>
+            <?php viewComponent('comment_desc') ?>
             <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
             viewComponent('open_chat_list_ranking_comment', ['openChatList' => $dto->recentCommentList]) ?>
         </article>
