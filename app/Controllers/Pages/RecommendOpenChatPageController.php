@@ -49,7 +49,7 @@ class RecommendOpenChatPageController
         $_css = ['room_list', 'site_header', 'site_footer', 'recommend_page'];
 
         $_breadcrumbsShema = $this->breadcrumbsShema->generateSchema(
-            'タグ',
+            'タグ毎のランキング',
             'recommend',
             $word,
             'recommend/?tag=' . urlencode($tag),
