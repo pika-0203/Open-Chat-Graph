@@ -7,7 +7,7 @@ namespace App\Services\RankingPosition\Store;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
-abstract class AabstractRankingPositionStore
+abstract class AbstractRankingPositionStore
 {
     /**
      * @var OpenChatDto[] $apiDtoCache

@@ -11,7 +11,7 @@ use App\Services\OpenChat\Crawler\OpenChatApiRisingDownloaderProcess;
 use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Services\RankingPosition\Store\RankingPositionStore;
 use App\Services\RankingPosition\Store\RisingPositionStore;
-use App\Services\RankingPosition\Store\AabstractRankingPositionStore;
+use App\Services\RankingPosition\Store\AbstractRankingPositionStore;
 use App\Services\OpenChat\Updater\Process\OpenChatApiDbMergerProcess;
 use App\Services\OpenChat\Dto\OpenChatApiDtoFactory;
 use App\Services\OpenChat\Dto\OpenChatDto;
@@ -63,7 +63,7 @@ class OpenChatApiDbMerger
     }
 
     private function fetchOpenChatApiRankingAllProcess(
-        AabstractRankingPositionStore $positionStore,
+        AbstractRankingPositionStore $positionStore,
         OpenChatApiRankingDownloader $downloader
     ): array {
         // API OC一件ずつの処理

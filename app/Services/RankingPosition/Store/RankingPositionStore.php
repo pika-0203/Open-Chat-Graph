@@ -6,7 +6,7 @@ namespace App\Services\RankingPosition\Store;
 
 use App\Config\AppConfig;
 
-class RankingPositionStore extends AabstractRankingPositionStore
+class RankingPositionStore extends AbstractRankingPositionStore
 {
     protected string $filePath = AppConfig::OPEN_CHAT_RANKING_POSITION_DIR;
 }

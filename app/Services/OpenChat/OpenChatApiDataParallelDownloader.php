@@ -11,7 +11,7 @@ use App\Services\OpenChat\Crawler\OpenChatApiRisingDownloaderProcess;
 use App\Models\Repositories\Log\LogRepositoryInterface;
 use App\Services\RankingPosition\Store\RankingPositionStore;
 use App\Services\RankingPosition\Store\RisingPositionStore;
-use App\Services\RankingPosition\Store\AabstractRankingPositionStore;
+use App\Services\RankingPosition\Store\AbstractRankingPositionStore;
 use App\Services\OpenChat\Dto\OpenChatApiDtoFactory;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Exceptions\ApplicationException;
@@ -68,7 +68,7 @@ class OpenChatApiDataParallelDownloader
 
     private function process(
         string $category,
-        AabstractRankingPositionStore $positionStore,
+        AbstractRankingPositionStore $positionStore,
         OpenChatApiRankingDownloader $downloader
     ): int {
         // API カテゴリごとの前処理
@@ -98,7 +98,7 @@ class OpenChatApiDataParallelDownloader
             }
 
             if ($errors) {
-                throw new \RuntimeException('validateAndMapToOpenChatDto: ' . $error[0]);
+                throw new \RuntimeException('validateAndMapToOpenChatDto: ' . implode(',', $errors));
             }
         };
 
