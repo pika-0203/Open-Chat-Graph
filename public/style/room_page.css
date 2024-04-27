@@ -510,6 +510,7 @@ body > footer {
   font-weight: normal;
   font-size: 13px;
   color: #777;
+  font-family: var(--font-family);
 }
 
 .list-aside summary h3 {
@@ -536,6 +537,6 @@ body > footer {
 }
 
 .comment-aside {
-  margin-top: .2rem;
+  margin-top: 0.2rem;
   margin-bottom: 1.3rem;
 }
