@@ -531,7 +531,11 @@ body > footer {
   line-height: 1.8;
 }
 
+.list-aside ol {
+  padding-left: 1rem;
+}
+
 .comment-aside {
-  margin-top: .5rem;
-  margin-bottom: 1.5rem;
+  margin-top: .2rem;
+  margin-bottom: 1.3rem;
 }
