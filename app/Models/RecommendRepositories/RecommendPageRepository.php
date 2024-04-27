@@ -193,10 +193,10 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
     function getRecommendTagAndCategoryAll()
     {
         $query =
-            'SELECT
+        'SELECT
                 grouped_data.tag,
                 grouped_data.category,
-                grouped_data.cnt AS record_count
+                max_counts.sumcnt AS record_count
             FROM
                 (
                     SELECT
@@ -213,7 +213,8 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                 JOIN (
                     SELECT
                         inner_counts.tag,
-                        MAX(inner_counts.cnt) AS maxcnt
+                        MAX(inner_counts.cnt) AS maxcnt,
+                        SUM(inner_counts.cnt) AS sumcnt
                     FROM
                         (
                             SELECT
