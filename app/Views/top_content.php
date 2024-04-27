@@ -9,6 +9,9 @@
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
+            <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('tags') ?>">
+                <span class="ranking-readMore">タグからオープンチャットを探す</span>
+            </a>
             <?php if ($tags) : ?>
                 <div>
                     <header class="openchat-list-title-area unset">

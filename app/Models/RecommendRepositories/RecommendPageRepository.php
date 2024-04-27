@@ -188,4 +188,71 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
 
         return DB::fetch($query, compact('tag'));
     }
+
+    /** @return array<int, array<array{tag: string, record_count: int}>> カテゴリーに基づいてグループ化された結果 */
+    function getRecommendTagAndCategoryAll()
+    {
+        $query =
+            'SELECT
+                grouped_data.tag,
+                grouped_data.category,
+                grouped_data.cnt AS record_count
+            FROM
+                (
+                    SELECT
+                        r.tag,
+                        oc.category,
+                        COUNT(*) AS cnt
+                    FROM
+                        open_chat AS oc
+                        JOIN recommend AS r ON r.id = oc.id
+                    GROUP BY
+                        r.tag,
+                        oc.category
+                ) AS grouped_data
+                JOIN (
+                    SELECT
+                        inner_counts.tag,
+                        MAX(inner_counts.cnt) AS maxcnt
+                    FROM
+                        (
+                            SELECT
+                                r.tag,
+                                oc.category,
+                                COUNT(*) AS cnt
+                            FROM
+                                open_chat AS oc 
+                                JOIN recommend AS r ON r.id = oc.id
+                            GROUP BY
+                                r.tag,
+                                oc.category
+                        ) AS inner_counts
+                    GROUP BY
+                        inner_counts.tag
+                ) AS max_counts ON grouped_data.tag = max_counts.tag
+                AND grouped_data.cnt = max_counts.maxcnt';
+
+        $results = DB::fetchAll($query);
+
+        // 結果を整形
+        $groupedResults = [];
+        foreach ($results as $row) {
+            // categoryをキーとして使用
+            $key = $row['category'] ?? 0;
+            if (!isset($groupedResults[$key])) {
+                $groupedResults[$key] = [];
+            }
+            // 同じカテゴリーのデータを配列に追加
+            $groupedResults[$key][] = ['tag' => $row['tag'], 'count' => $row['record_count']];
+        }
+
+        foreach ($groupedResults as &$row) {
+            // $groupedResultsの要素を要素数が多い順にソート
+            uasort($row, function ($a, $b) {
+                return $b['count'] - $a['count'];
+            });
+        }
+
+        return $groupedResults;
+    }
 }

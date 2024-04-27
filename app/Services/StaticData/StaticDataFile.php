@@ -35,4 +35,18 @@ class StaticDataFile
 
         return $data;
     }
+
+    /** @return array<int, array<array{tag:string, record_count:int}>> */
+    function getTagList(): array
+    {
+        /** @var array $data */
+        $data = getUnserializedFile('static_data_top/tag_list.dat');
+        if (!$data) {
+            /** @var StaticDataGenerator $staticDataGenerator */
+            $staticDataGenerator = app(StaticDataGenerator::class);
+            $data = $staticDataGenerator->getTagList();
+        }
+
+        return $data;
+    }
 }

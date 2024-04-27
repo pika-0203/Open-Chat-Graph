@@ -1,7 +1,7 @@
 <aside class="list-aside comment-aside">
     <details>
         <summary>
-            <h3>コメント欄を最大限に活用するための例文ガイド</h3>
+            <h3>コメントの例文ガイド</h3>
         </summary>
         <ol>
             <li>

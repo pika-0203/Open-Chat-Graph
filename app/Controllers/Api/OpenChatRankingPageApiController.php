@@ -33,8 +33,14 @@ class OpenChatRankingPageApiController
         $this->args->order = Valid::str(Recp::input('order', 'asc'), regex: ['asc', 'desc'], e: $error);
         $this->args->sort = Valid::str(Recp::input('sort', 'rank'), regex: ['rank', 'increase', 'rate', 'member', 'created_at'], e: $error);
 
-        $this->args->keyword = Valid::str(Recp::input('keyword', ''), emptyAble: true, maxLen: 1000, e: $error);
         $this->args->sub_category = Valid::str(Recp::input('sub_category', ''), emptyAble: true, maxLen: 40, e: $error);
+
+        $keyword = Valid::str(Recp::input('keyword', ''), emptyAble: true, maxLen: 1000, e: $error);
+        if ($keyword && str_starts_with($keyword, 'tag:')) {
+            $this->args->tag = str_replace('tag:', '', $keyword);
+        } elseif ($keyword) {
+            $this->args->keyword = $keyword;
+        }
     }
 
     function index(OpenChatStatsRankingApiRepository $repo)

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\StaticData;
 
 use App\Config\AppConfig;
+use App\Models\RecommendRepositories\RecommendPageRepository;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
 use App\Services\Recommend\TopPageRecommendList;
 use App\Services\StaticData\Dto\StaticTopPageDto;
@@ -14,7 +15,8 @@ class StaticDataGenerator
 {
     function __construct(
         private OpenChatListRepositoryInterface $openChatListRepository,
-        private TopPageRecommendList $topPageRecommendList
+        private TopPageRecommendList $topPageRecommendList,
+        private RecommendPageRepository $recommendPageRepository,
     ) {
     }
 
@@ -46,10 +48,16 @@ class StaticDataGenerator
         return $_argDto;
     }
 
+    function getTagList(): array
+    {
+        return $this->recommendPageRepository->getRecommendTagAndCategoryAll();
+    }
+
     function updateStaticData()
     {
         safeFileRewrite(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME, (new \DateTime)->format('Y-m-d H:i:s'));
         saveSerializedFile('static_data_top/ranking_list.dat', $this->getTopPageDataFromDB());
         saveSerializedFile('static_data_top/ranking_arg_dto.dat', $this->getRankingArgDto());
+        saveSerializedFile('static_data_top/tag_list.dat', $this->getTagList());
     }
 }

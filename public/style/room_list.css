@@ -377,7 +377,7 @@ article.top-list {
   cursor: pointer;
   font-size: 15px;
   display: block;
-  font-weight: 500;
+  font-weight: normal;
   line-height: 18px;
   text-overflow: ellipsis;
   white-space: nowrap;

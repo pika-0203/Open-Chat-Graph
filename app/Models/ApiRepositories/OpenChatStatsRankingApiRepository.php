@@ -78,7 +78,7 @@ class OpenChatStatsRankingApiRepository
         $categoryStatement = $args->category ? "category = {$args->category}" : 1;
 
         // 検索が選択されていない場合
-        if (!$args->sub_category && !$args->keyword) {
+        if (!$args->sub_category && !$args->keyword && !$args->tag) {
             $result = DB::fetchAll(
                 $query($categoryStatement)('WHERE'),
                 $params
@@ -114,6 +114,25 @@ class OpenChatStatsRankingApiRepository
 
             $result[0]['totalCount'] = $count[0]['count'];
 
+            return $result;
+        }
+
+        // tag検索時
+        if ($args->tag) {
+            $categoryArg = $categoryStatement . " AND r.tag = :tag";
+            $whereArg = 'JOIN recommend AS r ON oc.id = r.id WHERE';
+
+            $result = DB::fetchAll(
+                $query($categoryArg)($whereArg),
+                [...$params, 'tag' => $args->tag]
+            );
+
+            if (!$result || $args->page !== 0) {
+                return $result;
+            }
+
+            // 1ページ目の場合は件数を含める
+            $result[0]['totalCount'] = DB::fetchColumn($countQuery($categoryArg)($whereArg), ['tag' => $args->tag]);
             return $result;
         }
 
@@ -187,7 +206,7 @@ class OpenChatStatsRankingApiRepository
         $categoryStatement = $args->category ? "category = {$args->category}" : 1;
 
         // サブカテゴリーが選択されていない場合
-        if (!$args->sub_category && !$args->keyword) {
+        if (!$args->sub_category && !$args->keyword && !$args->tag) {
             $result = array_map(
                 fn ($oc) => new OpenChatListDto($oc),
                 DB::fetchAll(
@@ -228,6 +247,28 @@ class OpenChatStatsRankingApiRepository
             );
 
             $result[0]->totalCount = $count[0]['count'];
+            return $result;
+        }
+
+        // tag検索時
+        if ($args->tag) {
+            $categoryArg = $categoryStatement . $whereClause . " AND r.tag = :tag";
+            $whereArg = 'JOIN recommend AS r ON oc.id = r.id WHERE';
+
+            $result = array_map(
+                fn ($oc) => new OpenChatListDto($oc),
+                DB::fetchAll(
+                    $query($categoryArg)($whereArg),
+                    [...$params, 'tag' => $args->tag]
+                )
+            );
+
+            if (!$result || $args->page !== 0) {
+                return $result;
+            }
+
+            // 1ページ目の場合は件数を含める
+            $result[0]->totalCount = DB::fetchColumn($countQuery($categoryArg)($whereArg), ['tag' => $args->tag]);
             return $result;
         }
 
