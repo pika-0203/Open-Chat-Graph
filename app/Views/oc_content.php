@@ -165,32 +165,31 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2]]) ?>
         <hr style="margin-top: 2px;">
       <?php endif ?>
+      <section style="all: unset; display: block; margin: 0 -1rem;">
+        <div style="display: flex; flex-direction: row; align-items: center;" class="openchat">
+          <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
+          <h2 class="graph-title">オープンチャットについてのコメント</h2>
+        </div>
+        <?php viewComponent('comment_desc') ?>
+        <div id="comment-root"></div>
+      </section>
       <?php if ($recommend[1]) : ?>
+        <hr style="margin-top: 2px;">
         <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2]]) ?>
       <?php endif ?>
-      <hr style="margin-top: 2px;">
     </article>
-    <section>
-      <div style="display: flex; flex-direction: row; align-items: center;" class="openchat">
-        <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
-        <h2 class="graph-title">オープンチャットについてのコメント</h2>
-      </div>
-      <?php viewComponent('comment_desc') ?>
-      <div id="comment-root"></div>
-    </section>
     <footer>
       <aside class="open-btn2">
-        <a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" class="app_link" style="  font-size: 11px;
-          color: #b7b7b7;
-          margin-bottom: .5rem;
-          margin-top: -.5rem;">
-          <span class="text">人数統計CSVをダウンロード</span>
-        </a>
         <a href="https://openchat-jp.line.me/other/beginners_guide" class="app_link">
           <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
         </a>
-        <a href="https://line.me/download" class="app_link">
+        <a href="https://line.me/download" class="app_link app-dl">
           <span class="text">LINEアプリをダウンロード（LINE公式）</span>
+        </a>
+        <a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" class="app_link csv-dl" style="
+          margin-bottom: 1rem;
+          margin-top: .5rem;">
+          <span class="text">人数統計CSVをダウンロード</span>
         </a>
       </aside>
       <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>

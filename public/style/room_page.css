@@ -364,6 +364,9 @@ body > footer {
 }
 
 @media screen and (max-width: 511px) {
+  .csv-dl {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 512px) {
@@ -485,6 +488,11 @@ body > footer {
     -webkit-text-decoration: underline 2px currentColor;
     text-decoration: underline 2px currentColor;
   }
+
+  .app-dl {
+    font-size: 12px;
+    color: #b7b7b7;
+  }
 }
 
 .grecaptcha-badge {
@@ -539,4 +547,13 @@ body > footer {
 .comment-aside {
   margin-top: 0.2rem;
   margin-bottom: 1.3rem;
+}
+.app-dl {
+  font-size: 12px;
+  color: #b7b7b7;
+}
+
+.csv-dl {
+  font-size: 12px;
+  color: #b7b7b7;
 }
