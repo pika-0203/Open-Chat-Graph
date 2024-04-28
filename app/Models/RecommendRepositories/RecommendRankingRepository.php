@@ -9,7 +9,6 @@ use Shadow\DB;
 class RecommendRankingRepository implements RecommendRankingRepositoryInterface
 {
     function getRanking(
-        int $id,
         string $tag,
         string $table,
         int $minDiffMember,
@@ -33,8 +32,7 @@ class RecommendRankingRepository implements RecommendRankingRepositoryInterface
                             FROM
                                 {$table}
                             WHERE
-                                open_chat_id != :id
-                                AND diff_member >= :minDiffMember
+                                diff_member >= :minDiffMember
                         ) AS t1
                         JOIN recommend AS t2 ON t1.open_chat_id = t2.id
                     WHERE
@@ -44,12 +42,11 @@ class RecommendRankingRepository implements RecommendRankingRepositoryInterface
                 ranking.diff_member DESC
             LIMIT
                 :limit",
-            compact('tag', 'id', 'limit', 'minDiffMember')
+            compact('tag', 'limit', 'minDiffMember')
         );
     }
 
     function getRankingByExceptId(
-        int $id,
         string $tag,
         string $table,
         int $minDiffMember,
@@ -79,26 +76,25 @@ class RecommendRankingRepository implements RecommendRankingRepositoryInterface
                                     FROM
                                         {$table}
                                     WHERE
-                                        open_chat_id != :id
-                                        AND diff_member >= :minDiffMember
+                                        diff_member >= :minDiffMember
                                 ) AS sr1
                         ) AS t1
                         JOIN recommend AS t2 ON t1.open_chat_id = t2.id
                     WHERE
                         t2.tag = :tag
                 ) AS ranking ON oc.id = ranking.id
+                LEFT JOIN statistics_ranking_hour AS rh ON rh.open_chat_id = oc.id
             WHERE
                 oc.id NOT IN ({$ids})
             ORDER BY
-                ranking.diff_member DESC
+                rh.diff_member DESC, ranking.diff_member DESC
             LIMIT
                 :limit",
-            compact('tag', 'id', 'limit', 'minDiffMember')
+            compact('tag', 'limit', 'minDiffMember')
         );
     }
 
     function getListOrderByMemberDesc(
-        int $id,
         string $tag,
         array $idArray,
         int $limit,
@@ -122,7 +118,6 @@ class RecommendRankingRepository implements RecommendRankingRepositoryInterface
                                 recommend
                             WHERE
                                 tag = :tag
-                                AND NOT id = :id
                         ) AS ranking ON oc.id = ranking.id
                     WHERE
                         oc.id NOT IN ({$ids})
@@ -135,7 +130,7 @@ class RecommendRankingRepository implements RecommendRankingRepositoryInterface
                 LEFT JOIN statistics_ranking_hour AS t2 ON t1.id = t2.open_chat_id
             ORDER BY
                 t2.diff_member DESC, t1.member DESC",
-            compact('tag', 'id', 'limit')
+            compact('tag', 'limit')
         );
     }
 

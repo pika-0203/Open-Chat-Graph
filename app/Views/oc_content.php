@@ -162,7 +162,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </nav>
       <hr>
       <?php if ($recommend[0]) : ?>
-        <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2]]) ?>
+        <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
         <hr style="margin-top: 2px;">
       <?php endif ?>
       <section style="all: unset; display: block; margin: 0 -1rem;">
@@ -175,7 +175,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </section>
       <?php if ($recommend[1]) : ?>
         <hr style="margin-top: 2px;">
-        <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2]]) ?>
+        <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       <?php endif ?>
     </article>
     <footer>

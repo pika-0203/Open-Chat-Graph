@@ -9,7 +9,6 @@ use Shadow\DB;
 class CategoryRankingRepository implements RecommendRankingRepositoryInterface
 {
     function getRanking(
-        int $id,
         string $category,
         string $table,
         int $minDiffMember,
@@ -28,7 +27,6 @@ class CategoryRankingRepository implements RecommendRankingRepositoryInterface
                         open_chat
                     WHERE
                         category = :category
-                        AND NOT id = :id
                 ) AS oc
                 JOIN (
                     SELECT
@@ -42,12 +40,11 @@ class CategoryRankingRepository implements RecommendRankingRepositoryInterface
                 ranking.diff_member DESC
             LIMIT
                 :limit",
-            compact('id', 'category', 'minDiffMember', 'limit')
+            compact('category', 'minDiffMember', 'limit')
         );
     }
 
     function getRankingByExceptId(
-        int $id,
         string $category,
         string $table,
         int $minDiffMember,
@@ -68,7 +65,6 @@ class CategoryRankingRepository implements RecommendRankingRepositoryInterface
                         open_chat
                     WHERE
                         category = :category
-                        AND NOT id = :id
                 ) AS oc
                 JOIN (
                     SELECT
@@ -89,12 +85,11 @@ class CategoryRankingRepository implements RecommendRankingRepositoryInterface
                 ranking.diff_member DESC
             LIMIT
                 :limit",
-            compact('id', 'category', 'minDiffMember', 'limit')
+            compact('category', 'minDiffMember', 'limit')
         );
     }
 
     function getListOrderByMemberDesc(
-        int $id,
         string $category,
         array $idArray,
         int $limit
@@ -110,12 +105,11 @@ class CategoryRankingRepository implements RecommendRankingRepositoryInterface
             WHERE
                 oc.category = :category
                 AND oc.id NOT IN ({$ids})
-                AND NOT oc.id = :id
             ORDER BY
                 oc.member DESC
             LIMIT
                 :limit",
-            compact('id', 'category', 'limit')
+            compact('category', 'limit')
         );
     }
 

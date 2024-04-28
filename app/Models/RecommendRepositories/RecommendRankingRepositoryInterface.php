@@ -34,7 +34,6 @@ interface RecommendRankingRepositoryInterface
     ";
 
     function getRanking(
-        int $id,
         string $entity,
         string $table,
         int $minDiffMember,
@@ -42,7 +41,6 @@ interface RecommendRankingRepositoryInterface
     ): array;
 
     function getRankingByExceptId(
-        int $id,
         string $entity,
         string $table,
         int $minDiffMember,
@@ -51,7 +49,6 @@ interface RecommendRankingRepositoryInterface
     ): array;
 
     function getListOrderByMemberDesc(
-        int $id,
         string $entity,
         array $idArray,
         int $limit,

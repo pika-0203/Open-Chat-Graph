@@ -18,11 +18,10 @@ class RecommendGenarator
     ) {
     }
 
-    function getRecomendRanking(int $open_chat_id, string $tag): RecommendListDto|false
+    function getRecomendRanking(string $tag): RecommendListDto|false
     {
         return $this->recommendRankingBuilder->getRanking(
             RecommendListType::Tag,
-            $open_chat_id,
             $tag,
             $tag,
             $this->recommendRankingRepository
@@ -38,7 +37,6 @@ class RecommendGenarator
 
         return $this->recommendRankingBuilder->getRanking(
             RecommendListType::Category,
-            $open_chat_id,
             (string)$category,
             $listName,
             $this->categoryRankingRepository
@@ -61,12 +59,12 @@ class RecommendGenarator
             return [$result, false, ''];
         }
 
-        $result1 = $this->getRecomendRanking($open_chat_id, $tag);
+        $result1 = $this->getRecomendRanking($tag);
         $result2 = $tag2
-            ? ($this->getRecomendRanking($open_chat_id, $tag2) ?: $this->getCategoryRanking($open_chat_id))
+            ? ($this->getRecomendRanking($tag2) ?: $this->getCategoryRanking($open_chat_id))
             : ($recommendTag && $recommendTag !== $tag
                 ? (
-                    $this->getRecomendRanking($open_chat_id, $recommendTag) ?: $this->getCategoryRanking($open_chat_id)
+                    $this->getRecomendRanking($recommendTag) ?: $this->getCategoryRanking($open_chat_id)
                 ) : (
                     $this->getCategoryRanking($open_chat_id)
                 )

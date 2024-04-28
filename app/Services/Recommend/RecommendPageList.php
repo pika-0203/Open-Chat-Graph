@@ -157,7 +157,6 @@ class RecommendPageList
     {
         $dto = $this->recommendRankingBuilder->getRanking(
             RecommendListType::Tag,
-            0,
             $tag,
             $tag,
             $this->recommendPageRepository
