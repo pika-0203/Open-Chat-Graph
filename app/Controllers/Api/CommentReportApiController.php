@@ -21,7 +21,7 @@ class CommentReportApiController
         string $token,
         int $comment_id
     ) {
-        $score = $googleReCaptcha->validate($token, 0.3);
+        $score = $googleReCaptcha->validate($token, 0.5);
         $report_user_id = $auth->loginCookieUserId();
 
         $comment = $commentListRepository->findCommentById($comment_id);
@@ -49,9 +49,18 @@ class CommentReportApiController
 
         $comment['report_user_hash'] = base62Hash($report_user_id, 'fnv132');
         $comment['report_log_id'] = $logId;
-        $comment['google_recaptcha_score'] = $score;
+        $comment['google_recaptcha_score'] = floor($score * 10) / 10;
 
-        AdminTool::sendLineNofity("通報: " . json_encode($comment, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+        $id = $comment['id'];
+        $ocId = $comment['open_chat_id'];
+        $deleteUrl = url(
+            "admin-api/deletecomment?openExternalBrowser=1&id={$ocId}&commentId={$id}"
+        );
+        $roomUrl = url("oc/{$id}?openExternalBrowser=1");
+
+        AdminTool::sendLineNofity(
+            "通報: " . json_encode($comment, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n削除: {$deleteUrl}\n部屋: {$roomUrl}"
+        );
 
         return response(['success' => true]);
     }

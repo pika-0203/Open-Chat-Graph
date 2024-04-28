@@ -46,34 +46,24 @@ class RecommendGenarator
     /** @return array{0:RecommendListDto|false,1:RecommendListDto|false,2:string|false} */
     function getRecommend(int $open_chat_id): array
     {
-        [$tag, $tag2] = $this->recommendRankingRepository->getTags($open_chat_id);
-        $recommendTag = $this->recommendRankingRepository->getRecommendTag($open_chat_id);
-
-        if (!$tag) $tag = $tag2;
-        if ($tag === $tag2) $tag2 = false;
-
-        if (!$tag) $tag = $recommendTag;
-
+        $tag = $this->recommendRankingRepository->getRecommendTag($open_chat_id);
         if (!$tag) {
             $result = $this->getCategoryRanking($open_chat_id);
             return [$result, false, ''];
         }
 
+        [$tag2, $tag3] = $this->recommendRankingRepository->getTags($open_chat_id);
+        if ($tag === $tag2) $tag2 = $tag3;
+
         $result1 = $this->getRecomendRanking($tag);
         $result2 = $tag2
             ? ($this->getRecomendRanking($tag2) ?: $this->getCategoryRanking($open_chat_id))
-            : ($recommendTag && $recommendTag !== $tag
-                ? (
-                    $this->getRecomendRanking($recommendTag) ?: $this->getCategoryRanking($open_chat_id)
-                ) : (
-                    $this->getCategoryRanking($open_chat_id)
-                )
-            );
+            : $this->getCategoryRanking($open_chat_id);
 
         return [
             $result1,
             $result2,
-            $recommendTag ?: ''
+            $tag ?: ''
         ];
     }
 }

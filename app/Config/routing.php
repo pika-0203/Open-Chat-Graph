@@ -145,10 +145,11 @@ Route::path(
 );
 
 Route::path(
-    'admin-api/deletecomment@post',
+    'admin-api/deletecomment@post@get',
     [AdminEndPointController::class, 'deletecomment']
 )
     ->matchNum('id')
-    ->matchNum('commentId');
+    ->matchNum('commentId')
+    ->matchNum('delete', emptyAble: true);
 
 Route::run();

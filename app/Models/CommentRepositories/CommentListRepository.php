@@ -76,12 +76,12 @@ class CommentListRepository implements CommentListRepositoryInterface
     {
         $query =
             "SELECT
-                comment_id,
                 open_chat_id,
                 id,
                 name,
+                time,
                 text,
-                time
+                comment_id
             FROM
                 comment
             WHERE

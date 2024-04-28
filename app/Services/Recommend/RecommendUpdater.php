@@ -36,6 +36,7 @@ class RecommendUpdater
         "26" => [
             ["PRODUCE 101 JAPAN THE GIRLS（日プ女子）", ["日プガールズ_OR_日プ女子_OR_ME:I_OR_日プ3_OR_ME：I", "PRODUCE_AND_101_AND_JAPAN_AND_THE_AND_GIRLS"]],
             ["PRODUCE 101 JAPAN（日プ）", ["PRODUCE_AND_101_AND_JAPAN"]],
+            ["SEVENTEEN", ["CARAT_OR_セブチ"]],
             "utfbin_Ado",
         ],
         "22" => [
@@ -50,6 +51,7 @@ class RecommendUpdater
             "フェス",
             "utfbin_GLAY",
             "utfbin_Ado",
+            ["SEVENTEEN", ["CARAT_OR_セブチ"]],
         ],
         "11" => [
             ["翻訳", ["LINE_AND_語", "翻訳", "LINE_AND_通訳"]],
