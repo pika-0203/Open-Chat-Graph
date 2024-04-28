@@ -54,7 +54,7 @@ class CommentReportApiController
         $id = $comment['id'];
         $ocId = $comment['open_chat_id'];
         $deleteUrl = url(
-            "admin-api/deletecomment?openExternalBrowser=1&id={$ocId}&commentId={$id}"
+            "admin-api/deletecomment?openExternalBrowser=1&id={$ocId}&commentId={$id}&flag=2"
         );
         $roomUrl = url("oc/{$id}?openExternalBrowser=1");
 
