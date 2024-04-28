@@ -14,6 +14,7 @@ class CommentListApi
     public string $text;
     public string $time;
     public string $userId;
+    public int $flag;
     public int $empathyCount;
     public int $insightsCount;
     public int $negativeCount;
@@ -28,7 +29,11 @@ class CommentListApi
                 'name' => $this->name,
                 'text' => $this->text,
                 'time' => $this->time,
-                'userId' => $this->userId === AdminConfig::ADMIN_API_KEY ? '管理者' : ''
+                'userId' => match ($this->flag) {
+                    0 => $this->userId === AdminConfig::ADMIN_API_KEY ? '管理者' : base62Hash($this->userId, 'fnv132'),
+                    1 => '削除済',
+                    2 => '通報により削除済',
+                }
             ],
             'like' => [
                 'empathyCount' => $this->empathyCount,

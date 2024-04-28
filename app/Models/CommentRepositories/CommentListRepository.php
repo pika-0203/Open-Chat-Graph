@@ -15,13 +15,17 @@ class CommentListRepository implements CommentListRepositoryInterface
             "SELECT
                 c.id,
                 c.comment_id AS commentId,
-                c.name,
                 CASE c.flag
-                    WHEN 1 THEN ''
-                    ELSE c.text
+                    WHEN 0 THEN c.name
+                    ELSE 'Anonymous'
+                END AS name,
+                CASE c.flag
+                    WHEN 0 THEN c.text
+                    ELSE ''
                 END AS text,
                 c.time,
                 c.user_id AS userId,
+                c.flag,
                 IFNULL(l.empathy, 0) AS empathyCount,
                 IFNULL(l.insights, 0) AS insightsCount,
                 IFNULL(l.negative, 0) AS negativeCount,

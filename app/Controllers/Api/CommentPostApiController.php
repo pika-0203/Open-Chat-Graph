@@ -51,7 +51,7 @@ class CommentPostApiController
 
         return response([
             'commentId' => $commentId,
-            'userId' => $args->user_id === AdminConfig::ADMIN_API_KEY ? '管理者' : ''
+            'userId' => $args->user_id === AdminConfig::ADMIN_API_KEY ? '管理者' : base62Hash($args->user_id, 'fnv132')
         ]);
     }
 }
