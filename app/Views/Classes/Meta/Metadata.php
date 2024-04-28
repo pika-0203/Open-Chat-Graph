@@ -35,7 +35,7 @@ class Metadata
 
     public function setTitle(string $title, bool $includeSiteTitle = true): static
     {
-        $this->title = h($title) . ($includeSiteTitle ? (' | ' . $this->title) : '');
+        $this->title = h($title) . ($includeSiteTitle ? ('｜' . $this->title) : '');
         return $this;
     }
 

@@ -23,8 +23,9 @@ use App\Middleware\VerifyCsrfToken;
 
 Route::middlewareGroup(RedirectLineWebBrowser::class)
     ->path('ranking/{category}', [ReactRankingPageController::class, 'ranking'])
-    ->match(cache(...))
     ->matchNum('category', min: 1)
+    ->match(fn (int $category) => isset(array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category]))
+    ->match(cache(...))
 
     ->path('ranking', [ReactRankingPageController::class, 'ranking'])
     ->match(cache(...));
