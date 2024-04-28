@@ -10,7 +10,7 @@ use App\Models\CommentRepositories\Enum\LikeBtnType;
 
 class LikePostRepository implements LikePostRepositoryInterface
 {
-    function addLike(LikeApiArgs $args, LikeBtnType $type): bool
+    function addLike(LikeApiArgs $args, LikeBtnType $type): int
     {
         $query =
             "INSERT INTO
@@ -33,7 +33,7 @@ class LikePostRepository implements LikePostRepositoryInterface
                         AND comment_id = :comment_id
                 )";
 
-        return CommentDB::executeAndCheckResult($query, [
+        return CommentDB::executeAndGetLastInsertId($query, [
             'comment_id' => $args->comment_id,
             'user_id' => $args->user_id,
             'type' => $type->value

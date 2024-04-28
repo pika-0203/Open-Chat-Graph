@@ -28,10 +28,10 @@ class CommentLikePostApiController
         );
     }
 
-    private function response(LikeApiArgs $args, CommentLogType $type)
+    private function response(LikeApiArgs $args, CommentLogType $type, int $entity_id)
     {
         $this->commentLogRepository->addLog(
-            $args->comment_id,
+            $entity_id,
             $type,
             getIP(),
             getUA(),
@@ -46,7 +46,7 @@ class CommentLikePostApiController
 
         $reslut = $this->likePostRepository->addLike($args, LikeBtnType::from($type));
 
-        return $reslut ? $this->response($args, CommentLogType::AddLike) : false;
+        return $reslut ? $this->response($args, CommentLogType::AddLike, $reslut) : false;
     }
 
     function delete(int $comment_id)
@@ -55,6 +55,6 @@ class CommentLikePostApiController
 
         $reslut = $this->likePostRepository->deleteLike($args);
 
-        return $reslut ? $this->response($args, CommentLogType::DeleteLike) : false;
+        return $reslut ? $this->response($args, CommentLogType::DeleteLike, $args->comment_id) : false;
     }
 }

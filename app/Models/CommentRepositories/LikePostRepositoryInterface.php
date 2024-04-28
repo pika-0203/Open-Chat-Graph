@@ -8,7 +8,7 @@ use App\Models\CommentRepositories\Enum\LikeBtnType;
 
 interface LikePostRepositoryInterface
 {
-    function addLike(LikeApiArgs $args, LikeBtnType $type): bool;
+    function addLike(LikeApiArgs $args, LikeBtnType $type): int;
     function deleteLike(LikeApiArgs $args): bool;
     function getLikeRecord(LikeApiArgs $args): LikeBtnApi;
 }

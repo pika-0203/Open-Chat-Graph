@@ -27,9 +27,12 @@ class AdminEndPointController
     function deletecomment(int $commentId, int $id, int $flag, DeleteCommentRepositoryInterface $deleteCommentRepository)
     {
         $result = $deleteCommentRepository->deleteCommentByOcId($id, $commentId, $flag !== 3 ? $flag : null);
+        if (!$result) {
+            return view('admin/admin_message_page', ['title' => 'コメント削除', 'message' => '削除されたコメントはありません']);
+        }
 
-        return $result
-            ? redirect("oc/{$id}")
-            : view('admin/admin_message_page', ['title' => 'コメント削除', 'message' => '削除されたコメントはありません']);
+        if ($flag > 0) $deleteCommentRepository->deleteLikeByUserIdAndIp($id, $result['user_id'], $result['ip']);
+
+        return redirect("oc/{$id}");
     }
 }
