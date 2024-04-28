@@ -24,10 +24,9 @@ class AdminEndPointController
         return redirect("oc/{$id}");
     }
 
-    function deletecomment(int $commentId, int $id, int $delete, DeleteCommentRepositoryInterface $deleteCommentRepository)
+    function deletecomment(int $commentId, int $id, int $flag, DeleteCommentRepositoryInterface $deleteCommentRepository)
     {
-
-        $result = $deleteCommentRepository->deleteCommentByOcId($id, $commentId, (bool)$delete);
+        $result = $deleteCommentRepository->deleteCommentByOcId($id, $commentId, $flag !== 3 ? $flag : null);
 
         return $result
             ? redirect("oc/{$id}")

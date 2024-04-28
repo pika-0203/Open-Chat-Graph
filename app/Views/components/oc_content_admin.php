@@ -24,7 +24,13 @@
             <option value="<?php echo $commentId ?>"><?php echo $commentId ?></option>
         <?php endforeach ?>
     </select>
-    <label for="delete-flag-check"><input type="checkbox" id="delete-flag-check" name="delete" value="1" />完全に削除</label>
+    <label for="delete-flag">Flag</label>
+    <select name="flag" id="delete-flag" style="width: 5rem; font-size:1rem">
+        <option value="1">削除</option>
+        <option value="2">通報</option>
+        <option value="0">復元</option>
+        <option value="3">完全削除</option>
+    </select>
     <input type="hidden" name="id" value="<?php echo $_adminDto->id ?>">
     <input type="submit">
 </form>

@@ -150,6 +150,6 @@ Route::path(
 )
     ->matchNum('id')
     ->matchNum('commentId')
-    ->matchNum('delete', emptyAble: true);
+    ->matchNum('flag', min: 0, max: 3);
 
 Route::run();
