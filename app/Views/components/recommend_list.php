@@ -11,19 +11,18 @@ use App\Services\Recommend\Enum\RecommendListType;
         <div class="inner">
             <?php if ($recommend->type === RecommendListType::Category) : ?>
                 <h3>
-                    <span>
-                        「<?php echo $recommend->listName ?>」
-                    </span>
                     <div>
-                        <span>カテゴリーのおすすめ</span>
+                        <span>いま人気のルーム</span>
                     </div>
-                    <small style="font-size: 11px; font-weight:normal; color:#b7b7b7; margin-left: 4px;">最新</small>
+                    <span>
+                        「<?php echo $recommend->listName ?>」カテゴリー
+                    </span>
                 </h3>
             <?php else : ?>
                 <a class="unset" href="<?php echo url("recommend?tag=" . urlencode(htmlspecialchars_decode($recommend->listName))) ?>">
                     <h3>
                         <span style="text-decoration-color: #111; text-wrap: wrap;">
-                            「<?php echo $recommend->listName ?>」タグのおすすめ
+                            いま人気のルーム「<?php echo $recommend->listName ?>」
                         </span>
                     </h3>
                     <small style="font-size: 13px; font-weight:normal; color:#777; margin-left: 4px; text-wrap: nowrap; word-break: keep-all;" aria-hidden="true">すべて見る</small>

@@ -71,7 +71,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php endif ?>
             <section style="all:unset; display:block;">
                 <?php if ($count) : ?>
-                    <h2 class="list-title oc-list">「<?php echo $tag ?>」タグのランキング <?php echo $count ?>件</h2>
+                    <h2 class="list-title oc-list">「<?php echo $tag ?>」のランキング <?php echo $count ?>件</h2>
                     <aside class="list-aside">
                         <details class="icon-desc">
                             <summary>メンバー数のアイコンについて</summary>
