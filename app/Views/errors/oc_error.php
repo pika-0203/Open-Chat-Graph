@@ -16,6 +16,10 @@
 
 <body class="body">
     <style>
+        * {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
         /* Increase size of the main heading */
         h1 {
             font-size: 5rem;
@@ -69,11 +73,11 @@
             <p style="color: #aaa; font-size: 12px">LINEオープンチャット内でトークルームが削除されました</p>
         </header>
         <?php if ($recommend[0]) : ?>
-            <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => 0, 'tag' => $recommend[2]]) ?>
+            <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => 0, 'tag' => $recommend[2], 'id' => 0]) ?>
             <hr style="margin: 1rem 0;">
         <?php endif ?>
         <?php if ($recommend[1]) : ?>
-            <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => 0, 'tag' => $recommend[2]]) ?>
+            <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => 0, 'tag' => $recommend[2], 'id' => 0]) ?>
         <?php endif ?>
         <hr style="margin: .5rem 0;">
         <article class="top-list">
