@@ -23,9 +23,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     </div>
                     <div class="header-img-title">
                         <?php if ($count) : ?>
-                            <h2>【<?php echo $tag ?>】オープンチャット人気ランキングTOP<?php echo $count ?>【毎時更新】</h2>
+                            <h2>【<?php echo $tag ?>】オープンチャット人数急増ランキングTOP<?php echo $count ?>【毎時更新】</h2>
                         <?php else : ?>
-                            <h2>【<?php echo $tag ?>】オープンチャット人気ランキング【毎時更新】</h2>
+                            <h2>【<?php echo $tag ?>】オープンチャット人数急増ランキング【毎時更新】</h2>
                         <?php endif ?>
                     </div>
                 </div>
@@ -35,7 +35,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <span class="recommend-desc-child">2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャットでは、「<?php echo $tag ?>」をテーマにしたルームが数多く開設されています。</span>
                     <br>
                     <br>
-                    <span class="recommend-desc-child">そこで、オプチャグラフでは、「<?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag) ?>」をテーマにした中で、最近人数が急増しているルームのランキングを作成しました。このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
+                    <span class="recommend-desc-child">そこで、オプチャグラフでは、「<?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag) ?>」をテーマにした中で、<b>最近人数が急増しているルームのランキング</b>を作成しました。このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
                     <br>
                     <br>
                     <span class="recommend-desc-child">オープンチャットの情報を掲載する仕組みにつきましては、<a href="<?php echo url('policy') ?>">オプチャグラフについて</a>をご覧ください。</span>
@@ -67,7 +67,11 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php endif ?>
             <section style="all:unset; display:block;">
                 <?php if ($count) : ?>
-                    <h2 class="list-title oc-list">「<?php echo $tag ?>」のランキング 上位<?php echo $count ?>件</h2>
+                    <h2 class="list-title oc-list">
+                        <div>「<?php echo $tag ?>」の</div>
+                        <div>人数急増ランキング</div>
+                        <div style="margin-left: 4px;">上位<?php echo $count ?>件</div>
+                    </h2>
                     <aside class="list-aside">
                         <details class="icon-desc">
                             <summary>メンバー数のアイコンについて</summary>

@@ -130,7 +130,7 @@ time {
   background-color: white;
   font-weight: bold;
   color: #555;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.9;
 }
 
@@ -143,7 +143,7 @@ _:lang(x) + _:-webkit-full-screen-document,
   all: unset;
   margin-left: auto;
   display: block;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
   cursor: pointer;
   background: inherit;
@@ -169,18 +169,18 @@ _:lang(x) + _:-webkit-full-screen-document,
   overflow: hidden;
   -webkit-box-orient: vertical;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
 }
 
 .recommend-desc {
   color: #555;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.9;
 }
 
 .recommend-desc2 {
   color: #555;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.9;
 }
 
@@ -208,7 +208,8 @@ section aside:hover {
   margin-bottom: 6px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .list-title.oc-list {

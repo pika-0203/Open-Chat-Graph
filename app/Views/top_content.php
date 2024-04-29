@@ -17,7 +17,7 @@
                     <header class="openchat-list-title-area unset">
                         <div class="openchat-list-date unset ranking-url">
                             <h2 class="unset">
-                                <span class="openchat-list-title">いま人数増加中のタグ</span>
+                                <span class="openchat-list-title">いま人数急増中のタグ</span>
                                 <span aria-hidden="true" style="font-size: 9px; user-select: none; margin-bottom: px;margin-left: -3px;">🚀</span>
                             </h2>
                             <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0"><?php echo $hourlyEnd ?></span>
@@ -25,9 +25,9 @@
                     </header>
                     <aside class="list-aside ranking-desc">
                         <details class="icon-desc">
-                            <summary>人数増加中のタグとは</summary>
+                            <summary>人数急増中のタグとは</summary>
                             <p class="recommend-desc">
-                                「人数増加中のタグ」とは、今オープンチャットで人気を集めているテーマを指します。同じタグを持ついくつかのオープンチャットに参加者が急増した場合、そのタグは「いま人数増加中のタグ」として表示されるようになります。 </p>
+                                「人数急増中のタグ」とは、今オープンチャットで人気を集めているテーマを指します。同じタグを持ついくつかのオープンチャットに参加者が急増した場合、そのタグは「いま人数急増中のタグ」として表示されるようになります。 </p>
                             <div>
                                 <?php viewComponent('recommend_tag_desc') ?>
                             </div>
