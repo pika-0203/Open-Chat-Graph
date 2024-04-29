@@ -30,7 +30,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     </div>
                 </div>
             </header>
-            <time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><span aria-hidden="true" style="user-select: none;">🕛 </span><?php echo $_updatedAt->format('Y年m月d日 H:i') ?></time>
             <section class="unset close" style="display: block; position:relative;" id="recommed-desc-box">
                 <p class="recommend-desc recommend-p" id="recommed-desc">
                     <span class="recommend-desc-child">2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャットでは、「<?php echo $tag ?>」をテーマにしたルームが数多く開設されています。</span>
@@ -68,7 +67,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php endif ?>
             <section style="all:unset; display:block;">
                 <?php if ($count) : ?>
-                    <h2 class="list-title oc-list">「<?php echo $tag ?>」のランキング <?php echo $count ?>件</h2>
+                    <h2 class="list-title oc-list">「<?php echo $tag ?>」のランキング 上位<?php echo $count ?>件</h2>
                     <aside class="list-aside">
                         <details class="icon-desc">
                             <summary>メンバー数のアイコンについて</summary>

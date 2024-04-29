@@ -10,7 +10,7 @@ li {
 .tag-list-section {
   all: unset;
   display: block;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 time {
@@ -52,7 +52,7 @@ time {
 }
 
 .list-aside.ranking-desc {
-  margin: 14px 0;
+  margin: 0px 0 11px 0;
 }
 
 .hearder-img-outer {
@@ -169,7 +169,7 @@ _:lang(x) + _:-webkit-full-screen-document,
   overflow: hidden;
   -webkit-box-orient: vertical;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
 }
 
 .recommend-desc {
@@ -212,7 +212,7 @@ section aside:hover {
 }
 
 .list-title.oc-list {
-  margin-bottom: 14px;
+  margin-bottom: 6px;
   margin-left: -6px;
 }
 
@@ -328,6 +328,10 @@ section aside:hover {
     margin: 0rem -3px 0rem -3px;
   }
 
+  .close .recommend-p {
+    -webkit-line-clamp: 2;
+  }
+
   .header-img img {
     border-radius: 6px;
     padding: 3px;
@@ -358,7 +362,7 @@ section aside:hover {
 
   .recommend-header h2 {
     color: #111;
-    font-size: 27px;
+    font-size: 24px;
     line-height: 1.5;
   }
 
