@@ -17,7 +17,7 @@ class TagsPageController
         cache();
 
         $_css = ['room_list', 'site_header', 'site_footer'];
-        $_meta = meta()->setTitle('タグ');
+        $_meta = meta()->setTitle('タグからオプチャを探す')->setDescription('各タグを、最も近いカテゴリに分類して表示しています。タグ内のルーム自体は、様々なカテゴリに属しています。');
 
         $_schema = $pageBreadcrumbsListSchema->generateSchema('タグ', 'tags');
         $tagsGroup = $staticDataGeneration->getTagList();
