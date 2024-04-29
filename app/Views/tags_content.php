@@ -1,7 +1,7 @@
 <?php $show = []; ?>
 <!DOCTYPE html>
 <html lang="ja">
-<?php viewComponent('head', compact('_css', '_meta', '_schema') + ['noindex' => true]) ?>
+<?php viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
 <body class="body">
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
