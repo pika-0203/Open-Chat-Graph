@@ -417,3 +417,10 @@ section aside:hover {
     margin-left: 0rem;
   }
 }
+
+.list-title.oc-list a {
+  all: unset;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}

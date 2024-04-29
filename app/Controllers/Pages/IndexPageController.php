@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
-use App\Config\AppConfig;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Services\User\MyOpenChatList;
 use App\Services\StaticData\StaticDataFile;
@@ -59,7 +58,7 @@ class IndexPageController
         $tags = $dto->recommendList ?? [];
         $_news = array_reverse(TopPageNews::getTopPageNews());
 
-        $updatedAtHouryCron = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
+        $updatedAtHouryCron = $dto->rankingUpdatedAt;
         if (isset($dto->recentCommentList[0]['time'])) {
             $udatedAtComments = new \DateTime($dto->recentCommentList[0]['time']);
             $_updatedAt = $updatedAtHouryCron > $udatedAtComments ? $updatedAtHouryCron : $udatedAtComments;

@@ -19,6 +19,7 @@ class StaticTopPageDto
 
     public \DateTime $hourlyUpdatedAt;
     public \DateTime $dailyUpdatedAt;
+    public \DateTime $rankingUpdatedAt;
 
     public int $tagCount;
 }

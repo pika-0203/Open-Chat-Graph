@@ -9,7 +9,7 @@
         <aside class="list-aside ranking-desc">
             <?php viewComponent('recommend_tag_desc') ?>
         </aside>
-        <p style="font-size: 13px; color: #555">各タグを、最も近いカテゴリに分類して表示しています。タグが付けられたルーム自体は、様々なカテゴリに属しています。</p>
+        <p style="font-size: 13px; color: #555">各タグ（テーマ）を、最も近いカテゴリに分類して表示しています。タグが付けられたルーム自体は、様々なカテゴリに属しています。</p>
         <?php foreach ($categories as $key => $category) : ?>
             <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem">
                 <div>

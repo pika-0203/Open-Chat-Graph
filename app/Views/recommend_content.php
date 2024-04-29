@@ -4,12 +4,12 @@
 
 use App\Config\AppConfig;
 
-/** @var array{ hour:?int,hour24:?int,week:?int } $diffMember */
+/** @var \App\Services\StaticData\Dto\StaticRecommendPageDto $_dto */
 viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_meta->generateTags(true)]) ?>
 
 <body class="body">
     <!-- 固定ヘッダー -->
-    <?php viewComponent('site_header', compact('_updatedAt')) ?>
+    <?php viewComponent('site_header', ['_updatedAt' => $_dto->rankingUpdatedAt]) ?>
     <main class="ranking-page-main">
         <article>
             <header class="recommend-header">
@@ -35,7 +35,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <span class="recommend-desc-child">2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャットでは、「<?php echo $tag ?>」をテーマにしたルームが数多く開設されています。</span>
                     <br>
                     <br>
-                    <span class="recommend-desc-child">そこで、オプチャグラフでは、<b>「<?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag) ?>」をテーマにした中で、最近人数が急増しているルームのランキング</b>を作成しました。このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
+                    <span class="recommend-desc-child">そこで、オプチャグラフでは、<b>「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているルームのランキング</b>を作成しました。このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
                     <br>
                     <br>
                     <span class="recommend-desc-child">オープンチャットの情報を掲載する仕組みにつきましては、<a href="<?php echo url('policy') ?>">オプチャグラフについて</a>をご覧ください。</span>
@@ -47,23 +47,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 </div>
             </section>
             <?php if (isset($tags) && $tags) : ?>
-                <aside class="list-aside">
-                    <h3 class="list-title">
-                        <span>関連のタグ</span>
-                    </h3>
-                    <?php viewComponent('recommend_tag_desc') ?>
-                    <section class="tag-list-section">
-                        <ul class="tag-list">
-                            <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
-                                <li>
-                                    <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
-                                        <?php echo \App\Services\Recommend\RecommendUtility::extractTag($word) ?>
-                                    </a>
-                                </li>
-                            <?php endforeach ?>
-                        </ul>
-                    </section>
-                </aside>
+                <?php viewComponent('recommend_content_tags', compact('tags') + ['desc' => true]) ?>
             <?php endif ?>
             <section style="all:unset; display:block;">
                 <?php if ($count) : ?>
@@ -92,47 +76,28 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php else : ?>
                     <h2 class="list-title oc-list">只今サーバー内でリスト更新中です…</h2>
                 <?php endif ?>
-                <?php if (isset($diffMember)) : ?>
-                    <aside class="list-aside">
-                        <span>全体の増減</span>
-                        <section class="diff-member">
-                            <div>
-                                <span>1時間</span>
-                                <span><?php echo signedNumF($diffMember['hour']) ?>人</span>
-                            </div>
-                            <div>
-                                <span>24時間</span>
-                                <span><?php echo signedNumF($diffMember['hour24']) ?>人</span>
-                            </div>
-                            <div>
-                                <span>1週間</span>
-                                <span><?php echo signedNumF($diffMember['week']) ?>人</span>
-                            </div>
-                        </section>
-                    </aside>
-                <?php endif ?>
                 <?php if (isset($recommend)) : ?>
                     <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
                 <?php endif ?>
             </section>
-            <?php if (isset($tags) && $tags) : ?>
-                <aside class="list-aside">
-                    <h3 class="list-title">
-                        <span>関連のタグ</span>
-                    </h3>
-                    <section class="tag-list-section" style="margin-bottom: 1rem;">
-                        <ul class="tag-list">
-                            <?php foreach (array_slice($tags, 0, 12) as $key => $word) : ?>
-                                <li>
-                                    <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
-                                        <?php echo \App\Services\Recommend\RecommendUtility::extractTag($word) ?>
-                                    </a>
-                                </li>
-                            <?php endforeach ?>
-                        </ul>
-                    </section>
-                </aside>
+            <?php if (isset($_dto->tagRecordCounts[$tag])) : ?>
+                <div class="top-list">
+                    <a style="margin: 1rem 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
+                        <span class="ranking-readMore">「<?php echo $extractTag ?>」をすべて見る<span class="small"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
+                    </a>
+                </div>
             <?php endif ?>
+            <?php if (isset($tags) && $tags) : ?>
+                <?php viewComponent('recommend_content_tags', compact('tags')) ?>
+            <?php endif ?>
+            <div class="top-list">
+                <a style="margin: 1rem 0;" class="top-ranking-readMore unset" href="<?php echo url('tags') ?>">
+                    <span class="ranking-readMore">すべてのタグを見る<span class="small"><?php echo $_dto->tagCount ?>タグ</span></span>
+                </a>
+                <a style="margin: 1rem 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
+                    <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
+                </a>
+            </div>
             <aside style="all: unset; display:block; margin: 20px 0 0 0;">
                 <p class="recommend-desc2">
                     オープンチャットは、LINEに登録している名前やプロフィールとは同期されないため、匿名性が高く安全に利用できることが特徴です。気になるルームを見つけたら、気軽に参加してみましょう！

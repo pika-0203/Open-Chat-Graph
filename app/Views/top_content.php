@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="ja">
 <?php
+
+use App\Services\Recommend\RecommendUtility;
+
 /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
 viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
@@ -9,17 +12,17 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
     <main style="margin-bottom: 0;">
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-                <span class="ranking-readMore">カテゴリーからオプチャを探す</span>
+                <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
             </a>
             <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('tags') ?>">
-                <span class="ranking-readMore">テーマからオプチャを探す<span style="color: #b7b7b7; font-weight:normal; font-size:13px; margin-left: 4px;"><?php echo $dto->tagCount ?>個のテーマ</span></span>
+                <span class="ranking-readMore">タグからオプチャを探す<span class="small"><?php echo $dto->tagCount ?>タグ</span></span>
             </a>
             <?php if ($tags) : ?>
                 <div>
                     <header class="openchat-list-title-area unset">
                         <div class="openchat-list-date unset ranking-url">
                             <h2 class="unset">
-                                <span class="openchat-list-title">いま人数急増中のテーマ</span>
+                                <span class="openchat-list-title">いま人数急増中のタグ</span>
                                 <span aria-hidden="true" style="font-size: 9px; user-select: none; margin-bottom: px;margin-left: -3px;">🚀</span>
                             </h2>
                             <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0"><?php echo $hourlyEnd ?></span>
@@ -27,9 +30,9 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     </header>
                     <aside class="list-aside ranking-desc">
                         <details class="icon-desc">
-                            <summary>人数急増中のテーマとは</summary>
+                            <summary>人数急増中のタグとは</summary>
                             <p class="recommend-desc">
-                                「人数急増中のテーマ」とは、今オープンチャットで人気を集めているテーマを指します。同じタグを持ついくつかのオープンチャットに参加者が急増した場合、そのタグは「いま人数急増中のテーマ」として表示されるようになります。 </p>
+                                「人数急増中のタグ」とは、今オープンチャットで人気を集めているテーマを指します。同じタグを持ついくつかのオープンチャットに参加者が急増した場合、そのタグは「いま人数急増中のタグ」として表示されるようになります。 </p>
                             <div>
                                 <?php viewComponent('recommend_tag_desc') ?>
                             </div>
@@ -39,7 +42,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                         <?php foreach ($tags['hour'] as $key => $word) : ?>
                             <li>
                                 <a class="hour tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
-                                    <?php echo \App\Services\Recommend\RecommendUtility::extractTag($word) ?>
+                                    <?php echo RecommendUtility::extractTag($word) ?>
                                     <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium show-north css-162gv95" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NorthIcon">
                                         <path d="m5 9 1.41 1.41L11 5.83V22h2V5.83l4.59 4.59L19 9l-7-7-7 7z"></path>
                                     </svg>
@@ -49,7 +52,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                         <?php foreach ($tags['hour24'] as $key => $word) : ?>
                             <li>
                                 <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
-                                    <?php echo \App\Services\Recommend\RecommendUtility::extractTag($word) ?>
+                                    <?php echo RecommendUtility::extractTag($word) ?>
                                 </a>
                             </li>
                         <?php endforeach ?>

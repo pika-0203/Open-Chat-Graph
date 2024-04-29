@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\StaticData;
 
+use App\Services\StaticData\Dto\StaticRecommendPageDto;
 use App\Services\StaticData\Dto\StaticTopPageDto;
 use App\Views\Dto\RankingArgDto;
 
@@ -26,6 +27,7 @@ class StaticDataFile
     {
         /** @var StaticTopPageDto $data */
         $data = getUnserializedFile('static_data_top/ranking_arg_dto.dat');
+        //$data = null;
         if (!$data) {
             /** @var StaticDataGenerator $staticDataGenerator */
             $staticDataGenerator = app(StaticDataGenerator::class);
@@ -37,11 +39,26 @@ class StaticDataFile
         return $data;
     }
 
+    function getRecommendPageDto(): StaticRecommendPageDto
+    {
+        /** @var StaticRecommendPageDto $data */
+        $data = getUnserializedFile('static_data_top/recommend_page_dto.dat');
+        //$data = null;
+        if (!$data) {
+            /** @var StaticDataGenerator $staticDataGenerator */
+            $staticDataGenerator = app(StaticDataGenerator::class);
+            $data = $staticDataGenerator->getRecommendPageDto();
+        }
+
+        return $data;
+    }
+
     /** @return array<int, array<array{tag:string, record_count:int}>> */
     function getTagList(): array
     {
         /** @var array $data */
         $data = getUnserializedFile('static_data_top/tag_list.dat');
+        //$data = null;
         if (!$data) {
             /** @var StaticDataGenerator $staticDataGenerator */
             $staticDataGenerator = app(StaticDataGenerator::class);

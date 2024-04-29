@@ -184,7 +184,7 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
     }
 
     /** @return array<int, array<array{tag: string, record_count: int}>> カテゴリーに基づいてグループ化された結果 */
-    function getRecommendTagAndCategoryAll()
+    function getRecommendTagAndCategoryAll(bool $splitCategory = true)
     {
         $query =
             'SELECT
@@ -228,6 +228,7 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                 AND grouped_data.cnt = max_counts.maxcnt';
 
         $results = DB::fetchAll($query);
+        if(!$splitCategory) return $results;
 
         // 結果を整形
         $groupedResults = [];

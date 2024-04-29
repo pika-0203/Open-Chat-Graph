@@ -657,6 +657,13 @@ article.top-list {
   margin-bottom: 1px;
 }
 
+.ranking-readMore .small {
+  color: #b7b7b7;
+  font-weight: normal;
+  font-size: 13px;
+  margin-left: 4px;
+}
+
 .page-select {
   display: flex;
   width: 100%;

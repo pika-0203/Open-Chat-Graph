@@ -8,6 +8,7 @@ use App\Config\AppConfig;
 use App\Models\RecommendRepositories\RecommendPageRepository;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
 use App\Services\Recommend\TopPageRecommendList;
+use App\Services\StaticData\Dto\StaticRecommendPageDto;
 use App\Services\StaticData\Dto\StaticTopPageDto;
 use App\Views\Dto\RankingArgDto;
 
@@ -33,6 +34,7 @@ class StaticDataGenerator
 
         $dto->hourlyUpdatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME));
         $dto->dailyUpdatedAt = new \DateTime(file_get_contents(AppConfig::DAILY_CRON_UPDATED_AT_DATE));
+        $dto->rankingUpdatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
 
         $dto->tagCount = array_sum(array_map(fn ($el) => count($el), getUnserializedFile('static_data_top/tag_list.dat')));
 
@@ -50,6 +52,23 @@ class StaticDataGenerator
         return $_argDto;
     }
 
+    function getRecommendPageDto(): StaticRecommendPageDto
+    {
+        $tagList = getUnserializedFile('static_data_top/tag_list.dat');
+
+        $dto = new StaticRecommendPageDto;
+        $dto->rankingUpdatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
+        $dto->tagCount = array_sum(array_map(fn ($el) => count($el), $tagList));
+
+        $dto->tagRecordCounts = [];
+        array_map(
+            fn ($row) => $dto->tagRecordCounts[$row['tag']] = $row['record_count'],
+            $this->recommendPageRepository->getRecommendTagAndCategoryAll(false)
+        );
+
+        return $dto;
+    }
+
     function getTagList(): array
     {
         return $this->recommendPageRepository->getRecommendTagAndCategoryAll();
@@ -61,5 +80,6 @@ class StaticDataGenerator
         saveSerializedFile('static_data_top/tag_list.dat', $this->getTagList());
         saveSerializedFile('static_data_top/ranking_list.dat', $this->getTopPageDataFromDB());
         saveSerializedFile('static_data_top/ranking_arg_dto.dat', $this->getRankingArgDto());
+        saveSerializedFile('static_data_top/recommend_page_dto.dat', $this->getRecommendPageDto());
     }
 }

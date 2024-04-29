@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
-use App\Config\AppConfig;
 use App\Services\Recommend\RecommendPageList;
 use App\Services\Recommend\RecommendUtility;
 use App\Services\StaticData\StaticDataFile;
@@ -27,19 +26,18 @@ class RecommendOpenChatPageController
     ];
 
     function index(
-        StaticDataFile $staticDataFile,
         RecommendPageList $recommendPageList,
+        StaticDataFile $staticDataGeneration,
         string $tag
     ) {
         if (isset(self::Redirect[$tag])) return redirect('recommend?tag=' . urlencode(self::Redirect[$tag]), 301);
         if (!$recommendPageList->isValidTag($tag)) return false;
 
-        $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
-        $updatedAtDate = new \DateTime($staticDataFile->getRankingArgDto()->rankingUpdatedAt);
+        $_dto = $staticDataGeneration->getRecommendPageDto();
 
         $count = 0;
         $pageTitle = "「{$tag}」オープンチャット人数急増ランキング【毎時更新】";
-        $word = RecommendUtility::extractTag($tag);
+        $extractTag = RecommendUtility::extractTag($tag);
         $pageDesc =
             "2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャットでは、「{$tag}」をテーマにしたルームが数多く開設されています。そこで、オプチャグラフでは、「{$tag}」をテーマにした中で、最近人数が急増しているルームのランキングを作成しました。このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。";
 
@@ -53,13 +51,13 @@ class RecommendOpenChatPageController
         $_breadcrumbsShema = $this->breadcrumbsShema->generateSchema(
             'おすすめ',
             'recommend',
-            $word,
+            $extractTag,
             'recommend/?tag=' . urlencode($tag),
             true
         );
 
         $canonical = url('recommend?tag=' . urlencode($tag));
-        
+
         $recommendArray = $recommendPageList->getListDto($tag);
         if (!$recommendArray) {
             $_schema = '';
@@ -68,12 +66,15 @@ class RecommendOpenChatPageController
                 '_css',
                 '_breadcrumbsShema',
                 'tag',
+                'extractTag',
                 'count',
                 '_schema',
-                '_updatedAt',
+                '_dto',
                 'canonical',
             ));
         }
+
+        cache();
 
         [$recommend, $diffMember] = $recommendArray;
         $recommendList = $recommend->getList(false);
@@ -88,13 +89,12 @@ class RecommendOpenChatPageController
             $_meta->description,
             url("recommend?tag=" . urlencode($tag)),
             new \DateTime('2024-04-06 08:00:00'),
-            $_updatedAt,
+            $_dto->rankingUpdatedAt,
             $tag,
             $recommendList
         );
 
-        $tags = $recommendPageList->getFilterdTags($recommendList, $tag);
-        cache();
+        $tags = array_slice($recommendPageList->getFilterdTags($recommendList, $tag), 0, 12);
 
         return view('recommend_content', compact(
             '_meta',
@@ -102,12 +102,12 @@ class RecommendOpenChatPageController
             '_breadcrumbsShema',
             'recommend',
             'tag',
+            'extractTag',
             'count',
             '_schema',
-            '_updatedAt',
+            '_dto',
             'canonical',
             'tags',
-            '_updatedAt',
         ));
     }
 }
