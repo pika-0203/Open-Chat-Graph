@@ -93,7 +93,7 @@ function convertDatetime(string|int $datetime, bool $time = false): string
     if (is_int($datetime)) {
         // タイムスタンプが与えられた場合
         if ($time) {
-            return date($format . ' H:i', $datetime);
+            return date($format . ' G:i', $datetime);
         }
         return date($format, $datetime);
     }
@@ -103,7 +103,7 @@ function convertDatetime(string|int $datetime, bool $time = false): string
 
     // 形式を変更して返す
     if ($time) {
-        return $dateTime->format($format . ' H:i');
+        return $dateTime->format($format . ' G:i');
     }
     return $dateTime->format($format);
 }

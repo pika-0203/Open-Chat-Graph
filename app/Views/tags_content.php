@@ -4,13 +4,12 @@
 <?php viewComponent('head', compact('_css', '_meta', '_schema') + ['noindex' => true]) ?>
 
 <body class="body">
-    <?php viewComponent('site_header') ?>
+    <?php viewComponent('site_header',compact('_updatedAt')) ?>
     <main style="margin-bottom: 0;">
         <aside class="list-aside ranking-desc">
             <?php viewComponent('recommend_tag_desc') ?>
         </aside>
-        <p style="font-size: 13px; color: #555">ここでは、タグを近そうなカテゴリに別けて一覧表示しています。</p>
-        <p style="font-size: 13px; color: #555">ルーム自体に設定されているカテゴリはバラバラです。</p>
+        <p style="font-size: 13px; color: #555">タグが付けられたルームは様々なカテゴリに属していますが、同じタグを持つルームの中で最も多いカテゴリを、そのタグのカテゴリとして分類し表示しています。</p>
         <?php foreach ($categories as $key => $category) : ?>
             <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem">
                 <div>

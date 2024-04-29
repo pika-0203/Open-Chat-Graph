@@ -7,6 +7,7 @@ namespace App\Controllers\Api;
 use App\Models\CommentRepositories\CommentListRepositoryInterface;
 use App\Models\CommentRepositories\CommentLogRepositoryInterface;
 use App\Models\CommentRepositories\Enum\CommentLogType;
+use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\Admin\AdminTool;
 use App\Services\Auth\AuthInterface;
 use App\Services\Auth\GoogleReCaptcha;
@@ -18,6 +19,7 @@ class CommentReportApiController
         CommentLogRepositoryInterface $commentLogRepository,
         AuthInterface $auth,
         GoogleReCaptcha $googleReCaptcha,
+        OpenChatPageRepositoryInterface $ocRepo,
         string $token,
         int $comment_id
     ) {
@@ -47,16 +49,18 @@ class CommentReportApiController
             json_encode(compact('report_user_id'))
         );
 
-        $comment['report_user_hash'] = base62Hash($report_user_id, 'fnv132');
         $comment['report_log_id'] = $logId;
-        $comment['google_recaptcha_score'] = floor($score * 10) / 10;
+        $comment['google_recaptcha_score'] = (string)floor($score * 10) / 10;
+        $comment['report_user_hash'] = base62Hash($report_user_id, 'fnv132');
+        $comment['report_user_ua'] = getUA();
+        $comment['report_user_ip'] = getIP();
 
         $id = $comment['id'];
         $ocId = $comment['open_chat_id'];
         $deleteUrl = url(
             "admin-api/deletecomment?openExternalBrowser=1&id={$ocId}&commentId={$id}&flag=2"
         );
-        $roomUrl = url("oc/{$id}?openExternalBrowser=1");
+        $roomUrl = url("oc/{$ocId}?openExternalBrowser=1");
 
         AdminTool::sendLineNofity(
             "通報: " . json_encode($comment, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n削除: {$deleteUrl}\n部屋: {$roomUrl}"

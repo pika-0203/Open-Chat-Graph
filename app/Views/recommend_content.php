@@ -8,11 +8,8 @@ use App\Config\AppConfig;
 viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_meta->generateTags(true)]) ?>
 
 <body class="body">
-    <style>
-
-    </style>
     <!-- 固定ヘッダー -->
-    <?php viewComponent('site_header') ?>
+    <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main class="ranking-page-main">
         <article>
             <header class="recommend-header">

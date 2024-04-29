@@ -3,7 +3,7 @@
 <?php viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
 <body class="body">
-    <?php viewComponent('site_header') ?>
+    <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main style="margin-bottom: 0;">
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">

@@ -23,13 +23,15 @@ class TagsPageController
         $tagsGroup = $staticDataGeneration->getTagList();
 
         $categories = array_flip(AppConfig::OPEN_CHAT_CATEGORY);
+        $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
 
         return view('tags_content', compact(
             '_meta',
             '_css',
             '_schema',
             'tagsGroup',
-            'categories'
+            'categories',
+            '_updatedAt'
         ));
     }
 }

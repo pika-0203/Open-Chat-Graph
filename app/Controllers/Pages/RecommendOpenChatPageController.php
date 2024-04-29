@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Config\AppConfig;
 use App\Services\Recommend\RecommendPageList;
 use App\Services\Recommend\RecommendUtility;
 use App\Services\StaticData\StaticDataFile;
@@ -31,8 +32,9 @@ class RecommendOpenChatPageController
         string $tag
     ) {
         if (isset(self::Redirect[$tag])) return redirect('recommend?tag=' . urlencode(self::Redirect[$tag]), 301);
+        if (!$recommendPageList->isValidTag($tag)) return false;
 
-        $_updatedAt = new \DateTime($staticDataFile->getRankingArgDto()->hourlyUpdatedAt);
+        $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
         $updatedAtDate = new \DateTime($staticDataFile->getRankingArgDto()->rankingUpdatedAt);
 
         $count = 0;
@@ -57,9 +59,9 @@ class RecommendOpenChatPageController
         );
 
         $canonical = url('recommend?tag=' . urlencode($tag));
+        
         $recommendArray = $recommendPageList->getListDto($tag);
-
-        if (!$recommendArray && $recommendPageList->isValidTag($tag)) {
+        if (!$recommendArray) {
             $_schema = '';
             return view('recommend_content', compact(
                 '_meta',
@@ -71,8 +73,6 @@ class RecommendOpenChatPageController
                 '_updatedAt',
                 'canonical',
             ));
-        } elseif (!$recommendArray) {
-            return false;
         }
 
         [$recommend, $diffMember] = $recommendArray;
@@ -107,7 +107,7 @@ class RecommendOpenChatPageController
             '_updatedAt',
             'canonical',
             'tags',
-            //'diffMember'
+            '_updatedAt',
         ));
     }
 }
