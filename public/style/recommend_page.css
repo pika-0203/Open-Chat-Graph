@@ -341,8 +341,8 @@ section aside:hover {
   .header-img-title {
     position: static;
     background: unset;
-    padding: 0;
     margin-top: 1rem;
+    padding: 0 1rem;
   }
 
   .ranking-page-main .share-nav {
