@@ -183,7 +183,7 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
         return DB::fetch($query, compact('tag'));
     }
 
-    /** @return array<int, array<array{tag: string, record_count: int}>> カテゴリーに基づいてグループ化された結果 */
+    /** @return array<int, array<array{tag:string,record_count:int,hour:?int,hour24:?int,week:?int}>> カテゴリーに基づいてグループ化された結果 */
     function getRecommendTagAndCategoryAll(bool $splitCategory = true)
     {
         $query =
@@ -228,7 +228,7 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                 AND grouped_data.cnt = max_counts.maxcnt';
 
         $results = DB::fetchAll($query);
-        if(!$splitCategory) return $results;
+        if (!$splitCategory) return $results;
 
         // 結果を整形
         $groupedResults = [];
@@ -239,13 +239,13 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                 $groupedResults[$key] = [];
             }
             // 同じカテゴリーのデータを配列に追加
-            $groupedResults[$key][] = ['tag' => $row['tag'], 'count' => $row['record_count']];
+            $groupedResults[$key][] = ['tag' => $row['tag'], 'record_count' => $row['record_count'], ...$this->getTagDiffMember($row['tag'])];
         }
 
         foreach ($groupedResults as &$row) {
             // $groupedResultsの要素を要素数が多い順にソート
             uasort($row, function ($a, $b) {
-                return $b['count'] - $a['count'];
+                return $b['hour24'] - $a['hour24'];
             });
         }
 
