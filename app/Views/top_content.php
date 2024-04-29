@@ -9,7 +9,10 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
     <main style="margin-bottom: 0;">
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-                <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
+                <span class="ranking-readMore">カテゴリーからオプチャを探す</span>
+            </a>
+            <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('tags') ?>">
+                <span class="ranking-readMore">テーマからオプチャを探す<span style="color: #b7b7b7; font-weight:normal; font-size:13px; margin-left: 4px;"><?php echo $dto->tagCount ?>個のテーマ</span></span>
             </a>
             <?php if ($tags) : ?>
                 <div>
@@ -58,9 +61,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     </ul>
                 </div>
             <?php endif ?>
-            <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('tags') ?>">
-                <span class="ranking-readMore">すべてのタグを見る<span style="color: #b7b7b7; font-weight:normal; font-size:13px; margin-left: 4px;"><?php echo $dto->tagCount ?>個</span></span>
-            </a>
         </article>
 
         <?php if ($myList) : ?>
