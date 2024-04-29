@@ -6,7 +6,7 @@
 <body class="body">
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main style="margin-bottom: 0;">
-        <p style="font-size: 13px; color: #555">テーマを、最も近いカテゴリに分類して表示しています。タグ内のルーム自体は、様々なカテゴリに属しています。</p>
+        <p style="font-size: 13px; color: #555">各タグを、最も近いカテゴリに分類して表示しています。タグ内のルーム自体は、様々なカテゴリに属しています。</p>
         <aside class="list-aside ranking-desc">
             <?php viewComponent('recommend_tag_desc') ?>
         </aside>
