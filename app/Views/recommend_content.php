@@ -35,7 +35,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <span class="recommend-desc-child">2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャットでは、「<?php echo $tag ?>」をテーマにしたルームが数多く開設されています。</span>
                     <br>
                     <br>
-                    <span class="recommend-desc-child">そこで、オプチャグラフでは、「<?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag) ?>」をテーマにした中で、<b>最近人数が急増しているルームのランキング</b>を作成しました。このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
+                    <span class="recommend-desc-child">そこで、オプチャグラフでは、<b>「<?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag) ?>」をテーマにした中で、最近人数が急増しているルームのランキング</b>を作成しました。このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
                     <br>
                     <br>
                     <span class="recommend-desc-child">オープンチャットの情報を掲載する仕組みにつきましては、<a href="<?php echo url('policy') ?>">オプチャグラフについて</a>をご覧ください。</span>
