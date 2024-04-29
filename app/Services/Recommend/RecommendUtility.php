@@ -26,6 +26,9 @@ class RecommendUtility
         'ビーファースト' => 'BE:FIRST',
         '馬場豊' => 'もこう',
         'ウィプレー' => 'WePlay',
+        'エンハイプン' => 'ENHYPEN',
+        'ブルーム' => '8LOOM',
+        'ルセラ' => 'LE SSERAFIM',
     ];
 
     static function extractTag(string $str): string

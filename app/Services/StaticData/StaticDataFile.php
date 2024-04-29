@@ -12,6 +12,7 @@ class StaticDataFile
     function getTopPageData(): StaticTopPageDto
     {
         $data = getUnserializedFile('static_data_top/ranking_list.dat');
+        //$data = null;
         if (!$data) {
             /** @var StaticDataGenerator $staticDataGenerator */
             $staticDataGenerator = app(StaticDataGenerator::class);

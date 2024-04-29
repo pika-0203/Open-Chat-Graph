@@ -19,4 +19,6 @@ class StaticTopPageDto
 
     public \DateTime $hourlyUpdatedAt;
     public \DateTime $dailyUpdatedAt;
+
+    public int $tagCount;
 }

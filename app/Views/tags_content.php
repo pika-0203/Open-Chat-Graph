@@ -27,8 +27,8 @@
                             $show[] = $tag
                             ?>
                             <li>
-                                <a class="tag-btn" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag['tag']))) ?>">
-                                    <span><?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag['tag']) ?></span><small style="margin-left: 4px;"><?php echo number_format($tag['count']) ?>件</small>
+                                <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($tag['tag']))) ?>">
+                                    <span><?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag['tag']) ?></span><small style="margin-left: 4px;"><?php echo number_format($tag['count']) ?></small>
                                 </a>
                             </li>
                         <?php endforeach ?>

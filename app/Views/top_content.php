@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
-<?php viewComponent('head', compact('_css', '_meta', '_schema')) ?>
+<?php
+/** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
+viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
 <body class="body">
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
@@ -9,15 +11,12 @@
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
-            <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('tags') ?>">
-                <span class="ranking-readMore">タグからオープンチャットを探す</span>
-            </a>
             <?php if ($tags) : ?>
                 <div>
                     <header class="openchat-list-title-area unset">
                         <div class="openchat-list-date unset ranking-url">
                             <h2 class="unset">
-                                <span class="openchat-list-title">いま人数急増中のタグ</span>
+                                <span class="openchat-list-title">いま人数急増中のテーマ</span>
                                 <span aria-hidden="true" style="font-size: 9px; user-select: none; margin-bottom: px;margin-left: -3px;">🚀</span>
                             </h2>
                             <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0"><?php echo $hourlyEnd ?></span>
@@ -25,9 +24,9 @@
                     </header>
                     <aside class="list-aside ranking-desc">
                         <details class="icon-desc">
-                            <summary>人数急増中のタグとは</summary>
+                            <summary>人数急増中のテーマとは</summary>
                             <p class="recommend-desc">
-                                「人数急増中のタグ」とは、今オープンチャットで人気を集めているテーマを指します。同じタグを持ついくつかのオープンチャットに参加者が急増した場合、そのタグは「いま人数急増中のタグ」として表示されるようになります。 </p>
+                                「人数急増中のテーマ」とは、今オープンチャットで人気を集めているテーマを指します。同じタグを持ついくつかのオープンチャットに参加者が急増した場合、そのタグは「いま人数急増中のテーマ」として表示されるようになります。 </p>
                             <div>
                                 <?php viewComponent('recommend_tag_desc') ?>
                             </div>
@@ -59,6 +58,9 @@
                     </ul>
                 </div>
             <?php endif ?>
+            <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('tags') ?>">
+                <span class="ranking-readMore">すべてのタグを見る<span style="color: #b7b7b7; font-weight:normal; font-size:13px; margin-left: 4px;"><?php echo $dto->tagCount ?>個</span></span>
+            </a>
         </article>
 
         <?php if ($myList) : ?>
@@ -86,8 +88,7 @@
                     <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0"><?php echo $_hourlyRange ?></span>
                 </div>
             </header>
-            <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
-            viewComponent('open_chat_list_ranking', ['openChatList' => $dto->hourlyList, 'isHourly' => true]) ?>
+            <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->hourlyList, 'isHourly' => true]) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=hourly') ?>">
                 <span class="ranking-readMore">1時間の人数増加ランキングを詳しく見る</span>
             </a>
@@ -101,8 +102,7 @@
                     </h2>
                 </div>
             </header>
-            <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
-            viewComponent('open_chat_list_ranking_comment', ['openChatList' => $dto->recentCommentList]) ?>
+            <?php viewComponent('open_chat_list_ranking_comment', ['openChatList' => $dto->recentCommentList]) ?>
         </article>
 
         <article class="top-ranking">
