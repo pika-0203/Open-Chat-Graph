@@ -27,15 +27,15 @@ function memberCount(int $count)
         <p style="font-size: 13px; color: #555">タグを探すときは、ブラウザの機能でページ内のテキストを検索してください。</p>
         <aside class="list-aside ranking-desc" style="margin: 1rem 0;">
             <details class="icon-desc">
-                <summary>タグ内の合計人数統計について</summary>
+                <summary>タグ内の人数集計について</summary>
                 <p class="recommend-desc">
-                    統計の対象は、公式ランキングに掲載中のルームのみです。<br>人数が10人未満、または1週間以上人数の変動が無いルームは対象外です。
+                    集計の対象は、公式ランキングに掲載中のルームのみです。<br>（人数が10人未満、または1週間以上人数の変動が無いルームは対象外）
                 </p>
                 <p class="recommend-desc">
                     タグ内の合計は、全ルームの人数です。<br>1H（1時間）、24H（24時間）、1W（1週間）は各期間における全ルームの人数増減です。
                 </p>
                 <p class="recommend-desc">
-                    統計は1時間毎の更新されます。（合計人数、1H、24H）<br>1Wのみ1日毎（0:00頃）の更新です。
+                    集計は1時間毎の更新されます。（合計人数、1H、24H）<br>1Wのみ1日毎（0:00頃）の更新です。
                 </p>
             </details>
         </aside>
