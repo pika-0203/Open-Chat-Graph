@@ -59,7 +59,7 @@ class RecommendOpenChatPageController
         $recommendArray = $recommendPageList->getListDto($tag);
         if (!$recommendArray) {
             $_schema = '';
-            $_meta->setTitle("「{$tag}」オープンチャット人数急増ランキング【毎時更新】");
+            $_meta->setTitle("【{$tag}】オープンチャット人数急増ランキング【毎時更新】");
             return view('recommend_content', compact(
                 '_meta',
                 '_css',
