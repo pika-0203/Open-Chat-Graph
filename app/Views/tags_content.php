@@ -22,13 +22,20 @@ function memberCount(int $count)
 <body class="body">
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main style="margin-bottom: 0;">
-        <p style="font-size: 13px; color: #555">各タグを、最も近いカテゴリに分類して表示しています。タグ内のルーム自体は、様々なカテゴリに属しています。</p>
-        <p style="font-size: 13px; color: #555">タグボタン内の統計情報は1時間毎の更新です。1H、24H、1Wの値は全ルームの合計人数増減です。</p>
-        <p style="font-size: 13px; color: #555">合計人数統計、件数のカウント、タグ毎の人数急増ランキングは公式ランキングに掲載中のルームのみが対象です。また、人数が10人以下・一週間以上メンバー数に動きが無いルームは統計から除外されます。</p>
+        <p style="font-size: 13px; color: #555">各タグを、近そうなカテゴリに分類して表示しています。タグ内のルームは様々なカテゴリに属しています。</p>
         <p style="font-size: 13px; color: #555">タグを探すときは、ブラウザの機能でページ内のテキストを検索してください。</p>
-        <aside class="list-aside ranking-desc">
-            <?php viewComponent('recommend_tag_desc') ?>
+        <aside class="list-aside ranking-desc" style="margin-bottom: 1rem;">
+            <details class="icon-desc">
+                <summary>合計人数統計について</summary>
+                <p class="recommend-desc">
+                    タグボタン内の統計情報は1時間毎の更新です。1H、24H、1Wの値は全ルームの合計人数増減です。
+                </p>
+                <p class="recommend-desc">
+                    合計人数統計、件数のカウントは公式ランキングに掲載中のルームのみが対象です。また、人数が10人以下・一週間以上メンバー数に動きが無いルームは統計から除外されます。
+                </p>
+            </details>
         </aside>
+        <?php viewComponent('recommend_tag_desc') ?>
         <?php foreach ($categories as $key => $category) : ?>
             <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem">
                 <div>
@@ -49,9 +56,8 @@ function memberCount(int $count)
                                 <a class="tag-btn" style="height: unset; padding: 4px 14px;" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($tag['tag']))) ?>">
                                     <div>
                                         <div style="line-height: 1.3;"><?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag['tag']) ?></div>
-                                        <small style="display:block; line-height: 1.2;">合計<?php echo number_format($tag['total_member']) ?>人</small>
-                                        <small style="font-weight: normal; display:block; line-height: 1.5;"><?php echo number_format($tag['record_count']) ?>件・<span style="font-weight: bold; color: #aaa;">平均<?php echo number_format(round($tag['total_member'] / $tag['record_count'])) ?>人</span>
-                                        </small>
+                                        <small style="font-weight: normal; display:block; line-height: 1.2;">合計 <?php echo number_format($tag['total_member']) ?>人</small>
+                                        <small style="font-weight: normal; display:block; line-height: 1.5;"><?php echo number_format($tag['record_count']) ?>件・平均 <?php echo number_format(round($tag['total_member'] / $tag['record_count'])) ?>人</small>
                                         <small style="font-weight:normal;line-height: 1.2;"></small>
                                     </div>
                                     <div>

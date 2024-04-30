@@ -268,4 +268,20 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
 
         return $groupedResults;
     }
+
+    /** @return array{ tag:string,record_count:int } */
+    function getRecommendTagRecordCountAllRoom()
+    {
+        $query =
+            'SELECT
+                r.tag,
+                COUNT(*) AS record_count
+            FROM
+                open_chat AS oc
+                JOIN recommend AS r ON r.id = oc.id
+            GROUP BY
+                r.tag';
+
+        return DB::fetchAll($query);
+    }
 }

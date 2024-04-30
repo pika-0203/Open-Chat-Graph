@@ -63,7 +63,7 @@ class StaticDataGenerator
         $dto->tagRecordCounts = [];
         array_map(
             fn ($row) => $dto->tagRecordCounts[$row['tag']] = $row['record_count'],
-            $this->recommendPageRepository->getRecommendTagAndCategoryAll(false)
+            $this->recommendPageRepository->getRecommendTagRecordCountAllRoom()
         );
 
         return $dto;
