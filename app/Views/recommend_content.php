@@ -54,7 +54,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <h2 class="list-title oc-list">
                         <div>「<?php echo $tag ?>」の</div>
                         <div>人数急増ランキング</div>
-                        <div style="margin-left: 4px;">上位<?php echo $count ?>件</div>
+                        <div style="margin-left: 4px;"><?php echo ((int)$_dto->tagRecordCounts[$tag]) > $count ? '上位' : '全' ?><?php echo $count ?>件</div>
                     </h2>
                     <aside class="list-aside">
                         <details class="icon-desc">
@@ -80,7 +80,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
                 <?php endif ?>
             </section>
-            <?php if (isset($_dto->tagRecordCounts[$tag])) : ?>
+            <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
                 <div class="top-list">
                     <a style="margin: 1rem 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
                         <span class="ranking-readMore">「<?php echo $extractTag ?>」をすべて見る<span class="small"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>

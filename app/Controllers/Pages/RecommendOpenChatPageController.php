@@ -81,7 +81,7 @@ class RecommendOpenChatPageController
 
         $count = $recommend->getCount();
         $headline = "【{$tag}】オープンチャット人数急増ランキングTOP{$count}【毎時更新】";
-        $_meta->title = "{$headline}｜オプチャグラフ";
+        $_meta->setTitle($headline);
         $_meta->setImageUrl(imgUrl($recommendList[0]['id'], $recommendList[0]['img_url']));
 
         $_schema = $this->breadcrumbsShema->generateRecommend(
