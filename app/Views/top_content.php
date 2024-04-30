@@ -25,7 +25,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                                 <span class="openchat-list-title">いま人数急増中のタグ</span>
                                 <span aria-hidden="true" style="font-size: 9px; user-select: none; margin-bottom: px;margin-left: -3px;">🚀</span>
                             </h2>
-                            <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0"><?php echo $hourlyEnd ?></span>
+                            <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0"><?php echo $hourlyEnd ?></span>
                         </div>
                     </header>
                     <aside class="list-aside ranking-desc">
@@ -70,7 +70,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <article class="mylist">
                 <div class="refresh-time openchat-list-date">
                     <span style="font-weight: bold; color:#111; font-size:13px; margin: 0; line-height: unset;">ピン留め (24時間の人数増加)</span>
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0; line-height: unset;"><?php echo $hourlyEnd ?></span>
+                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0; line-height: unset;"><?php echo $hourlyEnd ?></span>
                 </div>
                 <div style="margin: -4px 0 -4px 0;">
                     <?php viewComponent('open_chat_list_ranking', ['openChatList' => $myList, 'isHourly' => true]) ?>
@@ -88,7 +88,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     <h2 class="unset">
                         <span class="openchat-list-title">1時間の人数増加ランキング</span>
                     </h2>
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0"><?php echo $_hourlyRange ?></span>
+                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0"><?php echo $_hourlyRange ?></span>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->hourlyList, 'isHourly' => true]) ?>
@@ -114,7 +114,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     <h2 class="unset">
                         <span class="openchat-list-title">24時間の人数増加ランキング</span>
                     </h2>
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0">1時間ごとに更新</span>
+                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0">1時間ごとに更新</span>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->dailyList, 'isHourly' => true]) ?>
@@ -129,7 +129,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     <h2 class="unset">
                         <span class="openchat-list-title">1週間の人数増加ランキング</span>
                     </h2>
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0">1日ごとに更新</span>
+                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0">1日ごとに更新</span>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->weeklyList]) ?>
@@ -144,7 +144,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     <h2 class="unset">
                         <span class="openchat-list-title">人数ランキング</span>
                     </h2>
-                    <span style="font-weight: normal; color:#b7b7b7; font-size:13px; margin: 0">※公式運営を除く</span>
+                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0">※公式運営を除く</span>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->popularList]) ?>

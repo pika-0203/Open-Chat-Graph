@@ -36,13 +36,11 @@ class RecommendOpenChatPageController
         $_dto = $staticDataGeneration->getRecommendPageDto();
 
         $count = 0;
-        $pageTitle = "「{$tag}」オープンチャット人数急増ランキング【毎時更新】";
         $extractTag = RecommendUtility::extractTag($tag);
         $pageDesc =
             "2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャットでは、「{$tag}」をテーマにしたルームが数多く開設されています。そこで、オプチャグラフでは、「{$tag}」をテーマにした中で、最近人数が急増しているルームのランキングを作成しました。このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。";
 
         $_meta = meta()
-            ->setTitle($pageTitle)
             ->setDescription($pageDesc)
             ->setOgpDescription($pageDesc);
 
@@ -61,6 +59,7 @@ class RecommendOpenChatPageController
         $recommendArray = $recommendPageList->getListDto($tag);
         if (!$recommendArray) {
             $_schema = '';
+            $_meta->setTitle("「{$tag}」オープンチャット人数急増ランキング【毎時更新】");
             return view('recommend_content', compact(
                 '_meta',
                 '_css',
