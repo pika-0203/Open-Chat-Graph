@@ -49,8 +49,8 @@ function memberCount(int $count)
                     <ul class="tag-list open">
                         <?php foreach ($tagsGroup[$key] as $tag) : ?>
                             <?php
-                            if (!$tag['tag'] || in_array($tag, $show)) continue;
-                            $show[] = $tag
+                            if (!$tag['tag'] || in_array($tag['tag'], $show)) continue;
+                            $show[] = $tag['tag']
                             ?>
                             <li>
                                 <a class="tag-btn" style="height: unset; padding: 4px 14px;" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($tag['tag']))) ?>">
