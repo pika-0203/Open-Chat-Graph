@@ -26,7 +26,7 @@ class TagsPageController
             return array_map(function ($tags) use (&$exists) {
                 $result = [];
                 foreach ($tags as $tag) {
-                    if (in_array($tag['tag'], $exists)) continue;
+                    if (!$tag['tag'] || in_array($tag['tag'], $exists)) continue;
                     $exists[] = $tag['tag'];
                     $result[] = $tag;
                 }

@@ -211,7 +211,6 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                         LEFT JOIN statistics_ranking_hour AS d2 ON d2.open_chat_id = oc.id
                     WHERE
                         d.open_chat_id IS NOT NULL OR d2.open_chat_id IS NOT NULL
-                        AND r.tag != ''
                     GROUP BY
                         r.tag,
                         oc.category
@@ -236,7 +235,6 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                                 LEFT JOIN statistics_ranking_hour AS d2 ON d2.open_chat_id = oc.id
                             WHERE
                                 d.open_chat_id IS NOT NULL OR d2.open_chat_id IS NOT NULL
-                                AND r.tag != ''
                             GROUP BY
                                 r.tag,
                                 oc.category
