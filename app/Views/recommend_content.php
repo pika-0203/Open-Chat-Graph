@@ -80,28 +80,26 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
                 <?php endif ?>
             </section>
-            <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
-                <div class="top-list">
-                    <a style="margin: 1rem 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
-                        <span class="ranking-readMore">「<?php echo $extractTag ?>」をすべて見る<span class="small"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
-                    </a>
-                </div>
-            <?php endif ?>
             <?php if (isset($tags) && $tags) : ?>
+                <p class="recommend-desc2">
+                    探しているルームが見つからない時は、関連のタグをチェックしてみましょう！
+                </p>
                 <?php viewComponent('recommend_content_tags', compact('tags')) ?>
             <?php endif ?>
             <div class="top-list">
-                <a style="margin: 1rem 0;" class="top-ranking-readMore unset" href="<?php echo url('tags') ?>">
-                    <span class="ranking-readMore">すべてのタグを見る<span class="small"><?php echo $_dto->tagCount ?>タグ</span></span>
-                </a>
+                <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
+                    <a style="margin: 1rem 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
+                        <span class="ranking-readMore">「<?php echo $extractTag ?>」を詳しく見る<span class="small"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
+                    </a>
+                <?php endif ?>
                 <a style="margin: 1rem 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                     <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
                 </a>
+                <a style="margin: 1rem 0;" class="top-ranking-readMore unset" href="<?php echo url('tags') ?>">
+                    <span class="ranking-readMore">すべてのタグを見る<span class="small"><?php echo $_dto->tagCount ?>タグ</span></span>
+                </a>
             </div>
-            <aside style="all: unset; display:block; margin: 20px 0 0 0;">
-                <p class="recommend-desc2">
-                    オープンチャットは、LINEに登録している名前やプロフィールとは同期されないため、匿名性が高く安全に利用できることが特徴です。気になるルームを見つけたら、気軽に参加してみましょう！
-                </p>
+            <aside style="all: unset; display:block; margin: 20px 0 0 0; text-align: center;">
                 <div class="app_link">
                     <a href="https://openchat-jp.line.me/other/beginners_guide">
                         <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
