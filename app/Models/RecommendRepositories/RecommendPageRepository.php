@@ -189,10 +189,10 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
     }
 
     /** @return array<int, array<array{tag:string,record_count:int,hour:?int,hour24:?int,week:?int}>> カテゴリーに基づいてグループ化された結果 */
-    function getRecommendTagAndCategoryAll(bool $splitCategory = true)
+    function getRecommendTagAndCategoryAll()
     {
         $query =
-            'SELECT
+            "SELECT
                 grouped_data.tag,
                 grouped_data.category,
                 max_counts.sumcnt AS record_count,
@@ -211,6 +211,7 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                         LEFT JOIN statistics_ranking_hour AS d2 ON d2.open_chat_id = oc.id
                     WHERE
                         d.open_chat_id IS NOT NULL OR d2.open_chat_id IS NOT NULL
+                        AND r.tag != ''
                     GROUP BY
                         r.tag,
                         oc.category
@@ -235,6 +236,7 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                                 LEFT JOIN statistics_ranking_hour AS d2 ON d2.open_chat_id = oc.id
                             WHERE
                                 d.open_chat_id IS NOT NULL OR d2.open_chat_id IS NOT NULL
+                                AND r.tag != ''
                             GROUP BY
                                 r.tag,
                                 oc.category
@@ -242,10 +244,9 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                     GROUP BY
                         inner_counts.tag
                 ) AS max_counts ON grouped_data.tag = max_counts.tag
-                AND grouped_data.cnt = max_counts.maxcnt';
+                AND grouped_data.cnt = max_counts.maxcnt";
 
         $results = DB::fetchAll($query);
-        if (!$splitCategory) return $results;
 
         // 結果を整形
         $groupedResults = [];
