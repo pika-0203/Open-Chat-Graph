@@ -95,9 +95,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <a style="margin: 1rem 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                     <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
                 </a>
-                <a style="margin: 1rem 0;" class="top-ranking-readMore unset" href="<?php echo url('tags') ?>">
-                    <span class="ranking-readMore">すべてのタグを見る<span class="small"><?php echo $_dto->tagCount ?>タグ</span></span>
-                </a>
             </div>
             <aside style="all: unset; display:block; margin: 20px 0 0 0; text-align: center;">
                 <div class="app_link">
