@@ -18,17 +18,15 @@ class MemberColumnUpdater
     /**
      * @param array{ open_chat_id: int, member: int }[] $data
      */
-    function updateMemberColumn(array $data, ?\DateTime $lastTime)
+    function updateMemberColumn(array $data)
     {
-        $updated_at = $lastTime ? $lastTime->format('Y-m-d H:i:s') : null;
-        
         foreach ($data as $oc) {
             $dto = $this->openChatDataWithCache->getOpenChatDataById($oc['open_chat_id']);
             if (!$dto || $dto->memberCount === $oc['member']) {
                 continue;
             }
 
-            $this->updateRepository->updateMemberColumn($oc, $updated_at);
+            $this->updateRepository->updateMemberColumn($oc);
         }
     }
 }

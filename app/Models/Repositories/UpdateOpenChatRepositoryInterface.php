@@ -18,12 +18,11 @@ interface UpdateOpenChatRepositoryInterface
 
     public function getOpenChatIdByEmid(string $emid): int|false;
 
-
     /**
      * @param array{ open_chat_id: int, member: int } $oc
      * @param ?string Y-m-d H:i:s
      */
-    public function updateMemberColumn(array $oc, ?string $updated_at): void;
+    public function updateMemberColumn(array $oc): void;
 
     public function updateLocalImgUrl(int $open_chat_id, string $local_img_url): void;
 

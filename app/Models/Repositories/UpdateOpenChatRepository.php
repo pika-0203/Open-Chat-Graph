@@ -117,16 +117,12 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         return DB::fetchColumn($query, compact('emid'));
     }
 
-    public function updateMemberColumn(array $oc, ?string $updated_at): void
+    public function updateMemberColumn(array $oc): void
     {
         $member = $oc['member'];
         $id = $oc['open_chat_id'];
 
-        if ($updated_at) {
-            DB::$pdo->exec("UPDATE open_chat SET member = {$member}, updated_at = '{$updated_at}' WHERE id = {$id}");
-        } else {
-            DB::$pdo->exec("UPDATE open_chat SET member = {$member} WHERE id = {$id}");
-        }
+        DB::$pdo->exec("UPDATE open_chat SET member = {$member} WHERE id = {$id}");
     }
 
     public function getUpdatedOpenChatBetweenUpdatedAt(\DateTime $start, \DateTime $end): array

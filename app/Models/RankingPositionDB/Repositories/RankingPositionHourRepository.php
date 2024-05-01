@@ -151,6 +151,7 @@ class RankingPositionHourRepository implements RankingPositionHourRepositoryInte
                 DATE(time) = '{$dateString}'
                 AND {$isAll} category = 0";
 
+        RankingPositionDB::$pdo = null;
         return RankingPositionDB::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
     }
 

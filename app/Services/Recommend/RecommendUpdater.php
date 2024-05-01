@@ -559,7 +559,7 @@ class RecommendUpdater
 
     function updateRecommendTables(bool $betweenUpdateTime = true)
     {
-        $this->start = $betweenUpdateTime ? OpenChatServicesUtility::getModifiedCronTime(strtotime('-1hour'))->format('Y-m-d H:i:s') : '2023-10-16 00:00:00';
+        $this->start = $betweenUpdateTime ? file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME) : '2023-10-16 00:00:00';
         $this->end = $betweenUpdateTime ? OpenChatServicesUtility::getModifiedCronTime(strtotime('+1hour'))->format('Y-m-d H:i:s') : '2033-10-16 00:00:00';
 
         $deleteRecommend = fn (string $table) => DB::execute(
