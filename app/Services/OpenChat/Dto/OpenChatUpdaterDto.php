@@ -18,6 +18,7 @@ class OpenChatUpdaterDto
     public ?int $createdAt = null;
     public ?int $category = null;
     public ?int $emblem = null;
+    public ?int $joinMethodType = null;
     public ?string $invitationTicket = null;
 
     function __construct(int $open_chat_id)

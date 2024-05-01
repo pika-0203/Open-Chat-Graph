@@ -22,15 +22,15 @@ class DeleteOpenChatRepository implements DeleteOpenChatRepositoryInterface
     {
         $result = DB::executeAndCheckResult(
             "DELETE FROM
-                     open_chat
-                WHERE
-                     id = :open_chat_id",
+                open_chat
+            WHERE
+                id = :open_chat_id",
             compact('open_chat_id')
         );
 
         $this->statisticsRepository->daleteDailyStatistics($open_chat_id);
         $this->rankingPositionRepository->daleteDailyPosition($open_chat_id);
-        
+
         $this->deleteCommentRepository->deleteCommentsAll($open_chat_id);
 
         return $result;

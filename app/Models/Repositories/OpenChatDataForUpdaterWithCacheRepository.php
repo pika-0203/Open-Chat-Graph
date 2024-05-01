@@ -38,6 +38,7 @@ class OpenChatDataForUpdaterWithCacheRepository implements OpenChatDataForUpdate
                 api_created_at,
                 category,
                 emblem,
+                join_method_type,
                 url";
 
         $query =

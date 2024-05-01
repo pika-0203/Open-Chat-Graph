@@ -63,6 +63,7 @@ class OpenChatApiDtoFactory
             $dto->profileImageObsHash = Validator::str($square['square']['profileImageObsHash'], e: $exceptionClass);
             $dto->memberCount = Validator::num($square['memberCount'], e: $exceptionClass);
             $dto->emblem = Validator::num($square['square']['emblems'][0] ?? null, emptyAble: true, default: 0, e: $exceptionClass);
+            $dto->joinMethodType = Validator::num($square['square']['joinMethodType'], e: $exceptionClass);
 
             $createdAt = Validator::num($square['createdAt'], e: $exceptionClass);
             $dto->createdAt = (int)floor($createdAt / 1000);

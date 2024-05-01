@@ -41,6 +41,7 @@ class OpenChatApiDbMergerProcess
             && $repoDto->profileImageObsHash === $apiDto->profileImageObsHash
             && $repoDto->category === $apiDto->category
             && $repoDto->emblem === $apiDto->emblem
+            && $repoDto->joinMethodType === $apiDto->joinMethodType
         ) {
             return null;
         }

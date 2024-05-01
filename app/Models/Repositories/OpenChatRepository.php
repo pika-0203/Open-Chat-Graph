@@ -44,6 +44,7 @@ class OpenChatRepository implements OpenChatRepositoryInterface
                     category,
                     api_created_at,
                     emblem,
+                    join_method_type,
                     url
                 )
             VALUES
@@ -59,6 +60,7 @@ class OpenChatRepository implements OpenChatRepositoryInterface
                     :category,
                     :api_created_at,
                     :emblem,
+                    :join_method_type,
                     :url
                 )",
             [
@@ -72,6 +74,7 @@ class OpenChatRepository implements OpenChatRepositoryInterface
                 'api_created_at' => $dto->createdAt,
                 'category' => $dto->category,
                 'emblem' => $dto->emblem,
+                'join_method_type' => $dto->joinMethodType,
                 'url' => $dto->invitationTicket,
             ]
         );
