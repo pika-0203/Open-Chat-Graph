@@ -4,6 +4,7 @@
 
 use App\Config\AppConfig;
 use App\Services\Recommend\Enum\RecommendListType;
+use App\Services\Recommend\RecommendUtility;
 
 ?>
 <aside style="margin: 0 -1rem;">
@@ -19,7 +20,7 @@ use App\Services\Recommend\Enum\RecommendListType;
             <?php else : ?>
                 <a class="unset" href="<?php echo url("recommend?tag=" . urlencode(htmlspecialchars_decode($recommend->listName))) ?>">
                     <h3>
-                        <div style="text-wrap: wrap;">「<?php echo $recommend->listName ?>」の</div>
+                        <div style="text-wrap: wrap;">「<?php echo RecommendUtility::extractTag($recommend->listName) ?>」の</div>
                         <div>人数急増ランキング</div>
                     </h3>
                     <small style="font-size: 13px; font-weight:normal; color:#777; margin: auto 0; margin-left: 4px; text-wrap: nowrap; word-break: keep-all;" aria-hidden="true">すべて見る</small>

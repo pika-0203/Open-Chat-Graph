@@ -52,7 +52,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <section style="all:unset; display:block;">
                 <?php if ($count) : ?>
                     <h2 class="list-title oc-list">
-                        <div>「<?php echo $tag ?>」の</div>
+                        <div>「<?php echo $extractTag ?>」の</div>
                         <div>人数急増ランキング</div>
                         <div style="margin-left: 4px;"><?php echo ((int)$_dto->tagRecordCounts[$tag]) > $count ? '上位' : '全' ?><?php echo $count ?>件</div>
                     </h2>
