@@ -11,6 +11,7 @@ use App\Services\Admin\AdminTool;
 $syncOpenChat = app(SyncOpenChat::class);
 try {
     $syncOpenChat->handle();
+    addCronLog('End');
 } catch (\Throwable $e) {
     addCronLog($e->__toString());
     AdminTool::sendLineNofity($e->__toString());
