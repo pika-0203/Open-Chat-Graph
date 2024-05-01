@@ -135,7 +135,7 @@ class SyncOpenChat
     {
         $this->hourlyMemberColumn->update();
         $this->hourlyMemberRanking->update();
-        //$this->recommendUpdater->updateRecommendTables();
+        $this->recommendUpdater->updateRecommendTables();
     }
 
     private function hourlyImageUpdate()
