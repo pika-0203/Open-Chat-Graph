@@ -291,6 +291,11 @@ class RecommendUpdater
     protected string $start;
     protected string $end;
 
+    function __construct()
+    {
+        $this->start = file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME) ?: '';
+    }
+
     function replace(string|array $word, string $column): string
     {
         $rep = function ($str) use ($column) {
@@ -559,7 +564,7 @@ class RecommendUpdater
 
     function updateRecommendTables(bool $betweenUpdateTime = true)
     {
-        $this->start = $betweenUpdateTime ? file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME) : '2023-10-16 00:00:00';
+        $this->start = $betweenUpdateTime ? $this->start : '2023-10-16 00:00:00';
         $this->end = $betweenUpdateTime ? OpenChatServicesUtility::getModifiedCronTime(strtotime('+1hour'))->format('Y-m-d H:i:s') : '2033-10-16 00:00:00';
 
         $deleteRecommend = fn (string $table) => DB::execute(

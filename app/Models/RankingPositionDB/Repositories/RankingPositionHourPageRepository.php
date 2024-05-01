@@ -69,4 +69,25 @@ class RankingPositionHourPageRepository implements RankingPositionHourPageReposi
         $time->modify("- {$intervalHour}hour");
         return $time->format('Y-m-d H:i:s');
     }
+
+    public function getFinalRankingPosition(int $open_chat_id, int $category): array|false
+    {
+        $query =
+            "SELECT
+                r.time AS time,
+                r.position AS position,
+                tc.total_count_ranking AS total_count_ranking
+            FROM
+                ranking AS r
+                JOIN total_count AS tc ON tc.category = r.category
+                AND r.time = tc.time
+            WHERE
+                r.open_chat_id = {$open_chat_id}
+                AND r.category = {$category}
+            ORDER BY
+                time DESC
+            LIMIT 1";
+
+        return RankingPositionDB::fetch($query);
+    }
 }

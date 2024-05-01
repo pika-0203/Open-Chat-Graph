@@ -12,6 +12,7 @@ use App\Services\OpenChat\OpenChatApiDataParallelDownloader;
 use App\Services\OpenChat\OpenChatDailyCrawling;
 use App\Services\OpenChat\OpenChatHourlyInvitationTicketUpdater;
 use App\Services\OpenChat\OpenChatImageUpdater;
+use App\Services\RankingBan\RankingBan;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistenceLastHourChecker;
 use App\Services\Recommend\RecommendUpdater;
@@ -32,6 +33,7 @@ class SyncOpenChat
         private OpenChatImageUpdater $OpenChatImageUpdater,
         private OpenChatHourlyInvitationTicketUpdater $invitationTicketUpdater,
         private RecommendUpdater $recommendUpdater,
+        private RankingBan $rankingBan,
     ) {
         set_exception_handler($this->exceptionHandler(...));
     }
@@ -135,6 +137,7 @@ class SyncOpenChat
     {
         $this->hourlyMemberColumn->update();
         $this->hourlyMemberRanking->update();
+        $this->rankingBan->updateRankingBanTable();
         $this->recommendUpdater->updateRecommendTables();
     }
 

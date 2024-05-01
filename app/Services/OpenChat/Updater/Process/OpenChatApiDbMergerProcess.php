@@ -46,6 +46,25 @@ class OpenChatApiDbMergerProcess
             return null;
         }
 
+        /** テストログコード */
+        if ($repoDto->open_chat_id === 2) {
+            $test = [
+                'name' => $repoDto->name === $apiDto->name,
+                'desc' => $repoDto->desc === $apiDto->desc,
+                'img' => $repoDto->profileImageObsHash === $apiDto->profileImageObsHash,
+                'category' => $repoDto->category === $apiDto->category,
+                'emblem' => $repoDto->emblem === $apiDto->emblem,
+                'join' => $repoDto->joinMethodType === $apiDto->joinMethodType,
+                'repo' => $repoDto,
+                'api' => $apiDto
+            ];
+
+            saveSerializedFile(
+                base62Hash((string)time()) . 'test1.dat',
+                $test
+            );
+        }
+
         // 再接続して更新
         DB::$pdo = null;
         $this->openChatMargeUpdateProcess->mergeUpdateOpenChat($repoDto, $apiDto, false);

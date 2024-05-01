@@ -16,4 +16,7 @@ interface RankingPositionHourPageRepositoryInterface
         int $intervalHour,
         \DateTime $endTime
     ): RankingPositionHourPageRepoDto;
+
+    /** @return array{ time:string,position:int,total_count_ranking:int } */
+    public function getFinalRankingPosition(int $open_chat_id, int $category): array|false;
 }

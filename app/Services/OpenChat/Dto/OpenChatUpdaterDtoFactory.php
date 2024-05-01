@@ -22,6 +22,7 @@ class OpenChatUpdaterDtoFactory
 
             if (!isset($apiDto->$prop) || $apiDto->$prop === $value) {
                 $updaterDto->$prop = null;
+                continue;
             }
 
             $updaterDto->$prop = $apiDto->$prop;

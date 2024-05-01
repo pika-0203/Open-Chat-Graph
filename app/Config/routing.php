@@ -14,6 +14,7 @@ use App\Controllers\Api\OpenChatRankingPageApiController;
 use App\Controllers\Api\OpenChatRegistrationApiController;
 use App\Controllers\Api\RankingPositionApiController;
 use App\Controllers\Pages\OpenChatPageController;
+use App\Controllers\Pages\RankingBanLabsPageController;
 use App\Controllers\Pages\ReactRankingPageController;
 use App\Controllers\Pages\RecentOpenChatPageController;
 use App\Controllers\Pages\RecommendOpenChatPageController;
@@ -112,6 +113,12 @@ Route::path('labs')
 Route::path(
     'labs/tags',
     [TagLabsPageController::class, 'index']
+)
+    ->match(cache(...));
+
+Route::path(
+    'labs/publication-analytics',
+    [RankingBanLabsPageController::class, 'index']
 )
     ->match(cache(...));
 
