@@ -8,16 +8,14 @@ use App\Config\AppConfig;
 use App\Services\StaticData\StaticDataFile;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 
-class TagsPageController
+class TagLabsPageController
 {
     function index(
         StaticDataFile $staticDataGeneration,
         PageBreadcrumbsListSchema $pageBreadcrumbsListSchema,
     ) {
-        cache();
-
         $_css = ['room_list', 'site_header', 'site_footer'];
-        $_meta = meta()->setTitle('タグからオプチャを探す')->setDescription('各タグを、最も近いカテゴリに分類して表示しています。タグ内のルーム自体は、様々なカテゴリに属しています。');
+        $_meta = meta()->setTitle('タグで見るトレンド動向')->setDescription('タグによる分類を用いたトレンド分析では、単純ながらも重要な増減数や合計人数の集計を行います。これにより、各トピックの人気度やその変動を捉えることができます。');
 
         $_schema = $pageBreadcrumbsListSchema->generateSchema('タグ', 'tags');
 
@@ -44,7 +42,7 @@ class TagsPageController
             '_schema',
             'tagsGroup',
             'categories',
-            '_updatedAt'
+            '_updatedAt',
         ));
     }
 }

@@ -6,6 +6,7 @@
     </div>
     <div class="footer-link-inner">
         <a class="unset" href="<?php echo url('ranking') ?>">カテゴリから探す</a>
+        <a class="unset" href="<?php echo url('labs') ?>">分析Labs</a>
         <a class="unset" href="https://openchat.line.me/jp/explore" target="_blank">LINE公式ランキング<span class="line-link-icon777"></span></a>
     </div>
 </nav>

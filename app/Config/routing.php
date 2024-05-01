@@ -18,6 +18,7 @@ use App\Controllers\Pages\ReactRankingPageController;
 use App\Controllers\Pages\RecentOpenChatPageController;
 use App\Controllers\Pages\RecommendOpenChatPageController;
 use App\Controllers\Pages\RegisterOpenChatPageController;
+use App\Controllers\Pages\TagLabsPageController;
 use App\Middleware\AdminCookieValidation;
 use App\Middleware\VerifyCsrfToken;
 
@@ -104,6 +105,15 @@ Route::path('admin/cookie')
         }
         return redirect();
     });
+
+Route::path('labs')
+    ->match(cache(...));
+
+Route::path(
+    'labs/tags',
+    [TagLabsPageController::class, 'index']
+)
+    ->match(cache(...));
 
 // コメントAPI
 Route::path(
