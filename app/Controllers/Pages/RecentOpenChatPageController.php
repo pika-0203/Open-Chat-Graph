@@ -23,7 +23,6 @@ class RecentOpenChatPageController
     function index(AdminAuthService $adminAuthService)
     {
         $recentPage = Reception::input('page');
-        $recentPage = $recentPage ?: 0;
         $rankingList = $this->openChatStatsRecent->getAllOrderByRegistrationDate($recentPage, AppConfig::OPEN_CHAT_LIST_LIMIT);
 
         if (!$rankingList) {

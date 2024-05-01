@@ -28,6 +28,7 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
     ->match(fn (int $category) => isset(array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category]))
 
     ->path('ranking', [ReactRankingPageController::class, 'ranking'])
+    ->matchNum('category', emptyAble: true)
     ->match(cache(...));
 
 Route::path('policy')
@@ -93,6 +94,7 @@ Route::path(
     'recently-registered@get',
     [RecentOpenChatPageController::class, 'index'],
 )
+    ->matchNum('page', emptyAble: true)
     ->match(cache(...));
 
 Route::path('admin/cookie')

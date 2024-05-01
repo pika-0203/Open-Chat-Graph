@@ -12,14 +12,14 @@ use App\Services\Recommend\Enum\RecommendListType;
             <?php if ($recommend->type === RecommendListType::Category) : ?>
                 <h3>
                     <h3>
-                        <div style="margin-left: -6px">「<?php echo $recommend->listName ?>」カテゴリーの</div>
+                        <div style="text-wrap: wrap;">「<?php echo $recommend->listName ?>」カテゴリーの</div>
                         <div>人数急増ランキング</div>
                     </h3>
                 </h3>
             <?php else : ?>
                 <a class="unset" href="<?php echo url("recommend?tag=" . urlencode(htmlspecialchars_decode($recommend->listName))) ?>">
                     <h3>
-                        <div style="margin-left: -6px">「<?php echo $recommend->listName ?>」の</div>
+                        <div style="text-wrap: wrap;">「<?php echo $recommend->listName ?>」の</div>
                         <div>人数急増ランキング</div>
                     </h3>
                     <small style="font-size: 13px; font-weight:normal; color:#777; margin: auto 0; margin-left: 4px; text-wrap: nowrap; word-break: keep-all;" aria-hidden="true">すべて見る</small>

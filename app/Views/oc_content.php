@@ -4,6 +4,7 @@
 
 use App\Config\AppConfig;
 use App\Services\Recommend\RecommendRankingBuilder;
+use App\Services\Recommend\RecommendUtility;
 
 /**
  * @var \DateTime $updatedAt
@@ -127,6 +128,10 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <div style="display: flex; flex-direction: row; align-items: center;">
         <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>
         <h2 class="graph-title">メンバー数の推移グラフ</h2>
+        <span class="openchat-list-date" style="flex-direction: row; margin-bottom: 6px; line-height:2; margin-left:auto; font-size: 11.5px;">
+          <div>登録:&nbsp;</div>
+          <div><?php echo convertDatetime($oc['created_at']) ?></div>
+        </span>
       </div>
       <!-- グラフセクション -->
       <div style="position: relative; max-width: 680px; margin: auto;">
@@ -143,18 +148,22 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
             </label>
           <?php endif ?>
         </nav>
-        <aside>
+        <aside style="display: flex; align-items:center;">
           <span class="openchat-list-date" style="flex-direction: row;">
-            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px; line-height: 1.5;">
-              <div>登録:&nbsp;</div>
+            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; line-height: 1.5;">
               <?php if (is_int($oc['api_created_at'])) : ?>
                 <div>カテゴリー:&nbsp;</div>
               <?php endif ?>
+              <?php if (isset($recommend[2]) && $recommend[2]) : ?>
+                <div>タグ:&nbsp;</div>
+              <?php endif ?>
             </div>
-            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 4px; line-height: 1.5;">
-              <div><?php echo convertDatetime($oc['created_at']) ?></div>
+            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; line-height: 1.5;">
               <?php if (is_int($oc['api_created_at'])) : ?>
-                <div><?php echo $category ?></div>
+                <a href="<?php echo url('ranking/' . $oc['category']) ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $category ?></a>
+              <?php endif ?>
+              <?php if (isset($recommend[2]) && $recommend[2]) : ?>
+                <a href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($recommend[2]))) ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo RecommendUtility::extractTag($recommend[2]) ?></a>
               <?php endif ?>
             </div>
           </span>

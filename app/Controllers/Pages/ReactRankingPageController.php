@@ -66,7 +66,7 @@ class ReactRankingPageController
         StaticDataFile $staticDataFile,
         PageBreadcrumbsListSchema $breadcrumbsShema,
         Reception $reception,
-        ?int $category
+        int $category
     ) {
         $_css = [
             'style/react/OpenChat.css',
