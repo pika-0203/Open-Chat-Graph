@@ -29,13 +29,13 @@ function memberCount(int $count)
             <details class="icon-desc">
                 <summary>タグ内の人数集計について</summary>
                 <p class="recommend-desc">
+                    タグ内の合計は、全ルームの合計人数です。<br>1H（1時間）、24H（24時間）、1W（1週間）は各期間における全ルームの合計人数増減です。
+                </p>
+                <p class="recommend-desc">
+                    集計は1時間ごとに更新されます。（合計人数、1H、24H）<br>1Wのみ1日ごと（0:00頃）の更新です。
+                </p>
+                <p class="recommend-desc">
                     集計の対象は、公式ランキングに掲載中のルームのみです。<br>（人数が10人未満、または1週間以上人数の変動が無いルームは対象外）
-                </p>
-                <p class="recommend-desc">
-                    タグ内の合計は、全ルームの人数です。<br>1H（1時間）、24H（24時間）、1W（1週間）は各期間における全ルームの人数増減です。
-                </p>
-                <p class="recommend-desc">
-                    集計は1時間毎の更新されます。（合計人数、1H、24H）<br>1Wのみ1日毎（0:00頃）の更新です。
                 </p>
             </details>
         </aside>

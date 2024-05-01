@@ -41,7 +41,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
             <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span></h1>
             <div class="link-mark"><span class="link-title"><span aria-hidden="true" style="font-size: 10px; margin-right:2px;">🔗</span>LINEオープンチャット公式サイト</span></div>
           </a>
-
           <div class="talkroom_description_box close" id="talkroom_description_box">
             <p class="talkroom_description" id="talkroom-description">
               <span id="talkroom-description-btn">
