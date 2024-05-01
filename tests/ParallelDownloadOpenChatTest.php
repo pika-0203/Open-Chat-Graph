@@ -16,7 +16,7 @@ class ParallelDownloadOpenChatTest extends TestCase
         $inst = app(ParallelDownloadOpenChat::class);
 
         OpenChatApiDataParallelDownloader::disableKillFlag();
-        $result = $inst->handle([['type' => 'rising', 'category' => 0], ['type' => 'ranking', 'category' => 0]]);
+        $result = $inst->handle([['type' => 'rising', 'category' => 6], ['type' => 'ranking', 'category' => 6]]);
 
         var_dump($result);
 

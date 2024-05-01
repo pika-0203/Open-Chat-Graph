@@ -87,7 +87,7 @@ class OpenChatApiDbMergerWithParallelDownloader
         exec("/usr/bin/php8.2 {$path} {$arg} >/dev/null 2>&1 &");
     }
 
-    private function mergeProcess(RankingType $type, int $category)
+    function mergeProcess(RankingType $type, int $category)
     {
         if (!$this->stateRepository->isDownloaded($type, $category)) return;
 
