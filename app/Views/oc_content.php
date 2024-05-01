@@ -128,9 +128,9 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <div style="display: flex; flex-direction: row; align-items: center;">
         <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>
         <h2 class="graph-title">メンバー数の推移グラフ</h2>
-        <span class="openchat-list-date" style="flex-direction: row; margin-bottom: 6px; line-height:2; margin-left:auto; font-size: 11.5px;">
-          <div>登録:&nbsp;</div>
-          <div><?php echo convertDatetime($oc['created_at']) ?></div>
+        <span class="number-box created-at">
+          <div class="openchat-itme-stats-title">登録:&nbsp;</div>
+          <div class="openchat-itme-stats-title"><?php echo convertDatetime($oc['created_at']) ?></div>
         </span>
       </div>
       <!-- グラフセクション -->
