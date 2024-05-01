@@ -52,7 +52,10 @@ function memberCount(int $count)
                 </header>
                 <div style="margin: 1rem; margin-bottom: 0; margin-top: .5rem;">
                     <?php foreach ($categories as $key => $category) : ?>
-                        <a style="font-size:15px; text-wrap:nowrap; margin-right:1.25rem; margin-bottom:1rem; display:inline-flex;" href="#<?php echo $key ?>"><?php echo $key ? $category : 'その他' ?></a>
+                        <a style="font-size:15px; text-wrap:nowrap; margin-bottom:20px; margin-right: 1px; display:inline-flex; gap:2px; text-decoration:none;" href="#<?php echo $key ?>">
+                            <span style="color:#111; text-decoration:underline;"><?php echo $key ? $category : 'その他' ?></span>
+                            <span style="color:#aaa; font-size:10px; margin: 0; line-height: 1.5;"><?php echo count($tagsGroup[$key]) ?>タグ</span>
+                        </a>
                     <?php endforeach ?>
                 </div>
             </div>
@@ -93,7 +96,7 @@ function memberCount(int $count)
                         <?php endforeach ?>
                     </ul>
                 </div>
-                <a style="font-size:15px; text-wrap:nowrap; margin-left:auto; display:inline-flex;" href="#top">ページの先頭に戻る</a>
+                <a style="font-size:15px; text-wrap:nowrap; margin-left:auto; display:inline-flex; color: #111" href="#top">ページの先頭に戻る</a>
             </article>
         <?php endforeach ?>
     </main>
