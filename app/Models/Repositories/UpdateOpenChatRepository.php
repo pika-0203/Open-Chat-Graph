@@ -63,6 +63,10 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         ];
 
         $columnsToUpdate = array_filter($columnsToSet, fn ($value) => $value !== null);
+        if(!$columnsToUpdate) {
+            return;
+        }
+
         $setStatement = implode(',', array_map(fn ($column) => "{$column} = :{$column}", array_keys($columnsToUpdate)));
 
         $columnsToUpdate['id'] = $dto->open_chat_id;

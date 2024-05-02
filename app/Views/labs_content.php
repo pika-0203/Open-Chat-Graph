@@ -19,11 +19,11 @@
                 <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs/tags') ?>">
                     <span class="ranking-readMore">タグで見るトレンド動向を開く<span class="small"></span>
                 </a>
-                <h2>最終ランキング掲載分析(準備中)</h2>
+                <h2>最終ランキング掲載分析</h2>
                 <p>現在ランキング未掲載のルームを、最終ランキング掲載日時が新しい順で並べて一覧表示します。これにより、ルーム内容の変更後などに起こる掲載状況の変動を捉えることができます。</p>
-<!--                 <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs/publication-analytics') ?>">
+                <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs/publication-analytics') ?>">
                     <span class="ranking-readMore">最終ランキング掲載分析を開く<span class="small"></span>
-                </a> -->
+                </a>
             </article>
         </main>
         <footer>
