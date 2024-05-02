@@ -107,7 +107,18 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <section class="open-btn pc-btn">
                   <?php if ($oc['url']) : ?>
                     <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
+                      <?php if ($oc['join_method_type'] !== 0) : ?>
+                        <svg style="height: 13px; fill: #fff; margin-right: 6px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.4 489.4" xml:space="preserve">
+                          <path d="M99 147v51.1h-3.4c-21.4 0-38.8 17.4-38.8 38.8v213.7c0 21.4 17.4 38.8 38.8 38.8h298.2c21.4 0 38.8-17.4 38.8-38.8V236.8c0-21.4-17.4-38.8-38.8-38.8h-1v-51.1C392.8 65.9 326.9 0 245.9 0 164.9.1 99 66 99 147m168.7 206.2c-3 2.2-3.8 4.3-3.8 7.8.1 15.7.1 31.3.1 47 .3 6.5-3 12.9-8.8 15.8-13.7 7-27.4-2.8-27.4-15.8v-.1c0-15.7 0-31.4.1-47.1 0-3.2-.7-5.3-3.5-7.4-14.2-10.5-18.9-28.4-11.8-44.1 6.9-15.3 23.8-24.3 39.7-21.1 17.7 3.6 30 17.8 30.2 35.5 0 12.3-4.9 22.3-14.8 29.5M163.3 147c0-45.6 37.1-82.6 82.6-82.6 45.6 0 82.6 37.1 82.6 82.6v51.1H163.3z" />
+                        </svg>
+                      <?php endif ?>
                       <span class="text">LINEで開く</span>
+                      <?php if ($oc['join_method_type'] === 1) : ?>
+                        <span style="font-size: 12px; margin-left: 4px; font-weight: normal; line-height: 2;" class="text">承認制</span>
+                      <?php endif ?>
+                      <?php if ($oc['join_method_type'] === 2) : ?>
+                        <span style="font-size: 12px; margin-left: 4px; font-weight: normal; line-height: 2;" class="text">参加コード入力制</span>
+                      <?php endif ?>
                     </a>
                   <?php endif ?>
                 </section>
@@ -115,7 +126,18 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <section class="open-btn sp-btn">
         <?php if ($oc['url']) : ?>
           <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
+            <?php if ($oc['join_method_type'] !== 0) : ?>
+              <svg style="height: 12px; fill: white; margin-right: 6px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.4 489.4" xml:space="preserve">
+                <path d="M99 147v51.1h-3.4c-21.4 0-38.8 17.4-38.8 38.8v213.7c0 21.4 17.4 38.8 38.8 38.8h298.2c21.4 0 38.8-17.4 38.8-38.8V236.8c0-21.4-17.4-38.8-38.8-38.8h-1v-51.1C392.8 65.9 326.9 0 245.9 0 164.9.1 99 66 99 147m168.7 206.2c-3 2.2-3.8 4.3-3.8 7.8.1 15.7.1 31.3.1 47 .3 6.5-3 12.9-8.8 15.8-13.7 7-27.4-2.8-27.4-15.8v-.1c0-15.7 0-31.4.1-47.1 0-3.2-.7-5.3-3.5-7.4-14.2-10.5-18.9-28.4-11.8-44.1 6.9-15.3 23.8-24.3 39.7-21.1 17.7 3.6 30 17.8 30.2 35.5 0 12.3-4.9 22.3-14.8 29.5M163.3 147c0-45.6 37.1-82.6 82.6-82.6 45.6 0 82.6 37.1 82.6 82.6v51.1H163.3z" />
+              </svg>
+            <?php endif ?>
             <span class="text">LINEで開く</span>
+            <?php if ($oc['join_method_type'] === 1) : ?>
+              <span style="font-size: 12px; margin-left: 4px; font-weight: normal;" class="text">承認制</span>
+            <?php endif ?>
+            <?php if ($oc['join_method_type'] === 2) : ?>
+              <span style="font-size: 12px; margin-left: 4px; font-weight: normal;" class="text">参加コード入力制</span>
+            <?php endif ?>
           </a>
         <?php endif ?>
       </section>
@@ -138,7 +160,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <div id="app"></div>
       </div>
 
-      <nav class="oc-desc-nav">
+      <nav class="oc-desc-nav <?php if (!is_int($oc['api_created_at'])) echo 'no-ranking' ?>">
         <nav class="my-list-form">
           <?php if (count($myList) - 1 < AppConfig::MY_LIST_LIMIT || isset($myList[$oc['id']])) : ?>
             <label class="checkbox-label" for="my-list-checkbox">
@@ -147,9 +169,9 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
             </label>
           <?php endif ?>
         </nav>
-        <aside style="display: flex; align-items:center;">
-          <span class="openchat-list-date" style="flex-direction: row;">
-            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; line-height: 1.5;">
+        <aside class="oc-desc-nav-category" style="display: flex; align-items:center;">
+          <span class="openchat-list-date" style="flex-direction: row; height: fit-content;">
+            <div style="display: flex; flex-direction: column; justify-content: flex-start; gap: 1rem; line-height: 1.5; height: 100%;">
               <?php if (is_int($oc['api_created_at'])) : ?>
                 <div>カテゴリー:&nbsp;</div>
               <?php endif ?>
@@ -157,18 +179,20 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <div>タグ:&nbsp;</div>
               <?php endif ?>
             </div>
-            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; line-height: 1.5;">
+            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; line-height: 1.5; height: 100%;">
               <?php if (is_int($oc['api_created_at'])) : ?>
                 <a href="<?php echo url('ranking/' . $oc['category']) ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $category ?></a>
               <?php endif ?>
               <?php if (isset($recommend[2]) && $recommend[2]) : ?>
-                <a href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($recommend[2]))) ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo RecommendUtility::extractTag($recommend[2]) ?></a>
+                <a href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($recommend[2]))) ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $recommend[2] ?></a>
               <?php endif ?>
             </div>
           </span>
         </aside>
       </nav>
-      <hr>
+      <?php if (is_int($oc['api_created_at'])) : ?>
+        <hr>
+      <?php endif ?>
       <?php if ($recommend[0]) : ?>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
         <hr style="margin-top: 2px;">

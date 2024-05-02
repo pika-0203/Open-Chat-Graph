@@ -26,11 +26,20 @@ hr {
   margin-bottom: 6px;
 }
 
-.openchat .oc-desc-nav {
+.oc-desc-nav {
   padding-top: 1.5rem;
   display: flex;
   justify-content: space-evenly;
   gap: 8px;
+}
+
+.oc-desc-nav.no-ranking {
+  position: absolute;
+  z-index: 100;
+  margin: 0 auto;
+  margin-top: -5rem;
+  width: calc(100% - 2rem);
+  max-width: calc(var(--width) - 2rem);
 }
 
 .openchat-header {

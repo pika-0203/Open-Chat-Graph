@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-use App\Services\RankingBan\RankingBan;
+use App\Services\RankingBan\RankingBanTableUpdater;
 use PHPUnit\Framework\TestCase;
 
 class RankingBanTest extends TestCase
 {
-    private RankingBan $inst;
+    private RankingBanTableUpdater $inst;
     public function test()
     {
-        $this->inst = app(RankingBan::class);
+        $this->inst = app(RankingBanTableUpdater::class);
 
         $this->inst->updateRankingBanTable();
 

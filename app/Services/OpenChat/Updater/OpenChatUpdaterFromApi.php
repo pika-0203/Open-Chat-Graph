@@ -26,7 +26,6 @@ class OpenChatUpdaterFromApi
         private OpenChatApiFromEmidDownloader $openChatDtoFetcher,
         private OpenChatUrlChecker $openChatUrlChecker,
         private OpenChatMargeUpdateProcess $openChatMargeUpdateProcess,
-        private OpenChatImageStoreUpdater $openChatImageStoreUpdater,
     ) {
         $this->date = OpenChatServicesUtility::getCronModifiedStatsMemberDate();
     }
@@ -34,7 +33,7 @@ class OpenChatUpdaterFromApi
     /**
      * @param int $open_chat_id
      */
-    function fetchUpdateOpenChat(int $open_chat_id): bool
+    function fetchUpdateOpenChat(int $open_chat_id, bool $updateDailyStatistics = true): bool
     {
         $repoDto = $this->openChatRepository->getOpenChatDataById($open_chat_id);
         if ($repoDto === false) {
@@ -52,18 +51,18 @@ class OpenChatUpdaterFromApi
             }
         } catch (InvalidMemberCountException $e) {
             $this->logRepository->logUpdateOpenChatError($open_chat_id, $e->getMessage());
-            $this->updateDelete($repoDto, false);
+            $this->updateDelete($repoDto, false, $updateDailyStatistics);
             return false;
         } catch (\RuntimeException $e) {
             $this->logRepository->logUpdateOpenChatError($open_chat_id, $e->getMessage());
             return false;
         }
 
-        $this->updateDelete($repoDto, $ocDto);
+        $this->updateDelete($repoDto, $ocDto, $updateDailyStatistics);
         return true;
     }
 
-    private function updateDelete(OpenChatRepositoryDto $repoDto, OpenChatDto|false $ocDto)
+    private function updateDelete(OpenChatRepositoryDto $repoDto, OpenChatDto|false $ocDto, bool $updateStatistics)
     {
         if (!$ocDto) {
             $this->openChatMargeUpdateProcess->mergeUpdateOpenChat($repoDto, $ocDto);
@@ -77,10 +76,13 @@ class OpenChatUpdaterFromApi
             || $repoDto->profileImageObsHash !== $ocDto->profileImageObsHash
             || $repoDto->invitationTicket !== $ocDto->invitationTicket
             || $repoDto->memberCount !== $ocDto->memberCount
+            || $repoDto->joinMethodType !== $ocDto->joinMethodType
         ) {
             $updaterDto = !!$this->openChatMargeUpdateProcess->mergeUpdateOpenChat($repoDto, $ocDto);
         }
 
-        $updaterDto && $this->statisticsRepository->insertDailyStatistics($repoDto->open_chat_id, $ocDto->memberCount, $this->date);
+        if ($updateStatistics && $updaterDto) {
+            $this->statisticsRepository->insertDailyStatistics($repoDto->open_chat_id, $ocDto->memberCount, $this->date);
+        }
     }
 }

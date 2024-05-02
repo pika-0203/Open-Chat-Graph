@@ -26,6 +26,7 @@ class OpenChatPageRepository implements OpenChatPageRepositoryInterface
                 oc.url,
                 oc.created_at,
                 oc.updated_at,
+                oc.join_method_type,
                 rh.diff_member AS rh_diff_member,
                 rh.percent_increase AS rh_percent_increase,
                 rh24.diff_member AS rh24_diff_member,

@@ -42,6 +42,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 description,
                 member,
                 category,
+                join_method_type,
                 created_at AS datetime
             FROM
                 open_chat
@@ -91,6 +92,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 oc.description,
                 oc.member,
                 oc.emblem,
+                oc.join_method_type,
                 ranking.diff_member AS diff_member,
                 ranking.percent_increase AS percent_increase,
                 ranking.id AS ranking_id
@@ -143,6 +145,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 oc.member,
                 oc.emblem,
                 oc.category,
+                oc.join_method_type,
                 ranking.diff_member,
                 ranking.percent_increase
             FROM
@@ -176,6 +179,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 member,
                 emblem,
                 category,
+                join_method_type,
                 api_created_at
             FROM
                 open_chat

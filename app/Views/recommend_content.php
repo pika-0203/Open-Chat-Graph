@@ -52,7 +52,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <section style="all:unset; display:block;">
                 <?php if ($count) : ?>
                     <h2 class="list-title oc-list">
-                        <div>「<?php echo $extractTag ?>」の</div>
+                        <div>「<?php echo $tag ?>」の</div>
                         <div>人数急増ランキング</div>
                         <div style="margin-left: 4px;"><?php echo ((int)$_dto->tagRecordCounts[$tag]) > $count ? '上位' : '全' ?><?php echo $count ?>件</div>
                     </h2>
@@ -80,6 +80,13 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
                 <?php endif ?>
             </section>
+            <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
+                <div class="top-list">
+                    <a style="margin: 1rem 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
+                        <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」を詳しく見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
+                    </a>
+                </div>
+            <?php endif ?>
             <?php if (isset($tags) && $tags) : ?>
                 <p class="recommend-desc2">
                     探しているルームが見つからない時は、関連のタグをチェックしてみましょう！
@@ -87,13 +94,8 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php viewComponent('recommend_content_tags', compact('tags')) ?>
             <?php endif ?>
             <div class="top-list">
-                <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
-                    <a style="margin: 1rem 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
-                        <span class="ranking-readMore">「<?php echo $extractTag ?>」を詳しく見る<span class="small"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
-                    </a>
-                <?php endif ?>
                 <a style="margin: 1rem 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-                    <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
+                    <span class="ranking-readMore" style="font-size: 11.5px;">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
                 </a>
             </div>
             <aside style="all: unset; display:block; margin: 20px 0 0 0; text-align: center;">
