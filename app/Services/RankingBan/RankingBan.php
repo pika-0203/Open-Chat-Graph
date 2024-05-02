@@ -41,9 +41,14 @@ class RankingBan
                 AND oc.category != 0"
         );
 
+        $existsDelete = DB::fetchAll(
+            "SELECT id FROM ranking_ban WHERE flag = 0",
+            args: [\PDO::FETCH_COLUMN, 0]
+        );
+
         $latestTime = OpenChatServicesUtility::getModifiedCronTime('now');
+        //$latestTime = new \DateTime('2024-03-31 00:00:00');
         $result = [];
-        $existsDelete = DB::fetchAll("SELECT id FROM ranking_ban", args: [\PDO::FETCH_COLUMN, 0]);
         foreach ($ocs as $oc) {
             $id = $oc['id'];
             $member = $oc['member'];
@@ -72,11 +77,14 @@ class RankingBan
             if ($percentage > 100) $percentage = 100;
             if ($percentage < 1) $percentage = 1;
 
-            $result[] = compact('id', 'datetime', 'percentage', 'member');
+            $result[] = compact('datetime', 'percentage', 'member') + ['open_chat_id' => $id, 'flag' => 0];
         }
 
+        $endDateTime = $latestTime->format('Y-m-d H:i:s');
         foreach ($existsDelete as $id) {
-            DB::connect()->exec("DELETE FROM ranking_ban WHERE id = {$id}");
+            DB::connect()->exec(
+                "UPDATE ranking_ban SET flag = 1, end_datetime = '{$endDateTime}' WHERE id = {$id}"
+            );
         }
 
         $this->sqlInsert->import(DB::connect(), 'ranking_ban', $result);
