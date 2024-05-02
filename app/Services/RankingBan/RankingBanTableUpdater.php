@@ -24,7 +24,7 @@ class RankingBanTableUpdater
         private OpenChatUpdaterFromApi $openChatUpdaterFromApi,
     ) {
         $this->time = OpenChatServicesUtility::getModifiedCronTime('now');
-        $this->time = new \DateTime('2024-03-29 00:30:00');
+        //$this->time = new \DateTime('2024-03-29 00:30:00');
     }
 
     private function buildTableData(
