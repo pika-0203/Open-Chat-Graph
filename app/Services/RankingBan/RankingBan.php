@@ -49,7 +49,7 @@ class RankingBan
             $member = $oc['member'];
 
             $ranking = $this->rankingPositionHourRepo->getFinalRankingPosition($id, $oc['category']);
-            if ($ranking && new \DateTime($ranking['time']) > new \DateTime('2024-03-31 15:00:00')) {
+            if ($ranking && new \DateTime($ranking['time']) > $latestTime) {
                 continue;
             }
 
