@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
-<?php viewComponent('head', compact('_css', '_meta')) ?>
+<?php
+
+use Shadow\Kernel\Reception as R;
+
+viewComponent('head', compact('_css', '_meta')) ?>
 
 <body class="body">
     <style>
@@ -34,13 +38,22 @@
             <header class="openchat-list-title-area unset">
                 <div style="flex-direction: column;">
                     <h2 class="list-title">
-                        最終ランキング掲載分析
+                        ランキング掲載分析
                     </h2>
                     <p>
-                        <small class="p-small">現在ランキング未掲載のルームを、最後に掲載されていた際の状況と共に一覧表示します。</small>
+                        <small class="p-small">ランキング掲載・未掲載の履歴をその時の状況と共に一覧表示します。</small>
                     </p>
                 </div>
             </header>
+            <form>
+                <label for="pet-select">ルーム内容の変更:</label>
+                <select id="pet-select" name="change">
+                    <option value="0" <?php if (R::input('change') == 0) echo 'selected' ?>>あり</option>
+                    <option value="2" <?php if (R::input('change') == 2) echo 'selected' ?>>両方</option>
+                    <option value="1" <?php if (R::input('change') == 1) echo 'selected' ?>>なし</option>
+                </select>
+                <input type="submit">
+            </form>
             <!-- select要素ページネーション -->
             <hr>
             <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList', '_now')) ?>

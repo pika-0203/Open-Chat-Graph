@@ -11,7 +11,13 @@ class RankingBanLabsPageController
 {
     function index(?string $change)
     {
-        $updatedAtValue = $change ? 1 : 0;
+        $updatedAtValue = "AND (rb.updated_at >= 1 OR (rb.update_items IS NOT NULL AND rb.update_items != ''))";
+        if ($change === '1') $updatedAtValue = "AND (rb.updated_at = 0 AND (rb.update_items IS NULL OR rb.update_items = ''))";
+        if ($change === '2') $updatedAtValue = '';
+
+        $per = 50;
+
+        $endDatetime = "AND rb.end_datetime IS NOT NULL";
 
         $openChatList = DB::fetchAll(
             "SELECT
@@ -34,12 +40,12 @@ class RankingBanLabsPageController
                 ranking_ban AS rb
                 JOIN open_chat AS oc ON oc.id = rb.open_chat_id
             WHERE
-                (rb.updated_at = 1
-                OR rb.percentage <= 50)
-                AND rb.updated_at >= {$updatedAtValue}
+                rb.percentage <= {$per}
+                {$updatedAtValue}
+                {$endDatetime}
             ORDER BY
-                `datetime` DESC,
                 end_datetime DESC,
+                `datetime` DESC,
                 percentage ASC
             LIMIT
                 100"

@@ -14,7 +14,7 @@
       <footer class="openchat-item-lower-outer" style="margin-top: 2px; gap: 0;">
         <div class="openchat-item-lower unset" style="font-size: 12px; <?php if ($oc['end_datetime'] === $_now || $oc['old_datetime'] === $_now) echo 'font-weight: bold;' ?>">
           <?php if (isset($oc['end_datetime'])) : ?>
-            <span class="registration-date blue">未掲載 <span style="font-weight: bold;"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span>: <?php echo convertDatetime($oc['old_datetime'], true) ?>~<?php echo convertDatetime($oc['end_datetime'], true) ?></span>
+            <span class="registration-date blue">再掲載 <span style="font-weight: bold;"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span>: <?php echo convertDatetime($oc['old_datetime'], true) ?>~<?php echo convertDatetime($oc['end_datetime'], true) ?></span>
           <?php else : ?>
             <span class="registration-date" style="color: #ff5d6d;">未掲載: <?php echo convertDatetime($oc['old_datetime'], true) ?>~</span>
           <?php endif ?>
@@ -26,7 +26,7 @@
             <span class="openchat-item-stats">(<?php echo signedNumF($oc['member'] - $oc['old_member']) ?: '±0' ?>人)</span>
           </span>
         </div>
-        <div class="openchat-item-lower unset" style="font-size: 12px; font-weight: <?php echo $oc['updated_at'] ? "bold" : "normal" ?>; color: <?php echo $oc['update_items'] ? "#aaa" : "#b7b7b7" ?>;">
+        <div class="openchat-item-lower unset" style="font-size: 12px; font-weight: <?php echo $oc['update_items'] ? "bold" : "normal" ?>; color: <?php echo $oc['update_items'] ? "#aaa" : "#b7b7b7" ?>;">
           <span>変更箇所: </span>
           <?php if ($oc['update_items']) : ?>
             <?php foreach ($oc['update_items'] as $item) : ?>
