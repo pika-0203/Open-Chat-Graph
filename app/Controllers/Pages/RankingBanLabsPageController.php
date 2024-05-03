@@ -13,13 +13,11 @@ class RankingBanLabsPageController
     {
         $updatedAtValue = "AND (rb.updated_at >= 1 OR (rb.update_items IS NOT NULL AND rb.update_items != ''))";
         if ($change === '1') $updatedAtValue = "AND (rb.updated_at = 0 AND (rb.update_items IS NULL OR rb.update_items = ''))";
-        if ($change === '2') $updatedAtValue = '';
 
         $per = 50;
 
         $endDatetime = "AND rb.end_datetime IS NOT NULL";
         if ($publish === '1') $endDatetime = "AND rb.end_datetime IS NULL";
-        if ($publish === '2') $endDatetime = '';
 
         $openChatList = DB::fetchAll(
             "SELECT
@@ -46,7 +44,7 @@ class RankingBanLabsPageController
                 {$updatedAtValue}
                 {$endDatetime}
             ORDER BY
-                end_datetime DESC,
+                GREATEST(`datetime`, `end_datetime`) DESC,
                 `datetime` DESC,
                 percentage ASC
             LIMIT

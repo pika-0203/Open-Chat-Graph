@@ -104,7 +104,8 @@ class RankingBanTableUpdater
                         end_datetime = '{$endDateTime}',
                         update_items = :update_items
                     WHERE
-                        open_chat_id = {$id}",
+                        open_chat_id = {$id}
+                        AND flag = 0",
                     ['update_items' => $oc['update_items']]
                 );
             } else {
@@ -115,7 +116,8 @@ class RankingBanTableUpdater
                         flag = 1,
                         end_datetime = '{$endDateTime}'
                     WHERE
-                        open_chat_id = {$id}"
+                        open_chat_id = {$id}
+                        AND flag = 0"
                 );
             }   
         }
