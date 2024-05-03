@@ -9,8 +9,10 @@ use Shadow\DB;
 
 class RankingBanLabsPageController
 {
-    function index()
+    function index(?string $change)
     {
+        $updatedAtValue = $change ? 1 : 0;
+
         $openChatList = DB::fetchAll(
             "SELECT
                 oc.id,
@@ -31,9 +33,10 @@ class RankingBanLabsPageController
             FROM
                 ranking_ban AS rb
                 JOIN open_chat AS oc ON oc.id = rb.open_chat_id
-            WHERE 
-                rb.updated_at = 1 
-                OR rb.percentage <= 50
+            WHERE
+                (rb.updated_at = 1
+                OR rb.percentage <= 50)
+                AND rb.updated_at >= {$updatedAtValue}
             ORDER BY
                 `datetime` DESC,
                 end_datetime DESC,
