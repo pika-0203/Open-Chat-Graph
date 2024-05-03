@@ -333,3 +333,25 @@ function calculatePositionPercentage($number)
 
     return $position . $adjustedPercentage . "%";
 }
+
+function calculateTimeDifference($latestDateTime, $pastDateTime)
+{
+    // 日時をDateTimeオブジェクトに変換
+    $latest = new DateTime($latestDateTime);
+    $past = new DateTime($pastDateTime);
+
+    // 差を計算
+    $difference = $latest->diff($past);
+
+    // 総時間を計算
+    $hours = ($difference->days * 24) + $difference->h + ($difference->i / 60) + ($difference->s / 3600);
+
+    // 100時間未満かどうか判断し、適切な文字列を返す
+    if ($hours < 100) {
+        return sprintf("%d時間", $hours);
+    } else {
+        // 日数を計算（小数点以下切り捨て）
+        $days = floor($hours / 24);
+        return sprintf("%d日", $days);
+    }
+}

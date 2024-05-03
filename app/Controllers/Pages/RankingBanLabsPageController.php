@@ -32,7 +32,7 @@ class RankingBanLabsPageController
                 JOIN open_chat AS oc ON oc.id = rb.open_chat_id
             WHERE 
                 rb.updated_at = 1 
-                OR rb.percentage <= 80
+                OR rb.percentage <= 50
             ORDER BY
                 `datetime` DESC,
                 end_datetime DESC,

@@ -14,13 +14,13 @@
       <footer class="openchat-item-lower-outer" style="margin-top: 2px; gap: 0;">
         <div class="openchat-item-lower unset" style="font-size: 12px;">
           <?php if (isset($oc['end_datetime'])) : ?>
-            <span class="registration-date blue">未掲載期間: <?php echo convertDatetime($oc['old_datetime'], true) ?> ~ <?php echo convertDatetime($oc['end_datetime'], true) ?></span>
+            <span class="registration-date blue">未掲載(<?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?>): <?php echo convertDatetime($oc['old_datetime'], true) ?>~<?php echo convertDatetime($oc['end_datetime'], true) ?></span>
           <?php else : ?>
-            <span class="registration-date" style="color: #ff5d6d;">未掲載: <?php echo convertDatetime($oc['old_datetime'], true) ?> ~</span>
+            <span class="registration-date" style="color: #ff5d6d;">未掲載: <?php echo convertDatetime($oc['old_datetime'], true) ?>~</span>
           <?php endif ?>
         </div>
         <div class="openchat-item-lower unset" style="font-size: 12px;">
-          <span class="openchat-item-stats" style="font-weight: <?php echo (!$oc['updated_at'] && $oc['percentage'] <= 50) ? "bold" : "normal" ?>;">最終順位: <?php echo calculatePositionPercentage($oc['percentage']) ?></span>
+          <span class="openchat-item-stats" style="font-weight: <?php echo ($oc['percentage'] <= 50) ? "bold" : "normal" ?>;">最終順位: <?php echo calculatePositionPercentage($oc['percentage']) ?></span>
           <span style="margin-left: 4px;">
             <span>最終人数: <?php echo formatMember($oc['old_member']) ?>人</span>
             <span class="openchat-item-stats">(<?php echo signedNumF($oc['member'] - $oc['old_member']) ?: '±0' ?>人)</span>
