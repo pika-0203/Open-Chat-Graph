@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace App\Services\OpenChat\Dto;
 
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
+
 class OpenChatUpdaterDto
 {
+    /** @var ?array{ name:bool,description:bool,img_url:bool,join_method_type:bool,category:bool } */
+    private ?array $updateItems = null;
+
     public int $open_chat_id;
     public bool $delete_flag = false;
-    public ?int $updated_at = null;
+    public ?string $updated_at = null;
 
     public ?string $emid = null;
     public ?string $name = null;
@@ -26,8 +31,25 @@ class OpenChatUpdaterDto
         $this->open_chat_id = $open_chat_id;
     }
 
-    function rewriteUpdateAtTime()
+    function rewriteUpdateAtTime(string $dateTime)
     {
-        $this->updated_at = time();
+        $this->updated_at = $dateTime;
+    }
+
+    function setUpdateItems()
+    {
+        $this->updateItems = [
+            'name' => $this->name !== null,
+            'description' => $this->desc !== null,
+            'img_url' => $this->profileImageObsHash !== null,
+            'join_method_type' => $this->joinMethodType !== null,
+            'category' => $this->category !== null,
+            'emblem' => $this->emblem !== null,
+        ];
+    }
+
+    function getUpdateItems(): ?string
+    {
+        return $this->updateItems ? json_encode($this->updateItems) : null;
     }
 }

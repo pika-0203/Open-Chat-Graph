@@ -50,7 +50,7 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
         }
 
         $columnsToSet = [
-            'updated_at' => isset($dto->updated_at) ? date('Y-m-d H:i:s', $dto->updated_at) : null,
+            'updated_at' => $dto->updated_at ?? null,
             'emid' => $dto->emid ?? null,
             'name' => $dto->name ?? null,
             'description' => $dto->desc ?? null,
@@ -60,10 +60,11 @@ class UpdateOpenChatRepository implements UpdateOpenChatRepositoryInterface
             'category' => $dto->category ?? null,
             'emblem' => $dto->emblem ?? null,
             'join_method_type' => $dto->joinMethodType ?? null,
+            'update_items' => $dto->getUpdateItems(),
         ];
 
         $columnsToUpdate = array_filter($columnsToSet, fn ($value) => $value !== null);
-        if(!$columnsToUpdate) {
+        if (!$columnsToUpdate) {
             return;
         }
 

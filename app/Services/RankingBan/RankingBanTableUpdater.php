@@ -23,17 +23,18 @@ class RankingBanTableUpdater
         private SqlInsert $sqlInsert,
         private OpenChatUpdaterFromApi $openChatUpdaterFromApi,
     ) {
-        $this->time = OpenChatServicesUtility::getModifiedCronTime('now');
-        //$this->time = new \DateTime('2024-03-29 00:30:00');
+        //$this->time = OpenChatServicesUtility::getModifiedCronTime('now');
+        $this->time = new \DateTime('2024-01-31 16:30:00');
     }
 
     private function buildTableData(
         array $openChatArray,
         \DateTime $latestTime,
-        array $existsIdArray
+        array $existsListArray
     ): array {
         $result = [];
 
+        $existsIdArray = array_column($existsListArray, 'open_chat_id');
         foreach ($openChatArray as $ocArrayKey => $oc) {
             $id = $oc['id'];
             $member = $oc['member'];
@@ -42,7 +43,7 @@ class RankingBanTableUpdater
             if ($ranking && new \DateTime($ranking['time']) >= $latestTime) continue;
 
             if (in_array($id, $existsIdArray)) {
-                unset($existsIdArray[array_search($id, $existsIdArray)]);
+                unset($existsListArray[array_search($id, $existsIdArray)]);
                 continue;
             }
 
@@ -68,27 +69,55 @@ class RankingBanTableUpdater
                 'member'
             ) + [
                 'open_chat_id' => $id,
-                'flag2' => 0
+                'updated_at' => 0,
+                'update_items' => null
             ];
         }
 
-        return [$result, $existsIdArray];
+        return [$result, $existsListArray];
     }
 
-    private function updateTable(\DateTime $latestTime, array $deleteIdArray)
+    private function updateTable(\DateTime $latestTime, array $deleteListArray)
     {
         $endDateTime = $latestTime->format('Y-m-d H:i:s');
 
-        foreach ($deleteIdArray as $id) {
-            DB::connect()->exec(
-                "UPDATE 
+        foreach ($deleteListArray as $row) {
+            $id = $row['open_chat_id'];
+            $datetime = $row['datetime'];
+
+            $oc = DB::fetch(
+                "SELECT
+                    updated_at,
+                    update_items
+                FROM
+                    open_chat
+                WHERE
+                    id = {$id}"
+            );
+
+            if ($oc && $oc['update_items'] && new \DateTime($oc['updated_at']) > new \DateTime($datetime)) {
+                DB::execute(
+                    "UPDATE 
                     ranking_ban 
                 SET 
                     flag = 1,
-                    end_datetime = '{$endDateTime}'
+                    end_datetime = '{$endDateTime}',
+                    update_items = :update_items
                 WHERE
-                    open_chat_id = {$id}"
-            );
+                    open_chat_id = {$id}",
+                    ['update_items' => $oc['update_items']]
+                );
+            } else {
+                DB::connect()->exec(
+                    "UPDATE 
+                        ranking_ban 
+                    SET 
+                        flag = 1,
+                        end_datetime = '{$endDateTime}'
+                    WHERE
+                        open_chat_id = {$id}"
+                );
+            }   
         }
     }
 
@@ -109,19 +138,21 @@ class RankingBanTableUpdater
         foreach ($latestOcIdArray as $key => $id) {
             $this->openChatUpdaterFromApi->fetchUpdateOpenChat($id, false);
 
-            $updatedAt = DB::fetchColumn(
+            $oc = DB::fetch(
                 "SELECT
-                    updated_at
+                    updated_at,
+                    update_items
                 FROM
                     open_chat
                 WHERE
                     id = {$id}"
             );
 
-            if (!$updatedAt) continue;
-            if (new \DateTime($updatedAt) < $latestTime) continue;
+            if (!$oc) continue;
+            if (!$oc['update_items'] || new \DateTime($oc['updated_at']) < $latestTime) continue;
 
-            $ocArray[$key]['flag2'] = 1;
+            $ocArray[$key]['updated_at'] = 1;
+            $ocArray[$key]['update_items'] = $oc['update_items'];
         }
 
         return $ocArray;
@@ -147,18 +178,18 @@ class RankingBanTableUpdater
                 AND oc.category != 0"
         );
 
-        $existsIdArray = DB::fetchAll(
+        $existsListArray = DB::fetchAll(
             "SELECT
-                open_chat_id 
+                open_chat_id,
+                datetime
             FROM 
                 ranking_ban
             WHERE 
-                flag = 0",
-            args: [\PDO::FETCH_COLUMN, 0]
+                flag = 0"
         );
 
-        [$insertOcArray, $deleteIdArray] = $this->buildTableData($openChatArray, $this->time, $existsIdArray);
-        $this->updateTable($this->time, $deleteIdArray);
+        [$insertOcArray, $deleteListArray] = $this->buildTableData($openChatArray, $this->time, $existsListArray);
+        $this->updateTable($this->time, $deleteListArray);
 
         $result = $this->crawlUpdateDeleteOpenChat($insertOcArray, $this->time);
 

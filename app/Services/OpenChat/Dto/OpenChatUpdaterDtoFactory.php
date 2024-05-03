@@ -4,8 +4,17 @@ declare(strict_types=1);
 
 namespace App\Services\OpenChat\Dto;
 
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
+
 class OpenChatUpdaterDtoFactory
 {
+    private string $dateTime;
+
+    function __construct()
+    {
+        $this->dateTime = OpenChatServicesUtility::getModifiedCronTime('now')->format('Y-m-d H:i:s');
+    }
+
     function mapToDto(OpenChatRepositoryDto $repoDto, OpenChatDto $apiDto, bool $updateMember): OpenChatUpdaterDto
     {
         $updaterDto = new OpenChatUpdaterDto($repoDto->open_chat_id);
@@ -29,14 +38,15 @@ class OpenChatUpdaterDtoFactory
         }
 
         if (
-            ($updaterDto->name !== null)
-            || ($updaterDto->desc !== null)
-            || ($updaterDto->profileImageObsHash !== null)
-            || ($updaterDto->joinMethodType !== null)
-            || ($updaterDto->category !== null)
-            || ($updaterDto->emblem !== null)
+            $updaterDto->name !== null
+            || $updaterDto->desc !== null
+            || $updaterDto->profileImageObsHash !== null
+            || $updaterDto->joinMethodType !== null
+            || $updaterDto->category !== null
+            || $updaterDto->emblem !== null
         ) {
-            $updaterDto->rewriteUpdateAtTime();
+            $updaterDto->rewriteUpdateAtTime($this->dateTime);
+            $updaterDto->setUpdateItems();
         }
 
         return $updaterDto;

@@ -36,12 +36,12 @@ class OpenChatApiDbMergerProcess
 
         // 更新がないかを確認
         if (
-            ($repoDto->name === $apiDto->name)
-            && ($repoDto->desc === $apiDto->desc)
-            && ($repoDto->profileImageObsHash === $apiDto->profileImageObsHash)
+            $repoDto->name === $apiDto->name
+            && $repoDto->desc === $apiDto->desc
+            && $repoDto->profileImageObsHash === $apiDto->profileImageObsHash
             && ($repoDto->category === $apiDto->category || $apiDto->category === null)
-            && ($repoDto->emblem === $apiDto->emblem)
-            && ($repoDto->joinMethodType === $apiDto->joinMethodType)
+            && $repoDto->emblem === $apiDto->emblem
+            && $repoDto->joinMethodType === $apiDto->joinMethodType
         ) {
             return null;
         }
