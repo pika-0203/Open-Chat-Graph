@@ -9,15 +9,17 @@ use Shadow\DB;
 
 class RankingBanLabsPageController
 {
-    function index(?string $change, ?string $publish)
+    function index(?string $change, ?string $publish, ?string $order)
     {
         $updatedAtValue = "AND (rb.updated_at >= 1 OR (rb.update_items IS NOT NULL AND rb.update_items != ''))";
         if ($change === '1') $updatedAtValue = "AND (rb.updated_at = 0 AND (rb.update_items IS NULL OR rb.update_items = ''))";
 
-        $per = 50;
-
         $endDatetime = "AND rb.end_datetime IS NOT NULL";
         if ($publish === '1') $endDatetime = "AND rb.end_datetime IS NULL";
+
+        $per = 50;
+        if ($order === '1') $per = 80;
+        if ($order === '2') $per = 100;
 
         $openChatList = DB::fetchAll(
             "SELECT
@@ -40,7 +42,7 @@ class RankingBanLabsPageController
                 ranking_ban AS rb
                 JOIN open_chat AS oc ON oc.id = rb.open_chat_id
             WHERE
-                rb.percentage <= {$per}
+                rb.percentage < {$per}
                 {$updatedAtValue}
                 {$endDatetime}
             ORDER BY

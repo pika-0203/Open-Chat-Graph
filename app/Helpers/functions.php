@@ -324,7 +324,7 @@ function sortAndUniqueArray(array $array, int $min = 2)
     return array_keys($filteredCounts);
 }
 
-function calculatePositionPercentage($number)
+function calculatePositionPercentage($number): string
 {
     $percentage = $number;
     $position = ($percentage <= 50) ? "上位" : "下位";
@@ -334,7 +334,7 @@ function calculatePositionPercentage($number)
     return $position . $adjustedPercentage . "%";
 }
 
-function calculateTimeDifference($latestDateTime, $pastDateTime)
+function calculateTimeDifference($latestDateTime, $pastDateTime): string
 {
     // 日時をDateTimeオブジェクトに変換
     $latest = new DateTime($latestDateTime);
@@ -354,4 +354,19 @@ function calculateTimeDifference($latestDateTime, $pastDateTime)
         $days = floor($hours / 24);
         return sprintf("%d日", $days);
     }
+}
+
+function calculateIn24Hours($latestDateTime, $pastDateTime): bool
+{
+    // 日時をDateTimeオブジェクトに変換
+    $latest = new DateTime($latestDateTime);
+    $past = new DateTime($pastDateTime);
+
+    // 差を計算
+    $difference = $latest->diff($past);
+
+    // 総時間を計算
+    $hours = ($difference->days * 24) + $difference->h + ($difference->i / 60) + ($difference->s / 3600);
+
+    return $hours <= 24;
 }

@@ -56,6 +56,12 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     <option value="0" <?php if (R::input('change') == 0) echo 'selected' ?>>あり</option>
                     <option value="1" <?php if (R::input('change') == 1) echo 'selected' ?>>なし</option>
                 </select>
+                <label for="pet-select">最終ランキング順位:</label>
+                <select id="pet-select" name="order">
+                    <option value="0" <?php if (R::input('order') == 0) echo 'selected' ?>>下位50%以下を除く</option>
+                    <option value="1" <?php if (R::input('order') == 1) echo 'selected' ?>>下位20%以下を除く</option>
+                    <option value="2" <?php if (R::input('order') == 2) echo 'selected' ?>>すべて表示</option>
+                </select>
             </form>
             <!-- select要素ページネーション -->
             <hr>
