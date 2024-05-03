@@ -370,3 +370,24 @@ function calculateIn24Hours($latestDateTime, $pastDateTime): bool
 
     return $hours <= 24;
 }
+
+function formatDateTimeHourly2(string $dateTimeStr): string
+{
+    // 引数の日時をDateTimeオブジェクトに変換
+    $dateTime = new \DateTime($dateTimeStr);
+
+    // 現在の年を取得
+    $currentYear = date("Y");
+
+    // 引数の日時の年を取得
+    $yearOfDateTime = $dateTime->format("Y");
+
+    // 現在の年と引数の日時の年を比較
+    if ($yearOfDateTime == $currentYear) {
+        // 今年の場合のフォーマット
+        return $dateTime->format("m/d G:i");
+    } else {
+        // 今年以外の場合のフォーマット
+        return $dateTime->format("Y/m/d G:i");
+    }
+}

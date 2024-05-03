@@ -15,9 +15,9 @@
       <footer class="openchat-item-lower-outer" style="margin-top: 2px; gap: 0;">
         <div class="openchat-item-lower unset" style="font-size: 12px; <?php if ($oc['end_datetime'] === $_now || $oc['old_datetime'] === $_now) echo 'font-weight: bold;' ?>">
           <?php if (isset($oc['end_datetime'])) : ?>
-            <span class="registration-date blue">再掲載 <span style="font-weight: bold;"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span>: <?php echo convertDatetime($oc['old_datetime'], true) ?>~<?php echo convertDatetime($oc['end_datetime'], true) ?></span>
+            <span class="registration-date blue">再掲載 <span style="font-weight: bold;"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span>: <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~<?php echo formatDateTimeHourly2($oc['end_datetime']) ?></span>
           <?php else : ?>
-            <span class="registration-date" style="color: #ff5d6d;">未掲載 <span style="font-weight: bold;"><?php echo $_now === $oc['old_datetime'] ? 'たった今' : calculateTimeDifference($_now, $oc['old_datetime']) . '前' ?></span>: <?php echo convertDatetime($oc['old_datetime'], true) ?>~</span>
+            <span class="registration-date" style="color: #ff5d6d;">未掲載 <span style="font-weight: bold;"><?php echo $_now === $oc['old_datetime'] ? 'たった今' : calculateTimeDifference($_now, $oc['old_datetime']) . '前' ?></span>: <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~</span>
           <?php endif ?>
         </div>
         <div class="openchat-item-lower unset" style="font-size: 12px;">
