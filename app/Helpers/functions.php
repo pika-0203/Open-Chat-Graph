@@ -323,3 +323,13 @@ function sortAndUniqueArray(array $array, int $min = 2)
     // キーのみを抽出（重複排除）
     return array_keys($filteredCounts);
 }
+
+function calculatePositionPercentage($number)
+{
+    $percentage = $number;
+    $position = ($percentage <= 50) ? "上位" : "下位";
+    $adjustedPercentage = ($percentage <= 50) ? $percentage : 100 - $percentage;
+    $adjustedPercentage = $adjustedPercentage ? $adjustedPercentage : 1;
+
+    return $position . $adjustedPercentage . "%";
+}

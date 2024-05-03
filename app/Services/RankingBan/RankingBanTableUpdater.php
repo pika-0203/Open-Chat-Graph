@@ -23,8 +23,8 @@ class RankingBanTableUpdater
         private SqlInsert $sqlInsert,
         private OpenChatUpdaterFromApi $openChatUpdaterFromApi,
     ) {
-        //$this->time = OpenChatServicesUtility::getModifiedCronTime('now');
-        $this->time = new \DateTime('2024-01-31 16:30:00');
+        $this->time = OpenChatServicesUtility::getModifiedCronTime('now');
+        //$this->time = new \DateTime('2024-01-31 16:30:00');
     }
 
     private function buildTableData(

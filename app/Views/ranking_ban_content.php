@@ -34,29 +34,16 @@
             <header class="openchat-list-title-area unset">
                 <div style="flex-direction: column;">
                     <h2 class="list-title">
-                        オプチャグラフに最近登録されたオープンチャット
+                        最終ランキング掲載分析
                     </h2>
                     <p>
-                        <small class="p-small">このページではオプチャグラフに登録されたオープンチャットを登録日時順で表示します。</small>
-                    </p>
-                    <p>
-                        <small class="p-small">LINE公式サイトのランキングは1時間毎に更新されており、オプチャグラフもその時間帯に合わせて公式サイトからデータを取得しています。</small>
+                        <small class="p-small">現在ランキング未掲載のルームを、最後に掲載されていた際の状況と共に一覧表示します。</small>
                     </p>
                 </div>
             </header>
             <!-- select要素ページネーション -->
             <hr>
-            <nav class="page-select unset">
-                <form class="unset">
-                    <select id="page-selector" class="unset">
-                        <?php echo $_select ?>
-                    </select>
-                    <label for="page-selector" class="unset"><span><?php echo $_label ?></span></label>
-                </form>
-            </nav>
-            <?php viewComponent('open_chat_list', compact('openChatList', 'isAdmin')) ?>
-            <!-- 次のページ・前のページボタン -->
-            <?php viewComponent('pager_nav', compact('pageNumber', 'maxPageNumber') + ['path' => $path]) ?>
+            <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList')) ?>
         </article>
     </main>
     <footer>
@@ -73,7 +60,6 @@
             })
         })(document.getElementById('page-selector'))
     </script>
-    <?php echo $_breadcrumbsShema ?>
 </body>
 
 </html>
