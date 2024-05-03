@@ -38,10 +38,10 @@ viewComponent('head', compact('_css', '_meta')) ?>
             <header class="openchat-list-title-area unset">
                 <div style="flex-direction: column;">
                     <h2 class="list-title">
-                        ランキング掲載分析
+                        オプチャ公式ランキング掲載の分析
                     </h2>
                     <p>
-                        ランキング掲載・未掲載の履歴をその時の状況と共に一覧表示します。<br>
+                        オプチャ公式ランキングへの掲載・未掲載の履歴をその時の状況と共に一覧表示します。<br>
                         ページ切り替え機能はまだ実装されていません。
                     </p>
                 </div>

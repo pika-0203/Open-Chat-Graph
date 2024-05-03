@@ -13,10 +13,10 @@
                     </svg><span style="line-height: 2;">分析Labs</span>
                 </h1>
                 <p>試験運用版の分析機能をお試しいただけます。開発初期段階の機能をそのまま公開しているため、まだ必要な機能が実装されていない場合や、なにか問題がある場合があります。</p>
-                <h2>ランキング掲載分析</h2>
-                <p>ランキング掲載・未掲載の履歴をその時の状況と共に一覧表示します。これにより、ルーム内容の変更後などに起こる掲載状況の変動を捉えることができます。</p>
+                <h2>オプチャ公式ランキング掲載の分析</h2>
+                <p>オプチャ公式ランキングへの掲載・未掲載の履歴をその時の状況と共に一覧表示します。これにより、ルーム内容の変更後などに起こる掲載状況の変動を捉えることができます。</p>
                 <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs/publication-analytics') ?>">
-                    <span class="ranking-readMore">ランキング掲載分析を開く
+                    <span class="ranking-readMore">オプチャ公式ランキング掲載の分析を開く
                 </a>
                 <h2>タグで見るトレンド動向</h2>
                 <img src="/labs-img/tags.webp" />
