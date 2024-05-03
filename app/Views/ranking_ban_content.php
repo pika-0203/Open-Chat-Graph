@@ -45,14 +45,19 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     </p>
                 </div>
             </header>
-            <form>
+            <form id="value-form">
                 <label for="pet-select">ルーム内容の変更:</label>
                 <select id="pet-select" name="change">
                     <option value="0" <?php if (R::input('change') == 0) echo 'selected' ?>>あり</option>
-                    <option value="2" <?php if (R::input('change') == 2) echo 'selected' ?>>両方</option>
                     <option value="1" <?php if (R::input('change') == 1) echo 'selected' ?>>なし</option>
+                    <option value="2" <?php if (R::input('change') == 2) echo 'selected' ?>>すべて</option>
                 </select>
-                <input type="submit">
+                <label for="pet-select">掲載状況:</label>
+                <select id="pet-select" name="publish">
+                    <option value="0" <?php if (R::input('publish') == 0) echo 'selected' ?>>再掲載済み</option>
+                    <option value="1" <?php if (R::input('publish') == 1) echo 'selected' ?>>現在未掲載</option>
+                    <option value="2" <?php if (R::input('publish') == 2) echo 'selected' ?>>すべて</option>
+                </select>
             </form>
             <!-- select要素ページネーション -->
             <hr>
@@ -64,14 +69,11 @@ viewComponent('head', compact('_css', '_meta')) ?>
     </footer>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
     <script>
-        ;
         (function(el) {
-            if (!el) return
-
-            el.addEventListener('change', () => {
-                el.value && (location.href = el.value)
+            el && el.addEventListener('change', () => {
+                el.submit()
             })
-        })(document.getElementById('page-selector'))
+        })(document.getElementById('value-form'))
     </script>
 </body>
 

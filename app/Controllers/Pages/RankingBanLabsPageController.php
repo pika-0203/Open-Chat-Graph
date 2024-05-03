@@ -9,7 +9,7 @@ use Shadow\DB;
 
 class RankingBanLabsPageController
 {
-    function index(?string $change)
+    function index(?string $change, ?string $publish)
     {
         $updatedAtValue = "AND (rb.updated_at >= 1 OR (rb.update_items IS NOT NULL AND rb.update_items != ''))";
         if ($change === '1') $updatedAtValue = "AND (rb.updated_at = 0 AND (rb.update_items IS NULL OR rb.update_items = ''))";
@@ -18,6 +18,8 @@ class RankingBanLabsPageController
         $per = 50;
 
         $endDatetime = "AND rb.end_datetime IS NOT NULL";
+        if ($publish === '1') $endDatetime = "AND rb.end_datetime IS NULL";
+        if ($publish === '2') $endDatetime = '';
 
         $openChatList = DB::fetchAll(
             "SELECT
