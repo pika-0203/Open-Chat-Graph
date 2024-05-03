@@ -1,5 +1,5 @@
 <!-- @param array $openChatList -->
-<!-- @param bool $isHourly -->
+<!-- @param bool $_now -->
 <ol class="openchat-item-list unset">
   <?php foreach ($openChatList as $oc) : ?>
     <li class="openchat-item unset" style="margin-right: 0;">
@@ -12,7 +12,7 @@
       </h3>
       <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
       <footer class="openchat-item-lower-outer" style="margin-top: 2px; gap: 0;">
-        <div class="openchat-item-lower unset" style="font-size: 12px;">
+        <div class="openchat-item-lower unset" style="font-size: 12px; <?php if ($oc['end_datetime'] === $_now || $oc['old_datetime'] === $_now) echo 'font-weight: bold;' ?>">
           <?php if (isset($oc['end_datetime'])) : ?>
             <span class="registration-date blue">未掲載 <span style="font-weight: bold;"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span>: <?php echo convertDatetime($oc['old_datetime'], true) ?>~<?php echo convertDatetime($oc['end_datetime'], true) ?></span>
           <?php else : ?>

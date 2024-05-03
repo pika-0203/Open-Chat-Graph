@@ -54,10 +54,11 @@ class RankingBanLabsPageController
         $_meta = meta();
         $_css = ['room_list', 'site_header', 'site_footer'];
         $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
+        $_now = file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME);
 
         return view(
             'ranking_ban_content',
-            compact('_meta', '_css', 'openChatList', '_updatedAt')
+            compact('_meta', '_css', 'openChatList', '_updatedAt', '_now')
         );
     }
 }

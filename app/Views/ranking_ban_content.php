@@ -43,7 +43,7 @@
             </header>
             <!-- select要素ページネーション -->
             <hr>
-            <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList')) ?>
+            <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList', '_now')) ?>
         </article>
     </main>
     <footer>
