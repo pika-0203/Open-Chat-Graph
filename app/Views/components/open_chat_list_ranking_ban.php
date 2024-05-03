@@ -14,7 +14,7 @@
       <footer class="openchat-item-lower-outer" style="margin-top: 2px; gap: 0;">
         <div class="openchat-item-lower unset" style="font-size: 12px;">
           <?php if (isset($oc['end_datetime'])) : ?>
-            <span class="registration-date blue">未掲載(<?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?>): <?php echo convertDatetime($oc['old_datetime'], true) ?>~<?php echo convertDatetime($oc['end_datetime'], true) ?></span>
+            <span class="registration-date blue">未掲載 <span style="font-weight: bold;"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span>: <?php echo convertDatetime($oc['old_datetime'], true) ?>~<?php echo convertDatetime($oc['end_datetime'], true) ?></span>
           <?php else : ?>
             <span class="registration-date" style="color: #ff5d6d;">未掲載: <?php echo convertDatetime($oc['old_datetime'], true) ?>~</span>
           <?php endif ?>

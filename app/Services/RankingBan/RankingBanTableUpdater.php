@@ -98,13 +98,13 @@ class RankingBanTableUpdater
             if ($oc && $oc['update_items'] && new \DateTime($oc['updated_at']) > new \DateTime($datetime)) {
                 DB::execute(
                     "UPDATE 
-                    ranking_ban 
-                SET 
-                    flag = 1,
-                    end_datetime = '{$endDateTime}',
-                    update_items = :update_items
-                WHERE
-                    open_chat_id = {$id}",
+                        ranking_ban 
+                    SET 
+                        flag = 1,
+                        end_datetime = '{$endDateTime}',
+                        update_items = :update_items
+                    WHERE
+                        open_chat_id = {$id}",
                     ['update_items' => $oc['update_items']]
                 );
             } else {
