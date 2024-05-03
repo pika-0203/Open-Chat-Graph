@@ -62,7 +62,7 @@ class RankingBanLabsPageController
         }, $openChatList);
 
 
-        $_meta = meta();
+        $_meta = meta()->setTitle('オプチャ公式ランキング掲載の分析')->setDescription('オプチャ公式ランキングへの掲載・未掲載の状況を一覧表示します。ルーム内容の変更後などに起こる掲載状況(検索落ちなど)の変動を捉えることができます。');
         $_css = ['room_list', 'site_header', 'site_footer'];
         $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
         $_now = file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME);
