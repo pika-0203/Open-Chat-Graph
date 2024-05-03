@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Config\AppConfig;
 use Shadow\DB;
 
 class RankingBanLabsPageController
@@ -52,10 +53,11 @@ class RankingBanLabsPageController
 
         $_meta = meta();
         $_css = ['room_list', 'site_header', 'site_footer'];
+        $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
 
         return view(
             'ranking_ban_content',
-            compact('_meta', '_css', 'openChatList')
+            compact('_meta', '_css', 'openChatList', '_updatedAt')
         );
     }
 }
