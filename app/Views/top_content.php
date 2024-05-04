@@ -81,7 +81,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     <?php viewComponent('open_chat_list_ranking', ['openChatList' => $myList, 'isHourly' => true]) ?>
                 </div>
                 <dvi style="margin: 1rem 0; display: block;">
-                    <?php viewComponent('top_news', compact('_news')) ?>
+                    <?php viewComponent('update_news', compact('_news')) ?>
                 </dvi>
             </article>
             <hr class="ht-top-mylist">
@@ -167,7 +167,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             </a>
         </article>
         <?php if (!$myList) : ?>
-            <?php viewComponent('top_news', compact('_news')) ?>
+            <?php viewComponent('update_news', compact('_news')) ?>
         <?php endif ?>
     </main>
     <footer>

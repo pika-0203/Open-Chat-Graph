@@ -2,7 +2,7 @@
     <details style="margin:0 0 0 0; width:100%;">
         <summary class="news-summary">
             <span>アップデート情報</span>
-            <span style="color: #aaa; font-weight:normal; font-size:13px"><?php /** @var \App\Views\Content\TopPageNews[] $_news */ echo timeElapsedString($_news[0]->date->format('Y-m-d H:i:s')) ?></span>
+            <span style="color: #aaa; font-weight:normal; font-size:13px"><?php /** @var \App\Views\Content\UpdateNews[] $_news */ echo timeElapsedString($_news[0]->date->format('Y-m-d H:i:s')) ?></span>
         </summary>
         <div style="position:relative;">
             <div style="margin: .5rem 0 .5rem 0; max-height: 20rem; overflow-y: auto;">

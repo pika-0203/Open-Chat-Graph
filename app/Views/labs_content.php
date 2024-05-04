@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
-<?php viewComponent('policy_head', compact('_css', '_meta')) ?>
+<?php
+
+use App\Views\Content\LabsNews;
+
+ viewComponent('policy_head', compact('_css', '_meta')) ?>
 
 <body>
     <div class="body">
@@ -13,6 +17,7 @@
                     </svg><span style="line-height: 2;">分析Labs</span>
                 </h1>
                 <p>試験運用版の分析機能をお試しいただけます。開発初期段階のため、新しい機能が追加されたり仕様が変わっていきます。</p>
+                <?php viewComponent('update_news', ['_news' => LabsNews::getNews()]) ?>
                 <h2>オプチャ公式ランキング掲載の分析</h2>
                 <a href="<?php echo url('labs/publication-analytics') ?>" aria-label="オプチャ公式ランキング掲載の分析">
                     <img src="/labs-img/ranking.webp" alt="オプチャ公式ランキング掲載の分析" />
