@@ -146,7 +146,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     </p>
                 </details>
             </aside>
-            <form id="value-form">
+            <form id="value-form" style="position: relative;">
                 <label for="pet-select0">掲載状況:</label>
                 <select id="pet-select0" name="publish">
                     <option value="0" <?php if (R::input('publish') === 0) echo 'selected' ?>>再掲載済み</option>
@@ -163,6 +163,9 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     <option value="80" <?php if (R::input('percent') === 80) echo 'selected' ?>>下位20%以下を除く</option>
                     <option value="100" <?php if (R::input('percent') === 100) echo 'selected' ?>>すべて表示</option>
                 </select>
+                <label for="keyword">キーワードで絞り込み:</label>
+                <input name="keyword" id="keyword" type="text" placeholder="ルーム名・説明文" value="<?php echo R::has('keyword') ? h(R::input('keyword')) : '' ?>">
+                <button type="button" style="padding: 4px 8px; position: absolute; top: 0; right: 0; margin: 1.5rem" onclick="location.href = '<?php echo url('labs/publication-analytics') ?>'">リセット</button>
             </form>
             <!-- select要素ページネーション -->
             <?php if (isset($_select)) : ?>
@@ -179,7 +182,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
             <?php if (isset($openChatList)) : ?>
                 <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList', '_now')) ?>
             <?php else : ?>
-                <p>0件の結果(サーバー内のデータ更新中です…)</p>
+                <p style="text-align: center;">0件の結果</p>
             <?php endif ?>
             <!-- 次のページ・前のページボタン -->
             <?php if (isset($_pagerNavArg)) : ?>
@@ -192,19 +195,17 @@ viewComponent('head', compact('_css', '_meta')) ?>
     </footer>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
     <script>
-        (function(el) {
-            el && el.addEventListener('change', () => {
-                el.submit()
-            })
+        ((form) => {
+            form.querySelectorAll('select').forEach((el) => el.addEventListener('change', () => form.submit()))
         })(document.getElementById('value-form'));
 
-        (function(el) {
+        ((el) => {
             if (!el) return
 
             el.addEventListener('change', () => {
                 el.value && (location.href = el.value)
             })
-        })(document.getElementById('page-selector'))
+        })(document.getElementById('page-selector'));
     </script>
 </body>
 

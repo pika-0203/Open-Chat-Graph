@@ -27,7 +27,7 @@ hr {
 }
 
 .oc-desc-nav {
-  padding-top: 1.5rem;
+  padding-top: 2rem;
   display: flex;
   justify-content: space-evenly;
   gap: 8px;
@@ -229,7 +229,7 @@ hr {
   color: #777;
   font-size: 13px;
   white-space: nowrap;
-  align-items: center;
+  align-items: flex-start;
   gap: 4px;
 }
 
@@ -504,7 +504,7 @@ body > footer {
   }
 
   .openchat .oc-desc-nav {
-    padding-top: 1.5rem;
+    padding-top: 2rem;
   }
 
   summary:hover {
