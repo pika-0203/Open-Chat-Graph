@@ -45,7 +45,7 @@ class RankingBanPageRepository
                 {$whereClause}
             ORDER BY
                 IFNULL(GREATEST(rb.datetime, rb.end_datetime), rb.datetime) DESC,
-                percentage ASC
+                oc.member DESC
             LIMIT
                 :offset, :limit";
 
@@ -90,6 +90,10 @@ class RankingBanPageRepository
             ? "AND rb.end_datetime IS NULL"
             : "AND rb.end_datetime IS NOT NULL";
 
-        return "rb.percentage < {$percent} {$updatedAtValue} {$endDatetime}";
+        $member = $percent < 100
+            ? ($percent < 80 ? 'AND rb.member >= 30' : 'AND rb.member >= 10')
+            : '';
+
+        return "rb.percentage < {$percent} {$updatedAtValue} {$endDatetime} {$member}";
     }
 }
