@@ -49,8 +49,13 @@ class RankingBanLabsPageController
         ];
 
 
+        $titleValue = [
+            'c' => !!$change ? 'c' : false,
+            'p' => !!$publish ? 'p' : false,
+            'per' => $percent > 50 ? $percent : false
+        ];
         $_meta = meta()
-            ->setTitle('オプチャ公式ランキング掲載の分析' . ($page > 1 ? " ({$page}ページ目)" : ''))
+            ->setTitle('オプチャ公式ランキング掲載の分析' . ($page > 1 ? "({$page}ページ目)" : '') . implode(',', array_filter($titleValue)))
             ->setDescription(
                 'オプチャ公式ランキングへの掲載・未掲載の状況を一覧表示します。ルーム内容の変更後などに起こる掲載状況（検索落ちなど）の変動を捉えることができます。'
             );
