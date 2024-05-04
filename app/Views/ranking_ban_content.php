@@ -177,7 +177,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
             <?php if (isset($openChatList)) : ?>
                 <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList', '_now')) ?>
             <?php else : ?>
-                <p>0件の結果</p>
+                <p>0件の結果(サーバー内のデータ更新中です…)</p>
             <?php endif ?>
             <!-- 次のページ・前のページボタン -->
             <?php if (isset($_pagerNavArg)) : ?>

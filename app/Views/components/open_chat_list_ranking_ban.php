@@ -21,8 +21,12 @@
           <span class="openchat-item-stats">順位 <?php echo calculatePositionPercentage($oc['percentage']) ?></span>
         </div>
         <?php if ($oc['update_items']) : ?>
-          <div class="openchat-item-lower unset" style="color: <?php echo $oc['update_items'] ? "#aaa" : "#b7b7b7" ?>;">
-            <span>変更箇所: </span>
+          <div class="openchat-item-lower unset">
+            <?php if ($oc['updated_at']) : ?>
+              <span>変更により未掲載: </span>
+            <?php else : ?>
+              <span>未掲載期間に変更: </span>
+            <?php endif ?>
             <?php foreach ($oc['update_items'] as $item) : ?>
               <?php if ($item === 'name') : ?>
                 <span>ルーム名</span>
