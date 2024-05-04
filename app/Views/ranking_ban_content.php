@@ -30,6 +30,10 @@ viewComponent('head', compact('_css', '_meta')) ?>
             color: #777;
 
         }
+
+        .recommend-desc {
+            font-size: 14px;
+        }
     </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
@@ -64,9 +68,6 @@ viewComponent('head', compact('_css', '_meta')) ?>
                         「未掲載 〇〇時間」には、載らなくなってから、今までどのぐらい経過したかが表示されています。
                     </p>
                     <p class="recommend-desc">
-                        「未掲載 〇〇時間」には、載らなくなってから、今までどのぐらい経過したかが表示されています。
-                    </p>
-                    <p class="recommend-desc">
                         「ルーム内容の変更:　あり・なし」は、ランキング未掲載になった理由がルーム管理者によるルームの設定変更によるものか、それ以外の理由かを選択し、別けて表示します。
                     </p>
                     <p class="recommend-desc">
@@ -92,8 +93,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                         また、活動量以外の理由でランキングから除外されていると見られるルームでも、検索は可能なパターンがあります。
                     </p>
                     <p class="recommend-desc">
-                        最終ランキング順位下位50％以下を除外するオプションを選択することで、活動量以外の原因で未掲載となった可能性が高いルーム一覧を表示できます。<br>
-                        これにより、ルームの設定変更・活動量以外の理由で非表示になる傾向をみることできます。
+                        「現在未掲載」・「下位の順位を除く」・「ルーム内容変更なし」のオプションを選択することで、ルームの設定変更・活動量以外の問題で非掲載になる傾向が掴めます。
                     </p>
                 </details>
             </aside>
