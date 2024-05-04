@@ -64,7 +64,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                         オプチャ公式ランキング掲載の分析
                     </h2>
                     <p>
-                        オプチャ公式ランキングへの掲載・未掲載の状況を一覧表示します。この一覧から、ルーム内容の変更後などに起こる掲載状況（検索落ちなど）の変化がわかります。<br>1ページあたり100件の表示です。
+                        オプチャ公式ランキングへの掲載・未掲載の状況と、ルーム内容の更新履歴を一覧表示します。
                     </p>
                 </div>
             </header>
@@ -171,6 +171,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                         <label for="page-selector" class="unset"><span><?php echo $_label ?></span></label>
                     </form>
                 </nav>
+                <small>1ページあたり100件の表示</small>
             <?php endif ?>
             <?php if (isset($openChatList)) : ?>
                 <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList', '_now')) ?>

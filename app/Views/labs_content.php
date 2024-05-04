@@ -4,7 +4,7 @@
 
 use App\Views\Content\LabsNews;
 
- viewComponent('policy_head', compact('_css', '_meta')) ?>
+viewComponent('policy_head', compact('_css', '_meta')) ?>
 
 <body>
     <div class="body">
@@ -22,7 +22,8 @@ use App\Views\Content\LabsNews;
                 <a href="<?php echo url('labs/publication-analytics') ?>" aria-label="オプチャ公式ランキング掲載の分析">
                     <img src="/labs-img/ranking.webp" alt="オプチャ公式ランキング掲載の分析" />
                 </a>
-                <p>オプチャ公式ランキングへの掲載・未掲載の状況を一覧表示します。これにより、ルーム内容の変更後などに起こる掲載状況（検索落ちなど）の変動を捉えることができます。</p>
+                <p>全てのオープンチャット（公式ランキングに掲載中のみ）のルーム内容変更を追跡し、変更箇所・日時・再掲載されるまでの履歴を記録しています。</p>
+                <p>これにより、ルーム内容の変更後などに起こる掲載状況（検索落ちなど）の変動を捉えることができます。</p>
                 <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs/publication-analytics') ?>">
                     <span class="ranking-readMore">オプチャ公式ランキング掲載の分析を開く
                 </a>
