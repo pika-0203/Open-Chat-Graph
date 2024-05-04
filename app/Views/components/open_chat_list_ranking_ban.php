@@ -25,7 +25,7 @@
             <?php if ($oc['updated_at']) : ?>
               <span>変更により未掲載: </span>
             <?php else : ?>
-              <span>未掲載期間に変更: </span>
+              <span>変更箇所: </span>
             <?php endif ?>
             <?php foreach ($oc['update_items'] as $item) : ?>
               <?php if ($item === 'name') : ?>
