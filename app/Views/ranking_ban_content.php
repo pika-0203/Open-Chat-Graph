@@ -118,7 +118,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                             <p class="recommend-desc">
                                 メンバー数の表示は、ランキング未掲載になった時点のメンバー数です。<br>メンバー数の隣にあるカッコに括られた数字は、ランキング未掲載になった時点のメンバー数と、いま現在のメンバー数の差です。<br>順位の％は、そのルームの平均的な順位（同一カテゴリー内でのランキング順位）です。
                             </p>
-                        </li>   
+                        </li>
                     </ul>
                 </details>
             </aside>
@@ -164,17 +164,25 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 </select>
             </form>
             <!-- select要素ページネーション -->
-            <nav class="page-select unset">
-                <form class="unset" style="width: 100%;">
-                    <select id="page-selector" class="unset">
-                        <?php echo $_select ?>
-                    </select>
-                    <label for="page-selector" class="unset"><span><?php echo $_label ?></span></label>
-                </form>
-            </nav>
-            <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList', '_now')) ?>
+            <?php if (isset($_select)) : ?>
+                <nav class="page-select unset">
+                    <form class="unset" style="width: 100%;">
+                        <select id="page-selector" class="unset">
+                            <?php echo $_select ?>
+                        </select>
+                        <label for="page-selector" class="unset"><span><?php echo $_label ?></span></label>
+                    </form>
+                </nav>
+            <?php endif ?>
+            <?php if (isset($openChatList)) : ?>
+                <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList', '_now')) ?>
+            <?php else : ?>
+                <p>0件の結果</p>
+            <?php endif ?>
             <!-- 次のページ・前のページボタン -->
-            <?php viewComponent('pager_nav_ranking_ban', $_pagerNavArg) ?>
+            <?php if (isset($_pagerNavArg)) : ?>
+                <?php viewComponent('pager_nav_ranking_ban', $_pagerNavArg) ?>
+            <?php endif ?>
         </article>
     </main>
     <footer>

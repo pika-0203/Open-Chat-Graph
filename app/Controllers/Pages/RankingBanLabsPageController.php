@@ -18,6 +18,22 @@ class RankingBanLabsPageController
         int $percent,
         int $page
     ) {
+        $titleValue = [
+            'c' => !!$change ? 'c' : false,
+            'p' => !!$publish ? 'p' : false,
+            'per' => $percent > 50 ? $percent : false
+        ];
+        $_meta = meta()
+            ->setTitle('オプチャ公式ランキング掲載の分析' . ($page > 1 ? "({$page}ページ目)" : '') . implode(',', array_filter($titleValue)))
+            ->setDescription(
+                'オプチャ公式ランキングへの掲載・未掲載の状況を一覧表示します。ルーム内容の変更後などに起こる掲載状況（検索落ちなど）の変動を捉えることができます。'
+            );
+
+        $_css = ['room_list', 'site_header', 'site_footer'];
+
+        $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
+        $_now = file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME);
+
         $rankingBanData = $rakingBanPageService->getAllOrderByDateTime(
             !!$change,
             !!$publish,
@@ -25,7 +41,18 @@ class RankingBanLabsPageController
             $page
         );
 
-        if (!$rankingBanData) return false;
+        if (!$rankingBanData && $page > 1) return false;
+        if (!$rankingBanData && $page === 1) {
+            return view(
+                'ranking_ban_content',
+                compact(
+                    '_meta',
+                    '_css',
+                    '_updatedAt',
+                    '_now',
+                )
+            );
+        }
 
         $path = 'labs/publication-analytics';
         $params = compact('change', 'publish', 'percent');
@@ -47,23 +74,6 @@ class RankingBanLabsPageController
             'pageNumber' => $page,
             'maxPageNumber' => $rankingBanData['maxPageNumber']
         ];
-
-
-        $titleValue = [
-            'c' => !!$change ? 'c' : false,
-            'p' => !!$publish ? 'p' : false,
-            'per' => $percent > 50 ? $percent : false
-        ];
-        $_meta = meta()
-            ->setTitle('オプチャ公式ランキング掲載の分析' . ($page > 1 ? "({$page}ページ目)" : '') . implode(',', array_filter($titleValue)))
-            ->setDescription(
-                'オプチャ公式ランキングへの掲載・未掲載の状況を一覧表示します。ルーム内容の変更後などに起こる掲載状況（検索落ちなど）の変動を捉えることができます。'
-            );
-
-        $_css = ['room_list', 'site_header', 'site_footer'];
-
-        $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
-        $_now = file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME);
 
         return view(
             'ranking_ban_content',
