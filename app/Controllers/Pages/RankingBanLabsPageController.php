@@ -48,8 +48,9 @@ class RankingBanLabsPageController
             'maxPageNumber' => $rankingBanData['maxPageNumber']
         ];
 
+
         $_meta = meta()
-            ->setTitle('オプチャ公式ランキング掲載の分析')
+            ->setTitle('オプチャ公式ランキング掲載の分析' . ($page > 1 ? " ({$page}ページ目)" : ''))
             ->setDescription(
                 'オプチャ公式ランキングへの掲載・未掲載の状況を一覧表示します。ルーム内容の変更後などに起こる掲載状況（検索落ちなど）の変動を捉えることができます。'
             );
