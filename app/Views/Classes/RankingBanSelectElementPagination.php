@@ -43,7 +43,7 @@ class RankingBanSelectElementPagination
     {
         // ページ番号の表示に必要な要素を取得する
         $getElement = function ($url, $selected, $start, $end, $i) use ($labelArray) {
-            $startLabel = isset($labelArray[$start - 1]) ? $this->formatDateTimeHourly($labelArray[$end - 1]) : '';
+            $startLabel = isset($labelArray[$start - 1]) ? $this->formatDateTimeHourly($labelArray[$start - 1]) : '';
             $endLabel = isset($labelArray[$end - 1]) ? $this->formatDateTimeHourly($labelArray[$end - 1]) : '';
 
             return "<option value='{$url}' {$selected}>{$endLabel} ~ {$startLabel} ({$i}ページ目)</option>";
