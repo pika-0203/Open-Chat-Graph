@@ -95,7 +95,7 @@ class RankingBanTableUpdater
                     id = {$id}"
             );
 
-            if ($oc && $oc['update_items'] && new \DateTime($oc['updated_at']) > new \DateTime($datetime)) {
+            if ($oc && $oc['update_items'] && new \DateTime($oc['updated_at']) >= new \DateTime($datetime)) {
                 DB::execute(
                     "UPDATE 
                         ranking_ban 
@@ -125,14 +125,11 @@ class RankingBanTableUpdater
 
     function crawlUpdateDeleteOpenChat(array $ocArray, \DateTime $latestTime)
     {
-        $pastHour = new \DateTime($latestTime->format('Y-m-d H:i:s'));
-        $pastHour->modify('-1hour');
-
         $latestOcIdArray = [];
         foreach ($ocArray as $key => $oc) {
             $datetime = new \DateTime($oc['datetime']);
 
-            if ($datetime < $pastHour || $datetime >= $latestTime) continue;
+            if ($datetime < $latestTime) continue;
 
             $latestOcIdArray[$key] = $oc['open_chat_id'];
         }
