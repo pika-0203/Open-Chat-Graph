@@ -50,7 +50,8 @@ class CommentReportApiController
         );
 
         $comment['report_log_id'] = $logId;
-        $comment['google_recaptcha_score'] = (string)floor($score * 10) / 10;
+        $scoreStr = (string)floor($score * 10) / 10;
+        $comment['recaptcha'] = "score: {$scoreStr}";
         $comment['report_user_hash'] = base62Hash($report_user_id, 'fnv132');
         $comment['report_user_ua'] = getUA();
         $comment['report_user_ip'] = getIP();
