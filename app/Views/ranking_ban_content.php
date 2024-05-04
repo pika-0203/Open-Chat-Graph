@@ -34,6 +34,25 @@ viewComponent('head', compact('_css', '_meta')) ?>
         .recommend-desc {
             font-size: 14px;
         }
+
+        .openchat-item-lower {
+            line-height: 1.2rem;
+        }
+
+        .member-count::before {
+            content: '';
+            position: absolute;
+            top: 7.5px;
+            right: -7px;
+            width: 2px;
+            height: 2px;
+            background-color: #aaa;
+        }
+
+        .member-count {
+            margin-right: 10px;
+            position: relative;
+        }
     </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
@@ -59,13 +78,13 @@ viewComponent('head', compact('_css', '_meta')) ?>
                         「掲載状況: 再掲載済み」と「ルーム内容の変更: あり」を選択している場合、ルーム管理者がルームの設定を変更して、一旦ランキング・検索に載らなくなり、その後また載るようになったルームの一覧が表示されます。<br>
                     </p>
                     <p class="recommend-desc">
-                        「再掲載 〇〇時間」には、載らなくなってからまた載るようになるまで、どのぐらい経過したかが表示されています。
+                        再掲載済み一覧の場合、「〇〇時間」には、未掲載からからまた掲載中になった時、どのぐらい経過したかが表示されています。
                     </p>
                     <p class="recommend-desc">
                         「掲載状況: 未掲載」を選択している場合、ランキング掲載中のルームが未掲載に変わり、現在も未掲載の状態が続いているルームの一覧を表示します。<br>
                     </p>
                     <p class="recommend-desc">
-                        「未掲載 〇〇時間」には、載らなくなってから、今までどのぐらい経過したかが表示されています。
+                        未掲載一覧の場合、「〇〇時間前」には、載らなくなってから、今までどのぐらい経過したかが表示されています。
                     </p>
                     <p class="recommend-desc">
                         「ルーム内容の変更:　あり・なし」は、ランキング未掲載になった理由がルーム管理者によるルームの設定変更によるものか、それ以外の理由かを選択し、別けて表示します。

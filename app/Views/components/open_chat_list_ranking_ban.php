@@ -12,24 +12,17 @@
         <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $oc['id'] . ($isHourly ? '?limit=hour' : '')) ?>"><?php if (($oc['emblem'] ?? 0) === 1) : ?><span class="super-icon sp"></span><?php elseif (($oc['emblem'] ?? 0) === 2) : ?><span class="super-icon official"></span><?php endif ?><span><?php echo $oc['name'] ?></span></a>
       </h3>
       <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
-      <footer class="openchat-item-lower-outer" style="margin-top: 2px; gap: 0;">
-        <div class="openchat-item-lower unset" style="font-size: 12px; <?php if ($oc['end_datetime'] === $_now || $oc['old_datetime'] === $_now) echo 'font-weight: bold;' ?>">
-          <?php if (isset($oc['end_datetime'])) : ?>
-            <span class="registration-date blue">再掲載 <span style="font-weight: bold;"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span>: <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~<?php echo formatDateTimeHourly2($oc['end_datetime']) ?></span>
-          <?php else : ?>
-            <span class="registration-date" style="color: #ff5d6d;">未掲載 <span style="font-weight: bold;"><?php echo $_now === $oc['old_datetime'] ? 'たった今' : calculateTimeDifference($_now, $oc['old_datetime']) . '前' ?></span>: <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~</span>
-          <?php endif ?>
-        </div>
-        <div class="openchat-item-lower unset" style="font-size: 12px;">
-          <span class="openchat-item-stats" style="font-weight: <?php echo ($oc['percentage'] <= 50) ? "bold" : "normal" ?>;">最終順位: <?php echo calculatePositionPercentage($oc['percentage']) ?></span>
-          <span style="margin-left: 4px;">
-            <span>最終人数: <?php echo formatMember($oc['old_member']) ?>人</span>
-            <span class="openchat-item-stats">(<?php echo signedNumF($oc['member'] - $oc['old_member']) ?: '±0' ?>人)</span>
+      <footer class="openchat-item-lower-outer" style="gap: 0;">
+        <div class="openchat-item-lower unset">
+          <span class="member-count">
+            <span>メンバー <?php echo formatMember($oc['old_member']) ?></span>
+            <span class="openchat-item-stats">(<?php echo signedNumF($oc['member'] - $oc['old_member']) ?: '±0' ?>)</span>
           </span>
+          <span class="openchat-item-stats">順位 <?php echo calculatePositionPercentage($oc['percentage']) ?></span>
         </div>
-        <div class="openchat-item-lower unset" style="font-size: 12px; font-weight: <?php echo $oc['update_items'] ? "bold" : "normal" ?>; color: <?php echo $oc['update_items'] ? "#aaa" : "#b7b7b7" ?>;">
-          <span>変更箇所: </span>
-          <?php if ($oc['update_items']) : ?>
+        <?php if ($oc['update_items']) : ?>
+          <div class="openchat-item-lower unset" style="color: <?php echo $oc['update_items'] ? "#aaa" : "#b7b7b7" ?>;">
+            <span>変更箇所: </span>
             <?php foreach ($oc['update_items'] as $item) : ?>
               <?php if ($item === 'name') : ?>
                 <span>ルーム名</span>
@@ -47,8 +40,13 @@
                 <span><?php echo $item ?></span>
               <?php endif ?>
             <?php endforeach ?>
+          </div>
+        <?php endif ?>
+        <div class="openchat-item-lower unset" style="margin-top: 1px;">
+          <?php if (isset($oc['end_datetime'])) : ?>
+            <span class="registration-date"><span class="blue"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span> <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~<?php echo formatDateTimeHourly2($oc['end_datetime']) ?></span>
           <?php else : ?>
-            <span>なし</span>
+            <span class="registration-date"><span class="blue"><?php echo $_now === $oc['old_datetime'] ? 'たった今' : calculateTimeDifference($_now, $oc['old_datetime']) . '前' ?></span> <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~</span>
           <?php endif ?>
         </div>
         <?php if (isset($oc['category']) && $oc['category']) : ?>
