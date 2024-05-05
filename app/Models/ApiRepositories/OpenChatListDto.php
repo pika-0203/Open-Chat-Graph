@@ -14,6 +14,7 @@ class OpenChatListDto
         $this->member = $oc['member'];
         $this->img = apiImgUrl($oc['id'], $oc['img_url']);
         $this->emblem = $oc['emblem'] ?? 0;
+        $this->joinMethodType = $oc['join_method_type'] ?? 0;
         $this->category = $oc['emblem'] === null ? -1 : ($oc['category'] ?? 0);
 
         if (isset($oc['api_created_at'])) {
@@ -41,6 +42,7 @@ class OpenChatListDto
     public int $member;
     public string $img;
     public int $emblem; // 0 なし, 1 スペシャル, 2 公認
+    public int $joinMethodType;
     public int $category;
     public ?int $totalCount;
     public ?string $increasedMember;

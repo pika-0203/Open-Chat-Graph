@@ -12,7 +12,8 @@ interface RecommendRankingRepositoryInterface
         oc.local_img_url AS img_url,
         oc.member,
         oc.description,
-        oc.emblem
+        oc.emblem,
+        oc.join_method_type
     ";
 
     const SelectPage = "
@@ -29,6 +30,7 @@ interface RecommendRankingRepositoryInterface
         oc.api_created_at,
         oc.created_at,
         oc.updated_at,
+        oc.join_method_type,
         ranking.tag1,
         ranking.tag2
     ";

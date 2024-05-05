@@ -1379,3 +1379,9 @@ article.top-list {
 .list-aside details b {
   color: inherit;
 }
+
+@media screen and (max-width: 511px) {
+  .top-ranking .lock-icon {
+    margin-top: 0;
+  }
+}

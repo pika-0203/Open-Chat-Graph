@@ -26,6 +26,17 @@
   background-position: -33px -76px;
 }
 
+.lock-icon {
+  width: 13px;
+  height: 13px;
+  margin-top: 2px;
+  margin-right: 2px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: top;
+  background-image: url(/../assets/lock.svg);
+}
+
 .show-north {
   color: #07b53b;
 }

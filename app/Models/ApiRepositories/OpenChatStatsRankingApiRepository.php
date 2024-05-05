@@ -55,6 +55,7 @@ class OpenChatStatsRankingApiRepository
             oc.member,
             oc.local_img_url AS img_url,
             oc.emblem,
+            oc.join_method_type,
             oc.category,
             sr.diff_member,
             sr.percent_increase
@@ -186,6 +187,7 @@ class OpenChatStatsRankingApiRepository
             oc.member,
             oc.local_img_url AS img_url,
             oc.emblem,
+            oc.join_method_type,
             oc.category,
             oc.api_created_at
         FROM
