@@ -356,7 +356,7 @@ function calculateTimeDifference($latestDateTime, $pastDateTime): string
     }
 }
 
-function calculateIn24Hours($latestDateTime, $pastDateTime): bool
+function calculateTimeFrame($latestDateTime, $pastDateTime): string
 {
     // 日時をDateTimeオブジェクトに変換
     $latest = new DateTime($latestDateTime);
@@ -365,11 +365,24 @@ function calculateIn24Hours($latestDateTime, $pastDateTime): bool
     // 差を計算
     $difference = $latest->diff($past);
 
-    // 総時間を計算
-    $hours = ($difference->days * 24) + $difference->h + ($difference->i / 60) + ($difference->s / 3600);
+    // 総日数を計算
+    $days = $difference->days;
 
-    return $hours <= 24;
+    // 総時間を計算
+    $hours = ($days * 24) + $difference->h + ($difference->i / 60) + ($difference->s / 3600);
+
+    // 経過時間に応じて戻り値を変更
+    if ($hours <= 24) {
+        return 'hour';
+    } elseif ($days <= 7) {
+        return 'week';
+    } elseif ($days <= 30) {
+        return 'month';
+    } else {
+        return 'all';
+    }
 }
+
 
 function formatDateTimeHourly2(string $dateTimeStr): string
 {

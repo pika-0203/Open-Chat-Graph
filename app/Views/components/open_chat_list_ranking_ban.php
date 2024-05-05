@@ -2,14 +2,14 @@
 <!-- @param bool $_now -->
 <ol class="openchat-item-list unset">
   <?php foreach ($openChatList as $oc) : ?>
-    <?php $isHourly = $oc['end_datetime'] ? calculateIn24Hours($_now, $oc['end_datetime']) : calculateIn24Hours($_now, $oc['old_datetime']) ?>
+    <?php $timeFrame = $oc['end_datetime'] ? calculateTimeFrame($_now, $oc['end_datetime']) : calculateTimeFrame($_now, $oc['old_datetime']) ?>
     <li class="openchat-item unset" style="margin-right: 0;">
-      <a class="link-overlay unset" href="<?php echo url('/oc/' . $oc['id'] . '?bar=ranking' . ($isHourly ? '&limit=hour' : '')) ?>" tabindex="-1" aria-hidden="true">
+      <a class="link-overlay unset" href="<?php echo url('/oc/' . $oc['id'] . "?bar=ranking&limit={$timeFrame}") ?>" tabindex="-1" aria-hidden="true">
         <span class="visually-hidden"><?php echo $oc['name'] ?></span>
       </a>
       <img alt="<?php echo $oc['name'] ?>" class="openchat-item-img" loading="lazy" src="<?php echo imgPreviewUrl($oc['id'], $oc['img_url']) ?>">
       <h3 class="unset">
-        <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $oc['id'] . '?bar=ranking' . ($isHourly ? '&limit=hour' : '')) ?>"><?php if (($oc['emblem'] ?? 0) === 1) : ?><span class="super-icon sp"></span><?php elseif (($oc['emblem'] ?? 0) === 2) : ?><span class="super-icon official"></span><?php endif ?><?php if (($oc['join_method_type'] ?? 0) === 2) : ?><span class="lock-icon"></span><?php endif ?><span><?php echo $oc['name'] ?></span></a>
+        <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $oc['id'] . "?bar=ranking&limit={$timeFrame}") ?>"><?php if (($oc['emblem'] ?? 0) === 1) : ?><span class="super-icon sp"></span><?php elseif (($oc['emblem'] ?? 0) === 2) : ?><span class="super-icon official"></span><?php endif ?><?php if (($oc['join_method_type'] ?? 0) === 2) : ?><span class="lock-icon"></span><?php endif ?><span><?php echo $oc['name'] ?></span></a>
       </h3>
       <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
       <footer class="openchat-item-lower-outer" style="gap: 0;">
