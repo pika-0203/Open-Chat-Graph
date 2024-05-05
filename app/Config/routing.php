@@ -120,8 +120,8 @@ Route::path(
     'labs/publication-analytics',
     [RankingBanLabsPageController::class, 'index']
 )
-    ->matchNum('change', min: 0, max: 1, default: 0, emptyAble: true)
-    ->matchNum('publish', min: 0, max: 1, default: 0, emptyAble: true)
+    ->matchNum('publish', min: 0, max: 2, default: 1, emptyAble: true)
+    ->matchNum('change', min: 0, max: 2, default: 0, emptyAble: true)
     ->matchNum('percent', min: 1, max: 100, default: 50, emptyAble: true)
     ->matchNum('page', min: 1, default: 1, emptyAble: true)
     ->matchStr('keyword', maxLen: 100, emptyAble: true)

@@ -18,11 +18,11 @@ class RakingBanPageService
     }
 
     /**
-     * @param bool $publish false:掲載中のみ, true:未掲載のみ
-     * @param bool $change false:内容変更ありのみ, true:変更なしのみ
+     * @param int $publish 0:掲載中のみ, 1:未掲載のみ, 2:すべて
+     * @param int $change 0:内容変更ありのみ, 1:変更なしのみ, 2:すべて
      * @return array{ pageNumber:int,maxPageNumber:int,openChatList:array,totalRecords:int,labelArray:array }
      */
-    public function getAllOrderByDateTime(bool $change, bool $publish, int $percent, string $keyword, int $pageNumber): array|false
+    public function getAllOrderByDateTime(int $change, int $publish, int $percent, string $keyword, int $pageNumber): array|false
     {
         $labelArray = $this->rankingBanPageRepository->findAllDatetimeColumn($change, $publish, $percent, $keyword);
 

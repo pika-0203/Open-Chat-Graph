@@ -53,6 +53,18 @@ viewComponent('head', compact('_css', '_meta')) ?>
             margin-right: 10px;
             position: relative;
         }
+
+        .eazy-btn {
+            padding: 3px 6px;
+            margin: 0;
+            font-size: 11px;
+        }
+
+        @media screen and (min-width: 512px) {
+            .eazy-btn {
+                font-size: 13px;
+            }
+        }
     </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
@@ -149,13 +161,15 @@ viewComponent('head', compact('_css', '_meta')) ?>
             <form id="value-form" style="position: relative; margin-bottom: 12px">
                 <label for="pet-select0">掲載状況:</label>
                 <select id="pet-select0" name="publish">
-                    <option value="0" <?php if (R::input('publish') === 0) echo 'selected' ?>>再掲載済み</option>
                     <option value="1" <?php if (R::input('publish') === 1) echo 'selected' ?>>現在未掲載</option>
+                    <option value="0" <?php if (R::input('publish') === 0) echo 'selected' ?>>再掲載済み</option>
+                    <option value="2" <?php if (R::input('publish') === 2) echo 'selected' ?>>すべて表示</option>
                 </select>
                 <label for="pet-select1">ルーム内容の変更:</label>
                 <select id="pet-select1" name="change">
                     <option value="0" <?php if (R::input('change') === 0) echo 'selected' ?>>あり</option>
                     <option value="1" <?php if (R::input('change') === 1) echo 'selected' ?>>なし</option>
+                    <option value="2" <?php if (R::input('change') === 2) echo 'selected' ?>>すべて表示</option>
                 </select>
                 <label for="pet-select2">最終ランキング順位:</label>
                 <select id="pet-select2" name="percent">
@@ -165,7 +179,12 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 </select>
                 <label for="keyword">検索:</label>
                 <input name="keyword" id="keyword" type="text" placeholder="キーワード" value="<?php echo R::has('keyword') ? h(R::input('keyword')) : '' ?>">
-                <button type="button" style="padding: 4px 8px; position: absolute; top: 0; right: 0; margin: 1.5rem" onclick="location.href = '<?php echo url('labs/publication-analytics') ?>'">リセット</button>
+                <div style="position: absolute; top: 0; right: 0; margin: .5rem; display: flex; gap: 1rem; flex-direction: column; border: 1px solid #efefef; padding: .5rem; border-radius: 4px;">
+                    <small style="font-size: 12px; text-align: center;">簡単設定ボタン</small>
+                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish') === 1 ? 0 : 1) . '&change=0&percent=50&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('publish') === 1 ? '再掲載済み<br>内容変更あり' : '現在未掲載<br>内容変更あり' ?></button>
+                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish') === 1 ? 0 : 1) . '&change=1&percent=50&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('publish') === 1 ? '再掲載済み<br>内容変更なし' : '現在未掲載<br>内容変更なし' ?></button>
+                    <button type="button" class="eazy-btn" style="padding: 8px 6px;" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=2&change=2&percent=100&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'">全表示</button>
+                </div>
             </form>
             <!-- select要素ページネーション -->
             <?php if (isset($_select)) : ?>

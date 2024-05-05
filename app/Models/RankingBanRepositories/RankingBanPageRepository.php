@@ -9,12 +9,12 @@ use Shadow\DB;
 class RankingBanPageRepository
 {
     /**
-     * @param bool $publish false:掲載中のみ, true:未掲載のみ
-     * @param bool $change false:内容変更ありのみ, true:変更なしのみ
+     * @param int $publish 0:掲載中のみ, 1:未掲載のみ, 2:すべて
+     * @param int $change 0:内容変更ありのみ, 1:変更なしのみ, 2:すべて
      */
     public function findAllOrderByIdDesc(
-        bool $change,
-        bool $publish,
+        int $change,
+        int $publish,
         int $percent,
         string $keyword,
         int $offset,
@@ -64,10 +64,10 @@ class RankingBanPageRepository
     }
 
     /**
-     * @param bool $publish false:掲載中のみ, true:未掲載のみ
-     * @param bool $change false:内容変更ありのみ, true:変更なしのみ
+     * @param int $publish 0:掲載中のみ, 1:未掲載のみ, 2:すべて
+     * @param int $change 0:内容変更ありのみ, 1:変更なしのみ, 2:すべて
      */
-    public function findAllDatetimeColumn(bool $change, bool $publish, int $percent, string $keyword): array
+    public function findAllDatetimeColumn(int $change, int $publish, int $percent, string $keyword): array
     {
         $whereClause = $this->buildWhereClause($change, $publish, $percent);
 
@@ -98,18 +98,18 @@ class RankingBanPageRepository
     }
 
     /**
-     * @param bool $publish false:掲載中のみ, true:未掲載のみ
-     * @param bool $change false:内容変更ありのみ, true:変更なしのみ
+     * @param int $change 0:内容変更ありのみ, 1:変更なしのみ, 2:すべて
+     * @param int $publish 0:掲載中のみ, 1:未掲載のみ, 2:すべて
      */
-    private function buildWhereClause(bool $change, bool $publish, int $percent)
+    private function buildWhereClause(int $change, int $publish, int $percent)
     {
-        $updatedAtValue = $change
-            ? "AND (rb.updated_at = 0 AND (rb.update_items IS NULL OR rb.update_items = ''))"
-            : "AND (rb.updated_at >= 1 OR (rb.update_items IS NOT NULL AND rb.update_items != ''))";
+        $updatedAtValue = $change === 0
+            ? "AND (rb.updated_at >= 1 OR (rb.update_items IS NOT NULL AND rb.update_items != ''))"
+            : ($change === 1 ? "AND (rb.updated_at = 0 AND (rb.update_items IS NULL OR rb.update_items = ''))" : '');
 
-        $endDatetime = $publish
-            ? "AND rb.end_datetime IS NULL"
-            : "AND rb.end_datetime IS NOT NULL";
+        $endDatetime = $publish === 0
+            ? "AND rb.end_datetime IS NOT NULL"
+            : ($publish === 1 ? "AND rb.end_datetime IS NULL" : '');
 
         $member = $percent < 100
             ? ($percent < 80 ? 'AND rb.member >= 30' : 'AND rb.member >= 10')
