@@ -47,6 +47,8 @@ class RankingBanLabsPageController
 
         if (!$rankingBanData && $page > 1) return false;
         if (!$rankingBanData && $page === 1) {
+            $totalRecords = 0;
+            $maxPageNumber = 0;
             return view(
                 'ranking_ban_content',
                 compact(
@@ -55,10 +57,14 @@ class RankingBanLabsPageController
                     '_updatedAt',
                     '_now',
                     'titleValue',
+                    'totalRecords',
+                    'maxPageNumber',
                 )
             );
         }
 
+        $totalRecords = $rankingBanData['totalRecords'];
+        $maxPageNumber = $rankingBanData['maxPageNumber'];
         $path = 'labs/publication-analytics';
         $params = compact('change', 'publish', 'percent', 'keyword');
 
@@ -66,7 +72,7 @@ class RankingBanLabsPageController
             $path,
             $params,
             $page,
-            $rankingBanData['totalRecords'],
+            $totalRecords,
             AppConfig::OPEN_CHAT_LIST_LIMIT,
             $rankingBanData['maxPageNumber'],
             array_reverse($rankingBanData['labelArray'])
@@ -77,7 +83,7 @@ class RankingBanLabsPageController
             'path' => $path,
             'params' => $params,
             'pageNumber' => $page,
-            'maxPageNumber' => $rankingBanData['maxPageNumber']
+            'maxPageNumber' => $maxPageNumber
         ];
 
         return view(
@@ -91,7 +97,9 @@ class RankingBanLabsPageController
                 '_select',
                 '_label',
                 '_pagerNavArg',
+                'totalRecords',
                 'titleValue',
+                'maxPageNumber',
             )
         );
     }

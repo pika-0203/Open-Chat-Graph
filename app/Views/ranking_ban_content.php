@@ -201,6 +201,8 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 </nav>
             <?php endif ?>
             <small style="font-size: 13px; white-space: pre-wrap;"><?php echo $titleValue ?></small>
+            <br>
+            <small style="font-size: 13px; white-space: pre-wrap;"><?php echo number_format($totalRecords) ?>件の結果 (<?php echo $maxPageNumber ?>ページ中/<?php echo R::input('page') ?>ページ目)</small>
             <?php if (isset($openChatList)) : ?>
                 <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList', '_now')) ?>
             <?php else : ?>
