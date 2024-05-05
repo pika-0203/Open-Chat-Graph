@@ -20,8 +20,13 @@
           </span>
           <span class="openchat-item-stats">順位 <?php echo calculatePositionPercentage($oc['percentage']) ?></span>
         </div>
+        <?php if (isset($oc['category']) && $oc['category']) : ?>
+          <div class="openchat-item-mui-chip-outer" style="margin-top: 0px;">
+            <span class="openchat-item-mui-chip-inner" aria-label="カテゴリ: <?php echo getCategoryName($oc['category']) ?>"><?php echo getCategoryName($oc['category']) ?></span>
+          </div>
+        <?php endif ?>
         <?php if ($oc['update_items']) : ?>
-          <div class="openchat-item-lower unset">
+          <div class="openchat-item-lower unset" style="margin-top: 2px;">
             <?php if ($oc['updated_at']) : ?>
               <span>変更により未掲載: </span>
             <?php else : ?>
@@ -53,11 +58,6 @@
             <span class="registration-date">未掲載 <span class="blue"><?php echo $_now === $oc['old_datetime'] ? 'たった今' : calculateTimeDifference($_now, $oc['old_datetime']) . '前' ?></span> <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~</span>
           <?php endif ?>
         </div>
-        <?php if (isset($oc['category']) && $oc['category']) : ?>
-          <div class="openchat-item-mui-chip-outer" style="margin-top: 3px;">
-            <span class="openchat-item-mui-chip-inner" aria-label="カテゴリ: <?php echo getCategoryName($oc['category']) ?>"><?php echo getCategoryName($oc['category']) ?></span>
-          </div>
-        <?php endif ?>
       </footer>
     </li>
   <?php endforeach ?>
