@@ -16,15 +16,18 @@ class RankingBanLabsPageController
         int $change,
         int $publish,
         int $percent,
-        int $page
+        int $page,
+        string $keyword
     ) {
-        $titleValue = [
-            'c' => !!$change ? 'c' : false,
-            'p' => !!$publish ? 'p' : false,
-            'per' => $percent > 50 ? $percent : false
-        ];
+        $titleValue = implode(', ', array_filter([
+            'p' => !!$publish ? '未掲載' : '再掲載',
+            'c' => !!$change ? '変更なし' : '変更あり',
+            'per' => $percent < 100 ? "上位{$percent}%" : 'すべて',
+            'keyword' => $keyword !== '' ? "「{$keyword}」" : false,
+        ]));
+
         $_meta = meta()
-            ->setTitle('オプチャ公式ランキング掲載の分析' . ($page > 1 ? "({$page}ページ目)" : '') . implode(',', array_filter($titleValue)))
+            ->setTitle('オプチャ公式ランキング掲載の分析 ' . ($page > 1 ? "({$page}ページ目) " : '') . $titleValue)
             ->setDescription(
                 'オプチャ公式ランキングへの掲載・未掲載の状況を一覧表示します。ルーム内容の変更後などに起こる掲載状況（検索落ちなど）の変動を捉えることができます。'
             );
@@ -38,6 +41,7 @@ class RankingBanLabsPageController
             !!$change,
             !!$publish,
             $percent,
+            $keyword,
             $page
         );
 
@@ -50,12 +54,13 @@ class RankingBanLabsPageController
                     '_css',
                     '_updatedAt',
                     '_now',
+                    'titleValue',
                 )
             );
         }
 
         $path = 'labs/publication-analytics';
-        $params = compact('change', 'publish', 'percent');
+        $params = compact('change', 'publish', 'percent', 'keyword');
 
         [$title, $_select, $_label] = $rankingBanSelectElementPagination->geneSelectElementPagerAsc(
             $path,
@@ -86,6 +91,7 @@ class RankingBanLabsPageController
                 '_select',
                 '_label',
                 '_pagerNavArg',
+                'titleValue',
             )
         );
     }

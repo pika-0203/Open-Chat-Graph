@@ -146,7 +146,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     </p>
                 </details>
             </aside>
-            <form id="value-form" style="position: relative;">
+            <form id="value-form" style="position: relative; margin-bottom: 12px">
                 <label for="pet-select0">掲載状況:</label>
                 <select id="pet-select0" name="publish">
                     <option value="0" <?php if (R::input('publish') === 0) echo 'selected' ?>>再掲載済み</option>
@@ -159,17 +159,20 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 </select>
                 <label for="pet-select2">最終ランキング順位:</label>
                 <select id="pet-select2" name="percent">
-                    <option value="50" <?php if (R::input('percent') === 50) echo 'selected' ?>>下位50%以下を除く</option>
-                    <option value="80" <?php if (R::input('percent') === 80) echo 'selected' ?>>下位20%以下を除く</option>
+                    <option value="50" <?php if (R::input('percent') === 50) echo 'selected' ?>>下位50%を除く</option>
+                    <option value="80" <?php if (R::input('percent') === 80) echo 'selected' ?>>下位20%を除く</option>
                     <option value="100" <?php if (R::input('percent') === 100) echo 'selected' ?>>すべて表示</option>
                 </select>
                 <label for="keyword">キーワードで絞り込み:</label>
-                <input name="keyword" id="keyword" type="text" placeholder="ルーム名・説明文" value="<?php echo R::has('keyword') ? h(R::input('keyword')) : '' ?>">
+                <input name="keyword" id="keyword" type="text" placeholder="キーワード" value="<?php echo R::has('keyword') ? h(R::input('keyword')) : '' ?>">
                 <button type="button" style="padding: 4px 8px; position: absolute; top: 0; right: 0; margin: 1.5rem" onclick="location.href = '<?php echo url('labs/publication-analytics') ?>'">リセット</button>
             </form>
             <!-- select要素ページネーション -->
             <?php if (isset($_select)) : ?>
-                <nav class="page-select unset">
+                <nav class="page-select unset" style="flex-direction: column; padding: 0; margin: 0 0 12px 0;">
+                    <div>
+                        <small>1ページあたり100件の表示</small>
+                    </div>
                     <form class="unset" style="width: 100%;">
                         <select id="page-selector" class="unset">
                             <?php echo $_select ?>
@@ -177,8 +180,8 @@ viewComponent('head', compact('_css', '_meta')) ?>
                         <label for="page-selector" class="unset"><span><?php echo $_label ?></span></label>
                     </form>
                 </nav>
-                <small>1ページあたり100件の表示</small>
             <?php endif ?>
+            <small style="font-size: 11px;"><?php echo $titleValue ?></small>
             <?php if (isset($openChatList)) : ?>
                 <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList', '_now')) ?>
             <?php else : ?>
@@ -196,15 +199,17 @@ viewComponent('head', compact('_css', '_meta')) ?>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
     <script>
         ((form) => {
-            form.querySelectorAll('select').forEach((el) => el.addEventListener('change', () => form.submit()))
+            if (!form) return
+
+            form.querySelectorAll('select').forEach(
+                (el) => el.addEventListener('change', () => form.submit())
+            )
         })(document.getElementById('value-form'));
 
         ((el) => {
             if (!el) return
 
-            el.addEventListener('change', () => {
-                el.value && (location.href = el.value)
-            })
+            el.addEventListener('change', () => el.value && (location.href = el.value))
         })(document.getElementById('page-selector'));
     </script>
 </body>

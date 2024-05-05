@@ -22,9 +22,9 @@ class RakingBanPageService
      * @param bool $change false:内容変更ありのみ, true:変更なしのみ
      * @return array{ pageNumber:int,maxPageNumber:int,openChatList:array,totalRecords:int,labelArray:array }
      */
-    public function getAllOrderByDateTime(bool $change, bool $publish, int $percent, int $pageNumber): array|false
+    public function getAllOrderByDateTime(bool $change, bool $publish, int $percent, string $keyword, int $pageNumber): array|false
     {
-        $labelArray = $this->rankingBanPageRepository->findAllDatetimeColumn($change, $publish, $percent);
+        $labelArray = $this->rankingBanPageRepository->findAllDatetimeColumn($change, $publish, $percent, $keyword);
 
         $limit = AppConfig::OPEN_CHAT_LIST_LIMIT;
 
@@ -41,6 +41,7 @@ class RakingBanPageService
             $change,
             $publish,
             $percent,
+            $keyword,
             $this->calcOffset($pageNumber, $limit),
             $limit
         );
