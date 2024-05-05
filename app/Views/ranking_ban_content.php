@@ -178,7 +178,10 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     <option value="100" <?php if (R::input('percent') === 100) echo 'selected' ?>>すべて表示</option>
                 </select>
                 <label for="keyword">検索:</label>
-                <input name="keyword" id="keyword" type="text" placeholder="キーワード" value="<?php echo R::has('keyword') ? h(R::input('keyword')) : '' ?>">
+                <div style="display: flex; margin-bottom: 1rem;">
+                    <input style="margin: 0; margin-right: 8px;" name="keyword" id="keyword" type="text" placeholder="キーワード" value="<?php echo R::has('keyword') ? h(R::input('keyword')) : '' ?>">
+                    <button type="button" style="margin: 0; padding: 0; width: 2rem;" id="reset-btn">✕</button>
+                </div>
                 <div style="position: absolute; top: 0; right: 0; margin: .5rem; display: flex; gap: 1rem; flex-direction: column; border: 1px solid #efefef; padding: .5rem; border-radius: 4px;">
                     <small style="font-size: 12px; text-align: center;">簡単設定ボタン</small>
                     <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish') === 1 ? 0 : 1) . '&change=0&percent=50&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('publish') === 1 ? '再掲載済み<br>内容変更あり' : '現在未掲載<br>内容変更あり' ?></button>
@@ -225,6 +228,13 @@ viewComponent('head', compact('_css', '_meta')) ?>
             form.querySelectorAll('select').forEach(
                 (el) => el.addEventListener('change', () => form.submit())
             )
+
+            const keyword = document.getElementById('keyword')
+            document.getElementById('reset-btn').addEventListener('click', () => {
+                if (!keyword.value) return
+                keyword.value = ''
+                form.submit()
+            })
         })(document.getElementById('value-form'));
 
         ((el) => {
