@@ -261,7 +261,7 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
         foreach ($groupedResults as &$row) {
             // $groupedResultsの要素を要素数が多い順にソート
             uasort($row, function ($a, $b) {
-                return $b['hour'] - $a['hour'];
+                return $b['week'] - $a['week'];
             });
         }
 

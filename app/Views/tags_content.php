@@ -53,8 +53,8 @@ function memberCount(int $count)
                 <div style="margin: 1rem; margin-bottom: 0; margin-top: .5rem;">
                     <?php foreach ($categories as $key => $category) : ?>
                         <a style="font-size:15px; text-wrap:nowrap; margin-bottom:20px; margin-right: 1px; display:inline-flex; gap:2px; text-decoration:none;" href="#<?php echo $key ?>">
-                            <span style="color:#111; text-decoration:underline;"><?php echo $key ? $category : 'その他' ?></span>
-                            <span style="color:#aaa; font-size:10px; margin: 0; line-height: 1.5;"><?php echo count($tagsGroup[$key]) ?>タグ</span>
+                            <span style="color:#111; text-decoration:underline; font-weight: bold;"><?php echo $key ? $category : 'その他' ?></span>
+                            <span style="color:#777; font-size:10px; margin: 0; line-height: 1.5; font-weight: bold;"><?php echo count($tagsGroup[$key]) ?>タグ</span>
                         </a>
                     <?php endforeach ?>
                 </div>
