@@ -163,7 +163,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     <option value="80" <?php if (R::input('percent') === 80) echo 'selected' ?>>下位20%を除く</option>
                     <option value="100" <?php if (R::input('percent') === 100) echo 'selected' ?>>すべて表示</option>
                 </select>
-                <label for="keyword">キーワードで絞り込み:</label>
+                <label for="keyword">検索:</label>
                 <input name="keyword" id="keyword" type="text" placeholder="キーワード" value="<?php echo R::has('keyword') ? h(R::input('keyword')) : '' ?>">
                 <button type="button" style="padding: 4px 8px; position: absolute; top: 0; right: 0; margin: 1.5rem" onclick="location.href = '<?php echo url('labs/publication-analytics') ?>'">リセット</button>
             </form>
