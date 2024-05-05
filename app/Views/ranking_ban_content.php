@@ -200,7 +200,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     </form>
                 </nav>
             <?php endif ?>
-            <small style="font-size: 11px;"><?php echo $titleValue ?></small>
+            <small style="font-size: 13px; white-space: pre-wrap;"><?php echo $titleValue ?></small>
             <?php if (isset($openChatList)) : ?>
                 <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList', '_now')) ?>
             <?php else : ?>
