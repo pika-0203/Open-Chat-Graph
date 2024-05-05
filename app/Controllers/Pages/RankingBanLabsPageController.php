@@ -20,10 +20,10 @@ class RankingBanLabsPageController
         string $keyword
     ) {
         $titleValue = implode(', ', array_filter([
-            'p' => $publish === 1 ? '現在未掲載' : ($publish === 0 ? '再掲載済み' : '全て'),
-            'c' => $change === 1 ? 'ルーム内容変更なし' : ($change === 0 ? 'ルーム内容変更あり' : '全て'),
-            'per' => $percent < 100 ? "ランク上位{$percent}%" : '全て',
-            'keyword' => $keyword !== '' ? "\n「{$keyword}」" : false,
+            'p' => $publish === 1 ? '💡現在未掲載' : ($publish === 0 ? '💡再掲載済み' : '💡全て'),
+            'c' => $change === 1 ? '📝ルーム内容変更なし' : ($change === 0 ? '📝ルーム内容変更あり' : '📝全て'),
+            'per' => $percent < 100 ? "📊ランク上位{$percent}%" : '📊全て',
+            'keyword' => $keyword !== '' ? "\n🔎「{$keyword}」" : false,
         ]));
 
         $_meta = meta()
