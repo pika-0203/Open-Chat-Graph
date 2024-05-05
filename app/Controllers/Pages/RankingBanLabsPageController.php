@@ -32,6 +32,8 @@ class RankingBanLabsPageController
                 'オプチャ公式ランキングへの掲載・未掲載の状況を一覧表示します。ルーム内容の変更後などに起こる掲載状況（検索落ちなど）の変動を捉えることができます。'
             );
 
+        $_meta->image_url = '';
+
         $_css = ['room_list', 'site_header', 'site_footer'];
 
         $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));

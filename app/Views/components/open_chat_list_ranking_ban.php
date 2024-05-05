@@ -54,9 +54,9 @@
           <?php endif ?>
         </div>
         <?php if (isset($oc['category']) && $oc['category']) : ?>
-          <!--<div class="openchat-item-mui-chip-outer">
+          <div class="openchat-item-mui-chip-outer" style="margin-top: 3px;">
             <span class="openchat-item-mui-chip-inner" aria-label="カテゴリ: <?php echo getCategoryName($oc['category']) ?>"><?php echo getCategoryName($oc['category']) ?></span>
-          </div>-->
+          </div>
         <?php endif ?>
       </footer>
     </li>
