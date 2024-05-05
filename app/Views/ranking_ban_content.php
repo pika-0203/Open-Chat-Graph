@@ -173,8 +173,8 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 </select>
                 <label for="pet-select2">最終ランキング順位:</label>
                 <select id="pet-select2" name="percent">
-                    <option value="50" <?php if (R::input('percent') === 50) echo 'selected' ?>>下位50%を除く</option>
                     <option value="80" <?php if (R::input('percent') === 80) echo 'selected' ?>>下位20%を除く</option>
+                    <option value="50" <?php if (R::input('percent') === 50) echo 'selected' ?>>下位50%を除く</option>
                     <option value="100" <?php if (R::input('percent') === 100) echo 'selected' ?>>すべて表示</option>
                 </select>
                 <label for="keyword">検索:</label>
@@ -184,8 +184,8 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 </div>
                 <div style="position: absolute; top: 0; right: 0; margin: .5rem; display: flex; gap: 1rem; flex-direction: column; border: 1px solid #efefef; padding: .5rem; border-radius: 4px;">
                     <small style="font-size: 12px; text-align: center;">簡単設定</small>
-                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish') === 1 ? 0 : 1) . '&change=0&percent=50&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('publish') === 1 ? '再掲載済み<br>内容変更あり' : '現在未掲載<br>内容変更あり' ?></button>
-                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish') === 1 ? 0 : 1) . '&change=1&percent=50&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('publish') === 1 ? '再掲載済み<br>内容変更なし' : '現在未掲載<br>内容変更なし' ?></button>
+                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish') === 1 ? 0 : 1) . '&change=0&percent=80&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('publish') === 1 ? '再掲載済み<br>内容変更あり' : '現在未掲載<br>内容変更あり' ?></button>
+                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish') === 1 ? 0 : 1) . '&change=1&percent=80&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('publish') === 1 ? '再掲載済み<br>内容変更なし' : '現在未掲載<br>内容変更なし' ?></button>
                     <button type="button" class="eazy-btn" style="padding: 8px 6px;" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=2&change=2&percent=100&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'">全表示</button>
                 </div>
             </form>
