@@ -48,7 +48,7 @@
         <?php endif ?>
         <div class="openchat-item-lower unset" style="margin-top: 1px;">
           <?php if (isset($oc['end_datetime'])) : ?>
-            <span class="registration-date">再掲載 <span class="blue"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span> <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~<?php echo formatDateTimeHourly2($oc['end_datetime']) ?></span>
+            <span class="registration-date"><span style="font-weight: bold;">再掲載</span> <span class="blue"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span> <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~<?php echo formatDateTimeHourly2($oc['end_datetime']) ?></span>
           <?php else : ?>
             <span class="registration-date">未掲載 <span class="blue"><?php echo $_now === $oc['old_datetime'] ? 'たった今' : calculateTimeDifference($_now, $oc['old_datetime']) . '前' ?></span> <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~</span>
           <?php endif ?>
