@@ -55,14 +55,30 @@ viewComponent('head', compact('_css', '_meta')) ?>
         }
 
         .eazy-btn {
-            padding: 3px 6px;
+            padding: 6px 3px;
             margin: 0;
-            font-size: 11px;
+            font-size: 13px;
         }
 
         @media screen and (min-width: 512px) {
             .eazy-btn {
                 font-size: 13px;
+            }
+        }
+
+        @media screen and (max-width: 359px) {
+            form {
+                font-size: 13px;
+            }
+
+            input {
+                font-size: 16px;
+            }
+        }
+
+        @media screen and (max-width: 511px) {
+            .ads-form {
+                height: 50px;
             }
         }
     </style>
@@ -158,6 +174,13 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     </p>
                 </details>
             </aside>
+            <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+                <!-- OCページ -->
+                <ins class="adsbygoogle ads-form" style="display:block;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
             <form id="value-form" style="position: relative; margin-bottom: 12px">
                 <label for="pet-select0">💡掲載状況:</label>
                 <select id="pet-select0" name="publish">
@@ -184,18 +207,11 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 </div>
                 <div style="position: absolute; top: 0; right: 0; margin: .5rem; display: flex; gap: 1rem; flex-direction: column; border: 1px solid #efefef; padding: .5rem; border-radius: 4px;">
                     <small style="font-size: 12px; text-align: center;">簡単設定</small>
-                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish') === 1 ? 0 : 1) . '&change=0&percent=' . (R::input('percent') !== 100 ? R::input('percent') : 50) . '&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('publish') === 1 ? '<span style="font-weight: normal; font-size: 13px;">↔再掲載</span><br>内容変更あり' : '<span style="font-weight: normal; font-size: 13px;">↔未掲載</span><br>内容変更あり' ?></button>
-                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish') === 1 ? 0 : 1) . '&change=1&percent=' . (R::input('percent') !== 100 ? R::input('percent') : 50) . '&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('publish') === 1 ? '<span style="font-weight: normal; font-size: 13px;">↔再掲載</span><br>内容変更なし' : '<span style="font-weight: normal; font-size: 13px;">↔未掲載</span><br>内容変更なし' ?></button>
+                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish') !== 1 ? 1 : 0) . '&change=' . (R::input('change')) . '&percent=' . (R::input('percent') !== 100 ? R::input('percent') : 50) . '&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('publish') !== 1 ? '🔁現在未掲載' : '🔁再掲載済み' ?></button>
+                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish')) . '&change=' . (R::input('change') !== 1 ? 1 : 0) . '&percent=' . (R::input('percent') !== 100 ? R::input('percent') : 50) . '&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('change') !== 1 ? '🔁内容変更なし' : '🔁内容変更あり' ?></button>
                     <button type="button" class="eazy-btn" style="padding: 8px 6px;" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=2&change=2&percent=100&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'">全表示</button>
                 </div>
             </form>
-            <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-                <!-- OCページ -->
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
             <!-- select要素ページネーション -->
             <?php if (isset($_select)) : ?>
                 <nav class="page-select unset" style="flex-direction: column; padding: 0; margin: 0 0 12px 0;">

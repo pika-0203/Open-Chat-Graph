@@ -22,12 +22,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     <span style="display: inline-block; line-height: 1;">分析Labs</span>
                 </span>
             </a>
-            <div style="padding-top: .5rem">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
             <?php if ($tags) : ?>
                 <div>
                     <header class="openchat-list-title-area unset">
@@ -93,7 +87,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <hr class="ht-top-mylist">
         <?php endif ?>
 
-        <article class="top-list" style="padding-top: 0; border: 0;">
+        <article class="top-list" style="padding-top: 0; padding-bottom: 2rem;">
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
@@ -102,16 +96,9 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                 </div>
             </header>
             <?php viewComponent('open_chat_list_ranking_comment', ['openChatList' => $dto->recentCommentList]) ?>
-            <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-                <!-- OCページ -->
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
         </article>
 
-        <article class="top-ranking" style="padding-top: 0; border: 0;">
+        <article class="top-ranking" style="border: 0;">
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
@@ -170,7 +157,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             </a>
             <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
                 <!-- OCページ -->
-                <ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-gs+4n+2t-de+fa" data-ad-client="ca-pub-2330982526015125" data-ad-slot="1753278137"></ins>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
                 <script>
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
@@ -192,7 +179,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             </a>
             <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
                 <!-- OCページ -->
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
                 <script>
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>

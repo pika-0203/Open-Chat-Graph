@@ -199,14 +199,14 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           </a>
         <?php endif ?>
       </section>
+      <div style="margin: 2rem 0 1.5rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+        <!-- OCページ -->
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
       <?php if ($recommend[0]) : ?>
-        <div style="margin: 2rem 0 1.5rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-          <!-- OCページ -->
-          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
-          <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
-        </div>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
         <hr style="margin-top: 2px;">
       <?php endif ?>
@@ -221,7 +221,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <?php if ($recommend[1]) : ?>
         <div style="margin: 1.5rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
           <!-- OCページ -->
-          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
           <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
           </script>
