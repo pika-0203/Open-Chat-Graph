@@ -8,6 +8,7 @@ use App\Config\AppConfig;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\OpenChatAdmin\AdminOpenChat;
 use App\Services\Recommend\RecommendGenarator;
+use App\Services\StaticData\StaticDataFile;
 use App\Services\Statistics\DownloadCsvService;
 use App\Services\Statistics\StatisticsChartArrayService;
 use App\Views\Dto\RankingPositionChartArgDto;
@@ -26,7 +27,8 @@ class OpenChatPageController
         PageBreadcrumbsListSchema $breadcrumbsShema,
         OcPageSchema $ocPageSchema,
         RecommendGenarator $recommendGenarator,
-        int $open_chat_id
+        StaticDataFile $staticDataGeneration,
+        int $open_chat_id,
     ) {
         $recommend = $recommendGenarator->getRecommend($open_chat_id);
         $oc = $ocRepo->getOpenChatById($open_chat_id);
@@ -49,7 +51,7 @@ class OpenChatPageController
 
         $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($_statsDto);
 
-        $_css = ['site_header', 'site_footer', 'room_page', 'react/OpenChat', 'graph_page', 'recommend_list'];
+        $_css = ['site_header', 'site_footer', 'room_page', 'react/OpenChat', 'graph_page', 'recommend_list', 'room_list'];
 
         $_meta = $meta->generateMetadata($open_chat_id, $oc)
             ->setImageUrl(imgUrl($oc['id'], $oc['img_url']));
@@ -112,6 +114,13 @@ class OpenChatPageController
             $_adminDto = null;
         }
 
+        $dto = $staticDataGeneration->getTopPageData();
+
+        $hourlyEnd = $dto->hourlyUpdatedAt->format('G:i');
+        $dto->hourlyUpdatedAt->modify('-1hour');
+        $hourlyStart = $dto->hourlyUpdatedAt->format('G:i');
+        $hourlyRange = "{$hourlyStart} 〜 {$hourlyEnd}";
+
         return view('oc_content', compact(
             '_meta',
             '_css',
@@ -126,7 +135,9 @@ class OpenChatPageController
             'recommend',
             'updatedAt',
             '_hourlyRange',
-            '_adminDto'
+            '_adminDto',
+            'dto',
+            'hourlyRange',
         ));
     }
 

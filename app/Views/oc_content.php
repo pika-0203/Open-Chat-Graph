@@ -211,11 +211,13 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <hr style="margin-top: 2px;">
       <?php endif ?>
       <section style="all: unset; display: block; margin: 0 -1rem; margin-top: 1rem;">
-        <div style="display: flex; flex-direction: row; align-items: center;" class="openchat">
+        <div style="display: flex; flex-direction: row; align-items: center; padding: 0 1rem;">
           <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
           <h2 class="graph-title">オープンチャットについてのコメント</h2>
         </div>
-        <?php viewComponent('comment_desc') ?>
+        <div style="padding: 0 1rem; margin-bottom: 1rem;">
+          <?php viewComponent('comment_desc') ?>
+        </div>
         <div id="comment-root"></div>
       </section>
       <?php if ($recommend[1]) : ?>
@@ -228,7 +230,52 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       <?php endif ?>
+
+      <aside class="top-ranking" style="border: 0; padding: 0;  margin-top: 1rem;">
+        <header class="openchat-list-title-area unset">
+          <div class="openchat-list-date unset ranking-url">
+            <h2 class="unset">
+              <span class="openchat-list-title">1時間の人数増加ランキング</span>
+            </h2>
+            <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0"><?php echo $hourlyRange ?></span>
+          </div>
+        </header>
+        <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->hourlyList, 'isHourly' => true]) ?>
+        <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=hourly') ?>">
+          <span class="ranking-readMore">1時間の人数増加ランキングを詳しく見る</span>
+        </a>
+        <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+          <!-- OCページ -->
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </aside>
+
+      <aside class="top-ranking" style="border: 0;  margin-top: 0rem;">
+        <header class="openchat-list-title-area unset">
+          <div class="openchat-list-date unset ranking-url">
+            <h2 class="unset">
+              <span class="openchat-list-title">24時間の人数増加ランキング</span>
+            </h2>
+            <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0">1時間ごとに更新</span>
+          </div>
+        </header>
+        <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->dailyList, 'isHourly' => true]) ?>
+        <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=daily') ?>">
+          <span class="ranking-readMore">24時間の人数増加ランキングを詳しく見る</span>
+        </a>
+        <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+          <!-- OCページ -->
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </aside>
     </article>
+
     <footer>
       <aside class="open-btn2">
         <a href="https://openchat-jp.line.me/other/beginners_guide" class="app_link">

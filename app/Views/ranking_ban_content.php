@@ -75,12 +75,6 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 font-size: 16px;
             }
         }
-
-        @media screen and (max-width: 511px) {
-            .ads-form {
-                height: 50px;
-            }
-        }
     </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
@@ -174,13 +168,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     </p>
                 </details>
             </aside>
-            <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-                <!-- OCページ -->
-                <ins class="adsbygoogle ads-form" style="display:block;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
+            
             <form id="value-form" style="position: relative; margin-bottom: 12px">
                 <label for="pet-select0">💡掲載状況:</label>
                 <select id="pet-select0" name="publish">

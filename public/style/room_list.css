@@ -294,8 +294,8 @@ main header {
   width: 100%;
 }
 
-article.top-ranking,
-article.top-list {
+.top-ranking,
+.top-list {
   display: flex;
   padding: 1rem 0;
   flex-direction: column;
@@ -320,6 +320,7 @@ article.top-list {
   padding-left: 62px;
   cursor: pointer;
   min-height: 58px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 .openchat-item.add-openchat-form-item {

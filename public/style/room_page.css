@@ -16,6 +16,7 @@ hr {
   padding: 0 1rem;
   padding-bottom: 0;
   font-family: var(--font-family);
+  max-width: 600px;
 }
 
 .openchat .graph-title {
@@ -345,7 +346,6 @@ body > footer {
 
 #comment-root {
   margin: 1rem;
-  max-width: 680px;
 }
 
 .number-box .css-162gv95 {
@@ -390,7 +390,7 @@ body > footer {
   #comment-root {
     padding: 0 1rem;
     margin: auto;
-    margin-top: 0.5rem;
+    margin-top: 2rem;
   }
 
   .open-btn.sp-btn {

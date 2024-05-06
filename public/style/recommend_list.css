@@ -168,7 +168,7 @@
     overflow-x: unset;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    padding: 0px 6%;
+    padding: 0;
   }
 
   .recommend-list li {
