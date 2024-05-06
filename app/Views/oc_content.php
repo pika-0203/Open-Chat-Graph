@@ -129,7 +129,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
       <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
         <!-- OCページ -->
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
         <script>
           (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
@@ -180,7 +180,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </aside>
       </nav>
 
-      <section class="open-btn sp-btn">
+      <section class="open-btn sp-btn" style="margin-bottom: 2rem;">
         <?php if ($oc['url']) : ?>
           <hr>
           <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
@@ -199,17 +199,16 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           </a>
         <?php endif ?>
       </section>
-      <div style="margin: 2rem 0 1.5rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+      <?php if ($recommend[0]) : ?>
+        <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+      <?php endif ?>
+      <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
         <!-- OCページ -->
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+        <ins class="adsbygoogle" style="display:block; height: 82px;" data-ad-format="fluid" data-ad-layout-key="-hx-k+2y-5w+48" data-ad-client="ca-pub-2330982526015125" data-ad-slot="1753278137"></ins>
         <script>
           (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
       </div>
-      <?php if ($recommend[0]) : ?>
-        <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-        <hr style="margin-top: 2px;">
-      <?php endif ?>
       <section style="all: unset; display: block; margin: 0 -1rem; margin-top: 1rem;">
         <div style="display: flex; flex-direction: row; align-items: center; padding: 0 1rem;">
           <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
@@ -220,16 +219,18 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
         <div id="comment-root"></div>
       </section>
+      
       <?php if ($recommend[1]) : ?>
-        <div style="margin: 1.5rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-          <!-- OCページ -->
-          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
-          <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
-        </div>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       <?php endif ?>
+
+      <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+        <!-- OCページ -->
+        <ins class="adsbygoogle" style="display:block; height: 82px;" data-ad-format="fluid" data-ad-layout-key="-hx-k+2y-5w+48" data-ad-client="ca-pub-2330982526015125" data-ad-slot="1753278137"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
 
       <aside class="top-ranking" style="border: 0; padding: 0;  margin-top: 1rem;">
         <header class="openchat-list-title-area unset">
@@ -246,7 +247,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </a>
         <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
           <!-- OCページ -->
-          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
           <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
           </script>
@@ -268,7 +269,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </a>
         <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
           <!-- OCページ -->
-          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
           <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
           </script>
