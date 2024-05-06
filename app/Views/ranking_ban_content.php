@@ -189,6 +189,13 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     <button type="button" class="eazy-btn" style="padding: 8px 6px;" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=2&change=2&percent=100&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'">全表示</button>
                 </div>
             </form>
+            <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+                <!-- OCページ -->
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
             <!-- select要素ページネーション -->
             <?php if (isset($_select)) : ?>
                 <nav class="page-select unset" style="flex-direction: column; padding: 0; margin: 0 0 12px 0;">

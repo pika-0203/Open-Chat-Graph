@@ -10,7 +10,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 <body class="body">
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main style="margin-bottom: 0;">
-        <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem">
+        <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem; padding-bottom: 1rem;">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
             </a>
@@ -22,6 +22,12 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     <span style="display: inline-block; line-height: 1;">分析Labs</span>
                 </span>
             </a>
+            <div style="padding-top: .5rem">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
             <?php if ($tags) : ?>
                 <div>
                     <header class="openchat-list-title-area unset">
@@ -87,7 +93,25 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <hr class="ht-top-mylist">
         <?php endif ?>
 
-        <article class="top-ranking" style="padding-top: 0; margin-top: 0;">
+        <article class="top-list" style="padding-top: 0; border: 0;">
+            <header class="openchat-list-title-area unset">
+                <div class="openchat-list-date unset ranking-url">
+                    <h2 class="unset">
+                        <span class="openchat-list-title">最近のコメント投稿</span>
+                    </h2>
+                </div>
+            </header>
+            <?php viewComponent('open_chat_list_ranking_comment', ['openChatList' => $dto->recentCommentList]) ?>
+            <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+                <!-- OCページ -->
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </article>
+
+        <article class="top-ranking" style="padding-top: 0; border: 0;">
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
@@ -100,20 +124,16 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=hourly') ?>">
                 <span class="ranking-readMore">1時間の人数増加ランキングを詳しく見る</span>
             </a>
+            <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+                <!-- OCページ -->
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
         </article>
 
-        <article class="top-list">
-            <header class="openchat-list-title-area unset">
-                <div class="openchat-list-date unset ranking-url">
-                    <h2 class="unset">
-                        <span class="openchat-list-title">最近のコメント投稿</span>
-                    </h2>
-                </div>
-            </header>
-            <?php viewComponent('open_chat_list_ranking_comment', ['openChatList' => $dto->recentCommentList]) ?>
-        </article>
-
-        <article class="top-ranking">
+        <article class="top-ranking" style="padding-top: 0; border: 0;">
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
@@ -126,9 +146,16 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=daily') ?>">
                 <span class="ranking-readMore">24時間の人数増加ランキングを詳しく見る</span>
             </a>
+            <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+                <!-- OCページ -->
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
         </article>
 
-        <article class="top-ranking">
+        <article class="top-ranking" style="padding-top: 0; border: 0;">
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
@@ -141,9 +168,16 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=weekly') ?>">
                 <span class="ranking-readMore">1週間の人数増加ランキングを詳しく見る</span>
             </a>
+            <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+                <!-- OCページ -->
+                <ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-gs+4n+2t-de+fa" data-ad-client="ca-pub-2330982526015125" data-ad-slot="1753278137"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
         </article>
 
-        <article class="top-ranking created-at">
+        <article class="top-ranking created-at" style="padding-top: 0; border: 0;">
             <header class="openchat-list-title-area unset">
                 <div class="openchat-list-date unset ranking-url">
                     <h2 class="unset">
@@ -156,10 +190,17 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">人数ランキングを詳しく見る</span>
             </a>
+            <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+                <!-- OCページ -->
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
         </article>
 
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; border: 0">
-            <p style="line-height: 2; margin: 1.5rem 0 0 0;" class="top-small-desc">
+            <p style="line-height: 2; margin: 1rem 0 0 0;" class="top-small-desc">
                 オプチャグラフは<a href="https://openchat.line.me/jp/" rel="external" target="_blank">LINEオープンチャット公式サイト</a>に掲載されているオープンチャットを記録しています。
             </p>
             <a style="margin-bottom: 0; margin-top: 10px;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('policy') ?>">

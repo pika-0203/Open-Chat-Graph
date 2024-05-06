@@ -29,7 +29,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
     <article class="openchat unset">
-
       <!-- オープンチャット表示ヘッダー -->
       <section class="openchat-header unset">
         <div class="talkroom_banner_img_area">
@@ -123,28 +122,18 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                   <?php endif ?>
                 </section>
       </section>
-      <section class="open-btn sp-btn">
-        <?php if ($oc['url']) : ?>
-          <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
-            <?php if ($oc['join_method_type'] !== 0) : ?>
-              <svg style="height: 12px; fill: white; margin-right: 6px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.4 489.4" xml:space="preserve">
-                <path d="M99 147v51.1h-3.4c-21.4 0-38.8 17.4-38.8 38.8v213.7c0 21.4 17.4 38.8 38.8 38.8h298.2c21.4 0 38.8-17.4 38.8-38.8V236.8c0-21.4-17.4-38.8-38.8-38.8h-1v-51.1C392.8 65.9 326.9 0 245.9 0 164.9.1 99 66 99 147m168.7 206.2c-3 2.2-3.8 4.3-3.8 7.8.1 15.7.1 31.3.1 47 .3 6.5-3 12.9-8.8 15.8-13.7 7-27.4-2.8-27.4-15.8v-.1c0-15.7 0-31.4.1-47.1 0-3.2-.7-5.3-3.5-7.4-14.2-10.5-18.9-28.4-11.8-44.1 6.9-15.3 23.8-24.3 39.7-21.1 17.7 3.6 30 17.8 30.2 35.5 0 12.3-4.9 22.3-14.8 29.5M163.3 147c0-45.6 37.1-82.6 82.6-82.6 45.6 0 82.6 37.1 82.6 82.6v51.1H163.3z" />
-              </svg>
-            <?php endif ?>
-            <span class="text">LINEで開く</span>
-            <?php if ($oc['join_method_type'] === 1) : ?>
-              <span style="font-size: 12px; margin-left: 4px; font-weight: normal;" class="text">承認制</span>
-            <?php endif ?>
-            <?php if ($oc['join_method_type'] === 2) : ?>
-              <span style="font-size: 12px; margin-left: 4px; font-weight: normal;" class="text">参加コード入力制</span>
-            <?php endif ?>
-          </a>
-        <?php endif ?>
-      </section>
 
       <?php if (isset($_adminDto)) : ?>
         <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
       <?php endif ?>
+
+      <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+        <!-- OCページ -->
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
 
       <div style="display: flex; flex-direction: row; align-items: center;">
         <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>
@@ -190,14 +179,38 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           </span>
         </aside>
       </nav>
-      <?php if (is_int($oc['api_created_at'])) : ?>
-        <hr>
-      <?php endif ?>
+
+      <section class="open-btn sp-btn">
+        <?php if ($oc['url']) : ?>
+          <hr>
+          <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
+            <?php if ($oc['join_method_type'] !== 0) : ?>
+              <svg style="height: 12px; fill: white; margin-right: 6px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.4 489.4" xml:space="preserve">
+                <path d="M99 147v51.1h-3.4c-21.4 0-38.8 17.4-38.8 38.8v213.7c0 21.4 17.4 38.8 38.8 38.8h298.2c21.4 0 38.8-17.4 38.8-38.8V236.8c0-21.4-17.4-38.8-38.8-38.8h-1v-51.1C392.8 65.9 326.9 0 245.9 0 164.9.1 99 66 99 147m168.7 206.2c-3 2.2-3.8 4.3-3.8 7.8.1 15.7.1 31.3.1 47 .3 6.5-3 12.9-8.8 15.8-13.7 7-27.4-2.8-27.4-15.8v-.1c0-15.7 0-31.4.1-47.1 0-3.2-.7-5.3-3.5-7.4-14.2-10.5-18.9-28.4-11.8-44.1 6.9-15.3 23.8-24.3 39.7-21.1 17.7 3.6 30 17.8 30.2 35.5 0 12.3-4.9 22.3-14.8 29.5M163.3 147c0-45.6 37.1-82.6 82.6-82.6 45.6 0 82.6 37.1 82.6 82.6v51.1H163.3z" />
+              </svg>
+            <?php endif ?>
+            <span class="text">LINEで開く</span>
+            <?php if ($oc['join_method_type'] === 1) : ?>
+              <span style="font-size: 12px; margin-left: 4px; font-weight: normal;" class="text">承認制</span>
+            <?php endif ?>
+            <?php if ($oc['join_method_type'] === 2) : ?>
+              <span style="font-size: 12px; margin-left: 4px; font-weight: normal;" class="text">参加コード入力制</span>
+            <?php endif ?>
+          </a>
+        <?php endif ?>
+      </section>
       <?php if ($recommend[0]) : ?>
+        <div style="margin: 2rem 0 1.5rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+          <!-- OCページ -->
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
         <hr style="margin-top: 2px;">
       <?php endif ?>
-      <section style="all: unset; display: block; margin: 0 -1rem;">
+      <section style="all: unset; display: block; margin: 0 -1rem; margin-top: 1rem;">
         <div style="display: flex; flex-direction: row; align-items: center;" class="openchat">
           <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
           <h2 class="graph-title">オープンチャットについてのコメント</h2>
@@ -206,7 +219,13 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <div id="comment-root"></div>
       </section>
       <?php if ($recommend[1]) : ?>
-        <hr style="margin-top: 2px;">
+        <div style="margin: 1.5rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+          <!-- OCページ -->
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
         <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       <?php endif ?>
     </article>

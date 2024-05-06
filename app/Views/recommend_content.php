@@ -48,6 +48,13 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </section>
             <?php if (isset($tags) && $tags) : ?>
                 <?php viewComponent('recommend_content_tags', compact('tags') + ['desc' => true]) ?>
+                <div style="margin: 1.5rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2330982526015125" crossorigin="anonymous"></script>
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
             <?php endif ?>
             <section style="all:unset; display:block;">
                 <?php if ($count) : ?>
@@ -92,6 +99,13 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     探しているルームが見つからない時は、関連のタグをチェックしてみましょう！
                 </p>
                 <?php viewComponent('recommend_content_tags', compact('tags')) ?>
+                <div style="margin: 1.5rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2330982526015125" crossorigin="anonymous"></script>
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
             <?php endif ?>
             <div class="top-list">
                 <a style="margin: 1rem 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
