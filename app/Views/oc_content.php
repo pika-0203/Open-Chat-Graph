@@ -127,7 +127,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
       <?php endif ?>
 
-      <div style="margin: 1rem 0;">
+      <div style="margin: 1.25rem 0; height: calc(100vw / 1.2)">
         <?php viewComponent('ads/google-full-display') ?>
       </div>
 
