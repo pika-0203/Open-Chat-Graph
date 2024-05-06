@@ -155,7 +155,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <?php endif ?>
         </nav>
         <aside class="oc-desc-nav-category" style="display: flex; align-items:center;">
-          <span class="openchat-list-date" style="flex-direction: row; height: fit-content;">
+          <span class="openchat-list-date" style="flex-direction: row; height: fit-content; flex-wrap: nowrap;">
             <div style="display: flex; flex-direction: column; justify-content: flex-start; gap: 1rem; line-height: 1.5; height: 100%;">
               <?php if (is_int($oc['api_created_at'])) : ?>
                 <div>カテゴリー:&nbsp;</div>
@@ -176,9 +176,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </aside>
       </nav>
 
-      <section class="open-btn sp-btn" style="margin-bottom: 2rem;">
+      <section class="open-btn sp-btn">
         <?php if ($oc['url']) : ?>
-          <hr>
           <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
             <?php if ($oc['join_method_type'] !== 0) : ?>
               <svg style="height: 12px; fill: white; margin-right: 6px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.4 489.4" xml:space="preserve">
@@ -196,9 +195,12 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php endif ?>
       </section>
       <?php if ($recommend[0]) : ?>
-        <div class="first-recommend">
+        <article class="top-list first-recommend" style="padding-bottom: 0; gap: 0; border-top: 1px solid #efefef;">
           <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-        </div>
+          <div style="margin: 1rem 0;">
+            <?php viewComponent('ads/google-fluid-h82') ?>
+          </div>
+        </article>
       <?php endif ?>
       <section style="all: unset; display: block; margin: 0 -1rem; margin-top: 1rem;">
         <div style="display: flex; flex-direction: row; align-items: center; padding: 0 1rem;">
