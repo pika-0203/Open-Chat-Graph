@@ -44,17 +44,6 @@ class IndexPageController
             $dto->hourlyUpdatedAt
         );
 
-        $dto->dailyUpdatedAt->modify('-7day');
-        $weeklyStart = $dto->dailyUpdatedAt->format('n月j日');
-        $weeklyRange =  "{$weeklyStart} 〜 昨日";
-
-        $hourlyTime = $dto->hourlyUpdatedAt->format(\DateTime::ATOM);
-        $hourlyEnd = $dto->hourlyUpdatedAt->format('G:i');
-        $dto->hourlyUpdatedAt->modify('-1hour');
-        $hourlyStart = $dto->hourlyUpdatedAt->format('G:i');
-
-        $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hourlyEnd . '</time>';
-
         $tags = $dto->recommendList ?? [];
         $_news = array_reverse(TopPageNews::getTopPageNews());
 
@@ -67,17 +56,14 @@ class IndexPageController
         }
 
         return view('top_content', compact(
-            'dto',
             '_meta',
             '_css',
-            'myList',
-            '_hourlyRange',
-            'weeklyRange',
-            'hourlyEnd',
             '_schema',
+            '_updatedAt',
+            'dto',
+            'myList',
             'tags',
             '_news',
-            '_updatedAt'
         ));
     }
 }

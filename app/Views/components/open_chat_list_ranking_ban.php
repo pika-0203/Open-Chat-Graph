@@ -5,7 +5,7 @@
     <?php $timeFrame = $oc['end_datetime'] ? calculateTimeFrame($_now, $oc['end_datetime']) : calculateTimeFrame($_now, $oc['old_datetime']) ?>
     <li style="all: unset; display: block;">
       <?php if ($key && $key % 10 === 0) : ?>
-        <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
+        <div style="margin: 1rem 0;">
           <!-- OCページ -->
           <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
           <script>

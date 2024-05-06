@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
+use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\OpenChatAdmin\AdminOpenChat;
 use App\Services\Recommend\RecommendGenarator;
@@ -28,6 +29,7 @@ class OpenChatPageController
         OcPageSchema $ocPageSchema,
         RecommendGenarator $recommendGenarator,
         StaticDataFile $staticDataGeneration,
+        RecentCommentListRepositoryInterface $recentCommentListRepository,
         int $open_chat_id,
     ) {
         $recommend = $recommendGenarator->getRecommend($open_chat_id);
@@ -115,11 +117,7 @@ class OpenChatPageController
         }
 
         $dto = $staticDataGeneration->getTopPageData();
-
-        $hourlyEnd = $dto->hourlyUpdatedAt->format('G:i');
-        $dto->hourlyUpdatedAt->modify('-1hour');
-        $hourlyStart = $dto->hourlyUpdatedAt->format('G:i');
-        $hourlyRange = "{$hourlyStart} 〜 {$hourlyEnd}";
+        $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChatAll(0, 15);
 
         return view('oc_content', compact(
             '_meta',
@@ -137,7 +135,6 @@ class OpenChatPageController
             '_hourlyRange',
             '_adminDto',
             'dto',
-            'hourlyRange',
         ));
     }
 

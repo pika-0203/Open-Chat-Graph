@@ -30,7 +30,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                                 <span class="openchat-list-title">いま人数急増中のタグ</span>
                                 <span aria-hidden="true" style="font-size: 9px; user-select: none; margin-bottom: px;margin-left: -3px;">🚀</span>
                             </h2>
-                            <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0"><?php echo $hourlyEnd ?></span>
+                            <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0"><?php echo $dto->hourlyUpdatedAt->format('G:i') ?></span>
                         </div>
                     </header>
                     <aside class="list-aside ranking-desc">
@@ -75,7 +75,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <article class="mylist">
                 <div class="refresh-time openchat-list-date">
                     <span style="font-weight: bold; color:#111; font-size:13px; margin: 0; line-height: unset;">ピン留め (24時間の人数増加)</span>
-                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0; line-height: unset;"><?php echo $hourlyEnd ?></span>
+                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0; line-height: unset;"><?php echo $dto->hourlyUpdatedAt->format('G:i') ?></span>
                 </div>
                 <div style="margin: -4px 0 -4px 0;">
                     <?php viewComponent('open_chat_list_ranking', ['openChatList' => $myList, 'isHourly' => true]) ?>
@@ -87,111 +87,8 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <hr class="ht-top-mylist">
         <?php endif ?>
 
-        <article class="top-list" style="padding-top: 0; padding-bottom: 1rem;">
-            <header class="openchat-list-title-area unset">
-                <div class="openchat-list-date unset ranking-url">
-                    <h2 class="unset">
-                        <span class="openchat-list-title">最近のコメント投稿</span>
-                    </h2>
-                </div>
-            </header>
-            <?php viewComponent('open_chat_list_ranking_comment', ['openChatList' => $dto->recentCommentList]) ?>
-            <div style="margin-top: 1rem;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-                <!-- OCページ -->
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-        </article>
-
-        <article class="top-ranking">
-            <header class="openchat-list-title-area unset">
-                <div class="openchat-list-date unset ranking-url">
-                    <h2 class="unset">
-                        <span class="openchat-list-title">1時間の人数増加ランキング</span>
-                    </h2>
-                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0"><?php echo $_hourlyRange ?></span>
-                </div>
-            </header>
-            <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->hourlyList, 'isHourly' => true]) ?>
-            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=hourly') ?>">
-                <span class="ranking-readMore">1時間の人数増加ランキングを詳しく見る</span>
-            </a>
-            <div style="margin-top: 0rem;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-                <!-- OCページ -->
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-        </article>
-
-        <article class="top-ranking">
-            <header class="openchat-list-title-area unset">
-                <div class="openchat-list-date unset ranking-url">
-                    <h2 class="unset">
-                        <span class="openchat-list-title">24時間の人数増加ランキング</span>
-                    </h2>
-                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0">1時間ごとに更新</span>
-                </div>
-            </header>
-            <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->dailyList, 'isHourly' => true]) ?>
-            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=daily') ?>">
-                <span class="ranking-readMore">24時間の人数増加ランキングを詳しく見る</span>
-            </a>
-            <div style="margin-top: 0rem;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-                <!-- OCページ -->
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-        </article>
-
-        <article class="top-ranking">
-            <header class="openchat-list-title-area unset">
-                <div class="openchat-list-date unset ranking-url">
-                    <h2 class="unset">
-                        <span class="openchat-list-title">1週間の人数増加ランキング</span>
-                    </h2>
-                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0">1日ごとに更新</span>
-                </div>
-            </header>
-            <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->weeklyList]) ?>
-            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=weekly') ?>">
-                <span class="ranking-readMore">1週間の人数増加ランキングを詳しく見る</span>
-            </a>
-            <div style="margin-top: 0rem;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-                <!-- OCページ -->
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-        </article>
-
-        <article class="top-ranking created-at">
-            <header class="openchat-list-title-area unset">
-                <div class="openchat-list-date unset ranking-url">
-                    <h2 class="unset">
-                        <span class="openchat-list-title">人数ランキング</span>
-                    </h2>
-                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0">※公式運営を除く</span>
-                </div>
-            </header>
-            <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->popularList]) ?>
-            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-                <span class="ranking-readMore">人数ランキングを詳しく見る</span>
-            </a>
-            <div style="margin-top: 0rem;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-                <!-- OCページ -->
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-        </article>
+        <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
+        <?php viewComponent('top_ranking_comment_list', compact('dto')) ?>
 
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; border: 0">
             <p style="line-height: 2; margin: 1rem 0 0 0;" class="top-small-desc">

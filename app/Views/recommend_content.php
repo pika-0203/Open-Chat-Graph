@@ -81,8 +81,8 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php endif ?>
             </section>
             <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
-                <div class="top-list">
-                    <a style="margin: 1rem 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
+                <div class="top-list" style="padding: 0 0 1rem 0;">
+                    <a style="margin: 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
                         <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」を詳しく見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
                     </a>
                 </div>
@@ -93,7 +93,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 </p>
                 <?php viewComponent('recommend_content_tags', compact('tags')) ?>
             <?php endif ?>
-            <div class="top-list">
+            <div class="top-list" style="margin-top: -1.5rem;">
                 <a style="margin: 1rem 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                     <span class="ranking-readMore" style="font-size: 11.5px;">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
                 </a>

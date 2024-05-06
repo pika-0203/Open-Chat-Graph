@@ -1,7 +1,7 @@
 <aside class="list-aside comment-aside">
     <details>
-        <summary>
-            <h3>コメントの例文ガイド</h3>
+        <summary style="font-size: 14px;">
+            <h3>コメントの例文ガイドを読む</h3>
         </summary>
         <ol>
             <li>

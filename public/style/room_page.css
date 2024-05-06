@@ -391,6 +391,11 @@ body > footer {
     padding: 0 1rem;
     margin: auto;
     margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .first-recommend {
+    margin: 2rem 0;
   }
 
   .open-btn.sp-btn {

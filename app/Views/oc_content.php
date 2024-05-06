@@ -127,12 +127,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
       <?php endif ?>
 
-      <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-        <!-- OCページ -->
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
-        <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+      <div style="margin: 1rem 0;">
+        <?php viewComponent('ads/google-full-display') ?>
       </div>
 
       <div style="display: flex; flex-direction: row; align-items: center;">
@@ -200,100 +196,55 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php endif ?>
       </section>
       <?php if ($recommend[0]) : ?>
-        <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+        <div class="first-recommend">
+          <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+        </div>
       <?php endif ?>
-      <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-        <!-- OCページ -->
-        <ins class="adsbygoogle" style="display:block; height: 82px;" data-ad-format="fluid" data-ad-layout-key="-hx-k+2y-5w+48" data-ad-client="ca-pub-2330982526015125" data-ad-slot="1753278137"></ins>
-        <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-      </div>
       <section style="all: unset; display: block; margin: 0 -1rem; margin-top: 1rem;">
         <div style="display: flex; flex-direction: row; align-items: center; padding: 0 1rem;">
           <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
           <h2 class="graph-title">オープンチャットについてのコメント</h2>
         </div>
-        <div style="padding: 0 1rem; margin-bottom: 1rem;">
+        <div style="padding: 0 1rem; margin-bottom: 1.5rem; margin-top: .25rem;">
           <?php viewComponent('comment_desc') ?>
         </div>
         <div id="comment-root"></div>
       </section>
-      
-      <?php if ($recommend[1]) : ?>
-        <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-      <?php endif ?>
 
-      <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-        <!-- OCページ -->
-        <ins class="adsbygoogle" style="display:block; height: 82px;" data-ad-format="fluid" data-ad-layout-key="-hx-k+2y-5w+48" data-ad-client="ca-pub-2330982526015125" data-ad-slot="1753278137"></ins>
-        <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-      </div>
-
-      <aside class="top-ranking" style="border: 0; padding: 0;  margin-top: 1rem;">
-        <header class="openchat-list-title-area unset">
-          <div class="openchat-list-date unset ranking-url">
-            <h2 class="unset">
-              <span class="openchat-list-title">1時間の人数増加ランキング</span>
-            </h2>
-            <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0"><?php echo $hourlyRange ?></span>
-          </div>
-        </header>
-        <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->hourlyList, 'isHourly' => true]) ?>
-        <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=hourly') ?>">
-          <span class="ranking-readMore">1時間の人数増加ランキングを詳しく見る</span>
-        </a>
-        <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-          <!-- OCページ -->
-          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
-          <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
+      <aside style="margin-bottom: 1rem;">
+        <div style="border-top: 1px solid #efefef; padding-top: 1rem">
+          <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
         </div>
+
+        <?php if ($recommend[1]) : ?>
+          <article class="top-list" style="padding-bottom: 0; gap: 0;">
+            <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+            <div style="margin: 1rem 0;">
+              <?php viewComponent('ads/google-fluid-h82') ?>
+            </div>
+          </article>
+        <?php endif ?>
+
+        <?php viewComponent('top_ranking_comment_list', compact('dto')) ?>
       </aside>
 
-      <aside class="top-ranking" style="border: 0;  margin-top: 0rem;">
-        <header class="openchat-list-title-area unset">
-          <div class="openchat-list-date unset ranking-url">
-            <h2 class="unset">
-              <span class="openchat-list-title">24時間の人数増加ランキング</span>
-            </h2>
-            <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0">1時間ごとに更新</span>
-          </div>
-        </header>
-        <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->dailyList, 'isHourly' => true]) ?>
-        <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=daily') ?>">
-          <span class="ranking-readMore">24時間の人数増加ランキングを詳しく見る</span>
-        </a>
-        <div style="margin: 1rem 0;/** border: 1px solid #efefef; padding: 6px; border-radius: 4px; **/">
-          <!-- OCページ -->
-          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
-          <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
-        </div>
-      </aside>
-    </article>
-
-    <footer>
-      <aside class="open-btn2">
-        <a href="https://openchat-jp.line.me/other/beginners_guide" class="app_link">
-          <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
-        </a>
-        <a href="https://line.me/download" class="app_link app-dl">
-          <span class="text">LINEアプリをダウンロード（LINE公式）</span>
-        </a>
-        <a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" class="app_link csv-dl" style="
+      <footer>
+        <aside class="open-btn2">
+          <a href="https://openchat-jp.line.me/other/beginners_guide" class="app_link">
+            <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
+          </a>
+          <a href="https://line.me/download" class="app_link app-dl">
+            <span class="text">LINEアプリをダウンロード（LINE公式）</span>
+          </a>
+          <a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" class="app_link csv-dl" style="
           margin-bottom: 1rem;
           margin-top: .5rem;">
-          <span class="text">人数統計CSVをダウンロード</span>
-        </a>
-      </aside>
-      <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
-      <?php viewComponent('footer_inner') ?>
-    </footer>
+            <span class="text">人数統計CSVをダウンロード</span>
+          </a>
+        </aside>
+        <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
+        <?php viewComponent('footer_inner') ?>
+      </footer>
   </div>
   <?php echo $_breadcrumbsShema ?>
   <script>
