@@ -200,6 +200,9 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <?php if ($recommend[0]) : ?>
         <article class="top-list first-recommend" style="padding-bottom: 0; gap: 0; border-top: 1px solid #efefef;">
           <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+          <div style="margin: 1rem 0;">
+            <?php viewComponent('ads/google-fluid-h82') ?>
+          </div>
         </article>
       <?php endif ?>
       <section style="all: unset; display: block; margin: 0 -1rem; margin-top: 1rem;">
@@ -221,6 +224,9 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php if ($recommend[1]) : ?>
           <article class="top-list" style="padding-bottom: 0; gap: 0;">
             <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+            <div style="margin: 1rem 0;">
+              <?php viewComponent('ads/google-fluid-h82') ?>
+            </div>
           </article>
         <?php endif ?>
 
