@@ -35,7 +35,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     </header>
                     <aside class="list-aside ranking-desc">
                         <details class="icon-desc">
-                            <summary>人数急増中のタグとは</summary>
+                            <summary style="font-size: 14px;">人数急増中のタグとは</summary>
                             <p class="recommend-desc">
                                 「人数急増中のタグ」とは、今オープンチャットで人気を集めているテーマを指します。同じタグを持ついくつかのオープンチャットに参加者が急増した場合、そのタグは「いま人数急増中のタグ」として表示されるようになります。 </p>
                             <div>

@@ -1,6 +1,6 @@
 <aside class="list-aside ranking-desc">
     <details class="icon-desc">
-        <summary>タグの分類について</summary>
+        <summary style="font-size: 14px;">タグの分類について</summary>
         <p class="recommend-desc">
             各ルームは、ルームのテーマにぴったり合う1つのタグで自動的に分類されます。例えば、美容室に関する話題のルームは「美容室」タグに分類され、「美容」とは分類されません。
         </p>

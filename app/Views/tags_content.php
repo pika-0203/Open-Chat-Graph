@@ -27,7 +27,7 @@ function memberCount(int $count)
         <p style="font-size: 13px; color: #555">タグを探すときは、ブラウザの機能でページ内のテキストを検索してください。</p>
         <aside class="list-aside ranking-desc" style="margin: 1rem 0;">
             <details class="icon-desc">
-                <summary>タグ内の人数集計について</summary>
+                <summary style="font-size: 14px;">タグ内の人数集計について</summary>
                 <p class="recommend-desc">
                     タグ内の合計は、全ルームの合計人数です。<br>1H（1時間）、24H（24時間）、1W（1週間）は各期間における全ルームの合計人数増減です。
                 </p>

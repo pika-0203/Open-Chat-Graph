@@ -92,7 +92,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
             </header>
             <aside class="list-aside ranking-desc" style="margin: 1rem 0;">
                 <details class="icon-desc">
-                    <summary>分析機能の説明と使い方</summary>
+                    <summary style="font-size: 14px;">分析機能の説明と使い方</summary>
                     <ul style="padding-left: 1.25rem;">
                         <li>
                             <p class="recommend-desc">
@@ -146,7 +146,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
             </aside>
             <aside class="list-aside ranking-desc" style="margin: 1rem 0;">
                 <details class="icon-desc">
-                    <summary>オプチャ公式ランキングの掲載を分析する考え方</summary>
+                    <summary style="font-size: 14px;">オプチャ公式ランキングの掲載を分析する考え方</summary>
                     <p class="recommend-desc">
                         通常、公式の検索機能で検索できないルーム(検索落ち)は、ランキングにも未掲載と考えられます。
                     </p>
@@ -168,7 +168,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     </p>
                 </details>
             </aside>
-            
+
             <form id="value-form" style="position: relative; margin-bottom: 12px">
                 <label for="pet-select0">💡掲載状況:</label>
                 <select id="pet-select0" name="publish">
