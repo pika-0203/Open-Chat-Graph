@@ -75,7 +75,4 @@ $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hou
     <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
         <span class="ranking-readMore">人数ランキングをすべて見る</span>
     </a>
-    <div style="margin-top: 1rem;">
-        <?php viewComponent('ads/google-fluid-h82') ?>
-    </div>
 </article>
