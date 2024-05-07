@@ -159,7 +159,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </nav>
         <aside class="oc-desc-nav-category" style="display: flex; align-items:center;">
           <span class="openchat-list-date" style="flex-direction: row; height: fit-content; flex-wrap: nowrap; color: #777;">
-            <div style="display: flex; flex-direction: column; justify-content: flex-start; gap: 1.5rem; line-height: 1.5; height: 100%;">
+            <div style="display: flex; flex-direction: column; justify-content: flex-start; gap: 1.5rem; line-height: 1.5; height: 100%; word-break: keep-all;">
               <?php if (is_int($oc['api_created_at'])) : ?>
                 <div>カテゴリー:&nbsp;</div>
               <?php endif ?>
@@ -167,7 +167,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <div>タグ:&nbsp;</div>
               <?php endif ?>
             </div>
-            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; line-height: 1.5; height: 100%;">
+            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; line-height: 1.5; height: 100%">
               <?php if (is_int($oc['api_created_at'])) : ?>
                 <a href="<?php echo url('ranking/' . $oc['category']) ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $category ?></a>
               <?php endif ?>

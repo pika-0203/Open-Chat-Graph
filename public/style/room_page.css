@@ -230,7 +230,6 @@ hr {
   flex-direction: row;
   color: #777;
   font-size: 13px;
-  white-space: nowrap;
   align-items: flex-start;
   gap: 4px;
 }
@@ -303,7 +302,7 @@ hr {
   border: 1px solid #efefef;
   padding: 4px 6px;
   border-radius: 3px;
-  text-wrap: nowrap;
+  word-break: keep-all;
 }
 
 body > footer {
