@@ -26,7 +26,7 @@ class IndexPageController
 
         $myList = [];
         // クッキーにピン留めがある場合
-        if(cookie()->has('myList') && cookie()->has('admin')) {
+        if(cookie()->has('myList')) {
             $myList = $this->listService();
         }
 
@@ -81,12 +81,14 @@ class IndexPageController
         if (!$expires) return [];
 
         $userId = $auth->loginCookieUserId();
-        //if ($userId === AdminConfig::ADMIN_API_KEY) return $myList;
+        if ($userId === AdminConfig::ADMIN_API_KEY) return $myList;
 
         $myOpenChatListUserLogger->userMyListLog(
-            $auth->loginCookieUserId(),
+            $userId,
             $expires,
             $myListIdArray
         );
+
+        return $myList;
     }
 }

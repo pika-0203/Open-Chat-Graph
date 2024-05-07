@@ -19,16 +19,16 @@ class UserLogRepository
         string $ua
     ): void {
         $query =
-            "INSERT INTO oc_list_user
-                (user_id, oc_list, list_count, expires, ip, ua)
-            VALUES
-                (:user_id, :oc_list, :list_count, :expires, :ip, :ua) AS alias
-            ON DUPLICATE KEY UPDATE
-                oc_list = alias.oc_list,
-                list_count = alias.list_count,
-                expires = alias.expires,
-                ip = alias.ip,
-                ua = alias.ua";
+        "INSERT INTO oc_list_user
+            (user_id, oc_list, list_count, expires, ip, ua)
+        VALUES
+            (:user_id, :oc_list, :list_count, :expires, :ip, :ua)
+        ON DUPLICATE KEY UPDATE
+            oc_list = VALUES(oc_list),
+            list_count = VALUES(list_count),
+            expires = VALUES(expires),
+            ip = VALUES(ip),
+            ua = VALUES(ua);";
 
         $oc_list = json_encode($ocList);
         $list_count = count($ocList);
