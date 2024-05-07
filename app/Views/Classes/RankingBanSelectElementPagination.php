@@ -46,7 +46,7 @@ class RankingBanSelectElementPagination
             $startLabel = isset($labelArray[$start - 1]) ? $this->formatDateTimeHourly($labelArray[$start - 1]) : '';
             $endLabel = isset($labelArray[$end - 1]) ? $this->formatDateTimeHourly($labelArray[$end - 1]) : '';
 
-            return "<option value='{$url}' {$selected}>{$endLabel} ~ {$startLabel} ({$i}ページ目)</option>";
+            return "<option value='{$url}' {$selected}>{$startLabel} → {$endLabel} ({$i}ページ目)</option>";
         };
 
         // 選択されたページに対して"selected"属性を返す
@@ -72,7 +72,7 @@ class RankingBanSelectElementPagination
         $endLabel = isset($labelArray[$labelEndNum - 1]) ? $this->formatDateTimeHourly($labelArray[$labelEndNum - 1]) : '';
 
         // select要素のラベルを生成する
-        $_label = "{$endLabel} ~ {$startLabel}<br>({$pageNumber}ページ目)";
+        $_label = "{$startLabel} → {$endLabel}<br>({$pageNumber}ページ目)";
 
         // タイトル用の文字列
         $title = "{$labelEndNum} ~ {$labelStartNum}";
