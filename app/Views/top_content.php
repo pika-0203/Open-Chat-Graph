@@ -8,6 +8,12 @@ use App\Services\Recommend\RecommendUtility;
 viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
 <body class="body">
+    <?php if (!isMobile()) : ?>
+        <div class="oc-ads1" style="margin-bottom: 2rem;">
+            <?php viewComponent('ads/google-full-display') ?>
+        </div>
+    <?php endif ?>
+
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main style="margin-bottom: 0;">
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem; padding-bottom: 1rem;">
