@@ -28,10 +28,13 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
   <div class="body">
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
+    <div style="margin-bottom: 1rem;">
+      <?php viewComponent('ads/google-horizontal-oc-top') ?>
+    </div>
     <article class="openchat unset">
 
       <!-- オープンチャット表示ヘッダー -->
-      <section class="openchat-header unset">
+      <section class="openchat-header unset" style="padding-top: 1rem; border-top: 1px solid #efefef">
         <div class="talkroom_banner_img_area">
           <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
         </div>
@@ -125,14 +128,10 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <?php endif ?>
           </div>
       </section>
-
+      <hr>
       <?php if (isset($_adminDto)) : ?>
         <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
       <?php endif ?>
-
-      <div class="oc-ads1">
-        <?php viewComponent('ads/google-full-display') ?>
-      </div>
 
       <div style="display: flex; flex-direction: row; align-items: center;">
         <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>
