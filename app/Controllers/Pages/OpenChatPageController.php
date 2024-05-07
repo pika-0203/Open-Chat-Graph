@@ -53,7 +53,7 @@ class OpenChatPageController
 
         $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($_statsDto);
 
-        $_css = ['site_header', 'site_footer', 'room_page', 'react/OpenChat', 'graph_page', 'recommend_list', 'room_list'];
+        $_css = ['room_list', 'site_header', 'site_footer', 'room_page', 'react/OpenChat', 'graph_page', 'recommend_list'];
 
         $_meta = $meta->generateMetadata($open_chat_id, $oc)
             ->setImageUrl(imgUrl($oc['id'], $oc['img_url']));

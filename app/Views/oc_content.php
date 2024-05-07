@@ -29,6 +29,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
     <article class="openchat unset">
+
       <!-- オープンチャット表示ヘッダー -->
       <section class="openchat-header unset">
         <div class="talkroom_banner_img_area">
@@ -37,7 +38,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
         <div class="openchat-header-right">
           <a title="<?php echo $oc['name'] ?>" rel="external" target="_blank" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] . AppConfig::LINE_OPEN_URL_SUFFIX ?>" class="h1-link unset">
-            <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><span class="name"><?php echo $oc['name'] ?></span></h1>
+            <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></h1>
             <div class="link-mark"><span class="link-title"><span aria-hidden="true" style="font-size: 10px; margin-right:2px;">🔗</span>LINEオープンチャット公式サイト</span></div>
           </a>
           <div class="talkroom_description_box close" id="talkroom_description_box">
@@ -70,6 +71,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <?php endif ?>
 
           <div class="talkroom_number_of_stats">
+
             <?php if (isset($oc['rh24_diff_member'])) : ?>
               <?php if ($oc['rh24_diff_member'] >= AppConfig::MIN_MEMBER_DIFF_H24) : ?>
                 <div class="number-box bold" style="margin-right: 6px;">
@@ -101,10 +103,10 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                     <?php endif ?>
                   </div>
                 <?php endif ?>
-                </div>
 
-                <section class="open-btn pc-btn">
-                  <?php if ($oc['url']) : ?>
+                </div>
+                <?php if ($oc['url']) : ?>
+                  <section class="open-btn pc-btn">
                     <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
                       <?php if ($oc['join_method_type'] !== 0) : ?>
                         <svg style="height: 13px; fill: #fff; margin-right: 6px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.4 489.4" xml:space="preserve">
@@ -119,8 +121,9 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                         <span style="font-size: 12px; margin-left: 4px; font-weight: normal; line-height: 2;" class="text">参加コード入力制</span>
                       <?php endif ?>
                     </a>
-                  <?php endif ?>
-                </section>
+                  </section>
+                <?php endif ?>
+          </div>
       </section>
 
       <?php if (isset($_adminDto)) : ?>
@@ -155,7 +158,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <?php endif ?>
         </nav>
         <aside class="oc-desc-nav-category" style="display: flex; align-items:center;">
-          <span class="openchat-list-date" style="flex-direction: row; height: fit-content; flex-wrap: nowrap;">
+          <span class="openchat-list-date" style="flex-direction: row; height: fit-content; flex-wrap: nowrap; color: #777;">
             <div style="display: flex; flex-direction: column; justify-content: flex-start; gap: 1rem; line-height: 1.5; height: 100%;">
               <?php if (is_int($oc['api_created_at'])) : ?>
                 <div>カテゴリー:&nbsp;</div>
@@ -207,7 +210,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
           <h2 class="graph-title">オープンチャットについてのコメント</h2>
         </div>
-        <div style="padding: 0 1rem; margin-bottom: 1.5rem; margin-top: .25rem;">
+        <div style="margin-bottom: 1.5rem; margin-top: .25rem;">
           <?php viewComponent('comment_desc') ?>
         </div>
         <div id="comment-root"></div>
@@ -230,7 +233,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('top_ranking_comment_list', compact('dto')) ?>
       </aside>
 
-      <footer>
+      <footer class="footer">
         <aside class="open-btn2">
           <a href="https://openchat-jp.line.me/other/beginners_guide" class="app_link">
             <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
@@ -247,6 +250,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
         <?php viewComponent('footer_inner') ?>
       </footer>
+    </article>
   </div>
   <?php echo $_breadcrumbsShema ?>
   <script>

@@ -169,6 +169,7 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     padding: 0;
+    margin: 1rem 0;
   }
 
   .recommend-list li {
