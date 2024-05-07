@@ -19,7 +19,7 @@ $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hou
     </header>
     <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->hourlyList, 'isHourly' => true]) ?>
     <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=hourly') ?>">
-        <span class="ranking-readMore">1時間の人数増加ランキングを詳しく見る</span>
+        <span class="ranking-readMore">1時間の人数増加ランキングをすべて見る</span>
     </a>
     <div style="margin-top: 1rem;">
         <?php viewComponent('ads/google-full-display') ?>
@@ -37,7 +37,7 @@ $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hou
     </header>
     <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->dailyList, 'isHourly' => true]) ?>
     <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=daily') ?>">
-        <span class="ranking-readMore">24時間の人数増加ランキングを詳しく見る</span>
+        <span class="ranking-readMore">24時間の人数増加ランキングをすべて見る</span>
     </a>
     <div style="margin-top: 1rem;">
         <?php viewComponent('ads/google-full-display') ?>
@@ -55,7 +55,7 @@ $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hou
     </header>
     <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->weeklyList]) ?>
     <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=weekly') ?>">
-        <span class="ranking-readMore">1週間の人数増加ランキングを詳しく見る</span>
+        <span class="ranking-readMore">1週間の人数増加ランキングをすべて見る</span>
     </a>
     <div style="margin-top: 1rem;">
         <?php viewComponent('ads/google-full-display') ?>
@@ -73,7 +73,7 @@ $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hou
     </header>
     <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->popularList]) ?>
     <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-        <span class="ranking-readMore">人数ランキングを詳しく見る</span>
+        <span class="ranking-readMore">人数ランキングをすべて見る</span>
     </a>
     <div style="margin-top: 1rem;">
         <?php viewComponent('ads/google-fluid-h82') ?>

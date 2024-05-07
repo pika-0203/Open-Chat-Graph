@@ -19,7 +19,7 @@
         <?php /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
         viewComponent('open_chat_list_ranking', ['openChatList' => $dto->hourlyList, 'isHourly' => true]) ?>
         <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=hourly') ?>">
-            <span class="ranking-readMore">1時間ランキングを詳しく見る</span>
+            <span class="ranking-readMore">1時間ランキングをすべて見る</span>
         </a>
     </article>
 
@@ -36,7 +36,7 @@
         </header>
         <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->dailyList]) ?>
         <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=daily') ?>">
-            <span class="ranking-readMore">24時間ランキングを詳しく見る</span>
+            <span class="ranking-readMore">24時間ランキングをすべて見る</span>
         </a>
     </article>
 
@@ -53,7 +53,7 @@
         </header>
         <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->weeklyList]) ?>
         <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=weekly') ?>">
-            <span class="ranking-readMore">1週間ランキングを詳しく見る</span>
+            <span class="ranking-readMore">1週間ランキングをすべて見る</span>
         </a>
     </article>
 
@@ -71,7 +71,7 @@
         </header>
         <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->popularList]) ?>
         <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-            <span class="ranking-readMore">メンバー数ランキングを詳しく見る</span>
+            <span class="ranking-readMore">メンバー数ランキングをすべて見る</span>
         </a>
     </article>
 </main>
