@@ -75,10 +75,6 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 font-size: 16px;
             }
         }
-
-        .adsbygoogle-noablate {
-            
-        }
     </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
