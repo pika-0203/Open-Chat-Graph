@@ -28,6 +28,11 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     <span style="display: inline-block; line-height: 1;">分析Labs</span>
                 </span>
             </a>
+            <?php if (isMobile()) : ?>
+                <div class="oc-ads1" style="min-height: 100px;">
+                    <?php viewComponent('ads/google-fluid-top-sp') ?>
+                </div>
+            <?php endif ?>
             <?php if ($tags) : ?>
                 <div>
                     <header class="openchat-list-title-area unset">
