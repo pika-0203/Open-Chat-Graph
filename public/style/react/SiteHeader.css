@@ -156,3 +156,15 @@
     border-radius: 99rem;
   }
 }
+
+.grippy-host {
+  display: none;
+}
+
+.right-side-rail-dismiss-btn {
+  display: none;
+}
+
+.left-side-rail-dismiss-btn {
+  display: none;
+}
