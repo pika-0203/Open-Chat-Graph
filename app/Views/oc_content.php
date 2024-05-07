@@ -28,6 +28,11 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
   <div class="body">
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
+    <?php if (!isMobile()) : ?>
+      <div class="oc-ads1">
+        <?php viewComponent('ads/google-full-display') ?>
+      </div>
+    <?php endif ?>
     <article class="openchat unset">
 
       <!-- オープンチャット表示ヘッダー -->
@@ -130,9 +135,11 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
       <?php endif ?>
 
-      <div style="margin: 1.25rem 0; height: calc(100vw / 1.2)">
-        <?php viewComponent('ads/google-full-display') ?>
-      </div>
+      <?php if (isMobile()) : ?>
+        <div class="oc-ads1">
+          <?php viewComponent('ads/google-full-display') ?>
+        </div>
+      <?php endif ?>
 
       <div style="display: flex; flex-direction: row; align-items: center;">
         <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>

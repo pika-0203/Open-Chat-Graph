@@ -73,9 +73,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
         <?php if ($myList) : ?>
             <article class="mylist">
-                <div style="margin: 1rem 0;">
-                    <?php viewComponent('ads/google-fluid-h82') ?>
-                </div>
                 <div class="refresh-time openchat-list-date">
                     <span style="font-weight: bold; color:#111; font-size:13px; margin: 0; line-height: unset;">ピン留め (24時間の人数増加)</span>
                     <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0; line-height: unset;"><?php echo $dto->hourlyUpdatedAt->format('G:i') ?></span>
@@ -83,9 +80,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                 <div style="margin: -4px 0 -4px 0;">
                     <?php viewComponent('open_chat_list_ranking', ['openChatList' => $myList, 'isHourly' => true]) ?>
                 </div>
-                <dvi style="margin: 1rem 0; display: block;">
-                    <?php viewComponent('update_news', compact('_news')) ?>
-                </dvi>
             </article>
             <hr class="ht-top-mylist">
         <?php endif ?>
@@ -101,9 +95,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                 <span class="ranking-readMore">オプチャグラフについて</span>
             </a>
         </article>
-        <?php if (!$myList) : ?>
-            <?php viewComponent('update_news', compact('_news')) ?>
-        <?php endif ?>
+        <?php viewComponent('update_news', compact('_news')) ?>
     </main>
     <footer>
         <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>

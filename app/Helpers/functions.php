@@ -404,3 +404,15 @@ function formatDateTimeHourly2(string $dateTimeStr): string
         return $dateTime->format("Y/m/d G:i");
     }
 }
+
+function isMobile(): bool
+{
+    $user_agent =  getUA();
+    if ((strpos($user_agent, 'iPhone') !== false)
+        || (strpos($user_agent, 'Android') !== false)
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+}
