@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Config\AdminConfig;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
+use App\Services\Auth\AuthInterface;
 use App\Services\User\MyOpenChatList;
 use App\Services\StaticData\StaticDataFile;
+use App\Services\User\MyOpenChatListUserLogger;
 use App\Views\Content\TopPageNews;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 use DateTime;
@@ -23,12 +26,8 @@ class IndexPageController
 
         $myList = [];
         // クッキーにピン留めがある場合
-        if (cookie()->has('myList')) {
-            /** 
-             * @var MyOpenChatList $myOpenChatList
-             */
-            $myOpenChatList = app(MyOpenChatList::class);
-            $myList = $myOpenChatList->init() ? $myOpenChatList->get() : [];
+        if(cookie()->has('myList') && cookie()->has('admin')) {
+            $myList = $this->listService();
         }
 
         $_css = ['room_list', 'site_header', 'site_footer'];
@@ -65,5 +64,29 @@ class IndexPageController
             'tags',
             '_news',
         ));
+    }
+
+    private function listService(): array
+    {
+        /** @var MyOpenChatList $myOpenChatList **/
+        $myOpenChatList = app(MyOpenChatList::class);
+
+        /** @var AuthInterface $auth **/
+        $auth = app(AuthInterface::class);
+
+        /** @var MyOpenChatListUserLogger $myOpenChatListUserLogger **/
+        $myOpenChatListUserLogger = app(MyOpenChatListUserLogger::class);
+
+        [$expires, $myListIdArray, $myList] = $myOpenChatList->init();
+        if (!$expires) return [];
+
+        $userId = $auth->loginCookieUserId();
+        //if ($userId === AdminConfig::ADMIN_API_KEY) return $myList;
+
+        $myOpenChatListUserLogger->userMyListLog(
+            $auth->loginCookieUserId(),
+            $expires,
+            $myListIdArray
+        );
     }
 }

@@ -17,6 +17,7 @@ app/Config/AdminConfig.php
 app/Services/Admin/FTPHandler.php
 app/Config/Shadow/DatabaseConfig.php
 app/Config/RankingPositionDBConfig.php
+app/Config/UserLogDBConfig.php
 app/Config/CommentDBConfig.php
 app/Config/Shadow/GceDatabaseConfig.php
 /node_modules

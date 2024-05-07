@@ -12,6 +12,7 @@ class CookieListService
     public string $cookieName;
     public int $myListLimit;
     private array $myListArray = [];
+    private int $expires;
 
     function init(string $cookieName = 'myList', $myListLimit = AppConfig::MY_LIST_LIMIT): bool
     {
@@ -29,6 +30,7 @@ class CookieListService
         }
 
         [$myListArray, $expires] = $result;
+        $this->expires = $expires;
 
         if (isWithinHalfExpires($expires, 3600 * 24 * 365)) {
             $this->setCookie($this->getCookie());
@@ -98,6 +100,8 @@ class CookieListService
             $expires,
             httpOnly: false
         );
+
+        $this->expires = $expires;
     }
 
     /**
@@ -124,5 +128,10 @@ class CookieListService
     function getListArray(): array
     {
         return $this->myListArray;
+    }
+
+    function getExpires(): int
+    {
+        return $this->expires;
     }
 }

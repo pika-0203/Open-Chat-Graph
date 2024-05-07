@@ -15,18 +15,26 @@ class MyOpenChatList
     ) {
     }
 
-    function init(): bool
+    function init(): array
     {
-        return $this->cookieListService->init();
-    }
+        if (!$this->cookieListService->init()) return [0, [], []];
 
-    function get(): array
-    {
         $cookieList = $this->cookieListService->getListArray();
-        $removeFlag = false;
         $idArray = array_keys($cookieList);
 
+        return [
+            $this->cookieListService->getExpires(),
+            $idArray,
+            $this->getMyOpenChatList($cookieList, $idArray)
+        ];
+    }
+
+    function getMyOpenChatList(array $cookieList, array $idArray): array
+    {
+        if (!$cookieList || !$idArray) return [];
+
         $myOpenChatList = $this->openChatListRepository->getRankingRecordByMylist($idArray);
+        $removeFlag = false;
 
         if (count($cookieList) !== count($myOpenChatList)) {
             foreach ($idArray as $id) {
