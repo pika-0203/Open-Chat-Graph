@@ -22,11 +22,9 @@ class RakingBanPageService
      * @param int $change 0:内容変更ありのみ, 1:変更なしのみ, 2:すべて
      * @return array{ pageNumber:int,maxPageNumber:int,openChatList:array,totalRecords:int,labelArray:array }
      */
-    public function getAllOrderByDateTime(int $change, int $publish, int $percent, string $keyword, int $pageNumber): array|false
+    public function getAllOrderByDateTime(int $change, int $publish, int $percent, string $keyword, int $pageNumber, int $limit): array|false
     {
         $labelArray = $this->rankingBanPageRepository->findAllDatetimeColumn($change, $publish, $percent, $keyword);
-
-        $limit = AppConfig::OPEN_CHAT_LIST_LIMIT;
 
         // ページの最大数を取得する
         $totalRecords = count($labelArray);

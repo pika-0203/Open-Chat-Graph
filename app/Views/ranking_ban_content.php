@@ -75,6 +75,10 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 font-size: 16px;
             }
         }
+
+        .adsbygoogle-noablate {
+            
+        }
     </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
@@ -203,8 +207,8 @@ viewComponent('head', compact('_css', '_meta')) ?>
             <!-- select要素ページネーション -->
             <?php if (isset($_select)) : ?>
                 <nav class="page-select unset" style="flex-direction: column; padding: 0; margin: 0 0 12px 0;">
-                    <div>
-                        <small>1ページあたり100件の表示</small>
+                    <div style="font-weight: bold; font-size: 13px;">
+                        1ページあたり50件の表示
                     </div>
                     <form class="unset" style="width: 100%;">
                         <select id="page-selector" class="unset">
@@ -214,9 +218,9 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     </form>
                 </nav>
             <?php endif ?>
-            <small style="font-size: 13px; white-space: pre-wrap;"><?php echo $titleValue ?></small>
+            <small style="font-size: 13px; white-space: pre-wrap; font-weight: bold; color:#111;"><?php echo $titleValue ?></small>
             <br>
-            <small style="font-size: 13px; white-space: pre-wrap;"><?php echo number_format($totalRecords) ?>件の結果 (<?php echo $maxPageNumber ?>ページ中/<?php echo R::input('page') ?>ページ目)</small>
+            <small style="font-size: 13px; white-space: pre-wrap; color:#111;"><?php echo number_format($totalRecords) ?>件の結果 (<?php echo $maxPageNumber ?>ページ中/<?php echo R::input('page') ?>ページ目)</small>
             <?php if (isset($openChatList)) : ?>
                 <?php viewComponent('open_chat_list_ranking_ban', compact('openChatList', '_now')) ?>
             <?php else : ?>

@@ -39,12 +39,15 @@ class RankingBanLabsPageController
         $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
         $_now = file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME);
 
+        $limit = 50;
+
         $rankingBanData = $rakingBanPageService->getAllOrderByDateTime(
             $change,
             $publish,
             $percent,
             $keyword,
-            $page
+            $page,
+            $limit
         );
 
         if (!$rankingBanData && $page > 1) return false;
@@ -75,7 +78,7 @@ class RankingBanLabsPageController
             $params,
             $page,
             $totalRecords,
-            AppConfig::OPEN_CHAT_LIST_LIMIT,
+            $limit,
             $rankingBanData['maxPageNumber'],
             array_reverse($rankingBanData['labelArray'])
         );
