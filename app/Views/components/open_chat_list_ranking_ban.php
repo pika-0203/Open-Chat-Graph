@@ -26,6 +26,7 @@
             </span>
             <span class="openchat-item-stats">順位 <?php echo calculatePositionPercentage($oc['percentage']) ?></span>
           </div>
+
           <?php if (isset($oc['category']) && $oc['category']) : ?>
             <div class="openchat-item-mui-chip-outer" style="margin: 2px 0;">
               <span class="openchat-item-mui-chip-inner" aria-label="カテゴリ: <?php echo getCategoryName($oc['category']) ?>"><?php echo getCategoryName($oc['category']) ?></span>
@@ -33,12 +34,12 @@
           <?php endif ?>
 
           <?php if (!isset($oc['end_datetime'])) : ?>
-            <div class="openchat-item-lower unset" style="color: #777; font-weight: bold;">
+            <div class="openchat-item-lower unset" style="color: #777; font-weight: bold; margin-top: 2px;">
               <span class="registration-date">現在未掲載 <span class="blue"><?php echo $_now === $oc['old_datetime'] ? 'たった今' : calculateTimeDifference($_now, $oc['old_datetime']) . '前' ?></span> <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~</span>
             </div>
           <?php endif ?>
 
-          <div class="openchat-item-lower unset" style="margin-top: 1px; color: #777; font-weight: bold;">
+          <div class="openchat-item-lower unset" style="margin-top: 2px; color: #777; font-weight: bold;">
             <?php if ($oc['update_items']) : ?>
               <?php if ($oc['updated_at']) : ?>
                 <span>変更により未掲載: </span>
@@ -68,8 +69,8 @@
           </div>
 
           <?php if (isset($oc['end_datetime'])) : ?>
-            <div class="openchat-item-lower unset" style="color: #777; font-weight: bold;">
-              <span class="registration-date"><span style="font-weight: bold;">再掲載</span> <span class="blue"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span> <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~<?php echo formatDateTimeHourly2($oc['end_datetime']) ?></span>
+            <div class="openchat-item-lower unset" style="color: #777; font-weight: bold; margin-top: 2px;">
+              <span class="registration-date"><span style="font-weight: bold;">再掲載済み</span> <span class="blue"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span> <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~<?php echo formatDateTimeHourly2($oc['end_datetime']) ?></span>
             </div>
           <?php endif ?>
 
