@@ -8,12 +8,6 @@ use App\Services\Recommend\RecommendUtility;
 viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
 <body class="body">
-    <?php if (!isMobile()) : ?>
-        <div class="oc-ads1" style="margin-bottom: 2rem;">
-            <?php viewComponent('ads/google-full-display') ?>
-        </div>
-    <?php endif ?>
-
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main style="margin-bottom: 0;">
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem; padding-bottom: 1rem;">
@@ -28,11 +22,9 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     <span style="display: inline-block; line-height: 1;">分析Labs</span>
                 </span>
             </a>
-            <?php if (isMobile()) : ?>
-                <div class="oc-ads1" style="min-height: 100px;">
-                    <?php viewComponent('ads/google-fluid-top-sp') ?>
-                </div>
-            <?php endif ?>
+            <div class="oc-ads1" style="min-height: 82px;">
+                <?php viewComponent('ads/google-fluid-top-sp') ?>
+            </div>
             <?php if ($tags) : ?>
                 <div>
                     <header class="openchat-list-title-area unset">
