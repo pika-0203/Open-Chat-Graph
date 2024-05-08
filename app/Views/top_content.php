@@ -88,7 +88,11 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         <?php endif ?>
 
         <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
+        <div style="margin: 1rem 0;">
+            <?php viewComponent('ads/google-full-display') ?>
+        </div>
         <?php viewComponent('top_ranking_comment_list', compact('dto')) ?>
+        <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
 
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; border: 0">
             <p style="line-height: 2; margin: 1rem 0 0 0;" class="top-small-desc">

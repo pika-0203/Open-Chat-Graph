@@ -21,19 +21,23 @@ hr {
 
 .openchat .graph-title {
   font-weight: bold;
-  font-size: 15px;
+  font-size: 16px;
   color: #111;
   margin: 0;
   margin-bottom: 6px;
 }
 
 .oc-desc-nav {
-  padding-top: 2rem;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  border-top: 1px #efefef solid;
   display: flex;
   justify-content: space-evenly;
   gap: 8px;
   margin-bottom: 2rem;
 }
+
+
 
 .oc-desc-nav.no-ranking {
   position: absolute;
@@ -299,10 +303,14 @@ hr {
 .my-list-form .checkbox-label {
   margin-top: 0px;
   height: fit-content;
-  border: 1px solid #efefef;
-  padding: 4px 6px;
-  border-radius: 3px;
+  border: 1px solid #06c755;
+  height: 42px;
+  padding: 0 6px;
+  border-radius: 7px;
   word-break: keep-all;
+  color: #06c755;
+  font-weight: bold;
+  line-height: normal;
 }
 
 body > footer {
@@ -375,7 +383,7 @@ body > footer {
   }
 
   .openchat .graph-title {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .my-list-form .checkbox-label {

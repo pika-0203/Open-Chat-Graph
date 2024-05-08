@@ -1,12 +1,12 @@
 <?php if (isMobile()) : ?>
-     <div style="max-width: calc(100vw - 32px); margin: 0 auto;">
-          <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176"></ins>
+     <div style="height: calc((100vw / 1.2) - 1px);">
+          <ins class="adsbygoogle" style="display: block;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="rectangle" data-full-width-responsive="true"></ins>
           <script>
-               (adsbygoogle = window.adsbygoogle || []).push({});
+               (adsbygoogle = window.adsbygoogle || []).push({})
           </script>
      </div>
 <?php else : ?>
-     <ins class="adsbygoogle" style="display:block;" data-ad-format="fluid" data-ad-layout-key="-dk+75+fi-w9+9t" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8892050483"></ins>
+     <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="auto" data-full-width-responsive="true"></ins>
      <script>
           (adsbygoogle = window.adsbygoogle || []).push({});
      </script>

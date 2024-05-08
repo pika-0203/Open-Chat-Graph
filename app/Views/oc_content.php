@@ -28,13 +28,11 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
   <div class="body">
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
-    <div style="margin-bottom: 1rem;">
-      <?php viewComponent('ads/google-horizontal-oc-top') ?>
-    </div>
+    <?php viewComponent('ads/google-horizontal-oc-top') ?>
     <article class="openchat unset">
 
       <!-- オープンチャット表示ヘッダー -->
-      <section class="openchat-header unset" style="padding-top: 1rem; border-top: 1px solid #efefef">
+      <section class="openchat-header unset" style="padding: 1rem 0; margin-bottom: 1rem; border-bottom: 1px solid #efefef">
         <div class="talkroom_banner_img_area">
           <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
         </div>
@@ -128,12 +126,12 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <?php endif ?>
           </div>
       </section>
-      <hr>
+
       <?php if (isset($_adminDto)) : ?>
         <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
       <?php endif ?>
 
-      <div style="display: flex; flex-direction: row; align-items: center;">
+      <div style="display: flex; flex-direction: row; align-items: center; margin-bottom: 1rem;">
         <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>
         <h2 class="graph-title">メンバー数の推移グラフ</h2>
         <span class="number-box created-at">
@@ -148,22 +146,15 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </div>
 
       <nav class="oc-desc-nav <?php if (!is_int($oc['api_created_at'])) echo 'no-ranking' ?>">
-        <nav class="my-list-form">
-          <?php if (count($myList) - 1 < AppConfig::MY_LIST_LIMIT || isset($myList[$oc['id']])) : ?>
-            <label class="checkbox-label" for="my-list-checkbox">
-              <input type="checkbox" id="my-list-checkbox" <?php if (isset($myList[$oc['id']])) echo 'checked' ?>>
-              <span>トップにピン留め</span>
-            </label>
-          <?php endif ?>
-        </nav>
+
         <aside class="oc-desc-nav-category" style="display: flex; align-items:center;">
-          <span class="openchat-list-date" style="flex-direction: row; height: fit-content; flex-wrap: nowrap; color: #777;">
-            <div style="display: flex; flex-direction: column; justify-content: flex-start; gap: 1.5rem; line-height: 1.5; height: 100%; word-break: keep-all;">
+          <span class="openchat-list-date" style="flex-direction: row; height: fit-content; flex-wrap: nowrap; color: #111;">
+            <div style="display: flex; flex-direction: column; justify-content: flex-start; gap: 1.5rem; line-height: 1.5; height: 100%; word-break: keep-all; font-weight: bold; align-items: center;">
               <?php if (is_int($oc['api_created_at'])) : ?>
-                <div>カテゴリー:&nbsp;</div>
+                <div>カテゴリー&nbsp;</div>
               <?php endif ?>
               <?php if (isset($recommend[2]) && $recommend[2]) : ?>
-                <div>タグ:&nbsp;</div>
+                <div>タグ&nbsp;</div>
               <?php endif ?>
             </div>
             <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; line-height: 1.5; height: 100%">
@@ -176,9 +167,19 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
             </div>
           </span>
         </aside>
+
+        <nav class="my-list-form">
+          <?php if (count($myList) - 1 < AppConfig::MY_LIST_LIMIT || isset($myList[$oc['id']])) : ?>
+            <label class="checkbox-label" for="my-list-checkbox">
+              <input type="checkbox" id="my-list-checkbox" <?php if (isset($myList[$oc['id']])) echo 'checked' ?>>
+              <span>トップにピン留め</span>
+            </label>
+          <?php endif ?>
+        </nav>
+
       </nav>
 
-      <section class="open-btn sp-btn">
+      <section class="open-btn sp-btn" style="margin: 0;">
         <?php if ($oc['url']) : ?>
           <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
             <?php if ($oc['join_method_type'] !== 0) : ?>
@@ -196,15 +197,31 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           </a>
         <?php endif ?>
       </section>
+
+      <div style="margin: 1rem 0;">
+        <?php viewComponent('ads/google-full-display') ?>
+      </div>
+
       <?php if ($recommend[0]) : ?>
-        <article class="top-list first-recommend" style="padding-bottom: 0; gap: 0; border-top: 1px solid #efefef;">
-          <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-          <div style="margin: 1rem 0;">
-            <?php viewComponent('ads/google-fluid-h82') ?>
-          </div>
-        </article>
+        <aside>
+          <article class="top-list first-recommend" style="padding-bottom: 0; gap: 0; border: 0;">
+            <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+            <div style="margin: 12px 0;">
+              <?php viewComponent('ads/google-fluid-h82') ?>
+            </div>
+          </article>
+          <?php if ($recommend[1]) : ?>
+            <article class="top-list" style="padding-bottom: 0; gap: 0; border: 0;">
+              <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+            </article>
+            <div style="margin: 1rem 0;">
+              <?php viewComponent('ads/google-full-display') ?>
+            </div>
+          <?php endif ?>
+        </aside>
       <?php endif ?>
-      <section style="all: unset; display: block; margin: 0 -1rem; margin-top: 1rem;">
+
+      <section style="all: unset; display: block; margin: 0 -1rem; margin-top: 2rem;">
         <div style="display: flex; flex-direction: row; align-items: center; padding: 0 1rem;">
           <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
           <h2 class="graph-title">オープンチャットについてのコメント</h2>
@@ -213,22 +230,18 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <?php viewComponent('comment_desc') ?>
         </div>
         <div id="comment-root"></div>
+        <div style="margin: 1rem auto;">
+          <?php viewComponent('ads/google-example-responsive-1') ?>
+        </div>
       </section>
 
       <aside style="margin-bottom: 1rem;">
-        <div style="border-top: 1px solid #efefef; padding-top: 1rem">
+        <div>
           <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
         </div>
-
-        <?php if ($recommend[1]) : ?>
-          <article class="top-list" style="padding-bottom: 0; gap: 0;">
-            <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-            <div style="margin: 1rem 0;">
-              <?php viewComponent('ads/google-fluid-h82') ?>
-            </div>
-          </article>
-        <?php endif ?>
-
+        <div style="margin: 1rem 0;">
+          <?php viewComponent('ads/google-full-display') ?>
+        </div>
         <?php viewComponent('top_ranking_comment_list', compact('dto')) ?>
       </aside>
 
