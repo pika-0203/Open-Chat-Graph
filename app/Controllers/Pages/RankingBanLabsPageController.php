@@ -39,7 +39,7 @@ class RankingBanLabsPageController
         $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
         $_now = file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME);
 
-        $limit = 50;
+        $limit = 100;
 
         $rankingBanData = $rakingBanPageService->getAllOrderByDateTime(
             $change,
