@@ -23,9 +23,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     </div>
                     <div class="header-img-title">
                         <?php if ($count) : ?>
-                            <h2>【<?php echo $tag ?>】オープンチャット人数急増ランキングTOP<?php echo $count ?>【毎時更新】</h2>
+                            <h2>【<?php echo $tag ?>】オープンチャット人数急増ランキングTOP<?php echo $count ?>【<?php echo $time ?>】</h2>
                         <?php else : ?>
-                            <h2>【<?php echo $tag ?>】オープンチャット人数急増ランキング【毎時更新】</h2>
+                            <h2>【<?php echo $tag ?>】オープンチャット人数急増ランキング【<?php echo $time ?>】</h2>
                         <?php endif ?>
                     </div>
                 </div>

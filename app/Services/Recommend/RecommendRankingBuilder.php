@@ -50,7 +50,7 @@ class RecommendRankingBuilder
         $ranking4 = $repository->getListOrderByMemberDesc(
             $entity,
             $idArray,
-            $count < AppConfig::RECOMMEND_LIST_LIMIT ? ($count < floor(AppConfig::RECOMMEND_LIST_LIMIT / 1) ? (int)floor(AppConfig::RECOMMEND_LIST_LIMIT / 1) - $count : 5) : 3
+            $count < AppConfig::RECOMMEND_LIST_LIMIT ? ($count < floor(AppConfig::RECOMMEND_LIST_LIMIT) ? (int)floor(AppConfig::RECOMMEND_LIST_LIMIT) - $count : 5) : 3
         );
 
         $dto = new RecommendListDto(

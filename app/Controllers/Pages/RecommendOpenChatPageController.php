@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\Recommend\RecommendPageList;
 use App\Services\Recommend\RecommendUtility;
 use App\Services\StaticData\StaticDataFile;
@@ -56,10 +57,13 @@ class RecommendOpenChatPageController
 
         $canonical = url('recommend?tag=' . urlencode($tag));
 
+        $time = OpenChatServicesUtility::getModifiedCronTime($_dto->rankingUpdatedAt->format('H:i'))
+            ->format('G:i');
+
         $recommendArray = $recommendPageList->getListDto($tag);
         if (!$recommendArray) {
             $_schema = '';
-            $_meta->setTitle("【{$tag}】オープンチャット人数急増ランキング【毎時更新】");
+            $_meta->setTitle("【{$tag}】オープンチャット人数急増ランキング【{$time}】");
             return view('recommend_content', compact(
                 '_meta',
                 '_css',
@@ -70,6 +74,7 @@ class RecommendOpenChatPageController
                 '_schema',
                 '_dto',
                 'canonical',
+                'time',
             ));
         }
 
@@ -79,7 +84,7 @@ class RecommendOpenChatPageController
         $recommendList = $recommend->getList(false);
 
         $count = $recommend->getCount();
-        $headline = "【{$tag}】オープンチャット人数急増ランキングTOP{$count}【毎時更新】";
+        $headline = "【{$tag}】オープンチャット人数急増ランキングTOP{$count}【{$time}】";
         $_meta->setTitle($headline);
         $_meta->setImageUrl(imgUrl($recommendList[0]['id'], $recommendList[0]['img_url']));
 
@@ -107,6 +112,7 @@ class RecommendOpenChatPageController
             '_dto',
             'canonical',
             'tags',
+            'time',
         ));
     }
 }
