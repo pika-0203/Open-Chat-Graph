@@ -30,34 +30,25 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     </div>
                 </div>
             </header>
+
             <section class="unset close" style="display: block; position:relative;" id="recommed-desc-box">
                 <p class="recommend-desc recommend-p" id="recommed-desc">
-                    <span class="recommend-desc-child">2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャットでは、「<?php echo $tag ?>」をテーマにしたルームが数多く開設されています。</span>
-                    <br>
-                    <span class="recommend-desc-child">そこで、オプチャグラフでは、<b>「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているルームのランキング</b>を作成しました。<br>このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
-                    <br>
-                    <span class="recommend-desc-child">オープンチャットの情報を掲載する仕組みにつきましては、<a href="<?php echo url('policy') ?>">オプチャグラフについて</a>をご覧ください。</span>
+                    <span class="recommend-desc-child">「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているルームのランキングです。<br>このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
                 </p>
-                <button id="recommed-desc-close-btn" class="close-btn" title="一部を表示">一部を表示</button>
-                <div class="more">
-                    <div class="more-separater">&nbsp;</div>
-                    <span class="unset more-text" id="read_more_btn" title="もっと見る">…もっと見る</span>
-                </div>
             </section>
-            <div style="margin: 1rem auto;">
+
+            <div style="margin: auto;">
                 <?php viewComponent('ads/google-example-responsive-1') ?>
             </div>
-            <?php if (isset($tags) && $tags) : ?>
-                <?php viewComponent('recommend_content_tags', compact('tags') + ['desc' => true]) ?>
-            <?php endif ?>
-            <div class="top-ranking" style="margin: 0; padding: 0; border: 0; display: block;">
+
+            <div class="top-ranking" style="margin: 0; padding: 0; border: 0; display: block; margin-top: 2rem;">
                 <?php if ($count) : ?>
                     <h2 class="list-title oc-list">
                         <div>「<?php echo $tag ?>」の</div>
                         <div>人数急増ランキング</div>
                         <div style="margin-left: 4px;"><?php echo ((int)$_dto->tagRecordCounts[$tag]) > $count ? '上位' : '全' ?><?php echo $count ?>件</div>
                     </h2>
-                    <aside class="list-aside" style="margin-bottom: 2rem;">
+                    <aside class="list-aside" style="margin:0 0 1.25rem 0;">
                         <details class="icon-desc">
                             <summary style="font-size: 14px;">メンバー数のアイコンについて</summary>
                             <div class="list-aside-details">
@@ -82,23 +73,24 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php endif ?>
             </div>
             <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
-                <div class="top-list" style="padding: 0 0 1rem 0; border: 0;">
+                <div class="top-list" style="margin: 1rem 0 -2rem 0; border: 0;">
                     <a style="margin: 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
                         <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」をすべて見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
                     </a>
                 </div>
             <?php endif ?>
-            <div>
-                <?php viewComponent('ads/google-full-display') ?>
-            </div>
+
             <?php if (isset($tags) && $tags) : ?>
                 <?php viewComponent('recommend_content_tags', compact('tags')) ?>
             <?php endif ?>
-            <div class="top-list" style="margin-top: -1.5rem;">
+            <div class="top-list" style="margin-top: -2rem; margin-bottom: 0rem; padding: 0; border: 0">
                 <a style="margin: 1rem 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                     <span class="ranking-readMore" style="font-size: 11.5px;">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
                 </a>
             </div>
+
+            <?php viewComponent('ads/google-horizontal-oc-top') ?>
+
             <aside style="all: unset; display:block; margin: 20px 0 0 0; text-align: center;">
                 <div class="app_link">
                     <a href="https://openchat-jp.line.me/other/beginners_guide">

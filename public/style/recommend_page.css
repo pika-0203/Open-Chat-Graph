@@ -109,78 +109,19 @@ time {
   justify-content: space-between;
 }
 
-.more-separater {
-  width: 4rem;
-  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-}
-
-.more {
-  cursor: pointer;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  display: none;
-}
-
-.close .more {
-  display: flex;
-}
-
-.more-text {
-  background-color: white;
-  font-weight: bold;
-  color: #555;
-  font-size: 13px;
-  line-height: 1.9;
-}
-
-_:lang(x) + _:-webkit-full-screen-document,
-.more {
-  bottom: -4px;
-}
-
-.close-btn {
-  all: unset;
-  margin-left: auto;
-  display: block;
-  font-size: 13px;
-  font-weight: bold;
-  cursor: pointer;
-  background: inherit;
-  color: #555;
-  border: 0;
-}
-
-.close .close-btn {
-  display: none;
-}
-
 .recommend-p {
   display: block;
 }
 
-.close {
-  cursor: pointer;
-  user-select: none;
-}
-
-.close .recommend-p {
-  -webkit-line-clamp: unset;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-}
-
 .recommend-desc {
   color: #555;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.9;
 }
 
 .recommend-desc2 {
   color: #555;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.9;
 }
 
@@ -200,6 +141,7 @@ section aside:hover {
 .list-aside {
   all: unset;
   display: block;
+  margin: 2rem 0;
 }
 
 .list-title {
@@ -210,6 +152,7 @@ section aside:hover {
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-top: 0;
 }
 
 .list-title.oc-list {
@@ -220,7 +163,7 @@ section aside:hover {
 .list-aside details {
   margin: 0;
   font-size: 13px;
-  color: #555;
+  color: #777;
   font-weight: normal;
 }
 
@@ -329,10 +272,6 @@ section aside:hover {
     margin: 0rem -3px 0rem -3px;
   }
 
-  .close .recommend-p {
-    -webkit-line-clamp: 2;
-  }
-
   .header-img img {
     border-radius: 6px;
     padding: 3px;
@@ -380,7 +319,7 @@ section aside:hover {
   }
 
   .ranking-desc .recommend-desc {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .list-title {
@@ -423,4 +362,9 @@ section aside:hover {
   color: inherit;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.top-ranking .openchat-item-list {
+  margin-top: 0;
+  margin-top: 0;
 }
