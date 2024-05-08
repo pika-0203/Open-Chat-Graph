@@ -19,30 +19,25 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                 </form>
             </div>
 
+            <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
+                <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
+            </a>
+
             <div class="oc-ads1" style="min-height: 82px;">
                 <?php viewComponent('ads/google-fluid-top-sp') ?>
             </div>
             <?php if ($tags) : ?>
                 <div>
-                    <header class="openchat-list-title-area unset">
+                    <header class="openchat-list-title-area unset" style="margin-bottom: 10px;">
                         <div class="openchat-list-date unset ranking-url">
                             <h2 class="unset">
-                                <span class="openchat-list-title">いま人数急増中のタグ</span>
+                                <span class="openchat-list-title">いま人数急増中のテーマ</span>
                                 <span aria-hidden="true" style="font-size: 9px; user-select: none; margin-bottom: px;margin-left: -3px;">🚀</span>
                             </h2>
                             <span style="font-weight: normal; color:#777; font-size:13px; margin: 0"><?php echo $dto->hourlyUpdatedAt->format('G:i') ?></span>
                         </div>
                     </header>
-                    <aside class="list-aside ranking-desc">
-                        <details class="icon-desc">
-                            <summary style="font-size: 14px;">人数急増中のタグとは</summary>
-                            <p class="recommend-desc">
-                                「人数急増中のタグ」とは、今オープンチャットで人気を集めているテーマを指します。</p>
-                            <div>
-                                <?php viewComponent('recommend_tag_desc') ?>
-                            </div>
-                        </details>
-                    </aside>
+
                     <ul class="tag-list">
                         <?php foreach ($tags['hour'] as $key => $word) : ?>
                             <li>
@@ -69,12 +64,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     </ul>
                 </div>
             <?php endif ?>
-        </article>
-
-        <article class="top-ranking" style="padding: 0; margin: 0; border: 0; margin-bottom: 2rem;">
-            <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-                <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
-            </a>
         </article>
 
         <?php if ($myList) : ?>

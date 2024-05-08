@@ -117,7 +117,6 @@ class OpenChatPageController
         }
 
         $dto = $staticDataGeneration->getTopPageData();
-        $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChatAll(0, 15);
 
         return view('oc_content', compact(
             '_meta',

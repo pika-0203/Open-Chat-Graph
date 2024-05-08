@@ -54,6 +54,9 @@ class IndexPageController
             $_updatedAt = $updatedAtHouryCron;
         }
 
+        $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChatAll(0, 15);
+        $dto->hourlyList = array_slice($dto->hourlyList, 0, 5);
+
         return view('top_content', compact(
             '_meta',
             '_css',
