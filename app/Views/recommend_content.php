@@ -73,7 +73,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php endif ?>
             </div>
             <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
-                <div class="top-list" style="margin: 1rem 0 -2rem 0; border: 0;">
+                <div class="top-list" style="margin: 0 0 0 0; border: 0; padding: 1rem 0 0 0;">
                     <a style="margin: 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
                         <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」をすべて見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
                     </a>
@@ -83,13 +83,14 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php if (isset($tags) && $tags) : ?>
                 <?php viewComponent('recommend_content_tags', compact('tags')) ?>
             <?php endif ?>
-            <div class="top-list" style="margin-top: -2rem; margin-bottom: 0rem; padding: 0; border: 0">
+            <div style="margin: 1rem 0;">
+                <?php viewComponent('ads/google-horizontal-oc-top') ?>
+            </div>
+            <div class="top-list" style="margin-bottom: 0rem; padding: 0; border: 0">
                 <a style="margin: 1rem 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                     <span class="ranking-readMore" style="font-size: 11.5px;">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
                 </a>
             </div>
-
-            <?php viewComponent('ads/google-horizontal-oc-top') ?>
 
             <aside style="all: unset; display:block; margin: 20px 0 0 0; text-align: center;">
                 <div class="app_link">
