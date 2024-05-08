@@ -34,9 +34,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <p class="recommend-desc recommend-p" id="recommed-desc">
                     <span class="recommend-desc-child">2019年のサービス開始以来、累計2200万人以上のユーザーに利用されているLINEオープンチャットでは、「<?php echo $tag ?>」をテーマにしたルームが数多く開設されています。</span>
                     <br>
-                    <br>
-                    <span class="recommend-desc-child">そこで、オプチャグラフでは、<b>「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているルームのランキング</b>を作成しました。このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
-                    <br>
+                    <span class="recommend-desc-child">そこで、オプチャグラフでは、<b>「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているルームのランキング</b>を作成しました。<br>このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
                     <br>
                     <span class="recommend-desc-child">オープンチャットの情報を掲載する仕組みにつきましては、<a href="<?php echo url('policy') ?>">オプチャグラフについて</a>をご覧ください。</span>
                 </p>
@@ -46,6 +44,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <span class="unset more-text" id="read_more_btn" title="もっと見る">…もっと見る</span>
                 </div>
             </section>
+            <div style="margin: 1rem auto;">
+                <?php viewComponent('ads/google-example-responsive-1') ?>
+            </div>
             <?php if (isset($tags) && $tags) : ?>
                 <?php viewComponent('recommend_content_tags', compact('tags') + ['desc' => true]) ?>
             <?php endif ?>
@@ -81,16 +82,16 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php endif ?>
             </section>
             <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
-                <div class="top-list" style="padding: 0 0 1rem 0;">
+                <div class="top-list" style="padding: 0 0 1rem 0; border: 0;">
                     <a style="margin: 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
                         <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」をすべて見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
                     </a>
                 </div>
             <?php endif ?>
+            <div>
+                <?php viewComponent('ads/google-full-display') ?>
+            </div>
             <?php if (isset($tags) && $tags) : ?>
-                <p class="recommend-desc2">
-                    探しているルームが見つからない時は、関連のタグをチェックしてみましょう！
-                </p>
                 <?php viewComponent('recommend_content_tags', compact('tags')) ?>
             <?php endif ?>
             <div class="top-list" style="margin-top: -1.5rem;">
