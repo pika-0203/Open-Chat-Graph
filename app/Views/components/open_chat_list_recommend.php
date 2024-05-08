@@ -21,7 +21,7 @@
           <div>「<?php echo $recommend->listName ?>」の</div>
           <div>人数急増ランキング</div>
           <div><?php echo $countTitle ?></div>
-          <div>【<?php echo $time ?>】 <?php echo $key ?>位〜</div>
+          <div>【<?php echo $time ?>】 <?php echo $key + 1 ?>位〜</div>
         </div>
       <?php endif ?>
       <div class="openchat-item">
