@@ -9,7 +9,7 @@ class AppConfig
     const RankingWeekTable = 'statistics_ranking_week';
     const OpenChatTable = 'open_chat';
     
-    const RECOMMEND_LIST_LIMIT = 200;
+    const RECOMMEND_LIST_LIMIT = 50;
     const MIN_MEMBER_DIFF_HOUR = 3;
     const MIN_MEMBER_DIFF_H24 = 8;
     const MIN_MEMBER_DIFF_WEEK = 10;

@@ -3,6 +3,7 @@
 <?php
 
 use App\Config\AppConfig;
+$countTitle = ((int)$_dto->tagRecordCounts[$tag]) > $count ? 'TOP' . $count : '全' . $count . '件';
 
 /** @var \App\Services\StaticData\Dto\StaticRecommendPageDto $_dto */
 viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_meta->generateTags(true)]) ?>
@@ -46,7 +47,8 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <h2 class="list-title oc-list">
                         <div>「<?php echo $tag ?>」の</div>
                         <div>人数急増ランキング</div>
-                        <div style="margin-left: 4px;"><?php echo ((int)$_dto->tagRecordCounts[$tag]) > $count ? '上位' : '全' ?><?php echo $count ?>件</div>
+                        <div><?php echo $countTitle ?></div>
+                        <div>【<?php echo $time ?>】</div>
                     </h2>
                     <aside class="list-aside" style="margin:0 0 1.25rem 0;">
                         <details class="icon-desc">
@@ -69,13 +71,13 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <h2 class="list-title oc-list">只今サーバー内でリスト更新中です…</h2>
                 <?php endif ?>
                 <?php if (isset($recommend)) : ?>
-                    <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
+                    <?php viewComponent('open_chat_list_recommend', compact('recommend', 'time', 'countTitle')) ?>
                 <?php endif ?>
             </div>
             <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
                 <div class="top-list" style="margin: 0 0 0 0; border: 0; padding: 1rem 0 0 0;">
                     <a style="margin: 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
-                        <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」をすべて見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
+                        <span class="ranking-readMore" style="font-size: 11.5px;"><?php echo $tag ?> を人数順で見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
                     </a>
                 </div>
             <?php endif ?>
