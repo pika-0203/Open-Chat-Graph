@@ -13,17 +13,7 @@
 
   foreach ($recommend->getList(false) as $key => $oc) : ?>
     <li class="unset">
-      <?php if ($key && $key % 10 === 0) : ?>
-        <div style="margin: auto;">
-          <?php viewComponent('ads/google-full-display') ?>
-        </div>
-        <div style="font-size: 13px; font-weight: bold; margin: 1rem 0; color: #555; display: flex; flex-direction:row; flex-wrap:wrap;">
-          <div>「<?php echo $recommend->listName ?>」の</div>
-          <div>人数急増ランキング</div>
-          <div><?php echo $countTitle ?></div>
-          <div>【<?php echo $time ?>】 <?php echo $key + 1 ?>位〜</div>
-        </div>
-      <?php endif ?>
+
       <div class="openchat-item">
         <a class="link-overlay unset" href="<?php echo url('/oc/' . $oc['id']) . ($oc['table_name'] === AppConfig::RankingHourTable || $oc['table_name'] === AppConfig::RankingDayTable ? '?limit=hour' : '') ?>" tabindex="-1" aria-hidden="true">
           <span class="visually-hidden"><?php echo $oc['name'] ?></span>

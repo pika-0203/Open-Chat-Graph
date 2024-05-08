@@ -21,7 +21,4 @@ $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hou
     <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=hourly') ?>">
         <span class="ranking-readMore">1時間の人数増加ランキングをすべて見る</span>
     </a>
-    <div>
-        <?php viewComponent('ads/google-full-display') ?>
-    </div>
 </article>

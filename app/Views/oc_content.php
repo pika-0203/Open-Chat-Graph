@@ -28,7 +28,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
   <div class="body">
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
-    <?php viewComponent('ads/google-horizontal-oc-top') ?>
     <article class="openchat unset">
 
       <!-- オープンチャット表示ヘッダー -->
@@ -198,25 +197,15 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php endif ?>
       </section>
 
-      <div style="margin: 1rem 0;">
-        <?php viewComponent('ads/google-full-display') ?>
-      </div>
-
       <?php if ($recommend[0]) : ?>
         <aside>
           <article class="top-list first-recommend" style="padding-bottom: 0; gap: 0; border: 0;">
             <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-            <div style="margin: 12px 0;">
-              <?php viewComponent('ads/google-fluid-h82') ?>
-            </div>
           </article>
           <?php if ($recommend[1]) : ?>
             <article class="top-list" style="padding-bottom: 0; gap: 0; border: 0;">
               <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
             </article>
-            <div style="margin: 1rem 0;">
-              <?php viewComponent('ads/google-full-display') ?>
-            </div>
           <?php endif ?>
         </aside>
       <?php endif ?>
@@ -233,9 +222,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </section>
 
       <aside style="margin-bottom: 1rem;">
-        <div style="margin: 1rem 0;">
-          <?php viewComponent('ads/google-full-display') ?>
-        </div>
         <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
         <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
       </aside>

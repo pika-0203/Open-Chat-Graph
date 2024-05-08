@@ -23,9 +23,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                 <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
             </a>
 
-            <div class="oc-ads1" style="min-height: 82px;">
-                <?php viewComponent('ads/google-fluid-top-sp') ?>
-            </div>
             <?php if ($tags) : ?>
                 <div>
                     <header class="openchat-list-title-area unset" style="margin-bottom: 10px;">
@@ -84,9 +81,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
         <div style="margin-top: 1rem;">
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
-        </div>
-        <div style="margin: 1rem 0;">
-            <?php viewComponent('ads/google-full-display') ?>
         </div>
         <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
 

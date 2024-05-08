@@ -11,7 +11,4 @@
     <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=daily') ?>">
         <span class="ranking-readMore">24時間の人数増加ランキングをすべて見る</span>
     </a>
-    <div>
-        <?php viewComponent('ads/google-full-display') ?>
-    </div>
 </article>

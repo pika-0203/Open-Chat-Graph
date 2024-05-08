@@ -39,10 +39,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 </p>
             </section>
 
-            <div style="margin: auto;">
-                <?php viewComponent('ads/google-example-responsive-1') ?>
-            </div>
-
             <div class="top-ranking" style="margin: 0; padding: 0; border: 0; display: block; margin-top: 2rem;">
                 <?php if ($count) : ?>
                     <h2 class="list-title oc-list">
@@ -86,9 +82,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php if (isset($tags) && $tags) : ?>
                 <?php viewComponent('recommend_content_tags', compact('tags')) ?>
             <?php endif ?>
-            <div style="margin: 1rem 0;">
-                <?php viewComponent('ads/google-horizontal-oc-top') ?>
-            </div>
+
             <div class="top-list" style="margin-bottom: 0rem; padding: 0; border: 0">
                 <a style="margin: 1rem 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                     <span class="ranking-readMore" style="font-size: 11.5px;">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
