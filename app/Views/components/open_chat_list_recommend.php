@@ -22,7 +22,7 @@
       </h3>
       <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
       <footer class="openchat-item-lower-outer">
-        <div class="openchat-item-lower unset">
+        <div class="openchat-item-lower unset" style="font-size: 12px;">
           <?php if (isset($oc['member'])) : ?>
             <span>
               <?php if ($oc['member'] === $recommend->maxMemberCount) : ?>

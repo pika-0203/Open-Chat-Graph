@@ -220,7 +220,7 @@ section aside:hover {
 .list-aside details {
   margin: 0;
   font-size: 13px;
-  color: #777;
+  color: #555;
   font-weight: normal;
 }
 
@@ -306,7 +306,7 @@ section aside:hover {
 
 .app_link a {
   font-size: 13px;
-  color: #777;
+  color: #555;
 }
 
 @media screen and (min-width: 512px) {

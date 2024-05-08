@@ -118,7 +118,7 @@ main header {
 }
 
 .recent-oc-btn {
-  color: #777;
+  color: #555;
   text-decoration: underline 1px;
   font-size: 13px;
 }
@@ -217,7 +217,7 @@ main header {
 }
 
 .openchat-list-subtitle {
-  color: #777;
+  color: #555;
   font-size: 12px;
   display: inline-block;
   margin: auto 0;
@@ -226,7 +226,7 @@ main header {
 
 .openchat-list-date {
   display: flex;
-  color: #b7b7b7;
+  color: #aaa;
   font-size: 13px;
   flex-wrap: wrap;
 }
@@ -273,7 +273,7 @@ main header {
 .openchat-list-title-area p {
   font-size: 13px;
   margin: 0.5rem 0;
-  color: #777;
+  color: #555;
 }
 
 .ranking-page-main .openchat-list-title-area p {
@@ -390,7 +390,7 @@ main header {
 }
 
 .openchat-item-desc {
-  color: #777;
+  color: #555;
   font-size: 13px;
   line-height: 135%;
   display: -webkit-box;
@@ -422,7 +422,7 @@ main header {
 
 .openchat-item-lower {
   display: flex;
-  color: #aaa;
+  color: #777;
   font-size: 13px;
   line-height: 1.1rem;
   gap: 4px;
@@ -532,7 +532,7 @@ main header {
   white-space: nowrap;
   overflow: hidden;
   min-width: max-content;
-  color: #aaa;
+  color: #777;
   font-weight: bold;
 }
 
@@ -543,7 +543,7 @@ main header {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  color: #aaa;
+  color: #777;
   font-weight: bold;
   margin-left: 2px;
   margin-right: 9px;
@@ -556,13 +556,13 @@ main header {
   left: -6px;
   width: 2px;
   height: 2px;
-  background-color: #aaa;
+  background-color: #777;
 }
 
 .openchat-item-title .comment-time {
   font-weight: normal;
   position: relative;
-  color: #aaa;
+  color: #777;
 }
 
 .top-ranking .openchat-item-title {
@@ -604,11 +604,11 @@ main header {
 }
 
 .top-list .registration-date {
-  color: #aaa;
+  color: #777;
 }
 
 .top-ranking.created-at .blue {
-  color: #aaa;
+  color: #777;
 }
 
 .top-ranking-readMore {
@@ -659,7 +659,7 @@ main header {
 }
 
 .ranking-readMore .small {
-  color: #aaa;
+  color: #777;
   font-weight: normal;
   font-size: 13px;
   margin-left: 4px;
@@ -757,7 +757,7 @@ main header {
 }
 
 .button01.prev a {
-  color: #aaa;
+  color: #777;
   border: 0px;
   background-color: inherit;
   box-shadow: 0 0 0 0;
@@ -779,8 +779,8 @@ main header {
   margin-right: 4px;
   width: 5px;
   height: 5px;
-  border-top: 2px solid #aaa;
-  border-right: 2px solid #aaa;
+  border-top: 2px solid #777;
+  border-right: 2px solid #777;
   transform: rotate(225deg);
   margin-bottom: 2px;
 }
@@ -800,7 +800,7 @@ main header {
   line-height: 1.4;
   font-size: 13px;
   margin: 0 0.5rem;
-  color: #aaa;
+  color: #777;
   white-space: nowrap;
 }
 
@@ -827,7 +827,7 @@ main header {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  color: #b7b7b7;
+  color: #aaa;
 }
 
 .btn-text {
@@ -862,7 +862,7 @@ main header {
 }
 
 .registration .registration-date.gray {
-  color: #777;
+  color: #555;
   font-size: 13px;
   /* font-weight: bold;*/
 }
@@ -895,7 +895,7 @@ main header {
 
 .top-small-desc,
 .top-small-desc a {
-  color: #777;
+  color: #555;
   font-size: 13px;
 }
 
@@ -1334,7 +1334,7 @@ main header {
 .list-aside details {
   margin: 0;
   font-size: 13px;
-  color: #777;
+  color: #555;
   font-weight: normal;
 }
 

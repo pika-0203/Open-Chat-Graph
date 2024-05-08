@@ -4,7 +4,6 @@
 
 use App\Config\AppConfig;
 use App\Services\Recommend\Enum\RecommendListType;
-use App\Services\Recommend\RecommendUtility;
 
 ?>
 <aside style="margin: 0 -1rem;">

@@ -2,7 +2,7 @@
     <details style="margin:0 0 0 0; width:100%;">
         <summary class="news-summary">
             <span>アップデート情報</span>
-            <span style="color: #aaa; font-weight:normal; font-size:13px"><?php /** @var \App\Views\Content\UpdateNews[] $_news */ echo timeElapsedString($_news[0]->date->format('Y-m-d H:i:s')) ?></span>
+            <span style="color: #777; font-weight:normal; font-size:13px"><?php /** @var \App\Views\Content\UpdateNews[] $_news */ echo timeElapsedString($_news[0]->date->format('Y-m-d H:i:s')) ?></span>
         </summary>
         <div style="position:relative;">
             <div style="margin: .5rem 0 .5rem 0; max-height: 20rem; overflow-y: auto;">
@@ -10,7 +10,7 @@
                     <?php foreach ($_news as $el) : ?>
                         <div style="margin-bottom: 1rem; border-bottom: 1px solid #efefef; width: 100%;">
                             <span style="color: #111; font-size: 13px; font-weight: bold"><?php echo $el->title ?></span>
-                            <span style="color: #777; margin-left: 4px"><?php echo $el->date->format('Y/n/j G:i') ?></span>
+                            <span style="color: #555; margin-left: 4px"><?php echo $el->date->format('Y/n/j G:i') ?></span>
                             <?php foreach ($el->body as $body) : ?>
                                 <?php if (is_array($body)) : ?>
                                     <ul style="padding-left: 1rem;">

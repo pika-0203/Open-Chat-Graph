@@ -69,8 +69,8 @@
             <?php viewComponent('site_header') ?>
         </div>
         <header style="padding: 6rem 0; text-align: center">
-            <p style="font-weight: bold; color: #777">このオープンチャットは削除されました😇</p>
-            <p style="color: #aaa; font-size: 12px">LINEオープンチャット内でトークルームが削除されました</p>
+            <p style="font-weight: bold; color: #555">このオープンチャットは削除されました😇</p>
+            <p style="color: #777; font-size: 12px">LINEオープンチャット内でトークルームが削除されました</p>
         </header>
         <?php if ($recommend[0]) : ?>
             <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => 0, 'tag' => $recommend[2], 'id' => 0]) ?>

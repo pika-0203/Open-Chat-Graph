@@ -50,14 +50,14 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php if (isset($tags) && $tags) : ?>
                 <?php viewComponent('recommend_content_tags', compact('tags') + ['desc' => true]) ?>
             <?php endif ?>
-            <section style="all:unset; display:block;">
+            <div class="top-ranking" style="margin: 0; padding: 0; border: 0; display: block;">
                 <?php if ($count) : ?>
                     <h2 class="list-title oc-list">
                         <div>「<?php echo $tag ?>」の</div>
                         <div>人数急増ランキング</div>
                         <div style="margin-left: 4px;"><?php echo ((int)$_dto->tagRecordCounts[$tag]) > $count ? '上位' : '全' ?><?php echo $count ?>件</div>
                     </h2>
-                    <aside class="list-aside">
+                    <aside class="list-aside" style="margin-bottom: 2rem;">
                         <details class="icon-desc">
                             <summary style="font-size: 14px;">メンバー数のアイコンについて</summary>
                             <div class="list-aside-details">
@@ -80,7 +80,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php if (isset($recommend)) : ?>
                     <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
                 <?php endif ?>
-            </section>
+            </div>
             <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
                 <div class="top-list" style="padding: 0 0 1rem 0; border: 0;">
                     <a style="margin: 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">

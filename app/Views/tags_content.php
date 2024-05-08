@@ -3,7 +3,7 @@
 function memberCount(int $count)
 {
 ?>
-    <span style="color:<?php echo $count === 0 ? '#aaa' : ($count > 0 ? '#4d73ff' : '#ff5d6d') ?>">
+    <span style="color:<?php echo $count === 0 ? '#777' : ($count > 0 ? '#4d73ff' : '#ff5d6d') ?>">
         <?php if ($count === 0) : ?>
             ±0
         <?php else : ?>
@@ -47,14 +47,14 @@ function memberCount(int $count)
                         <h2 class="unset">
                             <span class="openchat-list-title">カテゴリー</span>
                         </h2>
-                        <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0">各カテゴリまで移動</span>
+                        <span style="font-weight: normal; color:#777; font-size:13px; margin: 0">各カテゴリまで移動</span>
                     </div>
                 </header>
                 <div style="margin: 1rem; margin-bottom: 0; margin-top: .5rem;">
                     <?php foreach ($categories as $key => $category) : ?>
                         <a style="font-size:15px; text-wrap:nowrap; margin-bottom:20px; margin-right: 1px; display:inline-flex; gap:2px; text-decoration:none;" href="#<?php echo $key ?>">
                             <span style="color:#111; text-decoration:underline; font-weight: bold;"><?php echo $key ? $category : 'その他' ?></span>
-                            <span style="color:#777; font-size:10px; margin: 0; line-height: 1.5; font-weight: bold;"><?php echo count($tagsGroup[$key]) ?>タグ</span>
+                            <span style="color:#555; font-size:10px; margin: 0; line-height: 1.5; font-weight: bold;"><?php echo count($tagsGroup[$key]) ?>タグ</span>
                         </a>
                     <?php endforeach ?>
                 </div>
@@ -69,7 +69,7 @@ function memberCount(int $count)
                             <h2 class="unset">
                                 <span class="openchat-list-title"><?php echo $key ? $category : 'その他' ?></span>
                             </h2>
-                            <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0"><?php echo count($tagsGroup[$key]) ?>個のタグ</span>
+                            <span style="font-weight: normal; color:#777; font-size:13px; margin: 0"><?php echo count($tagsGroup[$key]) ?>個のタグ</span>
                         </div>
                     </header>
                     <ul class="tag-list open">
@@ -82,9 +82,9 @@ function memberCount(int $count)
                                         <small style="font-weight: normal; display:block; line-height: 1.5;"><?php echo number_format($tag['record_count']) ?>件・平均 <?php echo number_format(round($tag['total_member'] / $tag['record_count'])) ?>人</small>
                                     </div>
                                     <div>
-                                        <small style="color:#aaa; display:block; margin-left:4px;line-height: 1.3;">1H</small>
-                                        <small style="color:#aaa; display:block; margin-left:4px;line-height: 1.3;">24H</small>
-                                        <small style="color:#aaa; display:block; margin-left:4px;line-height: 1.3;">1W</small>
+                                        <small style="color:#777; display:block; margin-left:4px;line-height: 1.3;">1H</small>
+                                        <small style="color:#777; display:block; margin-left:4px;line-height: 1.3;">24H</small>
+                                        <small style="color:#777; display:block; margin-left:4px;line-height: 1.3;">1W</small>
                                     </div>
                                     <div>
                                         <small style="display:block; margin-left:4px;line-height: 1.3;"><?php memberCount($tag['hour'] ?? 0) ?></small>

@@ -110,7 +110,7 @@ html {
 
 .item-desc {
   all: unset;
-  color: #777;
+  color: #555;
   font-size: 13px;
   line-height: 130%;
   display: -webkit-box;
@@ -131,7 +131,7 @@ html {
 
 .item-lower-stats {
   display: flex;
-  color: #aaa;
+  color: #777;
   font-size: 13px;
   line-height: 1.1rem;
   gap: 12px;
@@ -164,7 +164,7 @@ html {
   left: -7px;
   width: 2px;
   height: 2px;
-  background-color: #aaa;
+  background-color: #777;
 }
 
 @media screen and (width >= 600px) {

@@ -128,12 +128,12 @@ hr {
 /* メンバー数 */
 .talkroom_number_of_members {
   margin-top: 0px;
-  color: #aaa;
+  color: #777;
 }
 
 .number_of_members {
   display: block;
-  color: #777;
+  color: #555;
   font-weight: 500;
   font-size: 13px;
 }
@@ -165,7 +165,7 @@ hr {
   right: 0;
   display: flex;
   visibility: hidden;
-  color: #aaa;
+  color: #777;
 }
 
 .more-text {
@@ -232,7 +232,7 @@ hr {
 .openchat-list-date {
   display: flex;
   flex-direction: row;
-  color: #777;
+  color: #555;
   font-size: 13px;
   align-items: flex-start;
   gap: 4px;
@@ -269,12 +269,12 @@ hr {
   flex-direction: row;
   flex-wrap: wrap;
   font-size: 11.5px;
-  color: #777;
+  color: #555;
 }
 
 .number-box .openchat-itme-stats-title {
   font-size: 11.5px;
-  color: #777;
+  color: #555;
 }
 
 .number-box.created-at {
@@ -354,7 +354,7 @@ body > footer {
 
 .app_link {
   font-size: 13px;
-  color: #777;
+  color: #555;
 }
 
 #comment-root {
@@ -472,7 +472,7 @@ body > footer {
 
   .number-box.bold {
     font-weight: normal;
-    color: #777;
+    color: #555;
   }
 
   .openchat-header,
@@ -502,7 +502,7 @@ body > footer {
   .number-box.created-at {
     margin-bottom: 10px;
     margin-left: 8px;
-    color: #777;
+    color: #555;
   }
 
   .talkroom_description_box .more,
@@ -532,7 +532,7 @@ body > footer {
 
   .app-dl {
     font-size: 12px;
-    color: #b7b7b7;
+    color: #aaa;
   }
 }
 
@@ -545,7 +545,7 @@ body > footer {
 }
 
 #comment-root .comment-term-text-color {
-  color: #b7b7b7;
+  color: #aaa;
 }
 
 .list-aside {
@@ -558,7 +558,7 @@ body > footer {
   margin: 0;
   font-weight: normal;
   font-size: 13px;
-  color: #777;
+  color: #555;
   font-family: var(--font-family);
 }
 
@@ -577,7 +577,7 @@ body > footer {
   margin-top: 6px;
   padding-left: 0.5rem;
   font-size: 13px;
-  color: #777;
+  color: #555;
   line-height: 1.8;
 }
 
@@ -591,12 +591,12 @@ body > footer {
 }
 .app-dl {
   font-size: 12px;
-  color: #b7b7b7;
+  color: #aaa;
 }
 
 .csv-dl {
   font-size: 12px;
-  color: #b7b7b7;
+  color: #aaa;
 }
 
 .oc-ads1 {
