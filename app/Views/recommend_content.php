@@ -78,7 +78,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
                 <div class="top-list" style="margin: 0 0 0 0; border: 0; padding: 1rem 0 0 0;">
                     <a style="margin: 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
-                        <span class="ranking-readMore" style="font-size: 11.5px;"><?php echo $tag ?> を人数順で見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
+                        <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」をすべて見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
                     </a>
                 </div>
             <?php endif ?>

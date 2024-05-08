@@ -118,6 +118,10 @@ class OpenChatPageController
 
         $dto = $staticDataGeneration->getTopPageData();
 
+        $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChatAll(0, 15);
+        $dto->hourlyList = array_slice($dto->hourlyList, 0, 5);
+        $dto->dailyList = array_slice($dto->dailyList, 0, 5);
+
         return view('oc_content', compact(
             '_meta',
             '_css',
