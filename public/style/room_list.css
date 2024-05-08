@@ -1202,11 +1202,11 @@ main header {
   font-weight: bold;
 }
 
-.top-ranking .tag-list li:nth-child(n + 31) {
+.top-ranking .tag-list li:nth-child(n + 13) {
   display: none;
 }
 
-.top-ranking .open.tag-list li:nth-child(n + 31) {
+.top-ranking .open.tag-list li:nth-child(n + 13) {
   display: inline-flex;
 }
 
@@ -1234,6 +1234,7 @@ main header {
   height: 36px;
   margin-left: auto;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border: 1px solid #06c755;
 }
 
 .tag-btn.open-btn::after {
@@ -1242,8 +1243,8 @@ main header {
   position: absolute;
   width: 6px;
   height: 6px;
-  border-top: 2px solid #111;
-  border-right: 2px solid #111;
+  border-top: 2px solid #06c755;
+  border-right: 2px solid #06c755;
   transform: rotate(135deg);
   left: 13px;
   top: 11px;

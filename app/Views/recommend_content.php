@@ -3,6 +3,7 @@
 <?php
 
 use App\Config\AppConfig;
+
 $countTitle = ((int)$_dto->tagRecordCounts[$tag]) > $count ? 'TOP' . $count : '全' . $count . '件';
 
 /** @var \App\Services\StaticData\Dto\StaticRecommendPageDto $_dto */
@@ -34,7 +35,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
 
             <section class="unset close" style="display: block; position:relative;" id="recommed-desc-box">
                 <p class="recommend-desc recommend-p" id="recommed-desc">
-                    <span class="recommend-desc-child">「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているルームのランキングです。<br>このランキングは1時間ごとに更新され、新しいルームが継続的に追加されます。</span>
+                    <span class="recommend-desc-child">「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているルームをご紹介🙌</span>
                 </p>
             </section>
 

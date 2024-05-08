@@ -30,7 +30,7 @@ class IndexPageController
             $myList = $this->listService();
         }
 
-        $_css = ['room_list', 'site_header', 'site_footer'];
+        $_css = ['room_list', 'site_header', 'site_footer', 'search_form'];
         $_meta = meta();
         $_meta->title = "{$_meta->title}｜オープンチャットの統計情報";
 

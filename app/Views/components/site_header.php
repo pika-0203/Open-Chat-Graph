@@ -28,10 +28,10 @@
             </script>
         <?php endif ?>
 
-        <nav class="header-nav unset">
-            <button class="header-button unset" id="search_button" aria-label="検索">
+        <nav class="header-nav unset" style="height: 48px;">
+            <!-- <button class="header-button unset" id="search_button" aria-label="検索">
                 <span class="search-button-icon"></span>
-            </button>
+            </button> -->
         </nav>
     </div>
     <div class="backdrop" id="backdrop" role="button" aria-label="閉じる"></div>

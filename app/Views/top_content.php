@@ -11,17 +11,14 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main style="margin-bottom: 0;">
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem; padding-bottom: 1rem;">
-            <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-                <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
-            </a>
-            <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs') ?>">
-                <span class="ranking-readMore" style="display: flex; align-items: center;">
-                    <svg style="color: #111; fill: currentColor; display: inline-block; margin-right: 4px" focusable="false" height="18px" viewBox="0 -960 960 960" width="18px">
-                        <path d="M209-120q-42 0-70.5-28.5T110-217q0-14 3-25.5t9-21.5l228-341q10-14 15-31t5-34v-110h-20q-13 0-21.5-8.5T320-810q0-13 8.5-21.5T350-840h260q13 0 21.5 8.5T640-810q0 13-8.5 21.5T610-780h-20v110q0 17 5 34t15 31l227 341q6 9 9.5 20.5T850-217q0 41-28 69t-69 28H209Zm221-660v110q0 26-7.5 50.5T401-573L276-385q-6 8-8.5 16t-2.5 16q0 23 17 39.5t42 16.5q28 0 56-12t80-47q69-45 103.5-62.5T633-443q4-1 5.5-4.5t-.5-7.5l-78-117q-15-21-22.5-46t-7.5-52v-110H430Z"></path>
-                    </svg>
-                    <span style="display: inline-block; line-height: 1;">分析Labs</span>
-                </span>
-            </a>
+            <div style="width: 100%;">
+                <form class="search-form2 search-form-inner" id="id_searchForm" method="GET" action="<?php echo url('ranking') ?>">
+                    <label class="search-label2" for="q-page">
+                    </label>
+                    <input type="text" id="q-page" name="keyword" placeholder="オープンチャットを検索" maxlength="40" autocomplete="off" required>
+                </form>
+            </div>
+
             <div class="oc-ads1" style="min-height: 82px;">
                 <?php viewComponent('ads/google-fluid-top-sp') ?>
             </div>
@@ -64,7 +61,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                                 </a>
                             </li>
                         <?php endforeach ?>
-                        <?php if (count($tags['hour']) + count($tags['hour24']) > 31) : ?>
+                        <?php if (count($tags['hour']) + count($tags['hour24']) > 13) : ?>
                             <li id="open-btn-li">
                                 <button class="unset tag-btn open-btn" onclick="this.parentElement.parentElement.classList.toggle('open')"></button>
                             </li>
@@ -74,10 +71,12 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php endif ?>
         </article>
 
-        <div style="margin: auto;">
-            <?php viewComponent('ads/google-example-responsive-1') ?>
-        </div>
-        
+        <article class="top-ranking" style="padding: 0; margin: 0; border: 0; margin-bottom: 2rem;">
+            <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
+                <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
+            </a>
+        </article>
+
         <?php if ($myList) : ?>
             <article class="mylist">
                 <div class="refresh-time openchat-list-date">
@@ -92,6 +91,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         <?php endif ?>
 
         <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+
         <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
         <div style="margin-top: 1rem;">
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
@@ -102,12 +102,20 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
 
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; border: 0">
+            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('policy') ?>">
+                <span class="ranking-readMore">オプチャグラフについて</span>
+            </a>
+            <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs') ?>">
+                <span class="ranking-readMore" style="display: flex; align-items: center;">
+                    <svg style="color: #111; fill: currentColor; display: inline-block; margin-right: 4px" focusable="false" height="18px" viewBox="0 -960 960 960" width="18px">
+                        <path d="M209-120q-42 0-70.5-28.5T110-217q0-14 3-25.5t9-21.5l228-341q10-14 15-31t5-34v-110h-20q-13 0-21.5-8.5T320-810q0-13 8.5-21.5T350-840h260q13 0 21.5 8.5T640-810q0 13-8.5 21.5T610-780h-20v110q0 17 5 34t15 31l227 341q6 9 9.5 20.5T850-217q0 41-28 69t-69 28H209Zm221-660v110q0 26-7.5 50.5T401-573L276-385q-6 8-8.5 16t-2.5 16q0 23 17 39.5t42 16.5q28 0 56-12t80-47q69-45 103.5-62.5T633-443q4-1 5.5-4.5t-.5-7.5l-78-117q-15-21-22.5-46t-7.5-52v-110H430Z"></path>
+                    </svg>
+                    <span style="display: inline-block; line-height: 1;">分析Labs</span>
+                </span>
+            </a>
             <p style="line-height: 2; margin: 1rem 0 0 0;" class="top-small-desc">
                 オプチャグラフは<a href="https://openchat.line.me/jp/" rel="external" target="_blank">LINEオープンチャット公式サイト</a>に掲載されているオープンチャットを記録しています。
             </p>
-            <a style="margin-bottom: 0; margin-top: 10px;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('policy') ?>">
-                <span class="ranking-readMore">オプチャグラフについて</span>
-            </a>
         </article>
         <?php viewComponent('update_news', compact('_news')) ?>
     </main>
