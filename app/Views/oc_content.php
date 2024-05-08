@@ -159,7 +159,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
             </div>
             <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; line-height: 1.5; height: 100%">
               <?php if (is_int($oc['api_created_at'])) : ?>
-                <a href="<?php echo url('ranking/' . $oc['category']. '?list=daily') ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $category ?></a>
+                <a href="<?php echo url('ranking/' . $oc['category'] . '?list=daily') ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $category ?></a>
               <?php endif ?>
               <?php if (isset($recommend[2]) && $recommend[2]) : ?>
                 <a href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($recommend[2]))) ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $recommend[2] ?></a>
@@ -230,19 +230,14 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <?php viewComponent('comment_desc') ?>
         </div>
         <div id="comment-root"></div>
-        <div style="margin: 1rem auto;">
-          <?php viewComponent('ads/google-example-responsive-1') ?>
-        </div>
       </section>
 
       <aside style="margin-bottom: 1rem;">
-        <div>
-          <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
-        </div>
         <div style="margin: 1rem 0;">
           <?php viewComponent('ads/google-full-display') ?>
         </div>
-        <?php viewComponent('top_ranking_comment_list', compact('dto')) ?>
+        <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+        <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
       </aside>
 
       <footer class="footer">

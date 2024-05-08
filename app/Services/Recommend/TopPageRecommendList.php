@@ -59,7 +59,7 @@ class TopPageRecommendList
                 LEFT JOIN statistics_ranking_hour24 AS t3 ON t3.open_chat_id = t1.open_chat_id
             WHERE
                 t1.diff_member >= 3
-                AND t3.diff_member >= 20
+                AND t3.diff_member >= 10
             ORDER BY
                 t1.id ASC",
             args: [\PDO::FETCH_COLUMN, 0]
@@ -73,9 +73,9 @@ class TopPageRecommendList
                 JOIN recommend AS t2 ON t1.open_chat_id = t2.id
                 LEFT JOIN statistics_ranking_week AS t3 ON t3.open_chat_id = t1.open_chat_id
             WHERE
-                t1.diff_member >= 10
-                OR (t3.diff_member >= 20 AND t1.diff_member >= 0)
-                OR (t3.diff_member >= 50)
+                t1.diff_member >= 6
+                OR (t3.diff_member >= 10 AND t1.diff_member >= 0)
+                OR (t3.diff_member >= 20)
             ORDER BY
                 t1.id ASC",
             args: [\PDO::FETCH_COLUMN, 0]
@@ -84,7 +84,7 @@ class TopPageRecommendList
         $filter = array_merge(RecommendPageList::TagFilter, self::ExtraTagFilter);
         
         $tags = array_filter(sortAndUniqueArray($hour), fn ($e) => $e && !in_array($e, $filter));
-        $tags1 = array_filter(sortAndUniqueArray($hour2, 4), fn ($e) => $e && !in_array($e, $filter) && !in_array($e, $tags));
+        $tags1 = array_filter(sortAndUniqueArray($hour2, 3), fn ($e) => $e && !in_array($e, $filter) && !in_array($e, $tags));
         $hourTags = array_merge($tags, $tags1);
 
         $tags2 = array_filter(sortAndUniqueArray($hour24, 4), fn ($e) => $e && !in_array($e, $filter) && !in_array($e, $hourTags));

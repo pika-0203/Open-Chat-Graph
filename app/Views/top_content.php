@@ -40,7 +40,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                         <details class="icon-desc">
                             <summary style="font-size: 14px;">人数急増中のタグとは</summary>
                             <p class="recommend-desc">
-                                「人数急増中のタグ」とは、今オープンチャットで人気を集めているテーマを指します。同じタグを持ついくつかのオープンチャットに参加者が急増した場合、そのタグは「いま人数急増中のタグ」として表示されるようになります。 </p>
+                                「人数急増中のタグ」とは、今オープンチャットで人気を集めているテーマを指します。</p>
                             <div>
                                 <?php viewComponent('recommend_tag_desc') ?>
                             </div>
@@ -64,7 +64,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                                 </a>
                             </li>
                         <?php endforeach ?>
-                        <?php if (count($tags['hour']) + count($tags['hour24']) > 13) : ?>
+                        <?php if (count($tags['hour']) + count($tags['hour24']) > 31) : ?>
                             <li id="open-btn-li">
                                 <button class="unset tag-btn open-btn" onclick="this.parentElement.parentElement.classList.toggle('open')"></button>
                             </li>
@@ -74,6 +74,10 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php endif ?>
         </article>
 
+        <div style="margin: auto;">
+            <?php viewComponent('ads/google-example-responsive-1') ?>
+        </div>
+        
         <?php if ($myList) : ?>
             <article class="mylist">
                 <div class="refresh-time openchat-list-date">
@@ -87,11 +91,14 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <hr class="ht-top-mylist">
         <?php endif ?>
 
-        <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
+        <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+        <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
+        <div style="margin-top: 1rem;">
+            <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
+        </div>
         <div style="margin: 1rem 0;">
             <?php viewComponent('ads/google-full-display') ?>
         </div>
-        <?php viewComponent('top_ranking_comment_list', compact('dto')) ?>
         <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
 
         <article class="top-ranking" style="padding-top: 0; margin-top: 0; border: 0">
