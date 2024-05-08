@@ -1387,3 +1387,7 @@ main header {
     margin-top: 0;
   }
 }
+
+.adsbygoogle {
+  margin: 0 -1rem !important;
+}

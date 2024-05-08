@@ -13,7 +13,7 @@
     </a>
 </article>
 
-<article class="top-ranking created-at" style="border: 0; padding: 0; margin-top: 1rem;">
+<article class="top-ranking created-at" style="border: 0; padding: 0; margin: 2rem 0;">
     <header class="openchat-list-title-area unset">
         <div class="openchat-list-date unset ranking-url">
             <h2 class="unset">

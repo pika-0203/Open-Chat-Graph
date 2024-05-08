@@ -178,7 +178,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
       </nav>
 
-      <section class="open-btn sp-btn" style="margin: 0;">
+      <section class="open-btn sp-btn" style="margin: 2rem 0;">
         <?php if ($oc['url']) : ?>
           <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
             <?php if ($oc['join_method_type'] !== 0) : ?>
@@ -199,11 +199,11 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
       <?php if ($recommend[0]) : ?>
         <aside>
-          <article class="top-list first-recommend" style="padding-bottom: 0; gap: 0; border: 0;">
+          <article class="top-list first-recommend" style="padding: 0; gap: 0; border: 0; margin: 2rem 0;">
             <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
           </article>
           <?php if ($recommend[1]) : ?>
-            <article class="top-list" style="padding-bottom: 0; gap: 0; border: 0;">
+            <article class="top-list" style="padding: 0; gap: 0; border: 0; margin: 2rem 0;">
               <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
             </article>
           <?php endif ?>
@@ -215,14 +215,16 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
           <h2 class="graph-title">オープンチャットについてのコメント</h2>
         </div>
-        <div style="margin-bottom: 1.5rem; margin-top: .25rem;">
+        <div style="margin-bottom: 1.5rem; margin-top: 13px;">
           <?php viewComponent('comment_desc') ?>
         </div>
         <div id="comment-root"></div>
       </section>
 
-      <aside style="margin-bottom: 1rem;">
+      <aside style="margin: 2rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+      </aside>
+      <aside style="margin: 2rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
       </aside>
 
