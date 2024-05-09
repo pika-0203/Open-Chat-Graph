@@ -12,7 +12,7 @@ $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hou
             <h2 class="unset">
                 <span class="openchat-list-title">1時間の人数増加ランキング</span>
             </h2>
-            <span style="font-weight: normal; color:#777; font-size:13px; margin: 0">
+            <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0">
                 <?php echo $_hourlyRange ?>
             </span>
         </div>

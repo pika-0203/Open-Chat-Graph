@@ -29,9 +29,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
     <article class="openchat unset">
-      <?php viewComponent('ads/google-example-responsive-1') ?>
       <!-- オープンチャット表示ヘッダー -->
-      <section class="openchat-header unset" style="padding: 1rem 0; margin-bottom: 1rem; border-bottom: 1px solid #efefef">
+      <section class="openchat-header unset" style="padding: 0 0 1rem 0; margin-bottom: 1rem; border-bottom: 1px solid #efefef">
         <div class="talkroom_banner_img_area">
           <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
         </div>

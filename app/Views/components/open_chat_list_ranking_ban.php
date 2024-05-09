@@ -18,9 +18,9 @@
         <h3 class="unset">
           <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $oc['id'] . "?bar=ranking&limit={$timeFrame}") ?>"><?php if (($oc['emblem'] ?? 0) === 1) : ?><span class="super-icon sp"></span><?php elseif (($oc['emblem'] ?? 0) === 2) : ?><span class="super-icon official"></span><?php endif ?><?php if (($oc['join_method_type'] ?? 0) === 2) : ?><span class="lock-icon"></span><?php endif ?><span><?php echo $oc['name'] ?></span></a>
         </h3>
-        <p class="openchat-item-desc unset" style="color: #555;"><?php echo $oc['description'] ?></p>
+        <p class="openchat-item-desc unset" style="color: #777;"><?php echo $oc['description'] ?></p>
         <footer class="openchat-item-lower-outer" style="gap: 0;">
-          <div class="openchat-item-lower unset" style="color: #555; margin-top: 1px;">
+          <div class="openchat-item-lower unset" style="color: #777; margin-top: 1px;">
             <span class="member-count">
               <span>メンバー <?php echo formatMember($oc['old_member']) ?></span>
               <span class="openchat-item-stats">(<?php echo signedNumF($oc['member'] - $oc['old_member']) ?: '±0' ?>)</span>
@@ -35,12 +35,12 @@
           <?php endif ?>
 
           <?php if (!isset($oc['end_datetime'])) : ?>
-            <div class="openchat-item-lower unset" style="color: #555; font-weight: bold; margin-top: 2px;">
+            <div class="openchat-item-lower unset" style="color: #777; font-weight: bold; margin-top: 2px;">
               <span class="registration-date">現在未掲載 <span class="blue"><?php echo $_now === $oc['old_datetime'] ? 'たった今' : calculateTimeDifference($_now, $oc['old_datetime']) . '前' ?></span> <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~</span>
             </div>
           <?php endif ?>
 
-          <div class="openchat-item-lower unset" style="margin-top: 2px; color: #555; font-weight: bold;">
+          <div class="openchat-item-lower unset" style="margin-top: 2px; color: #777; font-weight: bold;">
             <?php if ($oc['update_items']) : ?>
               <?php if ($oc['updated_at']) : ?>
                 <span>変更により未掲載: </span>
@@ -70,7 +70,7 @@
           </div>
 
           <?php if (isset($oc['end_datetime'])) : ?>
-            <div class="openchat-item-lower unset" style="color: #555; font-weight: bold; margin-top: 2px;">
+            <div class="openchat-item-lower unset" style="color: #777; font-weight: bold; margin-top: 2px;">
               <span class="registration-date"><span style="font-weight: bold;">再掲載済み</span> <span class="blue"><?php echo calculateTimeDifference($oc['end_datetime'], $oc['old_datetime']) ?></span> <?php echo formatDateTimeHourly2($oc['old_datetime']) ?>~<?php echo formatDateTimeHourly2($oc['end_datetime']) ?></span>
             </div>
           <?php endif ?>

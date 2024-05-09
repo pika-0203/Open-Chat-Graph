@@ -27,7 +27,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
 
         .p-small {
             font-size: 13px;
-            color: #555;
+            color: #777;
 
         }
 
@@ -46,7 +46,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
             right: -7px;
             width: 2px;
             height: 2px;
-            background-color: #777;
+            background-color: #aaa;
         }
 
         .member-count {

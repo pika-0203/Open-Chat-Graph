@@ -60,12 +60,12 @@
   margin-top: 2px;
   line-height: 125%;
   overflow-wrap: anywhere;
-  color: #555;
+  color: #777;
 }
 
 .recommend-member {
   font-size: 12px;
-  color: #777;
+  color: #aaa;
   line-height: 125%;
   margin-top: 2px;
   white-space: nowrap;

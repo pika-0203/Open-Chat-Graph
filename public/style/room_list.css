@@ -118,7 +118,7 @@ main header {
 }
 
 .recent-oc-btn {
-  color: #555;
+  color: #777;
   text-decoration: underline 1px;
   font-size: 13px;
 }
@@ -217,7 +217,7 @@ main header {
 }
 
 .openchat-list-subtitle {
-  color: #555;
+  color: #777;
   font-size: 12px;
   display: inline-block;
   margin: auto 0;
@@ -226,7 +226,7 @@ main header {
 
 .openchat-list-date {
   display: flex;
-  color: #aaa;
+  color: #b7b7b7;
   font-size: 13px;
   flex-wrap: wrap;
 }
@@ -273,7 +273,7 @@ main header {
 .openchat-list-title-area p {
   font-size: 13px;
   margin: 0.5rem 0;
-  color: #555;
+  color: #777;
 }
 
 .ranking-page-main .openchat-list-title-area p {
@@ -290,7 +290,6 @@ main header {
 .top-ranking .openchat-item-list {
   margin-bottom: -1rem;
   margin-top: -1rem;
-  margin-left: -4px;
   width: 100%;
 }
 
@@ -315,7 +314,7 @@ main header {
   min-width: 0;
   padding: 0;
   position: relative;
-  margin: 18px 0;
+  margin: 20px 0;
   margin-right: 1.5rem;
   padding-left: 62px;
   cursor: pointer;
@@ -378,7 +377,7 @@ main header {
   cursor: pointer;
   font-size: 15px;
   display: block;
-  font-weight: normal;
+  font-weight: 500;
   line-height: 18px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -390,7 +389,7 @@ main header {
 }
 
 .openchat-item-desc {
-  color: #555;
+  color: #777;
   font-size: 13px;
   line-height: 135%;
   display: -webkit-box;
@@ -411,6 +410,7 @@ main header {
 
 .top-ranking .openchat-item-lower-outer {
   flex-direction: row;
+  margin-top: 1px;
 }
 
 .top-list .openchat-item-lower-outer:has(.registration-date) {
@@ -422,7 +422,7 @@ main header {
 
 .openchat-item-lower {
   display: flex;
-  color: #777;
+  color: #aaa;
   font-size: 13px;
   line-height: 1.1rem;
   gap: 4px;
@@ -463,12 +463,13 @@ main header {
 
 .top-ranking:not(.not-rank) .openchat-item {
   min-height: 56px;
-  margin: 1rem 0;
+  margin: 17px 1.5rem 17px 30px;
   margin-left: 1.5rem;
 }
 
 .top-ranking.not-rank .openchat-item {
-  margin: 1rem 0;
+  min-height: 56px;
+  margin: 17px 1.5rem 17px 0;
 }
 
 .top-list .openchat-item {
@@ -493,9 +494,9 @@ main header {
 }
 
 .top-ranking:not(.not-rank) .openchat-item-desc {
-  -webkit-line-clamp: 2;
-  font-size: 12px;
-  margin-top: 1px;
+  -webkit-line-clamp: 1;
+  font-size: 13px;
+  margin-top: 2px;
 }
 
 .top-list .openchat-item-desc {
@@ -523,8 +524,7 @@ main header {
 }
 
 .top-ranking .openchat-item-title {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 15px;
   color: #111;
 }
 
@@ -536,7 +536,7 @@ main header {
   white-space: nowrap;
   overflow: hidden;
   min-width: max-content;
-  color: #777;
+  color: #aaa;
   font-weight: bold;
 }
 
@@ -547,7 +547,7 @@ main header {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  color: #777;
+  color: #aaa;
   font-weight: bold;
   margin-left: 2px;
   margin-right: 9px;
@@ -560,21 +560,13 @@ main header {
   left: -6px;
   width: 2px;
   height: 2px;
-  background-color: #777;
+  background-color: #aaa;
 }
 
 .openchat-item-title .comment-time {
   font-weight: normal;
   position: relative;
-  color: #777;
-}
-
-.top-ranking:not(.not-rank) .openchat-item-title {
-  white-space: unset;
-  text-overflow: unset;
-  overflow: unset;
-  line-height: 135%;
-  margin-bottom: 1px;
+  color: #aaa;
 }
 
 .top-list .super-icon {
@@ -590,10 +582,14 @@ main header {
 }
 
 .top-list .openchat-item-lower,
-.top-ranking .openchat-item-lower,
+.top-ranking .openchat-item-lower {
+  font-size: 12px;
+  margin: 0;
+}
+
 .top-list .openchat-item-mui-chip-outer,
 .top-ranking .openchat-item-mui-chip-outer {
-  font-size: 11px;
+  font-size: 11.5px;
   margin: 0;
 }
 
@@ -603,16 +599,16 @@ main header {
 
 .top-list .openchat-item-lower,
 .top-list .openchat-item-mui-chip-outer {
-  font-size: 11px;
+  font-size: 12px;
   margin: 0;
 }
 
 .top-list .registration-date {
-  color: #777;
+  color: #aaa;
 }
 
 .top-ranking.created-at .blue {
-  color: #777;
+  color: #aaa;
 }
 
 .top-ranking-readMore {
@@ -663,7 +659,7 @@ main header {
 }
 
 .ranking-readMore .small {
-  color: #777;
+  color: #aaa;
   font-weight: normal;
   font-size: 13px;
   margin-left: 4px;
@@ -761,7 +757,7 @@ main header {
 }
 
 .button01.prev a {
-  color: #777;
+  color: #aaa;
   border: 0px;
   background-color: inherit;
   box-shadow: 0 0 0 0;
@@ -783,8 +779,8 @@ main header {
   margin-right: 4px;
   width: 5px;
   height: 5px;
-  border-top: 2px solid #777;
-  border-right: 2px solid #777;
+  border-top: 2px solid #aaa;
+  border-right: 2px solid #aaa;
   transform: rotate(225deg);
   margin-bottom: 2px;
 }
@@ -804,7 +800,7 @@ main header {
   line-height: 1.4;
   font-size: 13px;
   margin: 0 0.5rem;
-  color: #777;
+  color: #aaa;
   white-space: nowrap;
 }
 
@@ -831,7 +827,7 @@ main header {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  color: #aaa;
+  color: #b7b7b7;
 }
 
 .btn-text {
@@ -866,7 +862,7 @@ main header {
 }
 
 .registration .registration-date.gray {
-  color: #555;
+  color: #777;
   font-size: 13px;
   /* font-weight: bold;*/
 }
@@ -899,7 +895,7 @@ main header {
 
 .top-small-desc,
 .top-small-desc a {
-  color: #555;
+  color: #777;
   font-size: 13px;
 }
 
@@ -940,20 +936,17 @@ main header {
   margin-bottom: 1rem;
 }
 
-.mylist .openchat-item-title {
-  font-size: 13px;
-}
-
 .top-ranking.not-rank .openchat-item-desc,
 .mylist .openchat-item-desc {
   -webkit-line-clamp: 1;
-  font-size: 12px;
+  font-size: 13px;
+  margin-top: 2px;
 }
 
 .top-ranking.not-rank .openchat-item-lower,
 .mylist .openchat-item-lower {
   margin-top: 1px;
-  font-size: 11px !important;
+  font-size: 13px !important;
 }
 
 .mylist .openchat-item::before,
@@ -986,12 +979,8 @@ main header {
 }
 
 @media screen and (min-width: 512px) {
-  .mylist .openchat-item-title {
-    font-size: 14px;
-  }
-
   .mylist .openchat-item-desc {
-    margin-top: 2px;
+    margin-top: 3px;
     font-size: 13px;
   }
 
@@ -1125,7 +1114,7 @@ main header {
   .top-list .openchat-item-mui-chip-outer,
   .top-ranking .openchat-item-mui-chip-outer {
     font-size: 13px;
-    margin-top: 2px;
+    margin-top: 1px;
   }
 
   .top-ranking:not(.not-rank) .openchat-item-title {
@@ -1341,7 +1330,7 @@ main header {
 .list-aside details {
   margin: 0;
   font-size: 13px;
-  color: #777;
+  color: #aaa;
   font-weight: normal;
 }
 

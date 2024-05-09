@@ -1,5 +1,3 @@
-<!-- @param array $openChatList -->
-<!-- @param bool $isHourly -->
 <style>
   .openchat-item {
     margin: 20px 0;
@@ -11,9 +9,8 @@
 
   use App\Config\AppConfig;
 
-  foreach (isset($limit) ? array_slice($recommend->getList($shuffle ?? false), 0, $limit) : $recommend->getList(false) as $key => $oc) : ?>
+  foreach (isset($limit) ? array_slice(array_filter($recommend->getList($shuffle ?? false), fn ($oc) => $oc['id'] !== ($id ?? 0)), 0, $limit) : $recommend->getList(false) as $key => $oc) : ?>
     <li class="unset">
-
       <div class="openchat-item">
         <a class="link-overlay unset" href="<?php echo url('/oc/' . $oc['id']) . ($oc['table_name'] === AppConfig::RankingHourTable || $oc['table_name'] === AppConfig::RankingDayTable ? '?limit=hour' : '') ?>" tabindex="-1" aria-hidden="true">
           <span class="visually-hidden"><?php echo $oc['name'] ?></span>
@@ -24,7 +21,7 @@
         </h3>
         <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
         <footer class="openchat-item-lower-outer">
-          <div class="openchat-item-lower unset" style="font-size: 12px;">
+          <div class="openchat-item-lower unset" style="font-size: 13px; margin-top: 0;">
             <?php if (isset($oc['member'])) : ?>
               <span>
                 <?php if ($oc['member'] === $recommend->maxMemberCount) : ?>

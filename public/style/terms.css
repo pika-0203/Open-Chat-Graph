@@ -58,7 +58,7 @@ h1 {
 }
 
 #comment-root .comment-term-text-color {
-  color: #aaa;
+  color: #b7b7b7;
 }
 
 .terms .ranking-readMore {
@@ -76,6 +76,6 @@ h1 {
   width: 87.5%;
   margin: auto;
   margin-bottom: 2rem;
-  box-shadow: 1px 3px 15px -5px #555777;
+  box-shadow: 1px 3px 15px -5px #777;
   border-radius: 4px;
 }

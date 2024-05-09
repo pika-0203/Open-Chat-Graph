@@ -13,13 +13,6 @@ li {
   margin-bottom: 1.5rem;
 }
 
-time {
-  font-size: 11px;
-  color: #888;
-  display: flex;
-  justify-content: flex-end;
-}
-
 .list-aside .tag-list {
   all: unset;
   list-style: none;
@@ -118,13 +111,13 @@ time {
 }
 
 .recommend-desc {
-  color: #555;
+  color: #777;
   font-size: 14px;
   line-height: 1.9;
 }
 
 .recommend-desc2 {
-  color: #555;
+  color: #777;
   font-size: 14px;
   line-height: 1.9;
 }
@@ -167,7 +160,7 @@ section aside:hover {
 .list-aside details {
   margin: 0;
   font-size: 13px;
-  color: #777;
+  color: #aaa;
   font-weight: normal;
 }
 
@@ -185,7 +178,7 @@ section aside:hover {
 
 .list-aside-desc {
   font-size: 13px;
-  color: #555;
+  color: #777;
   display: block;
 }
 
@@ -220,7 +213,7 @@ section aside:hover {
 .ranking-page-main .openchat-item-lower-outer {
   flex-direction: row;
   gap: 8px;
-  margin-top: 2px;
+  margin-top: 1px;
   align-items: center;
 }
 
@@ -253,18 +246,12 @@ section aside:hover {
 
 .app_link a {
   font-size: 13px;
-  color: #555;
+  color: #777;
 }
 
 @media screen and (min-width: 512px) {
   .header-img {
     margin: 1.3rem 0;
-  }
-
-  time {
-    font-size: 13px;
-    color: #888;
-    justify-content: flex-start;
   }
 
   main header {
@@ -371,6 +358,7 @@ section aside:hover {
 .top-ranking .openchat-item-list {
   margin-top: 0;
   margin-top: 0;
+  margin-left: 0;
 }
 
 .top-ranking .openchat-item::before {
