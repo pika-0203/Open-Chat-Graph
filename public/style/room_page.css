@@ -332,11 +332,10 @@ body > footer {
 }
 
 .open-btn2 {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
 }
 
 .openchat_link {

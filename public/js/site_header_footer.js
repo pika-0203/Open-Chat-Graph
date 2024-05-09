@@ -139,6 +139,8 @@ const setAnchorPosition = () => {
       if (height > 110) {
         document.body.style.padding = `${height}px 0px 0px 0px`
       }
+
+      document.body.style.paddingBottom = '0px'
     }
     count++
     console.log(count)

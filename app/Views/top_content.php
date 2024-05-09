@@ -59,15 +59,11 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                         <?php endforeach ?>
 
                         <?php foreach ($tags['hour24'] as $key => $word) : ?>
-                            <?php if ($hourCount + $key + 1 <= 14) : ?>
-                                <?php greenTag($word) ?>
-                            <?php else : ?>
-                                <li>
-                                    <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
-                                        <?php echo RecommendUtility::extractTag($word) ?>
-                                    </a>
-                                </li>
-                            <?php endif ?>
+                            <li>
+                                <a class="tag-btn" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($word))) ?>">
+                                    <?php echo RecommendUtility::extractTag($word) ?>
+                                </a>
+                            </li>
                         <?php endforeach ?>
 
                         <?php if (count($tags['hour']) + count($tags['hour24']) > 14) : ?>
