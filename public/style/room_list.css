@@ -411,6 +411,7 @@ main header {
 .top-ranking .openchat-item-lower-outer {
   flex-direction: row;
   margin-top: 1px;
+  text-wrap: nowrap;
 }
 
 .top-list .openchat-item-lower-outer:has(.registration-date) {
@@ -589,7 +590,7 @@ main header {
 
 .top-list .openchat-item-mui-chip-outer,
 .top-ranking .openchat-item-mui-chip-outer {
-  font-size: 11.5px;
+  font-size: 12px;
   margin: 0;
 }
 

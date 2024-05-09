@@ -111,13 +111,13 @@ li {
 }
 
 .recommend-desc {
-  color: #777;
+  color: #555;
   font-size: 14px;
   line-height: 1.9;
 }
 
 .recommend-desc2 {
-  color: #777;
+  color: #555;
   font-size: 14px;
   line-height: 1.9;
 }
@@ -160,7 +160,7 @@ section aside:hover {
 .list-aside details {
   margin: 0;
   font-size: 13px;
-  color: #aaa;
+  color: #777;
   font-weight: normal;
 }
 
@@ -178,7 +178,7 @@ section aside:hover {
 
 .list-aside-desc {
   font-size: 13px;
-  color: #777;
+  color: #555;
   display: block;
 }
 
