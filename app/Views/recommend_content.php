@@ -39,10 +39,14 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </header>
 
             <section class="unset close" style="display: block; position:relative;" id="recommed-desc-box">
-                <p class="recommend-desc recommend-p" id="recommed-desc">
+                <p class="recommend-desc recommend-p" id="recommed-desc" style="font-size: 15px;">
                     <span class="recommend-desc-child">「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているルームをご紹介🙌</span>
                 </p>
             </section>
+
+            <div style="margin: 1rem 0; aspect-ratio: 1.2 / 1;">
+                <?php viewComponent('ads/google-full'); ?>
+            </div>
 
             <div class="top-ranking" style="margin: 0; padding: 0; border: 0; display: block; margin-top: 2rem;">
                 <?php if ($count) : ?>
@@ -73,7 +77,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <h2 class="list-title oc-list">只今サーバー内でリスト更新中です…</h2>
                 <?php endif ?>
                 <?php if (isset($recommend)) : ?>
-                    <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
+                    <?php viewComponent('open_chat_list_recommend', compact('recommend', 'countTitle', 'time')) ?>
                 <?php endif ?>
             </div>
             <?php if (isset($_dto->tagRecordCounts[$_tagIndex]) && ((int)$_dto->tagRecordCounts[$_tagIndex]) > $count) : ?>
