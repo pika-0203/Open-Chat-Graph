@@ -225,7 +225,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
           <h2 class="graph-title">オープンチャットについてのコメント</h2>
         </div>
-        <div style="margin-bottom: 1.5rem; margin-top: 13px;">
+        <div style="margin-bottom: 1.5rem; margin-top: 13px; padding: 0 1rem;">
           <?php viewComponent('comment_desc') ?>
         </div>
         <div id="comment-root"></div>

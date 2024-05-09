@@ -594,6 +594,7 @@ body > footer {
 .comment-aside {
   margin-top: 0.2rem;
   margin-bottom: 1.3rem;
+  padding: 0;
 }
 .app-dl {
   font-size: 12px;
