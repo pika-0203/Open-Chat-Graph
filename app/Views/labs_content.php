@@ -51,6 +51,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
             <?php viewComponent('footer_inner') ?>
         </footer>
     </div>
+
     <?php echo $_breadcrumbsShema ?>
 </body>
 
