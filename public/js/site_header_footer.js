@@ -116,27 +116,37 @@ const setHeaderShow = (header, hidden, show) => {
   setHeaderShow(header, -48, 0)
 })()
 
-const pcAdBarDetector = setInterval(() => {
-  const pcAdBar = document.querySelector('.adsbygoogle-noablate[data-anchor-status]')
-  if (pcAdBar !== null) {
-    console.log(pcAdBar)
-    clearInterval(pcAdBarDetector)
+const setAnchorPosition = () => {
+  let count = 0
+  const pcAdBarDetector = setInterval(() => {
+    const pcAdBar = document.querySelector('.adsbygoogle-noablate[data-anchor-status]')
+    if (pcAdBar !== null) {
+      clearInterval(pcAdBarDetector)
 
-    pcAdBar.style.top = '0px'
-    setHeaderShow(pcAdBar, 0, '47px')
+      pcAdBar.style.top = '0px'
+      setHeaderShow(pcAdBar, 0, '47px')
 
-    pcAdBar.style.transition = 'transform 0.3s'
+      pcAdBar.style.transition = 'transform 0.3s'
 
-    if (
-      document.querySelector('.site_header_outer').style.transform === 'translate(0px, 0px)' ||
-      document.documentElement.scrollTop === 0
-    ) {
-      pcAdBar.style.transform = 'translate(0px, 47px)'
+      if (
+        document.querySelector('.site_header_outer').style.transform === 'translate(0px, 0px)' ||
+        document.documentElement.scrollTop === 0
+      ) {
+        pcAdBar.style.transform = 'translate(0px, 47px)'
+      }
+
+      const height = pcAdBar.clientHeight
+      if (height > 110) {
+        document.body.style.padding = `${height}px 0 0 0`
+      }
     }
+    count++
+    console.log(count)
 
-    const height = pcAdBar.clientHeight
-    if (height > 110) {
-      document.body.style.padding = `${height}px 0 0 0`
+    if (count > 300) {
+      clearInterval(pcAdBarDetector)
     }
-  }
-}, 100)
+  }, 100)
+}
+
+setAnchorPosition()
