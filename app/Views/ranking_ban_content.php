@@ -193,10 +193,10 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     <input style="margin: 0; margin-right: 8px;" name="keyword" id="keyword" type="text" placeholder="キーワード" value="<?php echo R::has('keyword') ? h(R::input('keyword')) : '' ?>">
                     <button type="button" style="margin: 0; padding: 0; width: 2rem;" id="reset-btn">✕</button>
                 </div>
-                <div style="position: absolute; top: 0; right: 0; margin: .5rem; display: flex; gap: 1.5rem; flex-direction: column; border: 1px solid #efefef; padding: .5rem; border-radius: 4px;">
-                    <span style="font-size: 13px; text-align: center; font-weight: bold;">簡単設定</span>
-                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish') !== 1 ? 1 : 0) . '&change=' . (R::input('change')) . '&percent=' . (R::input('percent') !== 100 ? R::input('percent') : 50) . '&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('publish') !== 1 ? '🔁現在未掲載' : '🔁再掲載済み' ?></button>
-                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish')) . '&change=' . (R::input('change') !== 1 ? 1 : 0) . '&percent=' . (R::input('percent') !== 100 ? R::input('percent') : 50) . '&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('change') !== 1 ? '🔁内容変更なし' : '🔁内容変更あり' ?></button>
+                <div style="position: absolute; top: 0; right: 0; margin: .5rem; display: flex; gap: 1.35rem; flex-direction: column; border: 1px solid #efefef; padding: .5rem; border-radius: 4px;">
+                    <span style="font-size: 13px; text-align: center; font-weight: bold; margin-bottom: -1rem;">簡単設定</span>
+                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish') !== 1 ? 1 : 0) . '&change=' . (R::input('change')) . '&percent=' . (R::input('percent') !== 100 ? R::input('percent') : 50) . '&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('publish') !== 1 ? '💡現在未掲載' : '💡再掲載済み' ?><br>に切り替え</button>
+                    <button type="button" class="eazy-btn" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=' . (R::input('publish')) . '&change=' . (R::input('change') !== 1 ? 1 : 0) . '&percent=' . (R::input('percent') !== 100 ? R::input('percent') : 50) . '&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'"><?php echo R::input('change') !== 1 ? '📝内容変更なし' : '📝内容変更あり' ?><br>に切り替え</button>
                     <button type="button" class="eazy-btn" style="padding: 8px 6px;" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=2&change=2&percent=100&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'">全表示</button>
                 </div>
             </form>
@@ -204,7 +204,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
             <?php if (isset($_select)) : ?>
                 <nav class="page-select unset" style="flex-direction: column; padding: 0; margin: 0 0 12px 0;">
                     <div style="font-weight: bold; font-size: 13px;">
-                        1ページあたり100件の表示
+                        1ページあたり50件の表示
                     </div>
                     <form class="unset" style="width: 100%;">
                         <select id="page-selector" class="unset">

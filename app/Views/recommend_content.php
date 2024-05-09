@@ -4,7 +4,12 @@
 
 use App\Config\AppConfig;
 
-$countTitle = ((int)$_dto->tagRecordCounts[$tag]) > $count ? 'TOP' . $count : '全' . $count . '件';
+$_tagIndex = htmlspecialchars_decode($tag);
+if (isset($_dto->tagRecordCounts[$_tagIndex])) {
+    $countTitle = ((int)$_dto->tagRecordCounts[$_tagIndex]) > $count ? 'TOP' . $count : '全' . $count . '件';
+} else {
+    $countTitle = '';
+}
 
 /** @var \App\Services\StaticData\Dto\StaticRecommendPageDto $_dto */
 viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_meta->generateTags(true)]) ?>
@@ -71,10 +76,10 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
                 <?php endif ?>
             </div>
-            <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>
+            <?php if (isset($_dto->tagRecordCounts[$_tagIndex]) && ((int)$_dto->tagRecordCounts[$_tagIndex]) > $count) : ?>
                 <div class="top-list" style="margin: 0 0 0 0; border: 0; padding: 1rem 0 0 0;">
-                    <a style="margin: 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . htmlspecialchars_decode($tag))) ?>">
-                        <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」をすべて見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$tag] ?>件</span></span>
+                    <a style="margin: 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . $_tagIndex)) ?>">
+                        <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」をすべて見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$_tagIndex] ?>件</span></span>
                     </a>
                 </div>
             <?php endif ?>

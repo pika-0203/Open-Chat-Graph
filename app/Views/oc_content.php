@@ -29,7 +29,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
     <article class="openchat unset">
-
+      <?php viewComponent('ads/google-example-responsive-1') ?>
       <!-- オープンチャット表示ヘッダー -->
       <section class="openchat-header unset" style="padding: 1rem 0; margin-bottom: 1rem; border-bottom: 1px solid #efefef">
         <div class="talkroom_banner_img_area">
@@ -198,10 +198,10 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </section>
 
       <?php if ($recommend[0]) : ?>
-          <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-          <?php if ($recommend[1]) : ?>
-            <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-          <?php endif ?>
+        <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+        <?php if ($recommend[1]) : ?>
+          <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+        <?php endif ?>
       <?php endif ?>
 
       <section style="all: unset; display: block; margin: 0 -1rem; margin-top: 2rem;">
