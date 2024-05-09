@@ -59,7 +59,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                         <?php endforeach ?>
 
                         <?php foreach ($tags['hour24'] as $key => $word) : ?>
-                            <?php if ($hourCount + $key + 1 <= 4 + $hourCount) : ?>
+                            <?php if ($hourCount + $key + 1 <= 14) : ?>
                                 <?php greenTag($word) ?>
                             <?php else : ?>
                                 <li>
@@ -70,7 +70,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                             <?php endif ?>
                         <?php endforeach ?>
 
-                        <?php if (count($tags['hour']) + count($tags['hour24']) > 18) : ?>
+                        <?php if (count($tags['hour']) + count($tags['hour24']) > 14) : ?>
                             <li id="open-btn-li">
                                 <button class="unset tag-btn open-btn" onclick="this.parentElement.parentElement.classList.toggle('open')"></button>
                             </li>

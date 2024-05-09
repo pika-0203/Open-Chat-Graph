@@ -27,6 +27,8 @@ class TopPageRecommendList
         '経済',
         '美容',
         'ヘア',
+        'FX',
+        '副業',
         'サークル',
         '新歓',
         '占い師',
