@@ -19,6 +19,14 @@
 body {
   margin: 0;
   padding: 0;
+  transition: transform 1s;
+  padding: 110px 0px 0px;
+}
+
+@media screen and (min-width: 1000px) {
+  body {
+    padding: 0;
+  }
 }
 
 /* ヘッダー */
@@ -80,6 +88,7 @@ body {
   -webkit-backdrop-filter: blur(12px);
   max-width: var(--width);
   transition: transform 0.3s;
+  transform: translate(0px, 0px);
 }
 
 .site_header {

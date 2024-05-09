@@ -89,25 +89,54 @@ function validateStringNotEmpty(str) {
     })
   })(document.getElementById('copy-btn'))
 })()
-;(adsbygoogle = window.adsbygoogle || []).push({
-  google_ad_client: 'ca-pub-2330982526015125',
-  enable_page_level_ads: true,
-  overlays: {
-    top: false,
-    bottom: true,
-  },
-})
-;(() => {
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
-        if (node.classList && node.classList.contains('adsbygoogle-noablate')) {
-          console.log('done')
-        }
-      })
-    })
+
+const setHeaderShow = (header, hidden, show) => {
+  // 現在の位置を保持
+  let currentPosition = 0
+
+  window.addEventListener('scroll', () => {
+    // スクロール位置を保持
+    let scrollPosition = document.documentElement.scrollTop
+
+    // スクロールに合わせて要素をヘッダーの高さ分だけ移動（表示域から隠したり表示したり）
+    if (scrollPosition <= 0) {
+      header.style.transform = `translate(0, ${show})`
+    } else if (currentPosition <= scrollPosition) {
+      header.style.transform = 'translate(0,' + hidden + 'px)'
+    } else if (currentPosition > scrollPosition) {
+      header.style.transform = `translate(0, ${show})`
+    }
+
+    currentPosition = document.documentElement.scrollTop
   })
-  const targetNode = document.body
-  const config = { childList: true, subtree: true }
-  observer.observe(targetNode, config)
+}
+
+;(() => {
+  const header = document.querySelector('.site_header_outer')
+  setHeaderShow(header, -48, 0)
 })()
+
+const pcAdBarDetector = setInterval(() => {
+  const pcAdBar = document.querySelector('.adsbygoogle-noablate[data-anchor-status]')
+  if (pcAdBar !== null) {
+    console.log(pcAdBar)
+    clearInterval(pcAdBarDetector)
+
+    pcAdBar.style.top = '0px'
+    setHeaderShow(pcAdBar, 0, '47px')
+
+    pcAdBar.style.transition = 'transform 0.3s'
+
+    if (
+      document.querySelector('.site_header_outer').style.transform === 'translate(0px, 0px)' ||
+      document.documentElement.scrollTop === 0
+    ) {
+      pcAdBar.style.transform = 'translate(0px, 47px)'
+    }
+
+    const height = pcAdBar.clientHeight
+    if (height > 110) {
+      document.body.style.padding = `${height}px 0 0 0`
+    }
+  }
+}, 100)
