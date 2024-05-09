@@ -20,7 +20,7 @@ body {
   margin: 0;
   padding: 0;
   transition: transform 1s;
-  padding: 100px 0px 0px;
+  padding: 110px 0px 0px;
 }
 
 @media screen and (min-width: 1000px) {

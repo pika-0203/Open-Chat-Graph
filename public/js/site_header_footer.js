@@ -137,7 +137,7 @@ const setAnchorPosition = () => {
 
       const height = pcAdBar.clientHeight
       if (height > 110) {
-        document.body.style.padding = `${height}px 0 0 0`
+        document.body.style.padding = `${height}px 0px 0px 0px`
       }
     }
     count++

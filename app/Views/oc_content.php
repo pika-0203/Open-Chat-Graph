@@ -49,7 +49,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
             <button id="talkroom-description-close-btn" class="close-btn" title="一部を表示">一部を表示</button>
             <div class="more" id="read_more_btn">
               <div class="more-separater">&nbsp;</div>
-              <button class="unset more-text" title="もっと見る">…もっと見る</button>
+              <button class="unset more-text" style="font-weight: bold; color: #111;" title="もっと見る">…もっと見る</button>
             </div>
           </div>
 
