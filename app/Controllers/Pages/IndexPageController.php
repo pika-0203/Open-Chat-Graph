@@ -10,7 +10,6 @@ use App\Services\Auth\AuthInterface;
 use App\Services\User\MyOpenChatList;
 use App\Services\StaticData\StaticDataFile;
 use App\Services\User\MyOpenChatListUserLogger;
-use App\Views\Content\TopPageNews;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 use DateTime;
 
@@ -44,7 +43,6 @@ class IndexPageController
         );
 
         $tags = $dto->recommendList ?? [];
-        $_news = array_reverse(TopPageNews::getTopPageNews());
 
         $updatedAtHouryCron = $dto->rankingUpdatedAt;
         if (isset($dto->recentCommentList[0]['time'])) {
@@ -68,7 +66,6 @@ class IndexPageController
             'dto',
             'myList',
             'tags',
-            '_news',
         ));
     }
 

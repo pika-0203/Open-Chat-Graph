@@ -198,16 +198,10 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </section>
 
       <?php if ($recommend[0]) : ?>
-        <aside>
-          <article class="top-list first-recommend" style="padding: 0; gap: 0; border: 0; margin: 2rem 0;">
-            <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-          </article>
+          <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
           <?php if ($recommend[1]) : ?>
-            <article class="top-list" style="padding: 0; gap: 0; border: 0; margin: 2rem 0;">
-              <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-            </article>
+            <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
           <?php endif ?>
-        </aside>
       <?php endif ?>
 
       <section style="all: unset; display: block; margin: 0 -1rem; margin-top: 2rem;">

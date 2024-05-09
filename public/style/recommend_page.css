@@ -88,6 +88,10 @@ time {
   box-sizing: border-box;
 }
 
+.hearder-img-outer .google-auto-placed {
+  display: none;
+}
+
 .recommend-header {
   text-align: left;
 }

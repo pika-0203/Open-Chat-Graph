@@ -398,7 +398,7 @@ main header {
   -webkit-line-clamp: 2;
   overflow: hidden;
   word-break: break-all;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .openchat-item-lower-outer {
@@ -457,14 +457,18 @@ main header {
   display: inline-block;
 }
 
-.top-ranking {
+.top-ranking:not(.not-rank) {
   counter-reset: openchat-counter;
 }
 
-.top-ranking .openchat-item {
+.top-ranking:not(.not-rank) .openchat-item {
   min-height: 56px;
   margin: 1rem 0;
   margin-left: 1.5rem;
+}
+
+.top-ranking.not-rank .openchat-item {
+  margin: 1rem 0;
 }
 
 .top-list .openchat-item {
@@ -474,7 +478,7 @@ main header {
   padding-left: 50px;
 }
 
-.top-ranking .openchat-item::before {
+.top-ranking:not(.not-rank) .openchat-item::before {
   width: 1rem;
   content: counter(openchat-counter);
   counter-increment: openchat-counter;
@@ -488,10 +492,10 @@ main header {
   text-align: center;
 }
 
-.top-ranking .openchat-item-desc {
+.top-ranking:not(.not-rank) .openchat-item-desc {
   -webkit-line-clamp: 2;
   font-size: 12px;
-  margin-top: 0px;
+  margin-top: 1px;
 }
 
 .top-list .openchat-item-desc {
@@ -565,7 +569,7 @@ main header {
   color: #777;
 }
 
-.top-ranking .openchat-item-title {
+.top-ranking:not(.not-rank) .openchat-item-title {
   white-space: unset;
   text-overflow: unset;
   overflow: unset;
@@ -940,14 +944,16 @@ main header {
   font-size: 13px;
 }
 
+.top-ranking.not-rank .openchat-item-desc,
 .mylist .openchat-item-desc {
   -webkit-line-clamp: 1;
   font-size: 12px;
 }
 
+.top-ranking.not-rank .openchat-item-lower,
 .mylist .openchat-item-lower {
   margin-top: 1px;
-  font-size: 11px;
+  font-size: 11px !important;
 }
 
 .mylist .openchat-item::before,
@@ -1103,7 +1109,7 @@ main header {
     font-size: 13px;
   }
 
-  .top-ranking .openchat-item-desc {
+  .top-ranking:not(.not-rank) .openchat-item-desc {
     margin-top: 2px;
     font-size: 13px;
   }
@@ -1122,7 +1128,7 @@ main header {
     margin-top: 2px;
   }
 
-  .top-ranking .openchat-item-title {
+  .top-ranking:not(.not-rank) .openchat-item-title {
     font-size: 14px;
     font-weight: 500;
   }

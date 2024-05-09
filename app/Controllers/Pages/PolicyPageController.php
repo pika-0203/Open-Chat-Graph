@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Views\Content\TopPageNews;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 
 class PolicyPageController
@@ -17,7 +18,9 @@ class PolicyPageController
         $_meta->setDescription($desc)->setOgpDescription($desc);
         $_breadcrumbsShema = $breadcrumbsShema->generateSchema('オプチャグラフについて', 'policy');
 
-        return view('policy_content', compact('_meta', '_css', '_breadcrumbsShema'));
+        $_news = array_reverse(TopPageNews::getTopPageNews());
+
+        return view('policy_content', compact('_meta', '_css', '_breadcrumbsShema','_news'));
     }
 
     function privacy(PageBreadcrumbsListSchema $breadcrumbsShema)

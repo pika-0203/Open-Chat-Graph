@@ -68,7 +68,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <h2 class="list-title oc-list">只今サーバー内でリスト更新中です…</h2>
                 <?php endif ?>
                 <?php if (isset($recommend)) : ?>
-                    <?php viewComponent('open_chat_list_recommend', compact('recommend', 'time', 'countTitle')) ?>
+                    <?php viewComponent('open_chat_list_recommend', compact('recommend')) ?>
                 <?php endif ?>
             </div>
             <?php if (isset($_dto->tagRecordCounts[$tag]) && ((int)$_dto->tagRecordCounts[$tag]) > $count) : ?>

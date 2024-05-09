@@ -97,7 +97,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                 <span class="ranking-readMore">オプチャグラフについて</span>
             </a>
         </article>
-        <?php viewComponent('update_news', compact('_news')) ?>
     </main>
     <footer>
         <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>

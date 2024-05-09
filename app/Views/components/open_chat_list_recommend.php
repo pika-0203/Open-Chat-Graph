@@ -11,7 +11,7 @@
 
   use App\Config\AppConfig;
 
-  foreach ($recommend->getList(false) as $key => $oc) : ?>
+  foreach (isset($limit) ? array_slice($recommend->getList($shuffle ?? false), 0, $limit) : $recommend->getList(false) as $key => $oc) : ?>
     <li class="unset">
 
       <div class="openchat-item">
