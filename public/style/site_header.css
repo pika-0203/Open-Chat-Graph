@@ -534,25 +534,6 @@ body {
   display: none;
 }
 
-.example_responsive_1 {
-  width: 320px;
-  height: 100px;
-}
-
-@media (min-width: 500px) {
-  .example_responsive_1 {
-    width: 468px;
-    height: 60px;
-  }
-}
-
-@media (min-width: 800px) {
-  .example_responsive_1 {
-    width: 728px;
-    height: 90px;
-  }
-}
-
 .full-ads {
   margin: 1rem 0;
   aspect-ratio: 1.2 / 1;
