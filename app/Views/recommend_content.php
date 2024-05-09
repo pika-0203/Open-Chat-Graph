@@ -44,7 +44,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 </p>
             </section>
 
-            <div style="margin: 1rem 0; aspect-ratio: 1.2 / 1;">
+            <div class="full-ads">
                 <?php viewComponent('ads/google-full'); ?>
             </div>
 

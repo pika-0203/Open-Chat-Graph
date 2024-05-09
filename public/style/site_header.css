@@ -552,3 +552,14 @@ body {
     height: 90px;
   }
 }
+
+.full-ads {
+  margin: 1rem 0;
+  aspect-ratio: 1.2 / 1;
+}
+
+@media screen and (min-width: 512px) {
+  .full-ads {
+    aspect-ratio: 2 / 1;
+  }
+}

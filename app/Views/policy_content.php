@@ -20,6 +20,9 @@
                 <p>・ユーザーがオープンチャットを見つけて参加する機会を作る</p>
                 <p>・オープンチャットの管理者が成長傾向を把握し、比較できる事で運営に役立つ</p>
                 <h2>オープンチャットの情報を掲載する仕組み</h2>
+                <div style="margin: 2rem 0;" class="full-ads">
+                    <?php viewComponent('ads/google-full'); ?>
+                </div>
                 <p>
                     オプチャグラフは「<a href="https://openchat.line.me/jp" rel="external" target="_blank">LINEオープンチャット公式サイト</a>」のデータを基に、グラフやランキングを作成して掲載しています。
                 </p>
@@ -50,6 +53,9 @@
                         <a href="<?php echo url('recently-registered') ?>">最近登録されたオープンチャット</a>
                     </p>
                 </section>
+                <div style="margin: 2rem 0;" class="full-ads">
+                    <?php viewComponent('ads/google-full'); ?>
+                </div>
                 <section style="margin: 2rem 0;">
                     <h3 style="font-size: 14px;">公式サイトでの掲載条件</h3>
                     <p>
@@ -85,6 +91,9 @@
                         <b>オプチャグラフはLINE公式の検索機能について関与していません。公式の検索機能にルームが表示されない理由を調べることはできません。</b>
                     </p>
                 </section>
+                <div style="margin: 2rem 0;" class="full-ads">
+                    <?php viewComponent('ads/google-full'); ?>
+                </div>
                 <section style="margin: 2rem 0;">
                     <h3 style="font-size: 14px;">ランキングの順位グラフについて</h3>
                     <p>
@@ -98,6 +107,9 @@
                     </p>
                 </section>
                 <h2>オプチャグラフ公開の経緯</h2>
+                <div style="margin: 2rem 0;" class="full-ads">
+                    <?php viewComponent('ads/google-full'); ?>
+                </div>
                 <p>
                     オプチャグラフの公開が可能になった経緯として、オプチャ公式による検索エンジンへの対応が始まった事があげられます。
                 </p>
@@ -114,6 +126,9 @@
                     <a href="https://ja.wikipedia.org/wiki/%E6%A4%9C%E7%B4%A2%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%E6%9C%80%E9%81%A9%E5%8C%96" target="_blank">SEO</a>と言われるマーケティングの一環により、検索エンジンに積極的な掲載を図りユーザーの認知を増やすことを目的とした媒体であると考えられます。
                 </p>
                 <p>
+                <div style="margin: 2rem 0;" class="full-ads">
+                    <?php viewComponent('ads/google-full'); ?>
+                </div>
                 </p>
                 <p>
                     <b>オプチャグラフは「WEBブラウザ版メイン画面」の分析データを掲載し、参加経路拡大に寄与するために開発されたオープンチャット専用の検索エンジンです。</b>
@@ -133,8 +148,14 @@
                     <span id="comments" aria-hidden="true"></span>
                 </p>
                 <h2 style="margin-bottom: 2rem;">オプチャグラフに関する情報共有・コメント</h2>
+                <div style="margin: 2rem 0;" class="full-ads">
+                    <?php viewComponent('ads/google-full'); ?>
+                </div>
                 <div style="min-height: 400px;">
                     <div id="comment-root"></div>
+                </div>
+                <div style="margin: 2rem 0;" class="full-ads">
+                    <?php viewComponent('ads/google-full'); ?>
                 </div>
                 <h2>メールでのお問い合わせ先</h2>
                 <p>オプチャグラフお問い合わせ窓口: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>

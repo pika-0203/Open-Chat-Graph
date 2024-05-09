@@ -18,7 +18,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
                 </h1>
                 <p>試験運用版の分析機能をお試しいただけます。</p>
                 <?php viewComponent('update_news', ['_news' => array_reverse(LabsNews::getNews())]) ?>
-                <div style="margin: 2rem 0; aspect-ratio: 1.2 / 1;">
+                <div style="margin: 2rem 0;" class="full-ads">
                     <?php viewComponent('ads/google-full'); ?>
                 </div>
                 <h2>オプチャ公式ランキング掲載の分析</h2>
@@ -47,6 +47,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
             </article>
         </main>
         <footer>
+            <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
             <?php viewComponent('footer_inner') ?>
         </footer>
     </div>
