@@ -30,7 +30,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     <?php viewComponent('site_header') ?>
     <article class="openchat unset">
       <!-- オープンチャット表示ヘッダー -->
-      <section class="openchat-header unset" style="padding: 0rem 0 1rem 0; margin-bottom: 1rem; border-bottom: 1px solid #efefef">
+      <section class="openchat-header unset" style="margin-bottom: 1rem; border-bottom: 1px solid #efefef;">
         <div class="talkroom_banner_img_area">
           <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
         </div>
@@ -129,6 +129,10 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
       <?php endif ?>
 
+      <div style="margin: 1rem 0; aspect-ratio: 1.2 / 1;">
+        <?php viewComponent('ads/google-full'); ?>
+      </div>
+
       <div style="display: flex; flex-direction: row; align-items: center; margin-bottom: 1rem;">
         <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>
         <h2 class="graph-title">メンバー数の推移グラフ</h2>
@@ -198,6 +202,9 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
       <?php if ($recommend[0]) : ?>
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+        <div style="margin: 1rem 0;">
+          <?php viewComponent('ads/google-full'); ?>
+        </div>
         <?php if ($recommend[1]) : ?>
           <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
         <?php endif ?>
@@ -213,6 +220,10 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
         <div id="comment-root"></div>
       </section>
+
+      <div style="margin: 1rem 0;">
+        <?php viewComponent('ads/google-full'); ?>
+      </div>
 
       <aside style="margin: 2rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>

@@ -37,8 +37,6 @@ hr {
   margin-bottom: 2rem;
 }
 
-
-
 .oc-desc-nav.no-ranking {
   position: absolute;
   z-index: 100;
@@ -50,6 +48,14 @@ hr {
 
 .openchat-header {
   display: flex;
+  padding: 0 0 1rem 0;
+}
+
+@media screen and (max-width: 999px) {
+  .openchat-header {
+    border-top: 1px solid #efefef;
+    padding: 1rem 0 1rem 0;
+  }
 }
 
 .openchat-header a {
@@ -597,16 +603,4 @@ body > footer {
 .csv-dl {
   font-size: 12px;
   color: #b7b7b7;
-}
-
-.oc-ads1 {
-  margin: 1.25rem 0;
-  height: calc(100vw / 1.2);
-}
-
-@media screen and (min-width: 512px) {
-  .oc-ads1 {
-    margin: 1.25rem 0;
-    height: 280px;
-  }
 }

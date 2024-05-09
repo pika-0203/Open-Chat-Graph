@@ -81,11 +81,24 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
         </div>
 
+        <div style="margin: 1rem 0;">
+            <?php viewComponent('ads/google-full'); ?>
+        </div>
+
         <div style="margin: 2rem 0;">
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
         </div>
+
+        <div style="margin: 1rem 0;">
+            <?php viewComponent('ads/google-full'); ?>
+        </div>
+
         <div style="margin: 2rem 0;">
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
+        </div>
+
+        <div style="margin: 1rem 0;">
+            <?php viewComponent('ads/google-full'); ?>
         </div>
 
         <div style="margin: 2rem 0;">
