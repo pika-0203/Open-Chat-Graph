@@ -24,7 +24,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
 <body class="body">
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
-    <main style="margin-bottom: 0;">
+    <main style="margin-bottom: 0; overflow: hidden;">
         <article class="top-ranking" style="padding-top: 0rem; margin-top: 0; margin-bottom: 1rem; padding-bottom: 1rem;">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>

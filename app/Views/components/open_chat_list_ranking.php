@@ -12,9 +12,16 @@
       </h3>
       <p class="openchat-item-desc unset"><?php echo $oc['description'] ?></p>
       <footer class="openchat-item-lower-outer">
+        <div class="openchat-item-lower unset">
+          <span>メンバー <?php echo formatMember($oc['member']) ?>人</span>
+          <?php if (isset($oc['category']) && $oc['category']) : ?>
+            <div class="openchat-item-mui-chip-outer">
+              <span class="openchat-item-mui-chip-inner" aria-label="カテゴリ: <?php echo getCategoryName($oc['category']) ?>"><?php echo getCategoryName($oc['category']) ?></span>
+            </div>
+          <?php endif ?>
+        </div>
         <div class="openchat-item-lower unset <?php echo ($oc['diff_member'] ?? 1) > 0 ? 'positive' : 'negative' ?>">
           <?php if (isset($oc['member'])) : ?>
-            <span>メンバー <?php echo formatMember($oc['member']) ?>人</span>
           <?php endif ?>
           <?php if (($oc['diff_member'] ?? 0) > 0) : ?>
             <span>
@@ -31,11 +38,6 @@
             <span class="registration-date blue"><?php echo timeElapsedString($oc['time']) ?></span>
           <?php endif ?>
         </div>
-        <?php if (isset($oc['category']) && $oc['category']) : ?>
-          <div class="openchat-item-mui-chip-outer">
-            <span class="openchat-item-mui-chip-inner" aria-label="カテゴリ: <?php echo getCategoryName($oc['category']) ?>"><?php echo getCategoryName($oc['category']) ?></span>
-          </div>
-        <?php endif ?>
       </footer>
     </li>
   <?php endforeach ?>

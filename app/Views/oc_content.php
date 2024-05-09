@@ -28,7 +28,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
   <div class="body">
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
-    <article class="openchat unset">
+    <article class="openchat unset" style="overflow: hidden;">
       <!-- オープンチャット表示ヘッダー -->
       <section class="openchat-header unset" style="margin-bottom: 1rem; border-bottom: 1px solid #efefef;">
         <div class="talkroom_banner_img_area">
