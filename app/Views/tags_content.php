@@ -60,6 +60,9 @@ function memberCount(int $count)
                 </div>
             </div>
         </article>
+        <div style="margin: 2rem 0;">
+            <?php viewComponent('ads/google-full'); ?>
+        </div>
         <?php foreach ($categories as $key => $category) : ?>
             <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem; position: relative;">
                 <div style="position: absolute; top: -3.5rem;" id="<?php echo $key ?>" aria-hidden="true"></div>
@@ -98,6 +101,9 @@ function memberCount(int $count)
                 </div>
                 <a style="font-size:15px; text-wrap:nowrap; margin-left:auto; display:inline-flex; color: #111" href="#top">ページの先頭に戻る</a>
             </article>
+            <div style="margin: 2rem 0;">
+                <?php viewComponent('ads/google-full'); ?>
+            </div>
         <?php endforeach ?>
     </main>
     <footer>

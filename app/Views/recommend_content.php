@@ -39,7 +39,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </header>
 
             <section class="unset close" style="display: block; position:relative;" id="recommed-desc-box">
-                <p class="recommend-desc recommend-p" id="recommed-desc" style="font-size: 15px;">
+                <p class="recommend-desc recommend-p" id="recommed-desc" style="font-size: 16px; margin-bottom: 2rem;">
                     <span class="recommend-desc-child">「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているルームをご紹介🙌</span>
                 </p>
             </section>
