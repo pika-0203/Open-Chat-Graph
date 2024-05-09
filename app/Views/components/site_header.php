@@ -45,20 +45,22 @@
             <input type="hidden" name="order" value="desc">
         </form>
     </div>
-    <div class="header-ads">
-        <span style="color: #aaa; font-size: 12px; position: absolute; right: 0; left: 0; text-align: center; top: 2.5rem;">advertisement</span>
-        <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
+    <!-- <div class="header-ads" id="header-ads">
+        <span style="color: #aaa; font-size: 11px; position: absolute; right: 0; left: 0; text-align: center; top: 2.5rem; font-family: var(--font-family);">Loading ads...</span>
+        <div style="margin: auto;">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div> -->
     <script>
         // 現在の位置を保持
         let currentPosition = 0;
 
         // ヘッダーの高さを取得
         const header = document.querySelector(".site_header_outer");
-        const headerHeight = header.clientHeight * -1;
+        const headerHeight = 48 * -1;
 
         window.addEventListener("scroll", () => {
             // スクロール位置を保持
@@ -73,7 +75,6 @@
                 header.style.transform = "translate(0, 0)";
             }
 
-            console.log(scrollPosition)
             currentPosition = document.documentElement.scrollTop;
         })
     </script>

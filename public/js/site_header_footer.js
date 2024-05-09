@@ -45,12 +45,12 @@ function validateStringNotEmpty(str) {
       const tag = params.get('tag')
 
       let url = ''
-      if(tag) {
+      if (tag) {
         url = location.href
       } else {
         url = `https://${location.hostname}${location.pathname}`
       }
-      
+
       const text = document.title + '\n' + url
 
       try {
@@ -88,4 +88,26 @@ function validateStringNotEmpty(str) {
       outer.classList.remove('copy-btn-copied')
     })
   })(document.getElementById('copy-btn'))
+})()
+;(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-2330982526015125',
+  enable_page_level_ads: true,
+  overlays: {
+    top: false,
+    bottom: true,
+  },
+})
+;(() => {
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.classList && node.classList.contains('adsbygoogle-noablate')) {
+          console.log('done')
+        }
+      })
+    })
+  })
+  const targetNode = document.body
+  const config = { childList: true, subtree: true }
+  observer.observe(targetNode, config)
 })()

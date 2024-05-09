@@ -110,22 +110,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
 
     <?php echo $_breadcrumbsShema ?>
-    <script>
-        // 説明文の続きを読むボタン
-        const talkroomDesc = document.getElementById('recommed-desc')
-        const talkroomDescBox = document.getElementById('recommed-desc-box')
-        const closeId = 'recommed-desc-close-btn'
-        const closeBtn = document.getElementById('recommed-desc-close-btn')
-
-        talkroomDescBox.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
-
-        closeBtn.addEventListener('click', () => {
-            talkroomDescBox.classList.add('close')
-            window.scrollTo({
-                top: 0,
-            });
-        })
-    </script>
 </body>
 
 </html>
