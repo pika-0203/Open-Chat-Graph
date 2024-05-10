@@ -143,7 +143,6 @@ const setAnchorPosition = () => {
       document.body.style.paddingBottom = '0px'
     }
     count++
-    console.log(count)
 
     if (count > 300) {
       clearInterval(pcAdBarDetector)

@@ -223,7 +223,10 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <section style="all: unset; display: block; margin: 0 -1rem; margin-top: 2rem;">
         <div style="display: flex; flex-direction: row; align-items: center; padding: 0 1rem;">
           <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
-          <h2 class="graph-title">オープンチャットについてのコメント</h2>
+          <h2 class="graph-title">
+            <div>オープンチャットについてのコメント</div>
+            <div style="font-size: 11px; color: #777; font-weight: normal;"><?php echo $oc['name'] ?></div>
+          </h2>
         </div>
         <div style="margin-bottom: 1.5rem; margin-top: 13px; padding: 0 1rem;">
           <?php viewComponent('comment_desc') ?>
