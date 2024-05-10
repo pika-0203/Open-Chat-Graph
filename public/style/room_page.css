@@ -400,6 +400,16 @@ body > footer {
   word-break: break-all;
 }
 
+.title-bar-oc-name .super-icon.sp {
+  scale: 0.6;
+  margin: -5px -3px 0px -4px;
+}
+
+.title-bar-oc-name .super-icon.official {
+  scale: 0.6;
+  margin: -4px -3px 0px -4px;
+}
+
 .openchat-item-title-img {
   width: 32px;
   min-width: 32px;
