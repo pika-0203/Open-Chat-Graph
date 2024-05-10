@@ -249,7 +249,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
       </aside>
 
-      <footer class="footer">
+      <footer class="footer" style="margin: 0 -1rem;">
         <aside class="open-btn2">
           <a href="https://line.me/download" class="app_link app-dl">
             <span class="text">LINEアプリをダウンロード（LINE公式）</span>
