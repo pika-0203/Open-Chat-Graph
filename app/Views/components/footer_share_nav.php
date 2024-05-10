@@ -1,9 +1,6 @@
 <nav class="share-nav unset">
-    <div style="margin: 0; width: 100%;">
-        <ins class="adsbygoogle" style="display:block;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="rectangle" data-full-width-responsive="false"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+    <div style="margin: 1rem; aspect-ratio: 8/5;">
+        <?php viewComponent('ads/google-full'); ?>
     </div>
     <h3><span aria-hidden="true">\&nbsp;</span>このページをシェアする<span aria-hidden="true">&nbsp;/</span></h3>
     <div class="share-nav-inner">

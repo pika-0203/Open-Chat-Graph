@@ -44,10 +44,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </section>
 
             <div style="margin: 1rem -1rem 1rem -1rem; aspect-ratio: 8/5;">
-                <ins class="adsbygoogle" style="display:block; aspect-ratio: 8/5;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+                <?php viewComponent('ads/google-full'); ?>
             </div>
 
             <div class="top-ranking" style="margin: 0; padding: 0; border: 0; display: block; margin-top: 1rem;">

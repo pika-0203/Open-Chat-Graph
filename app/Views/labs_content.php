@@ -19,10 +19,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
                 <p>試験運用版の分析機能をお試しいただけます。</p>
                 <?php viewComponent('update_news', ['_news' => array_reverse(LabsNews::getNews())]) ?>
                 <div style="margin: 1rem 0; aspect-ratio: 8/5;">
-                    <ins class="adsbygoogle" style="display:block; aspect-ratio: 8/5;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
+                    <?php viewComponent('ads/google-full'); ?>
                 </div>
                 <h2>オプチャ公式ランキング掲載の分析</h2>
                 <a href="<?php echo url('labs/publication-analytics') ?>" aria-label="オプチャ公式ランキング掲載の分析">

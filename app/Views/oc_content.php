@@ -130,10 +130,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <?php endif ?>
 
       <div style="margin: 0 -1rem 1rem -1rem; aspect-ratio: 8/5;">
-        <ins class="adsbygoogle" style="display:block; aspect-ratio: 8/5;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176"></ins>
-        <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+        <?php viewComponent('ads/google-full'); ?>
       </div>
 
       <div class="title-bar">
@@ -206,18 +203,18 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php endif ?>
       </section>
 
-      <div style="margin: 1rem 0;">
+      <div style="margin: 1rem -1rem; aspect-ratio: 8/5;">
         <?php viewComponent('ads/google-full'); ?>
       </div>
 
       <?php if ($recommend[0]) : ?>
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-        <div style="margin: 1rem 0 2rem 0;">
+        <div style="margin: 1rem -1rem; aspect-ratio: 8/5;">
           <?php viewComponent('ads/google-full'); ?>
         </div>
         <?php if ($recommend[1]) : ?>
           <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-          <div style="margin: 1rem 0 2rem 0;">
+          <div style="margin: 1rem -1rem; aspect-ratio: 8/5;">
             <?php viewComponent('ads/google-full'); ?>
           </div>
         <?php endif ?>
@@ -237,19 +234,18 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <div id="comment-root"></div>
       </section>
 
-      <div style="margin: 1rem 0;">
+      <div style="margin: 1rem -1rem; aspect-ratio: 8/5;">
         <?php viewComponent('ads/google-full'); ?>
       </div>
-
-      <aside style="margin: 1rem 0 2rem 0;">
+      <aside style="margin: 1rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
       </aside>
 
-      <div class="full-ads">
+      <div style="margin: 1rem -1rem; aspect-ratio: 8/5;">
         <?php viewComponent('ads/google-full'); ?>
       </div>
 
-      <aside style="margin: 1rem 0 1rem 0;">
+      <aside style="margin: 1rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
       </aside>
 
