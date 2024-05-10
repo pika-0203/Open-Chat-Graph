@@ -74,10 +74,10 @@ li {
 .header-img-title {
   position: absolute;
   bottom: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.3) 20%, rgba(0, 0, 0, 0.9));
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.3) 31%, rgba(0, 0, 0, 0.9));
   z-index: 1;
   width: 100%;
-  padding: 8% 1rem 14px 1rem;
+  padding: 8% 1rem 21px 1rem;
   box-sizing: border-box;
 }
 
