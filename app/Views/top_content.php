@@ -93,7 +93,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
         </div>
 
-        <div style="margin:0 -1rem; aspect-ratio: 1.2;">
+        <div style="margin:0 -1rem;" class="rectangle-ads">
             <?php viewComponent('ads/google-full'); ?>
         </div>
 
@@ -101,7 +101,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
         </div>
 
-        <div style="margin:0 -1rem; aspect-ratio: 1.2;">
+        <div style="margin:0 -1rem;" class="rectangle-ads">
             <?php viewComponent('ads/google-full'); ?>
         </div>
 
@@ -109,7 +109,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
         </div>
 
-        <div style="margin:0 -1rem; aspect-ratio: 1.2;">
+        <div style="margin:0 -1rem;" class="rectangle-ads">
             <?php viewComponent('ads/google-full'); ?>
         </div>
 

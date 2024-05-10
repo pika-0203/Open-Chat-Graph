@@ -22,15 +22,11 @@
   margin: 0 auto;
 }
 
-.body::after {
+.body::before {
   width: 100%;
-  max-width: var(--width);
-  height: 94px;
+  height: 48px;
   display: block;
   content: '';
-  background: rgb(250, 250, 250);
-  position: absolute;
-  top: 48px;
   box-sizing: border-box;
 }
 
@@ -41,11 +37,15 @@
     padding: 110px 0px 0px;
   }
 
-  .body::before {
+  .body::after {
     width: 100%;
-    height: 48px;
+    max-width: var(--width);
+    height: 94px;
     display: block;
     content: '';
+    background: rgb(250, 250, 250);
+    position: absolute;
+    top: 48px;
     box-sizing: border-box;
   }
 }
@@ -517,6 +517,16 @@
 
 @media screen and (min-width: 512px) {
   .full-ads {
+    aspect-ratio: 2 / 1;
+  }
+}
+
+.rectangle-ads {
+  aspect-ratio: 1.2;
+}
+
+@media screen and (min-width: 512px) {
+  .rectangle-ads {
     aspect-ratio: 2 / 1;
   }
 }
