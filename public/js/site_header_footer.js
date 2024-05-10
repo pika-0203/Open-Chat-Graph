@@ -151,3 +151,34 @@ const setAnchorPosition = () => {
 }
 
 setAnchorPosition()
+
+async function blockblock() {
+  const agentsJsonUrl =
+    'https://raw.githubusercontent.com/monperrus/crawler-user-agents/master/crawler-user-agents.json'
+
+  const response = await fetch(agentsJsonUrl)
+  const items = await response.json()
+  const patterns = items.map((item) => item.pattern)
+  const REGEX_CRAWLER = patterns.join('|')
+  const ua = window.navigator.userAgent
+  const result = ua.match(REGEX_CRAWLER)
+  if (result !== null) return
+
+  fetch('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {
+    method: 'HEAD',
+    mode: 'no-cors',
+    cache: 'no-store',
+  })
+    .then()
+    .catch((err) => {
+      alert('アドブロックを解除してください')
+
+      const chart = document.querySelector('.openchat')
+      if (chart) chart.textContent = ''
+
+      document.querySelectorAll('.ranking-list').forEach((el) => (el.textContent = ''))
+      document.querySelectorAll('.openchat-item-list').forEach((el) => (el.textContent = ''))
+      document.querySelectorAll('.openchat-header').forEach((el) => (el.textContent = ''))
+    })
+}
+blockblock()

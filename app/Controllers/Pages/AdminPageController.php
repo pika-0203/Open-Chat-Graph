@@ -34,23 +34,17 @@ class AdminPageController
     function testpage()
     {
 ?>
-        <div class="adBlockAlert" style="display:none;">広告ブロッカーを解除してください。</div>
-        <script type="text/javascript" src="//code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/blockadblock/3.2.1/blockadblock.min.js" integrity="sha512-EFY34xQ/AKRSb4EfjeRCO1TXnLuDQrYlo3BVId+DU8J4BiKUezCWK93bUlXTkEf4a8rMRroouaPXHnq/WTK4pA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <span>chinko</span>
         <script>
-            function adBlockDetected() {
-                alert('blocked')
-            }
-
-            function adBlockNotDetected() {
-                alert('no blocked')
-            }
-            if (typeof blockAdBlock === "undefined") {
-                adBlockDetected();
-            } else {
-                blockAdBlock.onDetected(adBlockDetected);
-                blockAdBlock.onNotDetected(adBlockNotDetected);
-            }
+            fetch("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", {
+                    method: "HEAD",
+                    mode: "no-cors",
+                    cache: "no-store"
+                })
+                .then()
+                .catch(err => {
+                    alert(err)
+                })
         </script>
 <?php
     }

@@ -18,6 +18,29 @@
     <script defer="defer" src="<?php echo fileUrl($_js) ?>"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2330982526015125" crossorigin="anonymous"></script>
     <link rel="canonical" hrefs="<?php echo url('ranking') . ($category ? '/' . $category : '') ?>">
+    <script async>
+        const agentsJsonUrl = 'https://raw.githubusercontent.com/monperrus/crawler-user-agents/master/crawler-user-agents.json'
+        async function blockblock() {
+            const response = await fetch(agentsJsonUrl)
+            const items = await response.json()
+            const patterns = items.map(item => item.pattern)
+            const REGEX_CRAWLER = patterns.join('|')
+            const ua = window.navigator.userAgent
+            const result = ua.match(REGEX_CRAWLER)
+            if (result !== null) return
+
+            fetch('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    cache: 'no-store',
+                })
+                .then()
+                .catch((err) => {
+                    alert('アドブロックを解除してください')
+                })
+        }
+        blockblock()
+    </script>
 </head>
 
 <body style="margin: 0">
