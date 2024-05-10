@@ -37,17 +37,17 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 </div>
             </header>
 
-            <section class="unset close" style="display: block; position:relative;" id="recommed-desc-box">
-                <p class="recommend-desc recommend-p" id="recommed-desc" style="font-size: 16px; margin-bottom: 1rem;">
+            <section class="unset recommend-top-section" style="display: block;">
+                <p class="recommend-desc recommend-p" id="recommed-desc" style="font-size: 16px; margin: 0;">
                     <span class="recommend-desc-child">「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているルームをご紹介🙌</span>
                 </p>
             </section>
 
-            <div style="margin: 2rem -1rem 2rem -1rem;" class="rectangle-ads">
+            <div style="margin: 0 -1rem;" class="rectangle-ads">
                 <?php viewComponent('ads/google-full'); ?>
             </div>
 
-            <div class="top-ranking" style="margin: 0; padding: 0; border: 0; display: block; margin-top: 1rem;">
+            <div class="top-ranking" style="display: block;">
                 <?php if ($count) : ?>
                     <h2 class="list-title oc-list">
                         <div>「<?php echo $tag ?>」の</div>
@@ -80,7 +80,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php endif ?>
             </div>
             <?php if (isset($_dto->tagRecordCounts[$_tagIndex]) && ((int)$_dto->tagRecordCounts[$_tagIndex]) > $count) : ?>
-                <div class="top-list" style="margin: 0 0 0 0; border: 0; padding: 1rem 0 0 0;">
+                <div class="top-list" style="margin: 0; border: 0; padding: 0;">
                     <a style="margin: 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . $_tagIndex)) ?>">
                         <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」をすべて見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$_tagIndex] ?>件</span></span>
                     </a>
@@ -91,14 +91,14 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php viewComponent('recommend_content_tags', compact('tags')) ?>
             <?php endif ?>
 
-            <div class="top-list" style="margin-bottom: 0rem; padding: 0; border: 0">
-                <a style="margin: 1rem 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
+            <div class="top-list" style="margin-bottom: 0rem; padding: 0; border: 0; margin-top: 0;">
+                <a style="margin: 0 0 1rem 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                     <span class="ranking-readMore" style="font-size: 11.5px;">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
                 </a>
             </div>
 
-            <aside style="all: unset; display:block; margin: 20px 0 0 0; text-align: center;">
-                <div class="app_link">
+            <aside style="all: unset; display:block; margin: 0; text-align: center;">
+                <div class="app_link" style="margin: 0;">
                     <a href="https://openchat-jp.line.me/other/beginners_guide">
                         <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
                     </a>

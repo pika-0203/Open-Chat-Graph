@@ -92,7 +92,6 @@ li {
 @media screen and (max-width: 999px) {
   .recommend-header {
     border-top: 1px solid #efefef;
-    border-bottom: 1px solid #efefef;
     padding-top: 1rem;
   }
 }
@@ -102,6 +101,13 @@ li {
   line-height: 1.6;
   font-size: 21px;
   margin: 0;
+}
+
+.recommend-top-section {
+  padding-bottom: 1rem;
+  margin-top: 1rem;
+  border-bottom: 1px solid #efefef;
+  margin-bottom: 1rem;
 }
 
 .ranking-page-main .share-nav {

@@ -1,4 +1,4 @@
-<aside class="list-aside">
+<aside class="list-aside" style="margin: 1rem 0">
     <h3 class="list-title">
         <span>関連のタグ</span>
     </h3>

@@ -13,10 +13,12 @@
     <li class="unset">
 
       <?php if ($key && $key % 10 === 0) : ?>
-        <div style="margin: 2rem -1rem;" class="rectangle-ads">
-          <?php viewComponent('ads/google-full'); ?>
+        <div style="margin: 1rem 0; padding: 1rem 0; border-top: 1px solid #efefef; border-bottom: 1px solid #efefef;" class="rectangle-ads">
+          <div style="margin: 0 -1rem;" class="rectangle-ads">
+            <?php viewComponent('ads/google-full'); ?>
+          </div>
         </div>
-        <h2 style="all: unset; font-size: 14px; font-weight: bold; margin: 1rem 0; color: #111; display: flex; flex-direction:row; flex-wrap:wrap;">
+        <h2 style="all: unset; font-size: 15px; font-weight: bold; margin: 1rem 0; color: #111; display: flex; flex-direction:row; flex-wrap:wrap;">
           <div>「<?php echo $recommend->listName ?>」の</div>
           <div>人数急増ランキング</div>
           <div><?php echo $countTitle ?></div>
