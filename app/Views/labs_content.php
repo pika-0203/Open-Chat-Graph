@@ -18,7 +18,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
                 </h1>
                 <p>試験運用版の分析機能をお試しいただけます。</p>
                 <?php viewComponent('update_news', ['_news' => array_reverse(LabsNews::getNews())]) ?>
-                <div style="margin: 1rem 0; aspect-ratio: 8/5;">
+                <div style="margin: 2rem -1rem; aspect-ratio: 8/5;">
                     <?php viewComponent('ads/google-full'); ?>
                 </div>
                 <h2>オプチャ公式ランキング掲載の分析</h2>
@@ -33,7 +33,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
                 <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs/publication-analytics') ?>">
                     <span class="ranking-readMore">オプチャ公式ランキング掲載の分析を開く
                 </a>
-                <div style="margin: 2rem 0;">
+                <div style="margin: 2rem -1rem; aspect-ratio: 8/5;">
                     <?php viewComponent('ads/google-full'); ?>
                 </div>
                 <h2>タグで見るトレンド動向</h2>

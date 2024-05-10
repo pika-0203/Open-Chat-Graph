@@ -60,12 +60,12 @@ function memberCount(int $count)
                 </div>
             </div>
         </article>
-        <div style="margin: 2rem -1rem; aspect-ratio: 8/5;">
-            <?php viewComponent('ads/google-full'); ?>
-        </div>
         <?php foreach ($categories as $key => $category) : ?>
-            <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem; position: relative;">
-                <div style="position: absolute; top: -3.5rem;" id="<?php echo $key ?>" aria-hidden="true"></div>
+            <div style="margin: 1rem -1rem; aspect-ratio: 8/5; position: relative;">
+                <div style="position: absolute; top: -120px;" id="<?php echo $key ?>" aria-hidden="true"></div>
+                <?php viewComponent('ads/google-full'); ?>
+            </div>
+            <article class="top-ranking" style="padding-top: 0; margin-top: 0; margin-bottom: 1rem;">
                 <div>
                     <header class="openchat-list-title-area unset">
                         <div class="openchat-list-date unset ranking-url">
@@ -101,9 +101,6 @@ function memberCount(int $count)
                 </div>
                 <a style="font-size:15px; text-wrap:nowrap; margin-left:auto; display:inline-flex; color: #111" href="#top">ページの先頭に戻る</a>
             </article>
-            <div style="margin: 2rem -1rem; aspect-ratio: 8/5;">
-                <?php viewComponent('ads/google-full'); ?>
-            </div>
         <?php endforeach ?>
     </main>
     <footer>
