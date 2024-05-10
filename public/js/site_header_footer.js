@@ -171,12 +171,12 @@ async function blockblock() {
   })
     .then()
     .catch((err) => {
-      alert('お知らせ: アドブロックの設定を解除してください。アドブロックが有効な場合、一部機能が利用できません。')
+      alert('お知らせ: エラーが発生したためページを更新してください。アドブロックが有効な場合は解除してください。')
 
       const chart = document.querySelector('#graph-box')
       if (chart) chart.style.pointerEvents = 'none'
       const opbtn = document.querySelectorAll('.open-btn')
-      opbtn.forEach((el) => el.textContent = '')
+      opbtn.forEach((el) => (el.textContent = ''))
     })
 }
 blockblock()
