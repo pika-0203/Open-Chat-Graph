@@ -24,7 +24,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
 <body class="body">
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
-    <main style="margin-bottom: 0; overflow: hidden;">
+    <main style="margin-bottom: 0; overflow: hidden; padding-bottom: 0rem;">
         <article class="top-ranking" style="padding-top: 0rem; margin-top: 0; margin-bottom: 1rem; padding-bottom: 1rem;">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
@@ -93,7 +93,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
         </div>
 
-        <div style="margin: 1rem; aspect-ratio: 8/5;">
+        <div style="margin:0 -1rem; aspect-ratio: 8/5;">
             <?php viewComponent('ads/google-full'); ?>
         </div>
 
@@ -101,7 +101,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
         </div>
 
-        <div style="margin: 1rem; aspect-ratio: 8/5;">
+        <div style="margin:0 -1rem; aspect-ratio: 8/5;">
             <?php viewComponent('ads/google-full'); ?>
         </div>
 
@@ -109,7 +109,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
         </div>
 
-        <div style="margin: 1rem; aspect-ratio: 8/5;">
+        <div style="margin:0 -1rem; aspect-ratio: 8/5;">
             <?php viewComponent('ads/google-full'); ?>
         </div>
 

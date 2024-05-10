@@ -1,5 +1,5 @@
 <nav class="share-nav unset">
-    <div style="margin: 1rem; aspect-ratio: 8/5;">
+    <div style="aspect-ratio: 8/5;">
         <?php viewComponent('ads/google-full'); ?>
     </div>
     <h3><span aria-hidden="true">\&nbsp;</span>このページをシェアする<span aria-hidden="true">&nbsp;/</span></h3>
