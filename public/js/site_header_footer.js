@@ -171,7 +171,7 @@ async function blockblock() {
   })
     .then()
     .catch((err) => {
-      alert('アドブロックを解除してください')
+      alert('お知らせ: アドブロックの設定を解除してください。アドブロックが有効な場合、一部機能が利用できません。')
 
       const chart = document.querySelector('#graph-box')
       if (chart) chart.style.pointerEvents = 'none'
