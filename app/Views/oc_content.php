@@ -145,7 +145,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </span>
       </div>
       <!-- グラフセクション -->
-      <div style="position: relative; max-width: 680px; margin: auto;">
+      <div style="position: relative; max-width: 680px; margin: auto;" id="graph-box">
         <div class="chart-canvas-box" id="dummy-canvas"></div>
         <div id="app"></div>
       </div>

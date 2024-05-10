@@ -173,12 +173,10 @@ async function blockblock() {
     .catch((err) => {
       alert('アドブロックを解除してください')
 
-      const chart = document.querySelector('.openchat')
-      if (chart) chart.textContent = ''
-
-      document.querySelectorAll('.ranking-list').forEach((el) => (el.textContent = ''))
-      document.querySelectorAll('.openchat-item-list').forEach((el) => (el.textContent = ''))
-      document.querySelectorAll('.openchat-header').forEach((el) => (el.textContent = ''))
+      const chart = document.querySelector('#graph-box')
+      if (chart) chart.style.pointerEvents = 'none'
+      const opbtn = document.querySelectorAll('.open-btn')
+      opbtn.forEach((el) => el.textContent = '')
     })
 }
 blockblock()
