@@ -16,9 +16,9 @@ class OfficialRoomRankingRepository implements RecommendRankingRepositoryInterfa
     ): array {
         $select = RecommendRankingRepositoryInterface::Select;
 
-        if($emblem) {
+        if ($emblem) {
             $statement = "emblem = '{$emblem}'";
-        }else {
+        } else {
             $statement = "emblem = 1 OR emblem = 2";
         }
 

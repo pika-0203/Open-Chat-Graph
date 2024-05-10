@@ -13,4 +13,5 @@ class OpenChatApiArgs
     public string $sub_category;
     public string $keyword = '';
     public string $tag = '';
+    public int $badge = 0;
 }

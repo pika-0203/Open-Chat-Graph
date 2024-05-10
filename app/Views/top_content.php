@@ -18,6 +18,16 @@ function greenTag($word)
 <?php
 }
 
+function listAds()
+{
+?>
+    <div style="margin: 0 -1rem;" class="rectangle-ads">
+        <?php viewComponent('ads/google-full'); ?>
+    </div>
+
+<?php
+}
+
 
 /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
 viewComponent('head', compact('_css', '_meta', '_schema')) ?>
@@ -89,29 +99,32 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <hr class="ht-top-mylist">
         <?php endif ?>
 
-        <div style="margin:0 -1rem;" class="rectangle-ads">
-            <?php viewComponent('ads/google-full'); ?>
-        </div>
+        <?php listAds(); ?>
 
-        <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+        <?php if ($newComment) : ?>
+            <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
+            <?php listAds(); ?>
+            <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+            <?php listAds(); ?>
+            <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
+            <?php listAds(); ?>
+            <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0, 'tag' => '']) ?>
+            <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0, 'style' => 'margin-top: -1rem; border-top: 0']) ?>
+            <?php listAds(); ?>
+            <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
+        <?php else : ?>
+            <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+            <?php listAds(); ?>
+            <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
+            <?php listAds(); ?>
+            <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0, 'tag' => '','style' => '']) ?>
+            <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0, 'style' => 'margin-top: -1rem; border-top: 0']) ?>
+            <?php listAds(); ?>
+            <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
+            <?php listAds(); ?>
+            <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
+        <?php endif ?>
 
-        <div style="margin: 0 -1rem;" class="rectangle-ads">
-            <?php viewComponent('ads/google-full'); ?>
-        </div>
-
-        <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
-
-        <div style="margin: 0 -1rem;" class="rectangle-ads">
-            <?php viewComponent('ads/google-full'); ?>
-        </div>
-
-        <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
-
-        <div style="margin: 0 -1rem;" class="rectangle-ads">
-            <?php viewComponent('ads/google-full'); ?>
-        </div>
-
-        <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
     </main>
     <footer>
         <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>

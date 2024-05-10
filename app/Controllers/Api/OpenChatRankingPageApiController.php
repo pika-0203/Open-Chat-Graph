@@ -38,8 +38,24 @@ class OpenChatRankingPageApiController
         $keyword = Valid::str(Recp::input('keyword', ''), emptyAble: true, maxLen: 1000, e: $error);
         if ($keyword && str_starts_with($keyword, 'tag:')) {
             $this->args->tag = str_replace('tag:', '', $keyword);
+        } elseif ($keyword && str_starts_with($keyword, 'badge:')) {
+            $this->args->badge = $this->velidateBadge(str_replace('badge:', '', $keyword));
+            $this->args->keyword = $keyword;
         } elseif ($keyword) {
             $this->args->keyword = $keyword;
+        }
+    }
+
+    function velidateBadge(string $word)
+    {
+        if ($word === 'スペシャルオープンチャット') {
+            return 1;
+        } elseif ($word === '公式認証オープンチャット') {
+            return 2;
+        } elseif ($word === 'すべて') {
+            return 3;
+        } else {
+            return 0;
         }
     }
 

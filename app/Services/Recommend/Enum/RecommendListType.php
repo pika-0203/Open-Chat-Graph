@@ -7,4 +7,5 @@ namespace App\Services\Recommend\Enum;
 enum RecommendListType {
     case Category;
     case Tag;
+    case Official;
 }

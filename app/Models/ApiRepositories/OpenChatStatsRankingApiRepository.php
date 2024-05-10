@@ -79,7 +79,7 @@ class OpenChatStatsRankingApiRepository
         $categoryStatement = $args->category ? "category = {$args->category}" : 1;
 
         // 検索が選択されていない場合
-        if (!$args->sub_category && !$args->keyword && !$args->tag) {
+        if (!$args->sub_category && !$args->keyword && !$args->tag && !$args->badge) {
             $result = DB::fetchAll(
                 $query($categoryStatement)('WHERE'),
                 $params
@@ -115,6 +115,34 @@ class OpenChatStatsRankingApiRepository
 
             $result[0]['totalCount'] = $count[0]['count'];
 
+            return $result;
+        }
+
+        // スペシャル
+        if ($args->badge) {
+            $param2 = [];
+            if ($args->badge < 3) {
+                $categoryArg = $categoryStatement . " AND oc.emblem = :emblem";
+                $param2 = ['emblem' => $args->badge];
+                $result = DB::fetchAll(
+                    $query($categoryArg)('WHERE'),
+                    [...$params, ...$param2]
+                );
+            } else {
+                $categoryArg = $categoryStatement . " AND oc.emblem > 0";
+                $result = DB::fetchAll(
+                    $query($categoryArg)('WHERE'),
+                    [...$params]
+                );
+            }
+
+
+            if (!$result || $args->page !== 0) {
+                return $result;
+            }
+
+            // 1ページ目の場合は件数を含める
+            $result[0]['totalCount'] = DB::fetchColumn($countQuery($categoryArg)('WHERE'), $param2);
             return $result;
         }
 
@@ -208,7 +236,7 @@ class OpenChatStatsRankingApiRepository
         $categoryStatement = $args->category ? "category = {$args->category}" : 1;
 
         // サブカテゴリーが選択されていない場合
-        if (!$args->sub_category && !$args->keyword && !$args->tag) {
+        if (!$args->sub_category && !$args->keyword && !$args->tag && !$args->badge) {
             $result = array_map(
                 fn ($oc) => new OpenChatListDto($oc),
                 DB::fetchAll(
@@ -249,6 +277,40 @@ class OpenChatStatsRankingApiRepository
             );
 
             $result[0]->totalCount = $count[0]['count'];
+            return $result;
+        }
+
+        // スペシャル
+        if ($args->badge) {
+            $param2 = [];
+
+            if ($args->badge < 3) {
+                $categoryArg = $categoryStatement . $whereClause . " AND oc.emblem = :emblem";
+                $param2 = ['emblem' => $args->badge];
+                $result = array_map(
+                    fn ($oc) => new OpenChatListDto($oc),
+                    DB::fetchAll(
+                        $query($categoryArg)('WHERE'),
+                        [...$params, ...$param2]
+                    )
+                );
+            } else {
+                $categoryArg = $categoryStatement . $whereClause . " AND oc.emblem > 0";
+                $result = array_map(
+                    fn ($oc) => new OpenChatListDto($oc),
+                    DB::fetchAll(
+                        $query($categoryArg)('WHERE'),
+                        $params
+                    )
+                );
+            }
+
+            if (!$result || $args->page !== 0) {
+                return $result;
+            }
+
+            // 1ページ目の場合は件数を含める
+            $result[0]->totalCount = DB::fetchColumn($countQuery($categoryArg)('WHERE'), $param2);
             return $result;
         }
 
