@@ -392,6 +392,12 @@ body > footer {
   font-weight: normal;
   line-height: 125%;
   margin-top: 3px;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
 }
 
 .openchat-item-title-img {

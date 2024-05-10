@@ -98,7 +98,7 @@ class RecommendOpenChatPageController
             $recommendList
         );
 
-        $tags = array_slice($recommendPageList->getFilterdTags($recommendList, $tag), 0, 12);
+        $tags = $recommendPageList->getFilterdTags($recommendList, $tag);
 
         return view('recommend_content', compact(
             '_meta',
