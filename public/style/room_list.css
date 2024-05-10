@@ -300,12 +300,21 @@ main header {
   flex-direction: column;
   gap: 1rem;
   border-bottom: 1px solid #efefef;
+  border-top: 1px solid #efefef;
+  margin: 1rem 0;
 }
 
 .top-list .openchat-item-list {
   margin-bottom: -1rem;
   margin-top: -0.5rem;
   width: 100%;
+}
+
+@media screen and (min-width: 1000px) {
+  .top-btns {
+    border-top: 0;
+    padding-top: 0  ;
+  }
 }
 
 .openchat-item {

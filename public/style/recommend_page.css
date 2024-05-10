@@ -89,6 +89,14 @@ li {
   text-align: left;
 }
 
+@media screen and (max-width: 999px) {
+  .recommend-header {
+    border-top: 1px solid #efefef;
+    border-bottom: 1px solid #efefef;
+    padding-top: 1rem;
+  }
+}
+
 .recommend-header h2 {
   color: #fff;
   line-height: 1.6;

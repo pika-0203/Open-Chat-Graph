@@ -5,7 +5,7 @@ $count2 = 0;
 $count3 = 0;
 ?>
 
-<ol class="openchat-item-list unset">
+<ol class="openchat-item-list unset" style="margin-bottom: -0.5rem;">
   <?php foreach ($openChatList as $oc) : ?>
     <?php if ($count1 >= 5) break; ?>
     <?php if (mb_strlen($oc['description']) > 10) : ?>

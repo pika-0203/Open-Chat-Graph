@@ -129,7 +129,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
       <?php endif ?>
 
-      <div style="margin: 0 -1rem 1rem -1rem;" class="rectangle-ads">
+      <div style="margin: 1rem -1rem 1rem -1rem;" class="rectangle-ads">
         <?php viewComponent('ads/google-full'); ?>
       </div>
 
@@ -184,7 +184,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
       </nav>
 
-      <section class="open-btn sp-btn" style="margin: 1rem 0;">
+      <section class="open-btn sp-btn" style="margin: 1rem 0; padding-bottom: 1rem; border-bottom: 1px solid #efefef;">
         <?php if ($oc['url']) : ?>
           <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
             <?php if ($oc['join_method_type'] !== 0) : ?>
@@ -209,39 +209,41 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
       <?php if ($recommend[0]) : ?>
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-        <div style="margin: 1rem -1rem;" class="rectangle-ads">
+        <div style="margin: 0 -1rem;" class="rectangle-ads">
           <?php viewComponent('ads/google-full'); ?>
         </div>
         <?php if ($recommend[1]) : ?>
           <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-          <div style="margin: 1rem -1rem;" class="rectangle-ads">
+          <div style="margin: 0 -1rem;" class="rectangle-ads">
             <?php viewComponent('ads/google-full'); ?>
           </div>
         <?php endif ?>
       <?php endif ?>
 
-      <section style="all: unset; display: block; margin: 1rem -1rem;">
-        <div style="display: flex; flex-direction: row; align-items: center; padding: 0 1rem; gap: 6px;">
-          <img class="openchat-item-title-img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
-          <h2 class="graph-title">
-            <div>オープンチャットについてのコメント</div>
-            <div class="title-bar-oc-name" style="padding-right: 1.5rem;"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></div>
-          </h2>
+      <section style="all: unset; display: block; padding: 1rem 0 0 0; border-top: 1px solid #efefef; border-bottom: solid 1px #efefef; margin: 1rem 0;">
+        <div style="margin: 0 -1rem;">
+          <div style="display: flex; flex-direction: row; align-items: center; padding: 0 1rem; gap: 6px;">
+            <img class="openchat-item-title-img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
+            <h2 class="graph-title">
+              <div>オープンチャットについてのコメント</div>
+              <div class="title-bar-oc-name" style="padding-right: 1.5rem;"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></div>
+            </h2>
+          </div>
+          <div style="margin-bottom: 1.5rem; margin-top: 13px; padding: 0 1rem;">
+            <?php viewComponent('comment_desc') ?>
+          </div>
+          <div id="comment-root"></div>
         </div>
-        <div style="margin-bottom: 1.5rem; margin-top: 13px; padding: 0 1rem;">
-          <?php viewComponent('comment_desc') ?>
-        </div>
-        <div id="comment-root"></div>
       </section>
 
-      <div style="margin: 1rem -1rem;" class="rectangle-ads">
+      <div style="margin: 0 -1rem;" class="rectangle-ads">
         <?php viewComponent('ads/google-full'); ?>
       </div>
       <aside style="margin: 1rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
       </aside>
 
-      <div style="margin: 1rem -1rem;" class="rectangle-ads">
+      <div style="margin: 0 -1rem;" class="rectangle-ads">
         <?php viewComponent('ads/google-full'); ?>
       </div>
 

@@ -14,6 +14,7 @@ use Shadow\DB;
 use App\Services\Admin\AdminTool;
 use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Models\SQLite\SQLiteStatistics;
+use App\Models\UserLogRepositories\UserLogRepository;
 use App\Services\OpenChat\OpenChatDailyCrawling;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
@@ -31,22 +32,10 @@ class AdminPageController
         }
     }
 
-    function testpage()
+    function mylist(UserLogRepository $repo)
     {
-?>
-        <span>chinko</span>
-        <script>
-            fetch("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", {
-                    method: "HEAD",
-                    mode: "no-cors",
-                    cache: "no-store"
-                })
-                .then()
-                .catch(err => {
-                    alert(err)
-                })
-        </script>
-<?php
+        $result = $repo->getUserListLogAll(9999, 0);
+        return view('admin/dash_my_list', ['result' => $result]);
     }
 
     function test()

@@ -13,15 +13,15 @@
     <li class="unset">
 
       <?php if ($key && $key % 10 === 0) : ?>
-        <div style="margin: 1rem -1rem;" class="rectangle-ads">
+        <div style="margin: 2rem -1rem;" class="rectangle-ads">
           <?php viewComponent('ads/google-full'); ?>
         </div>
-        <div style="font-size: 13px; font-weight: bold; margin: 1rem 0; color: #555; display: flex; flex-direction:row; flex-wrap:wrap;">
+        <h2 style="all: unset; font-size: 14px; font-weight: bold; margin: 1rem 0; color: #111; display: flex; flex-direction:row; flex-wrap:wrap;">
           <div>「<?php echo $recommend->listName ?>」の</div>
           <div>人数急増ランキング</div>
           <div><?php echo $countTitle ?></div>
           <div>【<?php echo $time ?>】 <?php echo $key + 1 ?>位〜</div>
-        </div>
+        </h2>
       <?php endif ?>
 
       <div class="openchat-item">

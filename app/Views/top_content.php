@@ -25,7 +25,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 <body class="body">
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main style="margin-bottom: 0; overflow: hidden; padding-bottom: 0rem;">
-        <article class="top-ranking" style="padding-top: 0rem; margin-top: 0; margin-bottom: 1rem; padding-bottom: 1rem;">
+        <article class="top-ranking top-btns" style="margin-top: 0; margin-bottom: 1rem;">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
             </a>
@@ -89,33 +89,29 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <hr class="ht-top-mylist">
         <?php endif ?>
 
-        <div style="margin: 1rem 0;">
-            <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
-        </div>
-
         <div style="margin:0 -1rem;" class="rectangle-ads">
             <?php viewComponent('ads/google-full'); ?>
         </div>
 
-        <div style="margin: 1rem 0;">
-            <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
-        </div>
+        <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
 
-        <div style="margin:0 -1rem;" class="rectangle-ads">
+        <div style="margin: 0 -1rem;" class="rectangle-ads">
             <?php viewComponent('ads/google-full'); ?>
         </div>
 
-        <div style="margin: 1rem 0;">
-            <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
-        </div>
+        <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
 
-        <div style="margin:0 -1rem;" class="rectangle-ads">
+        <div style="margin: 0 -1rem;" class="rectangle-ads">
             <?php viewComponent('ads/google-full'); ?>
         </div>
 
-        <div style="margin: 1rem 0;">
-            <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
+        <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
+
+        <div style="margin: 0 -1rem;" class="rectangle-ads">
+            <?php viewComponent('ads/google-full'); ?>
         </div>
+
+        <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
     </main>
     <footer>
         <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>

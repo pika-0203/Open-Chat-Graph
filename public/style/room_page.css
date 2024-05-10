@@ -53,6 +53,7 @@ hr {
 @media screen and (max-width: 999px) {
   .openchat-header {
     border-top: 1px solid #efefef;
+    border-bottom: 1px solid #efefef;
     padding: 1rem 0 1rem 0;
   }
 }
@@ -381,6 +382,8 @@ body > footer {
 }
 
 .title-bar {
+  border-top: 1px solid #efefef;
+  padding-top: 1rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -518,7 +521,8 @@ body > footer {
   }
 
   .openchat-header {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #efefef;
   }
 
   .app_link {

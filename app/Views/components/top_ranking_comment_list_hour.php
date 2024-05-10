@@ -6,7 +6,7 @@ $hourlyStart = $dto->hourlyUpdatedAt->format('G:i');
 $_hourlyRange = $hourlyStart . '〜<time datetime="' . $hourlyTime . '">' . $hourlyEnd . '</time>';
 ?>
 
-<article class="top-ranking" style="border: 0; padding: 0; margin-top: 1rem; margin-bottom: 1.5rem;">
+<article class="top-ranking">
     <header class="openchat-list-title-area unset">
         <div class="openchat-list-date unset ranking-url">
             <h2 class="unset">

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Config\AppConfig;
 use App\Models\RecommendRepositories\OfficialRoomRankingRepository;
 use PHPUnit\Framework\TestCase;
 

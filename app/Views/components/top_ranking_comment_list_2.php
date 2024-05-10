@@ -1,4 +1,4 @@
-<article class="top-ranking" style="border: 0; padding: 0; margin-top: 1rem; margin-bottom: 1.5rem;">
+<article class="top-ranking">
     <header class="openchat-list-title-area unset">
         <div class="openchat-list-date unset ranking-url">
             <h2 class="unset">
@@ -17,7 +17,7 @@
     <?php viewComponent('ads/google-full'); ?>
 </div>
 
-<article class="top-ranking created-at" style="border: 0; padding: 0; margin: 1rem 0;  margin-bottom: 1.5rem;">
+<article class="top-ranking created-at">
     <header class=" openchat-list-title-area unset">
         <div class="openchat-list-date unset ranking-url">
             <h2 class="unset">

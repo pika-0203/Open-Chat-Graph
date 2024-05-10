@@ -43,7 +43,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 </p>
             </section>
 
-            <div style="margin: 1rem -1rem 1rem -1rem;" class="rectangle-ads">
+            <div style="margin: 2rem -1rem 2rem -1rem;" class="rectangle-ads">
                 <?php viewComponent('ads/google-full'); ?>
             </div>
 
