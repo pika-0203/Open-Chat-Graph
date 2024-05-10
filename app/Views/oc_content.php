@@ -129,17 +129,17 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
       <?php endif ?>
 
-      <div class="full-ads">
+      <div class="full-ads" style="margin: 1rem 0 2rem 0;">
         <?php viewComponent('ads/google-full'); ?>
       </div>
 
-      <div style="display: flex; flex-direction: row; align-items: center; margin-bottom: 1rem;">
-        <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📈</div>
+      <div class="title-bar">
+        <img class="openchat-item-title-img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
         <h2 class="graph-title">
           <div>メンバー数の推移グラフ</div>
-          <div style="font-size: 11px; color: #777; font-weight: normal;"><?php echo $oc['name'] ?></div>
+          <div class="title-bar-oc-name"><?php echo $oc['name'] ?></div>
         </h2>
-        <span class="number-box created-at" style="text-wrap: nowrap; flex-wrap: nowrap; padding-left: 4px;">
+        <span class="number-box created-at">
           <div class="openchat-itme-stats-title">登録:&nbsp;</div>
           <div class="openchat-itme-stats-title"><?php echo convertDatetime($oc['created_at']) ?></div>
         </span>
@@ -214,18 +214,18 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
         <?php if ($recommend[1]) : ?>
           <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-          <div class="full-ads">
+          <div style="margin: 1rem 0;">
             <?php viewComponent('ads/google-full'); ?>
           </div>
         <?php endif ?>
       <?php endif ?>
 
-      <section style="all: unset; display: block; margin: 0 -1rem; margin-top: 2rem;">
-        <div style="display: flex; flex-direction: row; align-items: center; padding: 0 1rem;">
-          <div aria-hidden="true" style="font-size: 13px; margin-bottom: 8px; margin-right: 4px; user-select: none;">📝</div>
+      <section style="all: unset; display: block; margin: 2rem -1rem;">
+        <div style="display: flex; flex-direction: row; align-items: center; padding: 0 1rem; gap: 6px;">
+          <img class="openchat-item-title-img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
           <h2 class="graph-title">
             <div>オープンチャットについてのコメント</div>
-            <div style="font-size: 11px; color: #777; font-weight: normal;"><?php echo $oc['name'] ?></div>
+            <div style="font-size: 11px; color: #777; font-weight: normal; padding-right: 1.5rem;"><?php echo $oc['name'] ?></div>
           </h2>
         </div>
         <div style="margin-bottom: 1.5rem; margin-top: 13px; padding: 0 1rem;">

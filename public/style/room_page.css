@@ -24,7 +24,6 @@ hr {
   font-size: 16px;
   color: #111;
   margin: 0;
-  margin-bottom: 6px;
 }
 
 .oc-desc-nav {
@@ -274,19 +273,20 @@ hr {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  font-size: 11.5px;
+  font-size: 11px;
   color: #777;
 }
 
 .number-box .openchat-itme-stats-title {
-  font-size: 11.5px;
+  font-size: 11px;
   color: #777;
 }
 
 .number-box.created-at {
-  margin-bottom: 3px;
-  line-height: 2;
+  line-height: 1.5;
   margin-left: auto;
+  text-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .number-box.bold {
@@ -378,6 +378,35 @@ body > footer {
   margin: 0px 0px 1px 0px;
 }
 
+.title-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 6px;
+}
+
+.title-bar-oc-name {
+  font-size: 11px;
+  color: #777;
+  font-weight: normal;
+  line-height: 125%;
+  margin-top: 3px;
+}
+
+.openchat-item-title-img {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  min-height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+  pointer-events: none;
+  display: block;
+  margin: auto 0;
+  margin-right: 2px;
+}
+
 @media screen and (max-width: 359px) {
   .talkroom_number_of_stats {
     margin-right: -0.5rem;
@@ -388,13 +417,18 @@ body > footer {
   }
 
   .openchat .graph-title {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .my-list-form .checkbox-label {
     font-size: 11px;
     margin-right: 0px;
     text-wrap: unset;
+  }
+
+  .number-box.created-at {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -410,6 +444,20 @@ body > footer {
     margin: auto;
     margin-top: 2rem;
     margin-bottom: 1rem;
+  }
+
+  .title-bar-oc-name {
+    font-size: 12px;
+  }
+
+  .number-box .openchat-itme-stats-title {
+    font-size: 12px;
+  }
+
+  .openchat-item-title-img {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
   }
 
   .first-recommend {
@@ -501,6 +549,9 @@ body > footer {
 
   .openchat .graph-title {
     font-size: 1rem;
+  }
+
+  .title-bar {
     margin-bottom: 1rem;
   }
 
