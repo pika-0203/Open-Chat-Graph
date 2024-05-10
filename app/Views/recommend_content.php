@@ -21,13 +21,12 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
         <article>
             <header class="recommend-header">
                 <div class="hearder-img-outer">
-                    <div class="header-img">
-                        <?php if (isset($recommend)) : ?>
-                            <?php foreach ($recommend->getPreviewList(8) as $oc) : ?>
-                                <img alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
-                            <?php endforeach ?>
-                        <?php endif ?>
-                    </div>
+
+                    <?php if (isset($recommend)) : ?>
+                        <?php $oc = $recommend->getPreviewList(1)[0] ?>
+                        <img style="aspect-ratio: 1.4 / 1 ; object-fit: cover; display: block; width: 100%; margin: auto;" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
+                    <?php endif ?>
+
                     <div class="header-img-title">
                         <?php if ($count) : ?>
                             <h2>【<?php echo $tag ?>】オープンチャット人数急増ランキングTOP<?php echo $count ?>【<?php echo $time ?>】</h2>

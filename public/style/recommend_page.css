@@ -77,7 +77,7 @@ li {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.3) 20%, rgba(0, 0, 0, 0.9));
   z-index: 1;
   width: 100%;
-  padding: 10% 1rem 10px 1rem;
+  padding: 8% 1rem 14px 1rem;
   box-sizing: border-box;
 }
 
@@ -91,8 +91,8 @@ li {
 
 .recommend-header h2 {
   color: #fff;
-  line-height: 29px;
-  font-size: 17.5px;
+  line-height: 1.6;
+  font-size: 21px;
   margin: 0;
 }
 
