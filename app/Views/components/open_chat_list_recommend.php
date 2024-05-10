@@ -4,7 +4,7 @@
     margin-right: 1.5rem;
   }
 </style>
-<ol class="openchat-item-list unset">
+<ol class="openchat-item-list unset" style="margin-top: 0;">
   <?php /** @var \App\Services\Recommend\Dto\RecommendListDto $recommend */
 
   use App\Config\AppConfig;
