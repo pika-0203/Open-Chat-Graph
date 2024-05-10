@@ -38,16 +38,19 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </header>
 
             <section class="unset close" style="display: block; position:relative;" id="recommed-desc-box">
-                <p class="recommend-desc recommend-p" id="recommed-desc" style="font-size: 16px; margin-bottom: 2rem;">
+                <p class="recommend-desc recommend-p" id="recommed-desc" style="font-size: 16px; margin-bottom: 1rem;">
                     <span class="recommend-desc-child">「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているルームをご紹介🙌</span>
                 </p>
             </section>
 
-            <div class="full-ads">
-                <?php viewComponent('ads/google-full'); ?>
+            <div style="margin: 1rem -1rem 1rem -1rem; aspect-ratio: 8/5;">
+                <ins class="adsbygoogle" style="display:block; aspect-ratio: 8/5;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
 
-            <div class="top-ranking" style="margin: 0; padding: 0; border: 0; display: block; margin-top: 2rem;">
+            <div class="top-ranking" style="margin: 0; padding: 0; border: 0; display: block; margin-top: 1rem;">
                 <?php if ($count) : ?>
                     <h2 class="list-title oc-list">
                         <div>「<?php echo $tag ?>」の</div>

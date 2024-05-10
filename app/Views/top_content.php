@@ -40,7 +40,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             </a>
 
             <?php if ($tags) : ?>
-                <div style="margin-top: 1rem;">
+                <div>
                     <header class="openchat-list-title-area unset" style="margin-bottom: 10px;">
                         <div class="openchat-list-date unset ranking-url">
                             <h2 class="unset">
@@ -89,7 +89,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <hr class="ht-top-mylist">
         <?php endif ?>
 
-        <div style="margin: 2rem 0;">
+        <div style="margin: 1rem 0;">
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
         </div>
 
@@ -97,7 +97,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('ads/google-full'); ?>
         </div>
 
-        <div style="margin: 2rem 0;">
+        <div style="margin: 1rem 0;">
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
         </div>
 
@@ -105,7 +105,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('ads/google-full'); ?>
         </div>
 
-        <div style="margin: 2rem 0;">
+        <div style="margin: 1rem 0;">
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
         </div>
 
@@ -113,11 +113,11 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('ads/google-full'); ?>
         </div>
 
-        <div style="margin: 2rem 0;">
+        <div style="margin: 1rem 0;">
             <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
         </div>
 
-        <article class="top-ranking" style="padding-top: 0; margin-top: 2rem; border: 0">
+        <article class="top-ranking" style="padding: 0; margin-top: 1rem; border: 0">
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('policy') ?>">
                 <span class="ranking-readMore">オプチャグラフについて</span>
             </a>

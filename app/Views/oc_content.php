@@ -30,7 +30,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     <?php viewComponent('site_header') ?>
     <article class="openchat unset" style="overflow: hidden;">
       <!-- オープンチャット表示ヘッダー -->
-      <section class="openchat-header unset" style="margin-bottom: 1rem; border-bottom: 1px solid #efefef;">
+      <section class="openchat-header unset">
         <div class="talkroom_banner_img_area">
           <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
         </div>
@@ -129,8 +129,11 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
       <?php endif ?>
 
-      <div class="full-ads" style="margin: 1rem 0 2rem 0;">
-        <?php viewComponent('ads/google-full'); ?>
+      <div style="margin: 0 -1rem 1rem -1rem; aspect-ratio: 8/5;">
+        <ins class="adsbygoogle" style="display:block; aspect-ratio: 8/5;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
       </div>
 
       <div class="title-bar">
@@ -184,7 +187,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
       </nav>
 
-      <section class="open-btn sp-btn" style="margin: 2rem 0;">
+      <section class="open-btn sp-btn" style="margin: 1rem 0;">
         <?php if ($oc['url']) : ?>
           <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
             <?php if ($oc['join_method_type'] !== 0) : ?>
@@ -220,7 +223,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php endif ?>
       <?php endif ?>
 
-      <section style="all: unset; display: block; margin: 2rem -1rem;">
+      <section style="all: unset; display: block; margin: 1rem -1rem;">
         <div style="display: flex; flex-direction: row; align-items: center; padding: 0 1rem; gap: 6px;">
           <img class="openchat-item-title-img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
           <h2 class="graph-title">
@@ -238,7 +241,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('ads/google-full'); ?>
       </div>
 
-      <aside style="margin: 2rem 0;">
+      <aside style="margin: 1rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
       </aside>
 
@@ -246,7 +249,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('ads/google-full'); ?>
       </div>
 
-      <aside style="margin: 2rem 0;">
+      <aside style="margin: 1rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
       </aside>
 
