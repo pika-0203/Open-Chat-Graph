@@ -19,7 +19,7 @@
                 <h2>サイトの目的</h2>
                 <p>・ユーザーがオープンチャットを見つけて参加する機会を作る</p>
                 <p>・オープンチャットの管理者が成長傾向を把握し、比較できる事で運営に役立つ</p>
-                <div style="margin: 2rem -1rem; aspect-ratio: 8/5;">
+                <div style="margin: 2rem -1rem; aspect-ratio: 1.2;">
                     <?php viewComponent('ads/google-full'); ?>
                 </div>
                 <h2>オープンチャットの情報を掲載する仕組み</h2>
@@ -100,7 +100,7 @@
                         <b>オプチャグラフはLINE公式のランキング掲載基準について関与していません。ルームの審査基準等を調べるためのツールではありません。</b>
                     </p>
                 </section>
-                <div style="margin: 2rem -1rem; aspect-ratio: 8/5;">
+                <div style="margin: 2rem -1rem; aspect-ratio: 1.2;">
                     <?php viewComponent('ads/google-full'); ?>
                 </div>
                 <h2>オプチャグラフ公開の経緯</h2>
@@ -138,14 +138,14 @@
                     オープンチャットの参加経路拡大に寄与するため、オプチャグラフのページもSEOを考慮した設計となっています。
                     <span id="comments" aria-hidden="true"></span>
                 </p>
-                <div style="margin: 2rem -1rem; aspect-ratio: 8/5;">
+                <div style="margin: 2rem -1rem; aspect-ratio: 1.2;">
                     <?php viewComponent('ads/google-full'); ?>
                 </div>
                 <h2 style="margin-bottom: 2rem;">オプチャグラフに関する情報共有・コメント</h2>
                 <div style="min-height: 400px;">
                     <div id="comment-root"></div>
                 </div>
-                <div style="margin: 2rem -1rem; aspect-ratio: 8/5;">
+                <div style="margin: 2rem -1rem; aspect-ratio: 1.2;">
                     <?php viewComponent('ads/google-full'); ?>
                 </div>
                 <h2>メールでのお問い合わせ先</h2>

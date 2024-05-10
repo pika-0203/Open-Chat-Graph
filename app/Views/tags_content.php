@@ -61,7 +61,7 @@ function memberCount(int $count)
             </div>
         </article>
         <?php foreach ($categories as $key => $category) : ?>
-            <div style="margin: 1rem -1rem; aspect-ratio: 8/5; position: relative;">
+            <div style="margin: 1rem -1rem; aspect-ratio: 1.2; position: relative;">
                 <div style="position: absolute; top: -120px;" id="<?php echo $key ?>" aria-hidden="true"></div>
                 <?php viewComponent('ads/google-full'); ?>
             </div>

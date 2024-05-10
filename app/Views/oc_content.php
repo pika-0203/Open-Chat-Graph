@@ -129,7 +129,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
       <?php endif ?>
 
-      <div style="margin: 0 -1rem 1rem -1rem; aspect-ratio: 8/5;">
+      <div style="margin: 0 -1rem 1rem -1rem; aspect-ratio: 1.2;">
         <?php viewComponent('ads/google-full'); ?>
       </div>
 
@@ -203,18 +203,18 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php endif ?>
       </section>
 
-      <div style="margin: 1rem -1rem; aspect-ratio: 8/5;">
+      <div style="margin: 1rem -1rem; aspect-ratio: 1.2;">
         <?php viewComponent('ads/google-full'); ?>
       </div>
 
       <?php if ($recommend[0]) : ?>
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-        <div style="margin: 1rem -1rem; aspect-ratio: 8/5;">
+        <div style="margin: 1rem -1rem; aspect-ratio: 1.2;">
           <?php viewComponent('ads/google-full'); ?>
         </div>
         <?php if ($recommend[1]) : ?>
           <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-          <div style="margin: 1rem -1rem; aspect-ratio: 8/5;">
+          <div style="margin: 1rem -1rem; aspect-ratio: 1.2;">
             <?php viewComponent('ads/google-full'); ?>
           </div>
         <?php endif ?>
@@ -234,14 +234,14 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <div id="comment-root"></div>
       </section>
 
-      <div style="margin: 1rem -1rem; aspect-ratio: 8/5;">
+      <div style="margin: 1rem -1rem; aspect-ratio: 1.2;">
         <?php viewComponent('ads/google-full'); ?>
       </div>
       <aside style="margin: 1rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
       </aside>
 
-      <div style="margin: 1rem -1rem; aspect-ratio: 8/5;">
+      <div style="margin: 1rem -1rem; aspect-ratio: 1.2;">
         <?php viewComponent('ads/google-full'); ?>
       </div>
 

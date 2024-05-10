@@ -13,7 +13,7 @@
     <li class="unset">
 
       <?php if ($key && $key % 10 === 0) : ?>
-        <div style="margin: 1rem -1rem; aspect-ratio: 8/5;">
+        <div style="margin: 1rem -1rem; aspect-ratio: 1.2;">
           <?php viewComponent('ads/google-full'); ?>
         </div>
         <div style="font-size: 13px; font-weight: bold; margin: 1rem 0; color: #555; display: flex; flex-direction:row; flex-wrap:wrap;">

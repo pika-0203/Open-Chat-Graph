@@ -13,7 +13,7 @@
     </a>
 </article>
 
-<div style="margin: 1rem 0;">
+<div style="margin: 0 -1rem; aspect-ratio: 1.2;">
     <?php viewComponent('ads/google-full'); ?>
 </div>
 
