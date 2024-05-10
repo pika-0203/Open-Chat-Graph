@@ -116,12 +116,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         <div style="margin: 1rem 0;">
             <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
         </div>
-
-        <article class="top-ranking" style="padding: 0; margin-top: 1rem; border: 0">
-            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('policy') ?>">
-                <span class="ranking-readMore">オプチャグラフについて</span>
-            </a>
-        </article>
     </main>
     <footer>
         <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>

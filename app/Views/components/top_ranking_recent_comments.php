@@ -1,4 +1,4 @@
-<article class="top-list" style="padding-top: 0; padding-bottom: 1rem; border-bottom: 0;">
+<article class="top-list" style="padding-top: 0; padding-bottom: 1rem; border-bottom: 1.24rem;">
     <header class="openchat-list-title-area unset">
         <div class="openchat-list-date unset ranking-url">
             <h2 class="unset">

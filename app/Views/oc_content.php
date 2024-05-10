@@ -212,12 +212,12 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
       <?php if ($recommend[0]) : ?>
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-        <div style="margin: 1rem 0;">
+        <div style="margin: 1rem 0 2rem 0;">
           <?php viewComponent('ads/google-full'); ?>
         </div>
         <?php if ($recommend[1]) : ?>
           <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-          <div style="margin: 1rem 0;">
+          <div style="margin: 1rem 0 2rem 0;">
             <?php viewComponent('ads/google-full'); ?>
           </div>
         <?php endif ?>
@@ -241,7 +241,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('ads/google-full'); ?>
       </div>
 
-      <aside style="margin: 1rem 0;">
+      <aside style="margin: 1rem 0 2rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
       </aside>
 
@@ -249,17 +249,17 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('ads/google-full'); ?>
       </div>
 
-      <aside style="margin: 1rem 0;">
+      <aside style="margin: 1rem 0 1rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
       </aside>
 
       <footer class="footer">
         <aside class="open-btn2">
-          <a href="https://openchat-jp.line.me/other/beginners_guide" class="app_link">
-            <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
-          </a>
           <a href="https://line.me/download" class="app_link app-dl">
             <span class="text">LINEアプリをダウンロード（LINE公式）</span>
+          </a>
+          <a href="https://openchat-jp.line.me/other/beginners_guide" class="app_link">
+            <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
           </a>
           <a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" class="app_link csv-dl" style="
           margin-bottom: 1rem;

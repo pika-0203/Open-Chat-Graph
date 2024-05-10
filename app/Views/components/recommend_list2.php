@@ -7,7 +7,7 @@ use App\Services\Recommend\Enum\RecommendListType;
 
 ?>
 
-<aside class="top-ranking not-rank" style="border: 0; padding: 0; margin-top: 1rem; margin-bottom: 1rem;">
+<aside class="top-ranking not-rank" style="border: 0; padding: 0; margin-top: 1rem; margin-bottom: 2rem;">
     <header class="openchat-list-title-area unset" style="margin-bottom: -1rem;">
         <div class="openchat-list-date unset ranking-url">
             <?php if ($recommend->type === RecommendListType::Category) : ?>

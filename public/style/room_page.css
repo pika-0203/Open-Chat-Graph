@@ -279,6 +279,8 @@ hr {
 
 .number-box .openchat-itme-stats-title {
   font-size: 11px;
+  word-break: keep-all;
+  text-wrap: nowrap;
   color: #777;
 }
 
@@ -468,6 +470,8 @@ body > footer {
 
   .number-box .openchat-itme-stats-title {
     font-size: 12px;
+    word-break: keep-all;
+    text-wrap: nowrap;
   }
 
   .openchat-item-title-img {
