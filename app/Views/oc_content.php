@@ -212,12 +212,19 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <div style="margin: 0 -1rem;" class="rectangle-ads">
           <?php viewComponent('ads/google-full'); ?>
         </div>
-        <?php if ($recommend[1]) : ?>
-          <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-          <div style="margin: 0 -1rem;" class="rectangle-ads">
-            <?php viewComponent('ads/google-full'); ?>
-          </div>
-        <?php endif ?>
+      <?php endif ?>
+      <?php if (isset($officialDto) && $officialDto && $officialDto2) : ?>
+        <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto : $officialDto2, 'id' => 0, 'style' => '']) ?>
+        <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto2 : $officialDto, 'id' => 0, 'style' => 'margin-top: -1rem; border-top: 0']) ?>
+        <div style="margin: 0 -1rem;" class="rectangle-ads">
+          <?php viewComponent('ads/google-full'); ?>
+        </div>
+      <?php endif ?>
+      <?php if ($recommend[1]) : ?>
+        <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+        <div style="margin: 0 -1rem;" class="rectangle-ads">
+          <?php viewComponent('ads/google-full'); ?>
+        </div>
       <?php endif ?>
 
       <section style="all: unset; display: block; padding: 1rem 0 0 0; border-top: 1px solid #efefef; border-bottom: solid 1px #efefef; margin: 1rem 0;">

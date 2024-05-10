@@ -8,6 +8,7 @@ use App\Config\AppConfig;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\OpenChatAdmin\AdminOpenChat;
+use App\Services\Recommend\OfficialPageList;
 use App\Services\Recommend\RecommendGenarator;
 use App\Services\StaticData\StaticDataFile;
 use App\Services\Statistics\DownloadCsvService;
@@ -121,6 +122,16 @@ class OpenChatPageController
         $dto->hourlyList = array_slice($dto->hourlyList, 0, 5);
         $dto->dailyList = array_slice($dto->dailyList, 0, 5);
 
+        if (($oc['emblem'] ?? 0) > 0) {
+            /** @var OfficialPageList $admin */
+            $officialPageList = app(OfficialPageList::class);
+            $officialDto = $officialPageList->getListDto('1', 'スペシャルオープンチャット')[0];
+            $officialDto2 = $officialPageList->getListDto('2', '公式認証オープンチャット')[0];
+        } else {
+            $officialDto = null;
+            $officialDto2 = null;
+        }
+
         return view('oc_content', compact(
             '_meta',
             '_css',
@@ -136,6 +147,8 @@ class OpenChatPageController
             'updatedAt',
             '_hourlyRange',
             '_adminDto',
+            'officialDto',
+            'officialDto2',
             'dto',
         ));
     }

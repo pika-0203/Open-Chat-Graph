@@ -117,7 +117,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php listAds(); ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
             <?php listAds(); ?>
-            <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0, 'tag' => '','style' => '']) ?>
+            <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0, 'style' => '']) ?>
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0, 'style' => 'margin-top: -1rem; border-top: 0']) ?>
             <?php listAds(); ?>
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>

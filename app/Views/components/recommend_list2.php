@@ -25,7 +25,7 @@ use App\Services\Recommend\Enum\RecommendListType;
             <?php endif ?>
         </div>
     </header>
-    <?php viewComponent('open_chat_list_recommend', compact('recommend', 'id') + ['limit' => 5, 'shuffle' => true]) ?>
+    <?php viewComponent('open_chat_list_recommend', compact('recommend', 'id') + ['limit' => 5, 'shuffle' => $recommend->type === RecommendListType::Official]) ?>
     <?php if ($recommend->type === RecommendListType::Category) : ?>
         <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking/' . AppConfig::OPEN_CHAT_CATEGORY[$recommend->listName] . '?list=hourly') ?>">
             <span class="ranking-readMore">もっと見る</span>
