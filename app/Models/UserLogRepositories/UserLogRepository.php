@@ -19,7 +19,7 @@ class UserLogRepository
         string $ua
     ): void {
         $query =
-        "INSERT INTO oc_list_user
+            "INSERT INTO oc_list_user
             (user_id, oc_list, list_count, expires, ip, ua)
         VALUES
             (:user_id, :oc_list, :list_count, :expires, :ip, :ua)
@@ -106,7 +106,7 @@ class UserLogRepository
                         user_id
                 ) AS t2 ON t1.user_id = t2.user_id
             ORDER BY
-                t2.count DESC
+                t2.time DESC
             LIMIT
                 :offset, :limit";
 
