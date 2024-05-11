@@ -16,7 +16,7 @@ use App\Services\Recommend\Enum\RecommendListType;
                 </h2>
             <?php elseif ($recommend->type === RecommendListType::Official) : ?>
                 <h2 class="unset">
-                    <span style="line-height: 1.5; font-size: 14px; color: #111; font-weight: bold;">おすすめの<?php echo $recommend->listName ?></span>
+                    <span style="line-height: 1.5; font-size: 14px; color: #111; font-weight: bold;"><?php echo $recommend->listName ?>のおすすめ</span>
                 </h2>
             <?php else : ?>
                 <h2 class="unset">
