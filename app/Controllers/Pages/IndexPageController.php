@@ -64,10 +64,6 @@ class IndexPageController
         $dto->popularList = array_slice($dto->popularList, 0, 5);
 
         $tags = $dto->recommendList ?? [];
-        if ($tags) {
-            shuffle($tags['hour']);
-            shuffle($tags['hour24']);
-        }
 
         $officialDto = $officialPageList->getListDto('1', 'スペシャルオープンチャット')[0];
         $officialDto2 = $officialPageList->getListDto('2', '公式認証オープンチャット')[0];
