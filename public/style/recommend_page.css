@@ -110,6 +110,10 @@ li {
   margin-bottom: 1rem;
 }
 
+.ranking-page-main {
+  overflow: hidden;
+}
+
 .ranking-page-main .share-nav {
   margin: 8px 0;
   margin-bottom: 20px;

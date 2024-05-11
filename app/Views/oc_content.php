@@ -249,16 +249,17 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <div style="margin: 0 -1rem;" class="rectangle-ads">
         <?php viewComponent('ads/google-full'); ?>
       </div>
+      
       <aside style="margin: 1rem 0;">
-        <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+        <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
       </aside>
-
+      
       <div style="margin: 0 -1rem;" class="rectangle-ads">
         <?php viewComponent('ads/google-full'); ?>
       </div>
-
+      
       <aside style="margin: 1rem 0;">
-        <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
+        <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
       </aside>
 
       <footer class="footer" style="margin: 0 -1rem;">
