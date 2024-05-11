@@ -63,7 +63,7 @@ class RecommendOpenChatPageController
         $recommendArray = $recommendPageList->getListDto($tag);
         if (!$recommendArray) {
             $_schema = '';
-            $_meta->setTitle("【{$tag}】オープンチャット人数急増ランキング【{$time}】");
+            $_meta->setTitle("【{$tag}】オープンチャットおすすめランキング【{$time}】");
             return view('recommend_content', compact(
                 '_meta',
                 '_css',
@@ -84,7 +84,7 @@ class RecommendOpenChatPageController
         $recommendList = $recommend->getList(false);
 
         $count = $recommend->getCount();
-        $headline = "【{$tag}】オープンチャット人数急増ランキングTOP{$count}【{$time}】";
+        $headline = "【{$tag}】オープンチャットおすすめランキングTOP{$count}【{$time}】";
         $_meta->setTitle($headline);
         $_meta->setImageUrl(imgUrl($recommendList[0]['id'], $recommendList[0]['img_url']));
 

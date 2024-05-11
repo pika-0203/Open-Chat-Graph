@@ -29,9 +29,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
 
                     <div class="header-img-title">
                         <?php if ($count) : ?>
-                            <h2>【<?php echo $tag ?>】オープンチャット人数急増ランキングTOP<?php echo $count ?>【<?php echo $time ?>】</h2>
+                            <h2>【<?php echo $tag ?>】オープンチャットおすすめランキングTOP<?php echo $count ?>【<?php echo $time ?>】</h2>
                         <?php else : ?>
-                            <h2>【<?php echo $tag ?>】オープンチャット人数急増ランキング【<?php echo $time ?>】</h2>
+                            <h2>【<?php echo $tag ?>】オープンチャットおすすめランキング【<?php echo $time ?>】</h2>
                         <?php endif ?>
                     </div>
                 </div>
@@ -51,7 +51,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php if ($count) : ?>
                     <h2 class="list-title oc-list">
                         <div>「<?php echo $tag ?>」の</div>
-                        <div>人数急増ランキング</div>
+                        <div>おすすめランキング</div>
                         <div><?php echo $countTitle ?></div>
                         <div>【<?php echo $time ?>】</div>
                     </h2>

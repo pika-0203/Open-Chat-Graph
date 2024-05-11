@@ -167,7 +167,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <a href="<?php echo url('ranking/' . $oc['category'] . '?list=daily') ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $category ?></a>
               <?php endif ?>
               <?php if (isset($recommend[2]) && $recommend[2]) : ?>
-                <a href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($recommend[2]))) ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $recommend[2] ?></a>
+                <a href="<?php echo url('ranking?list=daily&keyword=tag:' . urlencode(htmlspecialchars_decode($recommend[2]))) ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $recommend[2] ?></a>
               <?php endif ?>
             </div>
           </span>
@@ -213,22 +213,22 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <?php viewComponent('ads/google-full'); ?>
         </div>
       <?php endif ?>
-      <?php if (isset($officialDto) && $officialDto && $officialDto2) : ?>
-        <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto : $officialDto2, 'id' => 0, 'style' => 'border-bottom: 0; padding-bottom: 0;']) ?>
-        <div style="margin: 20px 0;">
-          <?php viewComponent('ads/google-horizontal') ?>
-        </div>
-        <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto2 : $officialDto, 'id' => 0, 'style' => 'border-top: 0; padding-top: 0;']) ?>
-        <div style="margin: 0 -1rem;" class="rectangle-ads">
-          <?php viewComponent('ads/google-full'); ?>
-        </div>
-      <?php endif ?>
       <?php if ($recommend[1]) : ?>
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
         <div style="margin: 0 -1rem;" class="rectangle-ads">
           <?php viewComponent('ads/google-full'); ?>
         </div>
-      <?php endif ?>
+        <?php endif ?>
+        <?php if (isset($officialDto) && $officialDto && $officialDto2) : ?>
+          <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto : $officialDto2, 'id' => 0, 'style' => 'border-bottom: 0; padding-bottom: 0;']) ?>
+          <div style="margin: 20px 0;">
+            <?php viewComponent('ads/google-horizontal') ?>
+          </div>
+          <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto2 : $officialDto, 'id' => 0, 'style' => 'border-top: 0; padding-top: 0;']) ?>
+          <div style="margin: 0 -1rem;" class="rectangle-ads">
+            <?php viewComponent('ads/google-full'); ?>
+          </div>
+        <?php endif ?>
 
       <section style="all: unset; display: block; padding: 1rem 0 0 0; border-top: 1px solid #efefef; border-bottom: solid 1px #efefef; margin: 1rem 0;">
         <div style="margin: 0 -1rem;">

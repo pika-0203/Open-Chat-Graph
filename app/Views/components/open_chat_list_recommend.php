@@ -20,7 +20,7 @@
         </div>
         <h2 style="all: unset; font-size: 15px; font-weight: bold; margin: 1rem 0; color: #111; display: flex; flex-direction:row; flex-wrap:wrap;">
           <div>「<?php echo $recommend->listName ?>」の</div>
-          <div>人数急増ランキング</div>
+          <div>おすすめランキング</div>
           <div><?php echo $countTitle ?></div>
           <div>【<?php echo $time ?>】 <?php echo $key + 1 ?>位〜</div>
         </h2>
