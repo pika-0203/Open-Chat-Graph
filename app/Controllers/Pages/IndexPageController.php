@@ -58,10 +58,10 @@ class IndexPageController
             $newComment = false;
         }
 
-        //$dto->hourlyList = array_slice($dto->hourlyList, 0, 5);
-        //$dto->dailyList = array_slice($dto->dailyList, 0, 5);
-        //$dto->weeklyList = array_slice($dto->weeklyList, 0, 5);
-        //$dto->popularList = array_slice($dto->popularList, 0, 5);
+        $dto->hourlyList = array_slice($dto->hourlyList, 0, 5);
+        $dto->dailyList = array_slice($dto->dailyList, 0, 5);
+        $dto->weeklyList = array_slice($dto->weeklyList, 0, 5);
+        $dto->popularList = array_slice($dto->popularList, 0, 5);
 
         $tags = $dto->recommendList ?? [];
         if ($tags) {

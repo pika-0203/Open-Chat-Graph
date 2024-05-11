@@ -214,8 +214,11 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
       <?php endif ?>
       <?php if (isset($officialDto) && $officialDto && $officialDto2) : ?>
-        <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto : $officialDto2, 'id' => 0, 'style' => '']) ?>
-        <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto2 : $officialDto, 'id' => 0, 'style' => 'margin-top: -1rem; border-top: 0']) ?>
+        <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto : $officialDto2, 'id' => 0, 'style' => 'border-bottom: 0; padding-bottom: 0;']) ?>
+        <div style="margin: 20px 0;">
+          <?php viewComponent('ads/google-horizontal') ?>
+        </div>
+        <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto2 : $officialDto, 'id' => 0, 'style' => 'border-top: 0; padding-top: 0;']) ?>
         <div style="margin: 0 -1rem;" class="rectangle-ads">
           <?php viewComponent('ads/google-full'); ?>
         </div>
