@@ -108,8 +108,11 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php listAds(); ?>
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
             <?php listAds(); ?>
-            <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0, 'style' => 'border-bottom: 0;']) ?>
-            <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0, 'style' => 'margin-top: -1rem; border-top: 0; padding-top: 0;']) ?>
+            <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0, 'style' => 'border-bottom: 0; padding-bottom: 0;']) ?>
+            <div style="margin: 24px 0;">
+                <?php viewComponent('ads/google-horizontal') ?>
+            </div>
+            <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0, 'style' => 'border-top: 0; padding-top: 0;']) ?>
             <?php listAds(); ?>
             <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
         <?php else : ?>
