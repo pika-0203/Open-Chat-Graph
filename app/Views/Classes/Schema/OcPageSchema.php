@@ -66,7 +66,7 @@ class OcPageSchema
             fn ($r) => $r instanceof RecommendListDto ? ($r->type === RecommendListType::Tag ? $r->listName : false) : false,
         );
 
-        $recommendSection = array_map(fn (RecommendListDto $r) => "「{$r->listName}」関連のおすすめ", $tags);
+        $recommendSection = array_map(fn (RecommendListDto $r) => "「{$r->listName}」のおすすめ", $tags);
 
         // WebPageの構築
         $webPage = Schema::article()

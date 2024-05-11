@@ -218,17 +218,23 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <div style="margin: 0 -1rem;" class="rectangle-ads">
           <?php viewComponent('ads/google-full'); ?>
         </div>
-        <?php endif ?>
-        <?php if (isset($officialDto) && $officialDto && $officialDto2) : ?>
-          <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto : $officialDto2, 'id' => $oc['id'], 'style' => 'border-bottom: 0; padding-bottom: 0;']) ?>
-          <div style="margin: 24px 0;">
-            <?php viewComponent('ads/google-horizontal') ?>
-          </div>
-          <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto2 : $officialDto, 'id' => $oc['id'], 'style' => 'border-top: 0; padding-top: 0;']) ?>
-          <div style="margin: 0 -1rem;" class="rectangle-ads">
-            <?php viewComponent('ads/google-full'); ?>
-          </div>
-        <?php endif ?>
+      <?php endif ?>
+      <?php if ($recommend[3]) : ?>
+        <?php viewComponent('recommend_list2', ['recommend' => $recommend[3], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+        <div style="margin: 0 -1rem;" class="rectangle-ads">
+          <?php viewComponent('ads/google-full'); ?>
+        </div>
+      <?php endif ?>
+      <?php if (isset($officialDto) && $officialDto && $officialDto2) : ?>
+        <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto : $officialDto2, 'id' => $oc['id'], 'style' => 'border-bottom: 0; padding-bottom: 0;']) ?>
+        <div style="margin: 24px 0;">
+          <?php viewComponent('ads/google-horizontal') ?>
+        </div>
+        <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto2 : $officialDto, 'id' => $oc['id'], 'style' => 'border-top: 0; padding-top: 0;']) ?>
+        <div style="margin: 0 -1rem;" class="rectangle-ads">
+          <?php viewComponent('ads/google-full'); ?>
+        </div>
+      <?php endif ?>
 
       <section style="all: unset; display: block; padding: 1rem 0 0 0; border-top: 1px solid #efefef; border-bottom: solid 1px #efefef; margin: 1rem 0;">
         <div style="margin: 0 -1rem;">
@@ -249,15 +255,15 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <div style="margin: 0 -1rem;" class="rectangle-ads">
         <?php viewComponent('ads/google-full'); ?>
       </div>
-      
+
       <aside style="margin: 1rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
       </aside>
-      
+
       <div style="margin: 0 -1rem;" class="rectangle-ads">
         <?php viewComponent('ads/google-full'); ?>
       </div>
-      
+
       <aside style="margin: 1rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
       </aside>
