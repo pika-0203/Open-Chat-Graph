@@ -39,7 +39,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
 
             <section class="unset recommend-top-section" style="display: block;">
                 <p class="recommend-desc recommend-p" id="recommed-desc" style="font-size: 16px; margin: 0;">
-                    <span class="recommend-desc-child">「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているルームをご紹介🙌</span>
+                    <span class="recommend-desc-child">「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているおすすめルームをご紹介🙌</span>
                 </p>
             </section>
 
