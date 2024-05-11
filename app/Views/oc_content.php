@@ -167,7 +167,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <a href="<?php echo url('ranking/' . $oc['category'] . '?list=daily') ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $category ?></a>
               <?php endif ?>
               <?php if (isset($recommend[2]) && $recommend[2]) : ?>
-                <a href="<?php echo url('ranking?list=daily&keyword=tag:' . urlencode(htmlspecialchars_decode($recommend[2]))) ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $recommend[2] ?></a>
+                <a href="<?php echo url('ranking?list=daily&keyword=' . urlencode('tag:' . htmlspecialchars_decode($recommend[2]))) ?>" style="width:fit-content; color:inherit; text-wrap: wrap;"><?php echo $recommend[2] ?></a>
               <?php endif ?>
             </div>
           </span>

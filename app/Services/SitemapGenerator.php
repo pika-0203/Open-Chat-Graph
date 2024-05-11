@@ -46,13 +46,19 @@ class SitemapGenerator
         $sitemap->addItem(self::SITE_URL . 'oc');
         $sitemap->addItem(self::SITE_URL . 'policy');
         $sitemap->addItem(self::SITE_URL . 'ranking', lastmod: $datetime);
+        $sitemap->addItem(self::SITE_URL . 'ranking?keyword=' . urlencode('badge:スペシャルオープンチャット'), lastmod: $datetime);
+        $sitemap->addItem(self::SITE_URL . 'ranking?keyword=' . urlencode('badge:公式認証オープンチャット'), lastmod: $datetime);
 
         foreach (AppConfig::OPEN_CHAT_CATEGORY as $category) {
-            $category && $sitemap->addItem(self::SITE_URL . 'ranking/' .$category, lastmod: $datetime);
+            $category && $sitemap->addItem(self::SITE_URL . 'ranking/' . $category, lastmod: $datetime);
         }
 
         foreach ($this->recommendUpdater->getAllTagNames() as $tag) {
             $sitemap->addItem(self::SITE_URL . 'recommend?tag=' . urlencode($tag), lastmod: $datetime);
+        }
+
+        foreach ($this->recommendUpdater->getAllTagNames() as $tag) {
+            $sitemap->addItem(self::SITE_URL . 'ranking?keyword=' . urlencode('tag:' . $tag), lastmod: $datetime);
         }
 
         return $this->saveXml($sitemap, 1);

@@ -31,7 +31,7 @@ use App\Services\Recommend\Enum\RecommendListType;
             <span class="ranking-readMore">もっと見る</span>
         </a>
     <?php elseif ($recommend->type === RecommendListType::Official) : ?>
-        <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking/?list=daily&keyword=badge:' . urlencode(htmlspecialchars_decode($recommend->listName))) ?>">
+        <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking/?list=daily&keyword=' . urlencode('badge:' . htmlspecialchars_decode($recommend->listName))) ?>">
             <span class="ranking-readMore"><?php echo $recommend->listName ?>をすべて見る</span>
         </a>
     <?php else : ?>
