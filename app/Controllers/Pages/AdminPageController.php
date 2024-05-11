@@ -38,7 +38,7 @@ class AdminPageController
         return view('admin/dash_my_list', ['result' => $result]);
     }
 
-    function test()
+    private function test()
     {
         $path = AppConfig::ROOT_PATH . 'test_exec.php';
 
@@ -47,7 +47,7 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'exec', 'message' => $path . ' を実行しました。']);
     }
 
-    function halfcheck()
+    private function halfcheck()
     {
         $path = AppConfig::ROOT_PATH . 'cron_half_check.php';
 
