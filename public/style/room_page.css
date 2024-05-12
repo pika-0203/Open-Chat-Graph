@@ -12,11 +12,35 @@ hr {
 
 .openchat {
   display: block;
-  margin: 0 auto;
-  padding: 0 1rem;
   padding-bottom: 0;
   font-family: var(--font-family);
   max-width: 600px;
+}
+
+.openchat-header {
+  display: flex;
+  padding: 1rem;
+}
+
+.openchat-graph-section {
+  padding: 1rem;
+}
+
+.open-btn.sp-btn {
+  margin: 0;
+  padding-top: 1rem;
+}
+
+.comment-section {
+  padding: 1rem;
+}
+
+.recommend-list-aside {
+  padding: 0 1rem;
+}
+
+.oc-page-footer {
+  padding: 1rem;
 }
 
 .openchat .graph-title {
@@ -27,35 +51,19 @@ hr {
 }
 
 .oc-desc-nav {
-  padding-top: 1.5rem;
-  margin-top: 1.5rem;
-  border-top: 1px #efefef solid;
   display: flex;
   justify-content: space-evenly;
   gap: 8px;
-  margin-bottom: 2rem;
+  padding: 1rem;
 }
 
 .oc-desc-nav.no-ranking {
+  margin-top: -5rem;
   position: absolute;
   z-index: 100;
   margin: 0 auto;
-  margin-top: -5rem;
   width: calc(100% - 2rem);
   max-width: calc(var(--width) - 2rem);
-}
-
-.openchat-header {
-  display: flex;
-  padding: 0 0 1rem 0;
-}
-
-@media screen and (max-width: 999px) {
-  .openchat-header {
-    border-top: 1px solid #efefef;
-    border-bottom: 1px solid #efefef;
-    padding: 1rem 0 1rem 0;
-  }
 }
 
 .openchat-header a {
@@ -312,18 +320,14 @@ hr {
 .my-list-form .checkbox-label {
   margin-top: 0px;
   height: fit-content;
-  border: 1px solid #06c755;
+  border: 1px solid #efefef;
   height: 42px;
   padding: 0 6px;
   border-radius: 7px;
   word-break: keep-all;
-  color: #06c755;
-  font-weight: bold;
+  color: #111;
   line-height: normal;
-}
-
-body > footer {
-  border-top: solid 1px var(--border-color);
+  font-weight: bold;
 }
 
 .open-btn {
@@ -335,7 +339,6 @@ body > footer {
 }
 
 .open-btn2 {
-  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -365,10 +368,6 @@ body > footer {
   color: #777;
 }
 
-#comment-root {
-  margin: 1rem;
-}
-
 .number-box .css-162gv95 {
   user-select: none;
   width: 1em;
@@ -382,12 +381,10 @@ body > footer {
 }
 
 .title-bar {
-  border-top: 1px solid #efefef;
-  padding-top: 1rem;
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
   gap: 6px;
 }
 
@@ -460,13 +457,6 @@ body > footer {
 }
 
 @media screen and (min-width: 512px) {
-  #comment-root {
-    padding: 0 1rem;
-    margin: auto;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-
   .title-bar-oc-name {
     font-size: 12px;
   }
@@ -497,10 +487,6 @@ body > footer {
     margin-bottom: 0;
   }
 
-  .open-btn2 {
-    margin-top: 2rem;
-  }
-
   .openchat_link {
     height: 38px;
     width: fit-content;
@@ -518,11 +504,6 @@ body > footer {
   .talkroom_link_h1 {
     font-size: 24px;
     line-height: 140%;
-  }
-
-  .openchat-header {
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #efefef;
   }
 
   .app_link {
@@ -601,10 +582,6 @@ body > footer {
     font-size: 13px;
   }
 
-  .openchat .oc-desc-nav {
-    padding-top: 2rem;
-  }
-
   summary:hover {
     -webkit-text-decoration: underline 2px currentColor;
     text-decoration: underline 2px currentColor;
@@ -670,12 +647,17 @@ body > footer {
   margin-bottom: 1.3rem;
   padding: 0;
 }
+
 .app-dl {
-  font-size: 12px;
+  font-size: 11px;
   color: #b7b7b7;
 }
 
 .csv-dl {
   font-size: 12px;
   color: #b7b7b7;
+}
+
+.MuiToggleButton-sizeSmall.MuiToggleButton-standard {
+  border-radius: 7px;
 }

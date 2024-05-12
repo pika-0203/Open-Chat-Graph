@@ -161,7 +161,7 @@ class PageBreadcrumbsListSchema
                     ->actionApplication($this->actionApplication())
             )
             ->additionalType('https://schema.org/FollowAction')
-            ->name('LINEで参加');
+            ->name('LINEで開く');
     }
 
     function generateRecommend(
@@ -193,6 +193,7 @@ class PageBreadcrumbsListSchema
 
         $itemList->itemListElement($listArray);
 
+        $time = $dateModified->format('G:i');
         // WebPageの構築
         $webSite = Schema::article()
             ->headline($title)
@@ -202,7 +203,7 @@ class PageBreadcrumbsListSchema
             ->author($this->person())
             ->datePublished($datePublished)
             ->dateModified($dateModified)
-            ->articleSection([$title, '関連のタグ', "「{$tag}」のおすすめランキングTOP{$count}", "メンバー数のアイコンについて"])
+            ->articleSection([$title, '関連のタグ', "【{$time}】「{$tag}」おすすめランキングTOP{$count}", "人数増加アイコンの説明"])
             ->about(Schema::thing()->name($tag))
             ->mainEntityOfPage(
                 Schema::collectionPage()

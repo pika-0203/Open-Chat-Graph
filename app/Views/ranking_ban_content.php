@@ -78,7 +78,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
     </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
-    <main class="ranking-page-main" style="margin-top: 8px; padding-top: 0;">
+    <main style="max-width: 600px; padding: 1rem;">
         <article>
             <header class="openchat-list-title-area unset">
                 <div style="flex-direction: column;">
@@ -228,7 +228,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
             <?php endif ?>
         </article>
     </main>
-    <footer>
+    <footer class="footer-elem-outer">
         <?php viewComponent('footer_inner') ?>
     </footer>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>

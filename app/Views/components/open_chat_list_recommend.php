@@ -1,31 +1,14 @@
-<style>
-  .openchat-item {
-    margin: 20px 0;
-    margin-right: 1.5rem;
-  }
-</style>
-<ol class="openchat-item-list unset" style="margin-top: 0;">
+<ol class="openchat-item-list unset">
   <?php /** @var \App\Services\Recommend\Dto\RecommendListDto $recommend */
 
   use App\Config\AppConfig;
 
-  foreach (isset($limit) ? array_slice(array_filter($recommend->getList($shuffle ?? false), fn ($oc) => $oc['id'] !== ($id ?? 0)), 0, $limit) : $recommend->getList(false) as $key => $oc) : ?>
+  if (!isset($listArray)) {
+    $listArray = isset($limit) ? array_slice(array_filter($recommend->getList($shuffle ?? false), fn ($oc) => $oc['id'] !== ($id ?? 0)), 0, $limit) : $recommend->getList(false);
+  }
+
+  foreach ($listArray as $oc) : ?>
     <li class="unset">
-
-      <?php if ($key && $key % 10 === 0) : ?>
-        <div style="margin: 1rem 0; padding: 1rem 0; border-top: 1px solid #efefef; border-bottom: 1px solid #efefef;" class="rectangle-ads">
-          <div style="margin: 0 -1rem;" class="rectangle-ads">
-            <?php viewComponent('ads/google-full'); ?>
-          </div>
-        </div>
-        <h2 style="all: unset; font-size: 15px; font-weight: bold; margin: 1rem 0; color: #111; display: flex; flex-direction:row; flex-wrap:wrap;">
-          <div>「<?php echo $recommend->listName ?>」の</div>
-          <div>おすすめランキング</div>
-          <div><?php echo $countTitle ?></div>
-          <div>【<?php echo $time ?>】 <?php echo $key + 1 ?>位〜</div>
-        </h2>
-      <?php endif ?>
-
       <div class="openchat-item">
         <a class="link-overlay unset" href="<?php echo url('/oc/' . $oc['id']) . ($oc['table_name'] === AppConfig::RankingHourTable || $oc['table_name'] === AppConfig::RankingDayTable ? '?limit=hour' : '') ?>" tabindex="-1" aria-hidden="true">
           <span class="visually-hidden"><?php echo $oc['name'] ?></span>

@@ -2,20 +2,13 @@
   --border-color: #efefef;
 }
 
-header,
-main {
-  margin: 0 auto;
-  padding: 0rem 1rem;
-}
-
 .ht-top-header {
   background-color: var(--border-color);
   margin: 0rem -1rem 0rem -1rem;
 }
 
-.ht-top-mylist {
-  background-color: var(--border-color);
-  margin: 0 0 1rem 0;
+.mylist {
+  margin: 1rem 0;
 }
 
 .visually-hidden {
@@ -26,11 +19,6 @@ main {
   position: absolute;
   white-space: nowrap;
   width: 1px;
-}
-
-main {
-  padding-bottom: 12px;
-  margin-bottom: 12px;
 }
 
 .ranking-page-main {
@@ -47,11 +35,6 @@ main {
 .article-news p {
   font-size: 13px;
   margin: 0.75rem 0;
-}
-
-main header {
-  margin-bottom: 10px;
-  padding: 0;
 }
 
 .main-header-title {
@@ -288,20 +271,20 @@ main header {
 }
 
 .top-ranking .openchat-item-list {
-  margin-bottom: -1rem;
-  margin-top: -1rem;
+  margin-bottom: -17px;
+  margin-top: -17px;
   width: 100%;
 }
 
 .top-ranking,
 .top-list {
   display: flex;
+  /* padding: 1rem 0; */
   padding: 1rem 0;
   flex-direction: column;
   gap: 1rem;
-  border-bottom: 1px solid #efefef;
-  border-top: 1px solid #efefef;
-  margin: 1rem 0;
+  /* border-bottom: 1px solid #efefef; */
+  /* border-top: 1px solid #efefef; */
 }
 
 .top-list .openchat-item-list {
@@ -313,7 +296,7 @@ main header {
 @media screen and (min-width: 1000px) {
   .top-btns {
     border-top: 0;
-    padding-top: 0  ;
+    padding-top: 0;
   }
 }
 
@@ -642,8 +625,10 @@ main header {
   margin-bottom: 2.4rem;
 }
 
+.readMore-btn.top-ranking-readMore,
 .top-ranking .top-ranking-readMore,
 .top-list .top-ranking-readMore {
+
   margin: 0;
   height: 42px;
   border: 1px solid #efefef;
@@ -1011,10 +996,6 @@ main header {
 }
 
 @media screen and (min-width: 512px) {
-  main header {
-    margin-bottom: 13px;
-  }
-
   .main-header-title {
     font-size: 2.2rem;
     padding-bottom: 0.3rem;
@@ -1152,11 +1133,7 @@ main header {
     font-size: 1rem;
   }
   .openchat-list-title {
-    font-size: 22px;
-  }
-
-  .openchat-list-title-area h2 {
-    margin: 0.5rem 0;
+    font-size: 19px;
   }
 
   .mylist .super-icon,
@@ -1169,18 +1146,6 @@ main header {
   .top-ranking .ranking-readMore,
   .top-list .ranking-readMore {
     font-size: 14px;
-  }
-
-  .top-ranking .top-ranking-readMore,
-  .top-list .top-ranking-readMore {
-    margin: 0.75rem 0 0.75rem 0;
-    height: 38px;
-  }
-}
-
-@media screen and (min-width: 600px) {
-  main {
-    max-width: 600px;
   }
 }
 

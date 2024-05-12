@@ -18,24 +18,13 @@ function greenTag($word)
 <?php
 }
 
-function listAds()
-{
-?>
-    <div style="margin: 0 -1rem;" class="rectangle-ads">
-        <?php viewComponent('ads/google-full'); ?>
-    </div>
-
-<?php
-}
-
-
 /** @var \App\Services\StaticData\Dto\StaticTopPageDto $dto */
 viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
-<body class="body">
+<body>
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
-    <main style="margin-bottom: 0; overflow: hidden; padding-bottom: 0rem;">
-        <article class="top-ranking top-btns" style="margin-top: 0; margin-bottom: 1rem;">
+    <main class="pad-side-top-ranking pad-side-top-list" style="max-width: 600px; padding: 0;">
+        <article class="top-ranking top-btns">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
             </a>
@@ -48,7 +37,9 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     <span style="display: inline-block; line-height: 1;">分析Labs</span>
                 </span>
             </a>
+        </article>
 
+        <article class="top-ranking">
             <?php if ($tags) : ?>
                 <div>
                     <header class="openchat-list-title-area unset" style="margin-bottom: 10px;">
@@ -87,54 +78,36 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         </article>
 
         <?php if ($myList) : ?>
-            <article class="mylist">
-                <div style="margin: 1rem 0;">
-                    <?php viewComponent('ads/google-horizontal') ?>
-                </div>
+            <article class="mylist pad-side">
                 <div class="refresh-time openchat-list-date">
-                    <span style="font-weight: bold; color:#111; font-size:14px; margin: 0; line-height: unset;">ピン留め</span>
+                    <span style="font-weight: bold; color:#111; font-size:13px; margin: 0; line-height: unset;">ピン留め (24時間の人数増加)</span>
+                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0; line-height: unset;"><?php echo $dto->hourlyUpdatedAt->format('G:i') ?></span>
                 </div>
                 <div style="margin: -4px 0 -4px 0;">
                     <?php viewComponent('open_chat_list_ranking', ['openChatList' => $myList, 'isHourly' => true]) ?>
                 </div>
             </article>
-            <hr class="ht-top-mylist">
         <?php endif ?>
 
-        <?php listAds(); ?>
 
         <?php if ($newComment) : ?>
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
-            <?php listAds(); ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
-            <?php listAds(); ?>
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
-            <?php listAds(); ?>
-            <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0, 'style' => 'border-bottom: 0; padding-bottom: 0;']) ?>
-            <div style="margin: 24px 0;">
-                <?php viewComponent('ads/google-horizontal') ?>
-            </div>
-            <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0, 'style' => 'border-top: 0; padding-top: 0;']) ?>
-            <?php listAds(); ?>
+            <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0]) ?>
+            <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0]) ?>
             <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
         <?php else : ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
-            <?php listAds(); ?>
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
-            <?php listAds(); ?>
-            <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0, 'style' => 'border-bottom: 0; padding-bottom: 0;']) ?>
-            <div style="margin: 24px 0;">
-                <?php viewComponent('ads/google-horizontal') ?>
-            </div>
-            <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0, 'style' => 'border-top: 0; padding-top: 0;']) ?>
-            <?php listAds(); ?>
+            <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0]) ?>
+            <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0]) ?>
             <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
-            <?php listAds(); ?>
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
         <?php endif ?>
 
     </main>
-    <footer>
+    <footer class="footer-elem-outer">
         <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
         <?php viewComponent('footer_inner') ?>
     </footer>

@@ -93,6 +93,8 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
                 oc.member,
                 oc.emblem,
                 oc.join_method_type,
+                ranking.diff_member AS diff_member,
+                ranking.percent_increase AS percent_increase,
                 ranking.id AS ranking_id
             FROM
                 open_chat AS oc

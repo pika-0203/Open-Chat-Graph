@@ -61,10 +61,7 @@ function memberCount(int $count)
             </div>
         </article>
         <?php foreach ($categories as $key => $category) : ?>
-            <div style="margin: 1rem -1rem; position: relative;" class="rectangle-ads">
-                <div style="position: absolute; top: -120px;" id="<?php echo $key ?>" aria-hidden="true"></div>
-                <?php viewComponent('ads/google-full'); ?>
-            </div>
+
             <article class="top-ranking" style="padding-top: 1rem; margin-bottom: 1rem;">
                 <div>
                     <header class="openchat-list-title-area unset">

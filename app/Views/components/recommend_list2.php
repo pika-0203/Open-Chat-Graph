@@ -7,8 +7,8 @@ use App\Services\Recommend\Enum\RecommendListType;
 
 ?>
 
-<aside class="top-ranking not-rank" style="<?php echo $style ?? '' ?>">
-    <header class="openchat-list-title-area unset" style="margin-bottom: -1rem;">
+<article class="top-ranking not-rank" style="<?php echo $style ?? '' ?>">
+    <header class="openchat-list-title-area unset">
         <div class="openchat-list-date unset ranking-url">
             <?php if ($recommend->type === RecommendListType::Category) : ?>
                 <h2 class="unset">
@@ -25,13 +25,13 @@ use App\Services\Recommend\Enum\RecommendListType;
             <?php endif ?>
         </div>
     </header>
-    <?php viewComponent('open_chat_list_recommend', compact('recommend', 'id') + ['limit' => 5, 'shuffle' => $recommend->type === RecommendListType::Official]) ?>
+    <?php viewComponent('open_chat_list_recommend', compact('recommend', 'id') + ['limit' => 5, 'shuffle' => true]) ?>
     <?php if ($recommend->type === RecommendListType::Category) : ?>
         <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking/' . AppConfig::OPEN_CHAT_CATEGORY[$recommend->listName] . '?list=daily') ?>">
             <span class="ranking-readMore">もっと見る</span>
         </a>
     <?php elseif ($recommend->type === RecommendListType::Official) : ?>
-        <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking/?list=daily&keyword=' . urlencode('badge:' . htmlspecialchars_decode($recommend->listName))) ?>">
+        <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking/?keyword=' . urlencode('badge:' . htmlspecialchars_decode($recommend->listName))) ?>">
             <span class="ranking-readMore"><?php echo $recommend->listName ?>をすべて見る</span>
         </a>
     <?php else : ?>
@@ -39,4 +39,4 @@ use App\Services\Recommend\Enum\RecommendListType;
             <span class="ranking-readMore">もっと見る</span>
         </a>
     <?php endif ?>
-</aside>
+</article>

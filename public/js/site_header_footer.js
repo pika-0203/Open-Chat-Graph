@@ -99,7 +99,7 @@ const setHeaderShow = (header, hidden, show) => {
     let scrollPosition = document.documentElement.scrollTop
 
     // スクロールに合わせて要素をヘッダーの高さ分だけ移動（表示域から隠したり表示したり）
-    if (scrollPosition <= 0) {
+    if (scrollPosition <= 48) {
       header.style.transform = `translate(0, ${show})`
     } else if (currentPosition <= scrollPosition) {
       header.style.transform = 'translate(0,' + hidden + 'px)'
@@ -150,7 +150,7 @@ const setAnchorPosition = () => {
   }, 100)
 }
 
-setAnchorPosition()
+//setAnchorPosition()
 
 async function blockblock() {
   const agentsJsonUrl =

@@ -12,11 +12,8 @@
         }
     </style>
     <?php viewComponent('site_header') ?>
-    <main style="border-bottom:1px solid #efefef;">
+    <main style="padding: 0 1rem;">
         <h2>オプチャグラフにオープンチャットを手動で登録する</h2>
-        <div style="margin: 2rem -1rem;" class="rectangle-ads">
-            <?php viewComponent('ads/google-full'); ?>
-        </div>
         <p>
             公式ランキングに掲載されているオープンチャットはオプチャグラフに自動登録されます。
         </p>
@@ -66,11 +63,8 @@
             <p>登録に使用できるのは招待用のURLではなく、公式サイトのURLです。</p>
             <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>登録する</button>
         </form>
-        <div style="margin: 2rem -1rem;" class="rectangle-ads">
-            <?php viewComponent('ads/google-full'); ?>
-        </div>
     </main>
-    <footer>
+    <footer style="all: unset; display:block; padding:1rem;">
         <?php viewComponent('footer_inner') ?>
     </footer>
     <script type="module">

@@ -18,9 +18,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
                 </h1>
                 <p>試験運用版の分析機能をお試しいただけます。</p>
                 <?php viewComponent('update_news', ['_news' => array_reverse(LabsNews::getNews())]) ?>
-                <div style="margin: 2rem -1rem;" class="rectangle-ads">
-                    <?php viewComponent('ads/google-full'); ?>
-                </div>
+
                 <h2>オプチャ公式ランキング掲載の分析</h2>
                 <a href="<?php echo url('labs/publication-analytics') ?>" aria-label="オプチャ公式ランキング掲載の分析">
                     <img src="/labs-img/ranking.webp" alt="オプチャ公式ランキング掲載の分析" />
@@ -33,9 +31,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
                 <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs/publication-analytics') ?>">
                     <span class="ranking-readMore">オプチャ公式ランキング掲載の分析を開く
                 </a>
-                <div style="margin: 2rem -1rem;" class="rectangle-ads">
-                    <?php viewComponent('ads/google-full'); ?>
-                </div>
+
                 <h2>タグで見るトレンド動向</h2>
                 <a href="<?php echo url('labs/tags') ?>" aria-label="タグで見るトレンド動向">
                     <img src="/labs-img/tags.webp" alt="タグで見るトレンド動向" />
@@ -46,7 +42,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
                 </a>
             </article>
         </main>
-        <footer>
+        <footer class="footer-elem-outer">
             <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
             <?php viewComponent('footer_inner') ?>
         </footer>

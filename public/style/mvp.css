@@ -492,3 +492,16 @@ blockquote footer {
 .unset:focus-visible {
   outline: -webkit-focus-ring-color auto 1px;
 }
+
+
+.list-aside-desc .css-162gv95 {
+  user-select: none;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  fill: currentcolor;
+  flex-shrink: 0;
+  color: rgb(7, 181, 59);
+  font-size: 11px;
+  margin: -1px -4px;
+}

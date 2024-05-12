@@ -1,7 +1,4 @@
 <nav class="share-nav unset">
-    <div style="width: 100%;" class="rectangle-ads">
-        <?php viewComponent('ads/google-full'); ?>
-    </div>
     <h3><span aria-hidden="true">\&nbsp;</span>このページをシェアする<span aria-hidden="true">&nbsp;/</span></h3>
     <div class="share-nav-inner">
         <div class="share-menu-outer">
@@ -35,4 +32,3 @@
         </div>
     </div>
 </nav>
-<hr>

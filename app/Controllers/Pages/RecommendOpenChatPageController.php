@@ -60,10 +60,14 @@ class RecommendOpenChatPageController
         $time = OpenChatServicesUtility::getModifiedCronTime($_dto->rankingUpdatedAt->format('H:i'))
             ->format('G:i');
 
+        $rankingDto = $staticDataGeneration->getTopPageData();
+        $rankingDto->hourlyList = array_slice($rankingDto->hourlyList, 0, 5);
+        $rankingDto->dailyList = array_slice($rankingDto->dailyList, 0, 5);
+
         $recommendArray = $recommendPageList->getListDto($tag);
         if (!$recommendArray) {
             $_schema = '';
-            $_meta->setTitle("【{$tag}】オープンチャットおすすめランキング【{$time}】");
+            $_meta->setTitle("【最新】「{$tag}」おすすめオープンチャットランキング");
             return view('recommend_content', compact(
                 '_meta',
                 '_css',
@@ -73,6 +77,7 @@ class RecommendOpenChatPageController
                 'count',
                 '_schema',
                 '_dto',
+                'rankingDto',
                 'canonical',
                 'time',
             ));
@@ -84,9 +89,10 @@ class RecommendOpenChatPageController
         $recommendList = $recommend->getList(false);
 
         $count = $recommend->getCount();
-        $headline = "【{$tag}】オープンチャットおすすめランキングTOP{$count}【{$time}】";
+        $headline = "【最新】「{$tag}」おすすめオープンチャットランキングTOP{$count}";
         $_meta->setTitle($headline);
         $_meta->setImageUrl(imgUrl($recommendList[0]['id'], $recommendList[0]['img_url']));
+        $_meta->thumbnail = imgPreviewUrl($recommendList[0]['id'], $recommendList[0]['img_url']);
 
         $_schema = $this->breadcrumbsShema->generateRecommend(
             $headline,
@@ -110,6 +116,7 @@ class RecommendOpenChatPageController
             'count',
             '_schema',
             '_dto',
+            'rankingDto',
             'canonical',
             'tags',
             'time',

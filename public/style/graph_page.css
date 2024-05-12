@@ -32,13 +32,23 @@
 
 .MuiToggleButton-root.MuiToggleButton-standard {
   color: #b7b7b7;
-  border: 1px solid #e8e8e8;
+  border: 1px solid #efefef;
 }
 
 .MuiToggleButton-root.Mui-selected.MuiToggleButton-standard,
 .MuiToggleButton-root.Mui-selected.MuiToggleButton-standard:hover {
-  background-color: rgba(0, 0, 0, 0.04);
-  border: 1px solid #e8e8e8;
+  background-color: #f5f5f5;
+  border: 1px solid #efefef;
+}
+
+.MuiStack-root .css-14edfjq {
+  opacity: 0.5;
+}
+
+.MuiStack-root .css-14edfjq .MuiToggleButton-root.Mui-selected.MuiToggleButton-standard,
+.MuiStack-root .css-14edfjq .MuiToggleButton-root.Mui-selected.MuiToggleButton-standard:hover {
+  color: #b7b7b7;
+  background-color: #fff;
 }
 
 .fade-in {

@@ -2,7 +2,7 @@
     <div class="site_header">
         <a class="header_site_title unset" href="<?php echo url() ?>">
             <img src="<?php echo url(\App\Config\AppConfig::SITE_ICON_FILE_PATH) ?>" alt="">
-            <?php if (strpos(path(), '/oc') === false) : ?>
+            <?php if (strpos(path(), '/oc') === false || isset($titleP)) : ?>
                 <h1>オプチャグラフ</h1>
             <?php else : ?>
                 <p>オプチャグラフ</p>
@@ -45,13 +45,4 @@
             <input type="hidden" name="order" value="desc">
         </form>
     </div>
-    <!-- <div class="header-ads" id="header-ads">
-        <span style="color: #aaa; font-size: 11px; position: absolute; right: 0; left: 0; text-align: center; top: 2.5rem; font-family: var(--font-family);">Loading ads...</span>
-        <div style="margin: auto;">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176" data-ad-format="horizontal" data-full-width-responsive="false"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </div> -->
 </header>

@@ -12,104 +12,145 @@ if (isset($_dto->tagRecordCounts[$_tagIndex])) {
 }
 
 /** @var \App\Services\StaticData\Dto\StaticRecommendPageDto $_dto */
-viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_meta->generateTags(true)]) ?>
+viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_meta->generateTags(true), 'titleP' => true]) ?>
 
-<body class="body">
+<body>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header', ['_updatedAt' => $_dto->rankingUpdatedAt]) ?>
-    <main class="ranking-page-main">
-        <article>
-            <header class="recommend-header">
-                <div class="hearder-img-outer">
+    <article class="ranking-page-main pad-side-top-ranking body">
 
-                    <?php if (isset($recommend)) : ?>
-                        <?php $oc = $recommend->getPreviewList(1)[0] ?>
-                        <img style="aspect-ratio: 1.4 / 1 ; object-fit: cover; display: block; width: 100%; margin: auto;" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
-                    <?php endif ?>
-
-                    <div class="header-img-title">
-                        <?php if ($count) : ?>
-                            <h2>【<?php echo $tag ?>】オープンチャットおすすめランキングTOP<?php echo $count ?>【<?php echo $time ?>】</h2>
-                        <?php else : ?>
-                            <h2>【<?php echo $tag ?>】オープンチャットおすすめランキング【<?php echo $time ?>】</h2>
-                        <?php endif ?>
-                    </div>
-                </div>
-            </header>
-
-            <section class="unset recommend-top-section" style="display: block;">
-                <p class="recommend-desc recommend-p" id="recommed-desc" style="font-size: 16px; margin: 0;">
-                    <span class="recommend-desc-child">「<?php echo $extractTag ?>」をテーマにした中で、最近人数が急増しているおすすめルームをご紹介🙌</span>
-                </p>
-            </section>
-
-            <div style="margin: 0 -1rem;" class="rectangle-ads">
-                <?php viewComponent('ads/google-full'); ?>
-            </div>
-
-            <div class="top-ranking" style="display: block;">
-                <?php if ($count) : ?>
-                    <h2 class="list-title oc-list">
-                        <div>「<?php echo $tag ?>」の</div>
-                        <div>おすすめランキング</div>
-                        <div><?php echo $countTitle ?></div>
-                        <div>【<?php echo $time ?>】</div>
-                    </h2>
-                    <aside class="list-aside" style="margin:0 0 1.25rem 0;">
-                        <details class="icon-desc">
-                            <summary style="font-size: 14px;">メンバー数のアイコンについて</summary>
-                            <div class="list-aside-details">
-                                <small class="list-aside-desc">🔥：過去1時間で<?php echo AppConfig::MIN_MEMBER_DIFF_HOUR ?>人以上増加<?php if (count($recommend->hour) >= AppConfig::RECOMMEND_LIST_LIMIT) : ?> (<?php echo AppConfig::RECOMMEND_LIST_LIMIT ?>件まで)<?php endif ?></small>
-                                <small class="list-aside-desc">🚀：過去24時間で<?php echo AppConfig::MIN_MEMBER_DIFF_H24 ?>人以上増加<?php if (count($recommend->day) >= AppConfig::RECOMMEND_LIST_LIMIT) : ?> (<?php echo AppConfig::RECOMMEND_LIST_LIMIT ?>件まで)<?php endif ?></small>
-                                <small class="list-aside-desc">
-                                    <span style="margin: 0 4px;">
-                                        <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium show-north css-162gv95" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NorthIcon">
-                                            <path d="m5 9 1.41 1.41L11 5.83V22h2V5.83l4.59 4.59L19 9l-7-7-7 7z"></path>
-                                        </svg>
-                                    </span>：過去1週間で<?php echo AppConfig::MIN_MEMBER_DIFF_WEEK ?>人以上増加<?php if (count($recommend->week) >= AppConfig::RECOMMEND_LIST_LIMIT) : ?> (上位<?php echo AppConfig::RECOMMEND_LIST_LIMIT ?>件まで)<?php endif ?>
-                                </small>
-                                <small class="list-aside-desc">🏆：リスト内で最も人数が多いトークルーム</small>
-                            </div>
-                        </details>
-                    </aside>
-                <?php else : ?>
-                    <h2 class="list-title oc-list">只今サーバー内でリスト更新中です…</h2>
-                <?php endif ?>
-                <?php if (isset($recommend)) : ?>
-                    <?php viewComponent('open_chat_list_recommend', compact('recommend', 'countTitle', 'time')) ?>
-                <?php endif ?>
-            </div>
-            <?php if (isset($_dto->tagRecordCounts[$_tagIndex]) && ((int)$_dto->tagRecordCounts[$_tagIndex]) > $count) : ?>
-                <div class="top-list" style="margin: 0; border: 0; padding: 0;">
-                    <a style="margin: 0;" class="top-ranking-readMore unset" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . $_tagIndex)) ?>">
-                        <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」をすべて見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$_tagIndex] ?>件</span></span>
-                    </a>
-                </div>
+        <header class="recommend-header">
+            <?php if ($count) : ?>
+                <h1 class="talkroom_link_h1 unset">【最新】「<?php echo $tag ?>」おすすめオープンチャットランキングTOP<?php echo $count ?></h1>
+            <?php else : ?>
+                <h1 class="talkroom_link_h1 unset">【最新】「<?php echo $tag ?>」おすすめオープンチャットランキング</h1>
             <?php endif ?>
+            <div class="recommend-header-bottom">
+                <div class="recommend-data-desc">統計に基づくランキング</div>
+                <div class="recommend-header-time">
+                    <time datetime="<?php echo $_dto->rankingUpdatedAt->format(\DateTime::ATOM) ?>"><?php echo $_dto->rankingUpdatedAt->format('Y年n月j日 G:i') ?></time>
+                    <div>1時間ごとに更新</div>
+                </div>
+            </div>
+        </header>
 
+        <aside class="list-aside recommend-ranking-bottom">
             <?php if (isset($tags) && $tags) : ?>
                 <?php viewComponent('recommend_content_tags', compact('tags')) ?>
             <?php endif ?>
+            <a class="readMore-btn top-ranking-readMore unset" href="<?php echo url('ranking') ?>">
+                <span class="ranking-readMore" style="font-size: 11.5px;">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
+            </a>
+        </aside>
 
-            <div class="top-list" style="margin-bottom: 0rem; padding: 0; border: 0; margin-top: 0;">
-                <a style="margin: 0 0 1rem 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
+        <section style="all: unset; display: block;">
+            <figure class="talkroom_banner_img_area">
+                <?php if (isset($recommend)) : ?>
+                    <?php $oc = $recommend->getPreviewList(1)[0] ?>
+                    <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
+                <?php endif ?>
+                <figcaption><?php echo $oc['name'] ?></figcaption>
+            </figure>
+            <p class="recommend-header-desc">
+                「<?php echo $tag ?>」のいま人数が急増しているおすすめルームをご紹介！
+            </p>
+        </section>
+
+        <section class="recommend-ranking-section">
+            <?php if (isset($recommend)) : ?>
+                <ol class="openchat-item-list parent unset">
+                    <?php
+                    $chunkLen = 10;
+                    $lists = array_chunk($recommend->getList(false), $chunkLen);
+                    $listsLastKey = count($lists) - 1;
+                    ?>
+                    <?php foreach ($lists as $key => $listArray) : ?>
+                        <li class="top-ranking">
+                            <?php if ($key === 0) : ?>
+                                <header class="recommend-ranking-section-header">
+                                    <h2 class="list-title oc-list">
+                                        <div>【<?php echo $time ?>】</div>
+                                        <div>「<?php echo $tag ?>」</div>
+                                        <div>おすすめランキング</div>
+                                        <div><?php echo $countTitle ?></div>
+                                    </h2>
+                                    <aside class="list-aside">
+                                        <details class="icon-desc">
+                                            <summary style="font-size: 13px; font-weight: normal;">人数増加アイコンの説明</summary>
+                                            <div class="list-aside-details">
+                                                <small class="list-aside-desc">🔥：過去1時間で<?php echo AppConfig::MIN_MEMBER_DIFF_HOUR ?>人以上増加<?php if (count($recommend->hour) >= AppConfig::RECOMMEND_LIST_LIMIT) : ?> (<?php echo AppConfig::RECOMMEND_LIST_LIMIT ?>件まで)<?php endif ?></small>
+                                                <small class="list-aside-desc">🚀：過去24時間で<?php echo AppConfig::MIN_MEMBER_DIFF_H24 ?>人以上増加<?php if (count($recommend->day) >= AppConfig::RECOMMEND_LIST_LIMIT) : ?> (<?php echo AppConfig::RECOMMEND_LIST_LIMIT ?>件まで)<?php endif ?></small>
+                                                <small class="list-aside-desc">
+                                                    <span style="margin: 0 4px;">
+                                                        <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium show-north css-162gv95" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NorthIcon">
+                                                            <path d="m5 9 1.41 1.41L11 5.83V22h2V5.83l4.59 4.59L19 9l-7-7-7 7z"></path>
+                                                        </svg>
+                                                    </span>：過去1週間で<?php echo AppConfig::MIN_MEMBER_DIFF_WEEK ?>人以上増加<?php if (count($recommend->week) >= AppConfig::RECOMMEND_LIST_LIMIT) : ?> (上位<?php echo AppConfig::RECOMMEND_LIST_LIMIT ?>件まで)<?php endif ?>
+                                                </small>
+                                                <small class="list-aside-desc">🏆：リスト内で最も人数が多いトークルーム</small>
+                                            </div>
+                                        </details>
+                                    </aside>
+                                </header>
+                            <?php else : ?>
+                                <header class="recommend-ranking-section-header">
+                                    <h2 style="all: unset; font-size: 14px; font-weight: bold; color: #111; display: flex; flex-direction:row; flex-wrap:wrap;">
+                                        <div>「<?php echo $recommend->listName ?>」</div>
+                                        <div>おすすめランキング</div>
+                                        <div><?php echo $countTitle ?? '' ?></div>
+                                        <div>（<?php echo $key * $chunkLen + 1 ?>位〜）</div>
+                                    </h2>
+                                </header>
+                            <?php endif ?>
+                            <?php viewComponent('open_chat_list_recommend', compact('recommend', 'listArray')) ?>
+                            <?php if ($listsLastKey === $key && isset($_dto->tagRecordCounts[$_tagIndex]) && ((int)$_dto->tagRecordCounts[$_tagIndex]) > $count) : ?>
+                                <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?keyword=' . urlencode('tag:' . $_tagIndex)) ?>">
+                                    <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」をすべて見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$_tagIndex] ?>件</span></span>
+                                </a>
+                            <?php endif ?>
+                        </li>
+                    <?php endforeach ?>
+                </ol>
+            <?php else : ?>
+                <section class="top-ranking recommend-ranking-section">
+                    <header class="recommend-ranking-section-header">
+                        <h2 class="list-title oc-list">只今サーバー内でリスト更新中です…</h2>
+                    </header>
+                </section>
+            <?php endif ?>
+
+            <aside class="list-aside recommend-ranking-bottom">
+                <?php if (isset($tags) && $tags) : ?>
+                    <?php viewComponent('recommend_content_tags', compact('tags')) ?>
+                <?php endif ?>
+                <a class="readMore-btn top-ranking-readMore unset" href="<?php echo url('ranking') ?>">
                     <span class="ranking-readMore" style="font-size: 11.5px;">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
                 </a>
-            </div>
-
-            <aside style="all: unset; display:block; margin: 0; text-align: center;">
-                <div class="app_link" style="margin: 0;">
-                    <a href="https://openchat-jp.line.me/other/beginners_guide">
-                        <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
-                    </a>
-                </div>
             </aside>
-        </article>
-    </main>
-    <footer style="padding-top: 1rem;">
-        <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
-        <?php viewComponent('footer_inner') ?>
-    </footer>
+
+        </section>
+
+        <aside class="top-ranking-list-aside">
+            <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $rankingDto]) ?>
+        </aside>
+
+        <aside class="top-ranking-list-aside">
+            <?php viewComponent('top_ranking_comment_list_hour', ['dto' => $rankingDto]) ?>
+        </aside>
+
+        <aside class="unset app_link open-chat-guide">
+            <a href="https://openchat-jp.line.me/other/beginners_guide">
+                <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
+            </a>
+        </aside>
+
+        <footer class="footer-elem-outer">
+            <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
+            <?php viewComponent('footer_inner') ?>
+        </footer>
+
+    </article>
+
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
 
     <?php echo $_breadcrumbsShema ?>

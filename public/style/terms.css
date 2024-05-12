@@ -27,6 +27,9 @@ h1 {
 
 .terms {
   font-family: var(--font-family);
+  padding: 1rem;
+  max-width: 600px;
+  margin: auto;
 }
 
 .terms > h2 {

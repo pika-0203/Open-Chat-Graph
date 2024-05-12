@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Recommend\Dto;
 
+use App\Config\AppConfig;
 use App\Services\Recommend\Enum\RecommendListType;
 
 class RecommendListDto
@@ -24,17 +25,55 @@ class RecommendListDto
     }
 
     /** @return array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int }[] */
-    function getList(bool $shuffle = true): array
+    function getList(bool $shuffle = true, ?int $limit = AppConfig::RECOMMEND_LIST_LIMIT): array
     {
-        if (!$shuffle) return array_merge($this->hour, $this->day, $this->week, $this->member);
+        if (!$shuffle && $limit) {
+            return array_slice(
+                array_merge($this->hour, $this->day, $this->week, $this->member),
+                0,
+                $limit
+            );
+        } elseif (!$shuffle && !$limit) {
+            return array_merge($this->hour, $this->day, $this->week, $this->member);
+        }
 
-        $ranking5 = $this->week;
-        shuffle($ranking5);
-        $ranking6 = array_merge($this->hour, $this->day);
-        shuffle($ranking6);
-        $ranking7 = $this->member;
-        shuffle($ranking7);
-        return array_merge($ranking6, $ranking5, $ranking7);
+        $hour = $this->hour;
+        shuffle($hour);
+        $length = $this->getSliceLength(count($hour));
+        if (!$length) {
+            return $hour;
+        }
+
+        $day = array_slice($this->day, 0, $length);
+        shuffle($day);
+        $length = $this->getSliceLength(count($hour) + count($day));
+        if (!$length) {
+            $result = array_merge($hour, $day);
+            shuffle($result);
+            return $result;
+        };
+
+        $week = array_slice($this->week, 0, $length);
+        shuffle($week);
+        $length = $this->getSliceLength(count($hour) + count($day) + count($week));
+        if (!$length) {
+            $result = array_merge($hour, $day, $week);
+            shuffle($result);
+            return $result;
+        };
+
+        $member = array_slice($this->member, 0, $length);
+        shuffle($member);
+        
+        $result = array_merge($hour, $day, $week, $member);
+        shuffle($result);
+        return $result;
+    }
+
+    private function getSliceLength(int $count)
+    {
+        $count = AppConfig::RECOMMEND_LIST_LIMIT - $count;
+        return max($count, 0);
     }
 
     /** @return array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int }[] */
@@ -45,8 +84,14 @@ class RecommendListDto
         return array_slice($ranking5, 0, $len);
     }
 
-    function getCount(): int
+    function getCount(?int $limit = AppConfig::RECOMMEND_LIST_LIMIT): int
     {
-        return count($this->hour) + count($this->day) + count($this->week) + count($this->member);
+        $totalCount = count($this->hour) + count($this->day) + count($this->week) + count($this->member);
+
+        if (!$limit) {
+            return $totalCount;
+        } else {
+            return $totalCount > $limit ? $limit : $totalCount;
+        }
     }
 }

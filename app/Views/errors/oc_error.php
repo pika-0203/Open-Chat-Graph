@@ -2,7 +2,11 @@
 <html lang="ja">
 
 <head prefix="og: http://ogp.me/ns#">
-    <?php echo gTag(\App\Config\AppConfig::GTAG_ID) ?>
+    <?php
+
+    use App\Config\AppConfig;
+
+    echo gTag(\App\Config\AppConfig::GTAG_ID) ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +16,7 @@
         <link rel="stylesheet" href="<?php echo fileUrl("style/{$css}.css") ?>">
     <?php endforeach ?>
     <link rel="icon" type="image/png" href="<?php echo url(\App\Config\AppConfig::SITE_ICON_FILE_PATH) ?>">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2330982526015125" crossorigin="anonymous"></script>
 </head>
 
 <body class="body">
@@ -68,24 +73,35 @@
         <div style="margin: 0 -1rem; ">
             <?php viewComponent('site_header') ?>
         </div>
-        <header style="padding: 6rem 0; text-align: center">
-            <p style="font-weight: bold; color: #777">このオープンチャットは削除されました😇</p>
-            <p style="color: #aaa; font-size: 12px">LINEオープンチャット内でトークルームが削除されました</p>
+        <ins class="adsbygoogle rectangle-ads" style="display:block; background: rgb(250, 250, 250); margin: 0 -1rem;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <header style="padding: 1rem 0 0 0; text-align: center">
+            <p style="color: #111; font-size: 11px; text-align: left;">「<?php echo $recommend[2] ?>」 ID:<?php echo $open_chat_id ?></p>
+            <p style="font-weight: bold; color: #777">このオープンチャットはオプチャグラフから削除されました😇</p>
+            <p style="color: #aaa; font-size: 13px">LINE内でルームが削除された可能性があります</p>
         </header>
         <?php if ($recommend[0]) : ?>
-            <?php viewComponent('recommend_list', ['recommend' => $recommend[0], 'member' => 0, 'tag' => $recommend[2], 'id' => 0]) ?>
-            <hr style="margin: 1rem 0;">
+            <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => 0, 'tag' => $recommend[2], 'id' => 0]) ?>
         <?php endif ?>
         <?php if ($recommend[1]) : ?>
-            <?php viewComponent('recommend_list', ['recommend' => $recommend[1], 'member' => 0, 'tag' => $recommend[2], 'id' => 0]) ?>
+            <ins class="adsbygoogle rectangle-ads" style="display:block; background: rgb(250, 250, 250); margin: 0 -1rem;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => 0, 'tag' => $recommend[2], 'id' => 0]) ?>
         <?php endif ?>
-        <hr style="margin: .5rem 0;">
-        <article class="top-list">
+        <div class="top-list" style="all: unset; display: all;">
             <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all&order=desc&sort=member') ?>">
                 <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
             </a>
-            <hr style="margin: .5rem 0;">
-        </article>
+        </div>
+        <ins class="adsbygoogle rectangle-ads" style="display:block; background: rgb(250, 250, 250); margin: 0 -1rem;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <p style="width: fit-content; margin: 1rem auto;"><a style="color: #777; font-size: 11px;" href="<?php echo AppConfig::LINE_OPEN_URL . $_deleted['emid'] . AppConfig::LINE_OPEN_URL_SUFFIX; ?>">オープンチャットのURL（LINEオープンチャット公式サイト）</a></p>
     </main>
     <footer>
         <?php viewComponent('footer_inner') ?>

@@ -1,4 +1,4 @@
-<aside class="list-aside" style="margin: 1rem 0">
+<div class="list-aside">
     <h3 class="list-title">
         <span>関連のタグ</span>
     </h3>
@@ -16,4 +16,4 @@
             <?php endforeach ?>
         </ul>
     </section>
-</aside>
+</div>

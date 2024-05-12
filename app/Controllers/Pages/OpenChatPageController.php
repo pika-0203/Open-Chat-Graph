@@ -18,6 +18,7 @@ use App\Views\Meta\OcPageMeta;
 use App\Views\Schema\OcPageSchema;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 use App\Views\StatisticsViewUtility;
+use Shadow\DB;
 
 class OpenChatPageController
 {
@@ -39,12 +40,16 @@ class OpenChatPageController
         if (!$oc && !$recommend[2]) {
             return false;
         } elseif (!$oc) {
-            $_meta = meta()->setTitle("削除されたオープンチャット")
-                ->setDescription('お探しのオープンチャットは削除されました。')
-                ->setOgpDescription('お探しのオープンチャットは削除されました。');
+            $tag = $recommend[2];
+            $_meta = meta()->setTitle("「{$tag}」タグ ID:{$open_chat_id} （オプチャグラフから削除済み）")
+                ->setDescription("「{$tag}」タグ ID:{$open_chat_id} （オプチャグラフから削除済み）")
+                ->setOgpDescription("「{$tag}」タグのオープンチャット ID:{$open_chat_id} （オプチャグラフから削除済み）");
             $_css = ['room_list', 'site_header', 'site_footer', 'recommend_list'];
-            http_response_code(404);
-            return view('errors/oc_error', compact('_meta', '_css', 'recommend'));
+
+            $_deleted = DB::fetch("SELECT * FROM open_chat_deleted WHERE id = :open_chat_id", compact('open_chat_id'));
+            if (!$_deleted) return false;
+
+            return view('errors/oc_error', compact('_meta', '_css', 'recommend', 'open_chat_id', '_deleted'));
         }
 
         $_statsDto = $statisticsChartArrayService->buildStatisticsChartArray($open_chat_id);
@@ -59,7 +64,7 @@ class OpenChatPageController
         $_meta = $meta->generateMetadata($open_chat_id, $oc)
             ->setImageUrl(imgUrl($oc['id'], $oc['img_url']));
 
-        $_meta->thumbnail = imgUrl($oc['id'], $oc['img_url']);
+        $_meta->thumbnail = imgPreviewUrl($oc['id'], $oc['img_url']);
 
         $myList = json_decode(cookie('myList') ?? '', true);
         if (!is_array($myList)) {
