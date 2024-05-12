@@ -16,7 +16,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
 
 <body>
     <!-- 固定ヘッダー -->
-    <?php viewComponent('site_header', ['_updatedAt' => $_dto->rankingUpdatedAt]) ?>
+    <?php viewComponent('site_header') ?>
     <article class="ranking-page-main pad-side-top-ranking body">
 
         <header class="recommend-header">

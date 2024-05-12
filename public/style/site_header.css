@@ -84,6 +84,7 @@ body {
   display: flex;
   padding: 0 1rem;
   width: 100%;
+  justify-content: center;
 }
 
 /* .is-search-form-open .site_header {
@@ -129,9 +130,10 @@ body {
   cursor: pointer;
   display: flex;
   height: 48px;
-  gap: 6px;
+  gap: 3px;
   padding: 0 0.5rem;
   align-items: center;
+  font-family: var(--font-family);
 }
 
 .header_site_title:focus-visible {
@@ -145,6 +147,7 @@ body {
   height: 15px;
   user-select: none;
   -webkit-user-select: none;
+
 }
 
 .header_site_title h1,
@@ -166,6 +169,11 @@ body {
   align-items: center;
   width: 100%;
   margin-right: -8px;
+
+  height: 48px;
+  position: absolute;
+  right: 1rem;
+  width: fit-content;
 }
 
 /* 検索フォーム */

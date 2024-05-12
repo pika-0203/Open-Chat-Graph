@@ -105,12 +105,14 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
         <?php endif ?>
-
     </main>
     <footer class="footer-elem-outer">
         <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
         <?php viewComponent('footer_inner') ?>
     </footer>
+    <div class="refresh-time" style="width: fit-content; margin: auto; padding-bottom: 0.5rem;">
+        <div class="refresh-icon"></div><time style="font-size: 11px; color: #777; margin-left:3px" datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><?php echo $_updatedAt->format('Y/n/j G:i') ?></time>
+    </div>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
     <?php echo $_meta->generateTopPageSchema() ?>
 </body>

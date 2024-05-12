@@ -8,12 +8,8 @@
                 <p>オプチャグラフ</p>
             <?php endif ?>
         </a>
-
-        <?php if (isset($_updatedAt)) : ?>
-            <div class="refresh-time">
-                <div class="refresh-icon"></div><time datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><?php echo $_updatedAt->format('Y/n/j G:i') ?></time>
-            </div>
-        <?php elseif (cookie()->has('admin')) : ?>
+        
+        <?php if (cookie()->has('admin')) : ?>
             <!-- admin用チェックボックス -->
             <label class="checkbox-label admin-check-label" for="adminEnable">
                 <small>Admin</small>
