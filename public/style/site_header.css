@@ -578,6 +578,24 @@ body::before {
   padding: 10px 1rem;
 }
 
-ins.adsbygoogle[data-ad-status="unfilled"] {
+/* ins.adsbygoogle[data-ad-status="unfilled"] {
     display: none !important;
+} */
+
+.hr-top {
+  all: unset;
+  display: block;
+  border-bottom: 1px solid #efefef;
+  margin: 0 auto;
+  padding: 8px 0;
+  width: calc(100% - 2rem);
+}
+
+.hr-bottom {
+  all: unset;
+  display: block;
+  border-top: 1px solid #efefef;
+  margin: 0 auto;
+  padding: 8px 0;
+  width: calc(100% - 2rem);
 }

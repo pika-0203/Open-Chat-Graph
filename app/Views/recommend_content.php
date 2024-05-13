@@ -19,6 +19,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <?php viewComponent('site_header') ?>
     <article class="ranking-page-main pad-side-top-ranking body">
         <?php viewComponent('ads/google-rectangle') ?>
+        <hr class="hr-top">
 
         <header class="recommend-header">
             <?php if ($count) : ?>
@@ -58,7 +59,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </a>
         </aside>
 
+        <hr class="hr-bottom">
         <?php viewComponent('ads/google-responsive') ?>
+        <hr class="hr-top">
 
         <section class="recommend-ranking-section">
             <?php if (isset($recommend)) : ?>
@@ -114,7 +117,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                             <?php endif ?>
                         </li>
                         <li>
+                            <hr class="hr-bottom">
                             <?php viewComponent('ads/google-responsive') ?>
+                            <hr class="hr-top">
                         </li>
                     <?php endforeach ?>
                 </ol>
@@ -141,7 +146,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $rankingDto]) ?>
         </aside>
 
+        <hr class="hr-bottom">
         <?php viewComponent('ads/google-responsive') ?>
+        <hr class="hr-top">
 
         <aside class="top-ranking-list-aside">
             <?php viewComponent('top_ranking_comment_list_hour', ['dto' => $rankingDto]) ?>
@@ -153,6 +160,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </a>
         </aside>
 
+        <hr class="hr-bottom">
         <?php viewComponent('ads/google-responsive') ?>
 
         <footer class="footer-elem-outer">
