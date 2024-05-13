@@ -28,6 +28,9 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
   <!-- 固定ヘッダー -->
   <?php viewComponent('site_header') ?>
   <article class="unset openchat body">
+
+    <?php viewComponent('ads/google-full') ?>
+    
     <!-- オープンチャット表示ヘッダー -->
     <section class="openchat-header unset">
       <div class="talkroom_banner_img_area">
