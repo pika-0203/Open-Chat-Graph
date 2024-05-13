@@ -119,6 +119,9 @@ viewComponent('head', compact('_css', '_meta')) ?>
                         </p>
                     </li>
                     <li>
+                        <div style="margin-left: -1.25rem;">
+                            <?php viewComponent('ads/google-responsive') ?>
+                        </div>
                         <p class="recommend-desc">
                             「📊最終ランキング順位」はランキング順位の上位何％までを表示するかが選べます。<br>
                             この分析機能では、単純なランク圏外ではなく、ルーム内容変更による未掲載や、それ以外の理由で未掲載となったルームに焦点を当てることができます。<br>
@@ -161,6 +164,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 <p class="recommend-desc">
                     また、端末により検索結果が変わるという公式発表がありますが、それによって検索画面に非表示になるのは、例外と考えることができます。
                 </p>
+                <?php viewComponent('ads/google-responsive') ?>
                 <p class="recommend-desc">
                     これらを踏まえて、ランキング掲載と検索機能はそれぞれ別々のロジックですが、可視性については一部共通する部分があると考えることができます。
                 </p>
@@ -173,7 +177,9 @@ viewComponent('head', compact('_css', '_meta')) ?>
             </details>
         </aside>
 
-        <form id="value-form" style="position: relative; margin-bottom: 12px">
+        <?php viewComponent('ads/google-responsive') ?>
+
+        <form id="value-form" style="position: relative; margin-bottom: 12px; margin-top: 1rem;">
             <label for="pet-select0">💡掲載状況:</label>
             <select id="pet-select0" name="publish">
                 <option value="1" <?php if (R::input('publish') === 1) echo 'selected' ?>>現在未掲載</option>
@@ -231,6 +237,9 @@ viewComponent('head', compact('_css', '_meta')) ?>
             <?php viewComponent('pager_nav_ranking_ban', $_pagerNavArg) ?>
         <?php endif ?>
     </main>
+    <div class="padding-ads">
+        <?php viewComponent('ads/google-full') ?>
+    </div>
     <footer class="footer-elem-outer">
         <?php viewComponent('footer_inner') ?>
     </footer>

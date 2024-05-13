@@ -14,6 +14,7 @@
     <?php viewComponent('site_header') ?>
     <main style="padding: 0 1rem;">
         <h2>オプチャグラフにオープンチャットを手動で登録する</h2>
+        <?php viewComponent('ads/google-responsive') ?>
         <p>
             公式ランキングに掲載されているオープンチャットはオプチャグラフに自動登録されます。
         </p>
@@ -30,6 +31,7 @@
                 <li>下記フォームに貼り付けて登録する</li>
             </ul>
         </section>
+        <?php viewComponent('ads/google-responsive') ?>
         <!-- 送信後のレスポンス -->
         <?php if (session()->has('id')) : ?>
             <!-- 登録完了 or 登録済 -->

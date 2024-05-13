@@ -47,6 +47,7 @@
                     </p>
                 </div>
             </header>
+            <?php viewComponent('ads/google-responsive') ?>
             <!-- select要素ページネーション -->
             <hr>
             <nav class="page-select unset">
