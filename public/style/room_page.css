@@ -61,7 +61,6 @@ hr {
   margin-top: -5rem;
   position: absolute;
   z-index: 100;
-  margin: 0 auto;
   width: calc(100% - 2rem);
   max-width: calc(var(--width) - 2rem);
 }
