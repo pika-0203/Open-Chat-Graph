@@ -9,7 +9,7 @@
     </header>
     <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->weeklyList]) ?>
     <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=weekly') ?>">
-        <span class="ranking-readMore">もっと見る</span>
+        <span class="ranking-readMore">1週間の人数増加ランキングをもっと見る</span>
     </a>
 </article>
 
@@ -24,6 +24,6 @@
     </header>
     <?php viewComponent('open_chat_list_ranking', ['openChatList' => $dto->popularList]) ?>
     <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-        <span class="ranking-readMore">もっと見る</span>
+        <span class="ranking-readMore">人数ランキングをもっと見る</span>
     </a>
 </article>

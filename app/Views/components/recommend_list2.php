@@ -4,6 +4,7 @@
 
 use App\Config\AppConfig;
 use App\Services\Recommend\Enum\RecommendListType;
+use App\Services\Recommend\RecommendUtility;
 
 ?>
 
@@ -28,15 +29,15 @@ use App\Services\Recommend\Enum\RecommendListType;
     <?php viewComponent('open_chat_list_recommend', compact('recommend', 'id') + ['limit' => 5, 'shuffle' => true]) ?>
     <?php if ($recommend->type === RecommendListType::Category) : ?>
         <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking/' . AppConfig::OPEN_CHAT_CATEGORY[$recommend->listName] . '?list=daily') ?>">
-            <span class="ranking-readMore">もっと見る</span>
+            <span class="ranking-readMore">「<?php echo $recommend->listName ?>」カテゴリーをもっと見る</span>
         </a>
     <?php elseif ($recommend->type === RecommendListType::Official) : ?>
         <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking/?keyword=' . urlencode('badge:' . htmlspecialchars_decode($recommend->listName))) ?>">
-            <span class="ranking-readMore"><?php echo $recommend->listName ?>をすべて見る</span>
+            <span class="ranking-readMore"><?php echo $recommend->listName ?>をもっと見る</span>
         </a>
     <?php else : ?>
         <a class="top-ranking-readMore unset ranking-url" href="<?php echo url("recommend?tag=" . urlencode(htmlspecialchars_decode($recommend->listName))) ?>">
-            <span class="ranking-readMore">もっと見る</span>
+            <span class="ranking-readMore">「<?php echo RecommendUtility::extractTag($recommend->listName) ?>」をもっと見る</span>
         </a>
     <?php endif ?>
 </article>
