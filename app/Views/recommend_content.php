@@ -45,7 +45,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 </figure>
             <?php endif ?>
             <p class="recommend-header-desc">
-                「<?php echo $tag ?>」のおすすめオープンチャットをご紹介！
+                「<?php echo $tag ?>」のおすすめオープンチャットランキングを発表！
             </p>
             <p class="recommend-header-desc">
                 ランキングの順位は、参加人数がどれぐらい上昇しているかによって決まります。

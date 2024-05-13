@@ -43,18 +43,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></h1>
           <div class="link-mark"><span class="link-title"><span aria-hidden="true" style="font-size: 10px; margin-right:2px;">🔗</span>LINEオープンチャット公式サイト</span></div>
         </a>
-        <div class="talkroom_description_box close" id="talkroom_description_box">
-          <p class="talkroom_description" id="talkroom-description">
-            <span id="talkroom-description-btn">
-              <?php echo nl2brReplace(trim(preg_replace("/(\r\n){3,}|\r{3,}|\n{3,}/", "\n\n", $oc['description']))) ?>
-            </span>
-          </p>
-          <button id="talkroom-description-close-btn" class="close-btn" title="一部を表示">一部を表示</button>
-          <div class="more" id="read_more_btn">
-            <div class="more-separater">&nbsp;</div>
-            <button class="unset more-text" style="font-weight: bold; color: #111;" title="もっと見る">…もっと見る</button>
-          </div>
-        </div>
 
         <div class="talkroom_number_of_members">
           <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?>人</span>
@@ -127,6 +115,21 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
               <?php endif ?>
         </div>
     </section>
+    <hr class="hr-bottom">
+
+    <div class="talkroom_description_box close" id="talkroom_description_box" style="margin: 0 1rem 1rem 1rem;">
+      <p class="talkroom_description" id="talkroom-description">
+        <span id="talkroom-description-btn">
+          <?php echo nl2brReplace(trim(preg_replace("/(\r\n){3,}|\r{3,}|\n{3,}/", "\n\n", $oc['description']))) ?>
+        </span>
+      </p>
+      <button id="talkroom-description-close-btn" class="close-btn" title="一部を表示">一部を表示</button>
+      <div class="more" id="read_more_btn">
+        <div class="more-separater">&nbsp;</div>
+        <button class="unset more-text" style="font-weight: bold; color: #111;" title="もっと見る">…もっと見る</button>
+      </div>
+    </div>
+
     <hr class="hr-bottom">
 
     <?php viewComponent('ads/google-responsive') ?>
@@ -321,9 +324,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         readMoreBtn.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
         close.addEventListener('click', () => {
           talkroomDescBox.classList.add('close')
-          window.scrollTo({
-            top: 0,
-          });
         })
       }
     })()
