@@ -19,8 +19,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <?php viewComponent('site_header') ?>
     <article class="ranking-page-main pad-side-top-ranking body">
 
-        <?php viewComponent('ads/google-full') ?>
-
         <header class="recommend-header">
             <?php if ($count) : ?>
                 <h1 class="talkroom_link_h1 unset">【最新】「<?php echo $tag ?>」おすすめオープンチャットランキングTOP<?php echo $count ?></h1>
@@ -132,8 +130,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
 
         </section>
 
-        <?php viewComponent('ads/google-full') ?>
-        
         <aside class="top-ranking-list-aside">
             <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $rankingDto]) ?>
         </aside>

@@ -471,7 +471,7 @@ body::before {
 
 @media screen and (min-width: 512px) {
   .site_header {
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 
   .super-icon {

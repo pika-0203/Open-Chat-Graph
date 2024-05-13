@@ -1,4 +1,4 @@
-<main>
+<main style="padding-top: 0; padding-bottom: 0;">
     <article class="top-list">
         <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
             <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>

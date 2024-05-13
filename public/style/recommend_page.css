@@ -23,6 +23,7 @@ li {
 
 .ranking-page-main .talkroom_banner_img_area {
   padding: 1rem;
+  padding-bottom: 0;
   aspect-ratio: 1.2 / 1;
   width: 100%;
 }

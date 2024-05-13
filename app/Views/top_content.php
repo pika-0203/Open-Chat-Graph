@@ -31,8 +31,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             </a>
         </article>
 
-        <?php viewComponent('ads/google-full') ?>
-
         <article class="top-ranking">
             <?php if ($tags) : ?>
                 <div>
@@ -70,6 +68,8 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                 </div>
             <?php endif ?>
         </article>
+
+        <?php viewComponent('ads/google-full') ?>
 
         <?php if ($myList) : ?>
             <article class="mylist pad-side">

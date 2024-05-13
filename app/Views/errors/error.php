@@ -309,11 +309,11 @@ $_css = ['room_list', 'site_header', 'site_footer'];
     </style>
 
     <!-- 固定ヘッダー -->
-    <main class="main">
+    <main class="main" style="padding: 0 1rem;">
         <div style="margin: 0 -1rem; ">
             <?php viewComponent('site_header') ?>
         </div>
-        <header>
+        <header style="padding: 0;">
             <?php if ($httpCode != 404 || !strpos(path(), 'oc/')) : ?>
                 <h1><?php echo $httpCode ?? '' ?></h1>
                 <h2><?php echo $httpStatusMessage ?? '' ?></h2>
@@ -373,7 +373,7 @@ $_css = ['room_list', 'site_header', 'site_footer'];
         }
         ?>
     <?php endif ?>
-    <footer>
+    <footer style="padding: 1rem;">
         <?php viewComponent('footer_inner') ?>
     </footer>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
