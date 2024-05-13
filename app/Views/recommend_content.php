@@ -132,6 +132,8 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
 
         </section>
 
+        <?php viewComponent('ads/google-full') ?>
+        
         <aside class="top-ranking-list-aside">
             <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $rankingDto]) ?>
         </aside>

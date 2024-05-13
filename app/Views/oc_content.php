@@ -30,7 +30,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
   <article class="unset openchat body">
 
     <?php viewComponent('ads/google-full') ?>
-    
+
     <!-- オープンチャット表示ヘッダー -->
     <section class="openchat-header unset">
       <div class="talkroom_banner_img_area">
@@ -241,6 +241,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </div>
       <div id="comment-root"></div>
     </section>
+
+    <?php viewComponent('ads/google-full') ?>
 
     <aside class="recommend-list-aside">
       <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>

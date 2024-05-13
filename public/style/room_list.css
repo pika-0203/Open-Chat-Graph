@@ -1176,11 +1176,11 @@
   font-weight: bold;
 }
 
-.top-ranking .tag-list li:nth-child(n + 26) {
+.top-ranking .tag-list li:nth-child(n + 31) {
   display: none;
 }
 
-.top-ranking .open.tag-list li:nth-child(n + 26) {
+.top-ranking .open.tag-list li:nth-child(n + 31) {
   display: inline-flex;
 }
 
