@@ -141,11 +141,10 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             </a>
         </article>
 
+        <div class="padding-ads">
+            <?php viewComponent('ads/google-full') ?>
+        </div>
     </main>
-
-    <div class="padding-ads">
-        <?php viewComponent('ads/google-full') ?>
-    </div>
 
     <footer class="footer-elem-outer">
         <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
