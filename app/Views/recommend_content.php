@@ -56,9 +56,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php if (isset($tags) && $tags) : ?>
                 <?php viewComponent('recommend_content_tags', compact('tags')) ?>
             <?php endif ?>
-            <a class="readMore-btn top-ranking-readMore unset" href="<?php echo url('ranking') ?>">
-                <span class="ranking-readMore" style="font-size: 11.5px;">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
-            </a>
         </aside>
 
         <hr class="hr-bottom">
