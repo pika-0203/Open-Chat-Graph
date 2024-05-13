@@ -111,9 +111,45 @@ const setHeaderShow = (header, hidden, show) => {
   })
 }
 
+let pcAdBarGlobal = null
+let bodyPaddingTop = 0
+const setHeaderShow2 = (header, hidden, show) => {
+  // 現在の位置を保持
+  let currentPosition = 0
+
+  window.addEventListener('scroll', () => {
+    // スクロール位置を保持
+    let scrollPosition = document.documentElement.scrollTop
+
+    if (!pcAdBarGlobal) {
+      const pcAdBar = document.querySelector('.adsbygoogle-noablate[data-anchor-status]')
+      if (pcAdBar && pcAdBar.style.top === '0px') {
+        pcAdBarGlobal = pcAdBar
+        pcAdBarGlobal.style.transition = 'all 0.3s'
+        const bodyPadTop = document.body.style.paddingTop
+        header.style.top = ''
+      }
+    }
+
+    // スクロールに合わせて要素をヘッダーの高さ分だけ移動（表示域から隠したり表示したり）
+    if (scrollPosition <= 48) {
+      header.style.transform = `translate(0, ${show})`
+      if (pcAdBarGlobal && pcAdBarGlobal.style.top === '0px') pcAdBarGlobal.style.top = `${hidden * -1}px`
+    } else if (currentPosition <= scrollPosition) {
+      header.style.transform = `translate(0, ${hidden}px)`
+      if (pcAdBarGlobal && pcAdBarGlobal.style.top === `${hidden * -1}px`) pcAdBarGlobal.style.top = `0px`
+    } else if (currentPosition > scrollPosition) {
+      header.style.transform = `translate(0, ${show})`
+      if (pcAdBarGlobal && pcAdBarGlobal.style.top === '0px') pcAdBarGlobal.style.top = `${hidden * -1}px`
+    }
+
+    currentPosition = document.documentElement.scrollTop
+  })
+}
+
 ;(() => {
   const header = document.querySelector('.site_header_outer')
-  setHeaderShow(header, -48, 0)
+  setHeaderShow2(header, -48, 0)
 })()
 
 const setAnchorPosition = () => {

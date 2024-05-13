@@ -23,6 +23,14 @@ body {
   width: 100%;
 }
 
+body::before {
+  width: 100%;
+  max-width: var(--width);
+  height: 48px;
+  display: block;
+  content: '';
+}
+
 .pad-side {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -66,10 +74,12 @@ body {
 
 .site_header_outer {
   all: unset;
-  position: sticky;
+  position: fixed;
   display: block;
   z-index: 30;
   top: 0;
+  left: 0;
+  right: 0;
   margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
@@ -130,7 +140,7 @@ body {
   cursor: pointer;
   display: flex;
   height: 48px;
-  gap: 3px;
+  gap: 4px;
   padding: 0 0.5rem;
   align-items: center;
   font-family: var(--font-family);
@@ -143,11 +153,10 @@ body {
 
 .header_site_title img {
   margin: auto;
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  height: 18px;
   user-select: none;
   -webkit-user-select: none;
-
 }
 
 .header_site_title h1,
@@ -157,7 +166,6 @@ body {
   white-space: nowrap;
   font-weight: bold;
   font-size: 15px;
-  letter-spacing: 0.05em;
   color: #111;
   line-height: 1.75;
   font-family: var(--font-family);
@@ -476,12 +484,6 @@ body {
 
   .header_site_title:focus-visible {
     height: 42px;
-  }
-
-  .header_site_title:hover {
-    background-color: var(--hover);
-    height: 42px;
-    border-radius: var(--border-radius);
   }
 
   .is-search-form-open .site_header {
