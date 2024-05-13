@@ -52,7 +52,7 @@
                     <a href="<?php echo url('recently-registered') ?>">最近登録されたオープンチャット</a>
                 </p>
             </section>
-            <?php viewComponent('ads/google-rectangle') ?>
+            <?php viewComponent('ads/google-responsive') ?>
             <section style="margin: 2rem 0;">
                 <h3 style="font-size: 14px;">公式サイトでの掲載条件</h3>
                 <p>
@@ -100,7 +100,7 @@
                     <b>オプチャグラフはLINE公式のランキング掲載基準について関与していません。ルームの審査基準等を調べるためのツールではありません。</b>
                 </p>
             </section>
-            <?php viewComponent('ads/google-rectangle') ?>
+            <?php viewComponent('ads/google-responsive') ?>
             <h2>オプチャグラフ公開の経緯</h2>
             <p>
                 オプチャグラフの公開が可能になった経緯として、オプチャ公式による検索エンジンへの対応が始まった事があげられます。
@@ -146,7 +146,7 @@
             <p>オプチャグラフお問い合わせ窓口: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>
         </article>
     </main>
-    <?php viewComponent('ads/google-rectangle') ?>
+    <?php viewComponent('ads/google-responsive') ?>
     <footer class="footer-elem-outer">
         <?php viewComponent('footer_inner') ?>
     </footer>

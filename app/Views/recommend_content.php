@@ -58,9 +58,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </a>
         </aside>
 
-        <div class="padding-ads">
-            <?php viewComponent('ads/google-rectangle') ?>
-        </div>
+        <?php viewComponent('ads/google-responsive') ?>
 
         <section class="recommend-ranking-section">
             <?php if (isset($recommend)) : ?>
@@ -116,9 +114,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                             <?php endif ?>
                         </li>
                         <li>
-                            <div class="padding-ads">
-                                <?php viewComponent('ads/google-rectangle') ?>
-                            </div>
+                            <?php viewComponent('ads/google-responsive') ?>
                         </li>
                     <?php endforeach ?>
                 </ol>
@@ -145,9 +141,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $rankingDto]) ?>
         </aside>
 
-        <div class="padding-ads">
-            <?php viewComponent('ads/google-rectangle') ?>
-        </div>
+        <?php viewComponent('ads/google-responsive') ?>
 
         <aside class="top-ranking-list-aside">
             <?php viewComponent('top_ranking_comment_list_hour', ['dto' => $rankingDto]) ?>
@@ -159,9 +153,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </a>
         </aside>
 
-        <div class="padding-ads">
-            <?php viewComponent('ads/google-rectangle') ?>
-        </div>
+        <?php viewComponent('ads/google-responsive') ?>
 
         <footer class="footer-elem-outer">
             <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>

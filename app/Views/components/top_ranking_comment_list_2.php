@@ -13,9 +13,7 @@
     </a>
 </article>
 
-<div class="padding-ads">
-    <?php viewComponent('ads/google-rectangle') ?>
-</div>
+<?php viewComponent('ads/google-responsive') ?>
 
 <article class="top-ranking created-at">
     <header class=" openchat-list-title-area unset">

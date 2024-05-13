@@ -24,14 +24,14 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 <body>
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main class="pad-side-top-ranking pad-side-top-list" style="max-width: 600px; padding: 0;">
-        
-    <article class="top-ranking top-btns">
-        <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-            <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
-        </a>
-    </article>
-    
-    <?php viewComponent('ads/google-rectangle') ?>
+
+        <article class="top-ranking top-btns">
+            <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
+                <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
+            </a>
+        </article>
+
+        <?php viewComponent('ads/google-rectangle') ?>
 
         <article class="top-ranking">
             <?php if ($tags) : ?>
@@ -71,9 +71,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php endif ?>
         </article>
 
-        <div class="padding-ads">
-            <?php viewComponent('ads/google-rectangle') ?>
-        </div>
+        <?php viewComponent('ads/google-responsive') ?>
 
         <?php if ($myList) : ?>
             <article class="mylist pad-side">
@@ -89,46 +87,27 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
         <?php if ($newComment) : ?>
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
-            <div class="padding-ads">
-                <?php viewComponent('ads/google-rectangle') ?>
-            </div>
+            <?php viewComponent('ads/google-responsive') ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
-            <div class="padding-ads">
-                <?php viewComponent('ads/google-rectangle') ?>
-            </div> <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
-            <div class="padding-ads">
-                <?php viewComponent('ads/google-rectangle') ?>
-            </div>
+            <?php viewComponent('ads/google-responsive') ?>
+            <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+            <?php viewComponent('ads/google-responsive') ?>
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0]) ?>
-            <div class="padding-ads">
-                <?php viewComponent('ads/google-rectangle') ?>
-            </div>
+            <?php viewComponent('ads/google-responsive') ?>
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0]) ?>
-            <div class="padding-ads">
-                <?php viewComponent('ads/google-rectangle') ?>
-            </div>
+            <?php viewComponent('ads/google-responsive') ?>
             <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
         <?php else : ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
-            <div class="padding-ads">
-                <?php viewComponent('ads/google-rectangle') ?>
-            </div>
+            <?php viewComponent('ads/google-responsive') ?>
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
-            <div class="padding-ads">
-                <?php viewComponent('ads/google-rectangle') ?>
-            </div>
+            <?php viewComponent('ads/google-responsive') ?>
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0]) ?>
-            <div class="padding-ads">
-                <?php viewComponent('ads/google-rectangle') ?>
-            </div>
+            <?php viewComponent('ads/google-responsive') ?>
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0]) ?>
-            <div class="padding-ads">
-                <?php viewComponent('ads/google-rectangle') ?>
-            </div>
+            <?php viewComponent('ads/google-responsive') ?>
             <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
-            <div class="padding-ads">
-                <?php viewComponent('ads/google-rectangle') ?>
-            </div>
+            <?php viewComponent('ads/google-responsive') ?>
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
         <?php endif ?>
 
@@ -143,9 +122,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             </a>
         </article>
 
-        <div class="padding-ads">
-            <?php viewComponent('ads/google-rectangle') ?>
-        </div>
+        <?php viewComponent('ads/google-responsive') ?>
     </main>
 
     <footer class="footer-elem-outer">

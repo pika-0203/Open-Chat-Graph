@@ -84,7 +84,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main style="max-width: 600px; padding: 0 1rem;">
-        <?php viewComponent('ads/google-responsive') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
         <header class="openchat-list-title-area unset" style="padding-top: 1rem;">
             <div style="flex-direction: column;">
                 <h2 class="list-title">
@@ -239,9 +239,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
             <?php viewComponent('pager_nav_ranking_ban', $_pagerNavArg) ?>
         <?php endif ?>
     </main>
-    <div class="padding-ads">
-        <?php viewComponent('ads/google-rectangle') ?>
-    </div>
+    <?php viewComponent('ads/google-responsive') ?>
     <footer class="footer-elem-outer">
         <?php viewComponent('footer_inner') ?>
     </footer>
