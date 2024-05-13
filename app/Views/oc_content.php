@@ -125,7 +125,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
     </section>
 
-    <div class="padding-ads">
+    <div class="padding-ads" style="padding: 0 1rem;">
       <?php viewComponent('ads/google-full') ?>
     </div>
 
