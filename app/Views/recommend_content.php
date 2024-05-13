@@ -19,8 +19,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <?php viewComponent('site_header') ?>
     <article class="ranking-page-main pad-side-top-ranking body">
 
-        <?php viewComponent('ads/google-full') ?>
-
         <header class="recommend-header">
             <?php if ($count) : ?>
                 <h1 class="talkroom_link_h1 unset">【最新】「<?php echo $tag ?>」おすすめオープンチャットランキングTOP<?php echo $count ?></h1>
@@ -142,10 +140,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
 
         </section>
 
-        <div class="padding-ads">
-            <?php viewComponent('ads/google-full') ?>
-        </div>
-
         <aside class="top-ranking-list-aside">
             <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $rankingDto]) ?>
         </aside>
@@ -164,14 +158,16 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </a>
         </aside>
 
+        <div class="padding-ads">
+            <?php viewComponent('ads/google-full') ?>
+        </div>
+
         <footer class="footer-elem-outer">
             <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
             <?php viewComponent('footer_inner') ?>
         </footer>
 
     </article>
-
-    <?php viewComponent('ads/google-full') ?>
 
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
 
