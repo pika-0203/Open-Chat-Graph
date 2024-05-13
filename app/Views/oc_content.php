@@ -125,8 +125,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
     </section>
 
-    <?php viewComponent('ads/google-full') ?>
-
     <?php if (isset($_adminDto)) : ?>
       <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
     <?php endif ?>

@@ -69,8 +69,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php endif ?>
         </article>
 
-        <?php viewComponent('ads/google-full') ?>
-
         <?php if ($myList) : ?>
             <article class="mylist pad-side">
                 <div class="refresh-time openchat-list-date">
