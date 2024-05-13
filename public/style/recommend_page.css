@@ -82,12 +82,24 @@ li {
   display: block;
 }
 
-.top-ranking:not(.not-rank) {
-  counter-reset: none;
+.openchat-item-list.parent {
+  counter-reset: openchat-counter2 0;
 }
 
-.openchat-item-list.parent {
-  counter-reset: openchat-counter 0;
+.openchat-item-list.parent .top-ranking:not(.not-rank) .openchat-item::before {
+  content: counter(openchat-counter2);
+  counter-increment: openchat-counter2;
+}
+
+.openchat-item-list.parent .ranking-page-main .openchat-item-lower-outer {
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 1px;
+  align-items: center;
+}
+
+.openchat-item-list.parent .ranking-page-main .openchat-item-mui-chip-outer {
+  margin-top: 0;
 }
 
 .recommend-ranking-section-header {
@@ -279,17 +291,6 @@ section aside:hover {
   border-right: 1px solid #111;
   transform: rotate(135deg);
   margin-bottom: 3px;
-}
-
-.ranking-page-main .openchat-item-lower-outer {
-  flex-direction: row;
-  gap: 8px;
-  margin-top: 1px;
-  align-items: center;
-}
-
-.ranking-page-main .openchat-item-mui-chip-outer {
-  margin-top: 0;
 }
 
 .diff-member {
