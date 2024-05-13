@@ -67,7 +67,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                             </li>
                         <?php endforeach ?>
 
-                        <?php if (count($tags['hour']) + count($tags['hour24']) > 14) : ?>
+                        <?php if (count($tags['hour']) + count($tags['hour24']) > 26) : ?>
                             <li id="open-btn-li">
                                 <button class="unset tag-btn open-btn" onclick="this.parentElement.parentElement.classList.toggle('open')"></button>
                             </li>

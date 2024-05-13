@@ -144,6 +144,7 @@ body::before {
   padding: 0 0.5rem;
   align-items: center;
   font-family: var(--font-family);
+  margin-left: -18px;
 }
 
 .header_site_title:focus-visible {

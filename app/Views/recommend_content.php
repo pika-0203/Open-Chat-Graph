@@ -19,6 +19,8 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <?php viewComponent('site_header') ?>
     <article class="ranking-page-main pad-side-top-ranking body">
 
+        <?php viewComponent('ads/google-full') ?>
+
         <header class="recommend-header">
             <?php if ($count) : ?>
                 <h1 class="talkroom_link_h1 unset">【最新】「<?php echo $tag ?>」おすすめオープンチャットランキングTOP<?php echo $count ?></h1>
@@ -44,13 +46,13 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
         </aside>
 
         <section style="all: unset; display: block;">
-            <figure class="talkroom_banner_img_area">
-                <?php if (isset($recommend)) : ?>
+            <?php if (isset($recommend)) : ?>
+                <figure class="talkroom_banner_img_area">
                     <?php $oc = $recommend->getPreviewList(1)[0] ?>
                     <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
-                <?php endif ?>
-                <figcaption><?php echo $oc['name'] ?></figcaption>
-            </figure>
+                    <figcaption><?php echo $oc['name'] ?></figcaption>
+                </figure>
+            <?php endif ?>
             <p class="recommend-header-desc">
                 「<?php echo $tag ?>」のいま人数が急増しているおすすめルームをご紹介！
             </p>
