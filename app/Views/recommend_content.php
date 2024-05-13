@@ -19,6 +19,8 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <?php viewComponent('site_header') ?>
     <article class="ranking-page-main pad-side-top-ranking body">
 
+        <?php viewComponent('ads/google-full') ?>
+
         <header class="recommend-header">
             <?php if ($count) : ?>
                 <h1 class="talkroom_link_h1 unset">【最新】「<?php echo $tag ?>」おすすめオープンチャットランキングTOP<?php echo $count ?></h1>
@@ -33,6 +35,10 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 </div>
             </div>
         </header>
+
+        <div class="padding-ads">
+            <?php viewComponent('ads/google-full') ?>
+        </div>
 
         <aside class="list-aside recommend-ranking-bottom">
             <?php if (isset($tags) && $tags) : ?>
@@ -109,7 +115,11 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                                     <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」をすべて見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$_tagIndex] ?>件</span></span>
                                 </a>
                             <?php endif ?>
-                            <?php viewComponent('ads/google-full') ?>
+                        </li>
+                        <li>
+                            <div class="padding-ads">
+                                <?php viewComponent('ads/google-full') ?>
+                            </div>
                         </li>
                     <?php endforeach ?>
                 </ol>
@@ -132,9 +142,17 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
 
         </section>
 
+        <div class="padding-ads">
+            <?php viewComponent('ads/google-full') ?>
+        </div>
+
         <aside class="top-ranking-list-aside">
             <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $rankingDto]) ?>
         </aside>
+
+        <div class="padding-ads">
+            <?php viewComponent('ads/google-full') ?>
+        </div>
 
         <aside class="top-ranking-list-aside">
             <?php viewComponent('top_ranking_comment_list_hour', ['dto' => $rankingDto]) ?>
@@ -152,6 +170,8 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
         </footer>
 
     </article>
+
+    <?php viewComponent('ads/google-full') ?>
 
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
 

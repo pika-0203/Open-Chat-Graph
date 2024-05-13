@@ -127,7 +127,9 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
     </section>
 
-    <?php viewComponent('ads/google-full') ?>
+    <div class="padding-ads">
+      <?php viewComponent('ads/google-full') ?>
+    </div>
 
     <?php if (isset($_adminDto)) : ?>
       <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
@@ -202,33 +204,48 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </section>
     </section>
 
-    <?php viewComponent('ads/google-full') ?>
+    <div class="padding-ads">
+      <?php viewComponent('ads/google-full') ?>
+    </div>
 
     <?php if ($recommend[0]) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       </aside>
+      <div class="padding-ads">
+        <?php viewComponent('ads/google-full') ?>
+      </div>
     <?php endif ?>
     <?php if ($recommend[1]) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       </aside>
+      <div class="padding-ads">
+        <?php viewComponent('ads/google-full') ?>
+      </div>
     <?php endif ?>
     <?php if ($recommend[3]) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[3], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       </aside>
+      <div class="padding-ads">
+        <?php viewComponent('ads/google-full') ?>
+      </div>
     <?php endif ?>
     <?php if (isset($officialDto) && $officialDto && $officialDto2) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto : $officialDto2, 'id' => $oc['id']]) ?>
       </aside>
+      <div class="padding-ads">
+        <?php viewComponent('ads/google-full') ?>
+      </div>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto2 : $officialDto, 'id' => $oc['id']]) ?>
       </aside>
+      <div class="padding-ads">
+        <?php viewComponent('ads/google-full') ?>
+      </div>
     <?php endif ?>
-
-    <?php viewComponent('ads/google-full') ?>
 
     <section class="comment-section">
       <div style="display: flex; flex-direction: row; align-items: center; gap: 6px;">
@@ -246,15 +263,23 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <div id="comment-root"></div>
     </section>
 
-    <?php viewComponent('ads/google-full') ?>
+    <div class="padding-ads">
+      <?php viewComponent('ads/google-full') ?>
+    </div>
 
     <aside class="recommend-list-aside">
       <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
     </aside>
+    <div class="padding-ads">
+      <?php viewComponent('ads/google-full') ?>
+    </div>
 
     <aside class="recommend-list-aside">
       <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
     </aside>
+    <div class="padding-ads">
+      <?php viewComponent('ads/google-full') ?>
+    </div>
 
     <footer class="oc-page-footer">
       <aside class="open-btn2">
@@ -274,6 +299,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <?php viewComponent('footer_inner') ?>
     </footer>
   </article>
+  <?php viewComponent('ads/google-full') ?>
   <?php echo $_breadcrumbsShema ?>
   <script>
     ;

@@ -71,7 +71,9 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php endif ?>
         </article>
 
-        <?php viewComponent('ads/google-full') ?>
+        <div class="padding-ads">
+            <?php viewComponent('ads/google-full') ?>
+        </div>
 
         <?php if ($myList) : ?>
             <article class="mylist pad-side">
@@ -87,19 +89,44 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
         <?php if ($newComment) : ?>
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
+            <div class="padding-ads">
+                <?php viewComponent('ads/google-full') ?>
+            </div>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
-            <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
-            <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0]) ?>
-            <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0]) ?>
-            <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
-        <?php else : ?>
+            <div class="padding-ads">
+                <?php viewComponent('ads/google-full') ?>
+            </div> <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+            <div class="padding-ads">
+                <?php viewComponent('ads/google-full') ?>
+            </div> <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0]) ?>
+            <div class="padding-ads">
+                <?php viewComponent('ads/google-full') ?>
+            </div> <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0]) ?>
+            <div class="padding-ads">
+                <?php viewComponent('ads/google-full') ?>
+            </div> <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
+            <div class="padding-ads">
+                <?php viewComponent('ads/google-full') ?>
+            </div> <?php else : ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
-            <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
-            <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0]) ?>
-            <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0]) ?>
-            <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
-            <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
-        <?php endif ?>
+            <div class="padding-ads">
+                <?php viewComponent('ads/google-full') ?>
+            </div> <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+            <div class="padding-ads">
+                <?php viewComponent('ads/google-full') ?>
+            </div> <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0]) ?>
+            <div class="padding-ads">
+                <?php viewComponent('ads/google-full') ?>
+            </div> <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0]) ?>
+            <div class="padding-ads">
+                <?php viewComponent('ads/google-full') ?>
+            </div> <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
+            <div class="padding-ads">
+                <?php viewComponent('ads/google-full') ?>
+            </div> <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
+            <div class="padding-ads">
+                <?php viewComponent('ads/google-full') ?>
+            </div> <?php endif ?>
 
         <article class="top-ranking top-btns">
             <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs') ?>">
@@ -120,6 +147,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
     <div class="refresh-time" style="width: fit-content; margin: auto; padding-bottom: 0.5rem;">
         <div class="refresh-icon"></div><time style="font-size: 11px; color: #777; margin-left:3px" datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><?php echo $_updatedAt->format('Y/n/j G:i') ?></time>
     </div>
+    <?php viewComponent('ads/google-full') ?>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
     <?php echo $_meta->generateTopPageSchema() ?>
 </body>

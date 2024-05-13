@@ -13,6 +13,8 @@
     </a>
 </article>
 
+<?php viewComponent('ads/google-full') ?>
+
 <article class="top-ranking created-at">
     <header class=" openchat-list-title-area unset">
         <div class="openchat-list-date unset ranking-url">

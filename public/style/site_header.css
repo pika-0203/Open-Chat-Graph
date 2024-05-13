@@ -573,3 +573,7 @@ body::before {
     aspect-ratio: 2 / 1;
   }
 }
+
+.padding-ads {
+  padding: 1rem;
+}
