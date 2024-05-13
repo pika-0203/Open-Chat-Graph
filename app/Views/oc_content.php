@@ -29,6 +29,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
   <?php viewComponent('site_header') ?>
   <article class="unset openchat body">
 
+    <?php viewComponent('ads/google-full') ?>
+
     <!-- オープンチャット表示ヘッダー -->
     <section class="openchat-header unset">
       <div class="talkroom_banner_img_area">
@@ -125,6 +127,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
     </section>
 
+    <?php viewComponent('ads/google-full') ?>
+
     <?php if (isset($_adminDto)) : ?>
       <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
     <?php endif ?>
@@ -198,7 +202,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </section>
     </section>
 
-
+    <?php viewComponent('ads/google-full') ?>
 
     <?php if ($recommend[0]) : ?>
       <aside class="recommend-list-aside">
@@ -224,6 +228,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </aside>
     <?php endif ?>
 
+    <?php viewComponent('ads/google-full') ?>
+
     <section class="comment-section">
       <div style="display: flex; flex-direction: row; align-items: center; gap: 6px;">
         <img class="openchat-item-title-img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
@@ -239,6 +245,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </div>
       <div id="comment-root"></div>
     </section>
+
+    <?php viewComponent('ads/google-full') ?>
 
     <aside class="recommend-list-aside">
       <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>

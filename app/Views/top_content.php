@@ -31,6 +31,8 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             </a>
         </article>
 
+        <?php viewComponent('ads/google-full') ?>
+
         <article class="top-ranking">
             <?php if ($tags) : ?>
                 <div>
@@ -59,7 +61,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                             </li>
                         <?php endforeach ?>
 
-                        <?php if (count($tags['hour']) + count($tags['hour24']) > 31) : ?>
+                        <?php if (count($tags['hour']) + count($tags['hour24']) > 41) : ?>
                             <li id="open-btn-li">
                                 <button class="unset tag-btn open-btn" onclick="this.parentElement.parentElement.classList.toggle('open')"></button>
                             </li>
@@ -68,6 +70,8 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                 </div>
             <?php endif ?>
         </article>
+
+        <?php viewComponent('ads/google-full') ?>
 
         <?php if ($myList) : ?>
             <article class="mylist pad-side">

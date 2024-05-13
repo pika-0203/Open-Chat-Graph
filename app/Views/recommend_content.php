@@ -52,7 +52,8 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 </figure>
             <?php endif ?>
             <p class="recommend-header-desc">
-                「<?php echo $tag ?>」のいま人数が急増しているおすすめルームをご紹介！
+                「<?php echo $tag ?>」のおすすめオープンチャットをご紹介！
+                <br>ランキングの順位は、最近どのぐらい参加者が増えているかによって決まります。
             </p>
         </section>
 
@@ -108,6 +109,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                                     <span class="ranking-readMore" style="font-size: 11.5px;">「<?php echo $tag ?>」をすべて見る<span class="small" style="font-size: 11.5px;"><?php echo $_dto->tagRecordCounts[$_tagIndex] ?>件</span></span>
                                 </a>
                             <?php endif ?>
+                            <?php viewComponent('ads/google-full') ?>
                         </li>
                     <?php endforeach ?>
                 </ol>
