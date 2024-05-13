@@ -1,17 +1,12 @@
 <!-- @param array $openChatList -->
 <!-- @param bool $_now -->
-<style>
-  .adsbygoogle {
-    margin: 0 -1rem !important;
-  }
-</style>
 <ol class="openchat-item-list unset">
   <?php foreach ($openChatList as $key => $oc) : ?>
     <?php $timeFrame = $oc['end_datetime'] ? calculateTimeFrame($_now, $oc['end_datetime']) : calculateTimeFrame($_now, $oc['old_datetime']) ?>
     <li style="all: unset; display: block;">
 
       <?php if ($key && $key % 5 === 0) : ?>
-        <?php viewComponent('ads/google-responsive') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
       <?php endif ?>
 
       <div class="openchat-item unset" style="margin-right: 0;">

@@ -121,7 +121,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                     </li>
                     <li>
                         <div style="margin-left: -1.25rem;">
-                            <?php viewComponent('ads/google-responsive') ?>
+                            <?php viewComponent('ads/google-rectangle') ?>
                         </div>
                         <p class="recommend-desc">
                             「📊最終ランキング順位」はランキング順位の上位何％までを表示するかが選べます。<br>
@@ -165,7 +165,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 <p class="recommend-desc">
                     また、端末により検索結果が変わるという公式発表がありますが、それによって検索画面に非表示になるのは、例外と考えることができます。
                 </p>
-                <?php viewComponent('ads/google-responsive') ?>
+                <?php viewComponent('ads/google-rectangle') ?>
                 <p class="recommend-desc">
                     これらを踏まえて、ランキング掲載と検索機能はそれぞれ別々のロジックですが、可視性については一部共通する部分があると考えることができます。
                 </p>
@@ -178,7 +178,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
             </details>
         </aside>
 
-        <?php viewComponent('ads/google-responsive') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
 
         <form id="value-form" style="position: relative; margin-bottom: 12px; margin-top: 1rem;">
             <label for="pet-select0">💡掲載状況:</label>
@@ -211,7 +211,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 <button type="button" class="eazy-btn" style="padding: 8px 6px;" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=2&change=2&percent=100&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'">全表示</button>
             </div>
         </form>
-        <?php viewComponent('ads/google-responsive') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
         <!-- select要素ページネーション -->
         <?php if (isset($_select)) : ?>
             <nav class="page-select unset" style="flex-direction: column; padding: 1rem 0 0 0; margin: 0 0 12px 0;">
@@ -239,7 +239,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
             <?php viewComponent('pager_nav_ranking_ban', $_pagerNavArg) ?>
         <?php endif ?>
     </main>
-    <?php viewComponent('ads/google-responsive') ?>
+    <?php viewComponent('ads/google-rectangle') ?>
     <footer class="footer-elem-outer">
         <?php viewComponent('footer_inner') ?>
     </footer>
