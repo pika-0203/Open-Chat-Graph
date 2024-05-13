@@ -54,7 +54,7 @@ hr {
   display: flex;
   justify-content: space-evenly;
   gap: 8px;
-  padding: 1rem;
+  padding: 1rem 0;
 }
 
 .oc-desc-nav.no-ranking {
