@@ -297,7 +297,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <?php viewComponent('footer_inner') ?>
     </footer>
   </article>
-  <?php viewComponent('ads/google-full') ?>
   <?php echo $_breadcrumbsShema ?>
   <script>
     ;
