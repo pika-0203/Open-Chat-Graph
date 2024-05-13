@@ -293,13 +293,6 @@
   width: 100%;
 }
 
-@media screen and (min-width: 1000px) {
-  .top-btns {
-    border-top: 0;
-    padding-top: 0;
-  }
-}
-
 .openchat-item {
   display: block;
   max-width: 100%;

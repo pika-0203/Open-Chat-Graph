@@ -469,6 +469,10 @@ body::before {
 }
 
 @media screen and (min-width: 512px) {
+  .site_header {
+    justify-content: space-between;
+  }
+
   .super-icon {
     scale: 1;
     margin-top: 0px;
