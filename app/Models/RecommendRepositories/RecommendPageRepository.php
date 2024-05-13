@@ -140,7 +140,7 @@ class RecommendPageRepository implements RecommendRankingRepositoryInterface
                         LEFT JOIN statistics_ranking_hour AS rh2 ON oc.id = rh2.open_chat_id
                     WHERE
                         oc.id NOT IN ({$ids})
-                        AND (rh.open_chat_id IS NOT NULL OR rh2.open_chat_id IS NOT NULL)
+                        AND ((rh.open_chat_id IS NOT NULL OR rh2.open_chat_id IS NOT NULL) OR oc.member >= 15)
                     ORDER BY
                         oc.member DESC
                     LIMIT
