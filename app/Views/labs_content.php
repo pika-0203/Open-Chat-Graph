@@ -9,7 +9,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
 <body>
     <div class="body">
         <?php viewComponent('site_header') ?>
-        <?php viewComponent('ads/google-full') ?>
+        <?php viewComponent('ads/google-responsive') ?>
         <main>
             <article class="terms">
                 <h1 style="letter-spacing: 0px;">

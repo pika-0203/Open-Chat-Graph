@@ -240,7 +240,7 @@ viewComponent('head', compact('_css', '_meta')) ?>
         <?php endif ?>
     </main>
     <div class="padding-ads">
-        <?php viewComponent('ads/google-full') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
     </div>
     <footer class="footer-elem-outer">
         <?php viewComponent('footer_inner') ?>

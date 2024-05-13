@@ -28,7 +28,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
   <!-- 固定ヘッダー -->
   <?php viewComponent('site_header') ?>
   <article class="unset openchat body">
-    <?php viewComponent('ads/google-full') ?>
+    <?php viewComponent('ads/google-rectangle') ?>
 
     <!-- オープンチャット表示ヘッダー -->
     <section class="openchat-header unset">
@@ -127,7 +127,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     </section>
 
     <div class="padding-ads">
-      <?php viewComponent('ads/google-full') ?>
+      <?php viewComponent('ads/google-rectangle') ?>
     </div>
 
     <?php if (isset($_adminDto)) : ?>
@@ -204,7 +204,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     </section>
 
     <div class="padding-ads">
-      <?php viewComponent('ads/google-full') ?>
+      <?php viewComponent('ads/google-rectangle') ?>
     </div>
 
     <?php if ($recommend[0]) : ?>
@@ -212,7 +212,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       </aside>
       <div class="padding-ads">
-        <?php viewComponent('ads/google-full') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
       </div>
     <?php endif ?>
     <?php if ($recommend[1]) : ?>
@@ -220,7 +220,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       </aside>
       <div class="padding-ads">
-        <?php viewComponent('ads/google-full') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
       </div>
     <?php endif ?>
     <?php if ($recommend[3]) : ?>
@@ -228,7 +228,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[3], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       </aside>
       <div class="padding-ads">
-        <?php viewComponent('ads/google-full') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
       </div>
     <?php endif ?>
     <?php if (isset($officialDto) && $officialDto && $officialDto2) : ?>
@@ -236,13 +236,13 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto : $officialDto2, 'id' => $oc['id']]) ?>
       </aside>
       <div class="padding-ads">
-        <?php viewComponent('ads/google-full') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
       </div>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto2 : $officialDto, 'id' => $oc['id']]) ?>
       </aside>
       <div class="padding-ads">
-        <?php viewComponent('ads/google-full') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
       </div>
     <?php endif ?>
 
@@ -263,21 +263,21 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     </section>
 
     <div class="padding-ads">
-      <?php viewComponent('ads/google-full') ?>
+      <?php viewComponent('ads/google-rectangle') ?>
     </div>
 
     <aside class="recommend-list-aside">
       <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
     </aside>
     <div class="padding-ads">
-      <?php viewComponent('ads/google-full') ?>
+      <?php viewComponent('ads/google-rectangle') ?>
     </div>
 
     <aside class="recommend-list-aside">
       <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
     </aside>
     <div class="padding-ads">
-      <?php viewComponent('ads/google-full') ?>
+      <?php viewComponent('ads/google-rectangle') ?>
     </div>
 
     <footer class="oc-page-footer">

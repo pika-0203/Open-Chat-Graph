@@ -18,7 +18,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
     <article class="ranking-page-main pad-side-top-ranking body">
-        <?php viewComponent('ads/google-full') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
 
         <header class="recommend-header">
             <?php if ($count) : ?>
@@ -59,7 +59,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
         </aside>
 
         <div class="padding-ads">
-            <?php viewComponent('ads/google-full') ?>
+            <?php viewComponent('ads/google-rectangle') ?>
         </div>
 
         <section class="recommend-ranking-section">
@@ -117,7 +117,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                         </li>
                         <li>
                             <div class="padding-ads">
-                                <?php viewComponent('ads/google-full') ?>
+                                <?php viewComponent('ads/google-rectangle') ?>
                             </div>
                         </li>
                     <?php endforeach ?>
@@ -146,7 +146,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
         </aside>
 
         <div class="padding-ads">
-            <?php viewComponent('ads/google-full') ?>
+            <?php viewComponent('ads/google-rectangle') ?>
         </div>
 
         <aside class="top-ranking-list-aside">
@@ -160,7 +160,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
         </aside>
 
         <div class="padding-ads">
-            <?php viewComponent('ads/google-full') ?>
+            <?php viewComponent('ads/google-rectangle') ?>
         </div>
 
         <footer class="footer-elem-outer">

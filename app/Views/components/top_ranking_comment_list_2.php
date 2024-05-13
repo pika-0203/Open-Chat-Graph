@@ -14,7 +14,7 @@
 </article>
 
 <div class="padding-ads">
-    <?php viewComponent('ads/google-full') ?>
+    <?php viewComponent('ads/google-rectangle') ?>
 </div>
 
 <article class="top-ranking created-at">
