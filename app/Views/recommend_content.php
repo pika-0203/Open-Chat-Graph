@@ -18,6 +18,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
     <article class="ranking-page-main pad-side-top-ranking body">
+        <?php viewComponent('ads/google-full') ?>
 
         <header class="recommend-header">
             <?php if ($count) : ?>
@@ -34,9 +35,19 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </div>
         </header>
 
-        <div class="padding-ads">
-            <?php viewComponent('ads/google-full') ?>
-        </div>
+        <section style="all: unset; display: block;">
+            <?php if (isset($recommend)) : ?>
+                <figure class="talkroom_banner_img_area">
+                    <?php $oc = $recommend->getPreviewList(1)[0] ?>
+                    <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
+                    <figcaption>「<?php echo $oc['name'] ?>」のメイン画像</figcaption>
+                </figure>
+            <?php endif ?>
+            <p class="recommend-header-desc">
+                「<?php echo $tag ?>」のおすすめオープンチャットをご紹介！
+                <br>ランキングの順位は、参加人数がどのぐらい上昇しているかによって決まります。
+            </p>
+        </section>
 
         <aside class="list-aside recommend-ranking-bottom">
             <?php if (isset($tags) && $tags) : ?>
@@ -47,19 +58,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </a>
         </aside>
 
-        <section style="all: unset; display: block;">
-            <?php if (isset($recommend)) : ?>
-                <figure class="talkroom_banner_img_area">
-                    <?php $oc = $recommend->getPreviewList(1)[0] ?>
-                    <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
-                    <figcaption><?php echo $oc['name'] ?></figcaption>
-                </figure>
-            <?php endif ?>
-            <p class="recommend-header-desc">
-                「<?php echo $tag ?>」のおすすめオープンチャットをご紹介！
-                <br>ランキングの順位は、最近どのぐらい参加者が増えているかによって決まります。
-            </p>
-        </section>
+        <div class="padding-ads">
+            <?php viewComponent('ads/google-full') ?>
+        </div>
 
         <section class="recommend-ranking-section">
             <?php if (isset($recommend)) : ?>

@@ -204,10 +204,6 @@ hr {
   user-select: none;
 }
 
-.talkroom_description_box.close br {
-  display: none;
-}
-
 .talkroom_description_box .close-btn {
   margin-left: auto;
   display: block;
@@ -225,10 +221,10 @@ hr {
 
 .talkroom_description_box.close .talkroom_description {
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-align: unset;
+  text-align: center;
 }
 
 .talkroom_description_box.close.hidden {
@@ -383,7 +379,7 @@ hr {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   gap: 6px;
 }
 

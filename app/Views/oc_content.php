@@ -28,6 +28,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
   <!-- 固定ヘッダー -->
   <?php viewComponent('site_header') ?>
   <article class="unset openchat body">
+    <?php viewComponent('ads/google-full') ?>
 
     <!-- オープンチャット表示ヘッダー -->
     <section class="openchat-header unset">
@@ -125,7 +126,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
     </section>
 
-    <div class="padding-ads" style="padding: 0 1rem;">
+    <div class="padding-ads">
       <?php viewComponent('ads/google-full') ?>
     </div>
 

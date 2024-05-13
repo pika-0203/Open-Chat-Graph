@@ -24,13 +24,15 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 <body>
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main class="pad-side-top-ranking pad-side-top-list" style="max-width: 600px; padding: 0;">
-
-        <article class="top-ranking top-btns">
-            <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
-                <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
-            </a>
-        </article>
-
+        
+    <article class="top-ranking top-btns">
+        <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
+            <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
+        </a>
+    </article>
+    
+    <?php viewComponent('ads/google-full') ?>
+    
         <article class="top-ranking">
             <?php if ($tags) : ?>
                 <div>
