@@ -32,18 +32,18 @@ body::before {
 }
 
 .pad-side {
-  padding-left: 1rem;
-  padding-right: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .pad-side-top-ranking .top-ranking {
-  padding-left: 1rem;
-  padding-right: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .pad-side-top-list .top-list {
-  padding-left: 1rem;
-  padding-right: 2.5rem;
+  margin-left: 1rem;
+  margin-right: 2.5rem;
 }
 
 /* ヘッダー */
@@ -560,6 +560,12 @@ body::before {
 
 .rectangle-ads {
   aspect-ratio: 1.2;
+}
+
+.openchat-item-list .google-auto-placed {
+  margin: 0 -1rem;
+  width: 100vw !important;
+  max-width: 600px;
 }
 
 @media screen and (min-width: 512px) {
