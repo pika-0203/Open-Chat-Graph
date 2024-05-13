@@ -46,7 +46,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php endif ?>
             <p class="recommend-header-desc">
                 「<?php echo $tag ?>」のおすすめオープンチャットをご紹介！
-                <br>ランキングの順位は、参加人数がどのぐらい上昇しているかによって決まります。
+            </p>
+            <p class="recommend-header-desc">
+                ランキングの順位は、参加人数がどれぐらい上昇しているかによって決まります。
             </p>
         </section>
 
@@ -116,11 +118,13 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                                 </a>
                             <?php endif ?>
                         </li>
-                        <li>
-                            <hr class="hr-bottom">
-                            <?php viewComponent('ads/google-responsive') ?>
-                            <hr class="hr-top">
-                        </li>
+                        <?php if ($listsLastKey !== $key) : ?>
+                            <li>
+                                <hr class="hr-bottom">
+                                <?php viewComponent('ads/google-responsive') ?>
+                                <hr class="hr-top">
+                            </li>
+                        <?php endif ?>
                     <?php endforeach ?>
                 </ol>
             <?php else : ?>
@@ -131,6 +135,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 </section>
             <?php endif ?>
 
+            <hr class="hr-top" style="padding: 0;">
             <aside class="list-aside recommend-ranking-bottom">
                 <?php if (isset($tags) && $tags) : ?>
                     <?php viewComponent('recommend_content_tags', compact('tags')) ?>
@@ -141,6 +146,10 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </aside>
 
         </section>
+
+        <hr class="hr-bottom">
+        <?php viewComponent('ads/google-responsive') ?>
+        <hr class="hr-top">
 
         <aside class="top-ranking-list-aside">
             <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $rankingDto]) ?>

@@ -264,6 +264,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <div id="comment-root"></div>
     </section>
 
+    <hr class="hr-bottom">
     <?php viewComponent('ads/google-responsive') ?>
     <hr class="hr-top">
 
