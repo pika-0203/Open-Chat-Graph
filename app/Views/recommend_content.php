@@ -17,7 +17,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
 <body>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
-    <article class="ranking-page-main pad-side-top-ranking body">
+    <article class="ranking-page-main pad-side-top-ranking body" style="overflow: hidden;">
         <?php viewComponent('ads/google-rectangle') ?>
 
         <header class="recommend-header">

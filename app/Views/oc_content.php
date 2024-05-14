@@ -27,7 +27,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
   </script>
   <!-- 固定ヘッダー -->
   <?php viewComponent('site_header') ?>
-  <article class="unset openchat body">
+  <article class="unset openchat body" style="overflow: hidden;">
     <?php viewComponent('ads/google-rectangle') ?>
 
 

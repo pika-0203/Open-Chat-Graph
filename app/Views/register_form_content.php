@@ -12,7 +12,7 @@
         }
     </style>
     <?php viewComponent('site_header') ?>
-    <main style="padding: 0 1rem;">
+    <main style="padding: 0 1rem;" style="overflow: hidden;">
         <h2>オプチャグラフにオープンチャットを手動で登録する</h2>
         <?php viewComponent('ads/google-responsive') ?>
         <p>

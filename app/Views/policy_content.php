@@ -13,7 +13,7 @@
     </script>
     <?php viewComponent('site_header') ?>
     <?php viewComponent('ads/google-rectangle') ?>
-    <main>
+    <main style="overflow: hidden;">
         <article class="terms">
             <h1 style="letter-spacing: 0px;">オプチャグラフについて</h1>
             <p>オプチャグラフはユーザーがオープンチャットを見つけて、成長傾向をグラフやランキングで比較できるWEBサイトです。</p>

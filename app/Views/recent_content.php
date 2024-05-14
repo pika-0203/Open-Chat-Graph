@@ -29,7 +29,7 @@
     </style>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
-    <main class="ranking-page-main" style="margin-top: 8px; padding-top: 0;">
+    <main class="ranking-page-main" style="margin-top: 8px; padding-top: 0; overflow: hidden;">
         <article>
             <header class="openchat-list-title-area unset">
                 <div style="flex-direction: column;">

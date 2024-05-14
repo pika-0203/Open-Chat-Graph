@@ -6,7 +6,7 @@
     <?php viewComponent('site_header') ?>
     <main>
         <article class="terms">
-            <h1 style="letter-spacing: 0px;">プライバシーポリシー</h1>
+            <h1 style="letter-spacing: 0px; overflow: hidden;">プライバシーポリシー</h1>
             <p></p>
             <h2>個人情報の利用目的</h2>
             <p>当サイトでは、メールでのお問い合わせの際に、名前（ニックネーム）、連絡先等の個人情報を送信いただく場合がございます。</p>

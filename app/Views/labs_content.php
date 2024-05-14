@@ -10,7 +10,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
     <div class="body">
         <?php viewComponent('site_header') ?>
         <?php viewComponent('ads/google-responsive') ?>
-        <main>
+        <main style="overflow: hidden;">
             <article class="terms">
                 <h1 style="letter-spacing: 0px;">
                     <svg style="color: #111; fill: currentColor; display: inline-block; margin-right: 4px; margin-bottom: -4px; margin-left: -12px;" focusable="false" height="24px" viewBox="0 -960 960 960" width="24px">
