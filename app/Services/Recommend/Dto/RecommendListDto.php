@@ -48,26 +48,24 @@ class RecommendListDto
         shuffle($day);
         $length = $this->getSliceLength(count($hour) + count($day));
         if (!$length) {
-            $result = array_merge($hour, $day);
-            shuffle($result);
-            return $result;
+            return array_merge($hour, $day);
         };
 
         $week = array_slice($this->week, 0, $length);
         shuffle($week);
         $length = $this->getSliceLength(count($hour) + count($day) + count($week));
         if (!$length) {
-            $result = array_merge($hour, $day, $week);
+            $result = array_merge($day, $week);
             shuffle($result);
-            return $result;
+            return array_merge($hour, $result);
         };
 
         $member = array_slice($this->member, 0, $length);
         shuffle($member);
-        
-        $result = array_merge($hour, $day, $week, $member);
+
+        $result = array_merge($day, $week);
         shuffle($result);
-        return $result;
+        return array_merge($hour, $result, $member);
     }
 
     private function getSliceLength(int $count)
