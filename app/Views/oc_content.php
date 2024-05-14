@@ -40,8 +40,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
       <div class="openchat-header-right">
         <a title="<?php echo $oc['name'] ?>" rel="external" target="_blank" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] . AppConfig::LINE_OPEN_URL_SUFFIX ?>" class="h1-link unset">
+          <div class="link-mark"><span class="link-title"><span aria-hidden="true" style="font-size: 10px; margin-right:2px;"></span>LINEオープンチャット</span></div>
           <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></h1>
-          <div class="link-mark"><span class="link-title"><span aria-hidden="true" style="font-size: 10px; margin-right:2px;">🔗</span>LINEオープンチャット公式サイト</span></div>
         </a>
 
         <div class="talkroom_number_of_members">
@@ -49,7 +49,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </div>
 
         <?php if (isset($_hourlyRange)) : ?>
-          <div class="talkroom_number_of_stats" style="line-height: 135%;">
+          <div class="talkroom_number_of_stats" style="line-height: 135%; margin-top: 4px;">
             <div class="number-box bold">
               <span aria-hidden="true" style="margin-right: 1px; font-size: 9px; user-select: none;">🔥</span>
               <span style="margin-right: 4px;" class="openchat-itme-stats-title"><?php echo $_hourlyRange ?></span>
@@ -62,59 +62,75 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
         <div class="talkroom_number_of_stats">
 
-          <?php if (isset($oc['rh24_diff_member'])) : ?>
-            <?php if ($oc['rh24_diff_member'] >= AppConfig::MIN_MEMBER_DIFF_H24) : ?>
-              <div class="number-box bold" style="margin-right: 6px;">
-                <span aria-hidden="true" style="margin-right: 1px; font-size: 9px; user-select: none;">🚀</span>
-              <?php else : ?>
-                <div class="number-box" style="margin-right: 6px;">
-                <?php endif ?>
-                <span class="openchat-itme-stats-title">24時間</span>
-                <?php if (($oc['rh24_diff_member'] ?? 0) !== 0) : ?>
-                  <div>
-                    <span class="openchat-item-stats"><?php echo signedNumF($oc['rh24_diff_member']) ?>人</span><span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['rh24_percent_increase'] * 10) / 10) ?>%)</span>
-                  </div>
-                <?php elseif ($oc['rh24_diff_member'] === 0) : ?>
-                  <span class="zero-stats">±0</span>
-                <?php endif ?>
-                </div>
-              <?php endif ?>
-
-              <?php if (isset($oc['diff_member2'])) : ?>
-                <div class="number-box weekly">
-                  <?php if (isset($oc['diff_member2']) && $oc['diff_member2'] !== 0) : ?>
-                    <span class="openchat-itme-stats-title">1週間</span>
-                    <div>
-                      <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?>人</span><span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
-                    </div>
-                  <?php elseif (isset($oc['diff_member2']) && $oc['diff_member2'] === 0) : ?>
-                    <span class="openchat-itme-stats-title">1週間</span>
-                    <span class="zero-stats">±0</span>
-                  <?php endif ?>
-                </div>
-              <?php endif ?>
-
+          <?php if (isset($oc['rh24_diff_member']) && $oc['rh24_diff_member'] >= AppConfig::MIN_MEMBER_DIFF_H24) : ?>
+            <div class="number-box bold" style="margin-right: 6px;">
+              <span aria-hidden="true" style="margin-right: 1px; font-size: 9px; user-select: none;">🚀</span>
+              <span class="openchat-itme-stats-title">24時間</span>
+              <div>
+                <span class="openchat-item-stats"><?php echo signedNumF($oc['rh24_diff_member']) ?>人</span><span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['rh24_percent_increase'] * 10) / 10) ?>%)</span>
               </div>
-              <?php if ($oc['url']) : ?>
-                <section class="open-btn pc-btn">
-                  <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
-                    <?php if ($oc['join_method_type'] !== 0) : ?>
-                      <svg style="height: 13px; fill: #fff; margin-right: 6px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.4 489.4" xml:space="preserve">
-                        <path d="M99 147v51.1h-3.4c-21.4 0-38.8 17.4-38.8 38.8v213.7c0 21.4 17.4 38.8 38.8 38.8h298.2c21.4 0 38.8-17.4 38.8-38.8V236.8c0-21.4-17.4-38.8-38.8-38.8h-1v-51.1C392.8 65.9 326.9 0 245.9 0 164.9.1 99 66 99 147m168.7 206.2c-3 2.2-3.8 4.3-3.8 7.8.1 15.7.1 31.3.1 47 .3 6.5-3 12.9-8.8 15.8-13.7 7-27.4-2.8-27.4-15.8v-.1c0-15.7 0-31.4.1-47.1 0-3.2-.7-5.3-3.5-7.4-14.2-10.5-18.9-28.4-11.8-44.1 6.9-15.3 23.8-24.3 39.7-21.1 17.7 3.6 30 17.8 30.2 35.5 0 12.3-4.9 22.3-14.8 29.5M163.3 147c0-45.6 37.1-82.6 82.6-82.6 45.6 0 82.6 37.1 82.6 82.6v51.1H163.3z" />
-                      </svg>
-                    <?php endif ?>
-                    <span class="text">LINEで開く</span>
-                    <?php if ($oc['join_method_type'] === 1) : ?>
-                      <span style="font-size: 12px; margin-left: 4px; font-weight: normal; line-height: 2;" class="text">承認制</span>
-                    <?php endif ?>
-                    <?php if ($oc['join_method_type'] === 2) : ?>
-                      <span style="font-size: 12px; margin-left: 4px; font-weight: normal; line-height: 2;" class="text">参加コード入力制</span>
-                    <?php endif ?>
-                  </a>
-                </section>
+            </div>
+          <?php elseif (isset($oc['rh24_diff_member'])) : ?>
+            <div class="number-box" style="margin-right: 6px;">
+              <span class="openchat-itme-stats-title">24時間</span>
+              <?php if (($oc['rh24_diff_member'] ?? 0) !== 0) : ?>
+                <div>
+                  <span class="openchat-item-stats"><?php echo signedNumF($oc['rh24_diff_member']) ?>人</span><span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['rh24_percent_increase'] * 10) / 10) ?>%)</span>
+                </div>
+              <?php elseif ($oc['rh24_diff_member'] === 0) : ?>
+                <span class="zero-stats">±0</span>
               <?php endif ?>
+            </div>
+          <?php endif ?>
+
+          <?php if (isset($oc['diff_member2']) && $oc['diff_member2'] >= AppConfig::MIN_MEMBER_DIFF_H24) : ?>
+            <div class="number-box bold" style="margin-right: 6px;">
+              <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium show-north css-162gv95" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NorthIcon">
+                <path d="m5 9 1.41 1.41L11 5.83V22h2V5.83l4.59 4.59L19 9l-7-7-7 7z"></path>
+              </svg>
+              <span class="openchat-itme-stats-title">1週間</span>
+              <div>
+                <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?>人</span><span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
+              </div>
+            </div>
+          <?php elseif (isset($oc['diff_member2'])) : ?>
+            <div class="number-box" style="margin-right: 6px;">
+              <span class="openchat-itme-stats-title">1週間</span>
+              <?php if (($oc['diff_member2'] ?? 0) !== 0) : ?>
+                <div>
+                  <span class="openchat-item-stats"><?php echo signedNumF($oc['diff_member2']) ?>人</span><span class="openchat-item-stats percent">(<?php echo signedNum(signedCeil($oc['percent_increase2'] * 10) / 10) ?>%)</span>
+                </div>
+              <?php elseif ($oc['diff_member2'] === 0) : ?>
+                <span class="zero-stats">±0</span>
+              <?php endif ?>
+            </div>
+          <?php endif ?>
+
         </div>
+
+        <?php if ($oc['url']) : ?>
+          <section class="open-btn pc-btn">
+            <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
+              <?php if ($oc['join_method_type'] !== 0) : ?>
+                <svg style="height: 13px; fill: #fff; margin-right: 6px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.4 489.4" xml:space="preserve">
+                  <path d="M99 147v51.1h-3.4c-21.4 0-38.8 17.4-38.8 38.8v213.7c0 21.4 17.4 38.8 38.8 38.8h298.2c21.4 0 38.8-17.4 38.8-38.8V236.8c0-21.4-17.4-38.8-38.8-38.8h-1v-51.1C392.8 65.9 326.9 0 245.9 0 164.9.1 99 66 99 147m168.7 206.2c-3 2.2-3.8 4.3-3.8 7.8.1 15.7.1 31.3.1 47 .3 6.5-3 12.9-8.8 15.8-13.7 7-27.4-2.8-27.4-15.8v-.1c0-15.7 0-31.4.1-47.1 0-3.2-.7-5.3-3.5-7.4-14.2-10.5-18.9-28.4-11.8-44.1 6.9-15.3 23.8-24.3 39.7-21.1 17.7 3.6 30 17.8 30.2 35.5 0 12.3-4.9 22.3-14.8 29.5M163.3 147c0-45.6 37.1-82.6 82.6-82.6 45.6 0 82.6 37.1 82.6 82.6v51.1H163.3z" />
+                </svg>
+              <?php endif ?>
+              <span class="text">LINEで参加</span>
+              <?php if ($oc['join_method_type'] === 1) : ?>
+                <span style="font-size: 12px; margin-left: 4px; font-weight: normal; line-height: 2;" class="text">承認制</span>
+              <?php endif ?>
+              <?php if ($oc['join_method_type'] === 2) : ?>
+                <span style="font-size: 12px; margin-left: 4px; font-weight: normal; line-height: 2;" class="text">参加コード入力制</span>
+              <?php endif ?>
+            </a>
+          </section>
+        <?php endif ?>
+
+      </div>
+
     </section>
+
     <hr class="hr-bottom">
 
     <div class="talkroom_description_box close" id="talkroom_description_box" style="margin: 0 1rem 1rem 1rem;">
@@ -131,7 +147,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     </div>
 
     <hr class="hr-bottom">
-
     <?php viewComponent('ads/google-responsive') ?>
 
     <?php if (isset($_adminDto)) : ?>
@@ -196,7 +211,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
                 <path d="M99 147v51.1h-3.4c-21.4 0-38.8 17.4-38.8 38.8v213.7c0 21.4 17.4 38.8 38.8 38.8h298.2c21.4 0 38.8-17.4 38.8-38.8V236.8c0-21.4-17.4-38.8-38.8-38.8h-1v-51.1C392.8 65.9 326.9 0 245.9 0 164.9.1 99 66 99 147m168.7 206.2c-3 2.2-3.8 4.3-3.8 7.8.1 15.7.1 31.3.1 47 .3 6.5-3 12.9-8.8 15.8-13.7 7-27.4-2.8-27.4-15.8v-.1c0-15.7 0-31.4.1-47.1 0-3.2-.7-5.3-3.5-7.4-14.2-10.5-18.9-28.4-11.8-44.1 6.9-15.3 23.8-24.3 39.7-21.1 17.7 3.6 30 17.8 30.2 35.5 0 12.3-4.9 22.3-14.8 29.5M163.3 147c0-45.6 37.1-82.6 82.6-82.6 45.6 0 82.6 37.1 82.6 82.6v51.1H163.3z" />
               </svg>
             <?php endif ?>
-            <span class="text">LINEで開く</span>
+            <span class="text">LINEで参加</span>
             <?php if ($oc['join_method_type'] === 1) : ?>
               <span style="font-size: 12px; margin-left: 4px; font-weight: normal;" class="text">承認制</span>
             <?php endif ?>

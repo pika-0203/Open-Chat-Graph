@@ -130,7 +130,8 @@ hr {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-top: 1px;
+  margin-top: -4px;
+  margin-bottom: 2px;
   color: #978170;
 }
 
@@ -140,15 +141,15 @@ hr {
 
 /* メンバー数 */
 .talkroom_number_of_members {
-  margin-top: 0px;
+  margin-top: 2px;
   color: #aaa;
 }
 
 .number_of_members {
   display: block;
-  color: #777;
-  font-weight: 500;
-  font-size: 13px;
+  color: #111;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .openchat-itme-stats-title {
@@ -277,12 +278,12 @@ hr {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  font-size: 11px;
+  font-size: 13px;
   color: #777;
 }
 
 .number-box .openchat-itme-stats-title {
-  font-size: 11px;
+  font-size: 13px;
   word-break: keep-all;
   text-wrap: nowrap;
   color: #777;

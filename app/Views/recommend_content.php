@@ -47,7 +47,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <p class="recommend-header-desc">
                 「<?php echo $tag ?>」のおすすめオープンチャットランキングを発表！
             </p>
-            <p class="recommend-header-desc">
+            <p class="recommend-header-desc" style="font-size: 11px; color: #777;">
                 ランキングの順位は、参加人数がどれぐらい上昇しているかによって決まります。
             </p>
         </section>
