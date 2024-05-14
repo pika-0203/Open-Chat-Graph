@@ -58,7 +58,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
         </aside>
 
         <hr class="hr-bottom">
-        <?php viewComponent('ads/google-responsive') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
 
         <section class="recommend-ranking-section">
             <?php if (isset($recommend)) : ?>

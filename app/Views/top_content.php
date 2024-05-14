@@ -72,7 +72,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         </article>
         <hr class="hr-bottom">
 
-        <?php viewComponent('ads/google-responsive') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
 
         <?php if ($myList) : ?>
             <article class="mylist pad-side">
