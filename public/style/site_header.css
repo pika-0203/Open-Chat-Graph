@@ -578,9 +578,9 @@ body::before {
   padding: 10px 1rem;
 }
 
-ins.adsbygoogle[data-ad-status="unfilled"] {
+/* ins.adsbygoogle[data-ad-status="unfilled"] {
     display: none !important;
-}
+} */
 
 ins.adsbygoogle[data-anchor-status='dismissed'] {
   display: none !important;
@@ -591,7 +591,8 @@ ins.adsbygoogle[data-anchor-status='dismissed'] {
   display: block;
   border-bottom: 1px solid #efefef;
   margin: 0 auto;
-  padding: 8px 0;
+  margin-bottom: -4px;
+  padding: 4.5px 0;
   width: calc(100% - 2rem);
 }
 
@@ -600,6 +601,7 @@ ins.adsbygoogle[data-anchor-status='dismissed'] {
   display: block;
   border-top: 1px solid #efefef;
   margin: 0 auto;
-  padding: 8px 0;
+  margin-top: -4px;
+  padding: 4.5px 0;
   width: calc(100% - 2rem);
 }

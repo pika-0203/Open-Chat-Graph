@@ -25,16 +25,14 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main class="pad-side-top-ranking pad-side-top-list" style="max-width: 600px; padding: 0;">
 
-        <article class="top-ranking top-btns">
+        <article class="top-ranking top-btns" style="padding-top: 0;">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
             </a>
         </article>
-        <hr class="hr-bottom">
 
         <?php viewComponent('ads/google-rectangle') ?>
 
-        <hr class="hr-top">
         <article class="top-ranking">
             <?php if ($tags) : ?>
                 <div>
@@ -75,7 +73,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         <hr class="hr-bottom">
 
         <?php viewComponent('ads/google-responsive') ?>
-        <hr class="hr-top">
 
         <?php if ($myList) : ?>
             <article class="mylist pad-side">
@@ -93,45 +90,35 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive') ?>
-            <hr class="hr-top">
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive') ?>
-            <hr class="hr-top">
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive') ?>
-            <hr class="hr-top">
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0]) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive') ?>
-            <hr class="hr-top">
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0]) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive') ?>
-            <hr class="hr-top">
             <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
         <?php else : ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive') ?>
-            <hr class="hr-top">
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive') ?>
-            <hr class="hr-top">
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0]) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive') ?>
-            <hr class="hr-top">
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0]) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive') ?>
-            <hr class="hr-top">
             <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive') ?>
-            <hr class="hr-top">
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
         <?php endif ?>
 

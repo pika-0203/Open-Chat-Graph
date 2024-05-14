@@ -32,7 +32,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
 
     <!-- オープンチャット表示ヘッダー -->
-    <hr class="hr-top">
     <section class="openchat-header unset">
       <div class="talkroom_banner_img_area">
         <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
@@ -131,7 +130,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
     </section>
 
-    <hr class="hr-bottom">
+    <hr class="hr-bottom" style="padding: 8px 0; margin-top: 0;">
 
     <div class="talkroom_description_box close" id="talkroom_description_box" style="margin: 0 1rem 1rem 1rem;">
       <p class="talkroom_description" id="talkroom-description">
@@ -146,9 +145,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </div>
     </div>
 
-    <hr class="hr-bottom">
+    <hr class="hr-bottom" style="padding: 8px 0; margin-top: 0;">
     <?php viewComponent('ads/google-responsive') ?>
-    <hr class="hr-top">
 
     <?php if ($recommend[0]) : ?>
       <aside class="recommend-list-aside">
@@ -238,7 +236,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     <hr class="hr-bottom">
 
     <?php viewComponent('ads/google-responsive') ?>
-    <hr class="hr-top">
 
     <?php if ($recommend[1]) : ?>
       <aside class="recommend-list-aside">
@@ -246,7 +243,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </aside>
       <hr class="hr-bottom">
       <?php viewComponent('ads/google-responsive') ?>
-      <hr class="hr-top">
     <?php endif ?>
     <?php if ($recommend[3]) : ?>
       <aside class="recommend-list-aside">
@@ -254,7 +250,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </aside>
       <hr class="hr-bottom">
       <?php viewComponent('ads/google-responsive') ?>
-      <hr class="hr-top">
     <?php endif ?>
     <?php if (isset($officialDto) && $officialDto && $officialDto2) : ?>
       <aside class="recommend-list-aside">
@@ -262,13 +257,11 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </aside>
       <hr class="hr-bottom">
       <?php viewComponent('ads/google-responsive') ?>
-      <hr class="hr-top">
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto2 : $officialDto, 'id' => $oc['id']]) ?>
       </aside>
       <hr class="hr-bottom">
       <?php viewComponent('ads/google-responsive') ?>
-      <hr class="hr-top">
     <?php endif ?>
 
     <section class="comment-section">
@@ -287,16 +280,13 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <div id="comment-root"></div>
     </section>
 
-    <hr class="hr-bottom">
     <?php viewComponent('ads/google-responsive') ?>
-    <hr class="hr-top">
 
     <aside class="recommend-list-aside">
       <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
     </aside>
     <hr class="hr-bottom">
     <?php viewComponent('ads/google-responsive') ?>
-    <hr class="hr-top">
 
     <aside class="recommend-list-aside">
       <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>

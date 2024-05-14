@@ -19,7 +19,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <?php viewComponent('site_header') ?>
     <article class="ranking-page-main pad-side-top-ranking body">
         <?php viewComponent('ads/google-rectangle') ?>
-        <hr class="hr-top">
 
         <header class="recommend-header">
             <?php if ($count) : ?>
