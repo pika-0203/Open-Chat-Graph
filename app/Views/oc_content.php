@@ -148,9 +148,9 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     <hr class="hr-bottom" style="padding: 8px 0; margin-top: 0;">
     <?php viewComponent('ads/google-rectangle') ?>
 
-    <?php if ($recommend[0]) : ?>
+    <?php if ($recommend[0] || $recommend[3]) : ?>
       <aside class="recommend-list-aside">
-        <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+        <?php viewComponent('recommend_list2', ['recommend' => $recommend[0] ?: $recommend[3], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       </aside>
       <hr class="hr-bottom">
       <?php viewComponent('ads/google-rectangle') ?>
@@ -244,7 +244,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <hr class="hr-bottom">
       <?php viewComponent('ads/google-responsive') ?>
     <?php endif ?>
-    <?php if ($recommend[3]) : ?>
+    <?php if ($recommend[0] && $recommend[3]) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[3], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       </aside>
