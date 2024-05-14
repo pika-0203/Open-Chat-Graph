@@ -578,9 +578,9 @@ body::before {
   padding: 10px 1rem;
 }
 
-/* ins.adsbygoogle[data-ad-status="unfilled"] {
+ins.adsbygoogle[data-ad-status="unfilled"] {
     display: none !important;
-} */
+}
 
 ins.adsbygoogle[data-anchor-status='dismissed'] {
   display: none !important;
