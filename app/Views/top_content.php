@@ -23,7 +23,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
 
 <body>
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
-    <main class="pad-side-top-ranking pad-side-top-list" style="max-width: 600px; padding: 0; overflow: hidden;">
+    <div class="pad-side-top-ranking pad-side-top-list body" style="overflow: hidden;">
 
         <article class="top-ranking top-btns" style="padding-top: 0;">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
@@ -143,7 +143,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         <div class="refresh-time" style="width: fit-content; margin: auto; padding-bottom: 0.5rem;">
             <div class="refresh-icon"></div><time style="font-size: 11px; color: #777; margin-left:3px" datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><?php echo $_updatedAt->format('Y/n/j G:i') ?></time>
         </div>
-    </main>
+    </div>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
     <?php echo $_meta->generateTopPageSchema() ?>
 </body>
