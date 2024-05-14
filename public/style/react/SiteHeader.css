@@ -161,29 +161,10 @@
   }
 }
 
-.google_ads_responsive_1 {
-  width: 320px;
-  height: 100px;
-  margin: auto;
-  background: rgb(250, 250, 250);
+ins.adsbygoogle[data-anchor-status='dismissed'] {
+  display: none !important;
 }
 
-@media (max-width: 352px) {
-  .google_ads_responsive_1 {
-    margin: auto -0.5rem;
-  }
-}
-
-@media (min-width: 500px) {
-  .google_ads_responsive_1 {
-    width: 468px;
-    height: 60px;
-  }
-}
-
-@media (min-width: 800px) {
-  .google_ads_responsive_1 {
-    width: 100%;
-    height: 90px;
-  }
+ins.adsbygoogle[data-ad-status="unfilled"] {
+    display: none !important;
 }
