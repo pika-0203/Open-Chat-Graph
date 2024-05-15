@@ -20,7 +20,7 @@ class PolicyPageController
 
         $_news = array_reverse(TopPageNews::getTopPageNews());
 
-        header("Cache-control: maxage=300");
+        cacheControl(3600);
 
         return view('policy_content', compact('_meta', '_css', '_breadcrumbsShema','_news'));
     }

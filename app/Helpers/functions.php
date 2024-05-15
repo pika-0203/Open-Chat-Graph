@@ -416,3 +416,9 @@ function isMobile(): bool
         return false;
     }
 }
+
+function cacheControl(int $seconds)
+{
+    header("Cache-control: public, maxage={$seconds}");
+    header_remove('Pragma');
+}

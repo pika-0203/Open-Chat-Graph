@@ -33,15 +33,13 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
     ->path('ranking', [ReactRankingPageController::class, 'ranking'])
     ->matchNum('category', emptyAble: true);
 
-Route::path('policy')
-    ->middleware([VerifyCsrfToken::class]);
+Route::path('policy');
 
 Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
     ->matchNum('open_chat_id', min: 1)
     ->match(cache(...))
     ->middleware([
         AdminCookieValidation::class,
-        VerifyCsrfToken::class,
     ]);
 
 Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
@@ -142,7 +140,8 @@ Route::path(
             ? ['name' => removeAllZeroWidthCharacters($name) ? $name : '']
             : false,
         'post'
-    );
+    )
+    ->middleware([VerifyCsrfToken::class]);
 
 // コメントリアクションAPI
 Route::path(

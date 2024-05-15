@@ -23,7 +23,7 @@ class LabsPageController
 
         $_recommendDto = $staticDataGeneration->getRecommendPageDto();
 
-        header("Cache-control: maxage=300");
+        cacheControl(3600);
 
         return view('labs_content', compact(
             '_meta',

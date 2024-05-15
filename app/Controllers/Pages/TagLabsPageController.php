@@ -36,7 +36,7 @@ class TagLabsPageController
         $categories = array_flip(AppConfig::OPEN_CHAT_CATEGORY);
         $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
 
-        header("Cache-control: maxage=300");
+        cacheControl(300);
 
         return view('tags_content', compact(
             '_meta',
