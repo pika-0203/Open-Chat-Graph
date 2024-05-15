@@ -149,7 +149,7 @@ const setHeaderShow2 = (header, hidden, show) => {
 
 ;(() => {
   const header = document.querySelector('.site_header_outer')
-  setHeaderShow2(header, -48, 0)
+  setHeaderShow(header, -48, 0)
 })()
 
 const setAnchorPosition = () => {
@@ -215,4 +215,4 @@ async function blockblock() {
       opbtn.forEach((el) => (el.textContent = ''))
     })
 }
-blockblock()
+//blockblock()
