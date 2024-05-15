@@ -167,7 +167,7 @@ class OpenChatListRepository implements OpenChatListRepositoryInterface
 
     function findMemberCountRanking(int $limit, array $whereIdNotIn): array
     {
-        $excludeId = implode(",", $whereIdNotIn);
+        $excludeId = $whereIdNotIn ? implode(",", $whereIdNotIn) : '0';
 
         $query =
             "SELECT
