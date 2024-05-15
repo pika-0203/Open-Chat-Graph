@@ -130,24 +130,21 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
     </section>
 
-    <hr class="hr-bottom" style="padding: 8px 0; margin-top: 0;">
-
-    <div class="talkroom_description_box close" id="talkroom_description_box" style="margin: 0 1rem 1rem 1rem;">
-      <p class="talkroom_description" id="talkroom-description">
-        <span id="talkroom-description-btn">
-          <?php if ($oc['description']) : ?>
+    <?php if ($oc['description']) : ?>
+      <hr class="hr-bottom" style="padding: 8px 0; margin-top: 0;">
+      <div class="talkroom_description_box close" id="talkroom_description_box" style="margin: 0 1rem 1rem 1rem;">
+        <p class="talkroom_description" id="talkroom-description">
+          <span id="talkroom-description-btn">
             <?php echo nl2brReplace(trim(preg_replace("/(\r\n){3,}|\r{3,}|\n{3,}/", "\n\n", $oc['description']))) ?>
-          <?php else : ?>
-            <span style="color: #b7b7b7;">説明文なし</span>
-          <?php endif ?>
-        </span>
-      </p>
-      <button id="talkroom-description-close-btn" class="close-btn" title="一部を表示">一部を表示</button>
-      <div class="more" id="read_more_btn">
-        <div class="more-separater">&nbsp;</div>
-        <button class="unset more-text" style="font-weight: bold; color: #111;" title="もっと見る">…もっと見る</button>
+          </span>
+        </p>
+        <button id="talkroom-description-close-btn" class="close-btn" title="一部を表示">一部を表示</button>
+        <div class="more" id="read_more_btn">
+          <div class="more-separater">&nbsp;</div>
+          <button class="unset more-text" style="font-weight: bold; color: #111;" title="もっと見る">…もっと見る</button>
+        </div>
       </div>
-    </div>
+    <?php endif ?>
 
     <!-- <hr class="hr-bottom" style="padding: 8px 0; margin-top: 0;"> -->
 
