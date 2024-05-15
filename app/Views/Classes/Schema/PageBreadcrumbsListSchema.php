@@ -161,7 +161,7 @@ class PageBreadcrumbsListSchema
                     ->actionApplication($this->actionApplication())
             )
             ->additionalType('https://schema.org/FollowAction')
-            ->name('LINEでこのルームに参加');
+            ->name('LINEで開く');
     }
 
     function generateRecommend(
