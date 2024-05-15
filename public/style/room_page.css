@@ -296,6 +296,11 @@ html {
   flex-wrap: nowrap;
 }
 
+.number-box.created-at .openchat-itme-stats-title {
+  color: #aaa;
+  font-size: 12px;
+}
+
 .number-box.bold {
   font-weight: bold;
 }
