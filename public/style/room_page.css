@@ -503,12 +503,12 @@ html {
   }
 
   .link-mark .link-title {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .talkroom_link_h1 {
-    font-size: 24px;
-    line-height: 140%;
+    font-size: 21px;
+    line-height: 125%;
   }
 
   .app_link {
@@ -521,7 +521,7 @@ html {
   }
 
   .talkroom_description_box.close:not(.hidden):hover {
-    background-color: rgb(250,250,250);
+    background-color: rgb(250, 250, 250);
   }
 
   .link-mark .line-link-icon777 {
