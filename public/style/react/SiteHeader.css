@@ -161,12 +161,11 @@
   }
 }
 
-ins.adsbygoogle[data-anchor-status='dismissed'] {
+/* ins.adsbygoogle[data-anchor-status='dismissed'] {
   display: none !important;
 }
 
 ins.adsbygoogle[data-ad-status='unfilled'] {
-  /* display: none !important; */
   background: rgb(250, 250, 250);
   position: relative;
   display: block;
@@ -193,4 +192,4 @@ ins.adsbygoogle[data-ad-status='unfilled']::before {
     aspect-ratio: 2 / 1;
     background: rgb(250, 250, 250);
   }
-}
+} */
