@@ -22,7 +22,7 @@ function memberCount(int $count)
 <body class="body">
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <?php viewComponent('ads/google-responsive') ?>
-    <main style="margin-bottom: 0;" style="overflow: hidden;">
+    <main style="margin-bottom: 0; padding: 1rem;">
         <div style="position: absolute; top: -3.5rem;" aria-hidden="true" id="top"></div>
         <p style="font-size: 13px; color: #777">各タグを、近そうなカテゴリに分類して表示しています。タグ内のルームは様々なカテゴリに属しています。</p>
         <p style="font-size: 13px; color: #777">タグを探すときは、ブラウザの機能でページ内のテキストを検索してください。</p>
@@ -63,7 +63,8 @@ function memberCount(int $count)
         </article>
         <?php foreach ($categories as $key => $category) : ?>
 
-            <article class="top-ranking" style="padding-top: 1rem; margin-bottom: 1rem;">
+            <article class="top-ranking" style="padding-top: 1rem; margin-bottom: 1rem; position: relative;">
+                <div style="position: absolute; top: -70px;" id="<?php echo $key ?>" aria-hidden="true"></div>
                 <div>
                     <header class="openchat-list-title-area unset">
                         <div class="openchat-list-date unset ranking-url">
