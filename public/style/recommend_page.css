@@ -7,7 +7,7 @@ li {
   display: block;
   padding: 1rem;
   padding-bottom: 0;
-  margin-bottom: 1rem;
+  padding-top: 4px;
 }
 
 .recommend-header-time {
@@ -21,43 +21,47 @@ li {
   max-width: 600px;
 }
 
-.ranking-page-main .talkroom_banner_img_area {
+.ranking-page-main .talkroom_banner_img_figure {
   padding: 1rem 0;
-  aspect-ratio: 1.2 / 1;
   width: 100%;
 }
 
-.ranking-page-main .talkroom_banner_img_area figcaption {
-  font-size: 10px;
-  color: #777;
+.ranking-page-main .talkroom_banner_img_figure figcaption {
+  font-size: 9px;
+  color: #b7b7b7;
   display: block;
   /*   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; */
   margin: 0 1rem;
-  line-height: 125%;
-  margin-top: 3px;
+  line-height: 120%;
+  margin-top: 2px;
+}
+
+.ranking-page-main .talkroom_banner_img_area {
+  aspect-ratio: 1.6 / 1;
+  width: 100%;
 }
 
 .ranking-page-main .talkroom_banner_img {
   object-fit: cover;
-  display: flex;
+  display: block;
   width: 100%;
-  aspect-ratio: 1.2 / 1;
+  aspect-ratio: 1.6 / 1;
 }
 
 .ranking-page-main .talkroom_link_h1 {
-  font-size: 22px;
+  font-size: 21px;
   font-weight: bold;
-  line-height: 1.5;
+  line-height: 1.25;
   color: #111;
   display: block;
   white-space: break-spaces;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 .recommend-header-bottom {
-  margin: 10px 0;
+  margin: 0;
   display: flex;
   justify-content: space-between;
 }
@@ -70,9 +74,17 @@ li {
 .recommend-header-desc {
   display: block;
   padding: 0 1rem;
-  font-size: 16px;
+  font-size: 14px;
   color: #555;
-  line-height: 1.8;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.recommend-header-desc.desc-bottom {
+  font-size: 11px;
+  color: #b7b7b7;
+  line-height: 1.25;
+  margin: 0;
 }
 
 .top-ranking-list-aside {

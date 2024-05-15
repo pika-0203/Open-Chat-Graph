@@ -18,13 +18,16 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header') ?>
     <article class="ranking-page-main pad-side-top-ranking body" style="overflow: hidden; padding-top: 0;">
-        <?php //viewComponent('ads/google-rectangle') ?>
+        <?php //viewComponent('ads/google-rectangle') 
+        ?>
 
         <section style="all: unset; display: block;">
             <?php if (isset($recommend)) : ?>
-                <figure style="padding: 0;" class="talkroom_banner_img_area">
+                <figure style="padding: 0;" class="talkroom_banner_img_figure">
                     <?php $oc = $recommend->getPreviewList(1)[0] ?>
-                    <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
+                    <div class="talkroom_banner_img_area">
+                        <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
+                    </div>
                     <figcaption>「<?php echo $oc['name'] ?>」のメイン画像</figcaption>
                 </figure>
             <?php endif ?>
@@ -39,7 +42,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                     <div class="recommend-data-desc">統計に基づくランキング</div>
                     <div class="recommend-header-time">
                         <time datetime="<?php echo $_dto->rankingUpdatedAt->format(\DateTime::ATOM) ?>"><?php echo $_dto->rankingUpdatedAt->format('Y年n月j日 G:i') ?></time>
-                        <div>1時間ごとに更新</div>
                     </div>
                 </div>
             </header>
@@ -47,7 +49,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <p class="recommend-header-desc">
                 「<?php echo $tag ?>」のおすすめオープンチャットランキングを発表！
             </p>
-            <p class="recommend-header-desc" style="font-size: 12px;">
+            <p class="recommend-header-desc desc-bottom">
                 ランキングの順位は、参加人数がどれぐらい上昇しているかによって決まります。
             </p>
         </section>
@@ -58,8 +60,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php endif ?>
         </aside>
 
-        <hr class="hr-bottom">
-        <?php //viewComponent('ads/google-rectangle') ?>
+        <hr class="hr-bottom" style="padding: 0;">
+        <?php //viewComponent('ads/google-rectangle') 
+        ?>
 
         <section class="recommend-ranking-section">
             <?php if (isset($recommend)) : ?>
@@ -117,7 +120,8 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                         <?php if ($listsLastKey !== $key) : ?>
                             <li>
                                 <hr class="hr-bottom">
-                                <?php //viewComponent('ads/google-responsive') ?>
+                                <?php //viewComponent('ads/google-responsive') 
+                                ?>
                             </li>
                         <?php endif ?>
                     <?php endforeach ?>
@@ -144,14 +148,16 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
         </section>
 
         <hr class="hr-bottom">
-        <?php //viewComponent('ads/google-responsive') ?>
+        <?php //viewComponent('ads/google-responsive') 
+        ?>
 
         <aside class="top-ranking-list-aside">
             <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $rankingDto]) ?>
         </aside>
 
         <hr class="hr-bottom">
-        <?php //viewComponent('ads/google-responsive') ?>
+        <?php //viewComponent('ads/google-responsive') 
+        ?>
 
         <aside class="top-ranking-list-aside">
             <?php viewComponent('top_ranking_comment_list_hour', ['dto' => $rankingDto]) ?>
@@ -164,7 +170,8 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </a>
         </aside>
 
-        <?php //viewComponent('ads/google-responsive') ?>
+        <?php //viewComponent('ads/google-responsive') 
+        ?>
 
         <footer class="footer-elem-outer">
             <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
