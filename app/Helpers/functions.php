@@ -420,7 +420,6 @@ function isMobile(): bool
 function cacheControl(int $seconds)
 {
     header("Cache-control: public, maxage={$seconds}");
-    header_remove('Pragma');
 }
 
 function sessinStart()
