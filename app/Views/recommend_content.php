@@ -20,33 +20,34 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <article class="ranking-page-main pad-side-top-ranking body" style="overflow: hidden;">
         <?php viewComponent('ads/google-rectangle') ?>
 
-        <header class="recommend-header">
-            <?php if ($count) : ?>
-                <h1 class="talkroom_link_h1 unset">【最新】「<?php echo $tag ?>」おすすめオープンチャットランキングTOP<?php echo $count ?></h1>
-            <?php else : ?>
-                <h1 class="talkroom_link_h1 unset">【最新】「<?php echo $tag ?>」おすすめオープンチャットランキング</h1>
-            <?php endif ?>
-            <div class="recommend-header-bottom">
-                <div class="recommend-data-desc">統計に基づくランキング</div>
-                <div class="recommend-header-time">
-                    <time datetime="<?php echo $_dto->rankingUpdatedAt->format(\DateTime::ATOM) ?>"><?php echo $_dto->rankingUpdatedAt->format('Y年n月j日 G:i') ?></time>
-                    <div>1時間ごとに更新</div>
-                </div>
-            </div>
-        </header>
-
         <section style="all: unset; display: block;">
             <?php if (isset($recommend)) : ?>
-                <figure class="talkroom_banner_img_area">
+                <figure style="padding: 0;" class="talkroom_banner_img_area">
                     <?php $oc = $recommend->getPreviewList(1)[0] ?>
                     <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
                     <figcaption>「<?php echo $oc['name'] ?>」のメイン画像</figcaption>
                 </figure>
             <?php endif ?>
+
+            <header class="recommend-header">
+                <?php if ($count) : ?>
+                    <h1 class="talkroom_link_h1 unset">【最新】「<?php echo $tag ?>」おすすめオープンチャットランキングTOP<?php echo $count ?></h1>
+                <?php else : ?>
+                    <h1 class="talkroom_link_h1 unset">【最新】「<?php echo $tag ?>」おすすめオープンチャットランキング</h1>
+                <?php endif ?>
+                <div class="recommend-header-bottom">
+                    <div class="recommend-data-desc">統計に基づくランキング</div>
+                    <div class="recommend-header-time">
+                        <time datetime="<?php echo $_dto->rankingUpdatedAt->format(\DateTime::ATOM) ?>"><?php echo $_dto->rankingUpdatedAt->format('Y年n月j日 G:i') ?></time>
+                        <div>1時間ごとに更新</div>
+                    </div>
+                </div>
+            </header>
+
             <p class="recommend-header-desc">
                 「<?php echo $tag ?>」のおすすめオープンチャットランキングを発表！
             </p>
-            <p class="recommend-header-desc" style="font-size: 11px; color: #777;">
+            <p class="recommend-header-desc" style="font-size: 12px;">
                 ランキングの順位は、参加人数がどれぐらい上昇しているかによって決まります。
             </p>
         </section>
@@ -73,10 +74,10 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                             <?php if ($key === 0) : ?>
                                 <header class="recommend-ranking-section-header">
                                     <h2 class="list-title oc-list">
-                                        <div>【<?php echo $time ?>】</div>
                                         <div>「<?php echo $tag ?>」</div>
                                         <div>おすすめランキング</div>
                                         <div><?php echo $countTitle ?></div>
+                                        <div>（<?php echo $time ?>）</div>
                                     </h2>
                                     <aside class="list-aside">
                                         <details class="icon-desc">
