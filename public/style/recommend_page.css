@@ -31,10 +31,12 @@ li {
   font-size: 10px;
   color: #777;
   display: block;
-  text-overflow: ellipsis;
+  /*   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
-  margin-left: 1rem;
+  overflow: hidden; */
+  margin: 0 1rem;
+  line-height: 125%;
+  margin-top: 3px;
 }
 
 .ranking-page-main .talkroom_banner_img {
