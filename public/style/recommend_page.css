@@ -39,7 +39,7 @@ li {
 }
 
 .ranking-page-main .talkroom_banner_img_area {
-  aspect-ratio: 1.6 / 1;
+  aspect-ratio: 1.4 / 1;
   width: 100%;
 }
 
@@ -47,7 +47,7 @@ li {
   object-fit: cover;
   display: block;
   width: 100%;
-  aspect-ratio: 1.6 / 1;
+  aspect-ratio: 1.4 / 1;
 }
 
 .ranking-page-main .talkroom_link_h1 {
