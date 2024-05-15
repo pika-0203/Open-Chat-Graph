@@ -355,6 +355,19 @@ section aside:hover {
     font-size: 14px;
   }
 
+  .ranking-page-main .talkroom_banner_img_figure figcaption {
+    font-size: 11px;
+    margin-bottom: 5px;
+  }
+
+  .recommend-header-desc {
+    font-size: 15px;
+  }
+
+  .recommend-header-desc.desc-bottom {
+    font-size: 13px;
+  }
+
   .ranking-desc .recommend-desc {
     font-size: 14px;
   }
