@@ -30,6 +30,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                 <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
             </a>
         </article>
+        <hr class="hr-bottom">
 
         <?php viewComponent('ads/google-rectangle') ?>
 

@@ -130,12 +130,13 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 </section>
             <?php endif ?>
 
-            <hr class="hr-top" style="padding: 0;">
+            <hr class="hr-bottom">
             <aside class="list-aside recommend-ranking-bottom">
                 <?php if (isset($tags) && $tags) : ?>
                     <?php viewComponent('recommend_content_tags', compact('tags')) ?>
+                    <hr class="hr-bottom" style="width: 100%;">
                 <?php endif ?>
-                <a class="readMore-btn top-ranking-readMore unset" href="<?php echo url('ranking') ?>">
+                <a style="margin: 1rem 0 0 0;" class="readMore-btn top-ranking-readMore unset" href="<?php echo url('ranking') ?>">
                     <span class="ranking-readMore" style="font-size: 11.5px;">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
                 </a>
             </aside>
@@ -155,6 +156,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
         <aside class="top-ranking-list-aside">
             <?php viewComponent('top_ranking_comment_list_hour', ['dto' => $rankingDto]) ?>
         </aside>
+        <hr class="hr-bottom">
 
         <aside class="unset app_link open-chat-guide">
             <a href="https://openchat-jp.line.me/other/beginners_guide">
@@ -162,7 +164,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </a>
         </aside>
 
-        <hr class="hr-bottom" style="padding: 8px 0; margin-top: 0;">
         <?php viewComponent('ads/google-responsive') ?>
 
         <footer class="footer-elem-outer">
