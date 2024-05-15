@@ -47,7 +47,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
         <?php if (isset($_hourlyRange)) : ?>
           <div class="talkroom_number_of_stats" style="line-height: 135%; margin-top: 4px;">
-            <div class="number-box bold">
+            <div class="number-box ">
               <span aria-hidden="true" style="margin-right: 1px; font-size: 9px; user-select: none;">🔥</span>
               <span style="margin-right: 4px;" class="openchat-itme-stats-title"><?php echo $_hourlyRange ?></span>
               <div>
@@ -60,7 +60,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         <div class="talkroom_number_of_stats">
 
           <?php if (isset($oc['rh24_diff_member']) && $oc['rh24_diff_member'] >= AppConfig::MIN_MEMBER_DIFF_H24) : ?>
-            <div class="number-box bold" style="margin-right: 6px;">
+            <div class="number-box " style="margin-right: 6px;">
               <span aria-hidden="true" style="margin-right: 1px; font-size: 9px; user-select: none;">🚀</span>
               <span class="openchat-itme-stats-title">24時間</span>
               <div>
@@ -81,7 +81,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <?php endif ?>
 
           <?php if (isset($oc['diff_member2']) && $oc['diff_member2'] >= AppConfig::MIN_MEMBER_DIFF_H24) : ?>
-            <div class="number-box bold" style="margin-right: 6px;">
+            <div class="number-box " style="margin-right: 6px;">
               <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium show-north css-162gv95" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NorthIcon">
                 <path d="m5 9 1.41 1.41L11 5.83V22h2V5.83l4.59 4.59L19 9l-7-7-7 7z"></path>
               </svg>
