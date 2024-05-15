@@ -452,11 +452,22 @@ hr {
 
 @media screen and (min-width: 512px) {
   .title-bar-oc-name {
-    font-size: 12px;
+    font-size: 13px;
+  }
+
+  .number-box.created-at {
+    margin-left: auto;
+    margin-bottom: 10px;
+    color: #777;
+  }
+
+  .number-box.created-at .openchat-itme-stats-title {
+    font-size: 13px;
+    color: #aaa;
   }
 
   .number-box .openchat-itme-stats-title {
-    font-size: 12px;
+    font-size: 14px;
     word-break: keep-all;
     text-wrap: nowrap;
   }
@@ -532,14 +543,21 @@ hr {
     font-size: 13px;
   }
 
-  .openchat-item-stats,
+  .talkroom_description {
+    margin-bottom: 1.25rem;
+  }
+
+  .openchat-item-stats {
+    font-size: 14px;
+  }
+
   .number_of_members {
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .openchat-item-stats.percent {
     margin-left: 1px;
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .openchat-list-date {
@@ -554,15 +572,10 @@ hr {
     margin-bottom: 1rem;
   }
 
-  .number-box.created-at {
-    margin-bottom: 10px;
-    margin-left: 8px;
-    color: #777;
-  }
-
   .talkroom_description_box .more,
   .talkroom_description {
-    line-height: 140%;
+    font-size: 15px;
+    line-height: 20px;
   }
 
   .openchat .footer {
@@ -573,7 +586,7 @@ hr {
   .talkroom_number_of_members,
   .openchat-itme-stats-title,
   .talkroom_number_of_stats {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   summary:hover {
