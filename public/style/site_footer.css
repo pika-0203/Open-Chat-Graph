@@ -1,6 +1,6 @@
 :root {
   --border-color: #efefef;
-  --hover: #f1f9f6;
+  --hover: rgb(250,250,250);
 }
 
 .footer-elem-outer {

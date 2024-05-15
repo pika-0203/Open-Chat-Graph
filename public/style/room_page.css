@@ -6,8 +6,8 @@ html {
   overflow-y: scroll; /* 常に垂直スクロールバーを表示 */
 }
 
-hr {
-  margin: 16px 0;
+.pc-hr {
+  display: none;
 }
 
 .openchat {
@@ -521,11 +521,7 @@ hr {
   }
 
   .talkroom_description_box.close:not(.hidden):hover {
-    background-color: #f1f9f6ab;
-  }
-
-  hr {
-    margin: 19px 0;
+    background-color: rgb(250,250,250);
   }
 
   .link-mark .line-link-icon777 {
@@ -541,6 +537,7 @@ hr {
   .openchat-header,
   .talkroom_description_box {
     font-size: 13px;
+    letter-spacing: -0.1px;
   }
 
   .talkroom_description {
@@ -574,8 +571,18 @@ hr {
 
   .talkroom_description_box .more,
   .talkroom_description {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 20px;
+  }
+
+  .talkroom_description {
+    margin-top: 4px;
+    margin-bottom: 20px;
+    padding: 0 1rem;
+  }
+
+  .pc-hr {
+    display: block;
   }
 
   .openchat .footer {
