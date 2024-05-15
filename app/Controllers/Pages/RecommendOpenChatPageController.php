@@ -83,7 +83,7 @@ class RecommendOpenChatPageController
             ));
         }
 
-        cache();
+        header("Cache-control: maxage=300");
 
         [$recommend, $diffMember] = $recommendArray;
         $recommendList = $recommend->getList(false);

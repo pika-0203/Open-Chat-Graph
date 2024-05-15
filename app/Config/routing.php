@@ -27,13 +27,11 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
     ->path('ranking/{category}', [ReactRankingPageController::class, 'ranking'])
     ->matchNum('category', min: 1)
     ->match(function (int $category) {
-        cache();
         return isset(array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category]);
     })
 
     ->path('ranking', [ReactRankingPageController::class, 'ranking'])
-    ->matchNum('category', emptyAble: true)
-    ->match(cache(...));
+    ->matchNum('category', emptyAble: true);
 
 Route::path('policy')
     ->middleware([VerifyCsrfToken::class]);
@@ -109,14 +107,12 @@ Route::path('admin/cookie')
         return redirect();
     });
 
-Route::path('labs')
-    ->match(cache(...));
+Route::path('labs');
 
 Route::path(
     'labs/tags',
     [TagLabsPageController::class, 'index']
-)
-    ->match(cache(...));
+);
 
 Route::path(
     'labs/publication-analytics',
