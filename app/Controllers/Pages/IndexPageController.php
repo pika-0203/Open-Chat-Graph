@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
-use App\Config\AdminConfig;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
-use App\Services\Auth\AuthInterface;
 use App\Services\Recommend\OfficialPageList;
-use App\Services\User\MyOpenChatList;
 use App\Services\StaticData\StaticDataFile;
-use App\Services\User\MyOpenChatListUserLogger;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 use DateTime;
 
