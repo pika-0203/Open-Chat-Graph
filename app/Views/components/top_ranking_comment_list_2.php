@@ -14,7 +14,7 @@
 </article>
 
 <hr class="hr-bottom">
-<?php viewComponent('ads/google-responsive') ?>
+<?php //viewComponent('ads/google-responsive') ?>
 
 <article class="top-ranking created-at">
     <header class=" openchat-list-title-area unset">

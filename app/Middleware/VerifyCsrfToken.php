@@ -10,10 +10,13 @@ use Shared\Exceptions\BadRequestException;
 
 class VerifyCsrfToken
 {
-    public function handle(Reception $reception)
+    public function __construct()
     {
         sessinStart();
+    }
 
+    public function handle(Reception $reception)
+    {
         if ($reception->isMethod('GET')) {
             Cookie::csrfToken();
             return;

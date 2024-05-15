@@ -26,7 +26,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
   <!-- 固定ヘッダー -->
   <?php viewComponent('site_header') ?>
   <article class="unset openchat body" style="overflow: hidden;">
-    <?php viewComponent('ads/google-rectangle') ?>
+    <?php //viewComponent('ads/google-rectangle') ?>
 
 
     <!-- オープンチャット表示ヘッダー -->
@@ -166,14 +166,14 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     </section>
     <hr class="hr-bottom">
 
-    <?php viewComponent('ads/google-rectangle') ?>
+    <?php //viewComponent('ads/google-rectangle') ?>
 
     <?php if ($recommend[0] || $recommend[3]) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[0] ?: $recommend[3], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       </aside>
       <hr class="hr-bottom">
-      <?php viewComponent('ads/google-rectangle') ?>
+      <?php //viewComponent('ads/google-rectangle') ?>
     <?php endif ?>
 
     <?php if (isset($_adminDto)) : ?>
@@ -235,33 +235,33 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     </section>
     <hr class="hr-bottom">
 
-    <?php viewComponent('ads/google-responsive') ?>
+    <?php //viewComponent('ads/google-responsive') ?>
 
     <?php if ($recommend[1]) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       </aside>
       <hr class="hr-bottom">
-      <?php viewComponent('ads/google-responsive') ?>
+      <?php //viewComponent('ads/google-responsive') ?>
     <?php endif ?>
     <?php if ($recommend[0] && $recommend[3]) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[3], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       </aside>
       <hr class="hr-bottom">
-      <?php viewComponent('ads/google-responsive') ?>
+      <?php //viewComponent('ads/google-responsive') ?>
     <?php endif ?>
     <?php if (isset($officialDto) && $officialDto && $officialDto2) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto : $officialDto2, 'id' => $oc['id']]) ?>
       </aside>
       <hr class="hr-bottom">
-      <?php viewComponent('ads/google-responsive') ?>
+      <?php //viewComponent('ads/google-responsive') ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $oc['emblem'] == 1 ? $officialDto2 : $officialDto, 'id' => $oc['id']]) ?>
       </aside>
       <hr class="hr-bottom">
-      <?php viewComponent('ads/google-responsive') ?>
+      <?php //viewComponent('ads/google-responsive') ?>
     <?php endif ?>
 
     <section class="comment-section">
@@ -280,19 +280,19 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <div id="comment-root"></div>
     </section>
 
-    <?php viewComponent('ads/google-responsive') ?>
+    <?php //viewComponent('ads/google-responsive') ?>
 
     <aside class="recommend-list-aside">
       <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
     </aside>
     <hr class="hr-bottom">
-    <?php viewComponent('ads/google-responsive') ?>
+    <?php //viewComponent('ads/google-responsive') ?>
 
     <aside class="recommend-list-aside">
       <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
     </aside>
     <hr class="hr-bottom">
-    <?php viewComponent('ads/google-responsive') ?>
+    <?php //viewComponent('ads/google-responsive') ?>
 
     <footer class="oc-page-footer">
       <aside class="open-btn2">

@@ -20,7 +20,6 @@ use App\Controllers\Pages\RecentOpenChatPageController;
 use App\Controllers\Pages\RecommendOpenChatPageController;
 use App\Controllers\Pages\RegisterOpenChatPageController;
 use App\Controllers\Pages\TagLabsPageController;
-use App\Middleware\AdminCookieValidation;
 use App\Middleware\VerifyCsrfToken;
 
 Route::middlewareGroup(RedirectLineWebBrowser::class)
@@ -36,10 +35,16 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
 Route::path('policy');
 
 Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
+    ->matchNum('open_chat_id', min: 1);
+
+Route::path('oc/{open_chat_id}/admin', [OpenChatPageController::class, 'index'])
     ->matchNum('open_chat_id', min: 1)
-    ->middleware([
-        AdminCookieValidation::class,
-    ]);
+    ->match(
+        function (AdminAuthService $adminAuthService) {
+            sessinStart();
+            return $adminAuthService->auth() ? ['isAdmin' => '1'] : false;
+        }
+    );
 
 Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
     ->matchNum('open_chat_id', min: 1);
@@ -98,6 +103,7 @@ Route::path(
 
 Route::path('admin/cookie')
     ->match(function (AdminAuthService $adminAuthService, ?string $key) {
+        sessinStart();
         if (!$adminAuthService->registerAdminCookie($key)) {
             return false;
         }

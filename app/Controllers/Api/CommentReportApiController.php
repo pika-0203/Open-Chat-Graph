@@ -61,7 +61,7 @@ class CommentReportApiController
         $deleteUrl = url(
             "admin-api/deletecomment?openExternalBrowser=1&id={$ocId}&commentId={$id}&flag=2"
         );
-        $roomUrl = url("oc/{$ocId}?openExternalBrowser=1");
+        $roomUrl = url("oc/{$ocId}/admin?openExternalBrowser=1");
 
         AdminTool::sendLineNofity(
             "通報: " . json_encode($comment, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n削除: {$deleteUrl}\n部屋: {$roomUrl}"

@@ -33,6 +33,7 @@ class OpenChatPageController
         StaticDataFile $staticDataGeneration,
         RecentCommentListRepositoryInterface $recentCommentListRepository,
         int $open_chat_id,
+        ?string $isAdmin,
     ) {
         $recommend = $recommendGenarator->getRecommend($open_chat_id);
         $oc = $ocRepo->getOpenChatById($open_chat_id);
@@ -110,12 +111,13 @@ class OpenChatPageController
             $_hourlyRange = null;
         }
 
-        if (cookie()->has('admin') && cookie()->has('admin-enable')) {
+        if (isset($isAdmin)) {
             /** @var AdminOpenChat $admin */
             $admin = app(AdminOpenChat::class);
             $_adminDto = $admin->getDto($open_chat_id);
         } else {
             $_adminDto = null;
+            cacheControl(300);
         }
 
         $dto = $staticDataGeneration->getTopPageData();
@@ -132,8 +134,6 @@ class OpenChatPageController
             $officialDto = null;
             $officialDto2 = null;
         }
-
-        cache();
 
         return view('oc_content', compact(
             '_meta',

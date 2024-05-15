@@ -8,22 +8,6 @@
                 <p>オプチャグラフ</p>
             <?php endif ?>
         </a>
-        
-        <?php if (cookie()->has('admin')) : ?>
-            <!-- admin用チェックボックス -->
-            <label class="checkbox-label admin-check-label" for="adminEnable">
-                <small>Admin</small>
-                <input type="checkbox" id="adminEnable" <?php if (cookie()->has('admin-enable')) echo 'checked' ?>>
-            </label>
-            <script type="module">
-                import {
-                    AdminCheckboxCookieManager
-                } from '<?php echo fileUrl("/js/AdminCheckboxCookieManager.js") ?>'
-
-                const adminCookieManager = new AdminCheckboxCookieManager
-            </script>
-        <?php endif ?>
-
         <nav class="header-nav unset" style="height: 48px;">
             <button class="header-button unset" id="search_button" aria-label="検索">
                 <span class="search-button-icon"></span>
