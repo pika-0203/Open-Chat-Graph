@@ -12,6 +12,8 @@ class VerifyCsrfToken
 {
     public function handle(Reception $reception)
     {
+        sessinStart();
+
         if ($reception->isMethod('GET')) {
             Cookie::csrfToken();
             return;

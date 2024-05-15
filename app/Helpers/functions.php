@@ -422,3 +422,13 @@ function cacheControl(int $seconds)
     header("Cache-control: public, maxage={$seconds}");
     header_remove('Pragma');
 }
+
+function sessinStart()
+{
+    if (isset($_SERVER['HTTP_HOST'])) {
+        session_set_cookie_params(SESSION_COOKIE_PARAMS);
+        session_name("session");
+    }
+
+    session_start();
+}

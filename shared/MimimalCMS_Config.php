@@ -48,8 +48,3 @@ if (($_SERVER['HTTP_HOST'] ?? '') === 'openchat-review.me') {
     define('COOKIE_DEFAULT_SECURE', false);
 }
 
-if (isset($_SERVER['HTTP_HOST'])) {
-    session_set_cookie_params(SESSION_COOKIE_PARAMS);
-    session_name("session");
-    session_start();
-}
