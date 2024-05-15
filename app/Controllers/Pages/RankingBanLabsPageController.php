@@ -91,7 +91,7 @@ class RankingBanLabsPageController
             'maxPageNumber' => $maxPageNumber
         ];
 
-        cacheControl(300);
+        cacheControl(600);
 
         return view(
             'ranking_ban_content',

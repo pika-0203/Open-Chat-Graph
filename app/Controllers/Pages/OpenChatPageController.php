@@ -117,7 +117,7 @@ class OpenChatPageController
             $_adminDto = $admin->getDto($open_chat_id);
         } else {
             $_adminDto = null;
-            cacheControl(300);
+            cacheControl(600);
         }
 
         $dto = $staticDataGeneration->getTopPageData();
