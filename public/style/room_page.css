@@ -388,7 +388,7 @@ html {
   font-size: 11px;
   color: #777;
   font-weight: normal;
-
+  line-height: 1.46;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
