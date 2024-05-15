@@ -24,12 +24,6 @@ class IndexPageController
     ) {
         $dto = $staticDataGeneration->getTopPageData();
 
-        $myList = [];
-        // クッキーにピン留めがある場合
-        if (cookie()->has('myList')) {
-            $myList = $this->listService();
-        }
-
         $_css = ['room_list', 'site_header', 'site_footer', 'search_form', 'recommend_list'];
         $_meta = meta();
         $_meta->title = "{$_meta->title}｜オープンチャットの統計情報";
@@ -68,43 +62,18 @@ class IndexPageController
         $officialDto = $officialPageList->getListDto('1', 'スペシャルオープンチャット')[0];
         $officialDto2 = $officialPageList->getListDto('2', '公式認証オープンチャット')[0];
 
+        cacheControl(300);
+
         return view('top_content', compact(
             '_meta',
             '_css',
             '_schema',
             '_updatedAt',
             'dto',
-            'myList',
             'tags',
             'officialDto',
             'officialDto2',
             'newComment',
         ));
-    }
-
-    private function listService(): array
-    {
-        /** @var MyOpenChatList $myOpenChatList **/
-        $myOpenChatList = app(MyOpenChatList::class);
-
-        /** @var AuthInterface $auth **/
-        $auth = app(AuthInterface::class);
-
-        /** @var MyOpenChatListUserLogger $myOpenChatListUserLogger **/
-        $myOpenChatListUserLogger = app(MyOpenChatListUserLogger::class);
-
-        [$expires, $myListIdArray, $myList] = $myOpenChatList->init();
-        if (!$expires) return [];
-
-        $userId = $auth->loginCookieUserId();
-        if ($userId === AdminConfig::ADMIN_API_KEY) return $myList;
-
-        $myOpenChatListUserLogger->userMyListLog(
-            $userId,
-            $expires,
-            $myListIdArray
-        );
-
-        return $myList;
     }
 }

@@ -165,7 +165,7 @@ class OpenChatPageController
             return false;
         }
 
-        cacheControl(3600);
+        cacheControl(3600 * 24);
         $downloadCsvService->sendCsv($open_chat_id, $oc['name']);
         exit;
     }

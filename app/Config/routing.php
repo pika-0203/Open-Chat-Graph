@@ -13,6 +13,7 @@ use App\Services\Admin\AdminAuthService;
 use App\Controllers\Api\OpenChatRankingPageApiController;
 use App\Controllers\Api\OpenChatRegistrationApiController;
 use App\Controllers\Api\RankingPositionApiController;
+use App\Controllers\Api\MyListApiController;
 use App\Controllers\Pages\OpenChatPageController;
 use App\Controllers\Pages\RankingBanLabsPageController;
 use App\Controllers\Pages\ReactRankingPageController;
@@ -73,8 +74,9 @@ Route::path(
     ->matchNum('category', min: 0, max: 41)
     ->matchStr('sort', regex: ['ranking', 'rising']);
 
-Route::path('/')
-    ->match(cache(...));
+Route::path('/');
+
+Route::path('mylist-api', [MyListApiController::class, 'index']);
 
 Route::path('recommend', [RecommendOpenChatPageController::class, 'index'])
     ->matchStr('tag', maxLen: 100);

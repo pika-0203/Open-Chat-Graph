@@ -32,7 +32,8 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         </article>
         <hr class="hr-bottom">
 
-        <?php //viewComponent('ads/google-rectangle') ?>
+        <?php //viewComponent('ads/google-rectangle') 
+        ?>
 
         <article class="top-ranking">
             <?php if ($tags) : ?>
@@ -73,58 +74,58 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         </article>
         <hr class="hr-bottom">
 
-        <?php //viewComponent('ads/google-rectangle') ?>
+        <?php //viewComponent('ads/google-rectangle') 
+        ?>
 
-        <?php if ($myList) : ?>
-            <article class="mylist pad-side">
-                <div class="refresh-time openchat-list-date">
-                    <span style="font-weight: bold; color:#111; font-size:13px; margin: 0; line-height: unset;">ピン留め (24時間の人数増加)</span>
-                    <span style="font-weight: normal; color:#aaa; font-size:13px; margin: 0; line-height: unset;"><?php echo $dto->hourlyUpdatedAt->format('G:i') ?></span>
-                </div>
-                <div style="margin: -4px 0 -4px 0;">
-                    <?php viewComponent('open_chat_list_ranking', ['openChatList' => $myList, 'isHourly' => true]) ?>
-                </div>
-            </article>
-        <?php endif ?>
-
+        <div id="myListDiv" style="transition: all 0.3s; opacity: 0;"></div>
         <?php if ($newComment) : ?>
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
             <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive') ?>
+            <?php //viewComponent('ads/google-responsive') 
+            ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
             <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive') ?>
+            <?php //viewComponent('ads/google-responsive') 
+            ?>
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
             <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive') ?>
+            <?php //viewComponent('ads/google-responsive') 
+            ?>
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0]) ?>
             <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive') ?>
+            <?php //viewComponent('ads/google-responsive') 
+            ?>
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0]) ?>
             <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive') ?>
+            <?php //viewComponent('ads/google-responsive') 
+            ?>
             <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
         <?php else : ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
             <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive') ?>
+            <?php //viewComponent('ads/google-responsive') 
+            ?>
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
             <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive') ?>
+            <?php //viewComponent('ads/google-responsive') 
+            ?>
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0]) ?>
             <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive') ?>
+            <?php //viewComponent('ads/google-responsive') 
+            ?>
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto2, 'id' => 0]) ?>
             <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive') ?>
+            <?php //viewComponent('ads/google-responsive') 
+            ?>
             <?php viewComponent('top_ranking_comment_list_2', compact('dto')) ?>
             <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive') ?>
+            <?php //viewComponent('ads/google-responsive') 
+            ?>
             <?php viewComponent('top_ranking_recent_comments', compact('dto')) ?>
         <?php endif ?>
-
         <hr class="hr-bottom">
-        <?php //viewComponent('ads/google-responsive') ?>
+        <?php //viewComponent('ads/google-responsive') 
+        ?>
         <hr class="hr-top">
         <article class="top-ranking top-btns">
             <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs') ?>">
@@ -147,6 +148,41 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
     </div>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
     <?php echo $_meta->generateTopPageSchema() ?>
+    <script>
+        let lastList = ''
+
+        function fetchMyList(name) {
+            const cookieRegex = new RegExp(`(^|;)\\s*${name}\\s*=\\s*([^;]+)`)
+            const cookieMatch = document.cookie.match(cookieRegex)
+            const myListDiv = document.getElementById('myListDiv')
+            if (!cookieMatch) {
+                myListDiv.textContent && (myListDiv.textContent = '')
+                return
+            }
+
+            fetch('mylist-api')
+                .then((res) => {
+                    if (res.status === 200)
+                        return res.text();
+                    else
+                        throw new Error()
+                })
+                .then((data) => {
+                    if (lastList === data)
+                        return
+
+                    lastList = data
+                    myListDiv.textContent = ''
+                    myListDiv.insertAdjacentHTML('afterbegin', data)
+                    myListDiv.style.opacity = '1'
+                })
+                .catch(error => console.error('エラー', error))
+        }
+
+        window.addEventListener("pageshow", function(event) {
+            fetchMyList('myList')
+        });
+    </script>
 </body>
 
 </html>
