@@ -49,6 +49,7 @@ class OpenChatPageController
             $_deleted = DB::fetch("SELECT * FROM open_chat_deleted WHERE id = :open_chat_id", compact('open_chat_id'));
             if (!$_deleted) return false;
 
+            cacheControl(3600);
             return view('errors/oc_error', compact('_meta', '_css', 'recommend', 'open_chat_id', '_deleted'));
         }
 
@@ -65,11 +66,6 @@ class OpenChatPageController
             ->setImageUrl(imgUrl($oc['id'], $oc['img_url']));
 
         $_meta->thumbnail = imgPreviewUrl($oc['id'], $oc['img_url']);
-
-        $myList = json_decode(cookie('myList') ?? '', true);
-        if (!is_array($myList)) {
-            $myList = [];
-        }
 
         $categoryValue = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : null;
 
@@ -137,11 +133,12 @@ class OpenChatPageController
             $officialDto2 = null;
         }
 
+        cache();
+
         return view('oc_content', compact(
             '_meta',
             '_css',
             'oc',
-            'myList',
             'category',
             '_chartArgDto',
             '_statsDto',
@@ -168,6 +165,7 @@ class OpenChatPageController
             return false;
         }
 
+        cacheControl(3600);
         $downloadCsvService->sendCsv($open_chat_id, $oc['name']);
         exit;
     }

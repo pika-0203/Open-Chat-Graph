@@ -225,12 +225,10 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         </aside>
 
         <nav class="my-list-form">
-          <?php if (count($myList) - 1 < AppConfig::MY_LIST_LIMIT || isset($myList[$oc['id']])) : ?>
-            <label class="checkbox-label" for="my-list-checkbox">
-              <input type="checkbox" id="my-list-checkbox" <?php if (isset($myList[$oc['id']])) echo 'checked' ?>>
-              <span>トップにピン留め</span>
-            </label>
-          <?php endif ?>
+          <label class="checkbox-label" for="my-list-checkbox">
+            <input type="checkbox" id="my-list-checkbox">
+            <span>トップにピン留め</span>
+          </label>
         </nav>
       </nav>
 
@@ -351,6 +349,9 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
     const myListCheckbox = document.getElementById('my-list-checkbox')
     const myListJsonCookie = new JsonCookie('myList')
+
+    if (myListCheckbox && myListJsonCookie.get(OPEN_CHAT_ID))
+      myListCheckbox.checked = true
 
     myListCheckbox && myListCheckbox.addEventListener('change', () => {
       const listLen = (Object.keys(myListJsonCookie.get() || {}).length)
