@@ -94,7 +94,7 @@ body::before {
   display: flex;
   padding: 0 1rem;
   width: 100%;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 /* .is-search-form-open .site_header {
@@ -144,7 +144,6 @@ body::before {
   padding: 0 0.5rem;
   align-items: center;
   font-family: var(--font-family);
-  margin-left: -18px;
 }
 
 .header_site_title:focus-visible {

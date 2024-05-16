@@ -37,17 +37,30 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </div>
 
       <div class="openchat-header-right">
-        <div class="link-mark"><span class="link-title" style="margin-top: -2px; font-weight: bold;"><span aria-hidden="true" style="font-size: 10px; margin-right:2px;"></span>LINEオープンチャット</span></div>
         <a title="<?php echo $oc['name'] ?>" rel="external" target="_blank" href="<?php echo AppConfig::LINE_OPEN_URL . $oc['emid'] . AppConfig::LINE_OPEN_URL_SUFFIX ?>" class="h1-link unset">
           <h1 class="talkroom_link_h1 unset"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></h1>
+          <div class="link-mark"><span class="link-title"><span aria-hidden="true" style="font-size: 10px; margin-right:2px;">🔗</span>LINEオープンチャット公式サイト</span></div>
         </a>
+
+        <div class="talkroom_description_box close" id="talkroom_description_box">
+          <p class="talkroom_description" id="talkroom-description">
+            <span id="talkroom-description-btn">
+              <?php echo nl2brReplace(trim(preg_replace("/(\r\n){3,}|\r{3,}|\n{3,}/", "\n\n", $oc['description']))) ?>
+            </span>
+          </p>
+          <button id="talkroom-description-close-btn" class="close-btn" title="一部を表示">一部を表示</button>
+          <div class="more" id="read_more_btn">
+            <div class="more-separater">&nbsp;</div>
+            <button class="unset more-text" style="font-weight: bold; color: #111;" title="もっと見る">…もっと見る</button>
+          </div>
+        </div>
 
         <div class="talkroom_number_of_members">
           <span class="number_of_members">メンバー <?php echo number_format($oc['member']) ?>人</span>
         </div>
 
         <?php if (isset($_hourlyRange)) : ?>
-          <div class="talkroom_number_of_stats" style="line-height: 135%; margin-top: 4px;">
+          <div class="talkroom_number_of_stats" style="line-height: 135%; margin-top: 3px;">
             <div class="number-box ">
               <span aria-hidden="true" style="margin-right: 1px; font-size: 9px; user-select: none;">🔥</span>
               <span style="margin-right: 4px;" class="openchat-itme-stats-title"><?php echo $_hourlyRange ?></span>
@@ -129,61 +142,19 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
     </section>
 
-    <hr class="hr-bottom pc-hr">
-    <?php if ($oc['description']) : ?>
-      <div class="talkroom_description_box close" id="talkroom_description_box" style="margin: 0 1rem 1rem 1rem;">
-        <p class="talkroom_description" id="talkroom-description">
-          <span id="talkroom-description-btn">
-            <?php echo nl2brReplace(trim(preg_replace("/(\r\n){3,}|\r{3,}|\n{3,}/", "\n\n", $oc['description']))) ?>
-          </span>
-        </p>
-        <button id="talkroom-description-close-btn" class="close-btn" title="一部を表示">一部を表示</button>
-        <div class="more" id="read_more_btn">
-          <div class="more-separater">&nbsp;</div>
-          <button class="unset more-text" style="font-weight: bold; color: #111;" title="もっと見る">…もっと見る</button>
-        </div>
-      </div>
-    <?php endif ?>
-
     <!-- <hr class="hr-bottom" style="padding: 8px 0; margin-top: 0;"> -->
 
-    <section class="open-btn sp-btn" style="padding: 12px 1rem 1rem 1rem;">
-      <?php if ($oc['url']) : ?>
-        <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
-          <?php if ($oc['join_method_type'] !== 0) : ?>
-            <svg style="height: 12px; fill: white; margin-right: 6px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.4 489.4" xml:space="preserve">
-              <path d="M99 147v51.1h-3.4c-21.4 0-38.8 17.4-38.8 38.8v213.7c0 21.4 17.4 38.8 38.8 38.8h298.2c21.4 0 38.8-17.4 38.8-38.8V236.8c0-21.4-17.4-38.8-38.8-38.8h-1v-51.1C392.8 65.9 326.9 0 245.9 0 164.9.1 99 66 99 147m168.7 206.2c-3 2.2-3.8 4.3-3.8 7.8.1 15.7.1 31.3.1 47 .3 6.5-3 12.9-8.8 15.8-13.7 7-27.4-2.8-27.4-15.8v-.1c0-15.7 0-31.4.1-47.1 0-3.2-.7-5.3-3.5-7.4-14.2-10.5-18.9-28.4-11.8-44.1 6.9-15.3 23.8-24.3 39.7-21.1 17.7 3.6 30 17.8 30.2 35.5 0 12.3-4.9 22.3-14.8 29.5M163.3 147c0-45.6 37.1-82.6 82.6-82.6 45.6 0 82.6 37.1 82.6 82.6v51.1H163.3z" />
-            </svg>
-          <?php endif ?>
-          <span class="text">LINEで開く</span>
-          <?php if ($oc['join_method_type'] === 1) : ?>
-            <span style="font-size: 12px; margin-left: 4px; font-weight: normal;" class="text">承認制</span>
-          <?php endif ?>
-          <?php if ($oc['join_method_type'] === 2) : ?>
-            <span style="font-size: 12px; margin-left: 4px; font-weight: normal;" class="text">参加コード入力制</span>
-          <?php endif ?>
-        </a>
-      <?php endif ?>
-    </section>
-    <hr class="hr-bottom">
 
     <?php //viewComponent('ads/google-rectangle') 
     ?>
 
-    <?php if ($recommend[0] || $recommend[3]) : ?>
-      <aside class="recommend-list-aside">
-        <?php viewComponent('recommend_list2', ['recommend' => $recommend[0] ?: $recommend[3], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
-      </aside>
-      <hr class="hr-bottom">
-      <?php //viewComponent('ads/google-rectangle') 
-      ?>
-    <?php endif ?>
+
 
     <?php if (isset($_adminDto)) : ?>
       <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
     <?php endif ?>
 
-    <!-- <hr class="hr-top"> -->
+    <hr class="hr-bottom" style="padding: 0;">
     <section class="openchat-graph-section">
 
       <div class="title-bar">
@@ -236,11 +207,37 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       </nav>
 
     </section>
+    <section class="open-btn sp-btn" style="padding: 12px 1rem 1rem 1rem;">
+      <?php if ($oc['url']) : ?>
+        <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
+          <?php if ($oc['join_method_type'] !== 0) : ?>
+            <svg style="height: 12px; fill: white; margin-right: 6px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.4 489.4" xml:space="preserve">
+              <path d="M99 147v51.1h-3.4c-21.4 0-38.8 17.4-38.8 38.8v213.7c0 21.4 17.4 38.8 38.8 38.8h298.2c21.4 0 38.8-17.4 38.8-38.8V236.8c0-21.4-17.4-38.8-38.8-38.8h-1v-51.1C392.8 65.9 326.9 0 245.9 0 164.9.1 99 66 99 147m168.7 206.2c-3 2.2-3.8 4.3-3.8 7.8.1 15.7.1 31.3.1 47 .3 6.5-3 12.9-8.8 15.8-13.7 7-27.4-2.8-27.4-15.8v-.1c0-15.7 0-31.4.1-47.1 0-3.2-.7-5.3-3.5-7.4-14.2-10.5-18.9-28.4-11.8-44.1 6.9-15.3 23.8-24.3 39.7-21.1 17.7 3.6 30 17.8 30.2 35.5 0 12.3-4.9 22.3-14.8 29.5M163.3 147c0-45.6 37.1-82.6 82.6-82.6 45.6 0 82.6 37.1 82.6 82.6v51.1H163.3z" />
+            </svg>
+          <?php endif ?>
+          <span class="text">LINEで開く</span>
+          <?php if ($oc['join_method_type'] === 1) : ?>
+            <span style="font-size: 12px; margin-left: 4px; font-weight: normal;" class="text">承認制</span>
+          <?php endif ?>
+          <?php if ($oc['join_method_type'] === 2) : ?>
+            <span style="font-size: 12px; margin-left: 4px; font-weight: normal;" class="text">参加コード入力制</span>
+          <?php endif ?>
+        </a>
+      <?php endif ?>
+    </section>
     <hr class="hr-bottom">
 
     <?php //viewComponent('ads/google-responsive') 
     ?>
 
+    <?php if ($recommend[0]) : ?>
+      <aside class="recommend-list-aside">
+        <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+      </aside>
+      <hr class="hr-bottom">
+      <?php //viewComponent('ads/google-rectangle') 
+      ?>
+    <?php endif ?>
     <?php if ($recommend[1]) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
@@ -249,7 +246,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <?php //viewComponent('ads/google-responsive') 
       ?>
     <?php endif ?>
-    <?php if ($recommend[0] && $recommend[3]) : ?>
+    <?php if ($recommend[3]) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[3], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
       </aside>
