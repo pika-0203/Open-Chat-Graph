@@ -342,6 +342,9 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
         readMoreBtn.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
         close.addEventListener('click', () => {
           talkroomDescBox.classList.add('close')
+          window.scrollTo({
+            top: 0,
+          });
         })
       }
     })()
