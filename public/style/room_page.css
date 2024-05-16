@@ -465,6 +465,10 @@ html {
     padding-top: 1rem;
   }
 
+  .openchat-graph-section {
+    padding-top: 26px;
+  }
+
   .title-bar-oc-name {
     font-size: 13px;
   }
