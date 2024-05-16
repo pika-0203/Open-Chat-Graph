@@ -58,7 +58,7 @@ class IndexPageController
         $officialDto = $officialPageList->getListDto('1', 'スペシャルオープンチャット')[0];
         $officialDto2 = $officialPageList->getListDto('2', '公式認証オープンチャット')[0];
 
-        cacheControl(600);
+        cacheControl(180);
 
         return view('top_content', compact(
             '_meta',

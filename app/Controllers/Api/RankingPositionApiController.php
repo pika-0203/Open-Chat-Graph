@@ -31,7 +31,7 @@ class RankingPositionApiController
             return response(new RankingPositionChartDto);
         }
 
-        cacheControl(600);
+        cacheControl(300);
 
         return response($chart->getRankingPositionChartArray(
             RankingType::from($sort),
@@ -48,7 +48,7 @@ class RankingPositionApiController
         int $category,
         string $sort
     ) {
-        cacheControl(600);
+        cacheControl(300);
 
         return response($chart->getPositionHourChartArray(
             RankingType::from($sort),

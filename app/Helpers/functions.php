@@ -419,7 +419,7 @@ function isMobile(): bool
 
 function cacheControl(int $seconds)
 {
-    header("Cache-control: public, max-age={$seconds}");
+    header("Cache-control: public, max-age={$seconds}, s-maxage={$seconds}");
 }
 
 function sessinStart()

@@ -61,7 +61,7 @@ class OpenChatRankingPageApiController
 
     function index(OpenChatStatsRankingApiRepository $repo)
     {
-        cacheControl(600);
+        cacheControl(180);
 
         switch ($this->args->list) {
             case 'hourly':
