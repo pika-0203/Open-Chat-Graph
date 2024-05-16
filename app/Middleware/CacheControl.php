@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
+use App\Config\AppConfig;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 class CacheControl
@@ -13,10 +14,12 @@ class CacheControl
         if (session_status() === 2)
             return;
 
-        $cacheExpires = OpenChatServicesUtility::getModifiedCronTime('now');
+        $cacheExpires = OpenChatServicesUtility::getModifiedCronTime(
+            file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME)
+        );
 
-        $cacheExpires->modify('+70minutes');
-        
+        $cacheExpires->modify('+63minutes');
+
         setCacheHeaders($cacheExpires);
     }
 }
