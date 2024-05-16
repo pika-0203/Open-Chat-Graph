@@ -20,7 +20,9 @@ class PolicyPageController
 
         $_news = array_reverse(TopPageNews::getTopPageNews());
 
-        return view('policy_content', compact('_meta', '_css', '_breadcrumbsShema','_news'));
+        $view = view('policy_content', compact('_meta', '_css', '_breadcrumbsShema', '_news'));
+        handleRequestWithETagAndCache($view->getRenderCache(), 300, 3600 * 24);
+        return $view;
     }
 
     function privacy(PageBreadcrumbsListSchema $breadcrumbsShema)
@@ -32,6 +34,8 @@ class PolicyPageController
         $_meta->setDescription($desc)->setOgpDescription($desc);
         $_breadcrumbsShema = $breadcrumbsShema->generateSchema('オプチャグラフについて', 'policy', 'プライバシーポリシー', 'privacy');
 
-        return view('privacy_content', compact('_meta', '_css', '_breadcrumbsShema'));
+        $view = view('privacy_content', compact('_meta', '_css', '_breadcrumbsShema'));
+        handleRequestWithETagAndCache($view->getRenderCache(), 300, 3600 * 24);
+        return $view;
     }
 }

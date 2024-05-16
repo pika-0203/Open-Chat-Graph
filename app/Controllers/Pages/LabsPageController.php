@@ -23,12 +23,15 @@ class LabsPageController
 
         $_recommendDto = $staticDataGeneration->getRecommendPageDto();
 
-        return view('labs_content', compact(
+        $view = view('labs_content', compact(
             '_meta',
             '_css',
             '_breadcrumbsShema',
             '_recommendDto',
         ));
+
+        handleRequestWithETagAndCache($view->getRenderCache(), 300, 3600);
+        return $view;
     }
 
     function cacheclear()
