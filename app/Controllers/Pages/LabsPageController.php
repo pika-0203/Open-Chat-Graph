@@ -23,8 +23,6 @@ class LabsPageController
 
         $_recommendDto = $staticDataGeneration->getRecommendPageDto();
 
-        cacheControl(3600);
-
         return view('labs_content', compact(
             '_meta',
             '_css',

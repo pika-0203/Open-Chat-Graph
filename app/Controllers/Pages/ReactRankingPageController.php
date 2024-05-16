@@ -90,8 +90,6 @@ class ReactRankingPageController
             $category ? (string)$category : ''
         );
 
-        cacheControl(3600);
-
         return view('ranking_react_content', compact('_css', '_js', '_meta', '_argDto', '_breadcrumbsShema', 'category'));
     }
 }

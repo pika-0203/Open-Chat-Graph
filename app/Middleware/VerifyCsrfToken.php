@@ -12,7 +12,7 @@ class VerifyCsrfToken
 {
     public function __construct()
     {
-        sessinStart();
+        sessionStart();
     }
 
     public function handle(Reception $reception)

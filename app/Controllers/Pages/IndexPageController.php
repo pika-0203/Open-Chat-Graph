@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
+use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\Recommend\OfficialPageList;
 use App\Services\StaticData\StaticDataFile;
 use App\Views\Schema\PageBreadcrumbsListSchema;
@@ -57,8 +58,6 @@ class IndexPageController
 
         $officialDto = $officialPageList->getListDto('1', 'スペシャルオープンチャット')[0];
         $officialDto2 = $officialPageList->getListDto('2', '公式認証オープンチャット')[0];
-
-        cacheControl(300);
 
         return view('top_content', compact(
             '_meta',

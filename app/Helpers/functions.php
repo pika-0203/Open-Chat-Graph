@@ -417,17 +417,31 @@ function isMobile(): bool
     }
 }
 
-function cacheControl(int $seconds)
+function setCacheHeaders(DateTime $expiryDate)
 {
-    header("Cache-control: public, max-age={$seconds}, s-maxage={$seconds}");
+    // GMTタイムゾーンのDateTimeオブジェクトを作成
+    $gmtTimezone = new DateTimeZone('GMT');
+    $now = new DateTime('now', $gmtTimezone);
+    $expires = clone $expiryDate; // 元のオブジェクトを変更しないように複製
+    $expires->setTimezone($gmtTimezone); // タイムゾーンをGMTに設定
+
+    // Expiresヘッダーのフォーマットに合わせて日付をフォーマット
+    $expiresFormatted = $expires->format('D, d M Y H:i:s \G\M\T');
+
+    // 現在の日時からキャッシュの有効期間（秒数）を計算
+    $maxAge = $expires->getTimestamp() - $now->getTimestamp();
+
+    // ヘッダーを設定
+    header("Expires: $expiresFormatted");
+    header("Cache-Control: public, max-age=$maxAge");
 }
 
-function sessinStart()
+function sessionStart(): bool
 {
     if (isset($_SERVER['HTTP_HOST'])) {
         session_set_cookie_params(SESSION_COOKIE_PARAMS);
         session_name("session");
     }
 
-    session_start();
+    return session_start();
 }

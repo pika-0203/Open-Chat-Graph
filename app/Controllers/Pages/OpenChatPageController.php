@@ -50,7 +50,6 @@ class OpenChatPageController
             $_deleted = DB::fetch("SELECT * FROM open_chat_deleted WHERE id = :open_chat_id", compact('open_chat_id'));
             if (!$_deleted) return false;
 
-            cacheControl(3600);
             return view('errors/oc_error', compact('_meta', '_css', 'recommend', 'open_chat_id', '_deleted'));
         }
 
@@ -117,7 +116,6 @@ class OpenChatPageController
             $_adminDto = $admin->getDto($open_chat_id);
         } else {
             $_adminDto = null;
-            cacheControl(300);
         }
 
         $dto = $staticDataGeneration->getTopPageData();
@@ -165,7 +163,6 @@ class OpenChatPageController
             return false;
         }
 
-        cacheControl(3600 * 24);
         $downloadCsvService->sendCsv($open_chat_id, $oc['name']);
         exit;
     }
