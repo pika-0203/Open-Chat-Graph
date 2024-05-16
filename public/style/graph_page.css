@@ -24,7 +24,6 @@
 
 #chart-preact-canvas {
   aspect-ratio: 1.8 / 1;
-  width: calc(100% - 1px) !important;
 }
 
 .MuiChip-root.openchat-item-header-chip.graph {
@@ -73,7 +72,6 @@
 
   #chart-preact-canvas {
     aspect-ratio: 1.4 / 1;
-    width: calc(100% - 1px) !important;
   }
 
   .MuiChip-root.openchat-item-header-chip.graph:hover {
@@ -96,7 +94,6 @@
 
   #chart-preact-canvas {
     aspect-ratio: 1.2 / 1;
-    width: calc(100% - 1px) !important;
   }
 
   .limit-btns .MuiTab-fullWidth {
@@ -105,5 +102,18 @@
 
   .MuiChip-root.openchat-item-header-chip.graph {
     font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 400px) {
+  #chart-preact-canvas {
+    width: calc(100% - 1px) !important;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  #chart-preact-canvas {
+    height: 315px !important;
+    width: 567px !important;
   }
 }
