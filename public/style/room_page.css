@@ -20,6 +20,7 @@ html {
 .openchat-header {
   display: flex;
   padding: 1rem;
+  padding-top: 0;
 }
 
 .openchat-graph-section {
@@ -460,6 +461,10 @@ html {
 }
 
 @media screen and (min-width: 512px) {
+  .openchat-header {
+    padding-top: 1rem;
+  }
+
   .title-bar-oc-name {
     font-size: 13px;
   }
@@ -497,7 +502,7 @@ html {
 
   .open-btn.pc-btn {
     display: block;
-    margin-top: 12px;
+    margin-top: 9px;
     margin-bottom: 0;
   }
 
@@ -558,7 +563,7 @@ html {
   }
 
   .number_of_members {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .openchat-item-stats.percent {
@@ -586,12 +591,15 @@ html {
   .talkroom_description_box .more,
   .talkroom_description {
     font-size: 14px;
-    line-height: 20px;
   }
 
-  .talkroom_description {
-    margin-top: 5px;
-    margin-bottom: 4px;
+  .talkroom_description_box {
+    margin-top: 4px;
+    margin-bottom: 1px;
+  }
+
+  .openchat-header-right {
+    gap: 1px;
   }
 
   .pc-hr {

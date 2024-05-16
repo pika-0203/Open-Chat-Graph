@@ -31,7 +31,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
 
     <!-- オープンチャット表示ヘッダー -->
-    <section class="openchat-header unset" style="padding-top: 0;">
+    <section class="openchat-header unset">
       <div class="talkroom_banner_img_area">
         <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
       </div>
