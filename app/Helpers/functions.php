@@ -157,6 +157,36 @@ function noStore()
     header('Cache-Control: no-store, no-cache, must-revalidate');
 }
 
+function handleRequestWithETagAndCache(string $content, int $maxAge, int $sMaxAge = 300)
+{
+    // ETagを生成（ここではコンテンツのMD5ハッシュを使用）
+    $etag = '"' . md5($content) . '"';
+
+    // max-ageと共にCache-Controlヘッダーを設定
+    header("Cache-Control: public, max-age={$maxAge}, s-maxage={$sMaxAge}, must-revalidate");
+
+    // 現在のリクエストのETagを取得
+    $requestEtag = isset($_SERVER['HTTP_IF_NONE_MATCH']) ? str_replace('-gzip', '', trim($_SERVER['HTTP_IF_NONE_MATCH'])) : '';
+
+    // ETagが一致する場合は304 Not Modifiedを返して終了
+    if ($requestEtag === $etag) {
+        header("HTTP/1.1 304 Not Modified");
+        exit;
+    }
+
+    header("ETag: $etag");
+}
+
+function getHouryUpdateTime()
+{
+    return file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME);
+}
+
+function getDailyUpdateTime()
+{
+    return file_get_contents(AppConfig::DAILY_CRON_UPDATED_AT_DATE);
+}
+
 /* function imgUrl(int $id, string $img_url): string
 {
     return "https://obs.line-scdn.net/{$img_url}";

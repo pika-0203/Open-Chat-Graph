@@ -17,7 +17,6 @@ class RankingPositionApiController
         private OpenChatPageRepositoryInterface $openChatPageRepository
     ) {
         localCORS();
-        noStore();
     }
 
     function rankingPosition(

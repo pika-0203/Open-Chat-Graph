@@ -17,7 +17,6 @@ class OpenChatRankingPageApiController
         private OpenChatApiArgs $args
     ) {
         localCORS();
-        cache();
         $this->validateInputs();
     }
 

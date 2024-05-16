@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
-use App\Middleware\CacheControl;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\OpenChatAdmin\AdminOpenChat;
@@ -100,9 +99,8 @@ class OpenChatPageController
             $oc,
         );
 
+        $hourlyUpdatedAt =  new \DateTime(getHouryUpdateTime());
         if (isset($oc['rh_diff_member']) && $oc['rh_diff_member'] >= AppConfig::MIN_MEMBER_DIFF_HOUR) {
-            $hourlyUpdatedAt =  new \DateTime(file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME));
-
             $hourlyTime = $hourlyUpdatedAt->format(\DateTime::ATOM);
             $hourlyUpdatedAt->modify('-1hour');
 
@@ -134,8 +132,6 @@ class OpenChatPageController
             $officialDto2 = null;
         }
 
-        cache();
-
         return view('oc_content', compact(
             '_meta',
             '_css',
@@ -166,7 +162,6 @@ class OpenChatPageController
             return false;
         }
 
-        header("Cache-Control: max-age=86400, must-revalidate, public");
         $downloadCsvService->sendCsv($open_chat_id, $oc['name']);
         exit;
     }
