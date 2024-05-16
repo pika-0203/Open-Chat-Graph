@@ -21,8 +21,8 @@ function nl2brReplace(string $string): string
 
 function gTag(string $id): string
 {
-    return
-        <<<HTML
+    return '';
+    /* <<<HTML
         <script async src="https://www.googletagmanager.com/gtag/js?id={$id}"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
@@ -34,7 +34,7 @@ function gTag(string $id): string
 
             gtag('config', '{$id}');
         </script>
-        HTML;
+        HTML; */
 }
 
 function meta(): App\Views\Meta\Metadata
@@ -428,12 +428,9 @@ function setCacheHeaders(DateTime $expiryDate)
     // Expiresヘッダーのフォーマットに合わせて日付をフォーマット
     $expiresFormatted = $expires->format('D, d M Y H:i:s \G\M\T');
 
-    // 現在の日時からキャッシュの有効期間（秒数）を計算
-    $maxAge = $expires->getTimestamp() - $now->getTimestamp();
-
     // ヘッダーを設定
     header("Expires: $expiresFormatted");
-    header("Cache-Control: public, max-age=$maxAge");
+    header("Cache-Control: public, must-revalidate");
 }
 
 function sessionStart(): bool
