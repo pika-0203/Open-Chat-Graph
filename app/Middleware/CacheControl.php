@@ -28,7 +28,7 @@ class CacheControl
         $cacheExpires = new \DateTime(file_get_contents(AppConfig::DAILY_CRON_UPDATED_AT_DATE));
 
         $cacheExpires->modify('+2day');
-        $cacheExpires->modify('+30minutes');
+        $cacheExpires->modify('+33minutes');
 
         setCacheHeaders($cacheExpires);
     }
