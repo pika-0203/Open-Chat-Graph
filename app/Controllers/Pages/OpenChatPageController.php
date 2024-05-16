@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
+use App\Middleware\CacheControl;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\OpenChatAdmin\AdminOpenChat;
@@ -163,6 +164,7 @@ class OpenChatPageController
             return false;
         }
 
+        app(CacheControl::class)->dailyCronCache();
         $downloadCsvService->sendCsv($open_chat_id, $oc['name']);
         exit;
     }
