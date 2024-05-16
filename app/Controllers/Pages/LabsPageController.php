@@ -30,4 +30,11 @@ class LabsPageController
             '_recommendDto',
         ));
     }
+
+    function cacheclear()
+    {
+        noStore();
+        header('Clear-Site-Data: "cache"');
+        return view('refresh-cache');
+    }
 }

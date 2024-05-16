@@ -134,6 +134,8 @@ class OpenChatPageController
             $officialDto2 = null;
         }
 
+        cache();
+
         return view('oc_content', compact(
             '_meta',
             '_css',
@@ -164,7 +166,7 @@ class OpenChatPageController
             return false;
         }
 
-        app(CacheControl::class)->dailyCronCache();
+        header("Cache-Control: max-age=86400, must-revalidate, public");
         $downloadCsvService->sendCsv($open_chat_id, $oc['name']);
         exit;
     }

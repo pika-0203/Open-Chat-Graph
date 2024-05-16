@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Config\AppConfig;
-use App\Config\ConfigJson;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 /**
@@ -151,6 +150,11 @@ function getQueryString(string $separater = '?'): string
 function cache()
 {
     header('Cache-Control: private');
+}
+
+function noStore()
+{
+    header('Cache-Control: no-store, no-cache, must-revalidate');
 }
 
 /* function imgUrl(int $id, string $img_url): string
@@ -415,21 +419,6 @@ function isMobile(): bool
     } else {
         return false;
     }
-}
-
-function setCacheHeaders(DateTime $expiryDate)
-{
-    // GMTタイムゾーンのDateTimeオブジェクトを作成
-    $gmtTimezone = new DateTimeZone('GMT');
-    $expires = clone $expiryDate; // 元のオブジェクトを変更しないように複製
-    $expires->setTimezone($gmtTimezone); // タイムゾーンをGMTに設定
-
-    // Expiresヘッダーのフォーマットに合わせて日付をフォーマット
-    $expiresFormatted = $expires->format('D, d M Y H:i:s \G\M\T');
-
-    // ヘッダーを設定
-    header("Expires: $expiresFormatted");
-    header("Cache-Control: public, must-revalidate");
 }
 
 function sessionStart(): bool

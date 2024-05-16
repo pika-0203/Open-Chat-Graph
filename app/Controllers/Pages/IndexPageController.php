@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
-use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\Recommend\OfficialPageList;
 use App\Services\StaticData\StaticDataFile;
 use App\Views\Schema\PageBreadcrumbsListSchema;
