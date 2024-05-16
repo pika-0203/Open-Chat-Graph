@@ -11,6 +11,10 @@
   margin: 1rem 0;
 }
 
+.top-ranking.top-btns {
+  padding-top: 0;
+}
+
 .visually-hidden {
   clip-path: inset(100%);
   clip: rect(1px, 1px, 1px, 1px);
@@ -993,6 +997,10 @@
 }
 
 @media screen and (min-width: 512px) {
+  .top-ranking.top-btns {
+    padding-top: 1rem;
+  }
+
   .main-header-title {
     font-size: 2.2rem;
     padding-bottom: 0.3rem;
