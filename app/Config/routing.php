@@ -38,6 +38,9 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
 
 Route::path('policy');
 
+Route::path('/')
+    ->match(fn () => handleRequestWithETagAndCache(getHouryUpdateTime() . 'index', 0));
+
 Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
     ->matchNum('open_chat_id', min: 1)
     ->match(fn (int $open_chat_id) => handleRequestWithETagAndCache(getHouryUpdateTime() . $open_chat_id, 0));
@@ -53,7 +56,7 @@ Route::path('oc/{open_chat_id}/admin', [OpenChatPageController::class, 'index'])
 
 Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
     ->matchNum('open_chat_id', min: 1)
-    ->match(fn (int $open_chat_id) => handleRequestWithETagAndCache(getDailyUpdateTime() . $open_chat_id, 43200));
+    ->match(fn (int $open_chat_id) => handleRequestWithETagAndCache(getDailyUpdateTime() . $open_chat_id, 0));
 
 Route::path('oclist', [OpenChatRankingPageApiController::class, 'index']);
 
@@ -67,9 +70,13 @@ Route::path(
     ->matchStr('start_date')
     ->matchStr('end_date')
     ->match(function (string $start_date, string $end_date, Reception $reception) {
-        handleRequestWithETagAndCache(getHouryUpdateTime() . json_encode($reception->input()), 0);
-        return $start_date === date("Y-m-d", strtotime($start_date))
+        $isValid = $start_date === date("Y-m-d", strtotime($start_date))
             && $end_date === date("Y-m-d", strtotime($end_date));
+        if (!$isValid)
+            return false;
+        
+        handleRequestWithETagAndCache(getHouryUpdateTime() . json_encode($reception->input()), 0);
+        return true;
     });
 
 Route::path(
