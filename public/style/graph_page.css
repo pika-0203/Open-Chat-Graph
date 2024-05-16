@@ -26,6 +26,7 @@
   aspect-ratio: 1.8 / 1;
   height: 100% !important;
   width: calc(100% - 1px) !important;
+  height: calc(100% - 1px) !important;
 }
 
 .MuiChip-root.openchat-item-header-chip.graph {
