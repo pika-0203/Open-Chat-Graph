@@ -126,8 +126,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         <hr class="hr-bottom">
         <?php //viewComponent('ads/google-responsive') 
         ?>
-        <hr class="hr-top">
-        <article class="top-ranking top-btns">
+        <article class="top-ranking top-btns" style="padding-top: 1rem;">
             <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs') ?>">
                 <span class="ranking-readMore" style="display: flex; align-items: center;">
                     <svg style="color: #111; fill: currentColor; display: inline-block; margin-right: 4px" focusable="false" height="18px" viewBox="0 -960 960 960" width="18px">
@@ -137,6 +136,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                 </span>
             </a>
         </article>
+        <hr class="hr-bottom">
 
         <footer class="footer-elem-outer">
             <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
