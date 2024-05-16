@@ -24,9 +24,7 @@
 
 #chart-preact-canvas {
   aspect-ratio: 1.8 / 1;
-  height: 100% !important;
   width: calc(100% - 1px) !important;
-  height: calc(100% - 1px) !important;
 }
 
 .MuiChip-root.openchat-item-header-chip.graph {
@@ -75,7 +73,7 @@
 
   #chart-preact-canvas {
     aspect-ratio: 1.4 / 1;
-    width: 100% !important;
+    width: calc(100% - 1px) !important;
   }
 
   .MuiChip-root.openchat-item-header-chip.graph:hover {
@@ -98,7 +96,7 @@
 
   #chart-preact-canvas {
     aspect-ratio: 1.2 / 1;
-    width: 100% !important;
+    width: calc(100% - 1px) !important;
   }
 
   .limit-btns .MuiTab-fullWidth {
