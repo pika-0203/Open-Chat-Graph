@@ -74,8 +74,6 @@ Route::path(
     ->matchNum('category', min: 0, max: 41)
     ->matchStr('sort', regex: ['ranking', 'rising']);
 
-Route::path('/');
-
 Route::path('mylist-api', [MyListApiController::class, 'index']);
 
 Route::path('recommend', [RecommendOpenChatPageController::class, 'index'])
@@ -111,8 +109,6 @@ Route::path('admin/cookie')
         }
         return redirect();
     });
-
-Route::path('labs');
 
 Route::path(
     'labs/tags',
