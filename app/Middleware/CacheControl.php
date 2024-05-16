@@ -15,10 +15,20 @@ class CacheControl
             return;
 
         $cacheExpires = OpenChatServicesUtility::getModifiedCronTime(
-            file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME)
+            file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME)
         );
 
         $cacheExpires->modify('+63minutes');
+
+        setCacheHeaders($cacheExpires);
+    }
+
+    public function dailyCronCache()
+    {
+        $cacheExpires = new \DateTime(file_get_contents(AppConfig::DAILY_CRON_UPDATED_AT_DATE));
+
+        $cacheExpires->modify('+2day');
+        $cacheExpires->modify('+30minutes');
 
         setCacheHeaders($cacheExpires);
     }

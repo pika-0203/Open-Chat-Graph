@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Api;
 
 use App\Config\AppConfig;
+use App\Middleware\CacheControl;
 use App\Models\ApiRepositories\OpenChatStatsRankingApiRepository;
 use App\Models\ApiRepositories\OpenChatApiArgs;
 use Shared\Exceptions\BadRequestException as HTTP400;
@@ -67,8 +68,10 @@ class OpenChatRankingPageApiController
             case 'daily':
                 return response($repo->findDailyStatsRanking($this->args));
             case 'weekly':
+                app(CacheControl::class)->dailyCronCache();
                 return response($repo->findWeeklyStatsRanking($this->args));
             case 'all':
+                app(CacheControl::class)->dailyCronCache();
                 return response($repo->findStatsAll($this->args));
         }
     }
