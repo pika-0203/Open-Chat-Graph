@@ -83,7 +83,7 @@ class RecommendOpenChatPageController
             ));
         }
 
-        cacheControl(600);
+        cacheControl(300);
 
         [$recommend, $diffMember] = $recommendArray;
         $recommendList = $recommend->getList(false);
