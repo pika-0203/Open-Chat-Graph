@@ -421,7 +421,6 @@ function setCacheHeaders(DateTime $expiryDate)
 {
     // GMTタイムゾーンのDateTimeオブジェクトを作成
     $gmtTimezone = new DateTimeZone('GMT');
-    $now = new DateTime('now', $gmtTimezone);
     $expires = clone $expiryDate; // 元のオブジェクトを変更しないように複製
     $expires->setTimezone($gmtTimezone); // タイムゾーンをGMTに設定
 

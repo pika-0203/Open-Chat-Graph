@@ -22,8 +22,10 @@
   overflow: hidden;
 }
 
-.touch-pan-y {
-  touch-action: pan-y !important;
+#chart-preact-canvas {
+  aspect-ratio: 1.8 / 1;
+  height: 100% !important;
+  width: 100% !important;
 }
 
 .MuiChip-root.openchat-item-header-chip.graph {
@@ -70,6 +72,10 @@
     aspect-ratio: 1.4 / 1;
   }
 
+  #chart-preact-canvas {
+    aspect-ratio: 1.4 / 1;
+  }
+
   .MuiChip-root.openchat-item-header-chip.graph:hover {
     color: #111;
     background-color: #f5f5f5;
@@ -85,6 +91,10 @@
   .chart-canvas-box {
     margin: 0 -0.75rem;
     width: calc(100% + 1.5rem);
+    aspect-ratio: 1.2 / 1;
+  }
+
+  #chart-preact-canvas {
     aspect-ratio: 1.2 / 1;
   }
 
