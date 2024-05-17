@@ -166,7 +166,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           <div class="title-bar-oc-name"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></div>
         </div>
         <span class="number-box created-at">
-          <div class="openchat-itme-stats-title">登録:&nbsp;</div>
+          <div class="openchat-itme-stats-title">登録:</div>
           <div class="openchat-itme-stats-title"><?php echo convertDatetime($oc['created_at']) ?></div>
         </span>
       </div>

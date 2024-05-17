@@ -302,8 +302,9 @@ html {
 }
 
 .number-box.created-at .openchat-itme-stats-title {
-  color: #aaa;
+  color: #777;
   font-size: 12px;
+  margin: 0;
 }
 
 .number-box.bold {
@@ -481,7 +482,7 @@ html {
 
   .number-box.created-at .openchat-itme-stats-title {
     font-size: 13px;
-    color: #aaa;
+    color: #777;
   }
 
   .number-box .openchat-itme-stats-title {
