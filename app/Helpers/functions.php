@@ -20,8 +20,8 @@ function nl2brReplace(string $string): string
 
 function gTag(string $id): string
 {
-    return '<script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>';
-    /* <<<HTML
+    return /* '<script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>'; */
+        <<<HTML
         <script async src="https://www.googletagmanager.com/gtag/js?id={$id}"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
@@ -33,7 +33,7 @@ function gTag(string $id): string
 
             gtag('config', '{$id}');
         </script>
-        HTML; */
+        HTML;
 }
 
 function meta(): App\Views\Meta\Metadata
