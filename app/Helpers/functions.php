@@ -163,7 +163,8 @@ function handleRequestWithETagAndCache(string $content, int $maxAge = 0, int $sM
     $etag = '"' . md5($content) . '"';
 
     // max-ageと共にCache-Controlヘッダーを設定
-    header("Cache-Control: public, max-age={$maxAge}, s-maxage={$sMaxAge}, must-revalidate");
+    header("Cache-Control: public, max-age={$maxAge}, must-revalidate");
+    header("Cloudflare-CDN-Cache-Control: max-age={$sMaxAge}");
 
     // 現在のリクエストのETagを取得
     $requestEtag = isset($_SERVER['HTTP_IF_NONE_MATCH']) ? str_replace('-gzip', '', trim($_SERVER['HTTP_IF_NONE_MATCH'])) : '';
