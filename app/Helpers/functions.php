@@ -20,7 +20,7 @@ function nl2brReplace(string $string): string
 
 function gTag(string $id): string
 {
-    return '';
+    return '<script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>';
     /* <<<HTML
         <script async src="https://www.googletagmanager.com/gtag/js?id={$id}"></script>
         <script>
@@ -175,6 +175,42 @@ function handleRequestWithETagAndCache(string $content, int $maxAge, int $sMaxAg
     }
 
     header("ETag: $etag");
+}
+
+function purgeCacheCloudFlare(string $zoneID, string $apiKey): string
+{
+    // cURLセッションを初期化
+    $ch = curl_init();
+
+    // Cloudflare APIに送信するデータを設定
+    $data = json_encode([
+        'purge_everything' => true,
+    ]);
+
+    curl_setopt($ch, CURLOPT_URL, "https://api.cloudflare.com/client/v4/zones/$zoneID/purge_cache");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+    // 認証情報をヘッダーに追加
+    $headers = [
+        "Authorization: Bearer $apiKey",
+        "Content-Type: application/json",
+    ];
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    // リクエストを実行し、レスポンスを取得
+    $response = curl_exec($ch);
+
+    // エラーチェック
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+    }
+
+    // cURLセッションを終了
+    curl_close($ch);
+
+    return $response;
 }
 
 function getHouryUpdateTime()
