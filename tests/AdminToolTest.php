@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Config\AdminConfig;
 use PHPUnit\Framework\TestCase;
 
 class AdminToolTest extends TestCase
 {
     public function test()
     {
-        debug(getUnserializedFile('2DBvvawGpYhtest1.dat'));
+        debug(purgeCacheCloudFlare(AdminConfig::CloudFlareZoneID, AdminConfig::CloudFlareApiKey));
 
         $this->assertTrue(true);
     }

@@ -175,7 +175,7 @@ class SyncOpenChat
         $this->state->isDailyTaskActive = false;
         $this->state->update();
         $this->dailyImageUpdate();
-        purgeCacheCloudFlare(AdminConfig::CloudFlareZoneID, AdminConfig::CloudFlareZoneID);
+        purgeCacheCloudFlare(AdminConfig::CloudFlareZoneID, AdminConfig::CloudFlareApiKey);
     }
 
     private function dailyImageUpdate()
