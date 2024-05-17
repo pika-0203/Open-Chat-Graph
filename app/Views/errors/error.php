@@ -237,6 +237,8 @@ class ErrorPage
     }
 }
 
+noStore();
+
 try {
     if ($detailsMessage) {
         $m = new ErrorPage;

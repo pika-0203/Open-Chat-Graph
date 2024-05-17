@@ -112,7 +112,7 @@ Route::path(
     [RecentOpenChatPageController::class, 'index'],
 )
     ->matchNum('page')
-    ->match(function (string $page) {
+    ->match(function (int $page) {
         handleRequestWithETagAndCache(getHouryUpdateTime() . "recently-registered/{$page}");
     });
 
