@@ -13,8 +13,8 @@
         <link rel="stylesheet" href="<?php echo fileUrl("style/{$css}.css") ?>">
     <?php endforeach ?>
     <link rel="icon" type="image/png" href="<?php echo url(\App\Config\AppConfig::SITE_ICON_FILE_PATH) ?>">
-    <script defer type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
-    <script defer type="module" crossorigin src="/<?php echo getFilePath('js/comment', 'index-*.js') ?>"></script>
+    <script async type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
+    <script async type="module" crossorigin src="/<?php echo getFilePath('js/comment', 'index-*.js') ?>"></script>
     <link rel="canonical" hrefs="<?php echo url(strstr(path(), '?', true) ?: path()) ?>">
     <?php if (isset($_schema)) : ?>
         <?php echo $_schema ?>

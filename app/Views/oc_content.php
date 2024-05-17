@@ -322,7 +322,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     </footer>
   </article>
   <?php echo $_breadcrumbsShema ?>
-  <script>
+  <script defer>
     ;
     (function() {
       // 説明文の続きを読むボタン
@@ -350,8 +350,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       }
     })()
   </script>
-  <script src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
-  <script type="module">
+  <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
+  <script defer type="module">
     import {
       JsonCookie
     } from '<?php echo fileUrl('/js/JsonCookie.js') ?>'
