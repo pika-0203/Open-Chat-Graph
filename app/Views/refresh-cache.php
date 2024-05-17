@@ -11,7 +11,6 @@
 
 <body style="width: 100%; margin: 0;">
     <div style="max-width: 600px; margin: auto;">
-        <img src="/assets/open-chat-graph.webp" style="width: 100%;" />
         <div style="padding: 1rem;">
             <p>ブラウザからオプチャグラフのキャッシュをクリアしました</p>
             <p>3秒後にトップページへ戻ります</p>
