@@ -139,7 +139,7 @@ class SyncOpenChat
     {
         $this->hourlyMemberColumn->update();
         $this->hourlyMemberRanking->update();
-        purgeCacheCloudFlare(AdminConfig::CloudFlareZoneID, AdminConfig::CloudFlareZoneID);
+        purgeCacheCloudFlare(AdminConfig::CloudFlareZoneID, AdminConfig::CloudFlareApiKey);
 
         $this->rankingBanUpdater->updateRankingBanTable();
         $this->recommendUpdater->updateRecommendTables();
