@@ -157,7 +157,7 @@ function noStore()
     header('Cache-Control: no-store, no-cache, must-revalidate');
 }
 
-function handleRequestWithETagAndCache(string $content, int $maxAge, int $sMaxAge = 300)
+function handleRequestWithETagAndCache(string $content, int $maxAge = 0, int $sMaxAge = 3600)
 {
     // ETagを生成（ここではコンテンツのMD5ハッシュを使用）
     $etag = '"' . md5($content) . '"';
@@ -187,14 +187,14 @@ function purgeCacheCloudFlare(string $zoneID, string $apiKey): string
         'purge_everything' => true,
     ]);
 
-    curl_setopt($ch, CURLOPT_URL, "https://api.cloudflare.com/client/v4/zones/$zoneID/purge_cache");
+    curl_setopt($ch, CURLOPT_URL, "https://api.cloudflare.com/client/v4/zones/{$zoneID}/purge_cache");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
     // 認証情報をヘッダーに追加
     $headers = [
-        "Authorization: Bearer $apiKey",
+        "Authorization: Bearer {$apiKey}",
         "Content-Type: application/json",
     ];
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);

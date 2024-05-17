@@ -28,22 +28,22 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
     ->path('ranking/{category}', [ReactRankingPageController::class, 'ranking'])
     ->matchNum('category', min: 1)
     ->match(function (int $category) {
-        handleRequestWithETagAndCache(getHouryUpdateTime() . "ranking/{$category}", 0, 0);
+        handleRequestWithETagAndCache(getHouryUpdateTime() . "ranking/{$category}");
         return isset(array_flip(AppConfig::OPEN_CHAT_CATEGORY)[$category]);
     })
 
     ->path('ranking', [ReactRankingPageController::class, 'ranking'])
     ->matchNum('category', emptyAble: true)
-    ->match(fn () => handleRequestWithETagAndCache(getHouryUpdateTime() . "ranking", 0, 0));
+    ->match(fn () => handleRequestWithETagAndCache(getHouryUpdateTime() . "ranking"));
 
 Route::path('policy');
 
 Route::path('/')
-    ->match(fn () => handleRequestWithETagAndCache(getHouryUpdateTime() . 'index', 0));
+    ->match(fn () => handleRequestWithETagAndCache(getHouryUpdateTime() . 'index'));
 
 Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
     ->matchNum('open_chat_id', min: 1)
-    ->match(fn (int $open_chat_id) => handleRequestWithETagAndCache(getHouryUpdateTime() . $open_chat_id, 0));
+    ->match(fn (int $open_chat_id) => handleRequestWithETagAndCache(getHouryUpdateTime() . $open_chat_id));
 
 Route::path('oc/{open_chat_id}/admin', [OpenChatPageController::class, 'index'])
     ->matchNum('open_chat_id', min: 1)
@@ -56,10 +56,10 @@ Route::path('oc/{open_chat_id}/admin', [OpenChatPageController::class, 'index'])
 
 Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
     ->matchNum('open_chat_id', min: 1)
-    ->match(fn (int $open_chat_id) => handleRequestWithETagAndCache(getDailyUpdateTime() . $open_chat_id, 0));
+    ->match(fn (int $open_chat_id) => handleRequestWithETagAndCache(getDailyUpdateTime() . $open_chat_id));
 
 Route::path('oclist', [OpenChatRankingPageApiController::class, 'index'])
-    ->match(fn (Reception $reception) => handleRequestWithETagAndCache(getHouryUpdateTime() . json_encode($reception->input()), 0, 0));
+    ->match(fn (Reception $reception) => handleRequestWithETagAndCache(getHouryUpdateTime() . json_encode($reception->input())));
 
 Route::path(
     'oc/{open_chat_id}/position',
@@ -76,7 +76,7 @@ Route::path(
         if (!$isValid)
             return false;
 
-        handleRequestWithETagAndCache(getHouryUpdateTime() . json_encode($reception->input()), 0, 0);
+        handleRequestWithETagAndCache(getHouryUpdateTime() . json_encode($reception->input()));
         return true;
     });
 
@@ -88,7 +88,7 @@ Route::path(
     ->matchNum('category', min: 0, max: 41)
     ->matchStr('sort', regex: ['ranking', 'rising'])
     ->match(function (Reception $reception) {
-        handleRequestWithETagAndCache(getHouryUpdateTime() . json_encode($reception->input()), 0, 0);
+        handleRequestWithETagAndCache(getHouryUpdateTime() . json_encode($reception->input()));
     });
 
 Route::path('mylist-api', [MyListApiController::class, 'index']);
@@ -96,7 +96,7 @@ Route::path('mylist-api', [MyListApiController::class, 'index']);
 Route::path('recommend', [RecommendOpenChatPageController::class, 'index'])
     ->matchStr('tag', maxLen: 100)
     ->match(function (string $tag) {
-        handleRequestWithETagAndCache(getHouryUpdateTime() . $tag, 0, 0);
+        handleRequestWithETagAndCache(getHouryUpdateTime() . $tag);
     });
 
 Route::path(
@@ -113,7 +113,7 @@ Route::path(
 )
     ->matchNum('page')
     ->match(function (string $page) {
-        handleRequestWithETagAndCache(getHouryUpdateTime() . "recently-registered/{$page}", 0, 0);
+        handleRequestWithETagAndCache(getHouryUpdateTime() . "recently-registered/{$page}");
     });
 
 Route::path(
@@ -122,7 +122,7 @@ Route::path(
 )
     ->matchNum('page', emptyAble: true)
     ->match(function () {
-        handleRequestWithETagAndCache(getHouryUpdateTime() . "recently-registered", 0, 0);
+        handleRequestWithETagAndCache(getHouryUpdateTime() . "recently-registered");
     });
 
 Route::path('admin/cookie')
@@ -139,7 +139,7 @@ Route::path(
     [TagLabsPageController::class, 'index']
 )
     ->match(function () {
-        handleRequestWithETagAndCache(getHouryUpdateTime() . "labs/tags", 0, 180);
+        handleRequestWithETagAndCache(getHouryUpdateTime() . "labs/tags");
     });
 
 Route::path(
@@ -152,7 +152,7 @@ Route::path(
     ->matchNum('page', min: 1, default: 1, emptyAble: true)
     ->matchStr('keyword', maxLen: 100, emptyAble: true)
     ->match(function (Reception $reception) {
-        handleRequestWithETagAndCache(getHouryUpdateTime() . json_encode($reception->input()), 0, 0);
+        handleRequestWithETagAndCache(getHouryUpdateTime() . json_encode($reception->input()));
     });
 
 // コメントAPI

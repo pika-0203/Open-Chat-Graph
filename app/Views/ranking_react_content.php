@@ -1,10 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-<!--
-    $_css = array
-    $_js = string
-    $_meta = Metadata
--->
 
 <head prefix="og: http://ogp.me/ns#">
     <?php echo gTag(\App\Config\AppConfig::GTAG_ID) ?>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Cron;
 
+use App\Config\AdminConfig;
 use App\Services\Admin\AdminTool;
 use App\Services\Cron\CronJson\SyncOpenChatState;
 use App\Services\OpenChat\OpenChatApiDbMergerWithParallelDownloader;
@@ -138,6 +139,8 @@ class SyncOpenChat
     {
         $this->hourlyMemberColumn->update();
         $this->hourlyMemberRanking->update();
+        purgeCacheCloudFlare(AdminConfig::CloudFlareZoneID, AdminConfig::CloudFlareZoneID);
+
         $this->rankingBanUpdater->updateRankingBanTable();
         $this->recommendUpdater->updateRecommendTables();
     }
@@ -172,6 +175,7 @@ class SyncOpenChat
         $this->state->isDailyTaskActive = false;
         $this->state->update();
         $this->dailyImageUpdate();
+        purgeCacheCloudFlare(AdminConfig::CloudFlareZoneID, AdminConfig::CloudFlareZoneID);
     }
 
     private function dailyImageUpdate()
