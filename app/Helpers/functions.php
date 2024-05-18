@@ -182,6 +182,8 @@ function handleRequestWithETagAndCache(string $content, int $maxAge = 0, int $sM
 
 function purgeCacheCloudFlare(string $zoneID, string $apiKey, ?array $files = null): string
 {
+    touch(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME);
+    
     // cURLセッションを初期化
     $ch = curl_init();
 
