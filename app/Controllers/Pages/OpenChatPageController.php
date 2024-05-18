@@ -122,7 +122,7 @@ class OpenChatPageController
 
         $emblem = $oc['emblem'] ?? 0;
         if ($emblem > 0) {
-            /** @var OfficialPageList $admin */
+            /** @var OfficialPageList $officialPageList */
             $officialPageList = app(OfficialPageList::class);
             $officialDto = $emblem === 1
                 ? $officialPageList->getListDto('1', 'スペシャルオープンチャット')[0]
