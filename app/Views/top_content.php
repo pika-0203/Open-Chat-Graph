@@ -29,7 +29,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
             </a>
-            <a style="margin: auto; font-size: 13px; color:#111;" href="/labs/cacheclear">【キャッシュの保持時間が長くなる現象(解決済)の対策】<br>各ページで最新時間のデータが表示されない場合は、こちらのリンクを押してブラウザからオプチャグラフのキャッシュを全て削除できます。</a>
         </article>
         <hr class="hr-bottom">
 

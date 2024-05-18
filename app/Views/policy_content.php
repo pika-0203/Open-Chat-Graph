@@ -12,7 +12,8 @@
         <?php echo json_encode(['openChatId' => 0, 'baseUrl' => url()], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
     </script>
     <?php viewComponent('site_header') ?>
-    <?php //viewComponent('ads/google-rectangle') ?>
+    <?php //viewComponent('ads/google-rectangle') 
+    ?>
     <main style="overflow: hidden;">
         <article class="terms">
             <h1 style="letter-spacing: 0px;">オプチャグラフについて</h1>
@@ -21,7 +22,9 @@
             <div style="margin: 2rem 0;">
                 <?php viewComponent('update_news', compact('_news')) ?>
             </div>
-            <?php //viewComponent('ads/google-rectangle') ?>
+            <a style="margin: auto; font-size: 13px; color:#111;" href="/labs/cacheclear">【キャッシュの保持時間が長くなる現象(解決済)の対策】<br>各ページで最新時間のデータが表示されない場合は、こちらのリンクを押してブラウザからオプチャグラフのキャッシュを全て削除できます。</a>
+            <?php //viewComponent('ads/google-rectangle') 
+            ?>
             <h2>サイトの目的</h2>
             <p>・ユーザーがオープンチャットを見つけて参加する機会を作る</p>
             <p>・オープンチャットの管理者が成長傾向を把握し、比較できる事で運営に役立つ</p>
@@ -57,7 +60,8 @@
                     <a href="<?php echo url('recently-registered') ?>">最近登録されたオープンチャット</a>
                 </p>
             </section>
-            <?php //viewComponent('ads/google-rectangle') ?>
+            <?php //viewComponent('ads/google-rectangle') 
+            ?>
             <section style="margin: 2rem 0;">
                 <h3 style="font-size: 14px;">公式サイトでの掲載条件</h3>
                 <p>
@@ -105,7 +109,8 @@
                     <b>オプチャグラフはLINE公式のランキング掲載基準について関与していません。ルームの審査基準等を調べるためのツールではありません。</b>
                 </p>
             </section>
-            <?php //viewComponent('ads/google-rectangle') ?>
+            <?php //viewComponent('ads/google-rectangle') 
+            ?>
             <h2>オプチャグラフ公開の経緯</h2>
             <p>
                 オプチャグラフの公開が可能になった経緯として、オプチャ公式による検索エンジンへの対応が始まった事があげられます。
@@ -151,7 +156,8 @@
             <p>オプチャグラフお問い合わせ窓口: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>
         </article>
     </main>
-    <?php //viewComponent('ads/google-rectangle') ?>
+    <?php //viewComponent('ads/google-rectangle') 
+    ?>
     <footer class="footer-elem-outer">
         <?php viewComponent('footer_inner') ?>
     </footer>

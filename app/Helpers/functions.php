@@ -162,7 +162,7 @@ function noStore()
 function handleRequestWithETagAndCache(string $content, int $maxAge = 0, int $sMaxAge = 3600)
 {
     // ETagを生成（ここではコンテンツのMD5ハッシュを使用）
-    $etag = '"' . md5($content) . '"';
+    $etag = '"' . md5($content . filemtime(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME)) . '"';
 
     // max-ageと共にCache-Controlヘッダーを設定
     header("Cache-Control: public, max-age={$maxAge}, must-revalidate");
