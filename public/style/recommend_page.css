@@ -58,6 +58,7 @@ li {
   display: block;
   white-space: break-spaces;
   margin-bottom: 4px;
+  word-break: break-all;
 }
 
 .recommend-header-bottom {

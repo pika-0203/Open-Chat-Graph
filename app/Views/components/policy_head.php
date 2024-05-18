@@ -16,4 +16,7 @@
     <script type="module" crossorigin src="/<?php echo getFilePath('js/comment', 'index-*.js') ?>"></script>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
     <link rel="canonical" hrefs="<?php echo url('policy') ?>">
+    <?php if (isset($noindex)) : ?>
+        <meta name="robots" content="noindex, nofollow">
+    <?php endif ?>
 </head>

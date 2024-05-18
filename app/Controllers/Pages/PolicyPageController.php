@@ -38,4 +38,17 @@ class PolicyPageController
         handleRequestWithETagAndCache($view->getRenderCache(), 300, 3600 * 24);
         return $view;
     }
+
+    function ads()
+    {
+        $_css = ['site_header', 'site_footer', 'room_list', 'terms', 'ads_element'];
+        $_meta = meta()->setTitle('広告について');
+        $_meta->image_url = '';
+        $desc = 'この広告は行動ターゲティング広告ではないため、クッキーの取得を行いません。サイト内のコンテンツに関連するアフィリエイトプログラム広告を自動的に表示しています。';
+        $_meta->setDescription($desc)->setOgpDescription($desc);
+
+        $view = view('ads_policy_content', compact('_meta', '_css'));
+        handleRequestWithETagAndCache($view->getRenderCache(), 300, 3600 * 24);
+        return $view;
+    }
 }

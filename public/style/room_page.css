@@ -116,6 +116,7 @@ html {
   color: #111;
   display: block;
   white-space: break-spaces;
+  word-break: break-all;
 }
 
 .link-mark {

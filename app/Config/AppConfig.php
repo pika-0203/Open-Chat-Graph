@@ -18,6 +18,7 @@ class AppConfig
     const DEFAULT_OGP_IMAGE_FILE_PATH = 'assets/ogp.png';
 
     const GTAG_ID = 'G-DBS3CW3XH5';
+    const GTM_ID = 'GTM-NTK2GPTF';
 
     const DEVICE_COOKIE_EXPIRES = 60 * 60 * 24 * 30;
 
