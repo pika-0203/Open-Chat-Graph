@@ -158,13 +158,6 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
         </aside>
 
         <hr class="hr-bottom">
-        <?php //viewComponent('ads/google-responsive') 
-        ?>
-
-        <aside class="top-ranking-list-aside">
-            <?php viewComponent('top_ranking_comment_list_hour', ['dto' => $rankingDto]) ?>
-        </aside>
-        <hr class="hr-bottom">
 
         <aside class="unset app_link open-chat-guide">
             <a href="https://openchat-jp.line.me/other/beginners_guide">

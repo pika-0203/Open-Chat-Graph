@@ -61,7 +61,6 @@ class RecommendOpenChatPageController
             ->format('G:i');
 
         $rankingDto = $staticDataGeneration->getTopPageData();
-        $rankingDto->hourlyList = array_slice($rankingDto->hourlyList, 0, 5);
         $rankingDto->dailyList = array_slice($rankingDto->dailyList, 0, 5);
 
         $recommendArray = $recommendPageList->getListDto($tag);
