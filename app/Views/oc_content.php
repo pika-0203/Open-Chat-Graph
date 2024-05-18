@@ -227,6 +227,24 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     </section>
     <hr class="hr-bottom">
 
+
+    <section class="comment-section">
+      <div style="display: flex; flex-direction: row; align-items: center; gap: 6px;">
+        <img class="openchat-item-title-img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgPreviewUrl($oc['id'], $oc['img_url']) ?>">
+        <div>
+          <h2 class="graph-title">
+            <div>オープンチャットについてのコメント</div>
+          </h2>
+          <div class="title-bar-oc-name" style="padding-right: 1.5rem;"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></div>
+        </div>
+      </div>
+      <div style="margin-bottom: 1.5rem; margin-top: 13px;">
+        <?php viewComponent('comment_desc') ?>
+      </div>
+      <div id="comment-root"></div>
+    </section>
+    <hr class="hr-bottom">
+
     <?php //viewComponent('ads/google-responsive') 
     ?>
 
@@ -268,23 +286,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
       <?php //viewComponent('ads/google-responsive') 
       ?>
     <?php endif ?>
-
-    <section class="comment-section">
-      <div style="display: flex; flex-direction: row; align-items: center; gap: 6px;">
-        <img class="openchat-item-title-img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgPreviewUrl($oc['id'], $oc['img_url']) ?>">
-        <div>
-          <h2 class="graph-title">
-            <div>オープンチャットについてのコメント</div>
-          </h2>
-          <div class="title-bar-oc-name" style="padding-right: 1.5rem;"><?php if ($oc['emblem'] === 1) : ?><span class="super-icon sp"></span><?php elseif ($oc['emblem'] === 2) : ?><span class="super-icon official"></span><?php endif ?><?php echo $oc['name'] ?></div>
-        </div>
-      </div>
-      <div style="margin-bottom: 1.5rem; margin-top: 13px;">
-        <?php viewComponent('comment_desc') ?>
-      </div>
-      <div id="comment-root"></div>
-    </section>
-    <hr class="hr-bottom">
 
     <?php //viewComponent('ads/google-responsive') 
     ?>

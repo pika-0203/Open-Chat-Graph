@@ -2,7 +2,7 @@
 <html lang="ja">
 
 <head prefix="og: http://ogp.me/ns#">
-    <?php echo gTag(\App\Config\AppConfig::GTAG_ID) ?>
+    <?php echo gTag(\App\Config\AppConfig::GTM_ID) ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <?php echo $_meta ?>

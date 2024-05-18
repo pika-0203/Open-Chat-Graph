@@ -33,19 +33,7 @@ function gTag(string $id): string
             j.async = true
             j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
             f.parentNode.insertBefore(j, f)
-        })(window, document, 'script', 'dataLayer', 'GTM-NTK2GPTF')
-        </script>
-        <!-- End Google Tag Manager -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id={$id}"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-        
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-
-            gtag('config', '{$id}');
+        })(window, document, 'script', 'dataLayer', '{$id}')
         </script>
         HTML;
 }
@@ -192,15 +180,21 @@ function handleRequestWithETagAndCache(string $content, int $maxAge = 0, int $sM
     header("ETag: $etag");
 }
 
-function purgeCacheCloudFlare(string $zoneID, string $apiKey): string
+function purgeCacheCloudFlare(string $zoneID, string $apiKey, ?array $files = null): string
 {
     // cURLセッションを初期化
     $ch = curl_init();
 
     // Cloudflare APIに送信するデータを設定
-    $data = json_encode([
-        'purge_everything' => true,
-    ]);
+    if ($files) {
+        $data = json_encode([
+            'files' => $files,
+        ]);
+    } else {
+        $data = json_encode([
+            'purge_everything' => true,
+        ]);
+    }
 
     curl_setopt($ch, CURLOPT_URL, "https://api.cloudflare.com/client/v4/zones/$zoneID/purge_cache");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

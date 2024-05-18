@@ -41,7 +41,7 @@ class IndexPageController
             $updatedAtComments = new \DateTime($dto->recentCommentList[0]['time']);
             $_updatedAt = $updatedAtHouryCron > $updatedAtComments ? $updatedAtHouryCron : $updatedAtComments;
 
-            $updatedAtComments->modify('+ 2hour');
+            $updatedAtComments->modify('+ 3hour');
             $newComment = new \DateTime() < $updatedAtComments;
         } else {
             $_updatedAt = $updatedAtHouryCron;

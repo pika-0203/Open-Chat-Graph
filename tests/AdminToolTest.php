@@ -9,7 +9,7 @@ class AdminToolTest extends TestCase
 {
     public function test()
     {
-        debug(purgeCacheCloudFlare(AdminConfig::CloudFlareZoneID, AdminConfig::CloudFlareApiKey));
+        debug(purgeCacheCloudFlare(AdminConfig::CloudFlareZoneID, AdminConfig::CloudFlareApiKey, ['https://openchat-review.me']));
 
         $this->assertTrue(true);
     }
