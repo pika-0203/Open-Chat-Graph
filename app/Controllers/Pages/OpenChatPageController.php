@@ -118,18 +118,17 @@ class OpenChatPageController
         }
 
         $dto = $staticDataGeneration->getTopPageData();
-
-        $dto->hourlyList = array_slice($dto->hourlyList, 0, 5);
         $dto->dailyList = array_slice($dto->dailyList, 0, 5);
 
-        if (($oc['emblem'] ?? 0) > 0) {
+        $emblem = $oc['emblem'] ?? 0;
+        if ($emblem > 0) {
             /** @var OfficialPageList $admin */
             $officialPageList = app(OfficialPageList::class);
-            $officialDto = $officialPageList->getListDto('1', 'スペシャルオープンチャット')[0];
-            $officialDto2 = $officialPageList->getListDto('2', '公式認証オープンチャット')[0];
+            $officialDto = $emblem === 1
+                ? $officialPageList->getListDto('1', 'スペシャルオープンチャット')[0]
+                : $officialPageList->getListDto('2', '公式認証オープンチャット')[0];
         } else {
             $officialDto = null;
-            $officialDto2 = null;
         }
 
         return view('oc_content', compact(
@@ -147,7 +146,6 @@ class OpenChatPageController
             '_hourlyRange',
             '_adminDto',
             'officialDto',
-            'officialDto2',
             'dto',
         ));
     }
