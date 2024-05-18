@@ -10,11 +10,7 @@ class AdminToolTest extends TestCase
 {
     public function test()
     {
-        //debug(purgeCacheCloudFlare(AdminConfig::CloudFlareZoneID, AdminConfig::CloudFlareApiKey, ['https://openchat-review.me']));
-        touch(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME);
-        debug(filemtime(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME));
-
-
+        debug(purgeCacheCloudFlare(AdminConfig::CloudFlareZoneID, AdminConfig::CloudFlareApiKey, /* ['https://openchat-review.me'] */));
         $this->assertTrue(true);
     }
 }
