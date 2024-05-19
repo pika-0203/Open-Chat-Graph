@@ -1,40 +1,45 @@
-.ads-element {
+.kokoku-element {
   all: unset;
-  display: block;
+  display: flex;
   width: 100%;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   word-break: break-all;
   --padding: 0 1rem;
   --paragraph-color: #aaa;
-  aspect-ratio: 0.9;
+  aspect-ratio: 1;
   color: #111;
+  width: fit-content;
 }
 
-.ads-header,
-.ads-box {
+.kokoku-header,
+.kokoku-box {
   all: unset;
   display: block;
 }
 
-.ads-header {
+.kokoku-box {
+  margin: auto;
+}
+
+.kokoku-header {
   position: relative;
 }
 
-.ads-anchor-box {
+.kokoku-anchor-box {
   all: unset;
   display: block;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
-.ads-img-box {
+.kokoku-img-box {
   width: 100%;
   display: flex;
   aspect-ratio: 1.2;
   background: rgb(250, 250, 250);
 }
 
-.ads-img {
+.kokoku-img {
   display: block;
   object-fit: cover;
   width: 100%;
@@ -43,21 +48,22 @@
   user-select: none;
 }
 
-.ads-title-box {
+.kokoku-title-box {
   display: flex;
   justify-content: space-between;
   padding: var(--padding);
   margin: 6px 0;
 }
 
-.ads-title {
+.kokoku-title {
   all: unset;
   display: block;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 135%;
+  font-weight: 500;
 }
 
-.ads-title-button {
+.kokoku-title-button {
   display: block;
   width: fit-content;
   padding: 8px;
@@ -72,7 +78,7 @@
   height: fit-content;
 }
 
-.ads-paragraph {
+.kokoku-paragraph {
   all: unset;
   display: block;
   padding: var(--padding);
@@ -81,16 +87,16 @@
   color: var(--paragraph-color);
 }
 
-.ads-box-footer {
+.kokoku-box-footer {
   all: unset;
   display: flex;
   padding: var(--padding);
   align-items: center;
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
-.ads-sponsor-name,
-.ads-pr-icon {
+.kokoku-sponsor-name,
+.kokoku-pr-icon {
   display: block;
   width: fit-content;
   font-size: 11px;
@@ -98,18 +104,18 @@
   line-height: 1.3;
 }
 
-.ads-pr-icon {
+.kokoku-pr-icon {
   border: 1px solid #efefef;
   font-size: 10px;
   padding: 1px 2px;
   border-radius: 2px;
 }
 
-.ads-sponsor-name {
+.kokoku-sponsor-name {
   margin-left: 4px;
 }
 
-.ads-info-button {
+.kokoku-info-button {
   all: unset;
   display: block;
   height: 15px;
@@ -121,7 +127,7 @@
   cursor: pointer;
 }
 
-.ads-info-button-info-svg {
+.kokoku-info-button-info-svg {
   all: unset;
   display: block;
   height: 13px;
@@ -132,22 +138,29 @@
 }
 
 @media screen and (min-width: 512px) {
-  .ads-element {
+  .kokoku-element {
     --padding: 0;
     --paragraph-color: #777;
+    aspect-ratio: unset;
+    margin: 1rem auto 0.5rem auto;
   }
 
-  .ads-img,
-  .ads-img-box {
+  .kokoku-box {
+    margin: 0 1rem;
+    padding: 0 16.5%;
+  }
+
+  .kokoku-img,
+  .kokoku-img-box {
     border-radius: 7px;
   }
 
-  .ads-title-button:hover {
+  .kokoku-title-button:hover {
     background: rgb(250, 250, 250);
   }
 
-  .ads-title:hover,
-  .ads-header:has(.ads-img:hover) .ads-title {
+  .kokoku-title:hover,
+  .kokoku-header:has(.kokoku-img:hover) .kokoku-title {
     text-decoration: underline;
   }
 }

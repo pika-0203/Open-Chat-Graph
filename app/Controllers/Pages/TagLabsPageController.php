@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
+use App\Models\AdsRepositories\AdsRepository;
 use App\Services\StaticData\StaticDataFile;
 use App\Views\Schema\PageBreadcrumbsListSchema;
 
@@ -13,6 +14,7 @@ class TagLabsPageController
     function index(
         StaticDataFile $staticDataGeneration,
         PageBreadcrumbsListSchema $pageBreadcrumbsListSchema,
+        ?string $isAdminPage,
     ) {
         $_css = ['room_list', 'site_header', 'site_footer'];
         $_meta = meta()->setTitle('タグで見るトレンド動向')->setDescription('タグによる分類を用いたトレンド分析では、単純ながらも重要な増減数や合計人数の集計を行います。これにより、各トピックの人気度やその変動を捉えることができます。');
@@ -36,6 +38,16 @@ class TagLabsPageController
         $categories = array_flip(AppConfig::OPEN_CHAT_CATEGORY);
         $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
 
+        if (adminMode(isset($isAdminPage))) {
+            /** @var AdsRepository $adsRepo */
+            $adsRepo = app(AdsRepository::class);
+            $adsList = $adsRepo->getAdsListAll();
+            $adsTagMap = $adsRepo->getTagMapAll();
+        } else {
+            $adsList = null;
+            $adsTagMap = null;
+        }
+
         return view('tags_content', compact(
             '_meta',
             '_css',
@@ -43,6 +55,9 @@ class TagLabsPageController
             'tagsGroup',
             'categories',
             '_updatedAt',
+            'isAdminPage',
+            'adsList',
+            'adsTagMap',
         ));
     }
 }

@@ -21,26 +21,38 @@ function memberCount(int $count)
 
 <body class="body">
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
-    <?php //viewComponent('ads/google-responsive') ?>
+    <?php //viewComponent('ads/google-responsive') 
+    ?>
     <main style="margin-bottom: 0; padding: 1rem;">
         <div style="position: absolute; top: -3.5rem;" aria-hidden="true" id="top"></div>
-        <p style="font-size: 13px; color: #777">各タグを、近そうなカテゴリに分類して表示しています。タグ内のルームは様々なカテゴリに属しています。</p>
-        <p style="font-size: 13px; color: #777">タグを探すときは、ブラウザの機能でページ内のテキストを検索してください。</p>
-        <aside class="list-aside ranking-desc" style="margin: 1rem 0;">
-            <details class="icon-desc">
-                <summary style="font-size: 14px;">タグ内の人数集計について</summary>
-                <p class="recommend-desc">
-                    タグ内の合計は、全ルームの合計人数です。<br>1H（1時間）、24H（24時間）、1W（1週間）は各期間における全ルームの合計人数増減です。
-                </p>
-                <p class="recommend-desc">
-                    集計は1時間ごとに更新されます。（合計人数、1H、24H）<br>1Wのみ1日ごと（0:00頃）の更新です。
-                </p>
-                <p class="recommend-desc">
-                    集計の対象は、公式ランキングに掲載中のルームのみです。<br>（人数が10人未満、または1週間以上人数の変動が無いルームは対象外）
-                </p>
-            </details>
-        </aside>
-        <?php viewComponent('recommend_tag_desc') ?>
+
+        <?php if (isset($isAdminPage) && isset($adsTagMap)) : ?>
+            <p>
+                <a href="<?php echo url('ads') ?>">広告</a>
+            </p>
+            <p style="font-size: 13px;">
+                設定済: <?php echo count($adsTagMap) ?>件
+            </p>
+        <?php else : ?>
+            <p style="font-size: 13px; color: #777">各タグを、近そうなカテゴリに分類して表示しています。タグ内のルームは様々なカテゴリに属しています。</p>
+            <p style="font-size: 13px; color: #777">タグを探すときは、ブラウザの機能でページ内のテキストを検索してください。</p>
+            <aside class="list-aside ranking-desc" style="margin: 1rem 0;">
+                <details class="icon-desc">
+                    <summary style="font-size: 14px;">タグ内の人数集計について</summary>
+                    <p class="recommend-desc">
+                        タグ内の合計は、全ルームの合計人数です。<br>1H（1時間）、24H（24時間）、1W（1週間）は各期間における全ルームの合計人数増減です。
+                    </p>
+                    <p class="recommend-desc">
+                        集計は1時間ごとに更新されます。（合計人数、1H、24H）<br>1Wのみ1日ごと（0:00頃）の更新です。
+                    </p>
+                    <p class="recommend-desc">
+                        集計の対象は、公式ランキングに掲載中のルームのみです。<br>（人数が10人未満、または1週間以上人数の変動が無いルームは対象外）
+                    </p>
+                </details>
+            </aside>
+            <?php viewComponent('recommend_tag_desc') ?>
+        <?php endif ?>
+
         <article class="top-ranking" style="padding:1rem 0; margin-top: 1rem; margin-bottom: 1rem; position: relative;">
             <div>
                 <header class="openchat-list-title-area unset">
@@ -76,7 +88,7 @@ function memberCount(int $count)
                     </header>
                     <ul class="tag-list open">
                         <?php foreach ($tagsGroup[$key] as $tag) : ?>
-                            <li>
+                            <li style="flex-direction: column;">
                                 <a class="tag-btn" style="height: unset; padding: 4px 14px;" href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($tag['tag']))) ?>">
                                     <div>
                                         <div style="line-height: 1.3;"><?php echo \App\Services\Recommend\RecommendUtility::extractTag($tag['tag']) ?></div>
@@ -94,6 +106,25 @@ function memberCount(int $count)
                                         <small style="display:block; margin-left:4px;line-height: 1.3;"><?php memberCount($tag['week'] ?? 0) ?></small>
                                     </div>
                                 </a>
+                                <?php if ($isAdminPage && isset($adsList)) : ?>
+                                    <?php $tagsMapAdsId = ($adsTagMap[htmlspecialchars_decode($tag['tag'])] ?? 0) ?>
+
+                                    <div style="width: 150px;">
+                                        <p style="font-size: 11px; overflow: hidden; text-overflow: ellipsis; text-wrap:nowrap; margin: 0px 0;"><?php echo isset($adsList[$tagsMapAdsId]) ? '設定済:' . $adsList[$tagsMapAdsId] : '未設定' ?></p>
+                                    </div>
+
+                                    <form class="updateTagsMapForms" style="all: unset; display:flex; max-width: 100%; margin: 0px 0 1rem 0;" method="POST" action="/ads/update-tagmap">
+                                        <input type="hidden" value="<?php echo $tag['tag'] ?>" name="tag">
+                                        <select style="font-size: 13px; max-width: 130px; margin:0; padding: 0;" name="ads_id">
+                                            <option value="0" selected></option>
+                                            <?php foreach ($adsList as $adsId => $adsItem) : ?>
+                                                <option value="<?php echo $adsId ?>" <?php if ($adsId === $tagsMapAdsId) echo 'selected' ?>><?php echo $adsId . ',' . $adsItem ?></option>
+                                            <?php endforeach ?>
+                                        </select>
+                                        <input type="submit" style="padding: 0; margin: 0; font-size: 12px; margin-left: 6px;">
+                                    </form>
+
+                                <?php endif ?>
                             </li>
                         <?php endforeach ?>
                     </ul>
@@ -108,6 +139,27 @@ function memberCount(int $count)
     </footer>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
     <?php echo $_meta->generateTopPageSchema() ?>
+    <?php if ($isAdminPage && isset($adsList)) : ?>
+        <script>
+            document.querySelectorAll('.updateTagsMapForms').forEach(el => {
+                el.addEventListener('submit', e => {
+                    e.preventDefault()
+                    const body = new FormData(el)
+                    fetch(el.action, {
+                            method: 'POST',
+                            body
+                        }).then(res => {
+                            if (!res.ok)
+                                return res.json()
+
+                            location.reload()
+                        })
+                        .then(error => error && alert(error))
+                        .catch(error => alert(error))
+                })
+            })
+        </script>
+    <?php endif ?>
 </body>
 
 </html>

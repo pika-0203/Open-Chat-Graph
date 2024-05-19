@@ -3,6 +3,7 @@
 namespace App\Config;
 
 use App\Controllers\Api\AdminEndPointController;
+use App\Controllers\Api\AdsRegistrationApiController;
 use App\Controllers\Api\CommentLikePostApiController;
 use App\Controllers\Api\CommentListApiController;
 use App\Controllers\Api\CommentPostApiController;
@@ -14,6 +15,7 @@ use App\Controllers\Api\OpenChatRankingPageApiController;
 use App\Controllers\Api\OpenChatRegistrationApiController;
 use App\Controllers\Api\RankingPositionApiController;
 use App\Controllers\Api\MyListApiController;
+use App\Controllers\Pages\AdsRegistrationPageController;
 use App\Controllers\Pages\OpenChatPageController;
 use App\Controllers\Pages\RankingBanLabsPageController;
 use App\Controllers\Pages\ReactRankingPageController;
@@ -44,15 +46,6 @@ Route::path('/')
 Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
     ->matchNum('open_chat_id', min: 1)
     ->match(fn (int $open_chat_id) => handleRequestWithETagAndCache(getHouryUpdateTime() . $open_chat_id));
-
-Route::path('oc/{open_chat_id}/admin', [OpenChatPageController::class, 'index'])
-    ->matchNum('open_chat_id', min: 1)
-    ->match(
-        function (AdminAuthService $adminAuthService) {
-            sessionStart();
-            return $adminAuthService->auth() ? ['isAdmin' => '1'] : false;
-        }
-    );
 
 Route::path('oc/{open_chat_id}/csv', [OpenChatPageController::class, 'csv'])
     ->matchNum('open_chat_id', min: 1)
@@ -125,19 +118,11 @@ Route::path(
         handleRequestWithETagAndCache(getHouryUpdateTime() . "recently-registered");
     });
 
-Route::path('admin/cookie')
-    ->match(function (AdminAuthService $adminAuthService, ?string $key) {
-        sessionStart();
-        if (!$adminAuthService->registerAdminCookie($key)) {
-            return false;
-        }
-        return redirect();
-    });
-
 Route::path(
     'labs/tags',
     [TagLabsPageController::class, 'index']
 )
+    ->matchStr('ads', emptyAble: true)
     ->match(function () {
         handleRequestWithETagAndCache(getHouryUpdateTime() . "labs/tags");
     });
@@ -193,6 +178,15 @@ Route::path(
     ->matchNum('comment_id', min: 1)
     ->matchStr('token');
 
+Route::path('admin/cookie')
+    ->match(function (AdminAuthService $adminAuthService, ?string $key) {
+        sessionStart();
+        if (!$adminAuthService->registerAdminCookie($key)) {
+            return false;
+        }
+        return redirect();
+    });
+
 Route::path(
     'admin-api@post',
     [AdminEndPointController::class, 'index']
@@ -205,6 +199,70 @@ Route::path(
     ->matchNum('id')
     ->matchNum('commentId')
     ->matchNum('flag', min: 0, max: 3);
+
+Route::path(
+    'oc/{open_chat_id}/admin',
+    [OpenChatPageController::class, 'index']
+)
+    ->matchNum('open_chat_id', min: 1)
+    ->match(fn () => ['isAdminPage' => '1']);
+
+Route::path(
+    'ads/register@post',
+    [AdsRegistrationApiController::class, 'register']
+)
+    ->matchStr('ads_title')
+    ->matchStr('ads_sponsor_name')
+    ->matchStr('ads_paragraph', emptyAble: true)
+    ->matchStr('ads_href')
+    ->matchStr('ads_img_url')
+    ->matchStr('ads_title_button');
+
+Route::path(
+    'ads/update@post',
+    [AdsRegistrationApiController::class, 'update']
+)
+    ->matchNum('id', min: 1)
+    ->matchStr('ads_title')
+    ->matchStr('ads_sponsor_name')
+    ->matchStr('ads_paragraph', emptyAble: true)
+    ->matchStr('ads_href')
+    ->matchStr('ads_img_url')
+    ->matchStr('ads_title_button');
+
+Route::path(
+    'ads/delete@post',
+    [AdsRegistrationApiController::class, 'delete']
+)
+    ->matchNum('id', min: 1);
+
+Route::path(
+    'ads/update-tagmap@post',
+    [AdsRegistrationApiController::class, 'updateTagsMap']
+)
+    ->matchNum('ads_id')
+    ->matchStr('tag');
+
+Route::path(
+    'ads/tags@post',
+    [AdsRegistrationApiController::class, 'updateTagsMap']
+)
+    ->matchNum('id', min: 1)
+    ->matchStr('tag');
+
+Route::path(
+    'ads',
+    [AdsRegistrationPageController::class, 'index']
+)
+    ->matchNum('id', emptyAble: true);
+
+Route::path(
+    'labs/tags/ads',
+    [TagLabsPageController::class, 'index']
+)
+    ->match(function () {
+        return ['isAdminPage' => '1'];
+    });
 
 cache();
 Route::run();

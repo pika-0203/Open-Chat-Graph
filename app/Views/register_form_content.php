@@ -14,7 +14,8 @@
     <?php viewComponent('site_header') ?>
     <main style="padding: 0 1rem;" style="overflow: hidden;">
         <h2>オプチャグラフにオープンチャットを手動で登録する</h2>
-        <?php //viewComponent('ads/google-responsive') ?>
+        <?php //viewComponent('ads/google-responsive') 
+        ?>
         <p>
             公式ランキングに掲載されているオープンチャットはオプチャグラフに自動登録されます。
         </p>
@@ -30,8 +31,12 @@
                 <li>ページのURLをアドレスバーからコピーする</li>
                 <li>下記フォームに貼り付けて登録する</li>
             </ul>
+            <p>
+                公式サイトの検索機能でヒットしない場合、Google検索などで見つかる場合があります。
+            </p>
         </section>
-        <?php //viewComponent('ads/google-responsive') ?>
+        <?php //viewComponent('ads/google-responsive') 
+        ?>
         <!-- 送信後のレスポンス -->
         <?php if (session()->has('id')) : ?>
             <!-- 登録完了 or 登録済 -->
@@ -65,6 +70,9 @@
             <p>登録に使用できるのは招待用のURLではなく、公式サイトのURLです。</p>
             <button type="submit" name="submit" class="ellipse-btn add-openchat" disabled>登録する</button>
         </form>
+        <p>
+            公式サイトに掲載されていないオープンチャットや、そのURLがわからない場合は登録ができません。
+        </p>
     </main>
     <footer style="all: unset; display:block; padding:1rem;">
         <?php viewComponent('footer_inner') ?>

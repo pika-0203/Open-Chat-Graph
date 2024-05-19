@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
+use App\Models\AdsRepositories\AdsRepository;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
+use App\Services\Admin\AdminAuthService;
 use App\Services\OpenChatAdmin\AdminOpenChat;
 use App\Services\Recommend\OfficialPageList;
 use App\Services\Recommend\RecommendGenarator;
@@ -32,8 +34,9 @@ class OpenChatPageController
         RecommendGenarator $recommendGenarator,
         StaticDataFile $staticDataGeneration,
         RecentCommentListRepositoryInterface $recentCommentListRepository,
+        AdsRepository $adsRepository,
         int $open_chat_id,
-        ?string $isAdmin,
+        ?string $isAdminPage,
     ) {
         $recommend = $recommendGenarator->getRecommend($open_chat_id);
         $oc = $ocRepo->getOpenChatById($open_chat_id);
@@ -60,7 +63,7 @@ class OpenChatPageController
 
         $oc += $statisticsViewUtility->getOcPageArrayElementMemberDiff($_statsDto);
 
-        $_css = ['room_list', 'site_header', 'site_footer', 'recommend_page', 'room_page', 'react/OpenChat', 'graph_page'];
+        $_css = ['room_list', 'site_header', 'site_footer', 'recommend_page', 'room_page', 'react/OpenChat', 'graph_page', 'ads_element'];
 
         $_meta = $meta->generateMetadata($open_chat_id, $oc)
             ->setImageUrl(imgUrl($oc['id'], $oc['img_url']));
@@ -109,7 +112,7 @@ class OpenChatPageController
             $_hourlyRange = null;
         }
 
-        if (isset($isAdmin)) {
+        if (adminMode(isset($isAdminPage))) {
             /** @var AdminOpenChat $admin */
             $admin = app(AdminOpenChat::class);
             $_adminDto = $admin->getDto($open_chat_id);
@@ -117,8 +120,8 @@ class OpenChatPageController
             $_adminDto = null;
         }
 
-        $dto = $staticDataGeneration->getTopPageData();
-        $dto->dailyList = array_slice($dto->dailyList, 0, 5);
+        $topPagedto = $staticDataGeneration->getTopPageData();
+        $topPagedto->dailyList = array_slice($topPagedto->dailyList, 0, 5);
 
         $emblem = $oc['emblem'] ?? 0;
         if ($emblem > 0) {
@@ -130,6 +133,11 @@ class OpenChatPageController
         } else {
             $officialDto = null;
         }
+
+        if ($recommend[2])
+            $adsDto = $adsRepository->getAdsByTag($recommend[2]);
+        else
+            $adsDto = false;
 
         return view('oc_content', compact(
             '_meta',
@@ -146,7 +154,8 @@ class OpenChatPageController
             '_hourlyRange',
             '_adminDto',
             'officialDto',
-            'dto',
+            'topPagedto',
+            'adsDto',
         ));
     }
 

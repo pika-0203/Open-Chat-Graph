@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use App\Config\AppConfig;
+use App\Services\Admin\AdminAuthService;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
+use Shared\Exceptions\NotFoundException;
 
 /**
  * Inserts HTML line breaks before all newlines in a string.
@@ -183,7 +185,7 @@ function handleRequestWithETagAndCache(string $content, int $maxAge = 0, int $sM
 function purgeCacheCloudFlare(string $zoneID, string $apiKey, ?array $files = null): string
 {
     touch(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME);
-    
+
     // cURLセッションを初期化
     $ch = curl_init();
 
@@ -506,4 +508,17 @@ function sessionStart(): bool
     }
 
     return session_start();
+}
+
+function adminMode(bool $isAdmin): bool
+{
+    if (!$isAdmin) return false;
+    noStore();
+
+    /** @var AdminAuthService $adminAuthService */
+    $adminAuthService = app(AdminAuthService::class);
+    if (!$adminAuthService->auth())
+        throw new NotFoundException;
+
+    return true;
 }

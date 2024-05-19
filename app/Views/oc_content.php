@@ -229,6 +229,10 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     </section>
     <hr class="hr-bottom">
 
+    <?php if ($adsDto) : ?>
+      <?php $adsDto->echoAdsElement() ?>
+    <?php endif ?>
+
     <?php //viewComponent('ads/google-responsive') 
     ?>
 
@@ -287,7 +291,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     ?>
 
     <aside class="recommend-list-aside">
-      <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
+      <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $topPagedto]) ?>
     </aside>
     <hr class="hr-bottom">
     <?php //viewComponent('ads/google-responsive') 
