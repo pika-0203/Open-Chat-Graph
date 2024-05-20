@@ -39,7 +39,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
             <div class="more-separater">&nbsp;</div>
             <button class="unset more-text" style="font-weight: bold; color: #111;" title="もっと見る">…もっと見る</button>
           </div>
-          <script>
+          <script async>
             (function() {
               // 説明文の続きを読むボタン
               const readMoreBtn = document.getElementById('read_more_btn')
@@ -184,7 +184,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
       <div style="position: relative; margin: auto; padding-bottom: 1rem" id="graph-box">
         <div class="chart-canvas-box" id="dummy-canvas"></div>
         <div id="app"></div>
-        <script type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
+        <script async type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
       </div>
 
       <nav style="padding-bottom: 0;" class="oc-desc-nav <?php if (!is_int($oc['api_created_at'])) echo 'no-ranking' ?>">
