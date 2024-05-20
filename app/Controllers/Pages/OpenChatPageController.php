@@ -7,6 +7,7 @@ namespace App\Controllers\Pages;
 use App\Config\AppConfig;
 use App\Models\AdsRepositories\AdsRepository;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
+use App\Models\RecommendRepositories\RecommendRankingRepository;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
 use App\Services\OpenChatAdmin\AdminOpenChat;
 use App\Services\Recommend\Dto\RecommendListDto;
@@ -24,8 +25,15 @@ use Shadow\DB;
 
 class OpenChatPageController
 {
-    private function deletedResponse(string $tag, int $open_chat_id)
+    private function deletedResponse(RecommendGenarator $recommendGenarator, int $open_chat_id)
     {
+        /** @var RecommendRankingRepository $repo */
+        $repo = app(RecommendRankingRepository::class);
+        $tag = $repo->getRecommendTag($open_chat_id);
+        if (!$tag)
+            return false;
+
+
         $_meta = meta()->setTitle("「{$tag}」タグ ID:{$open_chat_id} （オプチャグラフから削除済み）")
             ->setDescription("「{$tag}」タグ ID:{$open_chat_id} （オプチャグラフから削除済み）")
             ->setOgpDescription("「{$tag}」タグのオープンチャット ID:{$open_chat_id} （オプチャグラフから削除済み）");
@@ -33,6 +41,9 @@ class OpenChatPageController
 
         $_deleted = DB::fetch("SELECT * FROM open_chat_deleted WHERE id = :open_chat_id", compact('open_chat_id'));
         if (!$_deleted) return false;
+
+        [$tag2, $tag3] = $repo->getTags($open_chat_id);
+        $recommend = $recommendGenarator->getRecommend($tag, $tag2 ?: null, $tag3 ?: null, null);
 
         return view('errors/oc_error', compact('_meta', '_css', 'recommend', 'open_chat_id', '_deleted'));
     }
@@ -89,14 +100,10 @@ class OpenChatPageController
     ) {
         $_adminDto = isset($isAdminPage) && adminMode() ? $this->getAdminDto($open_chat_id) : null;
         $oc = $ocRepo->getOpenChatById($open_chat_id);
-        if (!$oc) return false;
-        
+        if (!$oc) return $this->deletedResponse($recommendGenarator, $open_chat_id);
+
         $recommend = $recommendGenarator->getRecommend($oc['tag1'], $oc['tag2'], $oc['tag3'], $oc['category']);
         $tag = $recommend[2];
-        
-        if (!$oc) {
-            return $tag ? $this->deletedResponse($tag, $open_chat_id) : false;
-        }
 
         $_statsDto = $statisticsChartArrayService->buildStatisticsChartArray($open_chat_id);
         if (!$_statsDto)

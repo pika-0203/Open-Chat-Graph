@@ -18,7 +18,7 @@ class RecommendStaticDataGenerator
     function __construct(
         private RecommendRankingRepository $recommendRankingRepository,
         private CategoryRankingRepository $categoryRankingRepository,
-        private OfficialRoomRankingRepository $recommendPageRepository,
+        private OfficialRoomRankingRepository $officialRoomRankingRepository,
         private RecommendRankingBuilder $recommendRankingBuilder,
         private RecommendUpdater $recommendUpdater,
     ) {
@@ -56,7 +56,7 @@ class RecommendStaticDataGenerator
             RecommendListType::Official,
             (string)$emblem,
             $listName,
-            $this->recommendPageRepository
+            $this->officialRoomRankingRepository
         ) : false;
     }
 
