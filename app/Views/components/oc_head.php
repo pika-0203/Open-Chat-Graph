@@ -13,6 +13,15 @@
         <link rel="stylesheet" href="<?php echo fileUrl("style/{$css}.css") ?>">
     <?php endforeach ?>
     <link rel="icon" type="image/png" href="<?php echo url(\App\Config\AppConfig::SITE_ICON_FILE_PATH) ?>">
+    <script type="application/json" id="chart-arg">
+        <?php echo json_encode($_chartArgDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
+    </script>
+    <script type="application/json" id="stats-dto">
+        <?php echo json_encode($_statsDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
+    </script>
+    <script type="application/json" id="comment-app-init-dto">
+        <?php echo json_encode($_commentArgDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
+    </script>
     <script async type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
     <script async type="module" crossorigin src="/<?php echo getFilePath('js/comment', 'index-*.js') ?>"></script>
     <link rel="canonical" hrefs="<?php echo url(strstr(path(), '?', true) ?: path()) ?>">

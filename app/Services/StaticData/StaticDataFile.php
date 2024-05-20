@@ -10,22 +10,30 @@ use App\Views\Dto\RankingArgDto;
 
 class StaticDataFile
 {
+    private function checkUpdatedAt(string $hourlyUpdatedAt)
+    {
+        if (!$hourlyUpdatedAt === getHouryUpdateTime())
+            noStore();
+    }
+
     function getTopPageData(): StaticTopPageDto
     {
         $data = getUnserializedFile('static_data_top/ranking_list.dat');
-        //$data = null;
+
+        /** @var StaticTopPageDto $data */
         if (!$data) {
             /** @var StaticDataGenerator $staticDataGenerator */
             $staticDataGenerator = app(StaticDataGenerator::class);
             return $staticDataGenerator->getTopPageDataFromDB();
         }
 
+        $this->checkUpdatedAt($data->hourlyUpdatedAt->format('Y-m-d H:i:s'));
         return $data;
     }
 
     function getRankingArgDto(): RankingArgDto
     {
-        /** @var StaticTopPageDto $data */
+        /** @var RankingArgDto $data */
         $data = getUnserializedFile('static_data_top/ranking_arg_dto.dat');
         //$data = null;
         if (!$data) {
@@ -36,6 +44,7 @@ class StaticDataFile
 
         $data->baseUrl = url();
 
+        $this->checkUpdatedAt($data->hourlyUpdatedAt);
         return $data;
     }
 
@@ -50,6 +59,7 @@ class StaticDataFile
             $data = $staticDataGenerator->getRecommendPageDto();
         }
 
+        $this->checkUpdatedAt($data->hourlyUpdatedAt);
         return $data;
     }
 
@@ -58,12 +68,16 @@ class StaticDataFile
     {
         /** @var array $data */
         $data = getUnserializedFile('static_data_top/tag_list.dat');
-        //$data = null;
+
         if (!$data) {
             /** @var StaticDataGenerator $staticDataGenerator */
             $staticDataGenerator = app(StaticDataGenerator::class);
             $data = $staticDataGenerator->getTagList();
         }
+
+        $time = getStorageFileTime('static_data_top/tag_list.dat');
+        if (!$time || new \DateTime('@' . $time) < new \DateTime(getHouryUpdateTime()))
+            noStore();
 
         return $data;
     }

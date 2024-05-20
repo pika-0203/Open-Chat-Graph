@@ -18,6 +18,7 @@ use App\Models\UserLogRepositories\UserLogRepository;
 use App\Services\OpenChat\OpenChatDailyCrawling;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
+use App\Services\Recommend\StaticData\RecommendStaticDataGenerator;
 use App\Services\SitemapGenerator;
 use App\Services\UpdateHourlyMemberRankingService;
 use Shadow\Kernel\Validator;
@@ -109,16 +110,10 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'cookie取得完了', 'message' => 'アクセス用のcookieを取得しました']);
     }
 
-    function generank(UpdateRankingService $updateRankingService)
-    {
-        $updateRankingService->update(OpenChatServicesUtility::getCronModifiedStatsMemberDate());
-
-        return view('admin/admin_message_page', ['title' => 'updateStaticData done', 'message' => 'updateStaticData done']);
-    }
-
-    function genetop(StaticDataGenerator $staticDataGenerator)
+    function genetop(StaticDataGenerator $staticDataGenerator, RecommendStaticDataGenerator $recommendStaticDataGenerator)
     {
         $staticDataGenerator->updateStaticData();
+        $recommendStaticDataGenerator->updateStaticData();
 
         return view('admin/admin_message_page', ['title' => 'updateStaticData done', 'message' => 'updateStaticData done']);
     }

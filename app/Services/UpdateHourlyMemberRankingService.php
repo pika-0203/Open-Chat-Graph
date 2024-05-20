@@ -8,12 +8,14 @@ use App\Config\AppConfig;
 use App\Models\Repositories\RankingPosition\HourMemberRankingUpdaterRepositoryInterface;
 use App\Models\Repositories\RankingPosition\RankingPositionHourRepositoryInterface;
 use App\Models\Repositories\Statistics\StatisticsRepositoryInterface;
+use App\Services\Recommend\StaticData\RecommendStaticDataGenerator;
 use App\Services\StaticData\StaticDataGenerator;
 
 class UpdateHourlyMemberRankingService
 {
     function __construct(
         private StaticDataGenerator $staticDataGenerator,
+        private RecommendStaticDataGenerator $recommendStaticDataGenerator,
         private HourMemberRankingUpdaterRepositoryInterface $hourMemberRankingUpdaterRepository,
         private RankingPositionHourRepositoryInterface $rankingPositionHourRepository,
         private StatisticsRepositoryInterface $statisticsRepository,
@@ -55,5 +57,6 @@ class UpdateHourlyMemberRankingService
     {
         safeFileRewrite(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME, $time);
         $this->staticDataGenerator->updateStaticData();
+        $this->recommendStaticDataGenerator->updateStaticData();
     }
 }

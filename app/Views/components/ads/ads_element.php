@@ -4,9 +4,9 @@
             <a class="kokoku-info-button" aria-label="広告について" href="<?php echo url('policy/ads') ?>">
                 <span class="kokoku-info-button-info-svg"></span>
             </a>
-            <a class="kokoku-anchor-box ads_href" href="<?php /** @var App\Views\Dto\AdsDto $dto */ echo $dto->ads_href ?>">
+            <a class="kokoku-anchor-box ads_href" href="<?php /** @var App\Views\Dto\AdsDto $dto */ echo $dto->ads_href ?>" rel="nofollow">
                 <div class="kokoku-img-box">
-                    <img class="kokoku-img ads_img_url" src="<?php echo $dto->ads_img_url ?>" loading="lazy" />
+                    <img class="kokoku-img ads_img_url" src="<?php echo $dto->ads_img_url ?>" loading="lazy" alt="<?php echo $dto->ads_sponsor_name ?>" />
                 </div>
                 <div class="kokoku-title-box">
                     <h3 class="kokoku-title ads_title"><?php echo $dto->ads_title ?></h3>

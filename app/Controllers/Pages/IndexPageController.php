@@ -33,7 +33,6 @@ class IndexPageController
             $dto->hourlyUpdatedAt
         );
 
-
         $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChatAll(0, 15);
         $updatedAtHouryCron = $dto->rankingUpdatedAt;
 
@@ -55,8 +54,8 @@ class IndexPageController
 
         $tags = $dto->recommendList ?? [];
 
-        $officialDto = $officialPageList->getListDto('1', 'スペシャルオープンチャット')[0];
-        $officialDto2 = $officialPageList->getListDto('2', '公式認証オープンチャット')[0];
+        $officialDto = $officialPageList->getListDto(1)[0];
+        $officialDto2 = $officialPageList->getListDto(2)[0];
 
         return view('top_content', compact(
             '_meta',

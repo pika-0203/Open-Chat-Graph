@@ -19,21 +19,16 @@ class RecommendListDto
         public array $day,
         public array $week,
         public array $member,
+        public string $hourlyUpdatedAt
     ) {
         $elements = array_column(array_merge($hour, $day, $week, $member), 'member');
         $this->maxMemberCount = $elements ? max($elements) : 0;
     }
 
     /** @return array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int }[] */
-    function getList(bool $shuffle = true, ?int $limit = AppConfig::RECOMMEND_LIST_LIMIT): array
+    function getList(bool $shuffle = true): array
     {
-        if (!$shuffle && $limit) {
-            return array_slice(
-                array_merge($this->hour, $this->day, $this->week, $this->member),
-                0,
-                $limit
-            );
-        } elseif (!$shuffle && !$limit) {
+        if (!$shuffle) {
             return array_merge($this->hour, $this->day, $this->week, $this->member);
         }
 

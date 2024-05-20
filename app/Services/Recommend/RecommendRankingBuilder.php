@@ -59,7 +59,8 @@ class RecommendRankingBuilder
             $ranking,
             $ranking2,
             $ranking3,
-            $ranking4
+            $ranking4,
+            file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME)
         );
 
         return $dto->maxMemberCount ? $dto : false;

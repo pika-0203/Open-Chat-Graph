@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\StaticData;
 
 use App\Config\AppConfig;
-use App\Models\RecommendRepositories\RecommendPageRepository;
+use App\Models\RecommendRepositories\RecommendRankingRepository;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
 use App\Services\Recommend\TopPageRecommendList;
 use App\Services\StaticData\Dto\StaticRecommendPageDto;
@@ -17,7 +17,7 @@ class StaticDataGenerator
     function __construct(
         private OpenChatListRepositoryInterface $openChatListRepository,
         private TopPageRecommendList $topPageRecommendList,
-        private RecommendPageRepository $recommendPageRepository,
+        private RecommendRankingRepository $recommendPageRepository,
     ) {
     }
 
@@ -28,7 +28,7 @@ class StaticDataGenerator
         $dto->hourlyList = $this->openChatListRepository->findMemberStatsHourlyRanking(0, AppConfig::TOP_RANKING_LIST_LIMIT);
         $dto->dailyList = $this->openChatListRepository->findMemberStatsDailyRanking(0, AppConfig::TOP_RANKING_LIST_LIMIT);
         $dto->weeklyList = $this->openChatListRepository->findMemberStatsPastWeekRanking(0, AppConfig::TOP_RANKING_LIST_LIMIT);
-        $dto->popularList = $this->openChatListRepository->findMemberCountRanking(AppConfig::TOP_RANKING_LIST_LIMIT,[]);
+        $dto->popularList = $this->openChatListRepository->findMemberCountRanking(AppConfig::TOP_RANKING_LIST_LIMIT, []);
         $dto->recentCommentList = [];
         $dto->recommendList = $this->topPageRecommendList->getList(30);
 
@@ -36,7 +36,11 @@ class StaticDataGenerator
         $dto->dailyUpdatedAt = new \DateTime(file_get_contents(AppConfig::DAILY_CRON_UPDATED_AT_DATE));
         $dto->rankingUpdatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
 
-        $dto->tagCount = array_sum(array_map(fn ($el) => count($el), getUnserializedFile('static_data_top/tag_list.dat')));
+        $tagList = getUnserializedFile('static_data_top/tag_list.dat');
+        if (!$tagList)
+            $tagList = $this->getTagList();
+
+        $dto->tagCount = array_sum(array_map(fn ($el) => count($el), $tagList));
 
         return $dto;
     }
@@ -55,9 +59,11 @@ class StaticDataGenerator
     function getRecommendPageDto(): StaticRecommendPageDto
     {
         $tagList = getUnserializedFile('static_data_top/tag_list.dat');
+        if (!$tagList)
+            $tagList = $this->getTagList();
 
         $dto = new StaticRecommendPageDto;
-        $dto->rankingUpdatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
+        $dto->hourlyUpdatedAt = file_get_contents(AppConfig::HOURLY_CRON_UPDATED_AT_DATETIME);
         $dto->tagCount = array_sum(array_map(fn ($el) => count($el), $tagList));
 
         $dto->tagRecordCounts = [];

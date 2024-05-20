@@ -4,6 +4,8 @@
 
 use App\Config\AppConfig;
 
+/** @var \App\Services\StaticData\Dto\StaticRecommendPageDto $_dto */
+
 $_tagIndex = htmlspecialchars_decode($tag);
 if (isset($_dto->tagRecordCounts[$_tagIndex])) {
     $countTitle = ((int)$_dto->tagRecordCounts[$_tagIndex]) > $count ? 'TOP' . $count : '全' . $count . '件';
@@ -11,7 +13,6 @@ if (isset($_dto->tagRecordCounts[$_tagIndex])) {
     $countTitle = '';
 }
 
-/** @var \App\Services\StaticData\Dto\StaticRecommendPageDto $_dto */
 viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_meta->generateTags(true), 'titleP' => true]) ?>
 
 <body>
@@ -40,9 +41,11 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
                 <?php endif ?>
                 <div class="recommend-header-bottom">
                     <div class="recommend-data-desc">統計に基づくランキング</div>
-                    <div class="recommend-header-time">
-                        <time datetime="<?php echo $_dto->rankingUpdatedAt->format(\DateTime::ATOM) ?>"><?php echo $_dto->rankingUpdatedAt->format('Y年n月j日 G:i') ?></time>
-                    </div>
+                    <?php if (isset($hourlyUpdatedAt)) : ?>
+                        <div class="recommend-header-time">
+                            <time datetime="<?php echo $hourlyUpdatedAt->format(\DateTime::ATOM) ?>"><?php echo $hourlyUpdatedAt->format('Y年n月j日 G:i') ?></time>
+                        </div>
+                    <?php endif ?>
                 </div>
             </header>
 
@@ -54,7 +57,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             </p>
         </section>
 
-        
+
 
         <aside class="list-aside recommend-ranking-bottom">
             <?php if (isset($tags) && $tags) : ?>

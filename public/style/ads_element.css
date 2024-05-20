@@ -6,9 +6,9 @@
   word-break: break-all;
   --padding: 0 1rem;
   --paragraph-color: #aaa;
-  aspect-ratio: 1;
+  /* aspect-ratio: 1; */
   color: #111;
-  width: fit-content;
+  margin: auto;
 }
 
 .kokoku-header,
@@ -18,7 +18,7 @@
 }
 
 .kokoku-box {
-  margin: auto;
+  width: 100%;
 }
 
 .kokoku-header {
@@ -35,7 +35,7 @@
 .kokoku-img-box {
   width: 100%;
   display: flex;
-  aspect-ratio: 1.2;
+  /* aspect-ratio: 1.2; */
   background: rgb(250, 250, 250);
 }
 
@@ -75,6 +75,7 @@
   font-weight: bold;
   user-select: none;
   word-break: keep-all;
+  text-wrap: nowrap;
   height: fit-content;
 }
 
@@ -150,11 +151,11 @@
     padding: 0 16.5%;
   }
 
-  .kokoku-img,
+  /*   .kokoku-img,
   .kokoku-img-box {
     border-radius: 7px;
   }
-
+ */
   .kokoku-title-button:hover {
     background: rgb(250, 250, 250);
   }

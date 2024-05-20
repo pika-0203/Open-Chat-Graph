@@ -57,7 +57,6 @@ export class JsonCookie {
     }
 
     if (!parsedCookieValue.hasOwnProperty(key)) {
-      console.error(`Error: Key ${key} not found in cookie ${this.name}.`)
       return undefined
     }
 

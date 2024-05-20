@@ -57,16 +57,16 @@ class RecommendOpenChatPageController
 
         $canonical = url('recommend?tag=' . urlencode($tag));
 
-        $time = OpenChatServicesUtility::getModifiedCronTime($_dto->rankingUpdatedAt->format('H:i'))
-            ->format('G:i');
 
         $rankingDto = $staticDataGeneration->getTopPageData();
         $rankingDto->dailyList = array_slice($rankingDto->dailyList, 0, 5);
 
         $recommendArray = $recommendPageList->getListDto($tag);
         if (!$recommendArray) {
+            $time = '';
             $_schema = '';
             $_meta->setTitle("【最新】「{$tag}」おすすめオープンチャットランキング");
+            noStore();
             return view('recommend_content', compact(
                 '_meta',
                 '_css',
@@ -84,6 +84,7 @@ class RecommendOpenChatPageController
 
         [$recommend, $diffMember] = $recommendArray;
         $recommendList = $recommend->getList(false);
+        $hourlyUpdatedAt = new \DateTime($recommend->hourlyUpdatedAt);
 
         $count = $recommend->getCount();
         $headline = "【最新】「{$tag}」おすすめオープンチャットランキングTOP{$count}";
@@ -96,11 +97,12 @@ class RecommendOpenChatPageController
             $_meta->description,
             url("recommend?tag=" . urlencode($tag)),
             new \DateTime('2024-04-06 08:00:00'),
-            $_dto->rankingUpdatedAt,
+            $hourlyUpdatedAt,
             $tag,
             $recommendList
         );
 
+        $time = $hourlyUpdatedAt->format('G:i');
         $tags = $recommendPageList->getFilterdTags($recommendList, $tag);
 
         return view('recommend_content', compact(
@@ -117,6 +119,7 @@ class RecommendOpenChatPageController
             'canonical',
             'tags',
             'time',
+            'hourlyUpdatedAt',
         ));
     }
 }

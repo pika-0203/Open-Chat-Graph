@@ -4,25 +4,9 @@
 
 use App\Config\AppConfig;
 
-/**
- * @var \DateTime $updatedAt
- */
-/**
- * @var \DateTime $hourlyUpdatedAt
- */
-
-viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
+viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_statsDto', '_commentArgDto')); ?>
 
 <body>
-  <script type="application/json" id="chart-arg">
-    <?php echo json_encode($_chartArgDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
-  </script>
-  <script type="application/json" id="stats-dto">
-    <?php echo json_encode($_statsDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
-  </script>
-  <script type="application/json" id="comment-app-init-dto">
-    <?php echo json_encode($_commentArgDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
-  </script>
   <!-- 固定ヘッダー -->
   <?php viewComponent('site_header') ?>
   <article class="unset openchat body" style="overflow: hidden;">
@@ -146,11 +130,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
 
     <!-- <hr class="hr-bottom" style="padding: 8px 0; margin-top: 0;"> -->
 
-
     <?php //viewComponent('ads/google-rectangle') 
     ?>
-
-
 
     <?php if (isset($_adminDto)) : ?>
       <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
@@ -316,8 +297,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
     </footer>
   </article>
   <?php echo $_breadcrumbsShema ?>
-  <script defer>
-    ;
+  <script src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
+  <script type="module">
     (function() {
       // 説明文の続きを読むボタン
       const readMoreBtn = document.getElementById('read_more_btn')
@@ -342,10 +323,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema')); ?>
           });
         })
       }
-    })()
-  </script>
-  <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
-  <script defer type="module">
+    })();
+
     import {
       JsonCookie
     } from '<?php echo fileUrl('/js/JsonCookie.js') ?>'

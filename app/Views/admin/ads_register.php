@@ -112,7 +112,7 @@
     <script>
         const form = document.getElementById('edit-form')
 
-        document.getElementById('copy_btn').addEventListener('click', () => {
+        document.getElementById('copy_btn')?.addEventListener('click', () => {
             if (!confirm('コピーして新規作成しますか？'))
                 return
             form.action = '/ads/register'

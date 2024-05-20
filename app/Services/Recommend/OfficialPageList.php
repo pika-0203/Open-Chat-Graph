@@ -4,27 +4,20 @@ declare(strict_types=1);
 
 namespace App\Services\Recommend;
 
-use App\Models\RecommendRepositories\OfficialRoomRankingRepository;
 use App\Services\Recommend\Dto\RecommendListDto;
-use App\Services\Recommend\Enum\RecommendListType;
+use App\Services\Recommend\StaticData\RecommendStaticDataFile;
 
 class OfficialPageList
 {
     function __construct(
-        private OfficialRoomRankingRepository $recommendPageRepository,
-        private RecommendRankingBuilder $recommendRankingBuilder,
+        private RecommendStaticDataFile $recommendStaticDataGenerator,
     ) {
     }
 
     /** @return array{ 0:RecommendListDto,1:array{ hour:?int,hour24:?int,week:?int } }|false */
-    function getListDto(string $emblem = '', string $listName = 'スペシャル・公式認証オープンチャット'): array|false
+    function getListDto(int $emblem): array|false
     {
-        $dto = $this->recommendRankingBuilder->getRanking(
-            RecommendListType::Official,
-            $emblem,
-            $listName,
-            $this->recommendPageRepository
-        );
+        $dto = $this->recommendStaticDataGenerator->getOfficialRanking($emblem);
 
         //return $dto ? [$dto, $this->recommendPageRepository->getTagDiffMember($tag)] : false;
         return $dto ? [$dto, []] : false;

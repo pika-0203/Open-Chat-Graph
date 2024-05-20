@@ -6,7 +6,7 @@ namespace App\Services\StaticData\Dto;
 
 class StaticRecommendPageDto
 {
-    public \DateTime $rankingUpdatedAt;
+    public string $hourlyUpdatedAt;
     /** @var array $tagRecordCounts ['タグ名' => int] */
     public array $tagRecordCounts;
     public int $tagCount;

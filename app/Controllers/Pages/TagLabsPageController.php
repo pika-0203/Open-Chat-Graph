@@ -38,7 +38,7 @@ class TagLabsPageController
         $categories = array_flip(AppConfig::OPEN_CHAT_CATEGORY);
         $_updatedAt = new \DateTime(file_get_contents(AppConfig::HOURLY_REAL_UPDATED_AT_DATETIME));
 
-        if (adminMode(isset($isAdminPage))) {
+        if (isset($isAdminPage) && adminMode()) {
             /** @var AdsRepository $adsRepo */
             $adsRepo = app(AdsRepository::class);
             $adsList = $adsRepo->getAdsListAll();

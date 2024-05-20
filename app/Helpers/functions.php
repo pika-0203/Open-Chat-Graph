@@ -510,9 +510,11 @@ function sessionStart(): bool
     return session_start();
 }
 
-function adminMode(bool $isAdmin): bool
+/**
+ * @throws NotFoundException
+ */
+function adminMode(): true
 {
-    if (!$isAdmin) return false;
     noStore();
 
     /** @var AdminAuthService $adminAuthService */
@@ -521,4 +523,15 @@ function adminMode(bool $isAdmin): bool
         throw new NotFoundException;
 
     return true;
+}
+
+function getStorageFileTime(string $filename, bool $fullPath = false): int|false
+{
+    $path = $fullPath === false ? (__DIR__ . '/../../storage/' . $filename) : $filename;
+
+    if (!file_exists($path)) {
+        return false;
+    }
+
+    return filemtime($path);
 }

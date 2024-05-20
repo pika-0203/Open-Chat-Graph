@@ -9,6 +9,7 @@ Thumbs.db
 /public/oc-img**
 
 /storage/ranking_position/**
+/storage/static_data_recommend/**
 /storage/json/**
 /storage/zip-backup-temp/**
 public/sitemaps/**

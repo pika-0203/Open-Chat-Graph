@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\Recommend;
 
-use App\Models\RecommendRepositories\RecommendPageRepository;
 use App\Services\Recommend\Dto\RecommendListDto;
-use App\Services\Recommend\Enum\RecommendListType;
+use App\Services\Recommend\StaticData\RecommendStaticDataFile;
 
 class RecommendPageList
 {
@@ -148,31 +147,23 @@ class RecommendPageList
     ];
 
     function __construct(
-        private RecommendPageRepository $recommendPageRepository,
-        private RecommendRankingBuilder $recommendRankingBuilder,
+        private RecommendStaticDataFile $recommendStaticDataGenerator,
+        private RecommendUpdater $recommendUpdater,
     ) {
     }
 
     /** @return array{ 0:RecommendListDto,1:array{ hour:?int,hour24:?int,week:?int } }|false */
     function getListDto(string $tag): array|false
     {
-        $dto = $this->recommendRankingBuilder->getRanking(
-            RecommendListType::Tag,
-            $tag,
-            $tag,
-            $this->recommendPageRepository
-        );
+        $dto = $this->recommendStaticDataGenerator->getRecomendRanking($tag);
 
         //return $dto ? [$dto, $this->recommendPageRepository->getTagDiffMember($tag)] : false;
         return $dto ? [$dto, []] : false;
     }
 
-
     function isValidTag(string $tag): bool
     {
-        /** @var RecommendUpdater $recommendUpdater */
-        $recommendUpdater = app(RecommendUpdater::class);
-        $tags = $recommendUpdater->getAllTagNames();
+        $tags = $this->recommendUpdater->getAllTagNames();
         return in_array($tag, $tags);
     }
 
@@ -190,11 +181,18 @@ class RecommendPageList
             1
         );
 
-        $tags = array_filter($tags, fn ($e) => (!in_array($e, self::TagFilter) || (isset(self::FilteredTagSort[$tag]) && in_array($e, self::FilteredTagSort[$tag]))) && $e !== $tag);
+        $tags = array_filter(
+            $tags,
+            fn ($e) => (!in_array($e, self::TagFilter) || (isset(self::FilteredTagSort[$tag]) && in_array($e, self::FilteredTagSort[$tag]))) && $e !== $tag
+        );
 
         $tagsStr = array_map(fn ($t) => RecommendUtility::extractTag($t), $tags);
+        
         uksort($tags, function ($a) use ($tagStr, $tagsStr, $tag, $tags) {
-            return str_contains($tagsStr[$a], $tagStr) || (isset(self::FilteredTagSort[$tag]) && in_array($tags[$a], self::FilteredTagSort[$tag])) ? -1 : 1;
+            return str_contains(
+                $tagsStr[$a],
+                $tagStr
+            ) || (isset(self::FilteredTagSort[$tag]) && in_array($tags[$a], self::FilteredTagSort[$tag])) ? -1 : 1;
         });
 
         return $tags;
