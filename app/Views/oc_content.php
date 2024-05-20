@@ -241,6 +241,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
         <?php viewComponent('comment_desc') ?>
       </div>
       <div id="comment-root"></div>
+      <script defer type="module" crossorigin src="/<?php echo getFilePath('js/comment', 'index-*.js') ?>"></script>
     </section>
     <hr class="hr-bottom">
 
