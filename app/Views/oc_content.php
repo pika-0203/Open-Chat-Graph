@@ -39,6 +39,33 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
             <div class="more-separater">&nbsp;</div>
             <button class="unset more-text" style="font-weight: bold; color: #111;" title="もっと見る">…もっと見る</button>
           </div>
+          <script>
+            (function() {
+              // 説明文の続きを読むボタン
+              const readMoreBtn = document.getElementById('read_more_btn')
+              const talkroomDesc = document.getElementById('talkroom-description')
+              const talkroomDescBox = document.getElementById('talkroom_description_box')
+
+              const closeId = 'talkroom-description-close-btn'
+
+              if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
+                talkroomDescBox.classList.add('hidden')
+              } else {
+                const open = document.getElementById(closeId)
+                const close = document.getElementById('talkroom-description-close-btn')
+
+                readMoreBtn.style.visibility = "visible"
+                talkroomDesc.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
+                readMoreBtn.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
+                close.addEventListener('click', () => {
+                  talkroomDescBox.classList.add('close')
+                  window.scrollTo({
+                    top: 0,
+                  });
+                })
+              }
+            })();
+          </script>
         </div>
 
         <div class="talkroom_number_of_members">
@@ -301,32 +328,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
   <?php echo $_breadcrumbsShema ?>
   <script src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
   <script type="module">
-    (function() {
-      // 説明文の続きを読むボタン
-      const readMoreBtn = document.getElementById('read_more_btn')
-      const talkroomDesc = document.getElementById('talkroom-description')
-      const talkroomDescBox = document.getElementById('talkroom_description_box')
-
-      const closeId = 'talkroom-description-close-btn'
-
-      if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
-        talkroomDescBox.classList.add('hidden')
-      } else {
-        const open = document.getElementById(closeId)
-        const close = document.getElementById('talkroom-description-close-btn')
-
-        readMoreBtn.style.visibility = "visible"
-        talkroomDesc.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
-        readMoreBtn.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
-        close.addEventListener('click', () => {
-          talkroomDescBox.classList.add('close')
-          window.scrollTo({
-            top: 0,
-          });
-        })
-      }
-    })();
-
     import {
       JsonCookie
     } from '<?php echo fileUrl('/js/JsonCookie.js') ?>'
