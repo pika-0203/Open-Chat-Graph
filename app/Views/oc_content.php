@@ -39,33 +39,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
             <div class="more-separater">&nbsp;</div>
             <button class="unset more-text" style="font-weight: bold; color: #111;" title="もっと見る">…もっと見る</button>
           </div>
-          <script async>
-            (function() {
-              // 説明文の続きを読むボタン
-              const readMoreBtn = document.getElementById('read_more_btn')
-              const talkroomDesc = document.getElementById('talkroom-description')
-              const talkroomDescBox = document.getElementById('talkroom_description_box')
-
-              const closeId = 'talkroom-description-close-btn'
-
-              if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
-                talkroomDescBox.classList.add('hidden')
-              } else {
-                const open = document.getElementById(closeId)
-                const close = document.getElementById('talkroom-description-close-btn')
-
-                readMoreBtn.style.visibility = "visible"
-                talkroomDesc.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
-                readMoreBtn.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
-                close.addEventListener('click', () => {
-                  talkroomDescBox.classList.add('close')
-                  window.scrollTo({
-                    top: 0,
-                  });
-                })
-              }
-            })();
-          </script>
         </div>
 
         <div class="talkroom_number_of_members">
@@ -181,11 +154,38 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
         </span>
       </div>
       <!-- グラフセクション -->
-      <div style="position: relative; margin: auto; padding-bottom: 1rem" id="graph-box">
+      <div style="position: relative; margin: auto; padding-bottom: 1rem; transition: all 1s ease 0s; opacity: 0" id="graph-box">
         <div class="chart-canvas-box" id="dummy-canvas"></div>
         <div id="app"></div>
-        <script async type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
       </div>
+      <script async type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
+      <script async>
+        (function() {
+          // 説明文の続きを読むボタン
+          const readMoreBtn = document.getElementById('read_more_btn')
+          const talkroomDesc = document.getElementById('talkroom-description')
+          const talkroomDescBox = document.getElementById('talkroom_description_box')
+
+          const closeId = 'talkroom-description-close-btn'
+
+          if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
+            talkroomDescBox.classList.add('hidden')
+          } else {
+            const open = document.getElementById(closeId)
+            const close = document.getElementById('talkroom-description-close-btn')
+
+            readMoreBtn.style.visibility = "visible"
+            talkroomDesc.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
+            readMoreBtn.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
+            close.addEventListener('click', () => {
+              talkroomDescBox.classList.add('close')
+              window.scrollTo({
+                top: 0,
+              });
+            })
+          }
+        })();
+      </script>
 
       <nav style="padding-bottom: 0;" class="oc-desc-nav <?php if (!is_int($oc['api_created_at'])) echo 'no-ranking' ?>">
         <aside class="oc-desc-nav-category" style="display: flex; align-items:center;">
@@ -268,7 +268,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
         <?php viewComponent('comment_desc') ?>
       </div>
       <div id="comment-root"></div>
-      <script defer type="module" crossorigin src="/<?php echo getFilePath('js/comment', 'index-*.js') ?>"></script>
     </section>
     <hr class="hr-bottom">
 
@@ -326,6 +325,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
     </footer>
   </article>
   <?php echo $_breadcrumbsShema ?>
+  <script defer type="module" crossorigin src="/<?php echo getFilePath('js/comment', 'index-*.js') ?>"></script>
   <script src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
   <script type="module">
     import {
