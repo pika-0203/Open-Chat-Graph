@@ -154,7 +154,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
         </span>
       </div>
       <!-- グラフセクション -->
-      <div style="position: relative; margin: auto; padding-bottom: 1rem; transition: all 1s ease 0s; opacity: 0" id="graph-box">
+      <div style="position: relative; margin: auto; padding-bottom: 1rem; transition: all 0.3s ease 0s; opacity: 0" id="graph-box">
         <div class="chart-canvas-box" id="dummy-canvas"></div>
         <div id="app"></div>
       </div>
