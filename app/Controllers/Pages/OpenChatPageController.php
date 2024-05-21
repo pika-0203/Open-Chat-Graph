@@ -157,7 +157,7 @@ class OpenChatPageController
         $topPagedto = $staticDataGeneration->getTopPageData();
         $topPagedto->dailyList = array_slice($topPagedto->dailyList, 0, 5);
 
-        $adsDto = $tag ? $adsRepository->getAdsByTag($tag, self::DefaultAdsId) : false;
+        $adsDto = $adsRepository->getAdsByTag($tag ?: '', self::DefaultAdsId);
 
         return view('oc_content', compact(
             '_meta',
