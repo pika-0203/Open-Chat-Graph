@@ -121,7 +121,7 @@ class AdsRepository
                 t1.id = IFNULL(
                     (
                         SELECT
-                            id
+                            ads_id
                         FROM
                             ads_tag_map
                         WHERE
