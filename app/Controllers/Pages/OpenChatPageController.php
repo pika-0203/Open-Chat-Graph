@@ -25,6 +25,8 @@ use Shadow\DB;
 
 class OpenChatPageController
 {
+    const DefaultAdsId = 13;
+
     private function deletedResponse(RecommendGenarator $recommendGenarator, int $open_chat_id)
     {
         /** @var RecommendRankingRepository $repo */
@@ -155,7 +157,7 @@ class OpenChatPageController
         $topPagedto = $staticDataGeneration->getTopPageData();
         $topPagedto->dailyList = array_slice($topPagedto->dailyList, 0, 5);
 
-        $adsDto = $tag ? $adsRepository->getAdsByTag($tag) : false;
+        $adsDto = $tag ? $adsRepository->getAdsByTag($tag, self::DefaultAdsId) : false;
 
         return view('oc_content', compact(
             '_meta',

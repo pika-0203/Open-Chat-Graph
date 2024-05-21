@@ -103,7 +103,7 @@ class AdsRepository
         return DB::fetchAll($query, args: [\PDO::FETCH_KEY_PAIR]);
     }
 
-    function getAdsByTag(string $tag): AdsDto|false
+    function getAdsByTag(string $tag, int $defaultAdsId): AdsDto|false
     {
         $query =
             "SELECT
@@ -117,12 +117,22 @@ class AdsRepository
                 t1.updated_at
             FROM
                 ads AS t1
-                JOIN ads_tag_map AS t2 ON t1.id = t2.ads_id
-                AND t2.tag = :tag";
+            WHERE
+                t1.id = IFNULL(
+                    (
+                        SELECT
+                            id
+                        FROM
+                            ads_tag_map
+                        WHERE
+                            tag = :tag
+                    ),
+                    :defaultAdsId
+                )";
 
         return DB::fetch(
             $query,
-            compact('tag'),
+            compact('tag', 'defaultAdsId'),
             [\PDO::FETCH_CLASS, AdsDto::class]
         );
     }
