@@ -159,33 +159,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
         <div id="app"></div>
       </div>
       <script async type="module" crossorigin src="/<?php echo getFilePath('js/chart', 'index-*.js') ?>"></script>
-      <script async>
-        (function() {
-          // 説明文の続きを読むボタン
-          const readMoreBtn = document.getElementById('read_more_btn')
-          const talkroomDesc = document.getElementById('talkroom-description')
-          const talkroomDescBox = document.getElementById('talkroom_description_box')
-
-          const closeId = 'talkroom-description-close-btn'
-
-          if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
-            talkroomDescBox.classList.add('hidden')
-          } else {
-            const open = document.getElementById(closeId)
-            const close = document.getElementById('talkroom-description-close-btn')
-
-            readMoreBtn.style.visibility = "visible"
-            talkroomDesc.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
-            readMoreBtn.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
-            close.addEventListener('click', () => {
-              talkroomDescBox.classList.add('close')
-              window.scrollTo({
-                top: 0,
-              });
-            })
-          }
-        })();
-      </script>
 
       <nav style="padding-bottom: 0;" class="oc-desc-nav <?php if (!is_int($oc['api_created_at'])) echo 'no-ranking' ?>">
         <aside class="oc-desc-nav-category" style="display: flex; align-items:center;">
@@ -218,6 +191,35 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
       </nav>
 
     </section>
+
+    <script async>
+      (function() {
+        // 説明文の続きを読むボタン
+        const readMoreBtn = document.getElementById('read_more_btn')
+        const talkroomDesc = document.getElementById('talkroom-description')
+        const talkroomDescBox = document.getElementById('talkroom_description_box')
+
+        const closeId = 'talkroom-description-close-btn'
+
+        if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
+          talkroomDescBox.classList.add('hidden')
+        } else {
+          const open = document.getElementById(closeId)
+          const close = document.getElementById('talkroom-description-close-btn')
+
+          readMoreBtn.style.visibility = "visible"
+          talkroomDesc.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
+          readMoreBtn.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
+          close.addEventListener('click', () => {
+            talkroomDescBox.classList.add('close')
+            window.scrollTo({
+              top: 0,
+            });
+          })
+        }
+      })();
+    </script>
+
     <section class="open-btn sp-btn" style="padding: 12px 1rem 1rem 1rem;">
       <?php if ($oc['url']) : ?>
         <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
@@ -237,10 +239,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
       <?php endif ?>
     </section>
     <hr class="hr-bottom">
-
-    <?php if ($adsDto) : ?>
-      <?php $adsDto->echoAdsElement() ?>
-    <?php endif ?>
 
     <?php //viewComponent('ads/google-responsive') 
     ?>
@@ -299,27 +297,27 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
     <?php //viewComponent('ads/google-responsive') 
     ?>
 
-    <aside class="recommend-list-aside">
-      <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $topPagedto]) ?>
-    </aside>
-    <hr class="hr-bottom">
+    <!-- <aside class="recommend-list-aside"> -->
+    <?php //viewComponent('top_ranking_comment_list_hour24', ['dto' => $topPagedto]) 
+    ?>
+    <!-- </aside> -->
+    <!-- <hr class="hr-bottom" style="padding: 0;"> -->
+
     <?php //viewComponent('ads/google-responsive') 
     ?>
 
-    <footer class="oc-page-footer">
+    <footer class="oc-page-footer" style="padding-top: 0;">
       <aside class="open-btn2">
-        <a href="https://openchat-jp.line.me/other/beginners_guide" class="app_link">
-          <span class="text">はじめてのLINEオープンチャットガイド（LINE公式）</span>
-        </a>
-        <a href="https://line.me/download" class="app_link app-dl">
-          <span class="text">LINEアプリをダウンロード（LINE公式）</span>
-        </a>
-        <a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" class="app_link csv-dl" style="
-          margin-bottom: 1rem;
-          margin-top: .5rem;">
+        <a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" class="app_link csv-dl">
           <span class="text">人数統計CSVをダウンロード</span>
         </a>
+        <?php if ($adsDto) : ?>
+          <div style="margin: 0 -1rem;">
+            <?php $adsDto->echoAdsElement() ?>
+          </div>
+        <?php endif ?>
       </aside>
+      <hr class="hr-top" style="margin: 0; width: 100%;">
       <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
       <?php viewComponent('footer_inner') ?>
     </footer>

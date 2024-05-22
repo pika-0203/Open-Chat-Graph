@@ -36,6 +36,10 @@ html {
   padding: 1rem;
 }
 
+.comment-section .share-nav {
+  padding-bottom: 0;
+}
+
 .recommend-list-aside {
   padding: 0 1rem;
 }
@@ -346,12 +350,6 @@ html {
   display: none;
 }
 
-.open-btn2 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .openchat_link {
   background: linear-gradient(-156deg, #0dc95a, #11d871 23.96%, #11d593 55.46%, #12cfcd 83.85%, #16c2c1);
   border-radius: 7px;
@@ -369,11 +367,6 @@ html {
 
 .openchat_link .text {
   line-height: 1;
-}
-
-.app_link {
-  font-size: 13px;
-  color: #777;
 }
 
 .number-box .css-162gv95 {
@@ -531,10 +524,6 @@ html {
     line-height: 125%;
   }
 
-  .app_link {
-    font-size: 13px;
-  }
-
   .h1-link:hover .talkroom_link_h1 {
     -webkit-text-decoration: underline 2px currentColor;
     text-decoration: underline 2px currentColor;
@@ -627,11 +616,6 @@ html {
     -webkit-text-decoration: underline 2px currentColor;
     text-decoration: underline 2px currentColor;
   }
-
-  .app-dl {
-    font-size: 12px;
-    color: #b7b7b7;
-  }
 }
 
 .grecaptcha-badge {
@@ -689,14 +673,9 @@ html {
   padding: 0;
 }
 
-.app-dl {
-  font-size: 11px;
-  color: #b7b7b7;
-}
-
 .csv-dl {
   font-size: 12px;
-  color: #b7b7b7;
+  color: #aaa;
 }
 
 .MuiToggleButton-sizeSmall.MuiToggleButton-standard {

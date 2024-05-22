@@ -322,10 +322,6 @@ section aside:hover {
   border-radius: 4px;
 }
 
-.app_link {
-  margin: 0.5rem 0;
-}
-
 .app_link a {
   font-size: 13px;
   color: #777;
