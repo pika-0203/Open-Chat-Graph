@@ -148,7 +148,7 @@ class OfficialRoomRankingRepository implements RecommendRankingRepositoryInterfa
                     WHERE
                         oc.id NOT IN ({$ids})
                         AND ((rh.open_chat_id IS NOT NULL OR rh2.open_chat_id IS NOT NULL) OR oc.member >= 15)
-                        AND {$emblem}
+                        AND {$statement}
                     ORDER BY
                         oc.member DESC
                     LIMIT

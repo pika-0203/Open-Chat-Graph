@@ -23,6 +23,6 @@
         </footer>
     </article>
     <?php if ($dto->ads_tracking_url) : ?>
-        <img loading="lazy" class="kokoku-tracking-img" src="<?php echo $dto->ads_tracking_url ?>" alt="">
+        <img class="kokoku-tracking-img" src="<?php echo $dto->ads_tracking_url ?>" alt="">
     <?php endif ?>
 </ins>

@@ -110,12 +110,13 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'cookie取得完了', 'message' => 'アクセス用のcookieを取得しました']);
     }
 
-    function genetop(StaticDataGenerator $staticDataGenerator, RecommendStaticDataGenerator $recommendStaticDataGenerator)
+    function genetop()
     {
-        $staticDataGenerator->updateStaticData();
-        $recommendStaticDataGenerator->updateStaticData();
+        $path = AppConfig::ROOT_PATH . 'genetop_exec.php';
 
-        return view('admin/admin_message_page', ['title' => 'updateStaticData done', 'message' => 'updateStaticData done']);
+        exec("/usr/bin/php8.2 {$path} >/dev/null 2>&1 &");
+
+        return view('admin/admin_message_page', ['title' => 'exec', 'message' => $path . ' を実行しました。']);
     }
 
     function killmerge()
