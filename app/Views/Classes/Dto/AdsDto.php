@@ -12,6 +12,7 @@ class AdsDto
     public string $ads_paragraph = '';
     public string $ads_href = '';
     public string $ads_img_url = '';
+    public string $ads_tracking_url = '';
     public string $ads_title_button = '';
     public string $updated_at = '';
 

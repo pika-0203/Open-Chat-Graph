@@ -27,6 +27,7 @@ class AdsRegistrationApiController
         string $ads_paragraph,
         string $ads_href,
         string $ads_img_url,
+        string $ads_tracking_url,
         string $ads_title_button,
     ) {
         $id = $repo->insertAds(
@@ -36,6 +37,7 @@ class AdsRegistrationApiController
                 'ads_paragraph',
                 'ads_href',
                 'ads_img_url',
+                'ads_tracking_url',
                 'ads_title_button',
             )
         );
@@ -51,6 +53,7 @@ class AdsRegistrationApiController
         string $ads_paragraph,
         string $ads_href,
         string $ads_img_url,
+        string $ads_tracking_url,
         string $ads_title_button,
     ) {
         $repo->updateAds(
@@ -61,6 +64,7 @@ class AdsRegistrationApiController
                 'ads_paragraph',
                 'ads_href',
                 'ads_img_url',
+                'ads_tracking_url',
                 'ads_title_button',
             )
         );

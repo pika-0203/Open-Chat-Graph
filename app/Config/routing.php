@@ -216,6 +216,7 @@ Route::path(
     ->matchStr('ads_paragraph', emptyAble: true)
     ->matchStr('ads_href')
     ->matchStr('ads_img_url')
+    ->matchStr('ads_tracking_url', emptyAble: true)
     ->matchStr('ads_title_button');
 
 Route::path(
@@ -228,6 +229,7 @@ Route::path(
     ->matchStr('ads_paragraph', emptyAble: true)
     ->matchStr('ads_href')
     ->matchStr('ads_img_url')
+    ->matchStr('ads_tracking_url', emptyAble: true)
     ->matchStr('ads_title_button');
 
 Route::path(

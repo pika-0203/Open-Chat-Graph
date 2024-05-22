@@ -15,6 +15,7 @@ class AdsRepository
         string $ads_paragraph,
         string $ads_href,
         string $ads_img_url,
+        string $ads_tracking_url,
         string $ads_title_button,
     ): int {
         $query =
@@ -25,6 +26,7 @@ class AdsRepository
                     ads_paragraph,
                     ads_href,
                     ads_img_url,
+                    ads_tracking_url,
                     ads_title_button
                 )
             VALUES
@@ -34,6 +36,7 @@ class AdsRepository
                     :ads_paragraph,
                     :ads_href,
                     :ads_img_url,
+                    :ads_tracking_url,
                     :ads_title_button
                 )";
 
@@ -43,6 +46,7 @@ class AdsRepository
             'ads_paragraph',
             'ads_href',
             'ads_img_url',
+            'ads_tracking_url',
             'ads_title_button',
         ));
     }
@@ -114,6 +118,7 @@ class AdsRepository
                 t1.ads_href,
                 t1.ads_img_url,
                 t1.ads_title_button,
+                t1.ads_tracking_url,
                 t1.updated_at
             FROM
                 ads AS t1
@@ -147,6 +152,7 @@ class AdsRepository
                 ads_paragraph,
                 ads_href,
                 ads_img_url,
+                ads_tracking_url,
                 ads_title_button,
                 updated_at
             FROM
@@ -174,6 +180,7 @@ class AdsRepository
                 ads_paragraph,
                 ads_href,
                 ads_img_url,
+                ads_tracking_url,
                 ads_title_button,
                 updated_at
             FROM
@@ -208,6 +215,7 @@ class AdsRepository
         string $ads_paragraph,
         string $ads_href,
         string $ads_img_url,
+        string $ads_tracking_url,
         string $ads_title_button,
     ): void {
         $updated_at = (new \DateTime())->format('Y-m-d H:i:s');
@@ -221,6 +229,7 @@ class AdsRepository
                 ads_paragraph = :ads_paragraph,
                 ads_href = :ads_href,
                 ads_img_url = :ads_img_url,
+                ads_tracking_url = :ads_tracking_url,
                 ads_title_button = :ads_title_button,
                 updated_at = :updated_at
             WHERE   
@@ -233,6 +242,7 @@ class AdsRepository
             'ads_paragraph',
             'ads_href',
             'ads_img_url',
+            'ads_tracking_url',
             'ads_title_button',
             'updated_at',
         ));

@@ -41,6 +41,7 @@
         @media screen and (max-width: 511px) {
             .ads-sample .kokoku-element {
                 margin: 1rem -1rem;
+                width: unset;
             }
         }
     </style>
@@ -70,7 +71,7 @@
                         <?php endif ?>
 
                         <label for="<?php echo $el ?>"><?php echo $el ?></label>
-                        <textarea id="<?php echo $el ?>" name="<?php echo $el ?>" <?php if ($el !== 'id') echo 'required' ?>><?php echo $value ?></textarea>
+                        <textarea id="<?php echo $el ?>" name="<?php echo $el ?>" <?php if ($el !== 'ads_paragraph' || $el !== 'ads_tracking_url') echo 'required' ?>><?php echo $value ?></textarea>
 
                     <?php endforeach ?>
 
@@ -91,7 +92,7 @@
             <p style="display: flex; gap:1rem;">
                 <a href="<?php echo url('ads') ?>">新規作成</a>
                 <a href="<?php echo url('labs/tags/ads') ?>">タグ</a>
-                </ｐ>
+            </p>
         </section>
 
         <section class="ads-sample">

@@ -48,6 +48,13 @@
   user-select: none;
 }
 
+.kokoku-tracking-img {
+  width: 1px;
+  height: 1px;
+  border: 0;
+  position: absolute;
+}
+
 .kokoku-title-box {
   display: flex;
   justify-content: space-between;
