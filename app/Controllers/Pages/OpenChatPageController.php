@@ -94,7 +94,6 @@ class OpenChatPageController
         PageBreadcrumbsListSchema $breadcrumbsShema,
         OcPageSchema $ocPageSchema,
         RecommendGenarator $recommendGenarator,
-        StaticDataFile $staticDataGeneration,
         RecentCommentListRepositoryInterface $recentCommentListRepository,
         AdsRepository $adsRepository,
         int $open_chat_id,
@@ -104,8 +103,10 @@ class OpenChatPageController
         $oc = $ocRepo->getOpenChatById($open_chat_id);
         if (!$oc) return $this->deletedResponse($recommendGenarator, $open_chat_id);
 
-        $recommend = $recommendGenarator->getRecommend($oc['tag1'], $oc['tag2'], $oc['tag3'], $oc['category']);
-        $tag = $recommend[2];
+        $tag = $oc['tag1'];
+        $categoryValue = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : null;
+        $category = $categoryValue ?? 'その他';
+        $recommend = $recommendGenarator->getRecommend($tag, $oc['tag2'], $oc['tag3'], $oc['category']);
 
         $_statsDto = $statisticsChartArrayService->buildStatisticsChartArray($open_chat_id);
         if (!$_statsDto)
@@ -126,13 +127,11 @@ class OpenChatPageController
         $_meta = $meta->generateMetadata($open_chat_id, $oc)->setImageUrl(imgUrl($oc['id'], $oc['img_url']));
         $_meta->thumbnail = imgPreviewUrl($oc['id'], $oc['img_url']);
 
-        $categoryValue = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : null;
-        $category = $categoryValue ?? 'その他';
 
         $_breadcrumbsShema = $breadcrumbsShema->generateSchema(
             'オプチャ',
             'oc',
-            $tag ? $tag : $category,
+            $tag ?: $category,
             (string)$open_chat_id
         );
 
@@ -154,9 +153,6 @@ class OpenChatPageController
         ];
         $officialDto = ($oc['emblem'] ?? 0) > 0 ? $this->buildOfficialDto($oc['emblem']) : null;
 
-        $topPagedto = $staticDataGeneration->getTopPageData();
-        $topPagedto->dailyList = array_slice($topPagedto->dailyList, 0, 5);
-
         $adsDto = $adsRepository->getAdsByTag($tag ?: '', self::DefaultAdsId);
 
         return view('oc_content', compact(
@@ -173,7 +169,6 @@ class OpenChatPageController
             '_hourlyRange',
             '_adminDto',
             'officialDto',
-            'topPagedto',
             'adsDto',
         ));
     }
