@@ -82,7 +82,7 @@ class RecommendListDto
     /** @return string[] */
     private function buildFilterdTags(array $mergedElements, bool $shuffle): array
     {
-        $tag = $this->type === RecommendListType::Tag && !$shuffle ? $this->listName : '';
+        $tag = $this->type === RecommendListType::Tag ? $this->listName : '';
         $tagName = $this->type === RecommendListType::Tag ? $this->listName : '';
         $tagStr = RecommendUtility::extractTag($tag);
 
