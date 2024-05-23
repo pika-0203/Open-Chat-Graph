@@ -83,7 +83,11 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <hr class="hr-bottom">
             <?php //viewComponent('ads/google-responsive') 
             ?>
-            <?php viewComponent('top_ranking_comment_list_week', compact('dto')) ?>
+            <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+            <hr class="hr-bottom">
+            <?php //viewComponent('ads/google-responsive') 
+            ?>
+            <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
             <hr class="hr-bottom">
             <?php //viewComponent('ads/google-responsive') 
             ?>
@@ -95,19 +99,19 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <hr class="hr-bottom">
             <?php //viewComponent('ads/google-responsive') 
             ?>
-            <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
+            <?php viewComponent('top_ranking_comment_list_member', compact('dto')) ?>
             <hr class="hr-bottom">
             <?php //viewComponent('ads/google-responsive') 
             ?>
+            <?php viewComponent('top_ranking_comment_list_week', compact('dto')) ?>
+        <?php else : ?>
             <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
             <hr class="hr-bottom">
             <?php //viewComponent('ads/google-responsive') 
             ?>
-            <?php viewComponent('top_ranking_comment_list_member', compact('dto')) ?>
-        <?php else : ?>
-            <?php viewComponent('top_ranking_comment_list_week', compact('dto')) ?>
+            <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
             <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive')  
+            <?php //viewComponent('ads/google-responsive') 
             ?>
             <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => 0, 'showTags' => true]) ?>
             <hr class="hr-bottom">
@@ -121,15 +125,11 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <hr class="hr-bottom">
             <?php //viewComponent('ads/google-responsive') 
             ?>
-            <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
-            <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive') 
-            ?>
-            <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
-            <hr class="hr-bottom">
-            <?php //viewComponent('ads/google-responsive') 
-            ?>
             <?php viewComponent('top_ranking_comment_list_member', compact('dto')) ?>
+            <hr class="hr-bottom">
+            <?php //viewComponent('ads/google-responsive')  
+            ?>
+            <?php viewComponent('top_ranking_comment_list_week', compact('dto')) ?>
         <?php endif ?>
         <hr class="hr-bottom">
         <?php //viewComponent('ads/google-responsive') 
