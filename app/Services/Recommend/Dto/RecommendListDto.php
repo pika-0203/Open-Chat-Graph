@@ -6,10 +6,14 @@ namespace App\Services\Recommend\Dto;
 
 use App\Config\AppConfig;
 use App\Services\Recommend\Enum\RecommendListType;
+use App\Services\Recommend\RecommendTagFilters;
+use App\Services\Recommend\RecommendUtility;
 
 class RecommendListDto
 {
     public int $maxMemberCount;
+    public array $mergedElements;
+    public ?array $shuffledMergedElements = null;
 
     /** @var array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int } $list */
     function __construct(
@@ -21,16 +25,23 @@ class RecommendListDto
         public array $member,
         public string $hourlyUpdatedAt
     ) {
-        $elements = array_column(array_merge($hour, $day, $week, $member), 'member');
+        $this->mergedElements = array_merge($hour, $day, $week, $member);
+
+        $elements = array_column($this->mergedElements, 'member');
         $this->maxMemberCount = $elements ? max($elements) : 0;
     }
 
-    /** @return array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int }[] */
-    function getList(bool $shuffle = true): array
+    private function getSliceLength(int $count)
     {
-        if (!$shuffle) {
-            return array_merge($this->hour, $this->day, $this->week, $this->member);
-        }
+        $count = AppConfig::RECOMMEND_LIST_LIMIT - $count;
+        return max($count, 0);
+    }
+
+    /** @return array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int }[] */
+    private function buildShuffledList(): array
+    {
+        if (is_array($this->shuffledMergedElements) && $this->shuffledMergedElements)
+            return $this->shuffledMergedElements;
 
         $hour = $this->hour;
         shuffle($hour);
@@ -60,31 +71,73 @@ class RecommendListDto
 
         $result = array_merge($day, $week);
         shuffle($result);
-        return array_merge($hour, $result, $member);
+
+        $this->shuffledMergedElements = array_merge($hour, $result, $member);
+        return $this->shuffledMergedElements;
     }
 
-    private function getSliceLength(int $count)
+    /** @return string[] */
+    private function buildFilterdTags(array $mergedElements, bool $shuffle): array
     {
-        $count = AppConfig::RECOMMEND_LIST_LIMIT - $count;
-        return max($count, 0);
+        $tag = $this->type === RecommendListType::Tag && !$shuffle ? $this->listName : '';
+        $tagName = $this->type === RecommendListType::Tag ? $this->listName : '';
+        $tagStr = RecommendUtility::extractTag($tag);
+
+        $tags = sortAndUniqueArray(
+            array_merge(
+                array_column($mergedElements, 'tag1'),
+                array_column($mergedElements, 'tag2'),
+                RecommendTagFilters::FilteredTagSort[$tag] ?? []
+            ),
+            1
+        );
+
+        $tags = array_filter(
+            $tags,
+            fn ($e) => (
+                !in_array($e, RecommendTagFilters::RecommendPageTagFilter)
+                || (
+                    isset(RecommendTagFilters::FilteredTagSort[$tag])
+                    && in_array($e, RecommendTagFilters::FilteredTagSort[$tag])
+                )
+            ) && $e !== $tagName
+        );
+
+        $tagsStr = array_map(fn ($t) => RecommendUtility::extractTag($t), $tags);
+
+        uksort($tags, function ($a) use ($tagStr, $tagsStr, $tag, $tags) {
+            return str_contains(
+                $tagsStr[$a],
+                $tagStr
+            ) || (
+                isset(RecommendTagFilters::FilteredTagSort[$tag])
+                && in_array($tags[$a], RecommendTagFilters::FilteredTagSort[$tag])
+            ) ? -1 : 1;
+        });
+
+        return $tags;
+    }
+
+    function getList(bool $shuffle = true, ?int $limit = AppConfig::TOP_RANKING_LIST_LIMIT): array
+    {
+        $elements = $shuffle ? $this->buildShuffledList() : $this->mergedElements;
+        return $limit ? array_slice($elements, 0, $limit) : $elements;
     }
 
     /** @return array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int }[] */
     function getPreviewList(int $len): array
     {
-        $ranking5 = array_merge($this->hour, $this->day, $this->week, $this->member);
-        if (count($ranking5) <= $len) return $ranking5;
-        return array_slice($ranking5, 0, $len);
+        return array_slice($this->mergedElements, 0, $len);
     }
 
-    function getCount(?int $limit = AppConfig::RECOMMEND_LIST_LIMIT): int
+    function getCount(): int
     {
-        $totalCount = count($this->hour) + count($this->day) + count($this->week) + count($this->member);
+        return count($this->mergedElements);
+    }
 
-        if (!$limit) {
-            return $totalCount;
-        } else {
-            return $totalCount > $limit ? $limit : $totalCount;
-        }
+    /** @return string[] */
+    function getFilterdTags(bool $shuffle = true, ?int $limit = AppConfig::TOP_RANKING_LIST_LIMIT): array
+    {
+        return $this->buildFilterdTags($this->getList($shuffle, $limit), $shuffle);
     }
 }

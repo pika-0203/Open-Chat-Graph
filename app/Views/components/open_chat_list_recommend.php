@@ -4,7 +4,7 @@
   use App\Config\AppConfig;
 
   if (!isset($listArray)) {
-    $listArray = isset($limit) ? array_slice(array_filter($recommend->getList($shuffle ?? false), fn ($oc) => $oc['id'] !== ($id ?? 0)), 0, $limit) : $recommend->getList(false);
+    $listArray = $recommend->getList($shuffle ?? false, ($limit ?? null) ? AppConfig::TOP_RANKING_LIST_LIMIT : null);
   }
 
   foreach ($listArray as $oc) : ?>

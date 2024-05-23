@@ -8,21 +8,6 @@ use Shadow\DB;
 
 class TopPageRecommendList
 {
-    const ExtraTagFilter = [
-        '大学新入生同士の情報交換',
-        '大学 新入生',
-        '大学',
-        '就活生情報・選考対策・企業研究',
-        '新入生',
-        '経済',
-        'ヘア',
-        '競馬予想',
-        '競艇予想',
-        'サークル',
-        '新歓',
-        'パチンコ・スロット（パチスロ）',
-    ];
-
     function getList(int $limit)
     {
         $hour = DB::fetchAll(
@@ -70,8 +55,8 @@ class TopPageRecommendList
             args: [\PDO::FETCH_COLUMN, 0]
         );
 
-        $filter = array_merge(RecommendPageList::TagFilter, self::ExtraTagFilter);
-        
+        $filter = RecommendTagFilters::getTopPageTagFilter();
+
         $tags = array_filter(sortAndUniqueArray($hour), fn ($e) => $e && !in_array($e, $filter));
         $tags1 = array_filter(sortAndUniqueArray($hour2, 3), fn ($e) => $e && !in_array($e, $filter) && !in_array($e, $tags));
         $hourTags = array_merge($tags, $tags1);

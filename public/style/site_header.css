@@ -580,3 +580,8 @@ ins.adsbygoogle[data-anchor-status='dismissed'] {
   padding: 4.5px 0;
   width: calc(100% - 2rem);
 }
+
+.hr-bottom.tags-top {
+  width: 100%;
+  padding: 8px 0;
+}

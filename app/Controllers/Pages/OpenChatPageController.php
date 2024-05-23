@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
-use App\Models\AdsRepositories\AdsRepository;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Models\RecommendRepositories\RecommendRankingRepository;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
@@ -13,6 +12,7 @@ use App\Services\OpenChatAdmin\AdminOpenChat;
 use App\Services\Recommend\Dto\RecommendListDto;
 use App\Services\Recommend\OfficialPageList;
 use App\Services\Recommend\RecommendGenarator;
+use App\Services\StaticData\Dto\StaticTopPageDto;
 use App\Services\StaticData\StaticDataFile;
 use App\Services\Statistics\DownloadCsvService;
 use App\Services\Statistics\StatisticsChartArrayService;
@@ -27,8 +27,11 @@ class OpenChatPageController
 {
     const DefaultAdsId = 13;
 
-    private function deletedResponse(RecommendGenarator $recommendGenarator, int $open_chat_id)
-    {
+    private function deletedResponse(
+        RecommendGenarator $recommendGenarator,
+        int $open_chat_id,
+        StaticTopPageDto $topPagedto
+    ) {
         /** @var RecommendRankingRepository $repo */
         $repo = app(RecommendRankingRepository::class);
         $tag = $repo->getRecommendTag($open_chat_id);
@@ -42,12 +45,13 @@ class OpenChatPageController
         $_css = ['room_list', 'site_header', 'site_footer', 'recommend_list'];
 
         $_deleted = DB::fetch("SELECT * FROM open_chat_deleted WHERE id = :open_chat_id", compact('open_chat_id'));
-        if (!$_deleted) return false;
+        if (!$_deleted)
+            return false;
 
         [$tag2, $tag3] = $repo->getTags($open_chat_id);
         $recommend = $recommendGenarator->getRecommend($tag, $tag2 ?: null, $tag3 ?: null, null);
 
-        return view('errors/oc_error', compact('_meta', '_css', 'recommend', 'open_chat_id', '_deleted'));
+        return view('errors/oc_error', compact('_meta', '_css', 'recommend', 'open_chat_id', '_deleted', 'topPagedto'));
     }
 
     private function buildChartDto(array $oc, string $categoryName): RankingPositionChartArgDto
@@ -93,15 +97,17 @@ class OpenChatPageController
         StatisticsViewUtility $statisticsViewUtility,
         PageBreadcrumbsListSchema $breadcrumbsShema,
         OcPageSchema $ocPageSchema,
+        StaticDataFile $staticDataGeneration,
         RecommendGenarator $recommendGenarator,
         RecentCommentListRepositoryInterface $recentCommentListRepository,
-        AdsRepository $adsRepository,
         int $open_chat_id,
         ?string $isAdminPage,
     ) {
         $_adminDto = isset($isAdminPage) && adminMode() ? $this->getAdminDto($open_chat_id) : null;
+        $topPagedto = $staticDataGeneration->getTopPageData();
         $oc = $ocRepo->getOpenChatById($open_chat_id);
-        if (!$oc) return $this->deletedResponse($recommendGenarator, $open_chat_id);
+        if (!$oc)
+            return $this->deletedResponse($recommendGenarator, $open_chat_id, $topPagedto);
 
         $tag = $oc['tag1'];
         $categoryValue = $oc['category'] ? array_search($oc['category'], AppConfig::OPEN_CHAT_CATEGORY) : null;
@@ -126,7 +132,6 @@ class OpenChatPageController
         ];
         $_meta = $meta->generateMetadata($open_chat_id, $oc)->setImageUrl(imgUrl($oc['id'], $oc['img_url']));
         $_meta->thumbnail = imgPreviewUrl($oc['id'], $oc['img_url']);
-
 
         $_breadcrumbsShema = $breadcrumbsShema->generateSchema(
             'オプチャ',
@@ -153,8 +158,6 @@ class OpenChatPageController
         ];
         $officialDto = ($oc['emblem'] ?? 0) > 0 ? $this->buildOfficialDto($oc['emblem']) : null;
 
-        $adsDto = $adsRepository->getAdsByTag($tag ?: '', self::DefaultAdsId);
-
         return view('oc_content', compact(
             '_meta',
             '_css',
@@ -169,7 +172,7 @@ class OpenChatPageController
             '_hourlyRange',
             '_adminDto',
             'officialDto',
-            'adsDto',
+            'topPagedto',
         ));
     }
 
@@ -179,9 +182,8 @@ class OpenChatPageController
         int $open_chat_id
     ) {
         $oc = $ocRepo->getOpenChatById($open_chat_id);
-        if (!$oc) {
+        if (!$oc)
             return false;
-        }
 
         $downloadCsvService->sendCsv($open_chat_id, $oc['name']);
         exit;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
-use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\Recommend\RecommendPageList;
 use App\Services\Recommend\RecommendUtility;
 use App\Services\StaticData\StaticDataFile;
@@ -31,8 +30,11 @@ class RecommendOpenChatPageController
         StaticDataFile $staticDataGeneration,
         string $tag
     ) {
-        if (isset(self::Redirect[$tag])) return redirect('recommend?tag=' . urlencode(self::Redirect[$tag]), 301);
-        if (!$recommendPageList->isValidTag($tag)) return false;
+        if (isset(self::Redirect[$tag]))
+            return redirect('recommend?tag=' . urlencode(self::Redirect[$tag]), 301);
+
+        if (!$recommendPageList->isValidTag($tag))
+            return false;
 
         $_dto = $staticDataGeneration->getRecommendPageDto();
 
@@ -57,9 +59,7 @@ class RecommendOpenChatPageController
 
         $canonical = url('recommend?tag=' . urlencode($tag));
 
-
         $rankingDto = $staticDataGeneration->getTopPageData();
-        $rankingDto->dailyList = array_slice($rankingDto->dailyList, 0, 5);
 
         $recommendArray = $recommendPageList->getListDto($tag);
         if (!$recommendArray) {
@@ -103,7 +103,6 @@ class RecommendOpenChatPageController
         );
 
         $time = $hourlyUpdatedAt->format('G:i');
-        $tags = $recommendPageList->getFilterdTags($recommendList, $tag);
 
         return view('recommend_content', compact(
             '_meta',
@@ -117,7 +116,6 @@ class RecommendOpenChatPageController
             '_dto',
             'rankingDto',
             'canonical',
-            'tags',
             'time',
             'hourlyUpdatedAt',
         ));

@@ -245,7 +245,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
 
     <?php if ($recommend[0] || $recommend[3]) : ?>
       <aside class="recommend-list-aside">
-        <?php viewComponent('recommend_list2', ['recommend' => $recommend[0] ?: $recommend[3], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+        <?php $recommendDto1 = $recommend[0] ?: $recommend[3] ?>
+        <?php viewComponent('recommend_list2', ['recommend' => $recommendDto1, 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id'], 'showTags' => true]) ?>
       </aside>
       <hr class="hr-bottom">
       <?php //viewComponent('ads/google-rectangle') 
@@ -271,7 +272,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
 
     <?php if ($recommend[1]) : ?>
       <aside class="recommend-list-aside">
-        <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+        <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id'], 'showTags' => true]) ?>
       </aside>
       <hr class="hr-bottom">
       <?php //viewComponent('ads/google-responsive') 
@@ -279,7 +280,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
     <?php endif ?>
     <?php if ($recommend[0] && $recommend[3]) : ?>
       <aside class="recommend-list-aside">
-        <?php viewComponent('recommend_list2', ['recommend' => $recommend[3], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id']]) ?>
+        <?php viewComponent('recommend_list2', ['recommend' => $recommend[3], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id'], 'showTags' => true]) ?>
       </aside>
       <hr class="hr-bottom">
       <?php //viewComponent('ads/google-responsive') 
@@ -287,7 +288,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
     <?php endif ?>
     <?php if (isset($officialDto) && $officialDto) : ?>
       <aside class="recommend-list-aside">
-        <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => $oc['id']]) ?>
+        <?php viewComponent('recommend_list2', ['recommend' => $officialDto, 'id' => $oc['id'], 'showTags' => true]) ?>
       </aside>
       <hr class="hr-bottom">
       <?php //viewComponent('ads/google-responsive') 
@@ -297,27 +298,37 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
     <?php //viewComponent('ads/google-responsive') 
     ?>
 
-    <!-- <aside class="recommend-list-aside"> -->
-    <?php //viewComponent('top_ranking_comment_list_hour24', ['dto' => $topPagedto]) 
-    ?>
-    <!-- </aside> -->
-    <!-- <hr class="hr-bottom" style="padding: 0;"> -->
+    <aside class="recommend-list-aside">
+      <?php viewComponent('top_ranking_comment_list_hour', ['dto' => $topPagedto]) ?>
+    </aside>
+    <hr class="hr-bottom">
 
     <?php //viewComponent('ads/google-responsive') 
     ?>
+
+    <aside class="recommend-list-aside">
+      <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $topPagedto]) ?>
+    </aside>
+    <hr class="hr-bottom">
+
+    <?php //viewComponent('ads/google-responsive') 
+    ?>
+
+    <aside class="recommend-list-aside">
+      <article class="top-ranking">
+        <a class="readMore-btn top-ranking-readMore unset" href="<?php echo url('ranking') ?>">
+          <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
+        </a>
+      </article>
+    </aside>
+    <hr class="hr-bottom">
 
     <footer class="oc-page-footer" style="padding-top: 0;">
       <aside class="open-btn2">
         <a href="<?php echo url('oc/' . $oc['id'] . '/csv') ?>" class="app_link csv-dl">
           <span class="text">人数統計CSVをダウンロード</span>
         </a>
-        <?php if ($adsDto) : ?>
-          <div style="margin: 0 -1rem;">
-            <?php $adsDto->echoAdsElement() ?>
-          </div>
-        <?php endif ?>
       </aside>
-      <hr class="hr-top" style="margin: 0; width: 100%;">
       <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
       <?php viewComponent('footer_inner') ?>
     </footer>
