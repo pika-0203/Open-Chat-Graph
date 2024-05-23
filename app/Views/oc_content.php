@@ -299,7 +299,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
     ?>
 
     <aside class="recommend-list-aside">
-      <?php viewComponent('top_ranking_comment_list_hour', ['dto' => $topPagedto]) ?>
+      <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $topPagedto]) ?>
     </aside>
     <hr class="hr-bottom">
 
@@ -307,7 +307,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
     ?>
 
     <aside class="recommend-list-aside">
-      <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $topPagedto]) ?>
+      <?php viewComponent('top_ranking_comment_list_hour', ['dto' => $topPagedto]) ?>
     </aside>
     <hr class="hr-bottom">
 
