@@ -47,14 +47,16 @@ class RecommendListDto
         shuffle($hour);
         $length = $this->getSliceLength(count($hour));
         if (!$length) {
-            return $hour;
+            $this->shuffledMergedElements = $hour;
+            return $this->shuffledMergedElements;
         }
 
         $day = array_slice($this->day, 0, $length);
         shuffle($day);
         $length = $this->getSliceLength(count($hour) + count($day));
         if (!$length) {
-            return array_merge($hour, $day);
+            $this->shuffledMergedElements = array_merge($hour, $day);
+            return $this->shuffledMergedElements;
         };
 
         $week = array_slice($this->week, 0, $length);
@@ -63,7 +65,8 @@ class RecommendListDto
         if (!$length) {
             $result = array_merge($day, $week);
             shuffle($result);
-            return array_merge($hour, $result);
+            $this->shuffledMergedElements = array_merge($hour, $result);
+            return $this->shuffledMergedElements;
         };
 
         $member = array_slice($this->member, 0, $length);
@@ -121,7 +124,8 @@ class RecommendListDto
     function getList(bool $shuffle = true, ?int $limit = AppConfig::TOP_RANKING_LIST_LIMIT): array
     {
         $elements = $shuffle ? $this->buildShuffledList() : $this->mergedElements;
-        return $limit ? array_slice($elements, 0, $limit) : $elements;
+        $result = $limit ? array_slice($elements, 0, $limit) : $elements;
+        return $result;
     }
 
     /** @return array{ id:int,name:string,img_url:string,member:int,table_name:string,emblem:int }[] */
