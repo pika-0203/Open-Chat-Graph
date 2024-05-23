@@ -70,7 +70,7 @@
     </style>
 
     <!-- 固定ヘッダー -->
-    <main class="main">
+    <main class="main pad-side-top-ranking pad-side-top-list body">
         <div style="margin: 0 -1rem; ">
             <?php viewComponent('site_header') ?>
         </div>
@@ -78,26 +78,38 @@
         <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
-        <header style="padding: 1rem 0 0 0; text-align: center">
+        <header style="padding: 1rem 1rem 0 1rem; text-align: center">
             <p style="color: #111; font-size: 11px; text-align: left;">「<?php echo $recommend[2] ?? '' ?>」 ID:<?php echo $open_chat_id ?></p>
             <p style="font-weight: bold; color: #777">このオープンチャットはオプチャグラフから削除されました😇</p>
             <p style="color: #aaa; font-size: 13px">LINE内でルームが削除された可能性があります</p>
         </header>
         <?php if (isset($recommend[0]) && $recommend[0]) : ?>
-            <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => 0, 'tag' => $recommend[2], 'id' => 0]) ?>
+            <aside class="recommend-list-aside">
+                <?php viewComponent('recommend_list2', ['recommend' => $recommend[0], 'member' => 0, 'tag' => $recommend[2], 'id' => 0, 'showTags' => true]) ?>
+            </aside>
+            <hr class="hr-bottom">
         <?php endif ?>
         <?php if (isset($recommend[1]) && $recommend[1]) : ?>
-            <ins class="adsbygoogle rectangle-ads" style="display:block; background: rgb(250, 250, 250); margin: 0 -1rem;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-            <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => 0, 'tag' => $recommend[2], 'id' => 0]) ?>
+            <aside class="recommend-list-aside">
+                <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => 0, 'tag' => $recommend[2], 'id' => 0, 'showTags' => true]) ?>
+            </aside>
+            <hr class="hr-bottom">
         <?php endif ?>
-        <div class="top-list" style="all: unset; display: all;">
-            <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?list=all&order=desc&sort=member') ?>">
-                <span class="ranking-readMore">カテゴリーからオープンチャットを探す</span>
-            </a>
-        </div>
+        <aside class="recommend-list-aside">
+            <?php viewComponent('top_ranking_comment_list_hour24', ['dto' => $topPagedto]) ?>
+        </aside>
+        <hr class="hr-bottom">
+        <aside class="recommend-list-aside">
+            <?php viewComponent('top_ranking_comment_list_hour', ['dto' => $topPagedto]) ?>
+        </aside>
+        <hr class="hr-bottom">
+        <aside class="recommend-list-aside">
+            <article class="top-ranking">
+                <a class="readMore-btn top-ranking-readMore unset" href="<?php echo url('ranking') ?>">
+                    <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
+                </a>
+            </article>
+        </aside>
         <!--   <ins class="adsbygoogle rectangle-ads" style="display:block; background: rgb(250, 250, 250); margin: 0 -1rem;" data-ad-client="ca-pub-2330982526015125" data-ad-slot="8037531176"></ins>
         <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
