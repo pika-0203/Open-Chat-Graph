@@ -7,6 +7,8 @@ namespace App\Controllers\Api;
 use App\Config\AppConfig;
 use App\Models\ApiRepositories\OpenChatStatsRankingApiRepository;
 use App\Models\ApiRepositories\OpenChatApiArgs;
+use App\Models\ApiRepositories\OpenChatOfficialRankingApiRepository;
+use App\Services\OpenChat\Enum\RankingType;
 use Shared\Exceptions\BadRequestException as HTTP400;
 use Shadow\Kernel\Reception as Recp;
 use Shadow\Kernel\Validator as Valid;
@@ -29,7 +31,7 @@ class OpenChatRankingPageApiController
         $this->args->limit = Valid::num(Recp::input('limit'), min: 1, e: $error);
         $this->args->category = (int)Valid::str(Recp::input('category', '0'), regex: AppConfig::OPEN_CHAT_CATEGORY, e: $error);
 
-        $this->args->list = Valid::str(Recp::input('list', 'daily'), regex: ['hourly', 'daily', 'weekly', 'all'], e: $error);
+        $this->args->list = Valid::str(Recp::input('list', 'daily'), regex: ['hourly', 'daily', 'weekly', 'all', 'ranking', 'rising'], e: $error);
         $this->args->order = Valid::str(Recp::input('order', 'asc'), regex: ['asc', 'desc'], e: $error);
         $this->args->sort = Valid::str(Recp::input('sort', 'rank'), regex: ['rank', 'increase', 'rate', 'member', 'created_at'], e: $error);
 
@@ -46,7 +48,7 @@ class OpenChatRankingPageApiController
         }
     }
 
-    function velidateBadge(string $word)
+    private function velidateBadge(string $word)
     {
         if ($word === 'スペシャルオープンチャット') {
             return 1;
@@ -57,6 +59,18 @@ class OpenChatRankingPageApiController
         } else {
             return 0;
         }
+    }
+
+    private function officialRanking(RankingType $type)
+    {
+        /** @var OpenChatOfficialRankingApiRepository $repo */
+        $repo = app(OpenChatOfficialRankingApiRepository::class);
+
+        $time = new \DateTime(getHouryUpdateTime());
+        $time->modify('-1hour');
+        $timeStr = $time->format('Y-m-d H:i:s');
+
+        return response($repo->findOfficialRanking($this->args, $type, $timeStr));
     }
 
     function index(OpenChatStatsRankingApiRepository $repo)
@@ -70,6 +84,10 @@ class OpenChatRankingPageApiController
                 return response($repo->findWeeklyStatsRanking($this->args));
             case 'all':
                 return response($repo->findStatsAll($this->args));
+            case 'ranking':
+                return $this->officialRanking(RankingType::Ranking);
+            case 'rising':
+                return $this->officialRanking(RankingType::Rising);
         }
     }
 }
