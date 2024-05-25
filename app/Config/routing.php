@@ -36,12 +36,12 @@ Route::middlewareGroup(RedirectLineWebBrowser::class)
     })
 
     ->path('ranking', [ReactRankingPageController::class, 'ranking'])
-    ->matchStr('list', default: 'all')
+    ->matchStr('list', default: 'all', emptyAble: true)
     ->matchNum('category', emptyAble: true)
     ->match(fn () => handleRequestWithETagAndCache(getHouryUpdateTime() . "ranking"))
 
     ->path('official-ranking/{category}', [ReactRankingPageController::class, 'ranking'])
-    ->matchStr('list', default: 'rising')
+    ->matchStr('list', default: 'rising', emptyAble: true)
     ->matchNum('category', min: 1)
     ->match(function (int $category) {
         handleRequestWithETagAndCache(getHouryUpdateTime() . "official-ranking/{$category}");
