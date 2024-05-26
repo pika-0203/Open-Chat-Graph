@@ -29,7 +29,9 @@ class OpenChatOfficialRankingApiRepository
                 open_chat AS oc
                 LEFT JOIN statistics_ranking_hour AS sr ON oc.id = sr.open_chat_id
             WHERE
-                oc.id IN ({$ids})";
+                oc.id IN ({$ids})
+            ORDER BY
+                FIELD(oc.id,{$ids});";
 
         return array_map(
             fn ($oc) => new OpenChatListDto($oc),
