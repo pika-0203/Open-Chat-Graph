@@ -121,9 +121,11 @@ class RecommendListDto
         return $tags;
     }
 
-    function getList(bool $shuffle = true, ?int $limit = AppConfig::TOP_RANKING_LIST_LIMIT): array
+    function getList(bool $shuffle = true, ?int $limit = AppConfig::TOP_RANKING_LIST_LIMIT, int $excludeId = 0): array
     {
         $elements = $shuffle ? $this->buildShuffledList() : $this->mergedElements;
+        if ($excludeId) $elements = array_filter($elements, fn ($el) => $el['id'] !== $excludeId);
+        
         $result = $limit ? array_slice($elements, 0, $limit) : $elements;
         return $result;
     }
