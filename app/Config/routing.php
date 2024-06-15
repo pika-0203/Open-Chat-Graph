@@ -292,8 +292,9 @@ Route::path(
     'auth/callback',
     [LineLoginApiController::class, 'callback']
 )
-    ->matchStr('code')
-    ->matchStr('state');
+    ->matchStr('error', emptyAble: true)
+    ->matchStr('code', emptyAble: true)
+    ->matchStr('state', emptyAble: true);
 
 Route::path(
     'auth/logout',

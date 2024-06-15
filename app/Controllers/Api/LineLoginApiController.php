@@ -28,13 +28,16 @@ class LineLoginApiController
      * LINEログインからのコールバックURL
      * https://openchat-review.me/auth/callback
      */
-    function callback(LineLoginCallbackHandler $line, CookieLineUserLogin $login, string $code, string $state)
+    function callback(LineLoginCallbackHandler $line, CookieLineUserLogin $login, string $code, string $state, string $error)
     {
-        $lineResponse = $line->handle($code, $state);
-        $login->signIn($lineResponse->open_id);
-
         $returnTo = session('return_to');
         session()->remove('return_to');
+
+        if (!$error || !$code || $error === 'ACCESS_DENIED')
+            return redirect($returnTo);
+
+        $lineResponse = $line->handle($code, $state);
+        $login->signIn($lineResponse->open_id);
 
         return redirect($returnTo);
     }
