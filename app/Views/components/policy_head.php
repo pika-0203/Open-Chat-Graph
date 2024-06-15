@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2330982526015125" crossorigin="anonymous"></script>
- --> <?php echo $_meta ?>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2330982526015125" crossorigin="anonymous"></script>
+    <?php echo $_meta ?>
     <link rel="stylesheet" href="<?php echo fileUrl('style/mvpmin.css') ?>">
     <?php foreach ($_css as $css) : ?>
         <link rel="stylesheet" href="<?php echo fileUrl("style/{$css}.css") ?>">
