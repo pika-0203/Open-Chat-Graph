@@ -9,9 +9,14 @@ use Shared\Exceptions\ValidationException;
 
 class CookieUserLogin
 {
-    public function __construct(
-        private CookieUserStore $cookie
-    ) {
+    protected CookieUserStore $cookie;
+
+    function __construct()
+    {
+        $this->cookie = app(
+            CookieUserStore::class,
+            ['cookieName' => 'cookie-user-id']
+        );
     }
 
     /**
@@ -51,7 +56,7 @@ class CookieUserLogin
         return $this->decrypt($encryptedUserId);
     }
 
-    private function decrypt(string $encryptedUserId): string
+    protected function decrypt(string $encryptedUserId): string
     {
         try {
             return $this->cookie->decryptUserId($encryptedUserId);

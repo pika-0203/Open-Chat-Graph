@@ -8,14 +8,15 @@ use Shadow\StringCryptorInterface;
 
 class CookieUserStore
 {
-    const COOKIE_NAME = 'cookie-user-id';
     private const COOKIE_EXPIRES = 3600 * 24 * 30;
 
     private StringCryptorInterface $cryptor;
+    private string $cookieName;
 
-    function __construct(StringCryptorInterface $cryptor)
+    function __construct(StringCryptorInterface $cryptor, string $cookieName)
     {
         $this->cryptor = $cryptor;
+        $this->cookieName = $cookieName;
     }
 
     /**
@@ -25,7 +26,7 @@ class CookieUserStore
      */
     function getEncryptedUserIdFromCookie(): ?string
     {
-        return cookie(self::COOKIE_NAME);
+        return cookie($this->cookieName);
     }
 
     /**
@@ -59,7 +60,7 @@ class CookieUserStore
         [$expires, $encryptedUserId] = $this->makeEncryptedUserId($userId);
 
         cookie(
-            [self::COOKIE_NAME => $encryptedUserId],
+            [$this->cookieName => $encryptedUserId],
             $expires
         );
     }
@@ -73,8 +74,8 @@ class CookieUserStore
     function decryptUserId(string $encryptedUserId): string
     {
         [$expires, $userId] = json_decode($this->cryptor->verifyHashAndDecrypt($encryptedUserId), true);
-        
-        if($this->isValidUntilHalf($expires)) {
+
+        if ($this->isValidUntilHalf($expires)) {
             // 有効期限が半分以下の場合
             $this->saveUserIdToCookie($userId);
         }
@@ -99,6 +100,6 @@ class CookieUserStore
      */
     function removeInvalidCookie(): void
     {
-        cookie()->remove(self::COOKIE_NAME);
+        cookie()->remove($this->cookieName);
     }
 }

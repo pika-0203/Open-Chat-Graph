@@ -8,6 +8,7 @@ use App\Controllers\Api\CommentLikePostApiController;
 use App\Controllers\Api\CommentListApiController;
 use App\Controllers\Api\CommentPostApiController;
 use App\Controllers\Api\CommentReportApiController;
+use App\Controllers\Api\LineLoginApiController;
 use Shadow\Kernel\Route;
 use App\Middleware\RedirectLineWebBrowser;
 use App\Services\Admin\AdminAuthService;
@@ -280,6 +281,25 @@ Route::path(
     ->match(function () {
         return ['isAdminPage' => '1'];
     });
+
+Route::path(
+    'auth/login',
+    [LineLoginApiController::class, 'login']
+)
+    ->matchStr('return_to', maxLen: 100, emptyAble: true);
+
+Route::path(
+    'auth/callback',
+    [LineLoginApiController::class, 'callback']
+)
+    ->matchStr('code')
+    ->matchStr('state');
+
+Route::path(
+    'auth/logout',
+    [LineLoginApiController::class, 'logout']
+)
+    ->matchStr('return_to', maxLen: 100, emptyAble: true);
 
 cache();
 Route::run();
