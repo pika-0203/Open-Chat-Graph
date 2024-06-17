@@ -33,7 +33,7 @@ class LineLoginApiController
         $returnTo = session('return_to');
         session()->remove('return_to');
 
-        if (!$error || !$code || $error === 'ACCESS_DENIED')
+        if (!$state || !$code || $error === 'ACCESS_DENIED')
             return redirect($returnTo);
 
         $lineResponse = $line->handle($code, $state);

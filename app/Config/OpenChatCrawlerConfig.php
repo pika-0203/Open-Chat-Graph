@@ -16,6 +16,13 @@ class OpenChatCrawlerConfig
         'image/webp' => 'webp',
     ];
 
+    const LINE_INTERNAL_URL_MATCH_PATTERN = '{(?<=https:\/\/line\.me\/ti\/g2\/).+?(?=\?|$)}';
+
+    const DOM_CLASS_NAME = '.MdMN04Txt';
+    const DOM_CLASS_MEMBER = '.MdMN05Txt';
+    const DOM_CLASS_DESCRIPTION = '.MdMN06Desc';
+    const DOM_CLASS_IMG = '.mdMN01Img';
+
     const STORE_IMG_QUALITY = 50;
 
     const OPEN_CHAT_API_OC_DATA_FROM_EMID_DOWNLOADER_HEADER = [

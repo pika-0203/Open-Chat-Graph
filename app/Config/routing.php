@@ -2,6 +2,7 @@
 
 namespace App\Config;
 
+use App\Controllers\Api\AccreditationPostApiController;
 use App\Controllers\Api\AdminEndPointController;
 use App\Controllers\Api\AdsRegistrationApiController;
 use App\Controllers\Api\CommentLikePostApiController;
@@ -16,6 +17,7 @@ use App\Controllers\Api\OpenChatRankingPageApiController;
 use App\Controllers\Api\OpenChatRegistrationApiController;
 use App\Controllers\Api\RankingPositionApiController;
 use App\Controllers\Api\MyListApiController;
+use App\Controllers\Pages\AccreditationController;
 use App\Controllers\Pages\AdsRegistrationPageController;
 use App\Controllers\Pages\OpenChatPageController;
 use App\Controllers\Pages\RankingBanLabsPageController;
@@ -25,6 +27,7 @@ use App\Controllers\Pages\RecommendOpenChatPageController;
 use App\Controllers\Pages\RegisterOpenChatPageController;
 use App\Controllers\Pages\TagLabsPageController;
 use App\Middleware\VerifyCsrfToken;
+use App\Services\Accreditation\Enum\ExamType;
 use Shadow\Kernel\Reception;
 
 Route::middlewareGroup(RedirectLineWebBrowser::class)
@@ -301,6 +304,68 @@ Route::path(
     [LineLoginApiController::class, 'logout']
 )
     ->matchStr('return_to', maxLen: 100, emptyAble: true);
+
+Route::path(
+    'accreditation/{examType}/{pageType}',
+    [AccreditationController::class, 'route']
+)
+    ->matchStr('examType', maxLen: 10)
+    ->matchStr('pageType', maxLen: 20, emptyAble: true)
+    ->matchNum('page', emptyAble: true, default: 1)
+    ->matchNum('id', emptyAble: true, default: 0);
+
+Route::path(
+    'accreditation/register-profile@POST',
+    [AccreditationPostApiController::class, 'registerProfile']
+)
+    ->matchStr('name', maxLen: 20)
+    ->matchStr('url', regex: OpenChatCrawlerConfig::LINE_INTERNAL_URL_MATCH_PATTERN, emptyAble: true)
+    ->matchStr('admin_key', maxLen: 200, emptyAble: true)
+    ->matchStr('return_to')
+    ->match(
+        fn (string $name) => !!removeAllZeroWidthCharacters($name)
+    );
+
+Route::path(
+    'accreditation/register-question@POST',
+    [AccreditationPostApiController::class, 'registerQuestion']
+)
+    ->matchStr('question', maxLen: 4000)
+    ->matchStr('answers.a', maxLen: 4000)
+    ->matchStr('answers.b', maxLen: 4000)
+    ->matchStr('answers.c', maxLen: 4000)
+    ->matchStr('answers.d', maxLen: 4000)
+    ->matchStr('answers.correct', maxLen: 1)
+    ->matchStr('explanation', maxLen: 4000, emptyAble: true)
+    ->matchStr('source_url', maxLen: 2083, emptyAble: true)
+    ->matchStr('type')
+    ->matchStr('return_to')
+    ->match(fn (string $type) => !!ExamType::tryFrom($type));
+
+Route::path(
+    'accreditation/edit-question@POST',
+    [AccreditationPostApiController::class, 'editQuestion']
+)
+    ->matchStr('question', maxLen: 4000)
+    ->matchStr('answers.a', maxLen: 4000)
+    ->matchStr('answers.b', maxLen: 4000)
+    ->matchStr('answers.c', maxLen: 4000)
+    ->matchStr('answers.d', maxLen: 4000)
+    ->matchStr('answers.correct', maxLen: 1)
+    ->matchStr('explanation', maxLen: 4000, emptyAble: true)
+    ->matchStr('source_url', maxLen: 2083, emptyAble: true)
+    ->matchStr('type')
+    ->matchNum('id')
+    ->matchNum('publishing', emptyAble: true, default: 0)
+    ->matchStr('return_to')
+    ->match(fn (string $type) => !!ExamType::tryFrom($type));
+
+Route::path(
+    'accreditation/delete-question@POST',
+    [AccreditationPostApiController::class, 'deleteQuestion']
+)
+    ->matchNum('id')
+    ->matchStr('return_to');
 
 cache();
 Route::run();
