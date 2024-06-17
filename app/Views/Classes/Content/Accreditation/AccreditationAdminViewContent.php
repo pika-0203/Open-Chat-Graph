@@ -277,7 +277,7 @@ class AccreditationAdminViewContent
     ?>
         <form style="user-select:none;" id="q-form" onsubmit="return confirm('<?php echo $confirm ?>')" id="user-form" method="POST" action="/accreditation/<?php echo $action . $returnTo ?>">
             <label for="q_text">問題文</label>
-            <textarea id="q_text" name="question" maxlength="4000" rows="4" required><?php echo $q->question ?? '' ?></textarea>
+            <textarea id="q_text" name="question" maxlength="4000" rows="5" required><?php echo $q->question ?? '' ?></textarea>
 
             <?php foreach (range('a', 'd') as $key => $el) : ?>
                 <div style="display: flex; gap: 1rem;">
@@ -287,11 +287,11 @@ class AccreditationAdminViewContent
                         <label for="radio_<?php echo $key ?>">正解</label>
                     </div>
                 </div>
-                <textarea id="answer_<?php echo $key ?>" name="answers[<?php echo $el ?>]" maxlength="4000" rows="2" required><?php echo $q->answersArray[$el] ?? '' ?></textarea>
+                <textarea id="answer_<?php echo $key ?>" name="answers[<?php echo $el ?>]" maxlength="4000" rows="3" required><?php echo $q->answersArray[$el] ?? '' ?></textarea>
             <?php endforeach ?>
 
             <label for="explanation">解説（省略可能）</label>
-            <textarea id="explanation" name="explanation" maxlength="4000" rows="4"><?php echo $q->explanationArray['explanation'] ?? '' ?></textarea>
+            <textarea id="explanation" name="explanation" maxlength="4000" rows="5"><?php echo $q->explanationArray['explanation'] ?? '' ?></textarea>
 
             <fieldset>
                 <legend style="font-weight: bold;">出典URL（必須）</legend>
@@ -394,7 +394,10 @@ class AccreditationAdminViewContent
     }
 
     function questionList(bool $editorMode = false)
-    { ?>
+    {
+        $listLen = count($this->controller->questionList);
+
+    ?>
         <section>
             <style>
                 .question_p {
@@ -417,6 +420,9 @@ class AccreditationAdminViewContent
                     background: var(--color-secondary-accent);
                 }
             </style>
+            <?php if (!$editorMode) : ?>
+                <small style="margin-right: auto; user-select: none; font-size: 14px;">全 <?php echo $listLen ?> 件</small>
+            <?php endif ?>
             <?php foreach ($this->controller->questionList as $el) : ?>
                 <?php $edit = AccreditationUtility::isQuestionEditable($el, $this->controller->myId, $this->controller->isAdmin) ?>
 
