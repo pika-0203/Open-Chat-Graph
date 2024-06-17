@@ -47,6 +47,7 @@ class AccreditationAdminViewContent
             <meta property="og:description" content="公認メンター マスク監修 オプチャ検定(LINE非公式：仮) 管理ページ">
             <meta property="og:site_name" content="オプチャ検定(LINE非公式：仮)">
             <meta name="twitter:card" content="summary">
+            <link rel="icon" type="image/png" href="<?php echo fileUrl('assets/study_icon.png') ?>">
             <link rel="stylesheet" href="<?php echo fileUrl('style/mvp.css') ?>">
         </head>
     <?php
