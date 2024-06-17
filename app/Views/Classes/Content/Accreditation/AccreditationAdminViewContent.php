@@ -255,7 +255,7 @@ class AccreditationAdminViewContent
             <p>
                 <small>「オプチャ検定 (LINE非公式：仮)」はLINEオープンチャット非公式の検定です。LINEヤフー社はこの内容に関与していません。</small>
             </p>
-            <small><a href="/accreditation/privacy" style="color: #777;">プライバシーポリシー</a></small>
+            <small><a href="/accreditation/privacy" style="color: #b7b7b7; text-decoration: none;">プライバシーポリシー</a></small>
         </footer>
     <?php
     }
