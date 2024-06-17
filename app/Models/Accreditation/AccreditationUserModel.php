@@ -112,11 +112,19 @@ class AccreditationUserModel
     /**
      * @return QuestionDto|false
      */
-    function getQuestionById(int $id): QuestionDto|false
+    function getQuestionById(int $id, ?ExamType $type = null): QuestionDto|false
     {
+        $params = compact('id');
+        $where = "WHERE t1.id = :id";
+
+        if ($type) {
+            $params['type'] = $type->value;
+            $where .= " AND type = :type";
+        }
+
         return AccreditationDB::fetch(
-            $this->getQuestionQuery() . "WHERE t1.id = :id",
-            compact('id'),
+            $this->getQuestionQuery() . $where,
+            $params,
             [\PDO::FETCH_CLASS, QuestionDto::class]
         );
     }
@@ -126,9 +134,11 @@ class AccreditationUserModel
      */
     function getQuestionList(int $publishing, ExamType $type): array
     {
+        $type = $type->value;
+
         return AccreditationDB::fetchAll(
-            $this->getQuestionQuery() . "WHERE t1.publishing = :publishing ORDER BY t1.edited_at DESC",
-            compact('publishing'),
+            $this->getQuestionQuery() . "WHERE t1.publishing = :publishing AND type = :type ORDER BY t1.edited_at DESC",
+            compact('publishing', 'type'),
             [\PDO::FETCH_CLASS, QuestionDto::class]
         );
     }
@@ -138,9 +148,11 @@ class AccreditationUserModel
      */
     function getMyQuestionList(int $user_id, ExamType $type): array
     {
+        $type = $type->value;
+
         return AccreditationDB::fetchAll(
-            $this->getQuestionQuery() . "WHERE t1.user_id = :user_id ORDER BY t1.edited_at DESC",
-            compact('user_id'),
+            $this->getQuestionQuery() . "WHERE t1.user_id = :user_id AND type = :type ORDER BY t1.edited_at DESC",
+            compact('user_id', 'type'),
             [\PDO::FETCH_CLASS, QuestionDto::class]
         );
     }

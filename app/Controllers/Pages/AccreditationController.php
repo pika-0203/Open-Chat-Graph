@@ -107,7 +107,7 @@ class AccreditationController
 
     function editor(array $controller)
     {
-        $q = $this->accreditationUserModel->getQuestionById($this->currentId);
+        $q = $this->accreditationUserModel->getQuestionById($this->currentId, $this->type);
         if (!$q)
             return false;
 
