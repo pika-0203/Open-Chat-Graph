@@ -1,6 +1,6 @@
 export class OpenChatUrlValidator {
   #urlPattern =
-    /((https?:\/\/openchat.line.me\/jp\/cover\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+)(.*)(?=\?)|(https?:\/\/openchat.line.me\/jp\/cover\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g
+    /((https:\/\/openchat.line.me\/jp\/cover\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+)(.*)(?=\?)|(https:\/\/openchat.line.me\/jp\/cover\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g
 
   constructor(form) {
     this.form = form
