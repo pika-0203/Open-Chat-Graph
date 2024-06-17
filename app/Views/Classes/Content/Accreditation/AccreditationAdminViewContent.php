@@ -275,7 +275,7 @@ class AccreditationAdminViewContent
             $submit = '登録';
         }
     ?>
-        <form style="user-select:none;" onsubmit="return confirm('<?php echo $confirm ?>')" id="user-form" method="POST" action="/accreditation/<?php echo $action . $returnTo ?>">
+        <form style="user-select:none;" id="q-form" onsubmit="return confirm('<?php echo $confirm ?>')" id="user-form" method="POST" action="/accreditation/<?php echo $action . $returnTo ?>">
             <label for="q_text">問題文</label>
             <textarea id="q_text" name="question" maxlength="4000" rows="4" required><?php echo $q->question ?? '' ?></textarea>
 
@@ -340,6 +340,7 @@ class AccreditationAdminViewContent
             const sorceUrl = document.getElementById('source_url')
             const submit = document.getElementById('submit-btn')
             const urlMessage = document.getElementById('url-message')
+            const qForm = document.getElementById('q-form')
 
             const inputValidator = new UrlValidator(
                 sorceUrl, urlMessage, submit
@@ -355,9 +356,24 @@ class AccreditationAdminViewContent
             radioUrl2.addEventListener('change', radioUrlChange)
 
             sorceUrl.addEventListener('input', () => {
-                radioUrl2.value = sorceUrl.value
+                const value = sorceUrl.value.trim()
+                sorceUrl.value = value
+                radioUrl2.value = value
                 radioUrl2.checked = true
                 inputValidator.handle()
+            })
+
+            submit.addEventListener('click', () => {
+                ['question', 'answer_0', 'answer_1', 'answer_2', 'answer_3', 'explanation'].map(key => {
+                    qForm[key].value = qForm[key].value.trim()
+                })
+
+                if (qForm['answers[correct]'].value || !qForm['question'].value)
+                    return
+
+                qForm.scrollIntoView({
+                    behavior: 'smooth'
+                });
             })
         </script>
     <?php
@@ -382,13 +398,13 @@ class AccreditationAdminViewContent
         <section>
             <style>
                 .question_p {
-                    font-size: 14px;
+                    font-size: 15px;
                     overflow-wrap: anywhere;
                     white-space: break-spaces;
                 }
 
                 .question_li {
-                    font-size: 13px;
+                    font-size: 14px;
                     font-weight: bold;
                 }
 
@@ -407,9 +423,9 @@ class AccreditationAdminViewContent
                 <aside class="question_paper <?php if ($el->publishing) echo 'published' ?>">
                     <div style="display: flex; justify-content: space-between;">
                         <?php if ($el->publishing) : ?>
-                            <small style="display: block; font-weight: bold;">問題ID: <?php echo ($el->id) ?>（出題中）</small>
+                            <small style="display: block; font-weight: bold; font-size: 14px;">問題ID: <?php echo ($el->id) ?>（出題中）</small>
                         <?php else : ?>
-                            <small style="display: block;">問題ID: <?php echo ($el->id) ?></small>
+                            <small style="display: block; font-size: 14px;">問題ID: <?php echo ($el->id) ?></small>
                         <?php endif ?>
                         <?php if ($edit && !$editorMode) : ?>
                             <a href="./editor?id=<?php echo $el->id ?>">編集</a>
