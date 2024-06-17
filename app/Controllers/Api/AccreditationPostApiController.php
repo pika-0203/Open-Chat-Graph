@@ -54,7 +54,7 @@ class AccreditationPostApiController
             getUA(),
         );
 
-        return redirect($return_to);
+        return redirect($return_to, 303);
     }
 
     private function buildExplanationArray(
@@ -104,7 +104,7 @@ class AccreditationPostApiController
             getUA(),
         );
 
-        return redirect($return_to);
+        return redirect($return_to, 303);
     }
 
     function editQuestion(
@@ -148,7 +148,7 @@ class AccreditationPostApiController
             getUA(),
         );
 
-        return redirect($return_to);
+        return redirect($return_to, 303);
     }
 
     function deleteQuestion(
@@ -180,6 +180,6 @@ class AccreditationPostApiController
             getUA(),
         );
 
-        return redirect($return_to);
+        return redirect($return_to, 303);
     }
 }

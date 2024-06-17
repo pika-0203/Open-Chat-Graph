@@ -54,14 +54,14 @@ class AccreditationController
 
         $userId = $login->login();
         if (!$userId && $pageType !== 'login')
-            return redirect("accreditation/{$examType}/login");
+            return redirect("accreditation/{$examType}/login", 307);
         elseif ($userId && $pageType === 'login')
-            return redirect("accreditation/{$examType}/home");
+            return redirect("accreditation/{$examType}/home", 307);
 
         if ($userId) {
             $this->profileArray = $accreditationUserModel->getProfile($userId);
             if (!$this->profileArray && $pageType !== 'profile')
-                return redirect("accreditation/{$examType}/profile");
+                return redirect("accreditation/{$examType}/profile", 307);
 
             if ($this->profileArray) {
                 $this->myId = $this->profileArray['id'];
