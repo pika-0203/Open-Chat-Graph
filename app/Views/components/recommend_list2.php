@@ -39,7 +39,7 @@ if ($recommend->type === RecommendListType::Category) {
             <span class="ranking-readMore">「<?php echo $recommend->listName ?>」カテゴリーをもっと見る</span>
         </a>
     <?php elseif ($recommend->type === RecommendListType::Official) : ?>
-        <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking/?keyword=' . urlencode('badge:' . htmlspecialchars_decode($recommend->listName))) ?>">
+        <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking?keyword=' . urlencode('badge:' . htmlspecialchars_decode($recommend->listName))) ?>">
             <span class="ranking-readMore"><?php echo $recommend->listName ?>をもっと見る</span>
         </a>
     <?php else : ?>

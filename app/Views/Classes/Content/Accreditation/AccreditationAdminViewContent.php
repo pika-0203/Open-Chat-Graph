@@ -113,7 +113,7 @@ class AccreditationAdminViewContent
                             ) : ?>
                                 <li><b><?php echo $value ?></b></li>
                             <?php else : ?>
-                                <li><a href="./user/?id=<?php echo $this->controller->myId ?>"><?php echo $value ?></a></li>
+                                <li><a href="./user?id=<?php echo $this->controller->myId ?>"><?php echo $value ?></a></li>
                             <?php endif ?>
                         <?php elseif ($key !== $this->controller->pageType) : ?>
                             <li><a href="./<?php echo $key ?>"><?php echo $value ?></a></li>
