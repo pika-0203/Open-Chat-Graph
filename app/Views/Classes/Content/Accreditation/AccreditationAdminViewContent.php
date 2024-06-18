@@ -199,12 +199,18 @@ class AccreditationAdminViewContent
                 <aside>
                     <div style="margin-bottom: 12px;">
                         <div style="margin-bottom: 4px;"><small>ニックネーム</small></div>
-                        <div><?php echo $p['name'] ?></div>
+                        <div>
+                            <?php if ($p['id'] !== $this->controller->myId) : ?>
+                                <a style="color: #111;" href="./user?id=<?php echo $p['id'] ?>"><?php echo $p['name'] ?></a>
+                            <?php else : ?>
+                                <span style="color: #111;"><?php echo $p['name'] ?></span>
+                            <?php endif ?>
+                        </div>
                     </div>
                     <?php if ($p['url']) : ?>
                         <div style="margin-bottom: 12px;">
                             <div style="margin-bottom: 4px;"><small>オープンチャット</small></div>
-                            <div> <a href="<?php echo $p['url'] ?>"><?php echo $p['room_name'] ?></a></div>
+                            <div> <a style="color: #111;" href="<?php echo $p['url'] ?>"><?php echo $p['room_name'] ?></a></div>
                         </div>
                     <?php endif ?>
                     <?php if ($p['is_admin']) : ?>
