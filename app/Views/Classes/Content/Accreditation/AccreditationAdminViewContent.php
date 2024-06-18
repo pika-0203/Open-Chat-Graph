@@ -285,8 +285,8 @@ class AccreditationAdminViewContent
                 <div style="display: flex; gap: 1rem;">
                     <label for="answer_<?php echo $key ?>">回答 <?php echo strtoupper($el) ?></label>
                     <div style="user-select: none;">
-                        <input id="radio_<?php echo $key ?>" type="radio" name="answers[correct]" value="<?php echo $el ?>" style="transform:scale(1.5);" required <?php if (($q->answersArray['correct'] ?? '') === $el) echo 'checked' ?>>
-                        <label for="radio_<?php echo $key ?>">正解</label>
+                        <input id="radio_<?php echo $key ?>" type="radio" name="answers[correct]" value="<?php echo $el ?>" style="transform:scale(1.5); cursor: pointer;" required <?php if (($q->answersArray['correct'] ?? '') === $el) echo 'checked' ?>>
+                        <label for="radio_<?php echo $key ?>" style="cursor: pointer;">正解</label>
                     </div>
                 </div>
                 <textarea id="answer_<?php echo $key ?>" name="answers[<?php echo $el ?>]" maxlength="4000" rows="3" required><?php echo $q->answersArray[$el] ?? '' ?></textarea>
@@ -300,14 +300,14 @@ class AccreditationAdminViewContent
                 <p>回答の根拠になるURLを指定してください</p>
                 <div style="margin-bottom: 1rem; display:flex; align-items: center">
                     <div>
-                        <input id="radio_url1" type="radio" name="source_url" value="" style="transform:scale(1.5); margin-bottom: 0;" required <?php if ($q && !($q->explanationArray['source_url'] ?? '')) echo 'checked' ?>>
-                        <label style="display: inline-block; user-select:none;" for="radio_url1">安心・安全ガイドライン</label>
+                        <input id="radio_url1" type="radio" name="source_url" value="" style="transform:scale(1.5); margin-bottom: 0; cursor: pointer;" required <?php if ($q && !($q->explanationArray['source_url'] ?? '')) echo 'checked' ?>>
+                        <label style="display: inline-block; user-select:none; cursor: pointer;" for="radio_url1">安心・安全ガイドライン</label>
                     </div>
                     <a style="text-wrap: nowrap; margin-left:1rem; font-size: 13px;" href="https://openchat-jp.line.me/other/guideline" target="_blank">開く↗</a>
                 </div>
                 <div>
-                    <input id="radio_url2" type="radio" name="source_url" value="<?php if ($q && ($q->explanationArray['source_title'] ?? '')) echo $q->explanationArray['source_url'] ?? '' ?>" style="transform:scale(1.5);" required <?php if ($q && ($q->explanationArray['source_title'] ?? '')) echo 'checked' ?>>
-                    <label for="radio_url2">URLを入力</label>
+                    <input id="radio_url2" type="radio" name="source_url" value="<?php if ($q && ($q->explanationArray['source_title'] ?? '')) echo $q->explanationArray['source_url'] ?? '' ?>" style="transform:scale(1.5); cursor: pointer;" required <?php if ($q && ($q->explanationArray['source_title'] ?? '')) echo 'checked' ?>>
+                    <label for="radio_url2" style="cursor: pointer;">URLを入力</label>
                 </div>
                 <small id="url-message" style="display: none;">URLが無効です</small>
                 <input style="display: block; margin-bottom: 0;" type="text" id="source_url" maxlength="4000" value="<?php if ($q && ($q->explanationArray['source_title'] ?? '')) echo $q->explanationArray['source_url'] ?? '' ?>">
@@ -322,7 +322,7 @@ class AccreditationAdminViewContent
                 <?php if ($this->controller->isAdmin) : ?>
                     <br>
                     <label for="publishing">公開設定</label>
-                    <select name="publishing" id="publishing">
+                    <select name="publishing" id="publishing" style="cursor: pointer;">
                         <option value="0" <?php if (($q->publishing ?? '') === 0) echo 'selected' ?>>未公開</option>
                         <option value="1" <?php if (($q->publishing ?? '') === 1) echo 'selected' ?>>出題中</option>
                     </select>
@@ -411,7 +411,7 @@ class AccreditationAdminViewContent
                     <input type="hidden" value="<?php echo $q->id ?>" name="id">
                     <fieldset style="display: flex; gap: 1rem;">
                         <legend>検定レベルの移動</legend>
-                        <select name="type" style="padding: 1rem; margin: 0;">
+                        <select name="type" style="padding: 1rem; margin: 0; cursor: pointer;">
                             <?php foreach (ExamType::cases() as $type) : ?>
                                 <?php if ($type === $this->controller->type) continue ?>
                                 <option style="font-size: 21px;" value="<?php echo $type->value ?>"><?php echo $type->value ?></option>
