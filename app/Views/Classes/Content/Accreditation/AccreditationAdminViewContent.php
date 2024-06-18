@@ -195,6 +195,7 @@ class AccreditationAdminViewContent
     {
     ?>
         <?php foreach ($this->controller->currentContributorsArray as $p) : ?>
+            <?php if ($p['id'] === 1 || $p['id'] === 2) continue ?>
             <section>
                 <aside>
                     <div style="margin-bottom: 12px;">
