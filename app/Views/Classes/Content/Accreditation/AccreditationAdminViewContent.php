@@ -38,14 +38,14 @@ class AccreditationAdminViewContent
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>オプチャ検定(LINE非公式：仮) 管理ページ</title>
-            <meta name="description" content="公認メンター マスク監修 オプチャ検定(LINE非公式：仮) 管理ページ">
+            <title>オプチャ検定 管理ページ</title>
+            <meta name="description" content="公認メンター マスク監修 オプチャ検定 管理ページ">
             <meta property="og:locale" content="ja_JP">
             <meta property="og:url" content="<?php url(path()) ?>">
             <meta property="og:type" content="website">
-            <meta property="og:title" content="オプチャ検定(LINE非公式：仮) 問題集管理ページ">
-            <meta property="og:description" content="公認メンター マスク監修 オプチャ検定(LINE非公式：仮) 管理ページ">
-            <meta property="og:site_name" content="オプチャ検定(LINE非公式：仮)">
+            <meta property="og:title" content="オプチャ検定 問題集管理ページ">
+            <meta property="og:description" content="公認メンター マスク監修 オプチャ検定 管理ページ">
+            <meta property="og:site_name" content="オプチャ検定">
             <meta name="twitter:card" content="summary">
             <link rel="icon" type="image/png" href="<?php echo fileUrl('assets/study_icon.png') ?>">
             <link rel="stylesheet" href="<?php echo fileUrl('style/mvp.css') ?>">
@@ -89,7 +89,7 @@ class AccreditationAdminViewContent
                 }
             </style>
             <nav style="margin-bottom: 0">
-                <a href="./home" style="text-decoration: none"><b>公認メンター マスク監修<br />オプチャ検定<br />(LINE非公式：仮)<br /><span style="color: <?php echo $this->typeColor ?>;"><?php echo $this->examTypeName ?></span> 管理ページ</b></a>
+                <a href="./home" style="text-decoration: none"><b>公認メンター マスク監修<br />オプチャ検定<br /><span style="color: <?php echo $this->typeColor ?>;"><?php echo $this->examTypeName ?></span> 管理ページ</b></a>
                 <ul>
                     <?php if ($this->controller->profileArray) : ?>
                         <li>
@@ -253,7 +253,7 @@ class AccreditationAdminViewContent
         <footer>
             <hr style="margin-top: 0;">
             <p>
-                <small>「オプチャ検定 (LINE非公式：仮)」はLINEオープンチャット非公式の検定です。LINEヤフー社はこの内容に関与していません。</small>
+                <small>「オプチャ検定」はLINEオープンチャット非公式の検定です。LINEヤフー社はこの内容に関与していません。</small>
             </p>
             <small><a href="/accreditation/privacy" style="color: #b7b7b7; text-decoration: none;">プライバシーポリシー</a></small>
         </footer>

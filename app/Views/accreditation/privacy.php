@@ -19,7 +19,7 @@ use App\Config\AppConfig;
     <meta property="og:type" content="website">
     <meta property="og:title" content="プライバシーポリシー">
     <meta property="og:description" content="プライバシーポリシー">
-    <meta property="og:site_name" content="オプチャ検定(LINE非公式：仮)">
+    <meta property="og:site_name" content="オプチャ検定">
     <meta name="twitter:card" content="summary">
     <link rel="icon" type="image/png" href="<?php echo fileUrl('assets/study_icon.png') ?>">
     <link rel="stylesheet" href="<?php echo fileUrl('style/mvp.css') ?>">
