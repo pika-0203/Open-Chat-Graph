@@ -22,6 +22,35 @@ class AccreditationUserModel
     }
 
     /**
+     * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int }[]
+     */
+    function getProfilesByType(ExamType $type): array|false
+    {
+        $type = $type->value;
+
+        return AccreditationDB::fetchAll(
+            "SELECT
+                t1.*
+            FROM
+                user AS t1
+            WHERE
+                EXISTS (
+                    SELECT
+                        user_id
+                    FROM
+                        exam
+                    WHERE
+                        user_id = t1.id
+                        AND type = :type
+                )
+            ORDER BY
+                t1.is_admin DESC,
+                name COLLATE utf8mb4_bin;",
+            compact('type')
+        );
+    }
+
+    /**
      * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int }|false
      */
     function getProfileById(int $id): array|false

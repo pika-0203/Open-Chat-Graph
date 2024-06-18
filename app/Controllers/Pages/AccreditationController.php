@@ -27,6 +27,11 @@ class AccreditationController
     public int $currentPage = 1;
     public int $currentId = 0;
 
+    /** 
+     * @var array{ id:int,user_id:string, name:string, url:string, is_admin:int, room_name:string }[]
+     */
+    public array $currentContributorsArray = [];
+
     public ExamType $type;
     public string $pageType;
     private AccreditationUserModel $accreditationUserModel;
@@ -136,5 +141,12 @@ class AccreditationController
         $this->questionList = $this->accreditationUserModel->getQuestionList(1, $this->type);
 
         return view('accreditation/questionList', $controller);
+    }
+
+    function contributors(array $controller)
+    {
+        $this->currentContributorsArray = $this->accreditationUserModel->getProfilesByType($this->type);
+
+        return view('accreditation/contributors', $controller);
     }
 }

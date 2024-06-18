@@ -142,17 +142,25 @@ class AccreditationAdminViewContent
             }
         </style>
         <div class="main-tab">
-            <?php if ($this->controller->pageType === 'home') : ?>
-                <a href="./unpublished"><b>未公開の問題</b></a>
-                <a href="./published"><b>出題中の問題</b></a>
-            <?php elseif ($this->controller->pageType === 'unpublished') : ?>
-                <a><i>未公開の問題</i></a>
-                <a href="./published"><b>出題中の問題</b></a>
-            <?php elseif ($this->controller->pageType === 'published') : ?>
-                <a href="./unpublished"><b>未公開の問題</b></a>
-                <a><i>出題中の問題</i></a>
-            <?php endif ?>
+            <?php foreach ([
+                ['未公開の問題', 'unpublished'],
+                ['出題中の問題', 'published'],
+                ['投稿者の一覧', 'contributors'],
+            ] as $p) : ?>
+                <?php if ($this->controller->pageType === $p[1]) : ?>
+                    <a><i><?php echo $p[0] ?></i></a>
+                <?php else : ?>
+                    <a href="./<?php echo $p[1] ?>"><b><?php echo $p[0] ?></b></a>
+                <?php endif ?>
+            <?php endforeach ?>
         </div>
+    <?php
+    }
+
+    function examTitle()
+    {
+    ?>
+        <span style="margin-left: 6px; font-size: 15px; color: <?php echo $this->typeColor ?>;"><?php echo $this->examTypeName ?></span>
     <?php
     }
 
@@ -176,14 +184,35 @@ class AccreditationAdminViewContent
                     </p>
                 <?php endif ?>
                 <?php if ($profile['is_admin']) : ?>
-                    <p>
-                        <small>
-                            👑サイト管理者
-                        </small>
-                    </p>
+                    <small>👑サイト管理者</small>
                 <?php endif ?>
             </aside>
         </section>
+    <?php
+    }
+
+    function contributors()
+    {
+    ?>
+        <?php foreach ($this->controller->currentContributorsArray as $p) : ?>
+            <section>
+                <aside>
+                    <div style="margin-bottom: 12px;">
+                        <div style="margin-bottom: 4px;"><small>ニックネーム</small></div>
+                        <div><?php echo $p['name'] ?></div>
+                    </div>
+                    <?php if ($p['url']) : ?>
+                        <div style="margin-bottom: 12px;">
+                            <div style="margin-bottom: 4px;"><small>オープンチャット</small></div>
+                            <div> <a href="<?php echo $p['url'] ?>"><?php echo $p['room_name'] ?></a></div>
+                        </div>
+                    <?php endif ?>
+                    <?php if ($p['is_admin']) : ?>
+                        <small>👑サイト管理者</small>
+                    <?php endif ?>
+                </aside>
+            </section>
+        <?php endforeach ?>
     <?php
     }
 
@@ -522,7 +551,7 @@ class AccreditationAdminViewContent
                     </div>
 
                     <?php if ($el->edit_user_id) : ?>
-                        <div style="display: flex; gap: 6px; margin-top: 8px;">
+                        <div style="display: flex; gap: 6px; margin-top: 16px;">
                             <small style="word-break: keep-all; text-wrap: nowrap;">最終更新</small>
 
                             <?php if ($el->is_admin_edit_user) : ?>
