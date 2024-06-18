@@ -140,6 +140,30 @@ class AccreditationAdminViewContent
             .main-tab a b {
                 padding: 20px 10px;
             }
+
+            @media screen and (max-width: 511px) {
+                .main-tab {
+                    gap: 8px;
+                }
+
+                .main-tab a i,
+                .main-tab a b {
+                    padding: 16px 8px;
+                    font-size: 14px;
+                }
+            }
+
+            @media screen and (max-width: 359px) {
+                .main-tab {
+                    gap: 8px;
+                }
+
+                .main-tab a i,
+                .main-tab a b {
+                    padding: 12px 6px;
+                    font-size: 14px;
+                }
+            }
         </style>
         <div class="main-tab">
             <?php foreach ([
