@@ -28,12 +28,14 @@ class AccreditationPostApiController
         if (!$user_id)
             throw new UnauthorizedException('未ログイン');
 
+        $profile = $model->getProfile($user_id);
+
         if ($admin_key && $admin_key === AdminConfig::ADMIN_ACCREDITATION_KEY)
             $is_admin = 1;
         elseif ($admin_key)
             throw new ValidationException('不正なパスワードです');
         else
-            $is_admin = 0;
+            $is_admin = ($profile && $profile['is_admin']) ? 1 : 0;
 
         if ($url) {
             $dto = $openChatCrawler->fetchOpenChatDto(
