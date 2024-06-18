@@ -184,4 +184,70 @@ class AccreditationPostApiController
 
         return redirect($return_to, 303);
     }
+
+    function resetPermissionQuestion(
+        AccreditationUserModel $model,
+        CookieLineUserLogin $login,
+        int $id,
+        string $return_to,
+    ) {
+        $user_id = $login->login();
+        if (!$user_id)
+            throw new UnauthorizedException('未ログイン');
+
+        $profile = $model->getProfile($user_id);
+        if (!$profile)
+            throw new UnauthorizedException('プロフィール未作成');
+
+        $q = $model->getQuestionById($id);
+        if (!$q)
+            throw new ValidationException('存在しない問題のID');
+
+        if (!$profile['is_admin'])
+            throw new UnauthorizedException('設定権限がありません');
+
+        $model->changePermissionQuestion(
+            $id,
+            $q->user_id,
+            $profile['id'],
+            getIP(),
+            getUA(),
+        );
+
+        return redirect($return_to, 303);
+    }
+
+    function moveQuestion(
+        AccreditationUserModel $model,
+        CookieLineUserLogin $login,
+        int $id,
+        string $type,
+    ) {
+        $type = ExamType::from($type);
+
+        $user_id = $login->login();
+        if (!$user_id)
+            throw new UnauthorizedException('未ログイン');
+
+        $profile = $model->getProfile($user_id);
+        if (!$profile)
+            throw new UnauthorizedException('プロフィール未作成');
+
+        $q = $model->getQuestionById($id);
+        if (!$q)
+            throw new ValidationException('存在しない問題のID');
+
+        if (!$profile['is_admin'])
+            throw new UnauthorizedException('設定権限がありません');
+
+        $model->moveQuestion(
+            $id,
+            $type,
+            $profile['id'],
+            getIP(),
+            getUA(),
+        );
+
+        return redirect("/accreditation/{$type->value}/editor?id={$id}", 303);
+    }
 }

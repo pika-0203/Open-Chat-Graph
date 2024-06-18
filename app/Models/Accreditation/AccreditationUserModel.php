@@ -137,7 +137,7 @@ class AccreditationUserModel
         $type = $type->value;
 
         return AccreditationDB::fetchAll(
-            $this->getQuestionQuery() . "WHERE t1.publishing = :publishing AND type = :type ORDER BY t1.edited_at DESC",
+            $this->getQuestionQuery() . "WHERE t1.publishing = :publishing AND type = :type ORDER BY t1.id DESC",
             compact('publishing', 'type'),
             [\PDO::FETCH_CLASS, QuestionDto::class]
         );
@@ -151,7 +151,7 @@ class AccreditationUserModel
         $type = $type->value;
 
         return AccreditationDB::fetchAll(
-            $this->getQuestionQuery() . "WHERE t1.user_id = :user_id AND type = :type ORDER BY t1.edited_at DESC",
+            $this->getQuestionQuery() . "WHERE t1.user_id = :user_id AND type = :type ORDER BY t1.id DESC",
             compact('user_id', 'type'),
             [\PDO::FETCH_CLASS, QuestionDto::class]
         );
@@ -202,6 +202,27 @@ class AccreditationUserModel
         return AccreditationDB::executeAndCheckResult(
             "DELETE FROM exam WHERE id = :id",
             compact('id')
+        );
+    }
+
+    function changePermissionQuestion(int $id, int $edit_user_id, int $user_id, string $ip, string $ua): bool
+    {
+        $this->userLog($user_id, $ip, $ua, 'changePermissionQuestion');
+
+        return AccreditationDB::executeAndCheckResult(
+            "UPDATE exam SET edit_user_id = :edit_user_id WHERE id = :id",
+            compact('id', 'edit_user_id')
+        );
+    }
+
+    function moveQuestion(int $id, ExamType $type, int $user_id, string $ip, string $ua): bool
+    {
+        $this->userLog($user_id, $ip, $ua, 'moveQuestion');
+
+        $type = $type->value;
+        return AccreditationDB::executeAndCheckResult(
+            "UPDATE exam SET type = :type WHERE id = :id",
+            compact('id', 'type')
         );
     }
 }

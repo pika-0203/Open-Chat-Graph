@@ -320,6 +320,7 @@ class AccreditationAdminViewContent
                 <input type="hidden" value="<?php echo $this->controller->currentId ?>" name="id">
 
                 <?php if ($this->controller->isAdmin) : ?>
+                    <br>
                     <label for="publishing">公開設定</label>
                     <select name="publishing" id="publishing">
                         <option value="0" <?php if (($q->publishing ?? '') === 0) echo 'selected' ?>>未公開</option>
@@ -392,6 +393,43 @@ class AccreditationAdminViewContent
             <input type="hidden" value="<?php echo $q->id ?>" name="id">
             <input type="submit" value="削除" style="padding: 10px 20px; background-color:#e2326b; border-color:#e2326b;" />
         </form>
+    <?php
+    }
+
+    function adminQuestionForm(string $returnTo, string $deleteReturnTo)
+    {
+        if (!isset($this->controller->questionList[0]) || !$this->controller->isAdmin)
+            return;
+
+        $q = $this->controller->questionList[0];
+    ?>
+        <section>
+            <aside>
+                <b>サイト管理者機能</b>
+                <hr>
+                <form style="all:unset; display: block;" onsubmit="return confirm('検定レベルを移動しますか？')" method="POST" action="/accreditation/move-question">
+                    <input type="hidden" value="<?php echo $q->id ?>" name="id">
+                    <fieldset style="display: flex; gap: 1rem;">
+                        <legend>検定レベルの移動</legend>
+                        <select name="type" style="padding: 1rem; margin: 0;">
+                            <?php foreach (ExamType::cases() as $type) : ?>
+                                <?php if ($type === $this->controller->type) continue ?>
+                                <option style="font-size: 21px;" value="<?php echo $type->value ?>"><?php echo $type->value ?></option>
+                            <?php endforeach ?>
+                        </select>
+                        <br>
+                        <input type="submit" value="移動する" style="padding: 10px 20px; margin: 0;" />
+                    </fieldset>
+                </form>
+                <hr>
+                <?php if (!$q->is_admin_user && $q->edit_user_id && ($q->user_id !== $q->edit_user_id)) : ?>
+                    <form style="all:unset; display: block;" onsubmit="return confirm('問題編集権限を投稿者に戻しますか？')" method="POST" action="/accreditation/reset-permission-question<?php echo $returnTo ?>">
+                        <input type="hidden" value="<?php echo $q->id ?>" name="id">
+                        <input type="submit" value="問題編集権限を投稿者に戻す" style="padding: 10px 20px;" />
+                    </form>
+                <?php endif ?>
+            </aside>
+        </section>
     <?php
     }
 

@@ -367,5 +367,20 @@ Route::path(
     ->matchNum('id')
     ->matchStr('return_to');
 
+Route::path(
+    'accreditation/reset-permission-question@POST',
+    [AccreditationPostApiController::class, 'resetPermissionQuestion']
+)
+    ->matchNum('id')
+    ->matchStr('return_to');
+
+Route::path(
+    'accreditation/move-question@POST',
+    [AccreditationPostApiController::class, 'moveQuestion']
+)
+    ->matchNum('id')
+    ->matchStr('type')
+    ->match(fn (string $type) => !!ExamType::tryFrom($type));
+
 cache();
 Route::run();

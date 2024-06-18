@@ -21,6 +21,7 @@ $deleteReturnTo = "?return_to=" . ($_SERVER['HTTP_REFERER'] ?? "/accreditation/{
         <?php $view->questionForm($returnTo, true) ?>
         <br>
         <?php $view->deleteQuestionForm($deleteReturnTo) ?>
+        <?php $view->adminQuestionForm($returnTo, $deleteReturnTo) ?>
     </main>
     <?php $view->footer() ?>
 </body>
