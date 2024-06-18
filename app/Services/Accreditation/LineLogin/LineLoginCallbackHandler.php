@@ -19,7 +19,11 @@ class LineLoginCallbackHandler
      */
     function handle(string $code, string $state): \stdClass
     {
-        $response = $this->line->token($code, $state);
+        try {
+            $response = $this->line->token($code, $state);
+        } catch (UnauthorizedException $e) {
+            throw new UnauthorizedException("LINEログインに失敗しました。\nデフォルトに設定されているブラウザから再度ログインしてください。\n" . "(" . $e->getMessage() . ")");
+        }
 
         if (isset($response->error)) {
             throw new UnauthorizedException('LINEログイン エラー: ' . $response->error);

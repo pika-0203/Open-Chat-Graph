@@ -49,7 +49,7 @@ class LineLogin
     function token(string $code, string $state): \stdClass
     {
         if (session('state') !== $state) {
-            throw new UnauthorizedException("LINEログインに失敗しました。\nデフォルトに設定されているブラウザで再度ログインしてください。\n(stateが一致しません。)");
+            throw new UnauthorizedException("stateが一致しません");
         }
 
         session()->remove('state');

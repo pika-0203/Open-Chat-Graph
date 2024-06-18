@@ -21,7 +21,7 @@ class LineLoginApiController
     {
         // ラインのログインページにリダイレクトする
         session(compact('return_to'));
-        return redirect($line->getLink());
+        return redirect($line->getLink(), 307);
     }
 
     /**
@@ -34,12 +34,16 @@ class LineLoginApiController
         session()->remove('return_to');
 
         if (!$state || !$code || $error === 'ACCESS_DENIED')
-            return redirect($returnTo);
+            return redirect($returnTo, 307);
 
-        $lineResponse = $line->handle($code, $state);
+        $lineResponse = $line->handle(
+            $code,
+            $state
+        );
+
         $login->signIn($lineResponse->open_id);
 
-        return redirect($returnTo);
+        return redirect($returnTo, 307);
     }
 
     /**
@@ -55,6 +59,6 @@ class LineLoginApiController
         }
 
         // 前のページにリダイレクトする
-        return redirect($return_to);
+        return redirect($return_to, 307);
     }
 }
