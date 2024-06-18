@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Accreditation\LineLogin;
 
 use App\Config\LineLoginConfig;
-use App\Exceptions\LineLoginException;
+use Shared\Exceptions\UnauthorizedException;
 
 class LineLogin
 {
@@ -42,14 +42,14 @@ class LineLogin
      * 
      * @return \stdClass レスポンスデータ
      * 
-     * @throws LineLoginException セッションのstateが一致しない場合
-     * @throws LineLoginException Curlリクエストが失敗した場合
-     * @throws LineLoginException レスポンスのJSONデータの解析に失敗した場合
+     * @throws UnauthorizedException セッションのstateが一致しない場合
+     * @throws UnauthorizedException Curlリクエストが失敗した場合
+     * @throws UnauthorizedException レスポンスのJSONデータの解析に失敗した場合
      */
     function token(string $code, string $state): \stdClass
     {
         if (session('state') !== $state) {
-            throw new LineLoginException('stateが一致しません。');
+            throw new UnauthorizedException("LINEログインに失敗しました。\nデフォルトに設定されているブラウザで再度ログインしてください。\n(stateが一致しません。)");
         }
 
         session()->remove('state');
@@ -73,7 +73,7 @@ class LineLogin
      * 
      * @return \stdClass レスポンスデータ
      * 
-     * @throws LineLoginException Curlリクエストが失敗した場合
+     * @throws UnauthorizedException Curlリクエストが失敗した場合
      */
     function verify(string $token): \stdClass
     {
@@ -89,7 +89,7 @@ class LineLogin
      * 
      * @return \stdClass レスポンスデータ
      * 
-     * @throws LineLoginException Curlリクエストが失敗した場合
+     * @throws UnauthorizedException Curlリクエストが失敗した場合
      */
     function refresh($token)
     {
@@ -112,7 +112,7 @@ class LineLogin
      * 
      * @return \stdClass レスポンスデータ
      *
-     * @throws LineLoginException Curlリクエストが失敗した場合。
+     * @throws UnauthorizedException Curlリクエストが失敗した場合。
      */
     function profile(string $token): \stdClass
     {
@@ -127,7 +127,7 @@ class LineLogin
      * 
      * @return \stdClass レスポンスデータ
      * 
-     * @throws LineLoginException Curlリクエストが失敗した場合
+     * @throws UnauthorizedException Curlリクエストが失敗した場合
      */
     public function revoke(string $token): \stdClass
     {
@@ -174,7 +174,7 @@ class LineLogin
      * 
      * @return \stdClass レスポンスデータ
      * 
-     * @throws LineLoginException Curlリクエストが失敗した場合
+     * @throws UnauthorizedException Curlリクエストが失敗した場合
      */
     private function sendCurl(string $url, ?array $header, string $type, ?array $data = null): \stdClass
     {
@@ -201,14 +201,14 @@ class LineLogin
 
         $response = curl_exec($request);
         if ($response === false) {
-            throw new LineLoginException(curl_error($request));
+            throw new UnauthorizedException(curl_error($request));
         }
 
         curl_close($request);
 
         $decoded_response = json_decode($response);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new LineLoginException('レスポンスのJSONデータの解析に失敗しました。');
+            throw new UnauthorizedException('レスポンスのJSONデータの解析に失敗しました。');
         }
 
         return $decoded_response;

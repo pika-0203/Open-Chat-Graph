@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Accreditation\LineLogin;
 
-use App\Exceptions\LineLoginException;
+use Shared\Exceptions\UnauthorizedException;
 use App\Services\Accreditation\LineLogin\LineLogin;
 
 class LineLoginCallbackHandler
@@ -22,17 +22,17 @@ class LineLoginCallbackHandler
         $response = $this->line->token($code, $state);
 
         if (isset($response->error)) {
-            throw new LineLoginException('LINEログイン エラー: ' . $response->error);
+            throw new UnauthorizedException('LINEログイン エラー: ' . $response->error);
         }
 
         if (isset($response->access_token) === false) {
-            throw new LineLoginException('LINEログイン エラー: アクセストークンがありません。');
+            throw new UnauthorizedException('LINEログイン エラー: アクセストークンがありません。');
         }
 
         $verifyResponse = $this->line->verify($response->access_token);
 
         if (isset($verifyResponse->error)) {
-            throw new LineLoginException('LINEログイン 検証エラー: ' . $verifyResponse->error);
+            throw new UnauthorizedException('LINEログイン 検証エラー: ' . $verifyResponse->error);
         }
 
         return $this->extractOpenIdFromIdToken($response);

@@ -13,13 +13,18 @@ class RedirectLineWebBrowser
         }
 
         $current_url = $_SERVER['REQUEST_URI'] ?? '';
-        if (strpos($current_url, '?') !== false) {
-            $new_url = $current_url . '&openExternalBrowser=1';
-        } else {
-            $new_url = $current_url . '?openExternalBrowser=1';
+
+        if (strpos($current_url, 'redirected=1') !== false) {
+            return true;
         }
 
-        return redirect($new_url);
+        if (strpos($current_url, '?') !== false) {
+            $new_url = $current_url . '&openExternalBrowser=1&redirected=1';
+        } else {
+            $new_url = $current_url . '?openExternalBrowser=1&redirected=1';
+        }
+
+        return redirect($new_url, 307);
     }
 
     private function isLineWebBrowser()
