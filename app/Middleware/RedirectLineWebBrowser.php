@@ -27,7 +27,7 @@ class RedirectLineWebBrowser
         return redirect($new_url, 307);
     }
 
-    private function isLineWebBrowser()
+    function isLineWebBrowser()
     {
         /** @var string ユーザエージェント文字列 */
         $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
