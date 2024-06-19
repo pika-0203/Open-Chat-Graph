@@ -313,7 +313,7 @@ class AccreditationAdminViewContent
         <footer>
             <hr style="margin-top: 0;">
             <p>
-                <small>「オプチャ検定」はLINEオープンチャット非公式の検定です。LINEヤフー社はこの内容に関与していません。</small>
+                <small>「オプチャ検定」はLINEオープンチャット非公式の検定です。LINEヤフー社はこの内容に関与していません。<br>監修しているのは一部のLINEオープンチャット公認メンターです。</small>
             </p>
             <small><a href="/accreditation/privacy" style="color: #b7b7b7; text-decoration: none;">プライバシーポリシー</a></small>
         </footer>
