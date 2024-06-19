@@ -25,7 +25,7 @@ class QuizApiModel
                 t2.url AS room_url
             FROM
                 exam AS t1
-                JOIN user AS t2
+                JOIN user AS t2 ON t1.user_id = t2.id
             WHERE
                 type = :type
                 AND publishing = 1";

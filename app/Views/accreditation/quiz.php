@@ -5,6 +5,7 @@
     <?php echo gTag(\App\Config\AppConfig::GTM_ID) ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#800080" />
 
     <link rel="icon" type="image/png" href="<?php echo fileUrl('assets/study_icon.png') ?>">
 
@@ -18,7 +19,7 @@
     <meta property="og:locale" content="ja_JP">
     <meta property="og:url" content="<?php url('accreditation') ?>">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="オプチャ検定 練習問題">
+    <meta property="og:title" content="公認メンター監修・オプチャ検定｜練習問題">
     <meta property="og:description" content="オプチャ検定の練習問題に挑戦しよう！">
     <meta property="og:site_name" content="オプチャ検定">
     <meta property="og:image" content="<?php echo fileUrl('assets/quiz-ogp.png') ?>">
