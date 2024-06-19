@@ -22,6 +22,15 @@ class QuizApiService
     ) {
     }
 
+    private function addOpenExternalBrowser(string $url): string
+    {
+        if (strpos($url, '?') !== false) {
+            return $url . '&openExternalBrowser=1&redirected=1';
+        } else {
+            return $url . '?openExternalBrowser=1&redirected=1';
+        }
+    }
+
     /**
      *  @param QuizApiQuestionDto[] $dbDtos
      * 
@@ -34,12 +43,12 @@ class QuizApiService
             $contributor = new Contributor(
                 $dto->user_name,
                 $dto->room_name,
-                $dto->room_url
+                $this->addOpenExternalBrowser($dto->room_url)
             );
 
             $source = new Source(
                 $dto->explanationArray['source_title'] ?: self::DEFAULT_SOURCE_TITLE,
-                $dto->explanationArray['source_url'] ?: self::DEFAULT_SOURCE_URL,
+                $this->addOpenExternalBrowser($dto->explanationArray['source_url'] ?: self::DEFAULT_SOURCE_URL),
             );
 
             $choices = [];
