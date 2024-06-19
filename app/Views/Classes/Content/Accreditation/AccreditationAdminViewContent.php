@@ -41,7 +41,7 @@ class AccreditationAdminViewContent
             <title>オプチャ検定 管理ページ</title>
             <meta name="description" content="公認メンター監修 オプチャ検定 管理ページ">
             <meta property="og:locale" content="ja_JP">
-            <meta property="og:url" content="<?php url(path()) ?>">
+            <meta property="og:url" content="<?php echo url(path()) ?>">
             <meta property="og:type" content="website">
             <meta property="og:title" content="オプチャ検定 問題集管理ページ">
             <meta property="og:description" content="公認メンター監修 オプチャ検定 管理ページ">
