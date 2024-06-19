@@ -504,6 +504,7 @@ class AccreditationAdminViewContent
                     font-size: 15px;
                     overflow-wrap: anywhere;
                     white-space: break-spaces;
+                    line-break: anywhere;
                 }
 
                 .question_li {
@@ -514,6 +515,7 @@ class AccreditationAdminViewContent
                 .question_li span {
                     overflow-wrap: anywhere;
                     white-space: break-spaces;
+                    line-break: anywhere;
                 }
 
                 .question_paper.published {
