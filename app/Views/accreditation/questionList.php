@@ -19,6 +19,7 @@ $isPublished = $view->controller->pageType === 'published';
             <p>
                 <small>サイト管理者により出題中になった問題一覧です。<br>出題中の問題は実際の検定に出題されます。</small>
             </p>
+            <a href="/accreditation" target="_blank" style="font-size: 14px;">公認メンター監修・オプチャ検定｜練習問題</a>
             <hr>
         <?php else : ?>
             <h2>未公開の問題<?php $view->examTitle() ?></h2>
