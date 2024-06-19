@@ -46,6 +46,7 @@ class AccreditationAdminViewContent
             <meta property="og:title" content="オプチャ検定 問題集管理ページ">
             <meta property="og:description" content="公認メンター監修 オプチャ検定 管理ページ">
             <meta property="og:site_name" content="オプチャ検定">
+            <meta property="og:image" content="<?php echo fileUrl('assets/ogp-accreditation.png') ?>">
             <meta name="twitter:card" content="summary">
             <link rel="icon" type="image/png" href="<?php echo fileUrl('assets/study_icon.png') ?>">
             <link rel="stylesheet" href="<?php echo fileUrl('style/mvp.css') ?>">
