@@ -280,4 +280,24 @@ class AccreditationUserModel
             compact('id', 'is_admin')
         );
     }
+
+    /**
+     * @return array{ total_count:ing,publishing_count:int }
+     */
+    function getQuestionCount(ExamType $type): array
+    {
+        $type = $type->value;
+
+        $total_count = AccreditationDB::fetchColumn(
+            "SELECT count(*) FROM exam WHERE type = :type",
+            compact('type'),
+        );
+
+        $publishing_count = AccreditationDB::fetchColumn(
+            "SELECT count(*) FROM exam WHERE type = :type AND publishing = 1",
+            compact('type'),
+        );
+
+        return compact('total_count', 'publishing_count');
+    }
 }

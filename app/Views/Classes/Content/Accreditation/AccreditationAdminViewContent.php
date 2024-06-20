@@ -379,7 +379,7 @@ class AccreditationAdminViewContent
             $submit = '登録';
         }
     ?>
-        <form style="user-select:none;" id="q-form" onsubmit="return confirm('<?php echo $confirm ?>')" id="user-form" method="POST" action="/accreditation/<?php echo $action . $returnTo ?>">
+        <form style="user-select:none; margin-top: 0.5rem;" id="q-form" onsubmit="return confirm('<?php echo $confirm ?>')" id="user-form" method="POST" action="/accreditation/<?php echo $action . $returnTo ?>">
             <label for="q_text">問題文</label>
             <textarea id="q_text" name="question" maxlength="4000" rows="5" required><?php echo $q->question ?? '' ?></textarea>
 

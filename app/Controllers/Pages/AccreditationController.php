@@ -82,7 +82,9 @@ class AccreditationController
 
     function home(array $controller)
     {
-        return view('accreditation/home', $controller);
+        $count = $this->accreditationUserModel->getQuestionCount($this->type);
+
+        return view('accreditation/home', $controller + $count);
     }
 
     function profile(array $controller)
