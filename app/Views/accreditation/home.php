@@ -22,11 +22,11 @@ $view = new AccreditationAdminViewContent($controller);
                 <span style="font-size: 14px;">出題中の問題数</span><b style="font-size: 40px; line-height: 1;"><?php echo $publishing_count ?? 0 ?></b>
             </section>
         </section>
-        <section style="margin: 2rem 0; gap: 1.8rem; font-weight: bold;">
+        <section style="margin: 2rem 0; gap: 1.3rem; font-size: 18px; font-weight: bold;">
             <?php foreach ([
                 'bronze' => 'ブロンズ',
-                'gold' => 'ゴールド',
                 'silver' => 'シルバー',
+                'gold' => 'ゴールド',
             ] as $key => $value) : ?>
                 <?php if ($key !== $view->controller->type->value) : ?>
                     <a href="./../<?php echo $key ?>/home"><?php echo $value ?></a>
