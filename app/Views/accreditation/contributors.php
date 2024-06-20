@@ -18,6 +18,7 @@ $view = new AccreditationAdminViewContent($controller);
             <small><?php echo $view->examTypeName ?>の問題を投稿した人の一覧です。</small>
         </p>
         <hr>
+        <small style="margin-right: auto; user-select: none; font-size: 14px;">投稿者 <?php echo count($view->controller->currentContributorsArray) ?> 人</small>
         <?php $view->contributors() ?>
     </main>
     <?php $view->footer() ?>
