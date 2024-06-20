@@ -90,7 +90,7 @@ class AccreditationAdminViewContent
                 }
             </style>
             <nav style="margin-bottom: 0">
-                <a href="./home" style="text-decoration: none"><b><small>公認メンター監修</small><br />オプチャ検定<br /><span style="color: <?php echo $this->typeColor ?>;"><?php echo $this->examTypeName ?></span> 管理ページ</b></a>
+                <a href="./home" style="text-decoration: none"><b><small>公認メンター監修</small><br />オプチャ検定<br /><span style="color: <?php echo $this->typeColor ?>;"><?php echo $this->examTypeName ?></span> 問題投稿</b></a>
                 <ul>
                     <?php if ($this->controller->profileArray) : ?>
                         <li>
@@ -252,7 +252,7 @@ class AccreditationAdminViewContent
     {
     ?>
         <p>
-            <small>問題文が採用された際には、制作の協力者としてニックネームとオプチャ名・オプチャリンクが検定サイト上に掲載される予定です。</small>
+            <small>問題が検定に出題された際は、出題者としてニックネームとオプチャ名・オプチャリンクが検定サイト上に掲載されます。</small>
         </p>
     <?php
     }
@@ -261,11 +261,11 @@ class AccreditationAdminViewContent
     {
     ?>
         <p>
-            <small>このサイトでは現在制作中の検定の問題文を管理しています。<br>LINEログインでユーザー登録を行い、問題文を投稿して制作に協力することができます。</small>
+            <small>このサイトでは検定の問題集を管理しています。<br>LINEログインでユーザー登録を行い、誰でも問題文を投稿して作成に協力することができます。</small>
         </p>
         <?php echo $this->profileTerm() ?>
         <p>
-            <small>投稿された問題文は、LINEオープンチャットの公認メンター監修の元、検定に合わせて編集等を行う場合があります。<br>問題数が限られているので、実際に出題されるのは一部の範囲の問題となります。</small>
+            <small>投稿された問題は、LINEオープンチャット公認メンター監修の元、検定に合わせて編集等を行う場合があります。<br>問題数が限られているので、実際に出題されるのは一部の範囲の問題となります。</small>
         </p>
     <?php
     }
@@ -274,7 +274,7 @@ class AccreditationAdminViewContent
     {
     ?>
         <p>
-            <small>このサイトでは現在制作中の検定の問題文を管理しています。</small>
+            <small>このサイトでは検定の問題集を管理しています。</small>
         </p>
         <?php $this->userTerm() ?>
         <?php $this->profileTerm() ?>
@@ -285,7 +285,7 @@ class AccreditationAdminViewContent
     {
     ?>
         <p>
-            <small>投稿された問題文は、LINEオープンチャットの公認メンター監修の元、検定に合わせて編集等を行う場合があります。<br>問題数が限られているので、実際に出題されるのは一部の範囲の問題となります。</small>
+            <small>投稿された問題は、LINEオープンチャット公認メンター監修の元、検定に合わせて編集等を行う場合があります。<br>問題数が限られているので、実際に出題されるのは一部の範囲の問題となります。</small>
         </p>
     <?php
     }
