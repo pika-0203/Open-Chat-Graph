@@ -150,11 +150,8 @@ class AccreditationController
         return view('accreditation/contributors', $controller);
     }
 
-    function admin(array $controller)
+    function member(array $controller)
     {
-        if (!$this->isAdmin)
-            return false;
-
         $this->currentContributorsArray = $this->accreditationUserModel->getProfilesAll($this->type);
 
         return view('accreditation/member', $controller);

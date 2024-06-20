@@ -116,20 +116,9 @@ class AccreditationAdminViewContent
                         'question' => '問題を投稿',
                         'user' => '投稿した問題',
                         'profile' => 'プロフィール設定',
-                        'admin' => 'ユーザー管理'
+                        'member' => 'メンバー'
                     ] as $key => $value) : ?>
-                        <?php if ($key === 'admin') : ?>
-                            <?php if (!($this->controller->profileArray['is_admin'] ?? false)) continue ?>
-                            <li>
-                                <?php if (in_array($this->controller->pageType, [
-                                    'admin',
-                                ])) : ?>
-                                    <b><?php echo $value ?></b>
-                                <?php else : ?>
-                                    <a href="./admin"><?php echo $value ?></a>
-                                <?php endif ?>
-                            </li>
-                        <?php elseif ($key === 'user') : ?>
+                        <?php if ($key === 'user') : ?>
                             <?php if (
                                 $this->controller->pageType === 'user'
                                 && $this->controller->myId === $this->controller->currentId
@@ -208,24 +197,6 @@ class AccreditationAdminViewContent
         </div>
     <?php
     }
-
-    /* function adminTab()
-    { ?>
-        <?php $this->tabStyle() ?>
-        <div class="main-tab">
-            <?php foreach ([
-                ['サイト詳細', 'admin'],
-                ['ユーザー管理', 'member'],
-            ] as $p) : ?>
-                <?php if ($this->controller->pageType === $p[1]) : ?>
-                    <a><i><?php echo $p[0] ?></i></a>
-                <?php else : ?>
-                    <a href="./<?php echo $p[1] ?>"><b><?php echo $p[0] ?></b></a>
-                <?php endif ?>
-            <?php endforeach ?>
-        </div>
-    <?php
-    } */
 
     function examTitle()
     {
@@ -327,7 +298,7 @@ class AccreditationAdminViewContent
     {
     ?>
         <p>
-            <small>このサイトでは検定の問題集を管理しています。<br>LINEログインでユーザー登録を行い、誰でも問題文を投稿して作成に協力することができます。</small>
+            <small>このサイトでは検定の問題集を管理しています。<br>LINEログインでメンバー登録を行い、誰でも問題文を投稿して作成に協力することができます。</small>
         </p>
         <?php echo $this->profileTerm() ?>
         <p>
@@ -369,7 +340,7 @@ class AccreditationAdminViewContent
     {
     ?>
         <p>
-            <small>サイト管理者が編集した後は、他のユーザーは編集できなくなります。</small>
+            <small>サイト管理者が編集した後は、他のメンバーは編集できなくなります。</small>
         </p>
     <?php
     }
