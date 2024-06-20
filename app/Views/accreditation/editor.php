@@ -14,7 +14,7 @@ $deleteReturnTo = "?return_to=" . ($_SERVER['HTTP_REFERER'] ?? "/accreditation/{
 <body>
     <?php $view->header() ?>
     <main>
-        <h2>問題を編集</h2>
+        <h2>問題を編集<?php $view->examTitle() ?></h2>
         <?php $view->termEditor() ?>
         <hr>
         <?php $view->questionList(true) ?>
