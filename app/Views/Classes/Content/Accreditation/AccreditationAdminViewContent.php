@@ -259,7 +259,7 @@ class AccreditationAdminViewContent
         <?php foreach ($this->controller->currentContributorsArray as $p) : ?>
             <?php if (in_array($p['id'], self::HIDDEN_USER_ID)) continue ?>
             <section>
-                <aside>
+                <aside style="margin: 0.5rem 0;">
                     <div style="margin-bottom: 12px;">
                         <div style="margin-bottom: 4px;"><small>ニックネーム</small></div>
                         <div>
@@ -289,6 +289,10 @@ class AccreditationAdminViewContent
     {
     ?>
         <p>
+            <?php if (!$this->controller->profileArray) : ?>
+                <small>プロフィールを作成するとメンバー一覧に表示されます。</small>
+                <br>
+            <?php endif ?>
             <small>問題が検定に出題された際は、出題者としてニックネームとオプチャ名・オプチャリンクが検定サイト上に掲載されます。</small>
         </p>
     <?php
@@ -539,6 +543,10 @@ class AccreditationAdminViewContent
     ?>
         <section>
             <style>
+                .question_paper {
+                    margin: 0.5rem 0;
+                }
+
                 .question_p,
                 .question_li span,
                 .word-wrap {
