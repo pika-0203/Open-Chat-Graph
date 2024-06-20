@@ -250,4 +250,33 @@ class AccreditationPostApiController
 
         return redirect("/accreditation/{$type->value}/editor?id={$id}", 303);
     }
+
+    function setAdminPermission(
+        AccreditationUserModel $model,
+        CookieLineUserLogin $login,
+        int $id,
+        int $is_admin,
+        string $return_to,
+    ) {
+        $user_id = $login->login();
+        if (!$user_id)
+            throw new UnauthorizedException('未ログイン');
+
+        $profile = $model->getProfile($user_id);
+        if (!$profile)
+            throw new UnauthorizedException('プロフィール未作成');
+
+        if (!in_array($profile['id'], AdminConfig::ACCREDITATION_TRUE_ADMIN_USER_ID))
+            throw new UnauthorizedException('設定権限がありません');
+
+        $model->setAdminPermission(
+            $id,
+            $is_admin,
+            $profile['id'],
+            getIP(),
+            getUA(),
+        );
+
+        return redirect($return_to, 303);
+    }
 }

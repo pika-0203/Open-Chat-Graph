@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Views\Content\Accreditation;
 
+use App\Config\AdminConfig;
 use App\Config\AppConfig;
 use App\Controllers\Pages\AccreditationController;
 use App\Services\Accreditation\AccreditationUtility;
@@ -11,6 +12,10 @@ use App\Services\Accreditation\Enum\ExamType;
 
 class AccreditationAdminViewContent
 {
+    private const HIDDEN_USER_ID = [
+        1, 2
+    ];
+
     public string $examTypeName;
     public string $typeColor;
 
@@ -56,7 +61,7 @@ class AccreditationAdminViewContent
 
     function header()
     { ?>
-        <header>
+        <header style="padding-bottom: 1rem; margin-bottom: 1rem;">
             <style>
                 @media screen and (max-width: 511px) {
                     nav ul li {
@@ -88,10 +93,14 @@ class AccreditationAdminViewContent
                     width: 100%;
                     margin: 1rem 0;
                 }
+
+                .header-nav-ul {
+                    margin-bottom: 0;
+                }
             </style>
             <nav style="margin-bottom: 0">
-                <a href="./home" style="text-decoration: none"><b><small>公認メンター監修</small><br />オプチャ検定<br /><span style="color: <?php echo $this->typeColor ?>;"><?php echo $this->examTypeName ?></span> 問題投稿</b></a>
-                <ul>
+                <a href="./home" style="text-decoration: none; text-wrap: nowrap;"><b><small>公認メンター監修</small><br />オプチャ検定<br /><span style="color: <?php echo $this->typeColor ?>;"><?php echo $this->examTypeName ?></span> 問題投稿</b></a>
+                <ul class="header-nav-ul">
                     <?php if ($this->controller->profileArray) : ?>
                         <li>
                             <small style="font-size: 12px; color: #000;">
@@ -106,9 +115,21 @@ class AccreditationAdminViewContent
                         'home' => 'ホーム',
                         'question' => '問題を投稿',
                         'user' => '投稿した問題',
-                        'profile' => 'プロフィール設定'
+                        'profile' => 'プロフィール設定',
+                        'admin' => 'ユーザー管理'
                     ] as $key => $value) : ?>
-                        <?php if ($key === 'user') : ?>
+                        <?php if ($key === 'admin') : ?>
+                            <?php if (!($this->controller->profileArray['is_admin'] ?? false)) continue ?>
+                            <li>
+                                <?php if (in_array($this->controller->pageType, [
+                                    'admin',
+                                ])) : ?>
+                                    <b><?php echo $value ?></b>
+                                <?php else : ?>
+                                    <a href="./admin"><?php echo $value ?></a>
+                                <?php endif ?>
+                            </li>
+                        <?php elseif ($key === 'user') : ?>
                             <?php if (
                                 $this->controller->pageType === 'user'
                                 && $this->controller->myId === $this->controller->currentId
@@ -129,7 +150,7 @@ class AccreditationAdminViewContent
     <?php
     }
 
-    function mainTab()
+    private function tabStyle()
     { ?>
         <style>
             .main-tab {
@@ -166,6 +187,12 @@ class AccreditationAdminViewContent
                 }
             }
         </style>
+    <?php
+    }
+
+    function mainTab()
+    { ?>
+        <?php $this->tabStyle() ?>
         <div class="main-tab">
             <?php foreach ([
                 ['未公開の問題', 'unpublished'],
@@ -182,6 +209,24 @@ class AccreditationAdminViewContent
     <?php
     }
 
+    /* function adminTab()
+    { ?>
+        <?php $this->tabStyle() ?>
+        <div class="main-tab">
+            <?php foreach ([
+                ['サイト詳細', 'admin'],
+                ['ユーザー管理', 'member'],
+            ] as $p) : ?>
+                <?php if ($this->controller->pageType === $p[1]) : ?>
+                    <a><i><?php echo $p[0] ?></i></a>
+                <?php else : ?>
+                    <a href="./<?php echo $p[1] ?>"><b><?php echo $p[0] ?></b></a>
+                <?php endif ?>
+            <?php endforeach ?>
+        </div>
+    <?php
+    } */
+
     function examTitle()
     {
     ?>
@@ -197,8 +242,14 @@ class AccreditationAdminViewContent
         }
 
     ?>
-        <section>
+        <section style="position: relative;">
             <aside>
+                <?php if (
+                    in_array($this->controller->myId, AdminConfig::ACCREDITATION_TRUE_ADMIN_USER_ID)
+                    && !in_array($profile['id'], AdminConfig::ACCREDITATION_TRUE_ADMIN_USER_ID)
+                ) : ?>
+                    <?php $this->adminProfileForm('') ?>
+                <?php endif ?>
                 <p><small><b>ニックネーム</b><br><?php echo $profile['name'] ?></small></p>
                 <?php if ($profile['url']) : ?>
                     <p>
@@ -216,11 +267,26 @@ class AccreditationAdminViewContent
     <?php
     }
 
+    function adminProfileForm()
+    {
+        $profile = $this->controller->currentProfileArray;
+        $isAdmin = $profile['is_admin'];
+        $returnTo = "?return_to=/accreditation/{$this->controller->type->value}/user?id=" . $profile['id'];
+
+    ?>
+        <form style="all:unset; display: block; position:absolute; top:2.25rem; right:1.25rem;" onsubmit="return confirm('<?php echo $isAdmin ? '管理者を解除しますか？' : '管理者に設定しますか？' ?>')" method="POST" action="/accreditation/set-admin-permission<?php echo $returnTo ?>">
+            <input type="hidden" value="<?php echo $profile['id'] ?>" name="id">
+            <input type="hidden" value="<?php echo $isAdmin ? 0 : 1 ?>" name="is_admin">
+            <input type="submit" value="<?php echo $isAdmin ? '管理者を解除' : '管理者に設定' ?>" style="padding: 3px 6px; font-size: 13px; margin: 0;" />
+        </form>
+    <?php
+    }
+
     function contributors()
     {
     ?>
         <?php foreach ($this->controller->currentContributorsArray as $p) : ?>
-            <?php if ($p['id'] === 1 || $p['id'] === 2) continue ?>
+            <?php if (in_array($p['id'], self::HIDDEN_USER_ID)) continue ?>
             <section>
                 <aside>
                     <div style="margin-bottom: 12px;">
@@ -353,8 +419,8 @@ class AccreditationAdminViewContent
                 <textarea id="answer_<?php echo $key ?>" name="answers[<?php echo $el ?>]" maxlength="4000" rows="3" required><?php echo $q->answersArray[$el] ?? '' ?></textarea>
             <?php endforeach ?>
 
-            <label for="explanation">解説（省略可能）</label>
-            <textarea id="explanation" name="explanation" maxlength="4000" rows="5"><?php echo $q->explanationArray['explanation'] ?? '' ?></textarea>
+            <label for="explanation">解説（必須）</label>
+            <textarea id="explanation" name="explanation" maxlength="4000" rows="5" required><?php echo $q->explanationArray['explanation'] ?? '' ?></textarea>
 
             <fieldset>
                 <legend style="font-weight: bold;">出典URL（必須）</legend>
@@ -392,6 +458,7 @@ class AccreditationAdminViewContent
             <?php endif ?>
 
             <br>
+            <small style="display:block;">個人情報の投稿は禁止です。</small>
             <input id="submit-btn" type="submit" value="<?php echo $submit ?>" />
         </form>
         <script type="module">
@@ -501,22 +568,21 @@ class AccreditationAdminViewContent
     ?>
         <section>
             <style>
-                .question_p {
-                    font-size: 15px;
+                .question_p,
+                .question_li span,
+                .word-wrap {
                     overflow-wrap: anywhere;
                     white-space: break-spaces;
                     line-break: anywhere;
+                }
+
+                .question_p {
+                    font-size: 15px;
                 }
 
                 .question_li {
                     font-size: 14px;
                     font-weight: bold;
-                }
-
-                .question_li span {
-                    overflow-wrap: anywhere;
-                    white-space: break-spaces;
-                    line-break: anywhere;
                 }
 
                 .question_paper.published {
@@ -559,13 +625,13 @@ class AccreditationAdminViewContent
                         <p class="question_p">Error: 配列の要素がありません(explanationArray)</p>
                     <?php elseif ($el->explanationArray['source_title'] && $el->explanationArray['source_url']) : ?>
                         <div style="font-size: 14px;">
-                            <div>出典URL: <a href="<?php echo $el->explanationArray['source_url'] ?>" target="_blank"><?php echo $el->explanationArray['source_title'] ?> ↗</a></div>
-                            <div><small style="color: #aaa;"><?php echo $el->explanationArray['source_url'] ?></small></div>
+                            <div class="word-wrap">出典URL: <a href="<?php echo $el->explanationArray['source_url'] ?>" target="_blank"><?php echo $el->explanationArray['source_title'] ?> ↗</a></div>
+                            <div class="word-wrap"><small style="color: #aaa;"><?php echo $el->explanationArray['source_url'] ?></small></div>
                         </div>
                     <?php elseif ($el->explanationArray['source_url'] === '') : ?>
                         <div style="font-size: 14px;">
-                            <div>出典URL: <a href="https://openchat-jp.line.me/other/guideline" target="_blank">安心・安全ガイドライン | LINEオープンチャット ↗</a></div>
-                            <div><small style="color: #aaa;">https://openchat-jp.line.me/other/guideline</small></div>
+                            <div class="word-wrap">出典URL: <a href="https://openchat-jp.line.me/other/guideline" target="_blank">安心・安全ガイドライン | LINEオープンチャット ↗</a></div>
+                            <div class="word-wrap"><small style="color: #aaa;">https://openchat-jp.line.me/other/guideline</small></div>
                         </div>
                     <?php endif ?>
 

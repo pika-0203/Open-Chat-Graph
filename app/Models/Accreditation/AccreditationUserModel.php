@@ -24,7 +24,7 @@ class AccreditationUserModel
     /**
      * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int }[]
      */
-    function getProfilesByType(ExamType $type): array|false
+    function getProfilesByType(ExamType $type): array
     {
         $type = $type->value;
 
@@ -47,6 +47,22 @@ class AccreditationUserModel
                 t1.is_admin DESC,
                 name COLLATE utf8mb4_bin;",
             compact('type')
+        );
+    }
+
+    /**
+     * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int }[]
+     */
+    function getProfilesAll(): array|false
+    {
+        return AccreditationDB::fetchAll(
+            "SELECT
+                t1.*
+            FROM
+                user AS t1
+            ORDER BY
+                t1.is_admin DESC,
+                name COLLATE utf8mb4_bin;"
         );
     }
 
@@ -252,6 +268,16 @@ class AccreditationUserModel
         return AccreditationDB::executeAndCheckResult(
             "UPDATE exam SET type = :type WHERE id = :id",
             compact('id', 'type')
+        );
+    }
+
+    function setAdminPermission(int $id, int $is_admin, int $user_id, string $ip, string $ua): bool
+    {
+        $this->userLog($user_id, $ip, $ua, 'setAdminPermission');
+
+        return AccreditationDB::executeAndCheckResult(
+            "UPDATE user SET is_admin = :is_admin WHERE id = :id",
+            compact('id', 'is_admin')
         );
     }
 }

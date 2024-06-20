@@ -336,7 +336,7 @@ Route::path(
     ->matchStr('answers.c', maxLen: 4000)
     ->matchStr('answers.d', maxLen: 4000)
     ->matchStr('answers.correct', maxLen: 1)
-    ->matchStr('explanation', maxLen: 4000, emptyAble: true)
+    ->matchStr('explanation', maxLen: 4000)
     ->matchStr('source_url', maxLen: 2083, emptyAble: true)
     ->matchStr('type')
     ->matchStr('return_to')
@@ -352,7 +352,7 @@ Route::path(
     ->matchStr('answers.c', maxLen: 4000)
     ->matchStr('answers.d', maxLen: 4000)
     ->matchStr('answers.correct', maxLen: 1)
-    ->matchStr('explanation', maxLen: 4000, emptyAble: true)
+    ->matchStr('explanation', maxLen: 4000)
     ->matchStr('source_url', maxLen: 2083, emptyAble: true)
     ->matchStr('type')
     ->matchNum('id')
@@ -381,6 +381,14 @@ Route::path(
     ->matchNum('id')
     ->matchStr('type')
     ->match(fn (string $type) => !!ExamType::tryFrom($type));
+
+Route::path(
+    'accreditation/set-admin-permission@POST',
+    [AccreditationPostApiController::class, 'setAdminPermission']
+)
+    ->matchNum('id')
+    ->matchNum('is_admin', min: 0, max: 1)
+    ->matchStr('return_to');
 
 cache();
 Route::run();

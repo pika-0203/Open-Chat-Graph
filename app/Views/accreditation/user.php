@@ -17,7 +17,6 @@ $view = new AccreditationAdminViewContent($controller);
             <?php $view->userTerm() ?>
             <hr>
             <?php $view->questionList() ?>
-            <hr>
         <?php else : ?>
             <h2>投稿者</h2>
             <?php $view->profile(true) ?>
