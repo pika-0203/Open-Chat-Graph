@@ -393,10 +393,8 @@ Route::path(
 Route::path('furigana@POST')
     ->matchStr('json');
 
-Route::path('furigana/guideline')
-    ->match(function (Reception $reception) {
-        handleRequestWithETagAndCache(getHouryUpdateTime() . json_encode($reception->input()));
-    });
+/* Route::path('furigana/guideline')
+    ->match(fn () => handleRequestWithETagAndCache(getHouryUpdateTime() . 'guideline')); */
 
 cache();
 Route::run();

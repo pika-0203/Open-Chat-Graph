@@ -119,14 +119,21 @@ JS;
         $cleaned_html = preg_replace('/<script\b[^>]*>.*?<\/script>/is', '', $html);
         $cleaned_html = preg_replace('/<link\b[^>]*>.*?>/is', '', $cleaned_html);
 
+        $style = <<<CSS
+ruby,
+ruby > rt {
+    font-family: "游ゴシック体", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, Noto Sans JP, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+CSS;
+
         try {
-            echo $this->addScriptToBody($cleaned_html, $script, 'https://openchat-jp.line.me', '(ふりがな付き) ');
+            echo $this->addScriptToBody($cleaned_html, $script, 'https://openchat-jp.line.me', '(ふりがな付き) ', $style);
         } catch (\Throwable $e) {
             throw new ValidationException("ページの取得に失敗しました.\n", $e->message);
         }
     }
 
-    private function addScriptToBody($html, $scriptContent, $baseDomain, $titlePrefix)
+    private function addScriptToBody($html, $scriptContent, $baseDomain, $titlePrefix, $style)
     {
         $dom = new \DOMDocument();
         // HTMLを読み込む
@@ -134,9 +141,13 @@ JS;
         // scriptタグを作成
         $scriptTag = $dom->createElement('script', $scriptContent);
 
+        // styleタグを作成
+        $styleTag = $dom->createElement('style', $style);
+
         // BODYタグの最後に追加
         $body = $dom->getElementsByTagName('body')->item(0);
         $body->appendChild($scriptTag);
+        $body->appendChild($styleTag);
 
         // base要素を作成して基準URLを設定
         /* $baseTag = $dom->createElement('base');
@@ -147,9 +158,10 @@ JS;
         // srcとhref属性を持つ要素を取得
         $elements = $dom->getElementsByTagName('*');
         foreach ($elements as $element) {
-            if (($element->hasAttribute('src') || $element->hasAttribute('href'))) {
+            if (($element->hasAttribute('src') || $element->hasAttribute('href')) || $element->getAttribute('data-href')) {
                 $srcValue = $element->getAttribute('src');
                 $hrefValue = $element->getAttribute('href');
+                $hrefValue2 = $element->getAttribute('data-href');
                 if (!empty($srcValue) && !filter_var($srcValue, FILTER_VALIDATE_URL) && !preg_match('/data:image/', $srcValue)) {
                     // $srcValueが相対パスの場合の処理
                     $element->setAttribute('src', $baseDomain . $srcValue);
@@ -157,6 +169,10 @@ JS;
                 if (!empty($hrefValue) && !filter_var($hrefValue, FILTER_VALIDATE_URL)) {
                     // $hrefValueが相対パスの場合の処理
                     $element->setAttribute('href', $baseDomain . $hrefValue);
+                }
+                if (!empty($hrefValue2) && !filter_var($hrefValue, FILTER_VALIDATE_URL)) {
+                    // $hrefValueが相対パスの場合の処理
+                    $element->setAttribute('href', $baseDomain . $hrefValue2);
                 }
             }
         }
@@ -168,12 +184,21 @@ JS;
         }
 
         // og:titleタグを取得・更新
+        // og:imageタグを取得・更新
         $metas = $dom->getElementsByTagName('meta');
         for ($i = 0; $i < $metas->length; $i++) {
             /** @var mixed */
             $meta = $metas->item($i);
             if ($meta->getAttribute('property') === 'og:title') {
                 $meta->setAttribute('content', $titlePrefix . $meta->getAttribute('content'));
+            }
+
+            if ($meta->getAttribute('property') === 'og:image') {
+                $srcValue = $meta->getAttribute('content');
+                if (!empty($srcValue) && !filter_var($srcValue, FILTER_VALIDATE_URL)) {
+                    // $hrefValueが相対パスの場合の処理
+                    $meta->setAttribute('content', $baseDomain . $srcValue);
+                }
             }
         }
 
