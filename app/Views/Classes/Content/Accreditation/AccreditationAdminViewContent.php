@@ -75,6 +75,7 @@ class AccreditationAdminViewContent
                     }
                 }
 
+
                 nav a b {
                     margin: 0;
                     padding: 4px;
@@ -97,13 +98,92 @@ class AccreditationAdminViewContent
                 .header-nav-ul {
                     margin-bottom: 0;
                 }
+
+                .header-nav-ul li {
+                    text-wrap: nowrap;
+                    white-space: nowrap;
+                }
+
+                .header-nav-left {
+                    margin-right: 1rem;
+                    width: 100%;
+                    max-width: 240px;
+                    margin-top: 1.5rem;
+                }
+
+                .header-nav-a {
+                    display: block;
+                }
+
+                .header-nav-title {
+                    color: #000;
+                    font-weight: normal;
+                    font-size: 15px;
+                    text-wrap: nowrap;
+                    white-space: nowrap;
+                    margin-top: 10px;
+                }
+
+                .header-nav-a img {
+                    margin: 0;
+                }
+
+                .nav-li-user-name {
+                    display: none;
+                }
+
+
+                .nav-left-user-name {
+                    margin-top: 10px;
+                    line-height: 1;
+                }
+
+                @media screen and (max-width: 360px) {
+                    .header-nav-title {
+                        font-size: 13px;
+                        text-wrap: unset;
+                        white-space: unset;
+                    }
+                }
+
+                @media screen and (min-width: 512px) {
+                    .header-nav-left {
+                        max-width: 200px;
+                        margin: 0;
+                    }
+
+                    .nav-li-user-name {
+                        display: inline-block;
+                    }
+
+                    .nav-left-user-name {
+                        display: none;
+                    }
+                }
             </style>
             <nav style="margin-bottom: 0">
-                <a href="./home" style="text-decoration: none; text-wrap: nowrap;"><b><small>公認メンター監修</small><br />オプチャ検定<br /><span style="color: <?php echo $this->typeColor ?>;"><?php echo $this->examTypeName ?></span> 問題投稿</b></a>
+                <div class="header-nav-left">
+                    <a class="header-nav-a" href="./home">
+                        <img style="display: block;" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" />
+                    </a>
+                    <div class="header-nav-title">
+                        <span style="color: <?php echo $this->typeColor ?>; font-weight:bold;"><?php echo $this->examTypeName ?></span><span style="margin-left: 4px;">問題投稿ページ</span>
+                    </div>
+                    <?php if ($this->controller->profileArray) : ?>
+                        <div class="nav-left-user-name">
+                            <small style="font-size: 13px; color: #000;">
+                                <?php if ($this->controller->profileArray['is_admin']) : ?>
+                                    👑
+                                <?php endif ?>
+                                <?php echo $this->controller->profileArray['name'] ?>
+                            </small>
+                        </div>
+                    <?php endif ?>
+                </div>
                 <ul class="header-nav-ul">
                     <?php if ($this->controller->profileArray) : ?>
-                        <li>
-                            <small style="font-size: 12px; color: #000;">
+                        <li class="nav-li-user-name">
+                            <small style="font-size: 13px; color: #000;">
                                 <?php if ($this->controller->profileArray['is_admin']) : ?>
                                     👑
                                 <?php endif ?>
