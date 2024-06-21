@@ -19,6 +19,7 @@ use App\Controllers\Api\RankingPositionApiController;
 use App\Controllers\Api\MyListApiController;
 use App\Controllers\Pages\AccreditationController;
 use App\Controllers\Pages\AdsRegistrationPageController;
+use App\Controllers\Pages\FuriganaPageController;
 use App\Controllers\Pages\OpenChatPageController;
 use App\Controllers\Pages\RankingBanLabsPageController;
 use App\Controllers\Pages\ReactRankingPageController;
@@ -395,6 +396,12 @@ Route::path('furigana@POST')
 
 /* Route::path('furigana/guideline')
     ->match(fn () => handleRequestWithETagAndCache(getHouryUpdateTime() . 'guideline')); */
+
+Route::path(
+    'furigana/defamation-guideline',
+    [FuriganaPageController::class, 'defamationGuideline']
+)
+    ->match(fn () => handleRequestWithETagAndCache(getHouryUpdateTime() . 'defamationGuideline'));
 
 cache();
 Route::run();

@@ -10,8 +10,18 @@ class FuriganaPageController
 {
     function guideline()
     {
+        $this->getHtml('https://openchat-jp.line.me/other/guideline', '安心・安全ガイドライン （ふりがな付き）');
+    }
+
+    function defamationGuideline()
+    {
+        $this->getHtml('https://openchat-jp.line.me/other/defamation_guideline_30jga8ku', '誹謗中傷に関する詳しいガイドライン （ふりがな付き）');
+    }
+
+    private function getHtml($url, $title)
+    {
         try {
-            $html = file_get_contents('https://openchat-jp.line.me/other/guideline');
+            $html = file_get_contents($url);
             if (!$html)
                 throw new ValidationException("アクセスエラー\n空のレスポンス");
         } catch (\Throwable $e) {
@@ -31,12 +41,12 @@ document.body.innerHTML = `
     text-align: center;
   "
 >
-  安心・安全ガイドライン （ふりがな付き）<br />translated by openchat-reveiw.me<br /><span style="margin-right: 4px;">原文</span><a href="https://openchat-jp.line.me/other/guideline" target="_blank" style="text-decoration: underline; color: #2196f3;">https://openchat-jp.line.me/other/guideline</a>
+  {$title}<br />translated by openchat-reveiw.me<br /><span style="margin-right: 4px;">原文</span><a href="{$url}" target="_blank" style="text-decoration: underline; color: #2196f3;">{$url}</a>
 </div>
 ` + document.body.innerHTML + `
 <div style="text-align: center; background: #f9f9f9; font-size: 11px; line-height: 1.3;">
   <span style="display: inline-block; margin-bottom: 2px;">Webサービス by Yahoo! JAPAN （https://developer.yahoo.co.jp/sitemap/）</span>
-  <br>※「安心・安全ガイドライン （ふりがな付き）」はLINEヤフー社公式のページではありません。
+  <br>※「{$title}」はLINEヤフー社公式のページではありません。
 </div>
 `
 
@@ -120,9 +130,28 @@ JS;
         $cleaned_html = preg_replace('/<link\b[^>]*>.*?>/is', '', $cleaned_html);
 
         $style = <<<CSS
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
 ruby,
 ruby > rt {
     font-family: "游ゴシック体", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, Noto Sans JP, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    letter-spacing: 0;
+    line-height: 2;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bold !important;
 }
 CSS;
 
