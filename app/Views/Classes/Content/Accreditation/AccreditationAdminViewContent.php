@@ -12,7 +12,7 @@ use App\Services\Accreditation\Enum\ExamType;
 
 class AccreditationAdminViewContent
 {
-    private const HIDDEN_USER_ID = [
+    const HIDDEN_USER_ID = [
         1, 2
     ];
 
