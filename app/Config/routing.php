@@ -390,5 +390,13 @@ Route::path(
     ->matchNum('is_admin', min: 0, max: 1)
     ->matchStr('return_to');
 
+Route::path('furigana@POST')
+    ->matchStr('json');
+
+Route::path('furigana/guideline')
+    ->match(function (Reception $reception) {
+        handleRequestWithETagAndCache(getHouryUpdateTime() . json_encode($reception->input()));
+    });
+
 cache();
 Route::run();
