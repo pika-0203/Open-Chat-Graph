@@ -73,6 +73,10 @@ class AccreditationAdminViewContent
                     footer {
                         padding-top: 0;
                     }
+
+                    .header-nav-ul li {
+                        margin-right: 1rem;
+                    }
                 }
 
 
@@ -108,11 +112,12 @@ class AccreditationAdminViewContent
                     margin-right: 1rem;
                     width: 100%;
                     max-width: 240px;
-                    margin-top: 1.5rem;
+                    margin-top: 1rem;
                 }
 
                 .header-nav-a {
                     display: block;
+                    text-decoration: none;
                 }
 
                 .header-nav-title {
@@ -128,14 +133,23 @@ class AccreditationAdminViewContent
                     margin: 0;
                 }
 
+                .nav-user-name-link {
+                    font-size: 13px;
+                    color: #000;
+                    text-decoration: none;
+                }
+
                 .nav-li-user-name {
                     display: none;
                 }
 
-
                 .nav-left-user-name {
                     margin-top: 10px;
                     line-height: 1;
+                }
+
+                .header-logo {
+                    display: block;
                 }
 
                 @media screen and (max-width: 360px) {
@@ -164,38 +178,27 @@ class AccreditationAdminViewContent
             <nav style="margin-bottom: 0">
                 <div class="header-nav-left">
                     <a class="header-nav-a" href="./home">
-                        <img style="display: block;" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" />
+                        <img class="header-logo" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" />
+                        <div class="header-nav-title">
+                            <span style="color: <?php echo $this->typeColor ?>; font-weight:bold;"><?php echo $this->examTypeName ?></span><span style="margin-left: 4px;">問題投稿ページ</span>
+                        </div>
                     </a>
-                    <div class="header-nav-title">
-                        <span style="color: <?php echo $this->typeColor ?>; font-weight:bold;"><?php echo $this->examTypeName ?></span><span style="margin-left: 4px;">問題投稿ページ</span>
-                    </div>
                     <?php if ($this->controller->profileArray) : ?>
                         <div class="nav-left-user-name">
-                            <small style="font-size: 13px; color: #000;">
+                            <a class="nav-user-name-link" href="./profile">
                                 <?php if ($this->controller->profileArray['is_admin']) : ?>
                                     👑
                                 <?php endif ?>
-                                <?php echo $this->controller->profileArray['name'] ?>
-                            </small>
+                                <span style="text-decoration: underline;"> <?php echo $this->controller->profileArray['name'] ?></span>
+                            </a>
                         </div>
                     <?php endif ?>
                 </div>
                 <ul class="header-nav-ul">
-                    <?php if ($this->controller->profileArray) : ?>
-                        <li class="nav-li-user-name">
-                            <small style="font-size: 13px; color: #000;">
-                                <?php if ($this->controller->profileArray['is_admin']) : ?>
-                                    👑
-                                <?php endif ?>
-                                <?php echo $this->controller->profileArray['name'] ?>
-                            </small>
-                        </li>
-                    <?php endif ?>
                     <?php foreach ([
                         'home' => 'ホーム',
                         'question' => '問題を投稿',
                         'user' => '投稿した問題',
-                        'profile' => 'プロフィール設定',
                         'member' => 'メンバー'
                     ] as $key => $value) : ?>
                         <?php if ($key === 'user') : ?>
@@ -213,6 +216,16 @@ class AccreditationAdminViewContent
                             <li><b><?php echo $value ?></b></li>
                         <?php endif ?>
                     <?php endforeach ?>
+                    <?php if ($this->controller->profileArray) : ?>
+                        <li class="nav-li-user-name">
+                            <a class="nav-user-name-link" href="./profile">
+                                <?php if ($this->controller->profileArray['is_admin']) : ?>
+                                    👑
+                                <?php endif ?>
+                                <span style="text-decoration: underline;"> <?php echo $this->controller->profileArray['name'] ?></span>
+                            </a>
+                        </li>
+                    <?php endif ?>
                 </ul>
             </nav>
         </header>
@@ -343,11 +356,7 @@ class AccreditationAdminViewContent
                     <div style="margin-bottom: 12px;">
                         <div style="margin-bottom: 4px;"><small>ニックネーム</small></div>
                         <div>
-                            <?php if ($p['id'] !== $this->controller->myId) : ?>
-                                <a style="color: #111;" href="./user?id=<?php echo $p['id'] ?>"><?php echo $p['name'] ?></a>
-                            <?php else : ?>
-                                <span style="color: #111;"><?php echo $p['name'] ?></span>
-                            <?php endif ?>
+                            <a style="color: #111;" href="./user?id=<?php echo $p['id'] ?>"><?php echo $p['name'] ?></a>
                         </div>
                     </div>
                     <?php if ($p['url']) : ?>
@@ -705,11 +714,7 @@ class AccreditationAdminViewContent
                             <small style="display: block;">👑</small>
                         <?php endif ?>
 
-                        <?php if ($this->controller->myId !== $el->user_id && $this->controller->currentId !== $el->user_id) : ?>
-                            <small style="display: block;"><a href="./user?id=<?php echo $el->user_id ?>"><?php echo $el->user_name ?></a></small>
-                        <?php else : ?>
-                            <small style="display: block;"><?php echo $el->user_name ?></small>
-                        <?php endif ?>
+                        <small style="display: block;"><a href="./user?id=<?php echo $el->user_id ?>"><?php echo $el->user_name ?></a></small>
                         <small style="display: block; word-break: keep-all; text-wrap: nowrap;"><?php echo formatDateTimeHourly2($el->created_at, true) ?></small>
                     </div>
 
@@ -721,11 +726,7 @@ class AccreditationAdminViewContent
                                 <small style="display: block;">👑</small>
                             <?php endif ?>
 
-                            <?php if ($this->controller->myId !== $el->edit_user_id && $this->controller->currentId !== $el->edit_user_id) : ?>
-                                <small style="display: block;"><a href="./user?id=<?php echo $el->edit_user_id ?>"><?php echo $el->edit_user_name ?></a></small>
-                            <?php else : ?>
-                                <small style="display: block;"><?php echo $el->edit_user_name ?></small>
-                            <?php endif ?>
+                            <small style="display: block;"><a href="./user?id=<?php echo $el->edit_user_id ?>"><?php echo $el->edit_user_name ?></a></small>
                             <small style="display: block; word-break: keep-all; text-wrap: nowrap;"><?php echo formatDateTimeHourly2($el->edited_at, true) ?></small>
                         </div>
                     <?php endif ?>

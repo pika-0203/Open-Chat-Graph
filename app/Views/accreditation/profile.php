@@ -17,7 +17,7 @@ $profile = $view->controller->profileArray;
   <main>
     <h2>プロフィール設定</h2>
     <?php $view->profileTerm() ?>
-    <hr>
+    <hr style="margin-bottom: 1rem;">
 
     <?php $view->profile() ?>
 
