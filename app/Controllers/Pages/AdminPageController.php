@@ -61,6 +61,7 @@ class AdminPageController
             $text,
             $existingImagePath,
             $fontFile,
+            characterSpacing: 2
         );
     }
 

@@ -11,10 +11,11 @@ class QuizOgpGenerator
         string $existingImagePath,
         string $fontFile,
         int $fontSize = 45,
+        int $characterSpacing = 0,
         int $top = 90,
         int $left = 120,
         int $right = 1090,
-        $bottom = 490
+        int $bottom = 490,
     ) {
         $text = str_replace(["\r\n", "\r"], "\n", $text);
         $text = str_replace("\n", " ", $text);
@@ -38,7 +39,7 @@ class QuizOgpGenerator
             $black,
             $fontFile,
             $text,
-            2,
+            $characterSpacing,
             10,
         );
 
