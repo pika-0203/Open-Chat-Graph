@@ -633,6 +633,7 @@ class AccreditationAdminViewContent
     function questionList(bool $editorMode = false)
     {
         $listLen = count($this->controller->questionList);
+        $shareUrl = url("accreditation?id=");
 
     ?>
         <section>
@@ -660,6 +661,30 @@ class AccreditationAdminViewContent
 
                 .question_paper.published {
                     background: var(--color-secondary-accent);
+                }
+
+                .share-menu-item {
+                    cursor: pointer;
+                }
+
+                .share-menu-icon {
+                    width: 24px;
+                    height: 24px;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    display: block;
+                }
+
+                .share-menu-icon-twitter {
+                    background-image: url(/assets/twitter_x.svg);
+                    background-color: #000000;
+                    border-radius: 6px;
+                }
+
+                .share-menu-icon-line {
+                    background-image: url(/assets/line.svg);
+                    background-color: #000000;
+                    border-radius: 6px;
                 }
             </style>
             <?php if (!$editorMode) : ?>
@@ -729,6 +754,17 @@ class AccreditationAdminViewContent
 
                             <small style="display: block;"><a href="./user?id=<?php echo $el->edit_user_id ?>"><?php echo $el->edit_user_name ?></a></small>
                             <small style="display: block; word-break: keep-all; text-wrap: nowrap;"><?php echo formatDateTimeHourly2($el->edited_at, true) ?></small>
+                        </div>
+                    <?php endif ?>
+
+                    <?php if ($el->isPabulished) : ?>
+                        <div style="display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap; justify-content: flex-end; align-items: center;">
+                            <small style="word-break: keep-all; text-wrap: nowrap;">単独でシェア</small>
+
+                            <a class="share-menu-item unset" href="https://twitter.com/intent/tweet?url=<?php echo urlencode($shareUrl . $el->id) ?>&text=<?php echo urlencode($el->question . "\nオプチャ検定｜Q." . $el->id . "\n") ?>" rel="nofollow noopener" target="_blank" title="Xにポスト">
+                                <span class="share-menu-icon-twitter share-menu-icon"></span>
+                            </a>
+                            <a href="<?php echo $shareUrl . $el->id ?>" target="_blank" title="単独URL">URL</a>
                         </div>
                     <?php endif ?>
 

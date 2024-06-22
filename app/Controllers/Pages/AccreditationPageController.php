@@ -20,7 +20,7 @@ class AccreditationPageController
         $_js = getFilePath('js/quiz', 'main.*.js');
 
         if ($id) {
-            $_argDto = $quizApiService->getSingleTopic($id, 30);
+            $_argDto = $quizApiService->getSingleTopic($id, 45);
             if (!$_argDto)
                 return false;
 

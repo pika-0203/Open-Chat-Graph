@@ -13,6 +13,7 @@ class QuizApiQuestionDto
     public string $user_name;
     public string $room_name;
     public string $room_url;
+    public string $type;
 
     /**
      * @var array{ a:string, b:string, c:string, d:string, correct:string }

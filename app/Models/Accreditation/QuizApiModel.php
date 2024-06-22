@@ -22,7 +22,8 @@ class QuizApiModel
                 t1.explanation,
                 t2.name AS user_name,
                 t2.room_name,
-                t2.url AS room_url
+                t2.url AS room_url,
+                t1.type
             FROM
                 exam AS t1
                 JOIN user AS t2 ON t1.user_id = t2.id
@@ -40,7 +41,7 @@ class QuizApiModel
     }
 
     /**
-     *  @return QuizApiQuestionDto[]
+     *  @return QuizApiQuestionDto
      */
     function getQuizApiQuestionDtoById(int $id): QuizApiQuestionDto|false
     {
@@ -52,7 +53,8 @@ class QuizApiModel
                 t1.explanation,
                 t2.name AS user_name,
                 t2.room_name,
-                t2.url AS room_url
+                t2.url AS room_url,
+                t1.type
             FROM
                 exam AS t1
                 JOIN user AS t2 ON t1.user_id = t2.id

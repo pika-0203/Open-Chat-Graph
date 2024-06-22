@@ -112,9 +112,15 @@ class QuizApiService
             return false;
 
         $questions = $this->buildQuestions([$dbDto]);
-        
+
+        $topic = match (ExamType::from($dbDto->type)) {
+            ExamType::Bronze => 'ブロンズ',
+            ExamType::Silver => 'シルバー',
+            ExamType::Gold => 'ゴールド',
+        };
+
         return new Topic(
-            'ブロンズ',
+            $topic,
             1,
             1,
             $totalTime,
@@ -136,9 +142,9 @@ class QuizApiService
         $count = count($questions);
 
         $topic = match ($type) {
-            $type::Bronze => 'ブロンズ',
-            $type::Silver => 'シルバー',
-            $type::Gold => 'ゴールド',
+            ExamType::Bronze => 'ブロンズ',
+            ExamType::Silver => 'シルバー',
+            ExamType::Gold => 'ゴールド',
         };
 
         return new Topic(
