@@ -9,6 +9,7 @@ use App\Models\Accreditation\AccreditationUserModel;
 use App\Services\Accreditation\AccreditationUtility;
 use App\Services\Accreditation\Auth\CookieLineUserLogin;
 use App\Services\Accreditation\Enum\ExamType;
+use App\Services\Accreditation\QuizOgpGenerator;
 use App\Services\OpenChat\Crawler\OpenChatCrawler;
 use Shared\Exceptions\UnauthorizedException;
 use Shared\Exceptions\ValidationException;
@@ -112,6 +113,7 @@ class AccreditationPostApiController
     function editQuestion(
         AccreditationUserModel $model,
         CookieLineUserLogin $login,
+        QuizOgpGenerator $quizOgpGenerator,
         string $question,
         array $answers,
         string $explanation,
@@ -149,6 +151,13 @@ class AccreditationPostApiController
             getIP(),
             getUA(),
         );
+
+        if ($publishing && (!$q->publishing || $q->question !== $question)) {
+            $quizOgpGenerator->generateTextOgp(
+                $question,
+                'quiz_img_' . $id,
+            );
+        }
 
         return redirect($return_to, 303);
     }
