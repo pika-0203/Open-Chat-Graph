@@ -17,6 +17,7 @@ use App\Models\SQLite\SQLiteStatistics;
 use App\Models\UserLogRepositories\UserLogRepository;
 use App\Services\Accreditation\Enum\ExamType;
 use App\Services\Accreditation\QuizApi\QuizApiService;
+use App\Services\Accreditation\QuizOgpGenerator;
 use App\Services\OpenChat\OpenChatDailyCrawling;
 use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
@@ -50,33 +51,18 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'exec', 'message' => $path . ' を実行しました。']);
     }
 
-    function testpage()
+    function testpage(QuizOgpGenerator $quizOgpGenerator)
     {
-        // 画像を生成
-        $image = imagecreatetruecolor(600, 400);
+        $text = 'トークルームに参加する時に、人数制限が上限に達していたらどんなメッセージが表示される？';
+        $existingImagePath = __DIR__ . '/../../../storage/font/text-ogp-quiz.png';
+        $fontFile = __DIR__ . '/../../../storage/font/mgenplus-1p-medium.ttf';
 
-        // 色を設定
-        $white = imagecolorallocate($image, 255, 255, 255);
-        $black = imagecolorallocate($image, 0, 0, 0);
-
-        // テキスト
-        $text = "安心安全ガイドラインで禁止されている\nことは、次のうちどれでしょう。";
-
-        // フォントのパス
-        $font = __DIR__ . '/../../../storage/font/mgenplus-1c-bold.ttf'; // フォント自身のパスに置き換えてください
-
-        // 背景を白で塗りつぶす
-        imagefill($image, 0, 0, $white);
-
-        // テキストを描画
-        imagettftext($image, 22, 0, 20, 100, $black, $font, $text,['linespacing' => 1.5]);
-
-        // 画像を出力
-        header('Content-Type: image/png');
-        imagepng($image);
-        imagedestroy($image);
+        $quizOgpGenerator->generateTextOgp(
+            $text,
+            $existingImagePath,
+            $fontFile,
+        );
     }
-
 
     private function halfcheck()
     {
