@@ -687,6 +687,16 @@ class AccreditationAdminViewContent
                     border-radius: 6px;
                 }
             </style>
+            <script>
+                async function copyUrl(text) {
+                    try {
+                        await navigator.clipboard.writeText(text)
+                        alert("URLをコピーしました");
+                    } catch {
+                        alert("コピーできませんでした\n(非対応ブラウザ)");
+                    }
+                }
+            </script>
             <?php if (!$editorMode) : ?>
                 <small style="margin-right: auto; user-select: none; font-size: 14px;">全 <?php echo $listLen ?> 件</small>
             <?php endif ?>
@@ -758,13 +768,14 @@ class AccreditationAdminViewContent
                     <?php endif ?>
 
                     <?php if ($el->isPabulished) : ?>
-                        <div style="display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap; justify-content: flex-end; align-items: center;">
-                            <small style="word-break: keep-all; text-wrap: nowrap;">単独でシェア</small>
+                        <div style="display: flex; gap: 12px; margin-top: 1rem; flex-wrap: wrap; justify-content: flex-end; align-items: center;">
+                            <small style="word-break: keep-all; text-wrap: nowrap;">シェア</small>
 
-                            <a class="share-menu-item unset" href="https://twitter.com/intent/tweet?url=<?php echo urlencode($shareUrl . $el->id) ?>&text=<?php echo urlencode($el->question . "\nオプチャ検定｜Q." . $el->id . "\n") ?>" rel="nofollow noopener" target="_blank" title="Xにポスト">
+                            <a class="share-menu-item unset" href="https://twitter.com/intent/tweet?url=<?php echo urlencode($shareUrl . $el->id) ?>&text=<?php echo urlencode($el->question . "\nオプチャ検定｜Q." . $el->id . "\n") ?>" rel="nofollow noopener" target="_blank" title="ポスト">
                                 <span class="share-menu-icon-twitter share-menu-icon"></span>
                             </a>
-                            <a href="<?php echo $shareUrl . $el->id ?>" target="_blank" title="単独URL">URL</a>
+                            <a style="cursor: pointer;" onclick="copyUrl('<?php echo $shareUrl . $el->id ?>')">URLをコピー</a>
+                            <a href="<?php echo $shareUrl . $el->id ?>" target="_blank">開く</a>
                         </div>
                     <?php endif ?>
 
