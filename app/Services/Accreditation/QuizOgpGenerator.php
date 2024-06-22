@@ -4,24 +4,34 @@ declare(strict_types=1);
 
 namespace App\Services\Accreditation;
 
+use Shadow\File\Image\ImageStore;
+
 class QuizOgpGenerator
 {
+    private string $existingImagePath = __DIR__ . '/../../../storage/font/text-ogp-quiz.png';
+    private string $fontFile = __DIR__ . '/../../../storage/font/mgenplus-2m-medium.ttf';
+    private string $destPath = PUBLIC_DIR . '/quiz-img';
+
+    function __construct(
+        private ImageStore $imageStore
+    ) {
+    }
+
     function generateTextOgp(
         string $text,
-        string $existingImagePath,
-        string $fontFile,
+        string $fileName,
         int $fontSize = 45,
-        int $characterSpacing = 0,
+        int $characterSpacing = 9,
         int $top = 90,
         int $left = 120,
         int $right = 1090,
         int $bottom = 490,
-    ) {
+    ): string {
         $text = str_replace(["\r\n", "\r"], "\n", $text);
         $text = str_replace("\n", " ", $text);
 
         // PNG画像を読み込む
-        $image = imagecreatefrompng($existingImagePath);
+        $image = imagecreatefrompng($this->existingImagePath);
 
         // 描画範囲を赤で可視化
         /* $red = imagecolorallocate($image, 255, 0, 0);
@@ -37,15 +47,17 @@ class QuizOgpGenerator
             $right,
             $bottom,
             $black,
-            $fontFile,
+            $this->fontFile,
             $text,
             $characterSpacing,
             10,
         );
 
-        header('Content-Type: image/png');
-        imagepng($image);
-        imagedestroy($image);
+        return $this->imageStore->storeImageFromGdImage(
+            $image,
+            $this->destPath,
+            $fileName,
+        );
     }
 
     /**

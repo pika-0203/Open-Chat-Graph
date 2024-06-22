@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Config\AppConfig;
+use App\Models\Accreditation\AccreditationDB;
+use App\Models\Accreditation\AccreditationUserModel;
 use App\Models\CommentRepositories\DeleteCommentRepositoryInterface;
 use App\Models\Repositories\DeleteOpenChatRepositoryInterface;
 use App\Services\UpdateRankingService;
@@ -51,18 +53,18 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'exec', 'message' => $path . ' を実行しました。']);
     }
 
-    function testpage(QuizOgpGenerator $quizOgpGenerator)
+    function testpage(QuizOgpGenerator $quizOgpGenerator, AccreditationUserModel $accreditationUserModel)
     {
-        $text = 'トークルームに参加する時に、人数制限が上限に達していたらどんなメッセージが表示される？';
-        $existingImagePath = __DIR__ . '/../../../storage/font/text-ogp-quiz.png';
-        $fontFile = __DIR__ . '/../../../storage/font/mgenplus-2m-medium.ttf';
 
-        $quizOgpGenerator->generateTextOgp(
-            $text,
-            $existingImagePath,
-            $fontFile,
-            characterSpacing: 10
-        );
+        foreach (ExamType::cases() as $type) {
+            $dtos = $accreditationUserModel->getQuestionList(1, $type);
+            foreach ($dtos as $dto) {
+                $quizOgpGenerator->generateTextOgp(
+                    $dto->question,
+                    'quiz_img_' . $dto->id,
+                );
+            }
+        }
     }
 
     private function halfcheck()
