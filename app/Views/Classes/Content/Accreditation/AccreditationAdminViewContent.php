@@ -49,7 +49,7 @@ class AccreditationAdminViewContent
             <meta property="og:url" content="<?php echo url(path()) ?>">
             <meta property="og:type" content="website">
             <meta property="og:title" content="オプチャ検定｜<?php echo $this->examTypeName ?>｜問題投稿ページ">
-            <meta property="og:description" content="ここから誰でもオプチャ検定に問題を投稿できます。">
+            <meta property="og:description" content="オプチャ検定の問題投稿ページでは、誰でも問題が投稿できて、他の人が投稿した問題を閲覧できます。自分の知識を共有し、オープンチャットコミュニティに貢献できます！">
             <meta property="og:site_name" content="オプチャ検定">
             <meta property="og:image" content="<?php echo fileUrl('assets/ogp-accreditation.png') ?>">
             <meta name="twitter:card" content="summary">

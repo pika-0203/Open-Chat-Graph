@@ -36,7 +36,7 @@ class AccreditationPageController
             $_argDto = $quizApiService->getTopic(ExamType::Bronze, 10, 180);
 
             $title = 'オプチャ検定｜練習問題';
-            $description = 'オプチャ検定の練習問題に挑戦しよう！';
+            $description = 'オプチャ検定は、LINEオープンチャットのガイドラインやルール、管理方法などについての知識を深める検定サイトです。LINEオープンチャットを運営する際に必要な情報を楽しく学ぶことができます。';
             $ogp = fileUrl("assets/quiz-ogp.png");
 
             return view(
