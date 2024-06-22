@@ -17,7 +17,7 @@ class AccreditationPageController
     function index(QuizApiService $quizApiService, int $id)
     {
         if ($id) {
-            $_argDto = $quizApiService->getSingleTopic($id, 20);
+            $_argDto = $quizApiService->getSingleTopic($id, 30);
             if (!$_argDto)
                 return false;
         } else {
