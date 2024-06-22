@@ -53,7 +53,7 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'exec', 'message' => $path . ' を実行しました。']);
     }
 
-    function testpage(QuizOgpGenerator $quizOgpGenerator, AccreditationUserModel $accreditationUserModel)
+    /* function testpage(QuizOgpGenerator $quizOgpGenerator, AccreditationUserModel $accreditationUserModel)
     {
 
         foreach (ExamType::cases() as $type) {
@@ -65,7 +65,7 @@ class AdminPageController
                 );
             }
         }
-    }
+    } */
 
     private function halfcheck()
     {
