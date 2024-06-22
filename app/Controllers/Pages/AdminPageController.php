@@ -55,13 +55,13 @@ class AdminPageController
     {
         $text = 'トークルームに参加する時に、人数制限が上限に達していたらどんなメッセージが表示される？';
         $existingImagePath = __DIR__ . '/../../../storage/font/text-ogp-quiz.png';
-        $fontFile = __DIR__ . '/../../../storage/font/mgenplus-1p-medium.ttf';
+        $fontFile = __DIR__ . '/../../../storage/font/mgenplus-2m-medium.ttf';
 
         $quizOgpGenerator->generateTextOgp(
             $text,
             $existingImagePath,
             $fontFile,
-            characterSpacing: 2
+            characterSpacing: 10
         );
     }
 
