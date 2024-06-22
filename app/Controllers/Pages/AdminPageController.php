@@ -50,6 +50,34 @@ class AdminPageController
         return view('admin/admin_message_page', ['title' => 'exec', 'message' => $path . ' を実行しました。']);
     }
 
+    function testpage()
+    {
+        // 画像を生成
+        $image = imagecreatetruecolor(600, 400);
+
+        // 色を設定
+        $white = imagecolorallocate($image, 255, 255, 255);
+        $black = imagecolorallocate($image, 0, 0, 0);
+
+        // テキスト
+        $text = "安心安全ガイドラインで禁止されている\nことは、次のうちどれでしょう。";
+
+        // フォントのパス
+        $font = __DIR__ . '/../../../storage/font/mgenplus-1c-bold.ttf'; // フォント自身のパスに置き換えてください
+
+        // 背景を白で塗りつぶす
+        imagefill($image, 0, 0, $white);
+
+        // テキストを描画
+        imagettftext($image, 22, 0, 20, 100, $black, $font, $text,['linespacing' => 1.5]);
+
+        // 画像を出力
+        header('Content-Type: image/png');
+        imagepng($image);
+        imagedestroy($image);
+    }
+
+
     private function halfcheck()
     {
         $path = AppConfig::ROOT_PATH . 'cron_half_check.php';
