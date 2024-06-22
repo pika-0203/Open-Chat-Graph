@@ -14,15 +14,15 @@
 
     <link rel="canonical" hrefs="<?php echo url('accreditation') ?>">
 
-    <title>公認メンター監修・オプチャ検定｜練習問題</title>
-    <meta name="description" content="オプチャ検定の練習問題に挑戦しよう！">
+    <title><?php echo $title ?></title>
+    <meta name="description" content="<?php echo $description ?>">
     <meta property="og:locale" content="ja_JP">
-    <meta property="og:url" content="<?php url('accreditation') ?>">
+    <meta property="og:url" content="<?php echo url('accreditation') ?>">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="公認メンター監修・オプチャ検定｜練習問題">
-    <meta property="og:description" content="オプチャ検定の練習問題に挑戦しよう！">
+    <meta property="og:title" content="<?php echo $title ?>">
+    <meta property="og:description" content="<?php echo $description ?>">
     <meta property="og:site_name" content="オプチャ検定">
-    <meta property="og:image" content="<?php echo fileUrl('assets/quiz-ogp.png') ?>">
+    <meta property="og:image" content="<?php echo $ogp ?>">
     <meta name="twitter:card" content="summary">
 </head>
 
