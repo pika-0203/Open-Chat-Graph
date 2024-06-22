@@ -403,5 +403,8 @@ Route::path(
 )
     ->match(fn () => handleRequestWithETagAndCache(getHouryUpdateTime() . 'defamationGuideline'));
 
+Route::path('accreditation')
+    ->matchNum('id', emptyAble: true, default: 0);
+
 cache();
 Route::run();

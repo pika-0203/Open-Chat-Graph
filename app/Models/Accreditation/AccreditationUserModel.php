@@ -230,11 +230,18 @@ class AccreditationUserModel
         $params['type'] = $params['type']->value;
         $params['edited_at'] = (new DateTime())->format('Y-m-d H:i:s');
 
+        $pabulished = '';
+        if ($params['publishing']) {
+            $pabulished = ',isPabulished = :isPabulished';
+            $params['isPabulished'] = 1;
+        }
+
+
         $this->userLog($params['edit_user_id'], $ip, $ua, 'updateQuestion');
 
         return AccreditationDB::executeAndCheckResult(
             "UPDATE exam 
-                SET question = :question, answers = :answers, explanation = :explanation, edit_user_id = :edit_user_id, edited_at = :edited_at, publishing = :publishing, type = :type
+                SET question = :question, answers = :answers, explanation = :explanation, edit_user_id = :edit_user_id, edited_at = :edited_at, publishing = :publishing, type = :type {$pabulished}
                 WHERE id = :id",
             $params
         );

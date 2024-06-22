@@ -14,9 +14,16 @@ class AccreditationPageController
         return view('accreditation/privacy');
     }
 
-    function index(QuizApiService $quizApiService)
+    function index(QuizApiService $quizApiService, int $id)
     {
-        $_argDto = $quizApiService->getTopic(ExamType::Bronze, 10, 180);
+        if ($id) {
+            $_argDto = $quizApiService->getSingleTopic($id, 20);
+            if (!$_argDto)
+                return false;
+        } else {
+            $_argDto = $quizApiService->getTopic(ExamType::Bronze, 10, 180);
+        }
+
 
         $_css = getFilePath('style/quiz', 'main.*.css');
         $_js = getFilePath('js/quiz', 'main.*.js');

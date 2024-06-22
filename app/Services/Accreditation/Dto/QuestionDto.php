@@ -20,6 +20,7 @@ class QuestionDto
     public int $is_admin_user;
     public string $edit_user_name;
     public int $is_admin_edit_user;
+    public int $isPabulished;
 
     /**
      * @var array{ a:string, b:string, c:string, d:string, correct:string }

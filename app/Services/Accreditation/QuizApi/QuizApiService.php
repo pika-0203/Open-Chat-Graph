@@ -105,6 +105,23 @@ class QuizApiService
         )];
     }
 
+    function getSingleTopic(int $id, int $totalTime): Topic|false
+    {
+        $dbDto = $this->model->getQuizApiQuestionDtoById($id);
+        if (!$dbDto)
+            return false;
+
+        $questions = $this->buildQuestions([$dbDto]);
+        
+        return new Topic(
+            'ブロンズ',
+            1,
+            1,
+            $totalTime,
+            $questions
+        );
+    }
+
     function getTopic(ExamType $type, int $lengh, int $totalTime): Topic
     {
         $dbDtos = $this->model->getQuizApiQuestionDto($type);
