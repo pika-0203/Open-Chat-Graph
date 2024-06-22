@@ -11,6 +11,7 @@ use Shadow\DB;
 use App\Services\OpenChat\OpenChatApiDbMerger;
 use App\Models\SQLite\SQLiteStatistics;
 use App\Models\UserLogRepositories\UserLogRepository;
+use App\Services\Accreditation\QuizOgpGenerator;
 use App\Services\OpenChat\OpenChatDailyCrawling;
 use App\Services\RankingPosition\Persistence\RankingPositionHourPersistence;
 use App\Services\SitemapGenerator;
@@ -40,6 +41,11 @@ class AdminPageController
         exec("/usr/bin/php8.2 {$path} >/dev/null 2>&1 &");
 
         return view('admin/admin_message_page', ['title' => 'exec', 'message' => $path . ' を実行しました。']);
+    }
+
+    function testpage(QuizOgpGenerator $quizOgpGenerator)
+    {
+        $quizOgpGenerator->generateTextOgp('LINEオープンチャットのガイドラインに基づき、次のうち禁止されている行為はどれですか？', '', characterSpacing: 10);
     }
 
     private function halfcheck()

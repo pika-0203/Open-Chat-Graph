@@ -9,7 +9,7 @@ use Shadow\File\Image\ImageStore;
 class QuizOgpGenerator
 {
     private string $existingImagePath = __DIR__ . '/../../../storage/font/text-ogp-quiz.png';
-    private string $fontFile = __DIR__ . '/../../../storage/font/mgenplus-2m-medium.ttf';
+    private string $fontFile = __DIR__ . '/../../../storage/font/mgenplus-1p-medium.ttf';
     private string $destPath = PUBLIC_DIR . '/quiz-img';
 
     function __construct(
@@ -52,6 +52,13 @@ class QuizOgpGenerator
             $characterSpacing,
             10,
         );
+
+        if(!$fileName) {
+            // 画像を出力（ブラウザに表示する場合）
+            header('Content-Type: image/png');
+            imagepng($image);
+            return '';
+        }
 
         return $this->imageStore->storeImageFromGdImage(
             $image,
