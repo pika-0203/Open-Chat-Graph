@@ -24,7 +24,7 @@ class AccreditationPageController
             if (!$_argDto)
                 return false;
 
-            $title = "公認メンター監修・オプチャ検定｜Q.{$id}";
+            $title = "オプチャ検定｜Q.{$id}";
             $description = $_argDto->questions[0]->question;
             $ogp = fileUrl("quiz-img/quiz_img_{$id}.webp");
 
@@ -35,7 +35,7 @@ class AccreditationPageController
         } else {
             $_argDto = $quizApiService->getTopic(ExamType::Bronze, 10, 180);
 
-            $title = '公認メンター監修・オプチャ検定｜練習問題';
+            $title = 'オプチャ検定｜練習問題';
             $description = 'オプチャ検定の練習問題に挑戦しよう！';
             $ogp = fileUrl("assets/quiz-ogp.png");
 

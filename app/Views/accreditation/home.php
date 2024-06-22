@@ -36,7 +36,7 @@ $view = new AccreditationAdminViewContent($controller);
             <?php endforeach ?>
         </section>
         <hr>
-        <a href="/accreditation" target="_blank" style="font-size: 14px;">公認メンター監修・オプチャ検定｜練習問題</a>
+        <a href="/accreditation" target="_blank" style="font-size: 14px;">オプチャ検定｜練習問題</a>
         <hr>
         <?php $view->termHome() ?>
     </main>

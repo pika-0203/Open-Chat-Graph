@@ -44,13 +44,13 @@ class AccreditationAdminViewContent
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>オプチャ検定｜<?php echo $this->examTypeName ?>｜問題投稿ページ</title>
-            <meta name="description" content="ここから誰でもオプチャ検定に問題を投稿できます。ぜひご協力を！">
+            <meta name="description" content="ここから誰でもオプチャ検定に問題を投稿できます。">
             <meta property="og:locale" content="ja_JP">
             <meta property="og:url" content="<?php echo url(path()) ?>">
             <meta property="og:type" content="website">
             <meta property="og:title" content="オプチャ検定｜<?php echo $this->examTypeName ?>｜問題投稿ページ">
-            <meta property="og:description" content="ここから誰でもオプチャ検定に問題を投稿できます。ぜひご協力を！">
-            <meta property="og:site_name" content="公認メンター監修・オプチャ検定">
+            <meta property="og:description" content="ここから誰でもオプチャ検定に問題を投稿できます。">
+            <meta property="og:site_name" content="オプチャ検定">
             <meta property="og:image" content="<?php echo fileUrl('assets/ogp-accreditation.png') ?>">
             <meta name="twitter:card" content="summary">
             <link rel="icon" type="image/png" href="<?php echo fileUrl('assets/study_icon.png') ?>">
