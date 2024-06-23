@@ -686,12 +686,16 @@ class AccreditationAdminViewContent
                     background-color: #000000;
                     border-radius: 6px;
                 }
+
+                .copy-btn-icon {
+                    background-image: url(/assets/copy_icon_b.svg);
+                }
             </style>
             <script>
                 async function copyUrl(text) {
                     try {
                         await navigator.clipboard.writeText(text)
-                        alert("URLをコピーしました");
+                        alert("タイトルとURLをクリップボードにコピーしました");
                     } catch {
                         alert("コピーできませんでした\n(非対応ブラウザ)");
                     }
@@ -768,13 +772,19 @@ class AccreditationAdminViewContent
                     <?php endif ?>
 
                     <?php if ($el->isPabulished) : ?>
-                        <div style="display: flex; gap: 12px; margin-top: 1rem; flex-wrap: wrap; justify-content: flex-end; align-items: center;">
+                        <div style="display: flex; gap: 16px; margin-top: 1rem; flex-wrap: wrap; justify-content: flex-end; align-items: center;">
                             <small style="word-break: keep-all; text-wrap: nowrap;">シェア</small>
 
+                            <div class="share-menu-item unset" onclick="copyUrl('<?php echo ('オプチャ検定｜Q.' . $el->id . '\n' . $shareUrl . $el->id) ?>')">
+                                <span class="copy-btn-icon share-menu-icon"></span>
+                            </div>
                             <a class="share-menu-item unset" href="https://twitter.com/intent/tweet?url=<?php echo urlencode($shareUrl . $el->id) ?>&text=<?php echo urlencode($el->question . "\nオプチャ検定｜Q." . $el->id . "\n") ?>" rel="nofollow noopener" target="_blank" title="ポスト">
                                 <span class="share-menu-icon-twitter share-menu-icon"></span>
                             </a>
-                            <a style="cursor: pointer;" onclick="copyUrl('<?php echo $shareUrl . $el->id ?>')">URLをコピー</a>
+
+                            <a class="share-menu-item unset" href="http://line.me/R/msg/text/?<?php echo urlencode('オプチャ検定｜Q.' . $el->id . "\n" . $shareUrl . $el->id) ?>" rel="nofollow noopener" target="_blank" title="LINEで送る">
+                                <span class="share-menu-icon-line share-menu-icon"></span>
+                            </a>
                             <a href="<?php echo $shareUrl . $el->id ?>" target="_blank">開く</a>
                         </div>
                     <?php endif ?>
