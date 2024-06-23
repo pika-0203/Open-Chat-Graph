@@ -665,14 +665,24 @@ class AccreditationAdminViewContent
 
                 .share-menu-item {
                     cursor: pointer;
+                    width: 24px;
+                    height: 24px;
+                    display: flex;
                 }
 
                 .share-menu-icon {
                     width: 24px;
                     height: 24px;
+                    margin: auto;
                     background-repeat: no-repeat;
                     background-size: contain;
                     display: block;
+                }
+
+                .share-menu-icon.copy {
+                    width: 20px;
+                    height: 20px;
+                    margin: auto;
                 }
 
                 .share-menu-icon-twitter {
@@ -683,7 +693,6 @@ class AccreditationAdminViewContent
 
                 .share-menu-icon-line {
                     background-image: url(/assets/line.svg);
-                    background-color: #000000;
                     border-radius: 6px;
                 }
 
@@ -695,7 +704,7 @@ class AccreditationAdminViewContent
                 async function copyUrl(text) {
                     try {
                         await navigator.clipboard.writeText(text)
-                        alert("タイトルとURLをクリップボードにコピーしました");
+                        alert("リンクをコピーしました");
                     } catch {
                         alert("コピーできませんでした\n(非対応ブラウザ)");
                     }
@@ -774,7 +783,7 @@ class AccreditationAdminViewContent
                             <small style="word-break: keep-all; text-wrap: nowrap;">シェア</small>
 
                             <div class="share-menu-item unset" onclick="copyUrl('<?php echo ('オプチャ検定｜Q.' . $el->id . '\n' . $shareUrl . $el->id) ?>')">
-                                <span class="copy-btn-icon share-menu-icon"></span>
+                                <span class="copy-btn-icon share-menu-icon copy"></span>
                             </div>
                             <a class="share-menu-item unset" href="https://twitter.com/intent/tweet?url=<?php echo urlencode($shareUrl . $el->id) ?>&text=<?php echo urlencode($el->question . "\nオプチャ検定｜Q." . $el->id . "\n") ?>" rel="nofollow noopener" target="_blank" title="ポスト">
                                 <span class="share-menu-icon-twitter share-menu-icon"></span>
