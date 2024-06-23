@@ -697,7 +697,7 @@ class AccreditationAdminViewContent
                 }
 
                 .copy-btn-icon {
-                    background-image: url(/assets/copy_icon_b.svg);
+                    background-image: url(/assets/copy_icon_c.svg);
                 }
             </style>
             <script>
