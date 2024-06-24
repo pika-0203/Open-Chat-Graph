@@ -24,8 +24,8 @@ class AccreditationPageController
             if (!$_argDto)
                 return false;
 
-            $title = "オプチャ検定｜Q.{$id}";
             $description = $_argDto->questions[0]->question;
+            $title = "{$description}｜オプチャ検定｜Q.{$id}";
             $ogp = fileUrl("quiz-img/quiz_img_{$id}.webp");
 
             return view(
