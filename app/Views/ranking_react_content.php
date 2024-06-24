@@ -11,8 +11,10 @@
         <link rel="stylesheet" href="<?php echo fileUrl($css) ?>">
     <?php endforeach ?>
     <script defer="defer" src="<?php echo fileUrl($_js) ?>"></script>
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2330982526015125" crossorigin="anonymous"></script> -->
     <link rel="canonical" hrefs="<?php echo url('ranking') . ($category ? '/' . $category : '') ?>">
+    <?php if (url() !== 'http://localhost') : ?>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2330982526015125" crossorigin="anonymous"></script>
+    <?php endif ?>
 </head>
 
 <body style="margin: 0;">
