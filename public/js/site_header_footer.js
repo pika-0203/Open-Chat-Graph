@@ -217,37 +217,3 @@ async function blockblock() {
 }
 
 //blockblock()
-
-window.addEventListener('load', function () {
-  const adContainer = document.querySelector('.rectangle-ad-container')
-  const insElement = adContainer.querySelector('ins.adsbygoogle')
-
-  function adjustHeight() {
-    const iframe = insElement.querySelector('iframe')
-    if (iframe) {
-      const iframeHeight = iframe.offsetHeight
-
-      adContainer.style.height = iframeHeight + 'px'
-      insElement.style.height = iframeHeight + 'px'
-
-      // 内部のdiv要素の高さも調整
-      const innerDivs = insElement.querySelectorAll('div')
-      innerDivs.forEach((div) => {
-        div.style.height = iframeHeight + 'px'
-      })
-    }
-  }
-
-  const observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-      if (mutation.addedNodes.length) {
-        adjustHeight()
-      }
-    })
-  })
-
-  observer.observe(insElement, { childList: true, subtree: true })
-
-  // 広告が完全にロードされた後も再調整
-  window.addEventListener('resize', adjustHeight)
-})
