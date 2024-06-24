@@ -30,12 +30,17 @@
     <script type="application/json" id="arg-dto">
         <?php echo json_encode($_argDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
     </script>
-    <script type="application/json" id="arg-dto-silver">
-        <?php echo json_encode($_argDto_silver, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
-    </script>
-    <!-- <script type="application/json" id="arg-dto-gold">
-        <?php //echo json_encode($_argDto_gold, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
-    </script> -->
+    <?php if (isset($_argDto_silver)) : ?>
+        <script type="application/json" id="arg-dto-silver">
+            <?php echo json_encode($_argDto_silver, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
+        </script>
+    <?php endif ?>
+    <?php if (isset($_argDto_gold)) : ?>
+        <script type="application/json" id="arg-dto-gold">
+            <?php //echo json_encode($_argDto_gold, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); 
+            ?>
+        </script>
+    <?php endif ?>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 </body>
