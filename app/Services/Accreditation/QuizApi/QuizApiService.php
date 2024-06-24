@@ -128,15 +128,15 @@ class QuizApiService
         );
     }
 
-    function getTopic(ExamType $type, int $lengh, int $totalTime): Topic
+    function getTopic(ExamType $type, int $lengh, int $totalTime): Topic|false
     {
-        $dbDtos = $this->model->getQuizApiQuestionDto($type);
+        $dbDtos = $this->model->getQuizApiQuestionDto($type, $lengh);
         if ($dbDtos) {
-            shuffle($dbDtos);
-            $dbDtos = array_slice($dbDtos, 0, $lengh);
             $questions = $this->buildQuestions($dbDtos);
-        } else {
+        } elseif (!$dbDtos && $type === ExamType::Bronze) {
             $questions = $this->buldSampleQuestions();
+        } else {
+            return false;
         }
 
         $count = count($questions);
