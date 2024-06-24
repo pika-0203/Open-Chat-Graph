@@ -19,21 +19,12 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
   <!-- 固定ヘッダー -->
   <?php viewComponent('site_header') ?>
   <article class="ranking-page-main pad-side-top-ranking body" style="overflow: hidden; padding-top: 0;">
-    <?php viewComponent('ads/google-rectangle') 
+    <?php viewComponent('ads/google-rectangle')
     ?>
 
     <section style="all: unset; display: block;">
-      <?php if (isset($recommend)) : ?>
-        <figure style="padding: 0;" class="talkroom_banner_img_figure">
-          <?php $oc = $recommend->getPreviewList(1)[0] ?>
-          <div class="talkroom_banner_img_area">
-            <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
-          </div>
-          <figcaption>「<?php echo $oc['name'] ?>」のメイン画像</figcaption>
-        </figure>
-      <?php endif ?>
 
-      <header class="recommend-header">
+      <header class="recommend-header" style="padding: 1rem;">
         <?php if ($count) : ?>
           <h1 class="talkroom_link_h1 unset">【最新】「<?php echo $tag ?>」おすすめオープンチャットランキングTOP<?php echo $count ?></h1>
         <?php else : ?>
@@ -48,6 +39,16 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
           <?php endif ?>
         </div>
       </header>
+
+      <?php if (isset($recommend)) : ?>
+        <figure style="padding: 0;" class="talkroom_banner_img_figure">
+          <?php $oc = $recommend->getPreviewList(1)[0] ?>
+          <div class="talkroom_banner_img_area">
+            <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
+          </div>
+          <figcaption>「<?php echo $oc['name'] ?>」のメイン画像</figcaption>
+        </figure>
+      <?php endif ?>
 
       <p class="recommend-header-desc">
         「<?php echo $tag ?>」のおすすめオープンチャットランキングを発表！
@@ -65,8 +66,8 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
       <?php endif ?>
     </aside>
 
-    <hr class="hr-bottom" style="padding: 0;">
-    <?php viewComponent('ads/google-rectangle') 
+    <hr class="hr-bottom">
+    <?php viewComponent('ads/google-rectangle')
     ?>
 
     <section class="recommend-ranking-section">
@@ -125,7 +126,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php if ($listsLastKey !== $key) : ?>
               <li>
                 <hr class="hr-bottom">
-                <?php viewComponent('ads/google-responsive') 
+                <?php viewComponent('ads/google-responsive')
                 ?>
               </li>
             <?php endif ?>
@@ -153,7 +154,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     </section>
 
     <hr class="hr-bottom">
-    <?php viewComponent('ads/google-responsive') 
+    <?php viewComponent('ads/google-responsive')
     ?>
 
     <aside class="top-ranking-list-aside">
@@ -161,7 +162,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     </aside>
 
     <hr class="hr-bottom">
-    <?php viewComponent('ads/google-responsive') 
+    <?php viewComponent('ads/google-responsive')
     ?>
 
     <aside class="top-ranking-list-aside">

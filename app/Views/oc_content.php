@@ -137,7 +137,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
       <?php viewComponent('oc_content_admin', compact('_adminDto')); ?>
     <?php endif ?>
 
-    <hr class="hr-bottom" style="padding: 0;">
     <section class="openchat-graph-section">
 
       <div class="title-bar">
