@@ -307,4 +307,12 @@ class AccreditationUserModel
 
         return compact('total_count', 'publishing_count');
     }
+
+    /**
+     * @return array{ id: int, edited_at: string }[]
+     */
+    public function getSiteMapData(): array
+    {
+        return AccreditationDB::fetchAll("SELECT id, edited_at FROM exam");
+    }
 }

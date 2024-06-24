@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Config\AppConfig;
+use App\Models\Accreditation\AccreditationUserModel;
 use Asika\Sitemap\Sitemap;
 use Asika\Sitemap\ChangeFreq;
 use Asika\Sitemap\SitemapIndex;
@@ -21,6 +22,7 @@ class SitemapGenerator
     function __construct(
         private OpenChatListRepositoryInterface $ocRepo,
         private RecommendUpdater $recommendUpdater,
+        private AccreditationUserModel $accreditationUserModel,
     ) {
     }
 
@@ -29,8 +31,14 @@ class SitemapGenerator
         $index = new SitemapIndex();
         $index->addItem($this->generateSitemap1(), new \DateTime);
 
+        $currentNum = 1;
         foreach (array_chunk($this->ocRepo->getOpenChatSiteMapData(), 25000) as $i => $openChat) {
             $index->addItem($this->genarateOpenChatSitemap($openChat, $i + 2), new \DateTime);
+            $currentNum++;
+        }
+
+        foreach (array_chunk($this->accreditationUserModel->getSiteMapData(), 25000) as $i => $question) {
+            $index->addItem($this->genarateAccreditationSitemap($question, $i + $currentNum + 1), new \DateTime);
         }
 
         safeFileRewrite(self::INDEX_SITEMAP, $index->render(), 0755);
@@ -48,6 +56,10 @@ class SitemapGenerator
         $sitemap->addItem(self::SITE_URL . 'ranking', lastmod: $datetime);
         $sitemap->addItem(self::SITE_URL . 'ranking?keyword=' . urlencode('badge:スペシャルオープンチャット'), lastmod: $datetime);
         $sitemap->addItem(self::SITE_URL . 'ranking?keyword=' . urlencode('badge:公式認証オープンチャット'), lastmod: $datetime);
+        $sitemap->addItem(self::SITE_URL . 'accreditation');
+        $sitemap->addItem(self::SITE_URL . 'accreditation/bronze/login');
+        $sitemap->addItem(self::SITE_URL . 'accreditation/silver/login');
+        $sitemap->addItem(self::SITE_URL . 'accreditation/gold/login');
 
         foreach (AppConfig::OPEN_CHAT_CATEGORY as $category) {
             $category && $sitemap->addItem(self::SITE_URL . 'ranking/' . $category, lastmod: $datetime);
@@ -70,6 +82,17 @@ class SitemapGenerator
         foreach ($openChat as $oc) {
             ['id' => $id, 'updated_at' => $updated_at] = $oc;
             $this->addItem($sitemap, "oc/{$id}", $updated_at);
+        }
+
+        return $this->saveXml($sitemap, $n);
+    }
+
+    private function genarateAccreditationSitemap(array $question, int $n): string
+    {
+        $sitemap = new Sitemap();
+        foreach ($question as $q) {
+            ['id' => $id, 'edited_at' => $edited_at] = $q;
+            $this->addItem($sitemap, "accreditation?id={$id}", $edited_at);
         }
 
         return $this->saveXml($sitemap, $n);
