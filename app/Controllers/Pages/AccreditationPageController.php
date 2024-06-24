@@ -24,8 +24,13 @@ class AccreditationPageController
             if (!$_argDto)
                 return false;
 
-            $description = $_argDto->questions[0]->question;
-            $title = "{$description}｜オプチャ検定｜Q.{$id}";
+            $description = $_argDto->questions[0]->question
+                . ' A.' . $_argDto->questions[0]->choices[0]
+                . ' B.' . $_argDto->questions[0]->choices[1]
+                . ' C.' . $_argDto->questions[0]->choices[2]
+                . ' D.' . $_argDto->questions[0]->choices[3];
+
+            $title = "{$_argDto->questions[0]->question}｜オプチャ検定｜Q.{$id}";
             $ogp = fileUrl("quiz-img/quiz_img_{$id}.webp");
             $canonical = url("accreditation?id={$id}");
 
