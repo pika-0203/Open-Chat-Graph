@@ -12,12 +12,12 @@
     <script defer="defer" src="<?php echo fileUrl($_js) ?>"></script>
     <link rel="stylesheet" href="<?php echo fileUrl($_css) ?>">
 
-    <link rel="canonical" hrefs="<?php echo url('accreditation') ?>">
+    <link rel="canonical" hrefs="<?php echo $canonical ?>">
 
     <title><?php echo $title ?></title>
     <meta name="description" content="<?php echo $description ?>">
     <meta property="og:locale" content="ja_JP">
-    <meta property="og:url" content="<?php echo url('accreditation') ?>">
+    <meta property="og:url" content="<?php echo $canonical ?>">
     <meta property="og:type" content="website">
     <meta property="og:title" content="<?php echo $title ?>">
     <meta property="og:description" content="<?php echo $description ?>">

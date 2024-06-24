@@ -27,10 +27,19 @@ class AccreditationPageController
             $description = $_argDto->questions[0]->question;
             $title = "{$description}｜オプチャ検定｜Q.{$id}";
             $ogp = fileUrl("quiz-img/quiz_img_{$id}.webp");
+            $canonical = url("accreditation?id={$id}");
 
             return view(
                 'accreditation/quiz',
-                compact('_argDto', '_css', '_js', 'title', 'description', 'ogp')
+                compact(
+                    '_argDto',
+                    '_css',
+                    '_js',
+                    'title',
+                    'description',
+                    'ogp',
+                    'canonical',
+                )
             );
         } else {
             $_argDto = $quizApiService->getTopic(ExamType::Bronze, 10, 180);
@@ -40,6 +49,7 @@ class AccreditationPageController
             $title = 'オプチャ検定｜練習問題';
             $description = 'オプチャ検定は、LINEオープンチャットのガイドラインやルール、管理方法などについての知識を深める検定サイトです。LINEオープンチャットを運営する際に必要な情報を楽しく学ぶことができます。';
             $ogp = fileUrl("assets/quiz-ogp.png");
+            $canonical = url("accreditation");
 
             return view(
                 'accreditation/quiz',
@@ -51,7 +61,8 @@ class AccreditationPageController
                     '_js',
                     'title',
                     'description',
-                    'ogp'
+                    'ogp',
+                    'canonical',
                 )
             );
         }
