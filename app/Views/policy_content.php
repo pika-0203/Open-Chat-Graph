@@ -22,7 +22,6 @@
             <div style="margin: 2rem 0;">
                 <?php viewComponent('update_news', compact('_news')) ?>
             </div>
-            <a style="margin: auto; font-size: 13px; color:#111;" href="/labs/cacheclear">【キャッシュの保持時間が長くなる現象(解決済)の対策】<br>各ページで最新時間のデータが表示されない場合は、こちらのリンクを押してブラウザからオプチャグラフのキャッシュを全て削除できます。</a>
             <?php viewComponent('ads/google-rectangle')
             ?>
             <h2>サイトの目的</h2>

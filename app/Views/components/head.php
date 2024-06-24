@@ -23,5 +23,5 @@
     <?php if (isset($noindex)) : ?>
         <meta name="robots" content="noindex, nofollow">
     <?php endif ?>
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2330982526015125" crossorigin="anonymous"></script> -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2330982526015125" crossorigin="anonymous"></script>
 </head>

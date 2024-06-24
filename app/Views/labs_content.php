@@ -9,7 +9,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
 <body>
     <div class="body">
         <?php viewComponent('site_header') ?>
-        <?php //viewComponent('ads/google-responsive') ?>
+        <?php viewComponent('ads/google-responsive') ?>
         <main style="overflow: hidden;">
             <article class="terms">
                 <h1 style="letter-spacing: 0px;">
@@ -21,7 +21,7 @@ viewComponent('policy_head', compact('_css', '_meta')) ?>
                 <?php viewComponent('update_news', ['_news' => array_reverse(LabsNews::getNews())]) ?>
 
                 <div style="margin-top: 2rem;">
-                    <?php //viewComponent('ads/google-rectangle') ?>
+                    <?php viewComponent('ads/google-rectangle') ?>
                 </div>
 
                 <h2>オプチャ公式ランキング掲載の分析</h2>

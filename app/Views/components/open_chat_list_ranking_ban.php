@@ -6,7 +6,7 @@
     <li style="all: unset; display: block;">
 
       <?php if ($key && $key % 5 === 0) : ?>
-        <?php //viewComponent('ads/google-rectangle') ?>
+        <?php viewComponent('ads/google-rectangle') ?>
       <?php endif ?>
 
       <div class="openchat-item unset" style="margin-right: 0;">

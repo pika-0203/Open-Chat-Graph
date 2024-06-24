@@ -19,7 +19,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
   <!-- 固定ヘッダー -->
   <?php viewComponent('site_header') ?>
   <article class="ranking-page-main pad-side-top-ranking body" style="overflow: hidden; padding-top: 0;">
-    <?php //viewComponent('ads/google-rectangle') 
+    <?php viewComponent('ads/google-rectangle') 
     ?>
 
     <section style="all: unset; display: block;">
@@ -66,7 +66,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     </aside>
 
     <hr class="hr-bottom" style="padding: 0;">
-    <?php //viewComponent('ads/google-rectangle') 
+    <?php viewComponent('ads/google-rectangle') 
     ?>
 
     <section class="recommend-ranking-section">
@@ -125,7 +125,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
             <?php if ($listsLastKey !== $key) : ?>
               <li>
                 <hr class="hr-bottom">
-                <?php //viewComponent('ads/google-responsive') 
+                <?php viewComponent('ads/google-responsive') 
                 ?>
               </li>
             <?php endif ?>
@@ -153,7 +153,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     </section>
 
     <hr class="hr-bottom">
-    <?php //viewComponent('ads/google-responsive') 
+    <?php viewComponent('ads/google-responsive') 
     ?>
 
     <aside class="top-ranking-list-aside">
@@ -161,7 +161,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     </aside>
 
     <hr class="hr-bottom">
-    <?php //viewComponent('ads/google-responsive') 
+    <?php viewComponent('ads/google-responsive') 
     ?>
 
     <aside class="top-ranking-list-aside">

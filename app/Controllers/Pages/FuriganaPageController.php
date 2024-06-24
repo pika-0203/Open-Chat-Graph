@@ -53,7 +53,7 @@ document.body.innerHTML = `
 const nodes = Array.from(document.querySelectorAll('body *'))
   .map((el) =>
     Array.from(el.childNodes).filter((node) => {
-      if (!(node instanceof Text)) return false // ここを修正
+      if (!(node instanceof Text)) return false
       const value = node.textContent
       const regex = new RegExp('^(?=.*[\u4E00-\u9FFF]).*$')
       return !!regex.test(value)
