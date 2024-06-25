@@ -94,7 +94,7 @@ class AccreditationPageController
                 return false;
 
             $_argDto = $quizApiService->getSingleTopic($ids[array_rand($ids)], self::SINGLE_TIME);
-            $_argDto->questions[0]->question = "【今日の１問】" . $_argDto->questions[0]->question;
+            $_argDto->questions[0]->question = "【今日の１問】 " . $_argDto->questions[0]->question;
 
             saveSerializedFile('accreditation/today_question.dat', compact('date', '_argDto'));
         } else {
