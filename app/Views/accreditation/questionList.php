@@ -19,17 +19,15 @@ $isPublished = $view->controller->pageType === 'published';
             <p>
                 <small>サイト管理者により出題中になった問題一覧です。<br>出題中の問題は実際の検定に出題されます。</small>
             </p>
-            <hr>
         <?php else : ?>
             <h2>未公開の問題<?php $view->examTitle() ?></h2>
             <p>
                 <small>ユーザーにより投稿され、サイトに保存されている問題一覧です。<br>サイト管理者により未公開・出題中が適宜変更されます。</small>
             </p>
-            <hr>
         <?php endif ?>
         <?php $view->questionList() ?>
     </main>
-    <?php $view->footer() ?>
+    <?php $view->footer(false) ?>
 </body>
 
 </html>

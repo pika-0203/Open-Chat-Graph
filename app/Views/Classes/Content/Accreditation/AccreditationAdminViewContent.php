@@ -444,7 +444,7 @@ class AccreditationAdminViewContent
     <?php
     }
 
-    function footer()
+    function footer($scrollBtn = true)
     {
     ?>
         <footer>
@@ -453,7 +453,7 @@ class AccreditationAdminViewContent
                 <p>
                     <small>このサイトはLINEオープンチャット非公式です。LINEヤフー社はこの内容に関与していません。<br>監修しているのは一部のLINEオープンチャット公認メンターです。</small>
                 </p>
-            <?php else : ?>
+            <?php elseif ($scrollBtn) : ?>
                 <small style="float: inline-end; text-decoration: underline; color: #111; cursor:pointer;" onclick="window.scroll({top: 0,behavior:'smooth'})">↑ 一番上までスクロール</small>
             <?php endif ?>
             <small><a href="/accreditation/privacy" style="color: #b7b7b7; text-decoration: none;">プライバシーポリシー</a></small>
@@ -641,10 +641,11 @@ class AccreditationAdminViewContent
         $shareUrl = url("accreditation?id=");
 
     ?>
-        <section>
+        <section style="flex-direction: column;">
             <style>
                 .question_paper {
                     margin: 0.5rem 0;
+                    width: unset;
                 }
 
                 .question_p,
@@ -704,6 +705,65 @@ class AccreditationAdminViewContent
                 .copy-btn-icon {
                     background-image: url(/assets/copy_icon_c.svg);
                 }
+
+                .question-link-wrap {
+                    max-width: 712px;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 16px;
+                    margin-top: 1rem;
+                }
+
+                .quession-link-prefix {
+                    font-size: 13px;
+                    user-select: none;
+                    text-wrap: nowrap;
+                }
+
+                .question-link {
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    display: block;
+                    font-size: 15px;
+                    line-height: 1;
+                }
+
+                .question-link-inner {
+                    display: flex;
+                    flex-direction: row;
+                    color: var(--color-text-secondary);
+                    gap: 4px;
+                    align-items: stretch;
+                }
+
+                details {
+                    width: 100%;
+                }
+
+                details summary {
+                    width: fit-content;
+                    user-select: none;
+                }
+
+                .scroll-to-top {
+                    all: unset;
+                    display: none;
+                    position: fixed;
+                    bottom: 10px;
+                    right: 10px;
+                    width: 36px;
+                    height: 36px;
+                    background-color: #fff;
+                    border-radius: 6px;
+                    text-align: center;
+                    line-height: 48px;
+                    cursor: pointer;
+                    box-shadow: 0px 0px 6px -2px #777777;
+                    align-items: center;
+                    justify-content: center;
+                }
             </style>
             <script>
                 async function copyUrl(text) {
@@ -717,11 +777,22 @@ class AccreditationAdminViewContent
             </script>
             <?php if (!$editorMode) : ?>
                 <small style="margin-right: auto; user-select: none; font-size: 14px;">全 <?php echo $listLen ?> 件</small>
+                <details>
+                    <summary>目次を開く</summary>
+                    <div class="question-link-wrap">
+                        <?php foreach ($this->controller->questionList as $el) : ?>
+                            <div class="question-link-inner">
+                                <div class="quession-link-prefix">ID<?php echo $el->id ?>.</div>
+                                <a class="question-link" href="#id-<?php echo $el->id ?>"><?php echo $el->question ?></a>
+                            </div>
+                        <?php endforeach ?>
+                    </div>
+                </details>
             <?php endif ?>
             <?php foreach ($this->controller->questionList as $el) : ?>
                 <?php $edit = AccreditationUtility::isQuestionEditable($el, $this->controller->myId, $this->controller->isAdmin) ?>
 
-                <aside class="question_paper <?php if ($el->publishing) echo 'published' ?>">
+                <aside class="question_paper <?php if ($el->publishing) echo 'published' ?>" id="id-<?php echo $el->id ?>">
                     <div style="display: flex; justify-content: space-between;">
                         <?php if ($el->publishing) : ?>
                             <small style="display: block; font-weight: bold; font-size: 14px;">問題ID: <?php echo ($el->id) ?>（出題中）</small>
@@ -800,9 +871,36 @@ class AccreditationAdminViewContent
                             <a href="<?php echo $shareUrl . $el->id ?>" target="_blank">開く</a>
                         </div>
                     <?php endif ?>
-
                 </aside>
             <?php endforeach ?>
+            <button class="scroll-to-top" id="scrollToTopBtn">
+                <svg width="80%" height="80%" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                    <line x1="16" y1="8" x2="16" y2="24" style="stroke:#000;stroke-width:1.5" />
+                    <line x1="16" y1="8" x2="8" y2="16" style="stroke:#000;stroke-width:1.5" />
+                    <line x1="16" y1="8" x2="24" y2="16" style="stroke:#000;stroke-width:1.5" />
+                </svg>
+            </button>
+            <script>
+                window.onscroll = function() {
+                    scrollFunction()
+                };
+
+                function scrollFunction() {
+                    var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+                    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                        scrollToTopBtn.style.display = "flex";
+                    } else {
+                        scrollToTopBtn.style.display = "none";
+                    }
+                }
+
+                const h2 = document.querySelector('h2')
+                document.getElementById('scrollToTopBtn').addEventListener('click', function() {
+                    h2.scrollIntoView({
+                        behavior: 'smooth'
+                    })
+                });
+            </script>
         </section>
 <?php
     }

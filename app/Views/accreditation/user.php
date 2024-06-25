@@ -23,7 +23,7 @@ $view = new AccreditationAdminViewContent($controller);
             <?php $view->questionList() ?>
         <?php endif ?>
     </main>
-    <?php $view->footer() ?>
+    <?php $view->footer(false) ?>
 </body>
 
 </html>
