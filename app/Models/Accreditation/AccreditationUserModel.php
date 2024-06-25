@@ -182,7 +182,7 @@ class AccreditationUserModel
         $type = $type->value;
 
         return AccreditationDB::fetchAll(
-            $this->getQuestionQuery() . "WHERE t1.publishing = :publishing AND type = :type ORDER BY t1.id DESC",
+            $this->getQuestionQuery() . "WHERE t1.publishing = :publishing AND type = :type ORDER BY t1.edited_at DESC",
             compact('publishing', 'type'),
             [\PDO::FETCH_CLASS, QuestionDto::class]
         );
