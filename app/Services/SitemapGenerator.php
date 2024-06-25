@@ -12,6 +12,8 @@ use Asika\Sitemap\SitemapIndex;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
 use App\Services\Recommend\RecommendUpdater;
 
+use function PHPUnit\Framework\fileExists;
+
 class SitemapGenerator
 {
     const SITE_URL = 'https://openchat-review.me/';
@@ -56,11 +58,23 @@ class SitemapGenerator
         $sitemap->addItem(self::SITE_URL . 'ranking', lastmod: $datetime);
         $sitemap->addItem(self::SITE_URL . 'ranking?keyword=' . urlencode('badge:スペシャルオープンチャット'), lastmod: $datetime);
         $sitemap->addItem(self::SITE_URL . 'ranking?keyword=' . urlencode('badge:公式認証オープンチャット'), lastmod: $datetime);
-        $sitemap->addItem(self::SITE_URL . 'accreditation');
         $sitemap->addItem(self::SITE_URL . 'accreditation/bronze/login');
         $sitemap->addItem(self::SITE_URL . 'accreditation/silver/login');
         $sitemap->addItem(self::SITE_URL . 'accreditation/gold/login');
-        $sitemap->addItem(self::SITE_URL . 'accreditation/login');
+
+        $accreditationLoginView = VIEWS_DIR . "/accreditation/home_login.php";
+        if (file_exists($accreditationLoginView))
+            $sitemap->addItem(
+                self::SITE_URL . 'accreditation/login',
+                lastmod: '@' . filemtime($accreditationLoginView)
+            );
+
+        $accreditationJs = getFilePath('js/quiz', 'main.*.js');
+        if ($accreditationJs)
+            $sitemap->addItem(
+                self::SITE_URL . 'accreditation',
+                lastmod: '@' . filemtime(PUBLIC_DIR . "/" . $accreditationJs)
+            );
 
         foreach (AppConfig::OPEN_CHAT_CATEGORY as $category) {
             $category && $sitemap->addItem(self::SITE_URL . 'ranking/' . $category, lastmod: $datetime);
