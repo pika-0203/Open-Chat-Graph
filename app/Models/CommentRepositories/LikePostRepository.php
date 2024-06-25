@@ -97,4 +97,11 @@ class LikePostRepository implements LikePostRepositoryInterface
 
         return $result ? $result : new LikeBtnApi;
     }
+
+    function getLikeAll(): array
+    {
+        return CommentDB::fetchAll(
+            "SELECT * FROM `like`"
+        );
+    }
 }

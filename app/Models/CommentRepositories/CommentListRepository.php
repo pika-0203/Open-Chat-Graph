@@ -108,4 +108,15 @@ class CommentListRepository implements CommentListRepositoryInterface
 
         return CommentDB::fetchAll($query, compact('open_chat_id'), [\PDO::FETCH_COLUMN, 0]);
     }
+
+    function getCommentsAll(): array
+    {
+        $query =
+            "SELECT
+                *
+            FROM
+                comment";
+
+        return CommentDB::fetchAll($query);
+    }
 }

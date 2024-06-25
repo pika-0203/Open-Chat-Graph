@@ -14,4 +14,6 @@ interface CommentListRepositoryInterface
 
     /** @return int[] */
     function getCommentIdArrayByOpenChatId(int $open_chat_id): array;
+
+    function getCommentsAll(): array;
 }

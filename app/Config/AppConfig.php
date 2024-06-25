@@ -110,6 +110,7 @@ class AppConfig
     const OPEN_CHAT_HOUR_FILTER_ID_DIR = __DIR__ . '/../../storage/ranking_position/filter.dat';
 
     const OPEN_CHAT_ID_DATA_FILE_PATH = __DIR__ . '/../../storage/OpenChatBackupData';
+    const COMMENT_DATA_FILE_PATH = __DIR__ . '/../../storage/CommentBackupData';
 
     const ACCREDITATION_DATA_FILE_PATH = __DIR__ . '/../../storage/AccreditationBackupData';
 }
