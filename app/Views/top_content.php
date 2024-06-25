@@ -25,16 +25,16 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <div class="pad-side-top-ranking pad-side-top-list body" style="overflow: hidden;">
 
-        <article class="top-ranking top-btns top">
+        <section class="top-ranking top-btns top">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('ranking') ?>">
                 <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
             </a>
-        </article>
-        <article class="top-ranking top-btns">
+        </section>
+        <section class="top-ranking top-btns">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('accreditation') ?>">
-                <span class="ranking-readMore">オプチャ検定<span class="small">オプチャを楽しく学ぶ</span></span>
+                <span class="ranking-readMore">オプチャを楽しく学ぶ<span class="small">オプチャ検定</span></span>
             </a>
-        </article>
+        </section>
         <hr class="hr-bottom">
 
         <?php viewComponent('ads/google-rectangle')
@@ -139,7 +139,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         <hr class="hr-bottom">
         <?php viewComponent('ads/google-responsive')
         ?>
-        <article class="top-ranking top-btns" style="padding-top: 1rem;">
+        <section class="top-ranking top-btns" style="padding-top: 1rem;">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('official-ranking') ?>">
                 <span class="ranking-readMore">前回(1時間前)の公式急上昇と人数推移<span class="small">βテスト</span></span>
             </a>
@@ -151,7 +151,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                     <span style="display: inline-block; line-height: 1;">分析Labs</span>
                 </span>
             </a>
-        </article>
+        </section>
         <hr class="hr-bottom">
 
         <footer class="footer-elem-outer">

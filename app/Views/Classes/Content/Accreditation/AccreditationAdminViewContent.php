@@ -451,7 +451,7 @@ class AccreditationAdminViewContent
             <?php if (in_array($this->controller->pageType, ['login', 'home'])) : ?>
                 <hr style="margin-top: 0rem;">
                 <p>
-                    <small>「オプチャ検定」はLINEオープンチャット非公式の検定です。LINEヤフー社はこの内容に関与していません。<br>監修しているのは一部のLINEオープンチャット公認メンターです。</small>
+                    <small>このサイトはLINEオープンチャット非公式です。LINEヤフー社はこの内容に関与していません。<br>監修しているのは一部のLINEオープンチャット公認メンターです。</small>
                 </p>
             <?php else : ?>
                 <small style="float: inline-end; text-decoration: underline; color: #111; cursor:pointer;" onclick="window.scroll({top: 0,behavior:'smooth'})">↑ 一番上までスクロール</small>

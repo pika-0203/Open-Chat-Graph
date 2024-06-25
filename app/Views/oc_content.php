@@ -266,6 +266,11 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
         <?php viewComponent('comment_desc') ?>
       </div>
       <div id="comment-root"></div>
+      <div class="top-ranking not-rank" style="padding-bottom: 0;">
+        <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('accreditation') ?>">
+          <span class="ranking-readMore">オプチャを楽しく学ぶ<span class="small">オプチャ検定</span></span>
+        </a>
+      </div>
     </section>
     <hr class="hr-bottom">
 
