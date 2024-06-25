@@ -59,6 +59,8 @@ $returnTo = "?return_to=/accreditation/bronze/home";
                 <small>投稿された問題は、検定に合わせるためにサイト管理者が編集する場合があります。<br>問題数が限られているので、実際に出題されるのは一部の範囲の問題となります。</small>
             </p>
             <hr>
+            <a href="/accreditation" target="_blank" style="font-size: 14px;">オプチャ検定｜練習問題</a>
+            <hr>
             <aside>
                 <small>
                     <b>iOS・Androidの推奨ブラウザ</b>
