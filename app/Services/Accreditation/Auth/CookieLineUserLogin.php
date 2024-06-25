@@ -6,9 +6,12 @@ namespace App\Services\Accreditation\Auth;
 
 use App\Services\Auth\CookieUserLogin;
 use App\Services\Auth\CookieUserStore;
+use Shared\Exceptions\ValidationException;
 
 class CookieLineUserLogin extends CookieUserLogin
 {
+    private const LINE_OPEN_ID_PATTERN = '/^U[0-9A-Fa-f]{32}$/';
+
     function __construct()
     {
         $this->cookie = app(
@@ -27,7 +30,17 @@ class CookieLineUserLogin extends CookieUserLogin
     {
         // クッキーから暗号化されたユーザーIDを取得する
         $encryptedUserId = $this->cookie->getEncryptedUserIdFromCookie();
-        return $encryptedUserId ? $this->decrypt($encryptedUserId) : '';
+        if(!$encryptedUserId)
+            return '';
+
+        $userId = $this->decrypt($encryptedUserId);
+
+        if (!preg_match(self::LINE_OPEN_ID_PATTERN, $userId)) {
+            $this->cookie->removeInvalidCookie();
+            throw new ValidationException('識別子のパターンが一致しません');
+        }
+
+        return $userId;
     }
 
     /**
@@ -38,7 +51,7 @@ class CookieLineUserLogin extends CookieUserLogin
     public function signIn(string $userId): string
     {
         $this->cookie->saveUserIdToCookie($userId);
-        return $userId;   
+        return $userId;
     }
 
     public function logout()

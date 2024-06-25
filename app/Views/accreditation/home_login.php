@@ -37,7 +37,7 @@ $returnTo = "?return_to=/accreditation/bronze/home";
         }
 
         small {
-            font-size: 14px;
+            font-size: 15px;
         }
     </style>
     <header>
