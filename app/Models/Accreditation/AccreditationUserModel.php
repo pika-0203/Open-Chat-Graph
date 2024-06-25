@@ -315,4 +315,15 @@ class AccreditationUserModel
     {
         return AccreditationDB::fetchAll("SELECT id, edited_at FROM exam");
     }
+
+    /**
+     * @return int[]
+     */
+    function getQuestionIdsAll(): array
+    {
+        return AccreditationDB::fetchAll(
+            "SELECT t1.id FROM exam AS t1 JOIN user AS t2 ON t1.user_id = t2.id WHERE t1.publishing = 1",
+            args: [\PDO::FETCH_COLUMN]
+        );
+    }
 }
