@@ -111,9 +111,13 @@ class AccreditationController
     {
         return view('accreditation/login', $controller);
     }
-    
-    function homeLogin()
+
+    function homeLogin(CookieLineUserLogin $login)
     {
+        $userId = $login->login();
+        if ($userId)
+            return redirect("accreditation/bronze/home", 307);
+
         return view('accreditation/home_login');
     }
 
