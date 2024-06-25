@@ -307,6 +307,11 @@ Route::path(
     ->matchStr('return_to', maxLen: 100, emptyAble: true);
 
 Route::path(
+    'accreditation/login',
+    [AccreditationController::class, 'homeLogin']
+);
+
+Route::path(
     'accreditation/{examType}/{pageType}',
     [AccreditationController::class, 'route']
 )

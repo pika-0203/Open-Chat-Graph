@@ -36,6 +36,11 @@ class AccreditationAdminViewContent
     }
 
     function head()
+    {
+        self::headComponent($this->examTypeName);
+    }
+
+    static function headComponent(?string $subTitle = null)
     { ?>
 
         <head prefix="og: http://ogp.me/ns#">
@@ -43,12 +48,12 @@ class AccreditationAdminViewContent
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>オプチャ検定｜<?php echo $this->examTypeName ?>｜問題投稿ページ</title>
+            <title>オプチャ検定<?php if ($subTitle) echo '｜' . $subTitle ?>｜問題投稿ページ</title>
             <meta name="description" content="ここから誰でもオプチャ検定に問題を投稿できます。">
             <meta property="og:locale" content="ja_JP">
             <meta property="og:url" content="<?php echo url(path()) ?>">
             <meta property="og:type" content="website">
-            <meta property="og:title" content="オプチャ検定｜<?php echo $this->examTypeName ?>｜問題投稿ページ">
+            <meta property="og:title" content="オプチャ検定<?php if ($subTitle) echo '｜' . $subTitle ?>｜問題投稿ページ">
             <meta property="og:description" content="オプチャ検定の問題投稿ページでは、誰でも問題が投稿できて、他の人が投稿した問題を閲覧できます。自分の知識を共有し、オープンチャットコミュニティに貢献できます！">
             <meta property="og:site_name" content="オプチャ検定">
             <meta property="og:image" content="<?php echo fileUrl('assets/ogp-accreditation.png') ?>">

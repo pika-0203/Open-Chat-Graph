@@ -111,6 +111,11 @@ class AccreditationController
     {
         return view('accreditation/login', $controller);
     }
+    
+    function homeLogin()
+    {
+        return view('accreditation/home_login');
+    }
 
     function editor(array $controller)
     {
