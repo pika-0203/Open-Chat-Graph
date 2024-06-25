@@ -54,7 +54,7 @@ class AccreditationAdminViewContent
             <meta property="og:url" content="<?php echo url(path()) ?>">
             <meta property="og:type" content="website">
             <meta property="og:title" content="オプチャ検定<?php if ($subTitle) echo '｜' . $subTitle ?>｜問題投稿ページ">
-            <meta property="og:description" content="オプチャ検定は、LINEオープンチャットの運営に関連する知識を深める場所です。ガイドライン、ルール、管理方法などについて楽しく学ぶことができます。問題投稿ページでは誰でも問題を投稿でき、他の人が投稿した問題を閲覧できます。自分の知識を共有して、オープンチャットコミュニティに貢献できます！">
+            <meta property="og:description" content="オプチャ検定は、LINEオープンチャットの利用に関連する知識を深める場所です。ガイドライン、ルール、管理方法などについて楽しく学ぶことができます。問題投稿ページでは誰でも問題を投稿でき、他の人が投稿した問題を閲覧できます。自分の知識を共有して、オープンチャットコミュニティに貢献できます！">
             <meta property="og:site_name" content="オプチャ検定">
             <meta property="og:image" content="<?php echo fileUrl('assets/ogp-accreditation.png') ?>">
             <meta name="twitter:card" content="summary">

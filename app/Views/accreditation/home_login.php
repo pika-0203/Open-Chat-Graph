@@ -28,6 +28,8 @@ $returnTo = "?return_to=/accreditation/bronze/home";
 
         header {
             padding-bottom: 0;
+            word-break: keep-all;
+            overflow-wrap: anywhere
         }
 
         main {
@@ -45,12 +47,12 @@ $returnTo = "?return_to=/accreditation/bronze/home";
         </div>
         <hr>
         <p>
-            オプチャ検定は、LINEオープンチャットの運営に関連する知識を深める場所です。<br>
-            ガイドライン、ルール、管理方法などについて楽しく学ぶことができます。
+            オプチャ検定は、LINEオープンチャットの<wbr>利用に関連する知識を深める場所です。<br>
+            ガイドライン、ルール、管理方法などに<wbr>ついて楽しく学ぶことができます。
         </p>
         <p>
-            問題投稿ページでは誰でも問題を投稿でき、他の人が投稿した問題を閲覧できます。<br>
-            自分の知識を共有して、オープンチャットコミュニティに貢献できます！
+            問題投稿ページでは誰でも問題を投稿でき、<wbr>他の人が投稿した問題を閲覧できます。<br>
+            自分の知識を共有して、<wbr>オープンチャットコミュニティに<wbr>貢献できます！
         </p>
     </header>
     <main>
