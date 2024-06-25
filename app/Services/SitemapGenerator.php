@@ -60,6 +60,7 @@ class SitemapGenerator
         $sitemap->addItem(self::SITE_URL . 'accreditation/bronze/login');
         $sitemap->addItem(self::SITE_URL . 'accreditation/silver/login');
         $sitemap->addItem(self::SITE_URL . 'accreditation/gold/login');
+        $sitemap->addItem(self::SITE_URL . 'accreditation/login');
 
         foreach (AppConfig::OPEN_CHAT_CATEGORY as $category) {
             $category && $sitemap->addItem(self::SITE_URL . 'ranking/' . $category, lastmod: $datetime);
