@@ -22,9 +22,9 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
     <?php viewComponent('ads/google-rectangle')
     ?>
 
-    <section style="all: unset; display: block;">
+    <section class="recommend-header-wrapper">
 
-      <header class="recommend-header" style="padding: 1rem;">
+      <header class="recommend-header">
         <?php if ($count) : ?>
           <h1 class="talkroom_link_h1 unset">【最新】「<?php echo $tag ?>」おすすめオープンチャットランキングTOP<?php echo $count ?></h1>
         <?php else : ?>
@@ -41,7 +41,7 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
       </header>
 
       <?php if (isset($recommend)) : ?>
-        <figure style="padding: 0;" class="talkroom_banner_img_figure">
+        <figure class="talkroom_banner_img_figure">
           <?php $oc = $recommend->getPreviewList(1)[0] ?>
           <div class="talkroom_banner_img_area">
             <img class="talkroom_banner_img" aria-hidden="true" alt="<?php echo $oc['name'] ?>" src="<?php echo imgUrl($oc['id'], $oc['img_url']) ?>">
@@ -50,12 +50,15 @@ viewComponent('head', compact('_css', '_schema', 'canonical') + ['_meta' => $_me
         </figure>
       <?php endif ?>
 
-      <p class="recommend-header-desc">
-        「<?php echo $tag ?>」のおすすめオープンチャットランキングを発表！
-      </p>
-      <p class="recommend-header-desc desc-bottom">
-        ランキングの順位は、参加人数がどれぐらい上昇しているかによって決まります。
-      </p>
+      <div class="recommend-header-desc-wrapper">
+        <p class="recommend-header-desc">
+          「<?php echo $tag ?>」のおすすめオープンチャットランキングを発表！
+        </p>
+        <p class="recommend-header-desc desc-bottom">
+          ランキングの順位は、参加人数がどれぐらい上昇しているかによって決まります。
+        </p>
+      </div>
+
     </section>
 
 
