@@ -326,4 +326,14 @@ class AccreditationUserModel
             args: [\PDO::FETCH_COLUMN]
         );
     }
+
+    function getExamTableAll(): array
+    {
+        return AccreditationDB::fetchAll("SELECT * FROM exam");
+    }
+
+    function getUserTableAll(): array
+    {
+        return AccreditationDB::fetchAll("SELECT * FROM user");
+    }
 }

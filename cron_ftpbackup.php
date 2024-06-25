@@ -23,6 +23,8 @@ try {
     $ocData = app(OpenChatIdDataZipBackupCron::class);
     $resultOcId = $ocData->saveBackupIdEmidArray();
     addCronLog($resultOcId);
+
+    
 } catch (\Throwable $e) {
     AdminTool::sendLineNofity('ftpZipBackUp: ' . $e->__toString());
 }
