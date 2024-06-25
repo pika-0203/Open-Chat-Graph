@@ -6,6 +6,7 @@ namespace App\Controllers\Pages;
 
 use App\Models\Accreditation\AccreditationUserModel;
 use App\Services\Accreditation\Enum\ExamType;
+use App\Services\Accreditation\QuizApi\Dto\Topic;
 use App\Services\Accreditation\QuizApi\QuizApiService;
 use DateTime;
 
@@ -83,7 +84,7 @@ class AccreditationPageController
     ) {
         $_css = getFilePath('style/quiz', 'main.*.css');
         $_js = getFilePath('js/quiz', 'main.*.js');
-        
+
         $fileName = 'accreditation/today_question.dat';
         $date = (new DateTime())->format('Y-m-d');
 
@@ -94,10 +95,12 @@ class AccreditationPageController
                 return false;
 
             $_argDto = $quizApiService->getSingleTopic($ids[array_rand($ids)], self::SINGLE_TIME);
-            $_argDto->questions[0]->question = "【今日の１問】 " . $_argDto->questions[0]->question;
+            if (!$_argDto)
+                return false;
 
             saveSerializedFile('accreditation/today_question.dat', compact('date', '_argDto'));
         } else {
+            /** @var Topic */
             $_argDto = $question['_argDto'];
         }
 
@@ -105,6 +108,13 @@ class AccreditationPageController
         $description = 'オプチャ検定は、ガイドラインやルール、管理方法などについての知識を深める場所です。LINEオープンチャットを運営する際に必要な情報を楽しく学ぶことができます。';
         $ogp = fileUrl("assets/quiz-today.png");
         $canonical = url("accreditation/today");
+
+        $cookie = cookie('accreditation-today');
+        cookie(['accreditation-today' => $date], time() + 60 * 60 * 24);
+
+        $formatedDate = (new DateTime())->format('n/j');
+        $subTitle = $cookie !== $date ? "【今日の１問 {$formatedDate}】 " : "【今日の１問 {$formatedDate} 再挑戦】 ";
+        $_argDto->questions[0]->question = $subTitle . $_argDto->questions[0]->question;
 
         return view(
             'accreditation/quiz',
