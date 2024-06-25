@@ -58,9 +58,6 @@ class SitemapGenerator
         $sitemap->addItem(self::SITE_URL . 'ranking', lastmod: $datetime);
         $sitemap->addItem(self::SITE_URL . 'ranking?keyword=' . urlencode('badge:スペシャルオープンチャット'), lastmod: $datetime);
         $sitemap->addItem(self::SITE_URL . 'ranking?keyword=' . urlencode('badge:公式認証オープンチャット'), lastmod: $datetime);
-        $sitemap->addItem(self::SITE_URL . 'accreditation/bronze/login');
-        $sitemap->addItem(self::SITE_URL . 'accreditation/silver/login');
-        $sitemap->addItem(self::SITE_URL . 'accreditation/gold/login');
 
         $accreditationLoginView = VIEWS_DIR . "/accreditation/home_login.php";
         if (file_exists($accreditationLoginView))
