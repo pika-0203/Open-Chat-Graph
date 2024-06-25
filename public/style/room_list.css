@@ -997,7 +997,7 @@
 }
 
 @media screen and (min-width: 512px) {
-  .top-ranking.top-btns {
+  .top-ranking.top-btns.top {
     padding-top: 1rem;
   }
 

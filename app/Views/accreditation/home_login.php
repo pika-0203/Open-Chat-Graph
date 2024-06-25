@@ -25,14 +25,35 @@ $returnTo = "?return_to=/accreditation/bronze/home";
         footer {
             padding-top: 0;
         }
+
+        header {
+            padding-bottom: 0;
+        }
+
+        main {
+            padding-top: 2rem;
+        }
+
+        small {
+            font-size: 14px;
+        }
     </style>
+    <header>
+        <img style="padding: 0 2rem; max-width: 300px;" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" />
+        <div style="margin-top: 1rem;">
+            <span>問題投稿ページ</span>
+        </div>
+        <hr>
+        <p>
+            オプチャ検定は、LINEオープンチャットの運営に関連する知識を深める場所です。<br>
+            ガイドライン、ルール、管理方法などについて楽しく学ぶことができます。
+        </p>
+        <p>
+            問題投稿ページでは誰でも問題を投稿でき、他の人が投稿した問題を閲覧できます。<br>
+            自分の知識を共有して、オープンチャットコミュニティに貢献できます！
+        </p>
+    </header>
     <main>
-        <header>
-            <img style="padding: 0 2rem; max-width: 300px;" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" />
-            <div style="margin-top: 1rem;">
-                <span>問題投稿ページ</span>
-            </div>
-        </header>
         <section>
             <div>
                 <div>
@@ -41,16 +62,12 @@ $returnTo = "?return_to=/accreditation/bronze/home";
             </div>
             <hr>
             <p>
-                <small>
-                    当サイト内ではユーザー登録のためにLINEログインが必要です。<br>
-                    <br>
-                    当サイトではLINEの個人名や個人情報、LINEに関する利用者の情報を取得しないため、安心してご利用いただけます。<br>
-                    LINEアプリに当サイトから通知が来ることもありません。<br>
-                </small>
+                <a href="/accreditation" target="_blank">オプチャ検定｜練習問題</a>
+                <br>
+                <small>(現在オプチャ検定の問題が出題されている場所です)</small>
             </p>
-            <hr>
             <p>
-                <small>このサイトでは検定の問題集を管理しています。<br>LINEログインでメンバー登録を行い、誰でも問題文を投稿して作成に協力することができます。</small>
+                <small>このサイトではオプチャ検定の問題集を管理しています。<br>LINEログインでメンバー登録を行い、誰でも問題文を投稿して作成に協力することができます。</small>
             </p>
             <p>
                 <small>問題が検定に出題された際は、出題者としてニックネームとオプチャ名・オプチャリンクが検定サイト上に掲載されます。</small>
@@ -59,25 +76,23 @@ $returnTo = "?return_to=/accreditation/bronze/home";
                 <small>投稿された問題は、検定に合わせるためにサイト管理者が編集する場合があります。<br>問題数が限られているので、実際に出題されるのは一部の範囲の問題となります。</small>
             </p>
             <hr>
-            <a href="/accreditation" target="_blank" style="font-size: 14px;">オプチャ検定｜練習問題</a>
-            <hr>
-            <aside>
+            <p>
                 <small>
-                    <b>iOS・Androidの推奨ブラウザ</b>
+                    オプチャ検定の問題投稿ページでは、メンバー登録のためにLINEログインを利用しています。<br>
                 </small>
-                <ul style="margin: 0;">
-                    <li>
-                        <small>
-                            デフォルトに設定されているブラウザ
-                        </small>
-                    </li>
-                    <li>
-                        <small>
-                            LINEアプリ内ブラウザ
-                        </small>
-                    </li>
-                </ul>
-            </aside>
+            </p>
+            <p>
+                <small>
+                    LINEに登録している名前やプロフィール画像などが表示されることはなく、お好きなニックネームを設定できます。<br>
+                    また、料金が発生することはなく、無料でご利用いただけます。<br>
+                </small>
+            </p>
+            <p>
+                <small>
+                    当サイトではLINEに登録している個人情報などを取得しないため、安心してご利用いただけます。<br>
+                    LINEアプリに当サイトから通知が来ることもありません。<br>
+                </small>
+            </p>
         </section>
     </main>
     <footer>
@@ -85,6 +100,7 @@ $returnTo = "?return_to=/accreditation/bronze/home";
         <p>
             <small>「オプチャ検定」はLINEオープンチャット非公式の検定です。LINEヤフー社はこの内容に関与していません。<br>監修しているのは一部のLINEオープンチャット公認メンターです。</small>
         </p>
+        <small><a href="/accreditation/privacy" style="color: #b7b7b7; text-decoration: none;">プライバシーポリシー</a></small>
     </footer>
 </body>
 
