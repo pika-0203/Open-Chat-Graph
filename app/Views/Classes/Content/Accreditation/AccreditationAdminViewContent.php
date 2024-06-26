@@ -711,7 +711,7 @@ class AccreditationAdminViewContent
                     box-sizing: border-box;
                     display: flex;
                     flex-direction: column;
-                    gap: 16px;
+                    gap: 12px;
                     margin-top: 1rem;
                 }
 
@@ -719,15 +719,23 @@ class AccreditationAdminViewContent
                     font-size: 13px;
                     user-select: none;
                     text-wrap: nowrap;
+                    font-weight: bold;
+                    letter-spacing: -0.3px;
                 }
 
                 .question-link {
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
                     overflow: hidden;
-                    display: block;
-                    font-size: 15px;
-                    line-height: 1;
+                    word-break: break-all;
+                    font-size: 13px;
+                    line-height: 1.3;
+                    letter-spacing: -0.3px;
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                    text-decoration: unset;
+                    font-weight: bold;
+                    color: rgb(39, 85, 172);
                 }
 
                 .question-link-inner {
@@ -782,7 +790,7 @@ class AccreditationAdminViewContent
                     <div class="question-link-wrap">
                         <?php foreach ($this->controller->questionList as $el) : ?>
                             <div class="question-link-inner">
-                                <div class="quession-link-prefix">ID<?php echo $el->id ?>.</div>
+                                <div class="quession-link-prefix">・</div>
                                 <a class="question-link" href="#id-<?php echo $el->id ?>"><?php echo $el->question ?></a>
                             </div>
                         <?php endforeach ?>
@@ -887,16 +895,16 @@ class AccreditationAdminViewContent
 
                 function scrollFunction() {
                     var scrollToTopBtn = document.getElementById("scrollToTopBtn");
-                    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
                         scrollToTopBtn.style.display = "flex";
                     } else {
                         scrollToTopBtn.style.display = "none";
                     }
                 }
 
-                const h2 = document.querySelector('h2')
                 document.getElementById('scrollToTopBtn').addEventListener('click', function() {
-                    h2.scrollIntoView({
+                    window.scroll({
+                        top: 0,
                         behavior: 'smooth'
                     })
                 });
