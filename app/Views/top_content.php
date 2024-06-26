@@ -32,7 +32,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         </section>
         <section class="top-ranking top-btns">
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('accreditation') ?>">
-                <span class="ranking-readMore">オプチャを楽しく学ぶ<span class="small">オプチャ検定</span></span>
+                <span class="ranking-readMore">オプチャ検定<span class="small">オプチャを楽しく学ぶ</span></span>
             </a>
         </section>
         <hr class="hr-bottom">
