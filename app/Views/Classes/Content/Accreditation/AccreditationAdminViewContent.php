@@ -784,6 +784,14 @@ class AccreditationAdminViewContent
                     align-items: center;
                     justify-content: center;
                 }
+
+                .source-url {
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    overflow: hidden;
+                    word-break: break-all;
+                }
             </style>
             <script>
                 async function copyUrl(text) {
@@ -841,12 +849,12 @@ class AccreditationAdminViewContent
                     <?php elseif ($el->explanationArray['source_title'] && $el->explanationArray['source_url']) : ?>
                         <div style="font-size: 14px;">
                             <div class="word-wrap">出典URL: <a href="<?php echo $el->explanationArray['source_url'] ?>" target="_blank"><?php echo $el->explanationArray['source_title'] ?> ↗</a></div>
-                            <div class="word-wrap"><small style="color: #aaa;"><?php echo $el->explanationArray['source_url'] ?></small></div>
+                            <div class="word-wrap"><small style="color: #aaa;" class="source-url"><?php echo $el->explanationArray['source_url'] ?></small></div>
                         </div>
                     <?php elseif ($el->explanationArray['source_url'] === '') : ?>
                         <div style="font-size: 14px;">
                             <div class="word-wrap">出典URL: <a href="https://openchat-jp.line.me/other/guideline" target="_blank">安心・安全ガイドライン | LINEオープンチャット ↗</a></div>
-                            <div class="word-wrap"><small style="color: #aaa;">https://openchat-jp.line.me/other/guideline</small></div>
+                            <div class="word-wrap"><small style="color: #aaa;" class="source-url">https://openchat-jp.line.me/other/guideline</small></div>
                         </div>
                     <?php endif ?>
 
