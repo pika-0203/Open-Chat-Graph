@@ -738,6 +738,18 @@ class AccreditationAdminViewContent
                     color: rgb(39, 85, 172);
                 }
 
+                @media screen and (min-width: 512px) {
+                    .question-link-wrap {
+                        gap: 15px;
+                    }
+
+                    .question-link {
+                        line-height: 1.4;
+                        font-size: 15px;
+                        font-weight: bold;
+                    }
+                }
+
                 .question-link-inner {
                     display: flex;
                     flex-direction: row;
