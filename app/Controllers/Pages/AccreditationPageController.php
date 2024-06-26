@@ -90,7 +90,7 @@ class AccreditationPageController
 
         $question = getUnserializedFile($fileName);
         if (!$question || $question['date'] !== $date) {
-            $ids = $accreditationUserModel->getQuestionIdsAll();
+            $ids = $accreditationUserModel->getQuestionIdsBy2Type(ExamType::Silver, ExamType::Gold);
             if (!$ids)
                 return false;
 

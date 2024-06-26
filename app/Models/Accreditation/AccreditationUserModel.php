@@ -213,10 +213,18 @@ class AccreditationUserModel
 
         $this->userLog($params['user_id'], $ip, $ua, 'registerQuestion');
 
-        return AccreditationDB::executeAndCheckResult(
+        $question_id = AccreditationDB::executeAndGetLastInsertId(
             "INSERT INTO exam (question, answers, explanation, user_id, publishing, type) 
                 VALUES (:question, :answers, :explanation, :user_id, :publishing, :type)",
             $params
+        );
+
+        return !!$question_id;
+
+        return AccreditationDB::executeAndCheckResult(
+            "INSERT INTO answer (question_id) 
+                VALUES (:question_id)",
+            compact('question_id')
         );
     }
 
@@ -319,11 +327,20 @@ class AccreditationUserModel
     /**
      * @return int[]
      */
-    function getQuestionIdsAll(): array
+    function getQuestionIdsBy2Type(ExamType $type1, ExamType $type2): array
     {
         return AccreditationDB::fetchAll(
-            "SELECT t1.id FROM exam AS t1 JOIN user AS t2 ON t1.user_id = t2.id WHERE t1.publishing = 1",
-            args: [\PDO::FETCH_COLUMN]
+            "SELECT
+                t1.id
+            FROM
+                exam AS t1
+                JOIN user AS t2 ON t1.user_id = t2.id
+            WHERE
+                t1.publishing = 1
+                AND type = :type1
+                OR type = :type2",
+            ['type1' => $type1->value, 'type2' => $type2->value],
+            [\PDO::FETCH_COLUMN]
         );
     }
 
