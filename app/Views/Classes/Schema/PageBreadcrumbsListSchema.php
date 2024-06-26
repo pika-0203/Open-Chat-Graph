@@ -22,9 +22,9 @@ class PageBreadcrumbsListSchema
         $this->siteImg = url('assets/ogp.png');
     }
 
+    // パンくずリスト
     function generateSchema(string $listItemName, string $path, string $secondName = '', string $secondPath = '', bool $fullPath = false): string
     {
-        // BreadcrumbListのインスタンスを作成
         $breadcrumbList = Schema::breadcrumbList();
 
         $itemListElement = [
@@ -45,13 +45,12 @@ class PageBreadcrumbsListSchema
                 ->item(url($fullPath ? $secondPath : ($path . '/' . $secondPath)));
         }
 
-        // リストの要素を追加
         $breadcrumbList->itemListElement($itemListElement);
 
-        // JSON-LDのマークアップを生成
         return $breadcrumbList->toScript();
     }
 
+    // organization
     function publisher()
     {
         $publisherName = self::PublisherName;

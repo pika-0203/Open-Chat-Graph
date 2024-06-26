@@ -12,8 +12,6 @@ use Asika\Sitemap\SitemapIndex;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
 use App\Services\Recommend\RecommendUpdater;
 
-use function PHPUnit\Framework\fileExists;
-
 class SitemapGenerator
 {
     const SITE_URL = 'https://openchat-review.me/';
