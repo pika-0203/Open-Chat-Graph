@@ -23,12 +23,17 @@ class AccreditationPageController
     {
         $_css = getFilePath('style/quiz', 'main.*.css');
         $_js = getFilePath('js/quiz', 'main.*.js');
-        $description = 'オプチャ検定は、ガイドラインやルール、管理方法などについての知識を深める場所です。LINEオープンチャットを利用する際に必要な情報を楽しく学ぶことができます。';
 
         if ($id) {
             $_argDto = $quizApiService->getSingleTopic($id, self::SINGLE_TIME);
             if (!$_argDto)
                 return false;
+
+            $description = $_argDto->questions[0]->question
+                . ' A.' . $_argDto->questions[0]->choices[0]
+                . ' B.' . $_argDto->questions[0]->choices[1]
+                . ' C.' . $_argDto->questions[0]->choices[2]
+                . ' D.' . $_argDto->questions[0]->choices[3];
 
             $title = "{$_argDto->questions[0]->question}｜オプチャ検定｜Q.{$id}";
             $ogp = fileUrl("quiz-img/quiz_img_{$id}.webp");
@@ -52,6 +57,7 @@ class AccreditationPageController
             //$_argDto_gold = $quizApiService->getTopic(ExamType::Gold, 30, 540);
 
             $title = 'オプチャ検定｜練習問題';
+            $description = 'オプチャ検定は、ガイドラインやルール、管理方法などについての知識を深める場所です。LINEオープンチャットを利用する際に必要な情報を楽しく学ぶことができます。';
             $ogp = fileUrl("assets/quiz-ogp.png");
             $canonical = url("accreditation");
 
