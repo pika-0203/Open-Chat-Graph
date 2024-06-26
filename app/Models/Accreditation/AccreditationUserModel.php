@@ -221,11 +221,11 @@ class AccreditationUserModel
 
         return !!$question_id;
 
-        return AccreditationDB::executeAndCheckResult(
+        /* return AccreditationDB::executeAndCheckResult(
             "INSERT INTO answer (question_id) 
                 VALUES (:question_id)",
             compact('question_id')
-        );
+        ); */
     }
 
     /**
