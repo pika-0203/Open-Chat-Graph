@@ -57,7 +57,7 @@ class AccreditationPageController
             //$_argDto_gold = $quizApiService->getTopic(ExamType::Gold, 30, 540);
 
             $title = 'オプチャ検定｜練習問題';
-            $description = 'オプチャ検定は、ガイドラインやルール、管理方法などについての知識を深める場所です。LINEオープンチャットを運営する際に必要な情報を楽しく学ぶことができます。';
+            $description = 'オプチャ検定は、ガイドラインやルール、管理方法などについての知識を深める場所です。LINEオープンチャットを利用する際に必要な情報を楽しく学ぶことができます。';
             $ogp = fileUrl("assets/quiz-ogp.png");
             $canonical = url("accreditation");
 
@@ -105,7 +105,7 @@ class AccreditationPageController
         }
 
         $title = '今日の一問｜オプチャ検定';
-        $description = 'オプチャ検定は、ガイドラインやルール、管理方法などについての知識を深める場所です。LINEオープンチャットを運営する際に必要な情報を楽しく学ぶことができます。';
+        $description = 'オプチャ検定は、ガイドラインやルール、管理方法などについての知識を深める場所です。LINEオープンチャットを利用する際に必要な情報を楽しく学ぶことができます。';
         $ogp = fileUrl("assets/quiz-today.png");
         $canonical = url("accreditation/today");
 
