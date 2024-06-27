@@ -31,6 +31,15 @@ use App\Config\AppConfig;
             border-bottom: 1px #efefef solid;
             margin: 2rem 0;
         }
+
+        li {
+            margin: 0.75rem 0;
+            padding: 0;
+        }
+
+        li p {
+            margin: 0;
+        }
     </style>
     <main style="max-width: 600px;">
         <article class="terms">

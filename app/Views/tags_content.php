@@ -21,8 +21,6 @@ function memberCount(int $count)
 
 <body class="body">
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
-    <?php viewComponent('ads/google-responsive') 
-    ?>
     <main style="margin-bottom: 0; padding: 1rem;">
         <div style="position: absolute; top: -3.5rem;" aria-hidden="true" id="top"></div>
 

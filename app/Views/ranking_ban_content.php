@@ -84,7 +84,6 @@ viewComponent('head', compact('_css', '_meta')) ?>
     <!-- 固定ヘッダー -->
     <?php viewComponent('site_header', compact('_updatedAt')) ?>
     <main style="max-width: 600px; padding: 0 1rem; overflow: hidden;">
-        <?php viewComponent('ads/google-rectangle') ?>
         <header class="openchat-list-title-area unset" style="padding-top: 1rem;">
             <div style="flex-direction: column;">
                 <h2 class="list-title">
@@ -173,9 +172,6 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 </p>
             </details>
         </aside>
-
-        <?php viewComponent('ads/google-rectangle') ?>
-
         <form id="value-form" style="position: relative; margin-bottom: 12px; margin-top: 1rem;">
             <label for="pet-select0">💡掲載状況:</label>
             <select id="pet-select0" name="publish">
@@ -207,7 +203,6 @@ viewComponent('head', compact('_css', '_meta')) ?>
                 <button type="button" class="eazy-btn" style="padding: 8px 6px;" onclick="location.href = '<?php echo url('labs/publication-analytics?publish=2&change=2&percent=100&keyword=' . (R::has('keyword') ? urlencode(R::input('keyword')) : '')) ?>'">全表示</button>
             </div>
         </form>
-        <?php viewComponent('ads/google-rectangle') ?>
         <!-- select要素ページネーション -->
         <?php if (isset($_select)) : ?>
             <nav class="page-select unset" style="flex-direction: column; padding: 1rem 0 0 0; margin: 0 0 12px 0;">
