@@ -22,24 +22,33 @@ $profile = $view->controller->profileArray;
     <?php $view->profile() ?>
 
     <form onsubmit="return confirm('<?php echo $profile ? '変更' : '登録' ?>しますか？')" id="user-form" method="POST" action="/accreditation/register-profile<?php echo $returnTo . ($profile ? '/profile' : '/home')  ?>">
-      <label for="user_name">お好きなニックネーム（必須）</label>
+      <label for="user_name">お好きなニックネーム（必須）
+        <?php if (!$profile) : ?>
+          <br>
+          <small style="font-weight: normal;">後から変更できます</small>
+        <?php endif ?>
+      </label>
       <input type="text" id="user_name" name="name" maxlength="20" required value="<?php echo $profile['name'] ?? '' ?>" />
-      <label for="oc_url">運営しているオプチャのURL（任意）</label>
+      <label for="oc_url">運営しているオプチャのURL（任意）
+        <?php if (!$profile) : ?>
+          <br>
+          <small style="font-weight: normal;">後から変更できます</small>
+        <?php endif ?>
+      </label>
       <small id="url-message" style="display: none;">URLが無効です</small>
       <div style="display: flex; flex-direction: column;">
         <input type="text" id="oc_url" name="url" value="<?php echo $profile['url'] ?? '' ?>" />
         <button type="button" style="padding: 2px; margin-left: auto; margin-top: -8px; margin-bottom: 1rem; font-size: 12px; display:block; text-wrap: nowrap; width: fit-content;" id="clear-url-btn">クリア</button>
       </div>
 
-      <?php if (Reception::has('admin') && !($profile['is_admin'] ?? null)) : ?>
-        <label for="admin_key">管理者登録パスワード</label>
-        <input type="text" id="admin_key" name="admin_key" maxlength="20" />
-      <?php endif ?>
+      <a target="_blank" href="/accreditation/privacy" style="margin-bottom: 12px; display: block; width:fit-content;">プライバシーポリシー</a>
+      <a target="_blank" href="/policy/term" style="margin-bottom: 10px; display: block; width:fit-content;">利用規約</a>
 
       <?php if ($profile) : ?>
         <input id="submit-btn" type="submit" value="変更" />
       <?php else : ?>
-        <small>後から変更できます</small>
+        <br>
+        <small>登録時に「プライバシーポリシー」・「利用規約」をお読みの上、同意していただくことが必要です。</small>
         <br>
         <input id="submit-btn" type="submit" value="登録" />
       <?php endif ?>

@@ -454,9 +454,11 @@ class AccreditationAdminViewContent
                     <small>このサイトはLINEオープンチャット非公式です。LINEヤフー社はこの内容に関与していません。<br>監修しているのは一部のLINEオープンチャット公認メンターです。</small>
                 </p>
             <?php elseif ($scrollBtn) : ?>
-                <small style="float: inline-end; text-decoration: underline; color: #111; cursor:pointer;" onclick="window.scroll({top: 0,behavior:'smooth'})">↑ 一番上までスクロール</small>
+                <small style="text-decoration: underline; color: #111; cursor:pointer; display:block; margin-left: auto; width:fit-content;" onclick="window.scroll({top: 0,behavior:'smooth'})">↑ 一番上までスクロール</small>
+                <br>
             <?php endif ?>
             <small><a href="/accreditation/privacy" style="color: #b7b7b7; text-decoration: none;">プライバシーポリシー</a></small>
+            <small><a href="/policy/term" style="color: #b7b7b7; text-decoration: none; margin-left: 1rem;">利用規約</a></small>
         </footer>
     <?php
     }
@@ -803,7 +805,7 @@ class AccreditationAdminViewContent
                     }
                 }
             </script>
-            <?php if (!$editorMode) : ?>
+            <?php if (!$editorMode && $listLen > 1) : ?>
                 <small style="margin-right: auto; user-select: none; font-size: 14px;">全 <?php echo $listLen ?> 件</small>
                 <details>
                     <summary>目次を開く</summary>

@@ -39,6 +39,13 @@ class PolicyPageController
         return $view;
     }
 
+    function term(PageBreadcrumbsListSchema $breadcrumbsShema)
+    {
+        $view = view('term_content');
+        handleRequestWithETagAndCache($view->getRenderCache(), 300, 3600 * 24);
+        return $view;
+    }
+
     function ads()
     {
         $_css = ['site_header', 'site_footer', 'room_list', 'terms', 'ads_element'];
