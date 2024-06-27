@@ -106,7 +106,7 @@ class QuizApiService
     }
 
     /**
-     * @return array{0:Topic, 1:string}|false
+     * @return array{ topic:Topic, created_at:string, edited_at:string }|false
      */
     function getSingleTopic(int $id, int $totalTime): array|false
     {
@@ -123,14 +123,15 @@ class QuizApiService
         };
 
         return [
-            new Topic(
+            'topic' => new Topic(
                 $topic,
                 1,
                 1,
                 $totalTime,
                 $questions
             ),
-            $dbDto->edited_at
+            'created_at' => $dbDto->created_at,
+            'edited_at' => $dbDto->edited_at,
         ];
     }
 

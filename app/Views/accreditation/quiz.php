@@ -9,8 +9,10 @@
 
     <link rel="icon" type="image/png" href="<?php echo fileUrl('assets/study_icon.png') ?>">
 
-    <script defer="defer" src="<?php echo fileUrl($_js) ?>"></script>
-    <link rel="stylesheet" href="<?php echo fileUrl($_css) ?>">
+    <?php if (!isset($isCrawler) || !$isCrawler) : ?>
+        <script defer="defer" src="<?php echo fileUrl($_js) ?>"></script>
+        <link rel="stylesheet" href="<?php echo fileUrl($_css) ?>">
+    <?php endif ?>
 
     <link rel="canonical" hrefs="<?php echo $canonical ?>">
 
@@ -27,24 +29,68 @@
 </head>
 
 <body style="margin: 0;">
-    <script type="application/json" id="arg-dto">
-        <?php echo json_encode($_argDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
-    </script>
-    <?php if (isset($_argDto_silver)) : ?>
-        <script type="application/json" id="arg-dto-silver">
-            <?php echo json_encode($_argDto_silver, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
+    <?php if (!isset($isCrawler) || !$isCrawler) : ?>
+        <script type="application/json" id="arg-dto">
+            <?php echo json_encode($_argDto, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
         </script>
-    <?php endif ?>
-    <?php if (isset($_argDto_gold)) : ?>
-        <script type="application/json" id="arg-dto-gold">
-            <?php //echo json_encode($_argDto_gold, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); 
-            ?>
-        </script>
-    <?php endif ?>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <?php if (isset($edited_at)) : ?>
-        <span style="font-size: 10px; color: #b7b7b7; position: absolute; top:4px; left:4px;">最終更新 <time datetime="<?php echo (new DateTime($edited_at))->format(DateTime::ATOM) ?>"><?php echo (new DateTime($edited_at))->format('Y/n/j') ?></time></span>
+        <?php if (isset($_argDto_silver)) : ?>
+            <script type="application/json" id="arg-dto-silver">
+                <?php echo json_encode($_argDto_silver, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>
+            </script>
+        <?php endif ?>
+        <?php if (isset($_argDto_gold)) : ?>
+            <script type="application/json" id="arg-dto-gold">
+                <?php //echo json_encode($_argDto_gold, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); 
+                ?>
+            </script>
+        <?php endif ?>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+        <?php if (isset($edited_at)) : ?>
+            <span style="font-size: 10px; color: #b7b7b7; position: absolute; top:4px; left:4px;">最終更新 <time datetime="<?php echo (new DateTime($edited_at))->format(DateTime::ATOM) ?>"><?php echo (new DateTime($edited_at))->format('Y/n/j') ?></time></span>
+        <?php endif ?>
+    <?php else : /** @var \App\Services\Accreditation\QuizApi\Dto\Topic $_argDto */ ?>
+        <header>
+            <h1><?php echo $_argDto->questions[0]->question ?></h1>
+        </header>
+        <main>
+            <article>
+                <section>
+                    <h2><?php echo $_argDto->questions[0]->question ?></h2>
+                    <ol>
+                        <?php foreach ($_argDto->questions[0]->choices as $choice) : ?>
+                            <li data-answer="<?php echo $_argDto->questions[0]->correctAnswers[0] === $choice ? 'true' : 'false' ?>"><?php echo $choice ?></li>
+                        <?php endforeach ?>
+                    </ol>
+                    <p>正解: <span data-correct-answer="true"><?php echo $_argDto->questions[0]->correctAnswers[0] ?></span></p>
+                    <p>解説: <?php echo $_argDto->questions[0]->explanation ?></p>
+                    <p>出典: <a href="<?php echo $_argDto->questions[0]->source->url ?>"><?php echo $_argDto->questions[0]->source->title ?></a></p>
+                    <p>出題者: <?php echo $_argDto->questions[0]->contributor->name ?></p>
+                    <p>出題者のオープンチャット: <a href="<?php echo $_argDto->questions[0]->contributor->url ?>"><?php echo $_argDto->questions[0]->contributor->roomName ?></a></p>
+                    <p>作成日: <?php echo $created_at ?></p>
+                    <p>更新日: <time datetime="<?php echo (new DateTime($edited_at))->format(DateTime::ATOM) ?>"><?php echo $edited_at ?></time></p>
+                </section>
+            </article>
+        </main>
+        <footer>
+            <p>オプチャ検定は、ガイドラインやルール、管理方法などについての知識を深める場所です。LINEオープンチャットを利用する際に必要な情報を楽しく学ぶことができます。</p>
+            <p><a href="/accreditation">トップ</a></p>
+            <p><a href="/accreditation/login">問題投稿ページ</a></p>
+            <p><a href="/policy/privacy">プライバシーポリシー</a></p>
+            <p>&copy; 2024 LINEオープンチャット 公認メンター監修 オプチャ検定</p>
+        </footer>
+        <?php echo \App\Services\Accreditation\SigleQuizPage::generateSchema(
+            $title,
+            $description,
+            $ogp,
+            $created_at,
+            $edited_at,
+            $_argDto->questions[0]->contributor->name,
+            $_argDto->questions[0]->contributor->url,
+            $_argDto->questions[0]->question,
+            $_argDto->questions[0]->correctAnswers[0],
+            $_argDto->questions[0]->choices
+        ) ?>
     <?php endif ?>
 </body>
 

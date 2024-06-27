@@ -14,6 +14,7 @@ class QuizApiQuestionDto
     public string $room_name;
     public string $room_url;
     public string $type;
+    public string $created_at;
     public string $edited_at;
 
     /**

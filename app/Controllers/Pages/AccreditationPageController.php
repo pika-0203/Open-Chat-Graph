@@ -8,6 +8,7 @@ use App\Models\Accreditation\AccreditationUserModel;
 use App\Services\Accreditation\Enum\ExamType;
 use App\Services\Accreditation\QuizApi\Dto\Topic;
 use App\Services\Accreditation\QuizApi\QuizApiService;
+use App\Services\Bot\BotFightUserAgents;
 use DateTime;
 
 class AccreditationPageController
@@ -24,61 +25,71 @@ class AccreditationPageController
         $_css = getFilePath('style/quiz', 'main.*.css');
         $_js = getFilePath('js/quiz', 'main.*.js');
 
-        if ($id) {
-            $topic = $quizApiService->getSingleTopic($id, self::SINGLE_TIME);
-            if (!$topic)
-                return false;
+        if ($id)
+            return $this->singleQuiz($quizApiService, $id, $_css, $_js);
 
-            [$_argDto, $edited_at] = $topic;
+        $_argDto = $quizApiService->getTopic(ExamType::Bronze, 10, 180);
+        $_argDto_silver = $quizApiService->getTopic(ExamType::Silver, 20, 360);
+        //$_argDto_gold = $quizApiService->getTopic(ExamType::Gold, 30, 540);
 
-            $description = $_argDto->questions[0]->question
-                . ' A.' . $_argDto->questions[0]->choices[0]
-                . ' B.' . $_argDto->questions[0]->choices[1]
-                . ' C.' . $_argDto->questions[0]->choices[2]
-                . ' D.' . $_argDto->questions[0]->choices[3];
+        $title = 'オプチャ検定｜練習問題';
+        $description = 'オプチャ検定は、ガイドラインやルール、管理方法などについての知識を深める場所です。LINEオープンチャットを利用する際に必要な情報を楽しく学ぶことができます。';
+        $ogp = fileUrl("assets/quiz-ogp.png");
+        $canonical = url("accreditation");
 
-            $title = "{$_argDto->questions[0]->question}｜オプチャ検定｜Q.{$id}";
-            $ogp = fileUrl("quiz-img/quiz_img_{$id}.webp");
-            $canonical = url("accreditation?id={$id}");
+        return view(
+            'accreditation/quiz',
+            compact(
+                '_argDto',
+                '_argDto_silver',
+                /* '_argDto_gold', */
+                '_css',
+                '_js',
+                'title',
+                'description',
+                'ogp',
+                'canonical',
+            )
+        );
+    }
 
-            return view(
-                'accreditation/quiz',
-                compact(
-                    '_argDto',
-                    '_css',
-                    '_js',
-                    'title',
-                    'description',
-                    'ogp',
-                    'canonical',
-                    'edited_at',
-                )
-            );
-        } else {
-            $_argDto = $quizApiService->getTopic(ExamType::Bronze, 10, 180);
-            $_argDto_silver = $quizApiService->getTopic(ExamType::Silver, 20, 360);
-            //$_argDto_gold = $quizApiService->getTopic(ExamType::Gold, 30, 540);
+    private function singleQuiz(QuizApiService $quizApiService, int $id, string $_css, string $_js)
+    {
+        $topic = $quizApiService->getSingleTopic($id, self::SINGLE_TIME);
+        if (!$topic)
+            return false;
 
-            $title = 'オプチャ検定｜練習問題';
-            $description = 'オプチャ検定は、ガイドラインやルール、管理方法などについての知識を深める場所です。LINEオープンチャットを利用する際に必要な情報を楽しく学ぶことができます。';
-            $ogp = fileUrl("assets/quiz-ogp.png");
-            $canonical = url("accreditation");
+        ['topic' => $_argDto, 'created_at' => $created_at, 'edited_at' => $edited_at] = $topic;
 
-            return view(
-                'accreditation/quiz',
-                compact(
-                    '_argDto',
-                    '_argDto_silver',
-                    /* '_argDto_gold', */
-                    '_css',
-                    '_js',
-                    'title',
-                    'description',
-                    'ogp',
-                    'canonical',
-                )
-            );
-        }
+        $description = $_argDto->questions[0]->question
+            . ' A.' . $_argDto->questions[0]->choices[0]
+            . ' B.' . $_argDto->questions[0]->choices[1]
+            . ' C.' . $_argDto->questions[0]->choices[2]
+            . ' D.' . $_argDto->questions[0]->choices[3];
+
+        $title = "{$_argDto->questions[0]->question}｜オプチャ検定｜Q.{$id}";
+        $ogp = fileUrl("quiz-img/quiz_img_{$id}.webp");
+        $canonical = url("accreditation?id={$id}");
+
+        /** @var BotFightUserAgents $bot */
+        $bot = app(BotFightUserAgents::class);
+        $isCrawler = $bot->isCrawler(getUA());
+
+        return view(
+            'accreditation/quiz',
+            compact(
+                '_argDto',
+                '_css',
+                '_js',
+                'title',
+                'description',
+                'ogp',
+                'canonical',
+                'created_at',
+                'edited_at',
+                'isCrawler',
+            )
+        );
     }
 
     function today(
