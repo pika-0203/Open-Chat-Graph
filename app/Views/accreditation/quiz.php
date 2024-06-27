@@ -66,7 +66,9 @@
                     <p>解説: <?php echo $_argDto->questions[0]->explanation ?></p>
                     <p>出典: <a href="<?php echo $_argDto->questions[0]->source->url ?>"><?php echo $_argDto->questions[0]->source->title ?></a></p>
                     <p>出題者: <?php echo $_argDto->questions[0]->contributor->name ?></p>
-                    <p>出題者のオープンチャット: <a href="<?php echo $_argDto->questions[0]->contributor->url ?>"><?php echo $_argDto->questions[0]->contributor->roomName ?></a></p>
+                    <?php if ($_argDto->questions[0]->contributor->url) : ?>
+                        <p>出題者のオープンチャット: <a href="<?php echo $_argDto->questions[0]->contributor->url ?>"><?php echo $_argDto->questions[0]->contributor->roomName ?></a></p>
+                    <?php endif ?>
                     <p>作成日: <?php echo $created_at ?></p>
                     <p>更新日: <time datetime="<?php echo (new DateTime($edited_at))->format(DateTime::ATOM) ?>"><?php echo $edited_at ?></time></p>
                 </section>
