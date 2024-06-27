@@ -41,13 +41,11 @@ $profile = $view->controller->profileArray;
         <button type="button" style="padding: 2px; margin-left: auto; margin-top: -8px; margin-bottom: 1rem; font-size: 12px; display:block; text-wrap: nowrap; width: fit-content;" id="clear-url-btn">クリア</button>
       </div>
 
-      <a target="_blank" href="/accreditation/privacy" style="margin-bottom: 12px; display: block; width:fit-content;">プライバシーポリシー</a>
-      <a target="_blank" href="/policy/term" style="margin-bottom: 10px; display: block; width:fit-content;">利用規約</a>
-
       <?php if ($profile) : ?>
         <input id="submit-btn" type="submit" value="変更" />
       <?php else : ?>
-        <br>
+        <a target="_blank" href="/accreditation/privacy" style="margin-bottom: 12px; display: block; width:fit-content;">プライバシーポリシー</a>
+        <a target="_blank" href="/policy/term" style="margin-bottom: 10px; display: block; width:fit-content;">利用規約</a>
         <small>登録時に「プライバシーポリシー」・「利用規約」をお読みの上、同意していただくことが必要です。</small>
         <br>
         <input id="submit-btn" type="submit" value="登録" />
