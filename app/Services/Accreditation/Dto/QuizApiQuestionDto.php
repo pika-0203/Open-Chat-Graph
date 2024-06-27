@@ -14,6 +14,7 @@ class QuizApiQuestionDto
     public string $room_name;
     public string $room_url;
     public string $type;
+    public string $edited_at;
 
     /**
      * @var array{ a:string, b:string, c:string, d:string, correct:string }

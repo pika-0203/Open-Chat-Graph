@@ -105,7 +105,10 @@ class QuizApiService
         )];
     }
 
-    function getSingleTopic(int $id, int $totalTime): Topic|false
+    /**
+     * @return array{0:Topic, 1:string}|false
+     */
+    function getSingleTopic(int $id, int $totalTime): array|false
     {
         $dbDto = $this->model->getQuizApiQuestionDtoById($id);
         if (!$dbDto)
@@ -119,13 +122,16 @@ class QuizApiService
             ExamType::Gold => 'ゴールド',
         };
 
-        return new Topic(
-            $topic,
-            1,
-            1,
-            $totalTime,
-            $questions
-        );
+        return [
+            new Topic(
+                $topic,
+                1,
+                1,
+                $totalTime,
+                $questions
+            ),
+            $dbDto->edited_at
+        ];
     }
 
     function getTopic(ExamType $type, int $lengh, int $totalTime): Topic|false

@@ -25,9 +25,11 @@ class AccreditationPageController
         $_js = getFilePath('js/quiz', 'main.*.js');
 
         if ($id) {
-            $_argDto = $quizApiService->getSingleTopic($id, self::SINGLE_TIME);
-            if (!$_argDto)
+            $topic = $quizApiService->getSingleTopic($id, self::SINGLE_TIME);
+            if (!$topic)
                 return false;
+
+            [$_argDto, $edited_at] = $topic;
 
             $description = $_argDto->questions[0]->question
                 . ' A.' . $_argDto->questions[0]->choices[0]
@@ -49,6 +51,7 @@ class AccreditationPageController
                     'description',
                     'ogp',
                     'canonical',
+                    'edited_at',
                 )
             );
         } else {

@@ -18,6 +18,7 @@ app/Services/Admin/**
 app/Config/AdminConfig.php
 app/Services/Admin/FTPHandler.php
 app/Config/Shadow/DatabaseConfig.php
+app/Config/Shadow/StringCryptorConfig.php
 app/Config/RankingPositionDBConfig.php
 app/Config/UserLogDBConfig.php
 app/Config/CommentDBConfig.php

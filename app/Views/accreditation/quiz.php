@@ -43,6 +43,9 @@
     <?php endif ?>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <?php if (isset($edited_at)) : ?>
+        <span style="font-size: 10px; color: #b7b7b7; position: absolute; top:4px; left:4px;">最終更新 <time datetime="<?php echo (new DateTime($edited_at))->format(DateTime::ATOM) ?>"><?php echo (new DateTime($edited_at))->format('Y/n/j') ?></time></span>
+    <?php endif ?>
 </body>
 
 </html>
