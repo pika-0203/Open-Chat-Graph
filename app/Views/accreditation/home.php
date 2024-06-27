@@ -88,9 +88,8 @@ $view = new AccreditationAdminViewContent($controller);
         </section>
         <hr>
         <a href="/accreditation" target="_blank" style="font-size: 18px; font-weight: bold;">オプチャ検定｜練習問題</a>
-        <br>
-        <div style="display: flex; gap: 16px; margin-top: 1rem; flex-wrap: wrap; align-items: center;">
-            <small style="word-break: keep-all; text-wrap: nowrap;">シェア</small>
+        <div style="display: flex; gap: 24px; margin-top: 2rem; flex-wrap: wrap; align-items: center;">
+            <small style="word-break: keep-all; text-wrap: nowrap; margin-right: -10px">シェア</small>
 
             <div class="share-menu-item unset" onclick="copyUrl('LINEオープンチャットを快適に利用できる知識を楽しく学ぼう！\nオプチャ検定｜練習問題\nhttps://openchat-review.me/accreditation')">
                 <span class="copy-btn-icon share-menu-icon copy"></span>
