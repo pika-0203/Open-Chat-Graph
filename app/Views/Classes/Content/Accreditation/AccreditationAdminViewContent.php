@@ -318,7 +318,7 @@ class AccreditationAdminViewContent
                     in_array($this->controller->myId, AdminConfig::ACCREDITATION_TRUE_ADMIN_USER_ID)
                     && !in_array($profile['id'], AdminConfig::ACCREDITATION_TRUE_ADMIN_USER_ID)
                 ) : ?>
-                    <?php $this->adminProfileForm('') ?>
+                    <?php $this->adminProfileForm() ?>
                 <?php endif ?>
                 <p><small><b>ニックネーム</b><br><?php echo $profile['name'] ?></small></p>
                 <?php if ($profile['url']) : ?>
