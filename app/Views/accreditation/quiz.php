@@ -12,6 +12,8 @@
     <?php if (!isset($isCrawler) || !$isCrawler) : ?>
         <script defer="defer" src="<?php echo fileUrl($_js) ?>"></script>
         <link rel="stylesheet" href="<?php echo fileUrl($_css) ?>">
+    <?php else : ?>
+        <link rel="stylesheet" href="<?php echo fileUrl('style/mvp.css') ?>">
     <?php endif ?>
 
     <link rel="canonical" hrefs="<?php echo $canonical ?>">
@@ -55,23 +57,21 @@
         </header>
         <main>
             <article>
-                <section>
-                    <h2><?php echo $_argDto->questions[0]->question ?></h2>
-                    <ol>
-                        <?php foreach ($_argDto->questions[0]->choices as $choice) : ?>
-                            <li data-answer="<?php echo $_argDto->questions[0]->correctAnswers[0] === $choice ? 'true' : 'false' ?>"><?php echo $choice ?></li>
-                        <?php endforeach ?>
-                    </ol>
-                    <p>正解: <span data-correct-answer="true"><?php echo $_argDto->questions[0]->correctAnswers[0] ?></span></p>
-                    <p>解説: <?php echo $_argDto->questions[0]->explanation ?></p>
-                    <p>出典: <a href="<?php echo $_argDto->questions[0]->source->url ?>"><?php echo $_argDto->questions[0]->source->title ?></a></p>
-                    <p>出題者: <?php echo $_argDto->questions[0]->contributor->name ?></p>
-                    <?php if ($_argDto->questions[0]->contributor->url) : ?>
-                        <p>出題者のオープンチャット: <a href="<?php echo $_argDto->questions[0]->contributor->url ?>"><?php echo $_argDto->questions[0]->contributor->roomName ?></a></p>
-                    <?php endif ?>
-                    <p>作成日: <?php echo $created_at ?></p>
-                    <p>更新日: <time datetime="<?php echo (new DateTime($edited_at))->format(DateTime::ATOM) ?>"><?php echo $edited_at ?></time></p>
-                </section>
+                <h2><?php echo $_argDto->questions[0]->question ?></h2>
+                <ol>
+                    <?php foreach ($_argDto->questions[0]->choices as $choice) : ?>
+                        <li data-answer="<?php echo $_argDto->questions[0]->correctAnswers[0] === $choice ? 'true' : 'false' ?>"><?php echo $choice ?></li>
+                    <?php endforeach ?>
+                </ol>
+                <p>正解: <span data-correct-answer="true"><?php echo $_argDto->questions[0]->correctAnswers[0] ?></span></p>
+                <p>解説: <?php echo $_argDto->questions[0]->explanation ?></p>
+                <p>出典: <a href="<?php echo $_argDto->questions[0]->source->url ?>"><?php echo $_argDto->questions[0]->source->title ?></a></p>
+                <p>出題者: <?php echo $_argDto->questions[0]->contributor->name ?></p>
+                <?php if ($_argDto->questions[0]->contributor->url) : ?>
+                    <p>出題者のオープンチャット: <a href="<?php echo $_argDto->questions[0]->contributor->url ?>"><?php echo $_argDto->questions[0]->contributor->roomName ?></a></p>
+                <?php endif ?>
+                <p>作成日: <?php echo $created_at ?></p>
+                <p>更新日: <time datetime="<?php echo (new DateTime($edited_at))->format(DateTime::ATOM) ?>"><?php echo $edited_at ?></time></p>
             </article>
         </main>
         <footer>
