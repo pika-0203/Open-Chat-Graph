@@ -118,7 +118,7 @@ class AccreditationAdminViewContent
                     margin-right: 1rem;
                     width: 100%;
                     max-width: 240px;
-                    margin-top: 1rem;
+                    padding: 0 1rem;
                 }
 
                 .header-nav-a {
@@ -150,13 +150,13 @@ class AccreditationAdminViewContent
                 }
 
                 .nav-left-user-name {
-                    margin-top: 10px;
+                    margin-bottom: 16px;
                     line-height: 1;
+                    text-align: right;
                 }
 
                 .header-logo {
                     display: block;
-                    padding: 0 1rem;
                 }
 
                 @media screen and (max-width: 360px) {
@@ -184,12 +184,6 @@ class AccreditationAdminViewContent
             </style>
             <nav style="margin-bottom: 0">
                 <div class="header-nav-left">
-                    <a class="header-nav-a" href="./home">
-                        <img class="header-logo" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" />
-                        <div class="header-nav-title">
-                            <span>問題投稿ページ</span>
-                        </div>
-                    </a>
                     <?php if ($this->controller->profileArray) : ?>
                         <div class="nav-left-user-name">
                             <a class="nav-user-name-link" href="./profile">
@@ -200,6 +194,12 @@ class AccreditationAdminViewContent
                             </a>
                         </div>
                     <?php endif ?>
+                    <a class="header-nav-a" href="./home">
+                        <img class="header-logo" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" />
+                        <div class="header-nav-title">
+                            <span>問題投稿ページ</span>
+                        </div>
+                    </a>
                 </div>
                 <ul class="header-nav-ul">
                     <?php foreach ([
@@ -260,7 +260,7 @@ class AccreditationAdminViewContent
 
                 .main-tab a i,
                 .main-tab a b {
-                    padding: 12px 4px;
+                    padding: 12px 6px;
                     font-size: 14px;
                 }
             }
@@ -272,7 +272,7 @@ class AccreditationAdminViewContent
 
                 .main-tab a i,
                 .main-tab a b {
-                    padding: 12px 4px;
+                    padding: 12px 6px;
                     font-size: 14px;
                 }
             }
@@ -757,12 +757,12 @@ class AccreditationAdminViewContent
                     box-sizing: border-box;
                     display: flex;
                     flex-direction: column;
-                    gap: 12px;
+                    gap: 13px;
                     margin-top: 1rem;
                 }
 
                 .quession-link-prefix {
-                    font-size: 13px;
+                    font-size: 14px;
                     user-select: none;
                     text-wrap: nowrap;
                     font-weight: bold;
@@ -775,7 +775,7 @@ class AccreditationAdminViewContent
                     -webkit-line-clamp: 2;
                     overflow: hidden;
                     word-break: break-all;
-                    font-size: 13px;
+                    font-size: 14px;
                     line-height: 1.3;
                     letter-spacing: -0.3px;
                     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
