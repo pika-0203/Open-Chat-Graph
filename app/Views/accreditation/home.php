@@ -110,7 +110,7 @@ $view = new AccreditationAdminViewContent($controller);
                 <iframe loading=lazy src="https://lookerstudio.google.com/embed/reporting/12373f52-b8f2-42d1-9935-d2ffd6bebfa2/page/usU4D" frameborder="0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
             </div>
             <br>
-            <small>昨日のアクセス数は本日12:00頃まで数字が変動します。</small>
+            <small>データの反映に時差があるため、最新日のアクセス数は最大2日後ぐらいに確定します</small>
         </details>
         <hr>
         <?php $view->termHome() ?>
