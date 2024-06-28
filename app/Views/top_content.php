@@ -30,11 +30,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
                 <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small">24カテゴリー</span></span>
             </a>
         </section>
-        <section class="top-ranking top-btns">
-            <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('accreditation') ?>">
-                <span class="ranking-readMore">オプチャ検定<span class="small">オプチャを楽しく学ぶ</span></span>
-            </a>
-        </section>
         <hr class="hr-bottom">
 
         <?php viewComponent('ads/google-rectangle')
@@ -93,6 +88,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('ads/google-responsive')
             ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
+            <?php viewComponent('recommend_list2_accreditation', compact('acrreditation')) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive')
             ?>
@@ -115,6 +111,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('ads/google-responsive')
             ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
+            <?php viewComponent('recommend_list2_accreditation', compact('acrreditation')) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive')
             ?>

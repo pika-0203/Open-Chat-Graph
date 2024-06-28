@@ -191,6 +191,20 @@ class AccreditationUserModel
     /**
      * @return QuestionDto[]
      */
+    function getQuestionListAllWthioutGold(int $publishing = 1): array
+    {
+        $type = ExamType::Gold->value;
+
+        return AccreditationDB::fetchAll(
+            $this->getQuestionQuery() . "WHERE t1.publishing = :publishing AND NOT type = :type ORDER BY t1.edited_at DESC",
+            compact('publishing', 'type'),
+            [\PDO::FETCH_CLASS, QuestionDto::class]
+        );
+    }
+
+    /**
+     * @return QuestionDto[]
+     */
     function getMyQuestionList(int $user_id, ExamType $type): array
     {
         $type = $type->value;
