@@ -21,7 +21,7 @@ class AccreditationSchemaGenerator
         $itemListElement = [
             Schema::listItem()
                 ->position(1)
-                ->name('トップ')
+                ->name('LINE')
                 ->item(rtrim(url(), '/')),
             Schema::listItem()
                 ->position(2)
