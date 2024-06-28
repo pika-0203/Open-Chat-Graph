@@ -60,7 +60,8 @@ class AccreditationAdminViewContent
             <meta name="twitter:card" content="summary_large_image">
             <link rel="icon" type="image/png" href="<?php echo fileUrl('assets/study_icon.png') ?>">
             <?php if ($sakuraCss) : ?>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura-earthly.css" type="text/css">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" type="text/css">
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css" type="text/css">
             <?php else : ?>
                 <link rel="stylesheet" href="<?php echo fileUrl('style/mvp.css') ?>">
             <?php endif ?>
