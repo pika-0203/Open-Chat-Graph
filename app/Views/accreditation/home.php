@@ -104,13 +104,13 @@ $view = new AccreditationAdminViewContent($controller);
         </div>
         <br>
         <details>
-            <summary style="width: fit-content;">練習問題のアクセス数グラフを見る</summary>
+            <summary style="width: fit-content;">練習問題のページ訪問回数を見る</summary>
             <br>
             <div class="graph-ifame">
                 <iframe loading=lazy src="https://lookerstudio.google.com/embed/reporting/12373f52-b8f2-42d1-9935-d2ffd6bebfa2/page/usU4D" frameborder="0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
             </div>
             <br>
-            <small>データの反映に時差があるため、最新日のアクセス数は最大2日後ぐらいに確定します</small>
+            <small>データの反映に時差があるため、最新日の数字は最大2日後ぐらいに確定します</small>
         </details>
         <hr>
         <?php $view->termHome() ?>
