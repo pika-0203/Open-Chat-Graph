@@ -29,7 +29,7 @@ $returnTo = "?return_to=/accreditation/bronze/home";
         <article>
             <p>
                 問題投稿ページでは誰でも問題を投稿でき、他の人が投稿した問題を見ることができます。<br>
-                投稿した問題はGoogle検索などに掲載され、投稿者の名前やオプチャのリンクを表示することができます。
+                投稿した問題は１問のクイズとしてGoogle検索などに表示され、投稿者の名前やオプチャのリンクを表示することができます。
             </p>
             <a style="display: block; width:fit-content;" href="/auth/login<?php echo $returnTo ?>">
                 <img style="display: block; width: 240px;" src="<?php echo fileUrl('assets/line_login_btn.png') ?>" alt="LINEでログイン">
