@@ -91,12 +91,6 @@
             <p><a href="/policy/privacy">プライバシーポリシー</a></p>
             <p>&copy; 2024 LINEオープンチャット 公認メンター監修 オプチャ検定</p>
         </footer>
-    <?php endif ?>
-
-    <?php if (isset($edited_at, $created_at)) :
-        /** @var \App\Services\Accreditation\QuizApi\Dto\Topic $_argDto
-         * クイズ単品ページ
-         */ ?>
         <?php echo \App\Services\Accreditation\AccreditationSchemaGenerator::singleQuiz(
             $title,
             $description,
