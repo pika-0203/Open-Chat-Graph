@@ -66,7 +66,7 @@ class AccreditationAdminViewContent
 
     function header()
     { ?>
-        <header style="padding-bottom: 1rem; margin-bottom: 1rem;">
+        <header style="padding-bottom: 1rem; margin-bottom: 0rem;">
             <style>
                 @media screen and (max-width: 511px) {
                     nav ul li {
@@ -111,6 +111,7 @@ class AccreditationAdminViewContent
                 .header-nav-ul li {
                     text-wrap: nowrap;
                     white-space: nowrap;
+                    padding-bottom: 6px;
                 }
 
                 .header-nav-left {
@@ -128,7 +129,7 @@ class AccreditationAdminViewContent
                 .header-nav-title {
                     color: #000;
                     font-weight: normal;
-                    font-size: 15px;
+                    font-size: 14px;
                     text-wrap: nowrap;
                     white-space: nowrap;
                     margin-top: 10px;
@@ -186,7 +187,7 @@ class AccreditationAdminViewContent
                     <a class="header-nav-a" href="./home">
                         <img class="header-logo" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" />
                         <div class="header-nav-title">
-                            <span style="color: <?php echo $this->typeColor ?>; font-weight:bold;"><?php echo $this->examTypeName ?></span><span style="margin-left: 4px;">問題投稿ページ</span>
+                            <span>問題投稿ページ</span>
                         </div>
                     </a>
                     <?php if ($this->controller->profileArray) : ?>
@@ -205,7 +206,7 @@ class AccreditationAdminViewContent
                         'home' => 'ホーム',
                         'question' => '問題を投稿',
                         'user' => '投稿した問題',
-                        'member' => 'メンバー'
+                        'member' => 'メンバー',
                     ] as $key => $value) : ?>
                         <?php if ($key === 'user') : ?>
                             <?php if (
@@ -248,17 +249,18 @@ class AccreditationAdminViewContent
 
             .main-tab a i,
             .main-tab a b {
-                padding: 20px 10px;
+                padding: 12px 10px;
+                word-break: keep-all
             }
 
             @media screen and (max-width: 511px) {
                 .main-tab {
-                    gap: 8px;
+                    gap: 12px;
                 }
 
                 .main-tab a i,
                 .main-tab a b {
-                    padding: 16px 8px;
+                    padding: 12px 4px;
                     font-size: 14px;
                 }
             }
@@ -270,7 +272,7 @@ class AccreditationAdminViewContent
 
                 .main-tab a i,
                 .main-tab a b {
-                    padding: 12px 6px;
+                    padding: 12px 4px;
                     font-size: 14px;
                 }
             }
@@ -283,14 +285,56 @@ class AccreditationAdminViewContent
         <?php $this->tabStyle() ?>
         <div class="main-tab">
             <?php foreach ([
-                ['未公開の問題', 'unpublished'],
-                ['出題中の問題', 'published'],
-                ['投稿者の一覧', 'contributors'],
+                ['未公開の<wbr>問題', 'unpublished'],
+                ['出題中の<wbr>問題', 'published'],
+                ['投稿者の<wbr>一覧', 'contributors'],
             ] as $p) : ?>
                 <?php if ($this->controller->pageType === $p[1]) : ?>
                     <a><i><?php echo $p[0] ?></i></a>
                 <?php else : ?>
                     <a href="./<?php echo $p[1] ?>"><b><?php echo $p[0] ?></b></a>
+                <?php endif ?>
+            <?php endforeach ?>
+        </div>
+        <?php $this->typeTab() ?>
+    <?php
+    }
+
+    function typeTab()
+    { ?>
+        <style>
+            .type-tab {
+                margin: 20px 0 24px 0;
+                font-size: 16px;
+                font-weight: bold;
+                display: flex;
+                gap: 20px;
+            }
+
+            @media screen and (min-width: 512px) {
+                .type-tab {
+                    margin: 20px 0 3rem 0;
+                    font-size: 18px;
+                    font-weight: bold;
+                    display: flex;
+                    gap: 20px;
+                }
+            }
+        </style>
+        <div class="type-tab">
+            <?php foreach ([
+                'bronze' => 'ブロンズ',
+                'silver' => 'シルバー',
+                'gold' => 'ゴールド',
+            ] as $key => $value) : ?>
+                <?php if ($key !== $this->controller->type->value) : ?>
+                    <?php if ($this->controller->pageType === 'user') : ?>
+                        <a href="./../<?php echo $key . "/user?id=" . $this->controller->currentId ?>"><?php echo $value ?></a>
+                    <?php else : ?>
+                        <a href="./../<?php echo $key . "/" . $this->controller->pageType ?>"><?php echo $value ?></a>
+                    <?php endif ?>
+                <?php else : ?>
+                    <b><?php echo $value ?></b>
                 <?php endif ?>
             <?php endforeach ?>
         </div>
@@ -805,8 +849,8 @@ class AccreditationAdminViewContent
                     }
                 }
             </script>
+            <small style="margin-right: auto; user-select: none; font-size: 15px; color: #000; font-weight: 700;">全 <?php echo $listLen ?> 件</small>
             <?php if (!$editorMode && $listLen > 1) : ?>
-                <small style="margin-right: auto; user-select: none; font-size: 14px;">全 <?php echo $listLen ?> 件</small>
                 <details>
                     <summary>目次を開く</summary>
                     <div class="question-link-wrap">
