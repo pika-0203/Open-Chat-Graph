@@ -7,9 +7,41 @@ namespace App\Services\Accreditation;
 use DateTime;
 use Spatie\SchemaOrg\Schema;
 
-class SigleQuizPage
+class AccreditationSchemaGenerator
 {
-    static function generateSchema(
+    // パンくずリスト
+    static function breadcrumbList(
+        string $secondName = '',
+        string $secondPath = '',
+        string $listItemName = 'オプチャ検定',
+        string $path = 'accreditation',
+    ): string {
+        $breadcrumbList = Schema::breadcrumbList();
+
+        $itemListElement = [
+            Schema::listItem()
+                ->position(1)
+                ->name('トップ')
+                ->item(rtrim(url(), '/')),
+            Schema::listItem()
+                ->position(2)
+                ->name($listItemName)
+                ->item(url($path)),
+        ];
+
+        if ($secondName && $secondPath) {
+            $itemListElement[] = Schema::listItem()
+                ->position(3)
+                ->name($secondName)
+                ->item(url("{$path}/{$secondPath}"));
+        }
+
+        $breadcrumbList->itemListElement($itemListElement);
+
+        return $breadcrumbList->toScript();
+    }
+
+    static function singleQuiz(
         string $headline,
         string $description,
         string $image,

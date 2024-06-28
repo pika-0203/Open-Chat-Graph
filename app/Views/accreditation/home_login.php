@@ -36,15 +36,19 @@ $returnTo = "?return_to=/accreditation/bronze/home";
             padding-top: 2rem;
         }
 
-        small {
+        article p,
+        footer p {
             font-size: 15px;
+            color: #555;
         }
     </style>
     <header>
-        <img style="padding: 0 2rem; max-width: 300px;" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" />
-        <div style="margin-top: 1rem;">
-            <span>問題投稿ページ</span>
-        </div>
+        <h1 style="all: unset; display:block;">
+            <img style="padding: 0 2rem; max-width: 300px;" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" alt="オプチャ検定" />
+            <div style="margin-top: 1rem;">
+                <span>問題投稿ページ</span>
+            </div>
+        </h1>
         <hr>
         <p>
             オプチャ検定は、LINEオープンチャットの<wbr>利用に関連する知識を深める場所です。<br>
@@ -56,55 +60,56 @@ $returnTo = "?return_to=/accreditation/bronze/home";
         </p>
     </header>
     <main>
-        <section>
-            <div>
-                <div>
-                    <a style="display:flex; width:fit-content" href="/auth/login<?php echo $returnTo ?>"><img style="disply: block; width: 240px;" src="<?php echo fileUrl('assets/line_login_btn.png') ?>"></a>
-                </div>
-            </div>
-            <hr>
-            <p>
-                <a href="/accreditation" target="_blank">オプチャ検定｜練習問題</a>
-                <br>
-                <small>(現在オプチャ検定の問題が出題されている場所です)</small>
-            </p>
-            <p>
-                <small>このサイトではオプチャ検定の問題集を管理しています。<br>LINEログインでメンバー登録を行い、誰でも問題文を投稿して作成に協力することができます。</small>
-            </p>
-            <p>
-                <small>問題が検定に出題された際は、出題者としてニックネームとオプチャ名・オプチャリンクが検定サイト上に掲載されます。</small>
-            </p>
-            <p>
-                <small>投稿された問題は、検定に合わせるためにサイト管理者が編集する場合があります。<br>問題数が限られているので、実際に出題されるのは一部の範囲の問題となります。</small>
-            </p>
-            <hr>
-            <p>
-                <small>
+        <article>
+            <section>
+                <h2 style="all:unset;display:block;">
+                    <div>
+                        <a style="display:flex; width:fit-content" href="/auth/login<?php echo $returnTo ?>"><img style="disply: block; width: 240px;" src="<?php echo fileUrl('assets/line_login_btn.png') ?>" alt="LINEでログイン"></a>
+                    </div>
+                </h2>
+                <hr>
+                <p>
+                    <a href="/accreditation" target="_blank" style="font-size: 18px;">オプチャ検定｜練習問題</a>
+                    <br>
+                    (現在オプチャ検定の問題が出題されている場所です)
+                </p>
+                <p>
+                    このサイトではオプチャ検定の問題集を管理しています。<br>LINEログインでメンバー登録を行い、誰でも問題文を投稿して作成に協力することができます。
+                </p>
+                <p>
+                    問題が検定に出題された際は、出題者としてニックネームとオプチャ名・オプチャリンクが検定サイト上に掲載されます。
+                </p>
+                <p>
+                    投稿された問題は、検定に合わせるためにサイト管理者が編集する場合があります。<br>問題数が限られているので、実際に出題されるのは一部の範囲の問題となります。
+                </p>
+                <hr>
+                <p>
                     オプチャ検定の問題投稿ページでは、メンバー登録のためにLINEログインを利用しています。<br>
-                </small>
-            </p>
-            <p>
-                <small>
+                </p>
+                <p>
                     LINEに登録している名前やプロフィール画像などが表示されることはなく、お好きなニックネームを設定できます。<br>
                     また、料金が発生することはなく、無料でご利用いただけます。<br>
-                </small>
-            </p>
-            <p>
-                <small>
+                </p>
+                <p>
                     当サイトではLINEに登録している個人情報などを取得しないため、安心してご利用いただけます。<br>
                     LINEアプリに当サイトから通知が来ることもありません。<br>
-                </small>
-            </p>
-        </section>
+                </p>
+            </section>
+        </article>
     </main>
     <footer>
         <hr style="margin-top: 0rem;">
         <p>
-            <small>このサイトはLINEオープンチャット非公式です。LINEヤフー社はこの内容に関与していません。<br>監修しているのは一部のLINEオープンチャット公認メンターです。</small>
+            このサイトはLINEオープンチャット非公式です。LINEヤフー社はこの内容に関与していません。<br>監修しているのは一部のLINEオープンチャット公認メンターです。
         </p>
-        <small><a href="/accreditation/privacy" style="color: #b7b7b7; text-decoration: none;">プライバシーポリシー</a></small>
-        <small><a href="/policy/term" style="color: #b7b7b7; text-decoration: none; margin-left: 1rem;">利用規約</a></small>
+        <a href="/accreditation/privacy" style="color: #b7b7b7; text-decoration: none;">プライバシーポリシー</a>
+        <a href="/policy/term" style="color: #b7b7b7; text-decoration: none; margin-left: 1rem;">利用規約</a>
     </footer>
+    <?php /** @var \App\Services\Accreditation\QuizApi\Dto\Topic $_argDto */
+    echo \App\Services\Accreditation\AccreditationSchemaGenerator::breadcrumbList(
+        '問題を投稿',
+        'login',
+    ) ?>
 </body>
 
 </html>

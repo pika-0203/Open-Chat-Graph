@@ -25,9 +25,15 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="<?php echo $title ?>">
     <meta property="og:description" content="<?php echo $description ?>">
-    <meta property="og:site_name" content="オプチャ検定">
+    <meta property="og:site_name" content="オプチャグラフ">
     <meta property="og:image" content="<?php echo $ogp ?>">
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="thumbnail" content="<?php echo fileUrl('assets/ogp-accreditation.png') ?>" />
+    <?php /** @var \App\Services\Accreditation\QuizApi\Dto\Topic $_argDto */
+    echo \App\Services\Accreditation\AccreditationSchemaGenerator::breadcrumbList(
+        isset($edited_at) ? '問題' : '',
+        isset($edited_at) ? "?id={$_argDto->questions[0]->id}" : '',
+    ) ?>
 </head>
 
 <body style="margin: 0;">
@@ -51,7 +57,11 @@
         <?php if (isset($edited_at)) : ?>
             <span style="font-size: 10px; color: #b7b7b7; position: absolute; top:4px; left:4px;">最終更新 <time datetime="<?php echo (new DateTime($edited_at))->format(DateTime::ATOM) ?>"><?php echo (new DateTime($edited_at))->format('Y/n/j') ?></time></span>
         <?php endif ?>
-    <?php else : /** @var \App\Services\Accreditation\QuizApi\Dto\Topic $_argDto */ ?>
+
+    <?php elseif (isset($edited_at, $created_at)) :
+        /**
+         * クイズ単品ページ
+         */ ?>
         <header>
             <h1><?php echo $_argDto->questions[0]->question ?></h1>
         </header>
@@ -81,7 +91,13 @@
             <p><a href="/policy/privacy">プライバシーポリシー</a></p>
             <p>&copy; 2024 LINEオープンチャット 公認メンター監修 オプチャ検定</p>
         </footer>
-        <?php echo \App\Services\Accreditation\SigleQuizPage::generateSchema(
+    <?php endif ?>
+
+    <?php if (isset($edited_at, $created_at)) :
+        /** @var \App\Services\Accreditation\QuizApi\Dto\Topic $_argDto
+         * クイズ単品ページ
+         */ ?>
+        <?php echo \App\Services\Accreditation\AccreditationSchemaGenerator::singleQuiz(
             $title,
             $description,
             $ogp,
