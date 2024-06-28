@@ -15,16 +15,21 @@ $returnTo = "?return_to=/accreditation/bronze/home";
             border-bottom: 0;
             text-decoration: underline;
         }
+
+        .logo {
+            filter: invert(26%) sepia(10%) saturate(21%) hue-rotate(316deg) brightness(98%) contrast(87%);
+            max-width: 250px;
+        }
     </style>
     <header>
-        <img style="max-width: 250px;" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" alt="オプチャ検定" />
+        <img class="logo" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" alt="オプチャ検定" />
         <h1>問題投稿ページ</h1>
     </header>
     <main>
         <article>
             <p>
-                問題投稿ページでは誰でも問題を投稿でき、他の人が投稿した問題を閲覧できます。<br>
-                自分の知識を共有して、オープンチャットコミュニティに貢献できます！
+                問題投稿ページでは誰でも問題を投稿でき、他の人が投稿した問題を見ることができます。<br>
+                投稿した問題はGoogle検索などに掲載され、投稿者の名前やオプチャのリンクを表示することができます。
             </p>
             <a style="display: block; width:fit-content;" href="/auth/login<?php echo $returnTo ?>">
                 <img style="display: block; width: 240px;" src="<?php echo fileUrl('assets/line_login_btn.png') ?>" alt="LINEでログイン">
@@ -39,7 +44,7 @@ $returnTo = "?return_to=/accreditation/bronze/home";
             <p>
                 一定の基準のもとに出題されている問題から、クイズ形式で正解・不正解が分かります。
                 <br>
-                これによってオープンチャットの正しいルールを確かめる事ができ、一問一答の検定を行うことができます。
+                これによってオープンチャットの正しいルールを確かめる事ができ、一問一答の検定ができます。
             </p>
             <p>
                 <a href="/accreditation" target="_blank">オプチャ検定｜練習問題</a>
