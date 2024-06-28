@@ -40,7 +40,7 @@ class AccreditationAdminViewContent
         self::headComponent($this->examTypeName);
     }
 
-    static function headComponent(?string $subTitle = null)
+    static function headComponent(?string $subTitle = null, ?bool $sakuraCss = false)
     { ?>
 
         <head prefix="og: http://ogp.me/ns#">
@@ -59,7 +59,11 @@ class AccreditationAdminViewContent
             <meta property="og:image" content="<?php echo fileUrl('assets/ogp-accreditation.png') ?>">
             <meta name="twitter:card" content="summary_large_image">
             <link rel="icon" type="image/png" href="<?php echo fileUrl('assets/study_icon.png') ?>">
-            <link rel="stylesheet" href="<?php echo fileUrl('style/mvp.css') ?>">
+            <?php if ($sakuraCss) : ?>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura-earthly.css" type="text/css">
+            <?php else : ?>
+                <link rel="stylesheet" href="<?php echo fileUrl('style/mvp.css') ?>">
+            <?php endif ?>
             <link rel="canonical" href="<?php echo url(path()) ?>">
             <meta name="thumbnail" content="<?php echo fileUrl('assets/ogp-accreditation.png') ?>" />
         </head>

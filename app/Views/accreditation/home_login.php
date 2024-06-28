@@ -7,94 +7,73 @@ $returnTo = "?return_to=/accreditation/bronze/home";
 
 <!DOCTYPE html>
 <html lang="ja">
-<?php AccreditationAdminViewContent::headComponent() ?>
+<?php AccreditationAdminViewContent::headComponent(null, true) ?>
 
 <body>
     <style>
-        hr {
-            border-bottom: 1px #efefef solid;
-            margin: 2rem 0;
-        }
-
-        section aside {
-            width: 100%;
-            margin: 1rem 0;
-        }
-
-        body,
-        footer {
-            padding-top: 0;
-        }
-
-        header {
-            padding-bottom: 0;
-            word-break: keep-all;
-            overflow-wrap: anywhere
-        }
-
-        main {
-            padding-top: 2rem;
-        }
-
-        article p,
-        footer p {
-            font-size: 15px;
-            color: #555;
+        a:hover {
+            border-bottom: 0;
+            text-decoration: underline;
         }
     </style>
     <header>
-        <h1 style="all: unset; display:block;">
-            <img style="padding: 0 2rem; max-width: 300px;" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" alt="オプチャ検定" />
-            <div style="margin-top: 1rem;">
-                <span>問題投稿ページ</span>
-            </div>
-        </h1>
-        <hr>
-        <p>
-            オプチャ検定は、LINEオープンチャットの<wbr>利用に関連する知識を深める場所です。<br>
-            ガイドライン、ルール、管理方法などに<wbr>ついて楽しく学ぶことができます。
-        </p>
-        <p>
-            問題投稿ページでは誰でも問題を投稿でき、<wbr>他の人が投稿した問題を閲覧できます。<br>
-            自分の知識を共有して、<wbr>オープンチャットコミュニティに<wbr>貢献できます！
-        </p>
+        <img style="max-width: 250px;" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" alt="オプチャ検定" />
+        <h1>問題投稿ページ</h1>
     </header>
     <main>
         <article>
-            <section>
-                <h2 style="all:unset;display:block;">
-                    <div>
-                        <a style="display:flex; width:fit-content" href="/auth/login<?php echo $returnTo ?>"><img style="disply: block; width: 240px;" src="<?php echo fileUrl('assets/line_login_btn.png') ?>" alt="LINEでログイン"></a>
-                    </div>
-                </h2>
-                <hr>
-                <p>
-                    <a href="/accreditation" target="_blank" style="font-size: 18px;">オプチャ検定｜練習問題</a>
-                    <br>
-                    (現在オプチャ検定の問題が出題されている場所です)
-                </p>
-                <p>
-                    このサイトではオプチャ検定の問題集を管理しています。<br>LINEログインでメンバー登録を行い、誰でも問題文を投稿して作成に協力することができます。
-                </p>
-                <p>
-                    問題が検定に出題された際は、出題者としてニックネームとオプチャ名・オプチャリンクが検定サイト上に掲載されます。
-                </p>
-                <p>
-                    投稿された問題は、検定に合わせるためにサイト管理者が編集する場合があります。<br>問題数が限られているので、実際に出題されるのは一部の範囲の問題となります。
-                </p>
-                <hr>
-                <p>
-                    オプチャ検定の問題投稿ページでは、メンバー登録のためにLINEログインを利用しています。<br>
-                </p>
-                <p>
-                    LINEに登録している名前やプロフィール画像などが表示されることはなく、お好きなニックネームを設定できます。<br>
-                    また、料金が発生することはなく、無料でご利用いただけます。<br>
-                </p>
-                <p>
-                    当サイトではLINEに登録している個人情報などを取得しないため、安心してご利用いただけます。<br>
-                    LINEアプリに当サイトから通知が来ることもありません。<br>
-                </p>
-            </section>
+            <p>
+                問題投稿ページでは誰でも問題を投稿でき、他の人が投稿した問題を閲覧できます。<br>
+                自分の知識を共有して、オープンチャットコミュニティに貢献できます！
+            </p>
+            <a style="display: block; width:fit-content;" href="/auth/login<?php echo $returnTo ?>">
+                <img style="display: block; width: 240px;" src="<?php echo fileUrl('assets/line_login_btn.png') ?>" alt="LINEでログイン">
+            </a>
+            <hr>
+            <h2>オプチャ検定とは</h2>
+            <p>
+                オプチャ検定は、LINEオープンチャットの利用に関連する知識を深める場所です。<br>
+                ガイドライン、ルール、管理方法などについて楽しく学ぶことができます。
+            </p>
+            <h2>検定って何？</h2>
+            <p>
+                一定の基準のもとに出題されている問題から、クイズ形式で正解・不正解が分かります。
+                <br>
+                これによってオープンチャットの正しいルールを確かめる事ができ、一問一答の検定を行うことができます。
+            </p>
+            <p>
+                <a href="/accreditation" target="_blank">オプチャ検定｜練習問題</a>
+                <br>
+                オプチャ検定の問題が出題されているページ
+            </p>
+            <p>
+                練習問題は、たくさんの問題からランダムで出題されるものを連続で答えて、得点によって合格・不合格が決まるものです。
+            </p>
+            <p>
+                時間が経つにつれ、投稿された問題が増えていき、出題のパターンが広がります。
+            </p>
+            <h2>問題投稿ページは何をするところ？</h2>
+            <p>
+                オプチャ検定の問題投稿ページでは、オプチャ検定の問題集を管理しています。
+                <br>
+                LINEログインでメンバー登録を行い、誰でも新しい問題を投稿することができます。
+            </p>
+            <p>
+                問題が検定に出題された際は、投稿者のニックネーム・オプチャ名・オプチャリンクが問題の解説欄に掲載されます。
+            </p>
+            <hr>
+            <h2>LINEログインについて</h2>
+            <p>
+                オプチャ検定の問題投稿ページでは、メンバー登録のためにLINEログインを利用しています。<br>
+            </p>
+            <p>
+                LINEに登録している名前やプロフィール画像などが表示されることはなく、お好きなニックネームを設定できます。<br>
+                また、料金が発生することはなく、無料でご利用いただけます。<br>
+            </p>
+            <p>
+                当サイトではLINEに登録している個人情報などを取得しないため、安心してご利用いただけます。<br>
+                LINEアプリに当サイトから通知が来ることもありません。<br>
+            </p>
         </article>
     </main>
     <footer>

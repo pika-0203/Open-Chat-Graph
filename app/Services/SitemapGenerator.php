@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Config\AppConfig;
+use App\Models\Accreditation\AccreditationDB;
 use App\Models\Accreditation\AccreditationUserModel;
 use Asika\Sitemap\Sitemap;
 use Asika\Sitemap\ChangeFreq;
 use Asika\Sitemap\SitemapIndex;
 use App\Models\Repositories\OpenChatListRepositoryInterface;
 use App\Services\Recommend\RecommendUpdater;
+use Shadow\DB;
 
 class SitemapGenerator
 {
@@ -28,6 +30,9 @@ class SitemapGenerator
 
     function generate()
     {
+        DB::$pdo = null;
+        AccreditationDB::$pdo = null;
+
         $index = new SitemapIndex();
         $index->addItem($this->generateSitemap1(), new \DateTime);
 

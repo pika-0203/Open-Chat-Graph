@@ -6,11 +6,11 @@
   --color-accent: #1558d615;
   --color-bg: #fff;
   --color-bg-secondary: rgb(207, 217, 222);
-  --color-link: #2196f3;
+  --color-link: #1976d2;
   --color-secondary: #920de9;
   --color-secondary-accent: #920de90b;
   --color-shadow: #f4f4f4;
-  --color-table: #118bee;
+  --color-table: #1976d2;
   --color-text: #000;
   --color-text-secondary: #777;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -23,7 +23,7 @@
   --width-card-medium: 460px;
   --width-card-wide: 800px;
   --width-content: 1080px;
-  --hover: rgb(250,250,250);
+  --hover: rgb(250, 250, 250);
 }
 
 * {
@@ -304,6 +304,7 @@ a i {
   color: var(--color-link);
   display: inline-block;
   padding: 1rem 2rem;
+  font-style: normal;
 }
 
 /* Images */
@@ -492,7 +493,6 @@ blockquote footer {
 .unset:focus-visible {
   outline: -webkit-focus-ring-color auto 1px;
 }
-
 
 .list-aside-desc .css-162gv95 {
   user-select: none;
