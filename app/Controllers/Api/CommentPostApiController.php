@@ -28,7 +28,10 @@ class CommentPostApiController
     ) {
         $score = $googleReCaptcha->validate($token, 0.5);
 
-        if ($open_chat_id && !$openChatPageRepository->isExistsOpenChat($open_chat_id)) {
+        if (
+            ($open_chat_id && !$openChatPageRepository->isExistsOpenChat($open_chat_id))
+            || $commentPostRepository->getBanRoomWeek($open_chat_id)
+        ) {
             return false;
         }
 

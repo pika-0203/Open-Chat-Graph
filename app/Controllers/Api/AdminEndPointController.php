@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Api;
 
 use App\Config\AdminConfig;
+use App\Models\CommentRepositories\CommentPostRepositoryInterface;
 use App\Models\CommentRepositories\DeleteCommentRepositoryInterface;
 use App\Services\Admin\AdminAuthService;
 use App\Services\OpenChatAdmin\AdminEndPoint;
@@ -34,7 +35,7 @@ class AdminEndPointController
             ]
         );
 
-        return redirect("oc/{$id}");
+        return redirect("oc/{$id}/admin");
     }
 
     function deletecomment(int $commentId, int $id, int $flag, DeleteCommentRepositoryInterface $deleteCommentRepository)
@@ -52,6 +53,16 @@ class AdminEndPointController
             [url()]
         );
 
-        return redirect("oc/{$id}");
+        return redirect("oc/{$id}/admin");
+    }
+
+    function commentbanroom(int $id, CommentPostRepositoryInterface $commentPostRepo)
+    {
+        $result = $commentPostRepo->addBanRoom($id);
+        if (!$result) {
+            return view('admin/admin_message_page', ['title' => '存在しない部屋です', 'message' => '存在しない部屋です']);
+        }
+
+        return redirect("oc/{$id}/admin");
     }
 }

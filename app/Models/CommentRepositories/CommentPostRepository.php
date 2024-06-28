@@ -34,4 +34,29 @@ class CommentPostRepository implements CommentPostRepositoryInterface
             'text' => $args->text,
         ]);
     }
+
+    function addBanRoom(int $open_chat_id): int
+    {
+        $query =
+            "INSERT INTO
+                ban_room (open_chat_id)
+            VALUES
+                (:open_chat_id)";
+
+        return CommentDB::executeAndGetLastInsertId($query, compact('open_chat_id'));
+    }
+
+    function getBanRoomWeek(int $open_chat_id): int|false
+    {
+        $query =
+            "SELECT 
+                open_chat_id
+            FROM 
+                ban_room 
+            WHERE 
+                open_chat_id = :open_chat_id 
+                AND created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
+
+        return CommentDB::fetchColumn($query, compact('open_chat_id'));
+    }
 }

@@ -221,6 +221,12 @@ Route::path(
     ->matchNum('flag', min: 0, max: 3);
 
 Route::path(
+    'admin-api/commentbanroom@post',
+    [AdminEndPointController::class, 'commentbanroom']
+)
+    ->matchNum('id');
+
+Route::path(
     'oc/{open_chat_id}/admin',
     [OpenChatPageController::class, 'index']
 )
