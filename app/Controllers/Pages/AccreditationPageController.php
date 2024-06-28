@@ -104,13 +104,15 @@ class AccreditationPageController
 
         $question = getUnserializedFile($fileName);
         if (!$question || $question['date'] !== $date) {
-            $ids = $accreditationUserModel->getQuestionIdsBy2Type(ExamType::Silver, ExamType::Gold);
+            $ids = $accreditationUserModel->getQuestionIds();
             if (!$ids)
                 return false;
 
-            $_argDto = $quizApiService->getSingleTopic($ids[array_rand($ids)], self::SINGLE_TIME);
-            if (!$_argDto)
+            $topic = $quizApiService->getSingleTopic($ids[array_rand($ids)], self::SINGLE_TIME);
+            if (!$topic)
                 return false;
+
+            ['topic' => $_argDto, 'created_at' => $created_at, 'edited_at' => $edited_at] = $topic;
 
             saveSerializedFile('accreditation/today_question.dat', compact('date', '_argDto'));
         } else {

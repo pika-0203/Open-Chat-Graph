@@ -327,7 +327,7 @@ class AccreditationUserModel
     /**
      * @return int[]
      */
-    function getQuestionIdsBy2Type(ExamType $type1, ExamType $type2): array
+    function getQuestionIds(): array
     {
         return AccreditationDB::fetchAll(
             "SELECT
@@ -336,11 +336,8 @@ class AccreditationUserModel
                 exam AS t1
                 JOIN user AS t2 ON t1.user_id = t2.id
             WHERE
-                t1.publishing = 1
-                AND type = :type1
-                OR type = :type2",
-            ['type1' => $type1->value, 'type2' => $type2->value],
-            [\PDO::FETCH_COLUMN]
+                t1.publishing = 1",
+            args: [\PDO::FETCH_COLUMN]
         );
     }
 
