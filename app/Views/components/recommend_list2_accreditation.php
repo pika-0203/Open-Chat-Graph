@@ -20,8 +20,4 @@
         <?php endforeach ?>
     </ol>
 
-    <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('accreditation') ?>">
-        <span class="ranking-readMore">オプチャについて知る<span class="small">オプチャ検定</span></span>
-    </a>
-
 </article>

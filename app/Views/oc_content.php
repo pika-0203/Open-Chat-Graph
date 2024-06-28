@@ -271,7 +271,8 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
       <?php viewComponent('recommend_list2_accreditation', compact('acrreditation')) ?>
     </aside>
     <hr class="hr-bottom">
-
+    <?php viewComponent('ads/google-responsive') ?>
+    
     <?php if ($recommend[1]) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id'], 'showTags' => true]) ?>
@@ -314,11 +315,14 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
     ?>
 
     <aside class="recommend-list-aside">
-      <article class="top-ranking">
+      <section class="top-ranking">
         <a class="readMore-btn top-ranking-readMore unset" href="<?php echo url('ranking') ?>">
           <span class="ranking-readMore">カテゴリーからオプチャを探す<span class="small" style="font-size: 11.5px;">24カテゴリー</span></span>
         </a>
-      </article>
+        <a class="top-ranking-readMore unset ranking-url" href="<?php echo url('accreditation') ?>">
+          <span class="ranking-readMore">オプチャについて知る<span class="small">オプチャ検定</span></span>
+        </a>
+      </section>
     </aside>
     <hr class="hr-bottom">
 
