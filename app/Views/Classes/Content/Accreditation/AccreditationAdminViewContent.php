@@ -572,25 +572,25 @@ class AccreditationAdminViewContent
         }
     ?>
         <form style="user-select:none; margin-top: 0.5rem;" id="q-form" onsubmit="return confirm('<?php echo $confirm ?>')" id="user-form" method="POST" action="/accreditation/<?php echo $action . $returnTo ?>">
-            <label for="q_text">問題文</label>
-            <textarea id="q_text" name="question" maxlength="4000" rows="5" required><?php echo $q->question ?? '' ?></textarea>
+            <label for="q_text">問題文 <span style="font-weight: normal; color: #777;"><span class="counter"></span>/140</span></label>
+            <textarea id="q_text" name="question" maxlength="140" rows="5" required><?php echo $q->question ?? '' ?></textarea>
 
             <?php foreach (range('a', 'd') as $key => $el) : ?>
                 <div style="display: flex; gap: 1rem;">
-                    <label for="answer_<?php echo $key ?>">回答 <?php echo strtoupper($el) ?></label>
+                    <label for="answer_<?php echo $key ?>">回答 <?php echo strtoupper($el) ?> <span style="font-weight: normal; color: #777;"><span class="counter"></span>/100</span></label>
                     <div style="user-select: none;">
                         <input id="radio_<?php echo $key ?>" type="radio" name="answers[correct]" value="<?php echo $el ?>" style="transform:scale(1.5); cursor: pointer;" required <?php if (($q->answersArray['correct'] ?? '') === $el) echo 'checked' ?>>
                         <label for="radio_<?php echo $key ?>" style="cursor: pointer;">正解</label>
                     </div>
                 </div>
-                <textarea id="answer_<?php echo $key ?>" name="answers[<?php echo $el ?>]" maxlength="4000" rows="3" required><?php echo $q->answersArray[$el] ?? '' ?></textarea>
+                <textarea id="answer_<?php echo $key ?>" name="answers[<?php echo $el ?>]" maxlength="100" rows="3" required><?php echo $q->answersArray[$el] ?? '' ?></textarea>
             <?php endforeach ?>
 
-            <label for="explanation">解説（必須）</label>
-            <textarea id="explanation" name="explanation" maxlength="4000" rows="5" required><?php echo $q->explanationArray['explanation'] ?? '' ?></textarea>
+            <label for="explanation">解説 <span style="font-weight: normal; color: #777;"><span class="counter"></span>/280</span></label>
+            <textarea id="explanation" name="explanation" maxlength="280" rows="5" required><?php echo $q->explanationArray['explanation'] ?? '' ?></textarea>
 
             <fieldset>
-                <legend style="font-weight: bold;">出典URL（必須）</legend>
+                <legend style="font-weight: bold;">出典URL</legend>
                 <p>回答の根拠になるURLを指定してください</p>
                 <div style="margin-bottom: 1rem; display:flex; align-items: center">
                     <div>
@@ -673,6 +673,32 @@ class AccreditationAdminViewContent
                     behavior: 'smooth'
                 });
             })
+
+            // input要素とtextarea要素を取得
+            const textInputs = document.querySelectorAll('input[type="text"], textarea');
+
+            // 各要素にイベントリスナーを追加
+            textInputs.forEach(input => {
+                // 文字数を取得
+                const count = input.value.length;
+
+                // 対応するlabel要素を取得し、文字数を反映
+                const label = document.querySelector('label[for="' + input.id + '"] .counter');
+                if (label) {
+                    label.textContent = count;
+                }
+
+                input.addEventListener('input', function() {
+                    // 文字数を取得
+                    const count = this.value.length;
+
+                    // 対応するlabel要素を取得し、文字数を反映
+                    const label = document.querySelector('label[for="' + this.id + '"] .counter');
+                    if (label) {
+                        label.textContent = count;
+                    }
+                });
+            });
         </script>
     <?php
     }
