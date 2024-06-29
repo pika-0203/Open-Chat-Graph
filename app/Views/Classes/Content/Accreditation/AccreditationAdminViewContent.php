@@ -699,6 +699,26 @@ class AccreditationAdminViewContent
                     }
                 });
             });
+
+            document.getElementById('q-form').addEventListener('submit', function(event) {
+                // フォーム内のすべてのinput[type="text"]とtextarea要素を取得
+                const textInputs = this.querySelectorAll('input[type="text"], textarea');
+
+                // 各要素の文字数を確認
+                let isExceedingMaxLength = false;
+                textInputs.forEach(input => {
+                    const maxLength = parseInt(input.getAttribute('maxlength'));
+                    if (input.value.length > maxLength) {
+                        isExceedingMaxLength = true;
+                    }
+                });
+
+                // 文字数がmaxlengthを超えている場合はアラートを表示し、submitをキャンセル
+                if (isExceedingMaxLength) {
+                    event.preventDefault();
+                    alert('文字数が制限を超えています');
+                }
+            });
         </script>
     <?php
     }
