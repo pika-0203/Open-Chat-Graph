@@ -55,7 +55,9 @@ class CommentPostRepository implements CommentPostRepositoryInterface
                 ban_room 
             WHERE 
                 open_chat_id = :open_chat_id 
-                AND created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
+                AND created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+            LIMIT
+                1";
 
         return CommentDB::fetchColumn($query, compact('open_chat_id'));
     }
