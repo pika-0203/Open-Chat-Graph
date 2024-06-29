@@ -27,7 +27,7 @@
     <meta property="og:description" content="<?php echo $description ?>">
     <meta property="og:site_name" content="オプチャグラフ">
     <meta property="og:image" content="<?php echo $ogp ?>">
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary">
     <meta name="thumbnail" content="<?php echo fileUrl('assets/ogp-accreditation.png') ?>" />
     <?php /** @var \App\Services\Accreditation\QuizApi\Dto\Topic $_argDto */
     echo \App\Services\Accreditation\AccreditationSchemaGenerator::breadcrumbList(
