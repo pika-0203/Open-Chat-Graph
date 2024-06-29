@@ -14,7 +14,7 @@ $isPublished = $view->controller->pageType === 'published';
     <?php $view->header() ?>
     <main>
         <?php $view->mainTab() ?>
-        <div style="margin-top:2rem;">
+        <div style="margin-top: 0;">
             <?php if ($isPublished) : ?>
                 <h2>出題中の問題<?php $view->examTitle() ?></h2>
                 <p>

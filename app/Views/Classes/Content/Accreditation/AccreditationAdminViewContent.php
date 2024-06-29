@@ -73,25 +73,8 @@ class AccreditationAdminViewContent
 
     function header()
     { ?>
-        <header style="padding-bottom: 1rem; margin-bottom: 0rem;">
+        <header style="padding-bottom: 0rem; margin-bottom: 0rem;">
             <style>
-                @media screen and (max-width: 511px) {
-                    nav ul li {
-                        display: list-item;
-                    }
-
-                    body header,
-                    main,
-                    footer {
-                        padding-top: 0;
-                    }
-
-                    .header-nav-ul li {
-                        margin-right: 1rem;
-                    }
-                }
-
-
                 nav a b {
                     margin: 0;
                     padding: 4px;
@@ -112,20 +95,43 @@ class AccreditationAdminViewContent
                 }
 
                 .header-nav-ul {
-                    margin-bottom: 0;
+                    font-size: 15px;
+                    width: 100%;
+                    justify-content: space-between;
+                }
+
+                .header-nav-ul a,
+                .header-nav-ul b {
+                    display: block;
+                    padding: 10px 8px;
+                }
+
+                .header-nav-ul a {
+                    text-decoration: none;
+                    color: #aaa;
+                }
+
+                .header-nav-ul b {
+                    color: #111;
+                }
+
+                .header-nav-ul li {
+                    border-bottom: 3px solid rgba(0, 0, 0, 0);
+                }
+
+                .header-nav-ul li:has(b) {
+                    border-bottom: 3px solid rgb(128, 0, 128);
                 }
 
                 .header-nav-ul li {
                     text-wrap: nowrap;
                     white-space: nowrap;
-                    padding-bottom: 6px;
                 }
 
                 .header-nav-left {
-                    margin-right: 1rem;
+                    margin-bottom: auto;
                     width: 100%;
-                    max-width: 240px;
-                    padding: 0 1rem;
+                    max-width: 180px;
                 }
 
                 .header-nav-a {
@@ -146,24 +152,50 @@ class AccreditationAdminViewContent
                     margin: 0;
                 }
 
-                .nav-user-name-link {
-                    font-size: 13px;
-                    color: #000;
-                    text-decoration: none;
-                }
-
-                .nav-li-user-name {
-                    display: none;
-                }
-
-                .nav-left-user-name {
-                    margin-bottom: 16px;
-                    line-height: 1;
-                    text-align: right;
-                }
-
                 .header-logo {
                     display: block;
+                }
+
+                body header {
+                    padding-top: 0;
+                }
+
+                main {
+                    padding-top: 0;
+                }
+
+
+                @media screen and (max-width: 511px) {
+                    nav ul li {
+                        display: list-item;
+                    }
+
+                    body header,
+                    main,
+                    footer {
+                        padding-top: 0;
+                    }
+
+                    body header nav {
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
+
+                    .header-nav-ul {
+                        display: flex;
+                        margin: 1rem 0;
+                        flex-wrap: wrap;
+                    }
+
+                    .header-nav-ul li {
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    .header-nav-left {
+                        max-width: 140px;
+                        margin: 1rem auto 0 auto;
+                    }
                 }
 
                 @media screen and (max-width: 360px) {
@@ -171,6 +203,10 @@ class AccreditationAdminViewContent
                         font-size: 13px;
                         text-wrap: unset;
                         white-space: unset;
+                    }
+
+                    .header-nav-ul {
+                        font-size: 13px;
                     }
                 }
 
@@ -180,39 +216,27 @@ class AccreditationAdminViewContent
                         margin: 0;
                     }
 
-                    .nav-li-user-name {
-                        display: inline-block;
+                    main {
+                        padding-top: 0;
+                        margin-top: 1rem;
                     }
 
-                    .nav-left-user-name {
-                        display: none;
+                    .header-nav-ul {
+                        font-size: 16px;
                     }
                 }
             </style>
             <nav style="margin-bottom: 0">
                 <div class="header-nav-left">
-                    <?php if ($this->controller->profileArray) : ?>
-                        <div class="nav-left-user-name">
-                            <a class="nav-user-name-link" href="./profile">
-                                <?php if ($this->controller->profileArray['is_admin']) : ?>
-                                    👑
-                                <?php endif ?>
-                                <span style="text-decoration: underline;"> <?php echo $this->controller->profileArray['name'] ?></span>
-                            </a>
-                        </div>
-                    <?php endif ?>
                     <a class="header-nav-a" href="./home">
-                        <img class="header-logo" src="<?php echo fileUrl('assets/accreditation-log.svg') ?>" />
-                        <div class="header-nav-title">
-                            <span>問題投稿ページ</span>
-                        </div>
+                        <img class="header-logo" src="<?php echo fileUrl('assets/accreditation-log2.svg') ?>" />
                     </a>
                 </div>
                 <ul class="header-nav-ul">
                     <?php foreach ([
                         'home' => 'ホーム',
-                        'question' => '問題を投稿',
-                        'user' => '投稿した問題',
+                        'question' => '投稿する',
+                        'user' => '投稿管理',
                         'member' => 'メンバー',
                     ] as $key => $value) : ?>
                         <?php if ($key === 'user') : ?>
@@ -224,22 +248,26 @@ class AccreditationAdminViewContent
                             <?php else : ?>
                                 <li><a href="./user?id=<?php echo $this->controller->myId ?>"><?php echo $value ?></a></li>
                             <?php endif ?>
+
+                        <?php elseif ($key === 'home') : ?>
+                            <?php if (
+                                $this->controller->pageType === 'unpublished'
+                                || $this->controller->pageType === 'published'
+                                || $this->controller->pageType === 'contributors'
+                                || $this->controller->pageType === 'home'
+                            ) : ?>
+                                <li><b><?php echo $value ?></b></li>
+                            <?php else : ?>
+                                <li><a href="./<?php echo $key ?>"><?php echo $value ?></a></li>
+                            <?php endif ?>
+
                         <?php elseif ($key !== $this->controller->pageType) : ?>
                             <li><a href="./<?php echo $key ?>"><?php echo $value ?></a></li>
                         <?php else : ?>
                             <li><b><?php echo $value ?></b></li>
                         <?php endif ?>
+
                     <?php endforeach ?>
-                    <?php if ($this->controller->profileArray) : ?>
-                        <li class="nav-li-user-name">
-                            <a class="nav-user-name-link" href="./profile">
-                                <?php if ($this->controller->profileArray['is_admin']) : ?>
-                                    👑
-                                <?php endif ?>
-                                <span style="text-decoration: underline;"> <?php echo $this->controller->profileArray['name'] ?></span>
-                            </a>
-                        </li>
-                    <?php endif ?>
                 </ul>
             </nav>
         </header>
@@ -251,24 +279,28 @@ class AccreditationAdminViewContent
         <style>
             .main-tab {
                 display: flex;
-                gap: 1rem;
+                gap: 8px;
             }
 
             .main-tab a i,
             .main-tab a b {
-                padding: 12px 10px;
-                word-break: keep-all
+                padding: 10px 16px;
+                font-size: 14px;
+                word-break: keep-all;
+                border-radius: 10rem;
+                border: 1px solid var(--color-link);
             }
 
             @media screen and (max-width: 511px) {
                 .main-tab {
-                    gap: 12px;
+                    gap: 6px;
+                    margin-top: 1rem;
                 }
 
                 .main-tab a i,
                 .main-tab a b {
-                    padding: 12px 6px;
-                    font-size: 14px;
+                    padding: 10px 10px;
+                    font-size: 13px;
                 }
             }
 
@@ -279,8 +311,8 @@ class AccreditationAdminViewContent
 
                 .main-tab a i,
                 .main-tab a b {
-                    padding: 12px 6px;
-                    font-size: 14px;
+                    padding: 10px 6px;
+                    font-size: 12px;
                 }
             }
         </style>
@@ -289,6 +321,7 @@ class AccreditationAdminViewContent
 
     function mainTab()
     { ?>
+        <?php $this->typeTab() ?>
         <?php $this->tabStyle() ?>
         <div class="main-tab">
             <?php foreach ([
@@ -297,13 +330,12 @@ class AccreditationAdminViewContent
                 ['投稿者の<wbr>一覧', 'contributors'],
             ] as $p) : ?>
                 <?php if ($this->controller->pageType === $p[1]) : ?>
-                    <a><i><?php echo $p[0] ?></i></a>
+                    <a href="./home"><i><?php echo $p[0] ?></i></a>
                 <?php else : ?>
                     <a href="./<?php echo $p[1] ?>"><b><?php echo $p[0] ?></b></a>
                 <?php endif ?>
             <?php endforeach ?>
         </div>
-        <?php $this->typeTab() ?>
     <?php
     }
 
@@ -311,17 +343,25 @@ class AccreditationAdminViewContent
     { ?>
         <style>
             .type-tab {
-                margin: 20px 0 24px 0;
-                font-size: 16px;
+                margin: 8px 0 0 0;
+                font-size: 15px;
                 font-weight: bold;
                 display: flex;
                 gap: 20px;
             }
 
+            .type-tab a {
+                text-decoration: none;
+            }
+
+            .type-tab b {
+                color: #aaa;
+            }
+
             @media screen and (min-width: 512px) {
                 .type-tab {
-                    margin: 20px 0 3rem 0;
-                    font-size: 18px;
+                    margin: 18px 0 16px 0;
+                    font-size: 16px;
                     font-weight: bold;
                     display: flex;
                     gap: 20px;
@@ -376,7 +416,7 @@ class AccreditationAdminViewContent
                     <p>
                         <small>
                             <b>オープンチャット</b><br>
-                            <a href="<?php echo $profile['url'] ?>"><?php echo $profile['room_name'] ?></a>
+                            <a style="color: rgb(29, 155, 240);" href="<?php echo $profile['url'] ?>"><?php echo $profile['room_name'] ?></a>
                         </small>
                     </p>
                 <?php endif ?>
@@ -419,7 +459,7 @@ class AccreditationAdminViewContent
                     <?php if ($p['url']) : ?>
                         <div style="margin-bottom: 12px;">
                             <div style="margin-bottom: 4px;"><small>オープンチャット</small></div>
-                            <div> <a style="color: #111;" href="<?php echo $p['url'] ?>"><?php echo $p['room_name'] ?></a></div>
+                            <div> <a style="color: #111; color: rgb(29, 155, 240);" href="<?php echo $p['url'] ?>"><?php echo $p['room_name'] ?></a></div>
                         </div>
                     <?php endif ?>
                     <?php if ($p['is_admin']) : ?>
@@ -901,12 +941,12 @@ class AccreditationAdminViewContent
                         <p class="question_p">Error: 配列の要素がありません(explanationArray)</p>
                     <?php elseif ($el->explanationArray['source_title'] && $el->explanationArray['source_url']) : ?>
                         <div style="font-size: 14px;">
-                            <div class="word-wrap">出典URL: <a href="<?php echo $el->explanationArray['source_url'] ?>" target="_blank"><?php echo $el->explanationArray['source_title'] ?> ↗</a></div>
+                            <div class="word-wrap">出典URL: <a style="color: rgb(29, 155, 240);" href="<?php echo $el->explanationArray['source_url'] ?>" target="_blank"><?php echo $el->explanationArray['source_title'] ?> ↗</a></div>
                             <div class="word-wrap"><small style="color: #aaa;" class="source-url"><?php echo $el->explanationArray['source_url'] ?></small></div>
                         </div>
                     <?php elseif ($el->explanationArray['source_url'] === '') : ?>
                         <div style="font-size: 14px;">
-                            <div class="word-wrap">出典URL: <a href="https://openchat-jp.line.me/other/guideline" target="_blank">安心・安全ガイドライン | LINEオープンチャット ↗</a></div>
+                            <div class="word-wrap">出典URL: <a style="color: rgb(29, 155, 240);" href="https://openchat-jp.line.me/other/guideline" target="_blank">安心・安全ガイドライン | LINEオープンチャット ↗</a></div>
                             <div class="word-wrap"><small style="color: #aaa;" class="source-url">https://openchat-jp.line.me/other/guideline</small></div>
                         </div>
                     <?php endif ?>

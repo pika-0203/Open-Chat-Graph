@@ -64,7 +64,7 @@ $view = new AccreditationAdminViewContent($controller);
     </style>
     <main>
         <?php $view->mainTab() ?>
-        <section style="gap: 2rem; padding: 1rem 0 0 0;">
+        <section style="gap: 2rem; padding: 2rem 0 0 0;">
             <section style="align-items: center; flex-direction: column;">
                 <span>投稿された問題数</span><b style="font-size: 56px; line-height: 1;"><?php echo $total_count ?? 0 ?></b>
             </section>
@@ -73,8 +73,8 @@ $view = new AccreditationAdminViewContent($controller);
             </section>
         </section>
         <hr>
-        <a href="/accreditation" target="_blank" style="font-size: 18px; font-weight: bold;">オプチャ検定｜練習問題</a>
-        <div style="display: flex; gap: 24px; margin-top: 2rem; flex-wrap: wrap; align-items: center;">
+        <a href="/accreditation" target="_blank" style="font-size: 16px; font-weight: bold; color: rgb(29, 155, 240);">オプチャ検定｜練習問題</a>
+        <div style="display: flex; gap: 24px; margin-top: 1rem; flex-wrap: wrap; align-items: center;">
             <small style="word-break: keep-all; text-wrap: nowrap; margin-right: -10px">シェア</small>
 
             <div class="share-menu-item unset" onclick="copyUrl('LINEオープンチャットを快適に利用できる知識を楽しく学ぼう！\nオプチャ検定｜練習問題\nhttps://openchat-review.me/accreditation')">
@@ -90,7 +90,7 @@ $view = new AccreditationAdminViewContent($controller);
         </div>
         <br>
         <details>
-            <summary style="width: fit-content;">練習問題のページ訪問回数を見る</summary>
+            <summary style="width: fit-content; font-size: 13px;">練習問題のページ訪問回数を見る</summary>
             <br>
             <div class="graph-ifame">
                 <iframe loading=lazy src="https://lookerstudio.google.com/embed/reporting/12373f52-b8f2-42d1-9935-d2ffd6bebfa2/page/usU4D" frameborder="0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
@@ -98,6 +98,18 @@ $view = new AccreditationAdminViewContent($controller);
             <br>
             <small>データの反映にラグがあるため、最新日の数字は最大2日後ぐらいに確定します</small>
         </details>
+        <?php if ($view->controller->profileArray) : ?>
+            <hr>
+            <small style="font-size: 13.3px;">
+                <span style="margin-right: 4px;">プロフィール</span>
+                <a href="./profile">
+                    <?php if ($view->controller->profileArray['is_admin']) : ?>
+                        👑
+                    <?php endif ?>
+                    <span style="text-decoration: underline;"> <?php echo $view->controller->profileArray['name'] ?></span>
+                </a>
+            </small>
+        <?php endif ?>
         <hr>
         <?php $view->termHome() ?>
     </main>
