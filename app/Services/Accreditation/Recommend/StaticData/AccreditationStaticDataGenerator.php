@@ -18,7 +18,7 @@ class AccreditationStaticDataGenerator
      */
     function getQuestions(): array
     {
-        return $this->accreditationUserModel->getQuestionListAllWthioutGold();
+        return $this->accreditationUserModel->getQuestionListAllWthiout();
     }
 
     private function updategetQuestions()
