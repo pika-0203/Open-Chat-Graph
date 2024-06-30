@@ -207,8 +207,7 @@ async function blockblock() {
   })
     .then()
     .catch((err) => {
-      alert('お知らせ: エラーが発生したためページを更新してください。アドブロックが有効な場合は解除してください。')
-
+      
       // オーバーレイの作成
       const overlay = document.createElement('div')
       overlay.style.position = 'fixed'
@@ -228,11 +227,13 @@ async function blockblock() {
       setTimeout(function () {
         overlay.style.opacity = '1' // 3秒後にオーバーレイを完全に表示
       }, 0) // 0秒後に実行（すぐに実行）
-
+      
       // 全てを真っ白にする
       setTimeout(function () {
         document.body.style.backgroundColor = 'white' // 更に3秒後に背景色を白に変更
       }, 1000) // 3秒後に実行
+      
+      alert('お知らせ: エラーが発生したためページを更新してください。アドブロックが有効な場合は解除してください。')
     })
 }
 
