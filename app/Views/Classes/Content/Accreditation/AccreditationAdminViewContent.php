@@ -37,10 +37,10 @@ class AccreditationAdminViewContent
 
     function head()
     {
-        self::headComponent($this->examTypeName);
+        self::headComponent($this->examTypeName, subTitle2: $this->controller->pageType);
     }
 
-    static function headComponent(?string $subTitle = null, ?bool $sakuraCss = false)
+    static function headComponent(?string $subTitle = null, ?bool $sakuraCss = false, ?string $subTitle2 = null)
     { ?>
 
         <head prefix="og: http://ogp.me/ns#">
@@ -48,12 +48,12 @@ class AccreditationAdminViewContent
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>オプチャ検定<?php if ($subTitle) echo '｜' . $subTitle ?>｜問題投稿ページ</title>
+            <title>オプチャ検定<?php if ($subTitle) echo '｜' . $subTitle ?>｜問題投稿ページ<?php if ($subTitle) echo '｜' . $subTitle2 ?></title>
             <meta name="description" content="ここから誰でもオプチャ検定に問題を投稿できます。">
             <meta property="og:locale" content="ja_JP">
             <meta property="og:url" content="<?php echo url(path()) ?>">
             <meta property="og:type" content="website">
-            <meta property="og:title" content="オプチャ検定<?php if ($subTitle) echo '｜' . $subTitle ?>｜問題投稿ページ">
+            <meta property="og:title" content="オプチャ検定<?php if ($subTitle) echo '｜' . $subTitle ?>｜問題投稿ページ<?php if ($subTitle) echo '｜' . $subTitle2 ?>">
             <meta property="og:description" content="オプチャ検定は、LINEオープンチャットの利用に関連する知識を深める場所です。ガイドライン、ルール、管理方法などについて楽しく学ぶことができます。問題投稿ページでは誰でも問題を投稿でき、他の人が投稿した問題を閲覧できます。自分の知識を共有して、オープンチャットコミュニティに貢献できます！">
             <meta property="og:site_name" content="オプチャグラフ">
             <meta property="og:image" content="<?php echo fileUrl('assets/ogp-accreditation.png') ?>">
