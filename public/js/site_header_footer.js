@@ -209,10 +209,30 @@ async function blockblock() {
     .catch((err) => {
       alert('お知らせ: エラーが発生したためページを更新してください。アドブロックが有効な場合は解除してください。')
 
-      const chart = document.querySelector('#graph-box')
-      if (chart) chart.style.pointerEvents = 'none'
-      const opbtn = document.querySelectorAll('.open-btn')
-      opbtn.forEach((el) => (el.textContent = ''))
+      // オーバーレイの作成
+      const overlay = document.createElement('div')
+      overlay.style.position = 'fixed'
+      overlay.style.top = '0'
+      overlay.style.left = '0'
+      overlay.style.width = '100%'
+      overlay.style.height = '100%'
+      overlay.style.backgroundColor = 'white'
+      overlay.style.opacity = '0'
+      overlay.style.zIndex = '29'
+      overlay.style.transition = 'opacity 1s' // フェードインに3秒かける
+
+      // オーバーレイをbodyに追加
+      document.body.appendChild(overlay)
+
+      // フェードインの開始
+      setTimeout(function () {
+        overlay.style.opacity = '1' // 3秒後にオーバーレイを完全に表示
+      }, 0) // 0秒後に実行（すぐに実行）
+
+      // 全てを真っ白にする
+      setTimeout(function () {
+        document.body.style.backgroundColor = 'white' // 更に3秒後に背景色を白に変更
+      }, 1000) // 3秒後に実行
     })
 }
 
