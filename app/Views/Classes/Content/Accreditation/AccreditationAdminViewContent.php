@@ -572,8 +572,8 @@ class AccreditationAdminViewContent
         }
     ?>
         <form style="user-select:none; margin-top: 0.5rem;" id="q-form" onsubmit="return confirm('<?php echo $confirm ?>')" id="user-form" method="POST" action="/accreditation/<?php echo $action . $returnTo ?>">
-            <label for="q_text">問題文 <span style="font-weight: normal; color: #777;"><span class="counter"></span>/140</span></label>
-            <textarea id="q_text" name="question" maxlength="140" rows="5" required><?php echo $q->question ?? '' ?></textarea>
+            <label for="q_text">問題文 <span style="font-weight: normal; color: #777;"><span class="counter"></span>/100</span></label>
+            <textarea id="q_text" name="question" maxlength="100" rows="5" required><?php echo $q->question ?? '' ?></textarea>
 
             <?php foreach (range('a', 'd') as $key => $el) : ?>
                 <div style="display: flex; gap: 1rem;">
@@ -586,8 +586,8 @@ class AccreditationAdminViewContent
                 <textarea id="answer_<?php echo $key ?>" name="answers[<?php echo $el ?>]" maxlength="100" rows="3" required><?php echo $q->answersArray[$el] ?? '' ?></textarea>
             <?php endforeach ?>
 
-            <label for="explanation">解説 <span style="font-weight: normal; color: #777;"><span class="counter"></span>/280</span></label>
-            <textarea id="explanation" name="explanation" maxlength="280" rows="5" required><?php echo $q->explanationArray['explanation'] ?? '' ?></textarea>
+            <label for="explanation">解説 <span style="font-weight: normal; color: #777;"><span class="counter"></span>/200</span></label>
+            <textarea id="explanation" name="explanation" maxlength="200" rows="5" required><?php echo $q->explanationArray['explanation'] ?? '' ?></textarea>
 
             <fieldset>
                 <legend style="font-weight: bold;">出典URL</legend>
