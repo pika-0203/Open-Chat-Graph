@@ -23,6 +23,7 @@ class RecommendOpenChatPageController
         'なりきり（全也）' => 'なりきり',
         'クーポン・お得情報' => 'クーポン・無料配布',
         'ロック' => '邦ロック',
+        '整形' => '美容整形',
     ];
 
     function index(
