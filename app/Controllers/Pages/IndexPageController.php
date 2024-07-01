@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Config\AdminConfig;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Services\Accreditation\Recommend\AcrreditationRecommend;
 use App\Services\Recommend\OfficialPageList;
@@ -35,14 +36,18 @@ class IndexPageController
             $dto->hourlyUpdatedAt
         );
 
-        $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChatAll(0, 15);
+        $dto->recentCommentList = $recentCommentListRepository->findRecentCommentOpenChatAll(
+            0,
+            15,
+            AdminConfig::ADMIN_API_KEY
+        );
         $updatedAtHouryCron = $dto->rankingUpdatedAt;
 
         if (isset($dto->recentCommentList[0]['time'])) {
             $updatedAtComments = new \DateTime($dto->recentCommentList[0]['time']);
             $_updatedAt = $updatedAtHouryCron > $updatedAtComments ? $updatedAtHouryCron : $updatedAtComments;
 
-            $updatedAtComments->modify('+ 24hour');
+            $updatedAtComments->modify('+ 168hour');
             $newComment = new \DateTime() < $updatedAtComments;
         } else {
             $_updatedAt = $updatedAtHouryCron;

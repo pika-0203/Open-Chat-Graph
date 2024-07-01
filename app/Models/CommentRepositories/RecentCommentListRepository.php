@@ -79,10 +79,10 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
     /**
      * @return array{ id:int,name:string,img_url:string,description:string,member:int,emblem:int,category:int,time:string }[]
      */
-    public function findRecentCommentOpenChatAll(int $offset, int $limit): array
+    public function findRecentCommentOpenChatAll(int $offset, int $limit, string $adminId = ''): array
     {
         $query =
-            "SELECT
+        "SELECT
                 open_chat_id,
                 time,
                 name,
@@ -90,12 +90,14 @@ class RecentCommentListRepository implements RecentCommentListRepositoryInterfac
                 text
             FROM
                 comment
+            WHERE
+                NOT user_id = :adminId
             ORDER BY
                 time DESC
             LIMIT
                 :offset, :limit;";
 
-        $comments = CommentDB::fetchAll($query, compact('offset', 'limit'));
+        $comments = CommentDB::fetchAll($query, compact('offset', 'limit', 'adminId'));
 
         $ids = array_unique(array_column($comments, 'open_chat_id'));
         $ids = implode(',', $ids);
