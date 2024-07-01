@@ -272,7 +272,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
     </aside>
     <hr class="hr-bottom">
     <?php viewComponent('ads/google-responsive') ?>
-    
+
     <?php if ($recommend[1]) : ?>
       <aside class="recommend-list-aside">
         <?php viewComponent('recommend_list2', ['recommend' => $recommend[1], 'member' => $oc['member'], 'tag' => $recommend[2], 'id' => $oc['id'], 'showTags' => true]) ?>
@@ -337,6 +337,14 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
     </footer>
   </article>
   <?php echo $_breadcrumbsShema ?>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const num = document.querySelectorAll('ins').length;
+      for (let i = 0; i < num; i++) {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      }
+    });
+  </script>
   <script defer type="module" crossorigin src="/<?php echo getFilePath('js/comment', 'index-*.js') ?>"></script>
   <script src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
   <script type="module">

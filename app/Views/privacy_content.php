@@ -33,6 +33,14 @@
     <footer class="footer-elem-outer">
         <?php viewComponent('footer_inner') ?>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const num = document.querySelectorAll('ins').length;
+            for (let i = 0; i < num; i++) {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            }
+        });
+    </script>
     <?php echo $_breadcrumbsShema ?>
 </body>
 

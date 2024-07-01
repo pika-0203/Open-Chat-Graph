@@ -135,6 +135,14 @@ function memberCount(int $count)
         <?php viewComponent('footer_share_nav', ['title' => $_meta->title]) ?>
         <?php viewComponent('footer_inner') ?>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const num = document.querySelectorAll('ins').length;
+            for (let i = 0; i < num; i++) {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            }
+        });
+    </script>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
     <?php echo $_meta->generateTopPageSchema() ?>
     <?php if ($isAdminPage && isset($adsList)) : ?>
