@@ -171,7 +171,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         });
     </script>
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
-    <?php echo $_meta->generateTopPageSchema() ?>
     <script>
         let lastList = ''
 
@@ -207,6 +206,7 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             fetchMyList('myList')
         });
     </script>
+    <?php echo $_meta->generateTopPageSchema() ?>
 </body>
 
 </html>

@@ -191,34 +191,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
 
     </section>
 
-    <script async>
-      (function() {
-        // 説明文の続きを読むボタン
-        const readMoreBtn = document.getElementById('read_more_btn')
-        const talkroomDesc = document.getElementById('talkroom-description')
-        const talkroomDescBox = document.getElementById('talkroom_description_box')
-
-        const closeId = 'talkroom-description-close-btn'
-
-        if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
-          talkroomDescBox.classList.add('hidden')
-        } else {
-          const open = document.getElementById(closeId)
-          const close = document.getElementById('talkroom-description-close-btn')
-
-          readMoreBtn.style.visibility = "visible"
-          talkroomDesc.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
-          readMoreBtn.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
-          close.addEventListener('click', () => {
-            talkroomDescBox.classList.add('close')
-            window.scrollTo({
-              top: 0,
-            });
-          })
-        }
-      })();
-    </script>
-
     <section class="open-btn sp-btn" style="padding: 12px 1rem 1rem 1rem;">
       <?php if ($oc['url']) : ?>
         <a href="<?php echo AppConfig::LINE_APP_URL . $oc['url'] . AppConfig::LINE_APP_SUFFIX ?>" class="openchat_link">
@@ -336,7 +308,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
       <?php viewComponent('footer_inner') ?>
     </footer>
   </article>
-  <?php echo $_breadcrumbsShema ?>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const num = document.querySelectorAll('ins').length;
@@ -344,6 +315,33 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
         (adsbygoogle = window.adsbygoogle || []).push({});
       }
     });
+  </script>
+  <script async>
+    (function() {
+      // 説明文の続きを読むボタン
+      const readMoreBtn = document.getElementById('read_more_btn')
+      const talkroomDesc = document.getElementById('talkroom-description')
+      const talkroomDescBox = document.getElementById('talkroom_description_box')
+
+      const closeId = 'talkroom-description-close-btn'
+
+      if (talkroomDesc.offsetHeight >= talkroomDesc.scrollHeight) {
+        talkroomDescBox.classList.add('hidden')
+      } else {
+        const open = document.getElementById(closeId)
+        const close = document.getElementById('talkroom-description-close-btn')
+
+        readMoreBtn.style.visibility = "visible"
+        talkroomDesc.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
+        readMoreBtn.addEventListener('click', (e) => e.target.id !== closeId && talkroomDescBox.classList.remove('close'))
+        close.addEventListener('click', () => {
+          talkroomDescBox.classList.add('close')
+          window.scrollTo({
+            top: 0,
+          });
+        })
+      }
+    })();
   </script>
   <script defer type="module" crossorigin src="/<?php echo getFilePath('js/comment', 'index-*.js') ?>"></script>
   <script src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
@@ -388,6 +386,7 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
       myListJsonCookie.set('expires', expiresTimestamp)
     })
   </script>
+  <?php echo $_breadcrumbsShema ?>
 </body>
 
 </html>
