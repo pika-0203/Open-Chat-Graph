@@ -14,7 +14,7 @@
             <li class="openchat-item unset" style="padding-left: 0; min-height: 0; cursor: unset; margin: 6px 1.5rem 6px 0">
                 <div style="display: flex; flex-direction: row; flex-wrap:nowrap;">
                     <span style="user-select: none; min-width:20px; display:block; color: #777;" aria-hidden="true">・</span>
-                    <a href="<?php echo url('accreditation?id=' . $question->id) ?>" class="openchat-item-desc" style=" color: rgb(39, 85, 172); font-size: 15px; font-weight: bold; letter-spacing: -0.3px; -webkit-line-clamp: 2; text-decoration: unset; line-height: 1.25;"><?php echo $question->question ?></a>
+                    <a href="<?php echo url('accreditation?id=' . $question->id) ?>" class="openchat-item-desc" style=" color: rgb(39, 85, 172); font-size: 15px; font-weight: 500; letter-spacing: -0.3px; -webkit-line-clamp: 2; text-decoration: unset; line-height: 1.25;"><?php echo $question->question ?></a>
                 </div>
             </li>
         <?php endforeach ?>
