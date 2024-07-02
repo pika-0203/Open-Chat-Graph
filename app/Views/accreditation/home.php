@@ -146,13 +146,14 @@ $view = new AccreditationAdminViewContent($controller);
         </div>
         <hr>
         <div>
-            <h2>投稿された問題</h2>
+            <h2>問題数</h2>
             <table>
                 <thead>
                     <tr>
                         <th></th>
                         <th>問題数</th>
                         <th>出題中</th>
+                        <th>未公開</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -168,6 +169,9 @@ $view = new AccreditationAdminViewContent($controller);
                             <td>
                                 <span><?php echo $counts['publishing_count_' . $type->value] ?> 件</span>
                             </td>
+                            <td>
+                                <span><?php echo $counts['total_count_' . $type->value] - $counts['publishing_count_' . $type->value] ?> 件</span>
+                            </td>
                         </tr>
                     <?php endforeach ?>
                     <tr>
@@ -179,6 +183,9 @@ $view = new AccreditationAdminViewContent($controller);
                         </td>
                         <td>
                             <span><?php echo $counts['publishing_count_bronze'] + $counts['publishing_count_silver'] + $counts['publishing_count_gold'] ?> 件</span>
+                        </td>
+                        <td>
+                            <span><?php echo ($counts['total_count_bronze'] + $counts['total_count_silver'] + $counts['total_count_gold']) - ($counts['publishing_count_bronze'] + $counts['publishing_count_silver'] + $counts['publishing_count_gold']) ?> 件</span>
                         </td>
                     </tr>
                 </tbody>
