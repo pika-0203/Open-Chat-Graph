@@ -12,7 +12,7 @@ $view = new AccreditationAdminViewContent($controller);
 
 <!DOCTYPE html>
 <html lang="ja">
-<?php $view->head() ?>
+<?php $view->head(false) ?>
 
 <body>
     <?php $view->header() ?>
