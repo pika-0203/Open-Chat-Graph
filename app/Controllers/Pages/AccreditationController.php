@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Pages;
 
+use App\Models\Accreditation\AccreditationHomePageModel;
 use App\Models\Accreditation\AccreditationUserModel;
 use App\Services\Accreditation\AccreditationUtility;
 use App\Services\Accreditation\Auth\CookieLineUserLogin;
@@ -82,9 +83,9 @@ class AccreditationController
 
     function home(array $controller)
     {
-        $count = $this->accreditationUserModel->getQuestionCount($this->type);
+        $model = app(AccreditationHomePageModel::class);
 
-        return view('accreditation/home', $controller + $count);
+        return view('accreditation/home', $controller + compact('model'));
     }
 
     function profile(array $controller)

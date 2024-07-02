@@ -1,8 +1,13 @@
 <?php
 
+use App\Services\Accreditation\Enum\ExamType;
 use App\Views\Content\Accreditation\AccreditationAdminViewContent;
 
 $view = new AccreditationAdminViewContent($controller);
+
+/**
+ * @var \App\Models\Accreditation\AccreditationHomePageModel $model
+ */
 ?>
 
 <!DOCTYPE html>
@@ -61,17 +66,118 @@ $view = new AccreditationAdminViewContent($controller);
         .copy-btn-icon {
             background-image: url(/assets/copy_icon_c.svg);
         }
+
+        .list-wrapper {
+            margin: 24px 0;
+            display: block;
+            text-decoration: none;
+        }
+
+        .question-link {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            word-break: break-all;
+            font-size: 16px;
+            line-height: 1.5;
+            letter-spacing: -0.3px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+                sans-serif;
+            text-decoration: unset;
+            font-weight: bold;
+            width: fit-content;
+            max-width: 712px;
+            margin-top: 6px;
+        }
+
+        .exam-title-chip {
+            margin-right: 6px;
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 2rem;
+            font-size: 11px;
+            line-height: 1.3;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .gold-chip {
+            background: linear-gradient(45deg, #B67B03 0%, #DAAF08 45%, #FEE9A0 70%, #DAAF08 85%, #B67B03 90% 100%);
+        }
+
+        .silver-chip {
+            background: linear-gradient(45deg, #757575 0%, #9E9E9E 45%, #E8E8E8 70%, #9E9E9E 85%, #757575 90% 100%);
+        }
+
+        .bronze-chip {
+            background: linear-gradient(45deg, #cd7f32 0%, #d88b42 30%, #e6b377 50%, #f0c490 70%, #e6b377 85%, #cd7f32 100%);
+        }
+
+        @media screen and (min-width: 512px) {
+            .list-wrapper:hover .question-link {
+                text-decoration: underline 2px;
+            }
+        }
     </style>
     <main>
-        <?php $view->mainTab() ?>
-        <section style="gap: 2rem; padding: 2rem 0 0 0;">
-            <section style="align-items: center; flex-direction: column;">
-                <span>投稿された問題数</span><b style="font-size: 56px; line-height: 1;"><?php echo $total_count ?? 0 ?></b>
-            </section>
-            <section style="align-items: center; flex-direction: column;">
-                <span style="font-size: 14px;">出題中の問題数</span><b style="font-size: 40px; line-height: 1;"><?php echo $publishing_count ?? 0 ?></b>
-            </section>
-        </section>
+        <?php $view->mainTab(false) ?>
+        <hr>
+        <div>
+            <h2>最近の投稿</h2>
+            <?php $list = $model->getQuestionList(5); ?>
+            <?php foreach ($list as $q) : ?>
+                <?php $type = ExamType::from($q->type) ?>
+                <a class="list-wrapper" href="./../<?php echo $q->type . "/" . ($q->publishing ? 'published' : 'unpublished') ?>#id-<?php echo $q->id ?>">
+                    <span class="exam-title-chip <?php echo $q->type ?>-chip"><?php echo $view->getExamTypeName($type) ?></span>
+                    <small style="margin-right: 4px; color: #111;"><?php echo $q->user_name ?></small>
+                    <small style="margin-right: 4px; color: #777;"><?php echo timeElapsedString($q->created_at) ?></small>
+                    <small style="margin-right: 4px; color: <?php echo $q->publishing ? '#aaa' : '#4d73ff' ?>;"><?php echo $q->publishing ? '出題中' : '未公開' ?></small>
+                    <span class="question-link"><?php echo $q->question ?></span>
+                </a>
+            <?php endforeach ?>
+        </div>
+        <hr>
+        <div>
+            <h2>投稿された問題</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>問題数</th>
+                        <th>出題中</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $counts = $model->getQuestionCount(); ?>
+                    <?php foreach (ExamType::cases() as $type) : ?>
+                        <tr>
+                            <td style="color: <?php echo $view->getTypeColor($type) ?>; font-weight: bold;">
+                                <?php echo $view->getExamTypeName($type) ?>
+                            </td>
+                            <td>
+                                <span style="font-weight: bold;"><?php echo $counts['total_count_' . $type->value] ?> 件</span>
+                            </td>
+                            <td>
+                                <span><?php echo $counts['publishing_count_' . $type->value] ?> 件</span>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                    <tr>
+                        <td style="margin-top: 12px;">
+                            全体
+                        </td>
+                        <td>
+                            <span style="font-weight: bold;"><?php echo $counts['total_count_bronze'] + $counts['total_count_silver'] + $counts['total_count_gold'] ?> 件</span>
+                        </td>
+                        <td>
+                            <span><?php echo $counts['publishing_count_bronze'] + $counts['publishing_count_silver'] + $counts['publishing_count_gold'] ?> 件</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
         <hr>
         <a href="/accreditation" target="_blank" style="font-size: 16px; font-weight: bold; color: rgb(29, 155, 240);">オプチャ検定｜練習問題</a>
         <div style="display: flex; gap: 24px; margin-top: 1rem; flex-wrap: wrap; align-items: center;">
@@ -89,6 +195,7 @@ $view = new AccreditationAdminViewContent($controller);
             </a>
         </div>
         <br>
+
         <details>
             <summary style="width: fit-content; font-size: 13px;">練習問題のページ訪問回数を見る</summary>
             <br>
@@ -98,6 +205,7 @@ $view = new AccreditationAdminViewContent($controller);
             <br>
             <small>データの反映にラグがあるため、最新日の数字は最大2日後ぐらいに確定します</small>
         </details>
+
         <?php if ($view->controller->profileArray) : ?>
             <hr>
             <small style="font-size: 13.3px;">

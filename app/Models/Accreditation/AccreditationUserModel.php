@@ -97,10 +97,12 @@ class AccreditationUserModel
             $ua = 'Macintosh';
         } elseif ((strpos($ua, 'Windows') !== false)) {
             $ua = 'Windows';
+        } elseif ((strpos($ua, 'CrOS') !== false)) {
+            $ua = 'CrOS';
         } elseif ((strpos($ua, 'Linux') !== false)) {
             $ua = 'Linux';
         } else {
-            echo "Other";
+            $ua = "Other";
         }
 
         AccreditationDB::execute(
@@ -138,7 +140,7 @@ class AccreditationUserModel
         }
     }
 
-    private function getQuestionQuery()
+    static function getQuestionQuery()
     {
         return
             "SELECT
@@ -191,7 +193,7 @@ class AccreditationUserModel
     /**
      * @return QuestionDto[]
      */
-    function getQuestionListAllWthiout(int $publishing = 1): array
+    function getQuestionListAll(int $publishing = 1): array
     {
         return AccreditationDB::fetchAll(
             $this->getQuestionQuery() . "WHERE t1.publishing = :publishing ORDER BY t1.edited_at DESC",
@@ -306,26 +308,6 @@ class AccreditationUserModel
             "UPDATE user SET is_admin = :is_admin WHERE id = :id",
             compact('id', 'is_admin')
         );
-    }
-
-    /**
-     * @return array{ total_count:ing,publishing_count:int }
-     */
-    function getQuestionCount(ExamType $type): array
-    {
-        $type = $type->value;
-
-        $total_count = AccreditationDB::fetchColumn(
-            "SELECT count(*) FROM exam WHERE type = :type",
-            compact('type'),
-        );
-
-        $publishing_count = AccreditationDB::fetchColumn(
-            "SELECT count(*) FROM exam WHERE type = :type AND publishing = 1",
-            compact('type'),
-        );
-
-        return compact('total_count', 'publishing_count');
     }
 
     /**

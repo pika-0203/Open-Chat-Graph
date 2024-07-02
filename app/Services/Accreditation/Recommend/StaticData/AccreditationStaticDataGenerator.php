@@ -18,7 +18,7 @@ class AccreditationStaticDataGenerator
      */
     function getQuestions(): array
     {
-        return $this->accreditationUserModel->getQuestionListAllWthiout();
+        return $this->accreditationUserModel->getQuestionListAll();
     }
 
     private function updategetQuestions()

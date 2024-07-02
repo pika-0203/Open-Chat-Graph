@@ -22,13 +22,22 @@ class AccreditationAdminViewContent
     function __construct(
         public AccreditationController $controller,
     ) {
-        $this->examTypeName = match ($this->controller->type) {
+        $this->examTypeName = $this->getExamTypeName($this->controller->type);
+        $this->typeColor = $this->getTypeColor($this->controller->type);
+    }
+
+    function getExamTypeName(ExamType $type): string
+    {
+        return match ($type) {
             ExamType::Bronze => 'ブロンズ',
             ExamType::Silver => 'シルバー',
             ExamType::Gold => 'ゴールド',
         };
+    }
 
-        $this->typeColor = match ($this->controller->type) {
+    function getTypeColor(ExamType $type): string
+    {
+        return match ($type) {
             ExamType::Bronze => '#ac6b25',
             ExamType::Silver => '#808080',
             ExamType::Gold => '#e6b422',
@@ -100,19 +109,21 @@ class AccreditationAdminViewContent
                     justify-content: space-between;
                 }
 
-                .header-nav-ul a,
-                .header-nav-ul b {
+                .header-nav-ul>li>a,
+                .header-nav-ul b a {
                     display: block;
                     padding: 10px 8px;
                 }
 
-                .header-nav-ul a {
+                .header-nav-ul>li>a {
                     text-decoration: none;
                     color: #aaa;
                 }
 
-                .header-nav-ul b {
+                .header-nav-ul b,
+                .header-nav-ul b a {
                     color: #111;
+                    text-decoration: none;
                 }
 
                 .header-nav-ul li {
@@ -244,7 +255,7 @@ class AccreditationAdminViewContent
                                 $this->controller->pageType === 'user'
                                 && $this->controller->myId === $this->controller->currentId
                             ) : ?>
-                                <li><b><?php echo $value ?></b></li>
+                                <li><b><a href="./user?id=<?php echo $this->controller->myId ?>"><?php echo $value ?></a></b></li>
                             <?php else : ?>
                                 <li><a href="./user?id=<?php echo $this->controller->myId ?>"><?php echo $value ?></a></li>
                             <?php endif ?>
@@ -256,7 +267,7 @@ class AccreditationAdminViewContent
                                 || $this->controller->pageType === 'contributors'
                                 || $this->controller->pageType === 'home'
                             ) : ?>
-                                <li><b><?php echo $value ?></b></li>
+                                <li><b><a href="./<?php echo $key ?>"><?php echo $value ?></a></b></li>
                             <?php else : ?>
                                 <li><a href="./<?php echo $key ?>"><?php echo $value ?></a></li>
                             <?php endif ?>
@@ -264,7 +275,7 @@ class AccreditationAdminViewContent
                         <?php elseif ($key !== $this->controller->pageType) : ?>
                             <li><a href="./<?php echo $key ?>"><?php echo $value ?></a></li>
                         <?php else : ?>
-                            <li><b><?php echo $value ?></b></li>
+                            <li><b><a href="./<?php echo $key ?>"><?php echo $value ?></a></b></li>
                         <?php endif ?>
 
                     <?php endforeach ?>
@@ -319,9 +330,8 @@ class AccreditationAdminViewContent
     <?php
     }
 
-    function mainTab()
+    function mainTab(bool $showTypeTab = true)
     { ?>
-        <?php $this->typeTab() ?>
         <?php $this->tabStyle() ?>
         <div class="main-tab">
             <?php foreach ([
@@ -336,6 +346,9 @@ class AccreditationAdminViewContent
                 <?php endif ?>
             <?php endforeach ?>
         </div>
+        <?php if ($showTypeTab) : ?>
+            <?php $this->typeTab() ?>
+        <?php endif ?>
     <?php
     }
 
@@ -343,7 +356,7 @@ class AccreditationAdminViewContent
     { ?>
         <style>
             .type-tab {
-                margin: 8px 0 0 0;
+                margin: 16px 0 0 0;
                 font-size: 15px;
                 font-weight: bold;
                 display: flex;
