@@ -79,16 +79,16 @@ $view = new AccreditationAdminViewContent($controller);
             -webkit-line-clamp: 2;
             overflow: hidden;
             word-break: break-all;
-            font-size: 16px;
-            line-height: 1.5;
-            letter-spacing: -0.3px;
+            font-size: 19px;
+            line-height: 1.4;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
                 sans-serif;
             text-decoration: unset;
-            font-weight: bold;
+            font-weight: normal;
             width: fit-content;
-            max-width: 712px;
+            max-width: 583px;
             margin-top: 6px;
+            color: #1558d6;
         }
 
         .exam-title-chip {
@@ -118,6 +118,13 @@ $view = new AccreditationAdminViewContent($controller);
             .list-wrapper:hover .question-link {
                 text-decoration: underline 2px;
             }
+
+            .question-link {
+                -webkit-line-clamp: 1;
+                color: #1a0dab;
+                max-width: 590px;
+                font-size: 19px;
+            }
         }
     </style>
     <main>
@@ -132,7 +139,7 @@ $view = new AccreditationAdminViewContent($controller);
                     <span class="exam-title-chip <?php echo $q->type ?>-chip"><?php echo $view->getExamTypeName($type) ?></span>
                     <small style="margin-right: 4px; color: #111;"><?php echo $q->user_name ?></small>
                     <small style="margin-right: 4px; color: #777;"><?php echo timeElapsedString($q->created_at) ?></small>
-                    <small style="margin-right: 4px; color: <?php echo $q->publishing ? '#aaa' : '#4d73ff' ?>;"><?php echo $q->publishing ? '出題中' : '未公開' ?></small>
+                    <small style="margin-right: 4px; color: #aaa; font-weight: <?php echo $q->publishing ? 'normal' : 'bold' ?>;"><?php echo $q->publishing ? '出題中' : '未公開' ?></small>
                     <span class="question-link"><?php echo $q->question ?></span>
                 </a>
             <?php endforeach ?>
