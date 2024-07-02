@@ -12,7 +12,9 @@ $view = new AccreditationAdminViewContent($controller);
 <body>
     <?php $view->header() ?>
     <main>
-        <?php $view->typeTab() ?>
+        <div style="margin-top: 2rem;">
+            <?php $view->typeTab() ?>
+        </div>
         <div style="margin-top:0;">
             <?php if ($view->controller->currentId === $view->controller->myId) : ?>
                 <h2>投稿した問題<?php $view->examTitle() ?></h2>

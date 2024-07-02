@@ -194,7 +194,7 @@ class AccreditationAdminViewContent
 
                     .header-nav-ul {
                         display: flex;
-                        margin: 1rem 0;
+                        margin: 1rem 0 0 0;
                         flex-wrap: wrap;
                     }
 
@@ -300,12 +300,13 @@ class AccreditationAdminViewContent
                 word-break: keep-all;
                 border-radius: 10rem;
                 border: 1px solid var(--color-link);
+                margin: 0;
             }
 
             @media screen and (max-width: 511px) {
                 .main-tab {
                     gap: 6px;
-                    margin-top: 1rem;
+                    margin: 2rem 0;
                 }
 
                 .main-tab a i,
