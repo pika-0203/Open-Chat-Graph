@@ -194,7 +194,7 @@ class AccreditationAdminViewContent
 
                     .header-nav-ul {
                         display: flex;
-                        margin: 1rem 0 0 0;
+                        margin: 8px 0 0 0;
                         flex-wrap: wrap;
                     }
 
@@ -206,6 +206,18 @@ class AccreditationAdminViewContent
                     .header-nav-left {
                         max-width: 140px;
                         margin: 1rem auto 0 auto;
+                    }
+
+                    h2 {
+                        font-size: 20px;
+                    }
+
+                    hr {
+                        margin: 1rem 0;
+                    }
+
+                    details {
+                        margin: 1rem 0 0.5rem 0;
                     }
                 }
 
@@ -291,6 +303,7 @@ class AccreditationAdminViewContent
             .main-tab {
                 display: flex;
                 gap: 8px;
+                margin: 2rem 0;
             }
 
             .main-tab a i,
@@ -306,12 +319,12 @@ class AccreditationAdminViewContent
             @media screen and (max-width: 511px) {
                 .main-tab {
                     gap: 6px;
-                    margin: 2rem 0;
+                    margin: 1rem 0;
                 }
 
                 .main-tab a i,
                 .main-tab a b {
-                    padding: 10px 10px;
+                    padding: 8px 10px;
                     font-size: 13px;
                 }
             }
@@ -323,7 +336,7 @@ class AccreditationAdminViewContent
 
                 .main-tab a i,
                 .main-tab a b {
-                    padding: 10px 6px;
+                    padding: 8px 6px;
                     font-size: 12px;
                 }
             }
@@ -358,7 +371,7 @@ class AccreditationAdminViewContent
         <style>
             .type-tab {
                 margin: 16px 0 0 0;
-                font-size: 18px;
+                font-size: 16px;
                 font-weight: bold;
                 display: flex;
                 gap: 20px;
@@ -374,8 +387,8 @@ class AccreditationAdminViewContent
 
             @media screen and (min-width: 512px) {
                 .type-tab {
-                    margin: 18px 0 16px 0;
-                    font-size: 16px;
+                    margin: 2rem 0;
+                    font-size: 18px;
                     font-weight: bold;
                     display: flex;
                     gap: 20px;
@@ -946,16 +959,6 @@ class AccreditationAdminViewContent
                     word-break: break-all;
                 }
             </style>
-            <script>
-                async function copyUrl(text) {
-                    try {
-                        await navigator.clipboard.writeText(text)
-                        alert("リンクをコピーしました");
-                    } catch {
-                        alert("コピーできませんでした\n(非対応ブラウザ)");
-                    }
-                }
-            </script>
             <small style="margin-right: auto; user-select: none; font-size: 15px; color: #000; font-weight: 700;">全 <?php echo $listLen ?> 件</small>
             <?php if (!$editorMode && $listLen > 1) : ?>
                 <details>
@@ -1062,6 +1065,15 @@ class AccreditationAdminViewContent
                 </svg>
             </button>
             <script>
+                async function copyUrl(text) {
+                    try {
+                        await navigator.clipboard.writeText(text)
+                        alert("リンクをコピーしました");
+                    } catch {
+                        alert("コピーできませんでした\n(非対応ブラウザ)");
+                    }
+                }
+
                 window.onscroll = function() {
                     scrollFunction()
                 };
