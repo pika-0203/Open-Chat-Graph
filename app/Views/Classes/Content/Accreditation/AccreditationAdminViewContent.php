@@ -552,11 +552,11 @@ class AccreditationAdminViewContent
                             </div>
                         <?php endif ?>
                         <div style="font-size: 15px;">
-                            <span style="color: transparent; text-shadow: 0 0 0 rgba(128, 0, 128, 0.7); margin-right: 7px; font-size: 12px;">👤</span><a style="color: #111;" href="./user?id=<?php echo $p['id'] ?>&all"><?php echo $p['name'] ?></a>
+                            <span style="color: transparent; text-shadow: 0 0 0 rgba(128, 0, 128, 0.6); margin-right: 7px; font-size: 12px;">👤</span><a style="color: #111;" href="./user?id=<?php echo $p['id'] ?>&all"><?php echo $p['name'] ?></a>
                         </div>
                         <?php if ($p['url']) : ?>
                             <div class="room-link-wrapper">
-                                <span style="color: transparent; text-shadow: 0 0 0 #b7b7b7; margin-right: 7px; font-size: 12px;">🔗</span><a class="room-link" href="<?php echo $p['url'] ?>"><?php echo $p['room_name'] ?></a>
+                                <span style="color: transparent; text-shadow: 0 0 0 #b7b7b7; margin-right: 7px; font-size: 11px;">🔗</span><a class="room-link" href="<?php echo $p['url'] ?>"><?php echo $p['room_name'] ?></a>
                             </div>
                         <?php endif ?>
                         <?php if ($p['is_admin']) : ?>

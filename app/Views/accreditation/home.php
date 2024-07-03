@@ -211,8 +211,8 @@ $view = new AccreditationAdminViewContent($controller);
 
         <?php if ($view->controller->profileArray) : ?>
             <hr>
-            <small style="font-size: 13.3px;">
-                <span style="margin-right: 4px;">プロフィール</span>
+            <small style="font-size: 15px;">
+                <span style="margin-right: 4px; color:#111; font-weight: bold;">プロフィール設定</span>
                 <a href="./profile">
                     <?php if ($view->controller->profileArray['is_admin']) : ?>
                         👑
