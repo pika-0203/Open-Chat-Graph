@@ -17,7 +17,6 @@ $profile = $view->controller->profileArray;
   <main>
     <h2>プロフィール設定</h2>
     <?php $view->profileTerm() ?>
-    <hr style="margin-bottom: 1rem;">
 
     <?php $view->profile() ?>
 
@@ -38,7 +37,7 @@ $profile = $view->controller->profileArray;
       <small id="url-message" style="display: none;">URLが無効です</small>
       <div style="display: flex; flex-direction: column;">
         <input type="text" id="oc_url" name="url" value="<?php echo $profile['url'] ?? '' ?>" />
-        <button type="button" style="padding: 2px; margin-left: auto; margin-top: -8px; margin-bottom: 1rem; font-size: 12px; display:block; text-wrap: nowrap; width: fit-content;" id="clear-url-btn">クリア</button>
+        <button type="button" style="padding: 2px 10px; margin-left: auto; margin-top: -8px; margin-bottom: 1rem; font-size: 12px; display:block; text-wrap: nowrap; width: fit-content;" id="clear-url-btn">クリア</button>
       </div>
 
       <?php if ($profile) : ?>
@@ -67,7 +66,10 @@ $profile = $view->controller->profileArray;
     )
 
     addOpenChatForm.addEventListener('input', () => inputValidator.handle())
-    document.getElementById('clear-url-btn').addEventListener('click', () => addOpenChatForm.value = '')
+    document.getElementById('clear-url-btn').addEventListener('click', () => {
+      addOpenChatForm.value = ''
+      inputValidator.handle()
+    })
   </script>
 </body>
 

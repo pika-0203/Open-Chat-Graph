@@ -20,7 +20,7 @@ $view = new AccreditationAdminViewContent($controller);
                 </div>
                 <?php $view->questionList() ?>
             <?php else : ?>
-                <div style="margin: -1rem 0;">
+                <div style="margin: 0 0 -1rem 0;">
                     <?php $view->profile(true) ?>
                 </div>
                 <div style="margin: 24px 0 1rem 0;">

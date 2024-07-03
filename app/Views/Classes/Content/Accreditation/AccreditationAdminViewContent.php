@@ -504,6 +504,22 @@ class AccreditationAdminViewContent
             section aside:hover {
                 box-shadow: unset;
             }
+
+            .room-link-wrapper {
+                margin-top: 12px;
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+            }
+
+            .room-link {
+                color: #777;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
+                word-break: break-all;
+            }
         </style>
         <div style="border-top: 1px solid #efefef; margin-top: 1rem;">
             <?php foreach ($this->controller->currentContributorsArray as $p) : ?>
@@ -516,8 +532,8 @@ class AccreditationAdminViewContent
                             </div>
                         </div>
                         <?php if ($p['url']) : ?>
-                            <div style="margin-top: 12px; font-size: 14px;">
-                                <span style="color: transparent; text-shadow: 0 0 0 #b7b7b7; margin-right: 7px; font-size: 12px;">🔗</span><a style="color: #777;" href="<?php echo $p['url'] ?>"><?php echo $p['room_name'] ?></a>
+                            <div class="room-link-wrapper">
+                                <span style="color: transparent; text-shadow: 0 0 0 #b7b7b7; margin-right: 7px; font-size: 12px;">🔗</span><a class="room-link" href="<?php echo $p['url'] ?>"><?php echo $p['room_name'] ?></a>
                             </div>
                         <?php endif ?>
                         <?php if ($p['is_admin']) : ?>
