@@ -1,6 +1,7 @@
 <?php
 
 use App\Views\Content\Accreditation\AccreditationAdminViewContent;
+use Shadow\Kernel\Reception;
 
 $view = new AccreditationAdminViewContent($controller);
 ?>
@@ -15,7 +16,11 @@ $view = new AccreditationAdminViewContent($controller);
         <?php $view->mainTab() ?>
         <div style="margin-top:0;">
             <p>
-                <small><?php echo $view->examTypeName ?>の問題を投稿した人の一覧です。</small>
+                <?php if (!Reception::has('all')) : ?>
+                    <small><?php echo $view->examTypeName ?>の問題を投稿した人の一覧です。</small>
+                <?php else : ?>
+                    <small>問題を投稿した人の一覧です。</small>
+                <?php endif ?>
             </p>
         </div>
         <hr>

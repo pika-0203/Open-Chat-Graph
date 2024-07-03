@@ -9,6 +9,7 @@ use App\Config\AppConfig;
 use App\Controllers\Pages\AccreditationController;
 use App\Services\Accreditation\AccreditationUtility;
 use App\Services\Accreditation\Enum\ExamType;
+use Shadow\Kernel\Reception;
 
 class AccreditationAdminViewContent
 {
@@ -175,7 +176,6 @@ class AccreditationAdminViewContent
                     padding-top: 0;
                 }
 
-
                 @media screen and (max-width: 511px) {
                     nav ul li {
                         display: list-item;
@@ -217,7 +217,7 @@ class AccreditationAdminViewContent
                     }
 
                     details {
-                        margin: 1rem 0 0.5rem 0;
+                        margin: 0 0 1rem 0;
                     }
                 }
 
@@ -234,6 +234,10 @@ class AccreditationAdminViewContent
                 }
 
                 @media screen and (min-width: 512px) {
+                    details {
+                        margin-top: 0;
+                    }
+
                     .header-nav-left {
                         max-width: 200px;
                         margin: 0;
@@ -267,9 +271,9 @@ class AccreditationAdminViewContent
                                 $this->controller->pageType === 'user'
                                 && $this->controller->myId === $this->controller->currentId
                             ) : ?>
-                                <li><b><a href="./user?id=<?php echo $this->controller->myId ?>"><?php echo $value ?></a></b></li>
+                                <li><b><a href="./user?id=<?php echo $this->controller->myId ?>&all"><?php echo $value ?></a></b></li>
                             <?php else : ?>
-                                <li><a href="./user?id=<?php echo $this->controller->myId ?>"><?php echo $value ?></a></li>
+                                <li><a href="./user?id=<?php echo $this->controller->myId ?>&all"><?php echo $value ?></a></li>
                             <?php endif ?>
 
                         <?php elseif ($key === 'home') : ?>
@@ -354,19 +358,19 @@ class AccreditationAdminViewContent
                 ['投稿者の<wbr>一覧', 'contributors'],
             ] as $p) : ?>
                 <?php if ($this->controller->pageType === $p[1]) : ?>
-                    <a href="./home"><i><?php echo $p[0] ?></i></a>
+                    <a href="./home<?php if (Reception::has('all')) echo '?all' ?>"><i><?php echo $p[0] ?></i></a>
                 <?php else : ?>
-                    <a href="./<?php echo $p[1] ?>"><b><?php echo $p[0] ?></b></a>
+                    <a href="./<?php echo $p[1] ?><?php if (Reception::has('all')) echo '?all' ?>"><b><?php echo $p[0] ?></b></a>
                 <?php endif ?>
             <?php endforeach ?>
         </div>
         <?php if ($showTypeTab) : ?>
-            <?php $this->typeTab() ?>
+            <?php $this->typeTab(true) ?>
         <?php endif ?>
     <?php
     }
 
-    function typeTab()
+    function typeTab(bool $showAllTab = false)
     { ?>
         <style>
             .type-tab {
@@ -394,14 +398,28 @@ class AccreditationAdminViewContent
                     gap: 20px;
                 }
             }
+
+            @media screen and (max-width: 359px) {
+                .type-tab {
+                    font-size: 14px;
+                }
+            }
         </style>
         <div class="type-tab">
             <?php foreach ([
                 'bronze' => 'ブロンズ',
                 'silver' => 'シルバー',
                 'gold' => 'ゴールド',
-            ] as $key => $value) : ?>
-                <?php if ($key !== $this->controller->type->value) : ?>
+            ] + ($showAllTab ? ['all' => 'すべて'] : []) as $key => $value) : ?>
+                <?php if ($key === 'all') : ?>
+                    <?php if (Reception::has('all')) : ?>
+                        <b><?php echo $value ?></b>
+                    <?php elseif ($this->controller->pageType === 'user') : ?>
+                        <a href="./../<?php echo $this->controller->type->value . "/user?id=" . $this->controller->currentId ?>&all"><?php echo $value ?></a>
+                    <?php else : ?>
+                        <a href="./../<?php echo $this->controller->type->value . "/" . $this->controller->pageType ?>?all"><?php echo $value ?></a>
+                    <?php endif ?>
+                <?php elseif ($key !== $this->controller->type->value || Reception::has('all')) : ?>
                     <?php if ($this->controller->pageType === 'user') : ?>
                         <a href="./../<?php echo $key . "/user?id=" . $this->controller->currentId ?>"><?php echo $value ?></a>
                     <?php else : ?>
@@ -438,12 +456,12 @@ class AccreditationAdminViewContent
                 ) : ?>
                     <?php $this->adminProfileForm() ?>
                 <?php endif ?>
-                <p><small><b>ニックネーム</b><br><?php echo $profile['name'] ?></small></p>
+                <p style="margin-top: 0;"><small>ニックネーム<br><span style="color: #111; font-size: 15px;"><?php echo $profile['name'] ?></span></small></p>
                 <?php if ($profile['url']) : ?>
                     <p>
                         <small>
-                            <b>オープンチャット</b><br>
-                            <a style="color: rgb(29, 155, 240);" href="<?php echo $profile['url'] ?>"><?php echo $profile['room_name'] ?></a>
+                            <span>オープンチャット</span><br>
+                            <a style="color: rgb(29, 155, 240); font-size: 15px;" href="<?php echo $profile['url'] ?>"><?php echo $profile['room_name'] ?></a>
                         </small>
                     </p>
                 <?php endif ?>
@@ -480,7 +498,7 @@ class AccreditationAdminViewContent
                     <div style="margin-bottom: 12px;">
                         <div style="margin-bottom: 4px;"><small>ニックネーム</small></div>
                         <div>
-                            <a style="color: #111;" href="./user?id=<?php echo $p['id'] ?>"><?php echo $p['name'] ?></a>
+                            <a style="color: #111;" href="./user?id=<?php echo $p['id'] ?>&all"><?php echo $p['name'] ?></a>
                         </div>
                     </div>
                     <?php if ($p['url']) : ?>
@@ -958,8 +976,20 @@ class AccreditationAdminViewContent
                     overflow: hidden;
                     word-break: break-all;
                 }
+
+                .exam-title-chip {
+                    margin-right: 8px;
+                    display: flex;
+                    padding: 4px 7px;
+                    border-radius: 2rem;
+                    font-size: 11px;
+                    line-height: 1;
+                    color: #777;
+                    border: 1px solid;
+                    font-weight: bold;
+                    align-items: center;
+                }
             </style>
-            <small style="margin-right: auto; user-select: none; font-size: 15px; color: #000; font-weight: 700;">全 <?php echo $listLen ?> 件</small>
             <?php if (!$editorMode && $listLen > 1) : ?>
                 <details>
                     <summary>目次を開く</summary>
@@ -973,16 +1003,22 @@ class AccreditationAdminViewContent
                     </div>
                 </details>
             <?php endif ?>
+            <small style="margin-right: auto; user-select: none; font-size: 15px; color: #000; font-weight: 700;">全 <?php echo $listLen ?> 件</small>
             <?php foreach ($this->controller->questionList as $el) : ?>
                 <?php $edit = AccreditationUtility::isQuestionEditable($el, $this->controller->myId, $this->controller->isAdmin) ?>
 
                 <aside class="question_paper <?php if ($el->publishing) echo 'published' ?>" id="id-<?php echo $el->id ?>">
                     <div style="display: flex; justify-content: space-between;">
-                        <?php if ($el->publishing) : ?>
-                            <small style="display: block; font-weight: bold; font-size: 14px;">問題ID: <?php echo ($el->id) ?>（出題中）</small>
-                        <?php else : ?>
-                            <small style="display: block; font-size: 14px;">問題ID: <?php echo ($el->id) ?></small>
-                        <?php endif ?>
+                        <div style="display: flex; align-items: center;">
+                            <div class="exam-title-chip">
+                                <div><?php echo $this->getExamTypeName(ExamType::from($el->type)) ?></div>
+                            </div>
+                            <?php if ($el->publishing) : ?>
+                                <small style="display:block; font-weight: bold; font-size: 14px;">問題ID: <?php echo ($el->id) ?>（出題中）</small>
+                            <?php else : ?>
+                                <small style="display:block; font-size: 14px;">問題ID: <?php echo ($el->id) ?></small>
+                            <?php endif ?>
+                        </div>
                         <?php if ($edit && !$editorMode) : ?>
                             <a href="./editor?id=<?php echo $el->id ?>">編集</a>
                         <?php endif ?>
@@ -1021,7 +1057,7 @@ class AccreditationAdminViewContent
                             <small style="display: block;">👑</small>
                         <?php endif ?>
 
-                        <small style="display: block;"><a href="./user?id=<?php echo $el->user_id ?>"><?php echo $el->user_name ?></a></small>
+                        <small style="display: block;"><a href="./user?id=<?php echo $el->user_id ?>&all"><?php echo $el->user_name ?></a></small>
                         <small style="display: block; word-break: keep-all; text-wrap: nowrap;"><?php echo formatDateTimeHourly2($el->created_at, true) ?></small>
                     </div>
 
@@ -1033,7 +1069,7 @@ class AccreditationAdminViewContent
                                 <small style="display: block;">👑</small>
                             <?php endif ?>
 
-                            <small style="display: block;"><a href="./user?id=<?php echo $el->edit_user_id ?>"><?php echo $el->edit_user_name ?></a></small>
+                            <small style="display: block;"><a href="./user?id=<?php echo $el->edit_user_id ?>&all"><?php echo $el->edit_user_name ?></a></small>
                             <small style="display: block; word-break: keep-all; text-wrap: nowrap;"><?php echo formatDateTimeHourly2($el->edited_at, true) ?></small>
                         </div>
                     <?php endif ?>

@@ -24,9 +24,16 @@ class AccreditationUserModel
     /**
      * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int }[]
      */
-    function getProfilesByType(ExamType $type): array
+    function getProfilesByType(?ExamType $type): array
     {
-        $type = $type->value;
+        $params = null;
+        $where = '';
+
+        if ($type) {
+            $type = $type->value;
+            $params = compact('type');
+            $where = "AND type = :type";
+        }
 
         return AccreditationDB::fetchAll(
             "SELECT
@@ -41,12 +48,12 @@ class AccreditationUserModel
                         exam
                     WHERE
                         user_id = t1.id
-                        AND type = :type
+                        {$where}
                 )
             ORDER BY
                 t1.is_admin DESC,
                 name COLLATE utf8mb4_bin;",
-            compact('type')
+            $params
         );
     }
 
@@ -205,13 +212,19 @@ class AccreditationUserModel
     /**
      * @return QuestionDto[]
      */
-    function getMyQuestionList(int $user_id, ExamType $type): array
+    function getMyQuestionList(int $user_id, ?ExamType $type = null): array
     {
-        $type = $type->value;
+        $params = compact('user_id');
+        $where = "WHERE t1.user_id = :user_id";
+
+        if ($type) {
+            $params['type'] = $type->value;
+            $where .= " AND type = :type";
+        }
 
         return AccreditationDB::fetchAll(
-            $this->getQuestionQuery() . "WHERE t1.user_id = :user_id AND type = :type ORDER BY t1.id DESC",
-            compact('user_id', 'type'),
+            $this->getQuestionQuery() . $where. " ORDER BY t1.id DESC",
+            $params,
             [\PDO::FETCH_CLASS, QuestionDto::class]
         );
     }

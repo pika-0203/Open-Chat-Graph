@@ -12,19 +12,22 @@ $view = new AccreditationAdminViewContent($controller);
 <body>
     <?php $view->header() ?>
     <main>
-        <?php $view->typeTab() ?>
         <div style="margin-top:0;">
             <?php if ($view->controller->currentId === $view->controller->myId) : ?>
-                <h2>投稿した問題<?php $view->examTitle() ?></h2>
                 <?php $view->userTerm() ?>
-                <hr>
+                <div style="margin: 1rem 0;">
+                    <?php $view->typeTab(true) ?>
+                </div>
                 <?php $view->questionList() ?>
             <?php else : ?>
-                <h2>投稿者<?php $view->examTitle() ?></h2>
-                <?php $view->profile(true) ?>
+                <div style="margin: -1rem 0;">
+                    <?php $view->profile(true) ?>
+                </div>
+                <div style="margin: 24px 0 1rem 0;">
+                    <?php $view->typeTab(true) ?>
+                </div>
                 <?php $view->questionList() ?>
             <?php endif ?>
-        </div>
     </main>
     <?php $view->footer(false) ?>
 </body>

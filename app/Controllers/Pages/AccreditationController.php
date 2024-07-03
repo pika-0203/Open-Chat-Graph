@@ -10,6 +10,7 @@ use App\Services\Accreditation\AccreditationUtility;
 use App\Services\Accreditation\Auth\CookieLineUserLogin;
 use App\Services\Accreditation\Dto\QuestionDto;
 use App\Services\Accreditation\Enum\ExamType;
+use Shadow\Kernel\Reception;
 use Shared\Exceptions\NotFoundException;
 
 class AccreditationController
@@ -95,7 +96,10 @@ class AccreditationController
 
     function user(array $controller)
     {
-        $this->questionList = $this->accreditationUserModel->getMyQuestionList($this->currentId, $this->type);
+        $this->questionList = $this->accreditationUserModel->getMyQuestionList(
+            $this->currentId,
+            Reception::has('all') ? null : $this->type
+        );
 
         if ($this->profileArray['id'] === $this->currentId) {
             $this->currentProfileArray = $this->profileArray;
@@ -143,21 +147,27 @@ class AccreditationController
 
     function unpublished(array $controller)
     {
-        $this->questionList = $this->accreditationUserModel->getQuestionList(0, $this->type);
+        $this->questionList = Reception::has('all')
+            ? $this->accreditationUserModel->getQuestionListAll(0)
+            : $this->accreditationUserModel->getQuestionList(0, $this->type);
 
         return view('accreditation/questionList', $controller);
     }
 
     function published(array $controller)
     {
-        $this->questionList = $this->accreditationUserModel->getQuestionList(1, $this->type);
+        $this->questionList = Reception::has('all')
+            ? $this->accreditationUserModel->getQuestionListAll(1)
+            : $this->accreditationUserModel->getQuestionList(1, $this->type);
 
         return view('accreditation/questionList', $controller);
     }
 
     function contributors(array $controller)
     {
-        $this->currentContributorsArray = $this->accreditationUserModel->getProfilesByType($this->type);
+        $this->currentContributorsArray = $this->accreditationUserModel->getProfilesByType(
+            Reception::has('all') ? null : $this->type
+        );
 
         return view('accreditation/contributors', $controller);
     }

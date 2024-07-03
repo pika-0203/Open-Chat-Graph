@@ -14,11 +14,8 @@ $returnTo = "?return_to=/accreditation/{$view->controller->type->value}/user?id=
     <?php $view->header() ?>
     <main>
         <?php $view->typeTab() ?>
-        <div style="margin-top:0;">
-            <h2>問題を投稿<?php $view->examTitle() ?></h2>
-            <?php $view->termQ() ?>
-        </div>
-        <hr>
+        <h2>問題を投稿<?php $view->examTitle() ?></h2>
+        <?php $view->termQ() ?>
         <?php $view->questionForm($returnTo) ?>
     </main>
     <?php $view->footer() ?>

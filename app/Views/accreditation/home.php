@@ -94,24 +94,13 @@ $view = new AccreditationAdminViewContent($controller);
         .exam-title-chip {
             margin-right: 6px;
             display: inline-block;
-            padding: 2px 7px;
+            padding: 4px 7px;
             border-radius: 2rem;
             font-size: 11px;
-            line-height: 1.3;
-            color: #fff;
+            line-height: 1;
+            color: #777;
+            border: 1px solid;
             font-weight: bold;
-        }
-
-        .gold-chip {
-            background: linear-gradient(45deg, #B67B03 0%, #DAAF08 45%, #FEE9A0 70%, #DAAF08 85%, #B67B03 90% 100%);
-        }
-
-        .silver-chip {
-            background: linear-gradient(45deg, #757575 0%, #9E9E9E 45%, #E8E8E8 70%, #9E9E9E 85%, #757575 90% 100%);
-        }
-
-        .bronze-chip {
-            background: linear-gradient(45deg, #cd7f32 0%, #d88b42 30%, #e6b377 50%, #f0c490 70%, #e6b377 85%, #cd7f32 100%);
         }
 
         @media screen and (min-width: 512px) {
@@ -136,10 +125,12 @@ $view = new AccreditationAdminViewContent($controller);
             <?php foreach ($list as $q) : ?>
                 <?php $type = ExamType::from($q->type) ?>
                 <a class="list-wrapper" href="./../<?php echo $q->type . "/" . ($q->publishing ? 'published' : 'unpublished') ?>#id-<?php echo $q->id ?>">
-                    <span class="exam-title-chip <?php echo $q->type ?>-chip"><?php echo $view->getExamTypeName($type) ?></span>
-                    <small style="margin-right: 4px; color: #111;"><?php echo $q->user_name ?></small>
-                    <small style="margin-right: 4px; color: #777;"><?php echo timeElapsedString($q->created_at) ?></small>
-                    <small style="margin-right: 4px; color: #aaa; font-weight: <?php echo $q->publishing ? 'normal' : 'bold' ?>;"><?php echo $q->publishing ? '出題中' : '未公開' ?></small>
+                    <div style="display: flex; align-items: center;">
+                        <span class="exam-title-chip"><?php echo $view->getExamTypeName($type) ?></span>
+                        <small style="margin-right: 4px; color: #111;"><?php echo $q->user_name ?></small>
+                        <small style="margin-right: 4px; color: #777;"><?php echo timeElapsedString($q->created_at) ?></small>
+                        <small style="margin-right: 4px; color: #aaa; font-weight: <?php echo $q->publishing ? 'normal' : 'bold' ?>;"><?php echo $q->publishing ? '出題中' : '未公開' ?></small>
+                    </div>
                     <span class="question-link"><?php echo $q->question ?></span>
                 </a>
             <?php endforeach ?>
@@ -160,11 +151,11 @@ $view = new AccreditationAdminViewContent($controller);
                     <?php $counts = $model->getQuestionCount(); ?>
                     <?php foreach (ExamType::cases() as $type) : ?>
                         <tr>
-                            <td style="color: <?php echo $view->getTypeColor($type) ?>; font-weight: bold;">
+                            <td style="font-weight: bold;">
                                 <?php echo $view->getExamTypeName($type) ?>
                             </td>
                             <td>
-                                <span style="font-weight: bold;"><?php echo $counts['total_count_' . $type->value] ?> 件</span>
+                                <span><?php echo $counts['total_count_' . $type->value] ?> 件</span>
                             </td>
                             <td>
                                 <span><?php echo $counts['publishing_count_' . $type->value] ?> 件</span>
@@ -175,17 +166,15 @@ $view = new AccreditationAdminViewContent($controller);
                         </tr>
                     <?php endforeach ?>
                     <tr>
-                        <td style="margin-top: 12px;">
-                            全体
-                        </td>
+                        <td>合計</td>
                         <td>
                             <span style="font-weight: bold;"><?php echo $counts['total_count_bronze'] + $counts['total_count_silver'] + $counts['total_count_gold'] ?> 件</span>
                         </td>
                         <td>
-                            <span><?php echo $counts['publishing_count_bronze'] + $counts['publishing_count_silver'] + $counts['publishing_count_gold'] ?> 件</span>
+                            <span style="font-weight: bold;"><?php echo $counts['publishing_count_bronze'] + $counts['publishing_count_silver'] + $counts['publishing_count_gold'] ?> 件</span>
                         </td>
                         <td>
-                            <span><?php echo ($counts['total_count_bronze'] + $counts['total_count_silver'] + $counts['total_count_gold']) - ($counts['publishing_count_bronze'] + $counts['publishing_count_silver'] + $counts['publishing_count_gold']) ?> 件</span>
+                            <span style="font-weight: bold;"><?php echo ($counts['total_count_bronze'] + $counts['total_count_silver'] + $counts['total_count_gold']) - ($counts['publishing_count_bronze'] + $counts['publishing_count_silver'] + $counts['publishing_count_gold']) ?> 件</span>
                         </td>
                     </tr>
                 </tbody>
@@ -193,7 +182,7 @@ $view = new AccreditationAdminViewContent($controller);
 
         </div>
         <hr>
-        <a href="/accreditation" target="_blank" style="font-size: 16px; font-weight: bold; color: rgb(29, 155, 240);">オプチャ検定｜練習問題</a>
+        <a href="/accreditation" target="_blank" style="font-size: 16px; font-weight: bold; color: #1558d6;">オプチャ検定｜練習問題</a>
         <div style="display: flex; gap: 24px; margin-top: 1rem; flex-wrap: wrap; align-items: center;">
             <small style="word-break: keep-all; text-wrap: nowrap; margin-right: -10px">シェア</small>
 
