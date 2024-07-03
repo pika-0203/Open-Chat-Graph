@@ -16,21 +16,21 @@ use Shared\Exceptions\NotFoundException;
 class AccreditationController
 {
     /** 
-     * @var array{ id:int,user_id:string, name:string, url:string, is_admin:int, room_name:string }|false
+     * @var array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int,created_at:string }|false
      */
     public array|false $profileArray = false;
     public int $myId = 0;
     public bool $isAdmin = false;
 
     /** 
-     * @var array{ id:int,user_id:string, name:string, url:string, is_admin:int, room_name:string }|false
+     * @var array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int,created_at:string }|false
      */
     public array|false $currentProfileArray = false;
     public int $currentPage = 1;
     public int $currentId = 0;
 
     /** 
-     * @var array{ id:int,user_id:string, name:string, url:string, is_admin:int, room_name:string }[]
+     * @var array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int,created_at:string }[]
      */
     public array $currentContributorsArray = [];
 

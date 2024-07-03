@@ -11,7 +11,7 @@ use DateTime;
 class AccreditationUserModel
 {
     /**
-     * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int }|false
+     * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int,created_at:string }|false
      */
     function getProfile(string $user_id): array|false
     {
@@ -22,7 +22,7 @@ class AccreditationUserModel
     }
 
     /**
-     * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int }[]
+     * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int,created_at:string }[]
      */
     function getProfilesByType(?ExamType $type): array
     {
@@ -58,7 +58,7 @@ class AccreditationUserModel
     }
 
     /**
-     * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int }[]
+     * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int,created_at:string }[]
      */
     function getProfilesAll(): array|false
     {
@@ -74,7 +74,7 @@ class AccreditationUserModel
     }
 
     /**
-     * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int }|false
+     * @return array{ id:int,user_id:string,name:string,url:string,room_name:string,is_admin:int,created_at:string }|false
      */
     function getProfileById(int $id): array|false
     {
