@@ -174,6 +174,7 @@ class AccreditationAdminViewContent
 
                 main {
                     padding-top: 0;
+                    max-width: calc(590px + 2rem);
                 }
 
                 @media screen and (max-width: 511px) {
@@ -530,6 +531,14 @@ class AccreditationAdminViewContent
                 position: absolute;
                 right: 0;
                 top: 8px;
+            }
+
+            @media screen and (min-width: 512px) {
+                .createdAt {
+                    font-size: 12px;
+                    color: #777;
+                    right: 1rem;
+                }
             }
         </style>
         <div style="border-top: 1px solid #efefef; margin-top: 1rem;">
