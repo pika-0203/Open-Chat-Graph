@@ -461,7 +461,7 @@ class AccreditationAdminViewContent
                     <p>
                         <small>
                             <span>オープンチャット</span><br>
-                            <a style="color: rgb(29, 155, 240); font-size: 15px;" href="<?php echo $profile['url'] ?>"><?php echo $profile['room_name'] ?></a>
+                            <a style="color: #1558d6; font-size: 15px;" href="<?php echo $profile['url'] ?>"><?php echo $profile['room_name'] ?></a>
                         </small>
                     </p>
                 <?php endif ?>
@@ -491,28 +491,44 @@ class AccreditationAdminViewContent
     function contributors()
     {
     ?>
-        <?php foreach ($this->controller->currentContributorsArray as $p) : ?>
-            <?php if (in_array($p['id'], self::HIDDEN_USER_ID)) continue ?>
-            <section>
-                <aside style="margin: 0.5rem 0;">
-                    <div style="margin-bottom: 12px;">
-                        <div style="margin-bottom: 4px;"><small>ニックネーム</small></div>
+        <style>
+            section aside {
+                margin: 0;
+                box-shadow: unset;
+                border: unset;
+                padding: 1rem 0;
+                border-bottom: 1px solid #efefef;
+                border-radius: unset;
+            }
+
+            section aside:hover {
+                box-shadow: unset;
+            }
+        </style>
+        <div style="border-top: 1px solid #efefef; margin-top: 1rem;">
+            <?php foreach ($this->controller->currentContributorsArray as $p) : ?>
+                <?php if (in_array($p['id'], self::HIDDEN_USER_ID)) continue ?>
+                <section>
+                    <aside>
                         <div>
-                            <a style="color: #111;" href="./user?id=<?php echo $p['id'] ?>&all"><?php echo $p['name'] ?></a>
+                            <div style="font-size: 15px;">
+                                <span style="color: transparent; text-shadow: 0 0 0 rgba(128, 0, 128, 0.7); margin-right: 7px; font-size: 12px;">👤</span><a style="color: #111;" href="./user?id=<?php echo $p['id'] ?>&all"><?php echo $p['name'] ?></a>
+                            </div>
                         </div>
-                    </div>
-                    <?php if ($p['url']) : ?>
-                        <div style="margin-bottom: 12px;">
-                            <div style="margin-bottom: 4px;"><small>オープンチャット</small></div>
-                            <div> <a style="color: #111; color: rgb(29, 155, 240);" href="<?php echo $p['url'] ?>"><?php echo $p['room_name'] ?></a></div>
-                        </div>
-                    <?php endif ?>
-                    <?php if ($p['is_admin']) : ?>
-                        <small>👑サイト管理者</small>
-                    <?php endif ?>
-                </aside>
-            </section>
-        <?php endforeach ?>
+                        <?php if ($p['url']) : ?>
+                            <div style="margin-top: 12px; font-size: 14px;">
+                                <span style="color: transparent; text-shadow: 0 0 0 #b7b7b7; margin-right: 7px; font-size: 12px;">🔗</span><a style="color: #777;" href="<?php echo $p['url'] ?>"><?php echo $p['room_name'] ?></a>
+                            </div>
+                        <?php endif ?>
+                        <?php if ($p['is_admin']) : ?>
+                            <div style="margin-top: 12px; font-size: 12px; color: #777;">
+                                <span>👑 サイト管理者</span>
+                            </div>
+                        <?php endif ?>
+                    </aside>
+                </section>
+            <?php endforeach ?>
+        </div>
     <?php
     }
 
@@ -1040,12 +1056,12 @@ class AccreditationAdminViewContent
                         <p class="question_p">Error: 配列の要素がありません(explanationArray)</p>
                     <?php elseif ($el->explanationArray['source_title'] && $el->explanationArray['source_url']) : ?>
                         <div style="font-size: 14px;">
-                            <div class="word-wrap">出典URL: <a style="color: rgb(29, 155, 240);" href="<?php echo $el->explanationArray['source_url'] ?>" target="_blank"><?php echo $el->explanationArray['source_title'] ?> ↗</a></div>
+                            <div class="word-wrap">出典URL: <a style="color: #1558d6;" href="<?php echo $el->explanationArray['source_url'] ?>" target="_blank"><?php echo $el->explanationArray['source_title'] ?> ↗</a></div>
                             <div class="word-wrap"><small style="color: #aaa;" class="source-url"><?php echo $el->explanationArray['source_url'] ?></small></div>
                         </div>
                     <?php elseif ($el->explanationArray['source_url'] === '') : ?>
                         <div style="font-size: 14px;">
-                            <div class="word-wrap">出典URL: <a style="color: rgb(29, 155, 240);" href="https://openchat-jp.line.me/other/guideline" target="_blank">安心・安全ガイドライン | LINEオープンチャット ↗</a></div>
+                            <div class="word-wrap">出典URL: <a style="color: #1558d6;" href="https://openchat-jp.line.me/other/guideline" target="_blank">安心・安全ガイドライン | LINEオープンチャット ↗</a></div>
                             <div class="word-wrap"><small style="color: #aaa;" class="source-url">https://openchat-jp.line.me/other/guideline</small></div>
                         </div>
                     <?php endif ?>
