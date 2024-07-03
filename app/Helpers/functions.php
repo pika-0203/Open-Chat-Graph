@@ -488,6 +488,49 @@ function formatDateTimeHourly2(string $dateTimeStr): string
     }
 }
 
+function formatDateTime(string $dateTimeStr): string
+{
+    // 引数の日時をDateTimeオブジェクトに変換
+    $dateTime = new \DateTime($dateTimeStr);
+
+    // 現在の年を取得
+    $currentYear = date("Y");
+
+    // 引数の日時の年を取得
+    $yearOfDateTime = $dateTime->format("Y");
+
+    // 現在の年と引数の日時の年を比較
+    if ($yearOfDateTime == $currentYear) {
+        // 今年の場合のフォーマット
+        return $dateTime->format("n/j");
+    } else {
+        // 今年以外の場合のフォーマット
+        return $dateTime->format("Y/n/j");
+    }
+}
+
+function timeElapsedString2(string $datetime, int $thresholdMinutes = 15, int $intervalDate = 6): string
+{
+    $now = new DateTimeImmutable();
+    $interval = $now->diff(new DateTimeImmutable($datetime));
+
+    $totalMinutes = $interval->days * 24 * 60 + $interval->h * 60 + $interval->i;
+
+    if ($totalMinutes <= $thresholdMinutes) {
+        return 'たった今';
+    } elseif ($interval->y > 0 || $interval->d > $intervalDate) {
+        return formatDateTime($datetime);
+    } elseif ($interval->d > 0) {
+        return $interval->d . '日前';
+    } elseif ($interval->h > 0) {
+        return $interval->h . '時間前';
+    } elseif ($interval->i > 0) {
+        return $interval->i . '分前';
+    } else {
+        return $interval->s . '秒前';
+    }
+}
+
 function isMobile(): bool
 {
     $user_agent =  getUA();

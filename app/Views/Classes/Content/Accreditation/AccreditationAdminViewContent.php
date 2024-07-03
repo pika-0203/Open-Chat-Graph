@@ -488,7 +488,7 @@ class AccreditationAdminViewContent
     <?php
     }
 
-    function contributors()
+    function contributors(bool $showCreatedAt = false)
     {
     ?>
         <style>
@@ -499,6 +499,7 @@ class AccreditationAdminViewContent
                 padding: 1rem 0;
                 border-bottom: 1px solid #efefef;
                 border-radius: unset;
+                position: relative;
             }
 
             section aside:hover {
@@ -520,16 +521,29 @@ class AccreditationAdminViewContent
                 overflow: hidden;
                 word-break: break-all;
             }
+
+            .createdAt {
+                line-height: 1;
+                font-size: 10px;
+                color: #999;
+                text-align: end;
+                position: absolute;
+                right: 0;
+                top: 8px;
+            }
         </style>
         <div style="border-top: 1px solid #efefef; margin-top: 1rem;">
             <?php foreach ($this->controller->currentContributorsArray as $p) : ?>
                 <?php if (in_array($p['id'], self::HIDDEN_USER_ID)) continue ?>
                 <section>
                     <aside>
-                        <div>
-                            <div style="font-size: 15px;">
-                                <span style="color: transparent; text-shadow: 0 0 0 rgba(128, 0, 128, 0.7); margin-right: 7px; font-size: 12px;">👤</span><a style="color: #111;" href="./user?id=<?php echo $p['id'] ?>&all"><?php echo $p['name'] ?></a>
+                        <?php if ($showCreatedAt) : ?>
+                            <div class="createdAt">
+                                <span><?php echo timeElapsedString2($p['created_at']) ?></span>
                             </div>
+                        <?php endif ?>
+                        <div style="font-size: 15px;">
+                            <span style="color: transparent; text-shadow: 0 0 0 rgba(128, 0, 128, 0.7); margin-right: 7px; font-size: 12px;">👤</span><a style="color: #111;" href="./user?id=<?php echo $p['id'] ?>&all"><?php echo $p['name'] ?></a>
                         </div>
                         <?php if ($p['url']) : ?>
                             <div class="room-link-wrapper">
