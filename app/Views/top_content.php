@@ -88,7 +88,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('ads/google-responsive')
             ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
-            <?php viewComponent('recommend_list2_accreditation', compact('acrreditation')) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive')
             ?>
@@ -111,7 +110,6 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
             <?php viewComponent('ads/google-responsive')
             ?>
             <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
-            <?php viewComponent('recommend_list2_accreditation', compact('acrreditation')) ?>
             <hr class="hr-bottom">
             <?php viewComponent('ads/google-responsive')
             ?>

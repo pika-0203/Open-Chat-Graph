@@ -239,9 +239,6 @@ viewComponent('oc_head', compact('_css', '_meta', '_schema', '_chartArgDto', '_s
       </div>
       <div id="comment-root"></div>
     </section>
-    <aside class="recommend-list-aside">
-      <?php viewComponent('recommend_list2_accreditation', compact('acrreditation')) ?>
-    </aside>
     <hr class="hr-bottom">
     <?php viewComponent('ads/google-responsive') ?>
 

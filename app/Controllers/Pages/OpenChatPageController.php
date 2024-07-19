@@ -8,7 +8,6 @@ use App\Config\AppConfig;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
 use App\Models\RecommendRepositories\RecommendRankingRepository;
 use App\Models\Repositories\OpenChatPageRepositoryInterface;
-use App\Services\Accreditation\Recommend\AcrreditationRecommend;
 use App\Services\OpenChatAdmin\AdminOpenChat;
 use App\Services\Recommend\Dto\RecommendListDto;
 use App\Services\Recommend\OfficialPageList;
@@ -100,7 +99,6 @@ class OpenChatPageController
         StaticDataFile $staticDataGeneration,
         RecommendGenarator $recommendGenarator,
         RecentCommentListRepositoryInterface $recentCommentListRepository,
-        AcrreditationRecommend $acrreditation,
         int $open_chat_id,
         ?string $isAdminPage,
     ) {
@@ -174,7 +172,6 @@ class OpenChatPageController
             '_adminDto',
             'officialDto',
             'topPagedto',
-            'acrreditation',
         ));
     }
 

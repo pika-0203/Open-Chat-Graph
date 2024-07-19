@@ -6,7 +6,6 @@ namespace App\Controllers\Pages;
 
 use App\Config\AdminConfig;
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
-use App\Services\Accreditation\Recommend\AcrreditationRecommend;
 use App\Services\Recommend\OfficialPageList;
 use App\Services\StaticData\StaticDataFile;
 use App\Views\Schema\PageBreadcrumbsListSchema;
@@ -19,7 +18,6 @@ class IndexPageController
         RecentCommentListRepositoryInterface $recentCommentListRepository,
         PageBreadcrumbsListSchema $pageBreadcrumbsListSchema,
         OfficialPageList $officialPageList,
-        AcrreditationRecommend $acrreditation,
     ) {
         $dto = $staticDataGeneration->getTopPageData();
 
@@ -69,7 +67,6 @@ class IndexPageController
             'officialDto',
             'officialDto2',
             'newComment',
-            'acrreditation',
         ));
     }
 }
