@@ -518,7 +518,7 @@ function timeElapsedString2(string $datetime, int $thresholdMinutes = 15, int $i
 
     if ($totalMinutes <= $thresholdMinutes) {
         return 'たった今';
-    } elseif ($interval->y > 0 || $interval->d > $intervalDate) {
+    } elseif ($interval->y > 0 || $interval->d > $intervalDate || $interval->m > 0) {
         return formatDateTime($datetime);
     } elseif ($interval->d > 0) {
         return $interval->d . '日前';
