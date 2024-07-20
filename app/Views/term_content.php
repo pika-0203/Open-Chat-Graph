@@ -222,13 +222,6 @@ use App\Config\AppConfig;
             <h2>付則</h2>
             <p>2023年5月1日制定</p>
             <p>以上</p>
-            <hr>
-            <aside>
-                <h3>メールでのお問い合わせ先</h3>
-                <p>
-                    <a href="mailto:support@openchat-review.me">support@openchat-review.me</a>
-                </p>
-            </aside>
         </article>
     </main>
 </body>
