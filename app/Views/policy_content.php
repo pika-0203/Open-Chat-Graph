@@ -17,9 +17,10 @@
             <h1 style="letter-spacing: 0px;">オプチャグラフについて</h1>
             <p>オプチャグラフはユーザーがオープンチャットを見つけて、成長傾向をグラフやランキングで比較できるWEBサイトです。</p>
             <p>LINE非公式の<a href="https://github.com/pika-0203/Open-Chat-Graph" target="_blank">オープンソースプロジェクト</a>により運営されています。 </p>
-            <div style="margin: 2rem 0;">
-                <?php viewComponent('update_news', compact('_news')) ?>
-            </div>
+            <!-- <div style="margin: 2rem 0;">
+                <?php //viewComponent('update_news', compact('_news')) 
+                ?>
+            </div> -->
             <!-- <h2>サイトの目的</h2>
             <p>・ユーザーがオープンチャットを見つけて参加する機会を作る</p>
             <p>・オープンチャットの管理者が成長傾向を把握し、比較できる事で運営に役立つ</p> -->
@@ -34,8 +35,8 @@
             <p>
                 <b>データの取得は公式サイトのみから行います。LINEアプリ本体に係るデータを取得することはありません。</b>
             </p>
-            <section style="margin: 2rem 0;">
-                <h3 style="font-size: 14px;">オプチャグラフに掲載される条件</h3>
+            <h2 style="font-size: 15px;">オプチャグラフに掲載される条件</h2>
+            <section style="margin: 0;">
                 <p>
                     オプチャグラフのクローラーは<a href="https://openchat.line.me/jp/explore?sort=RANKING" rel="external" target="_blank">公式サイトのランキング</a>から新しいルームを見つけて登録します。<b>ランキングに掲載されていないルームは登録されません。</b>
                 </p>
@@ -55,8 +56,8 @@
                     <a href="<?php echo url('recently-registered') ?>">最近登録されたオープンチャット</a>
                 </p>
             </section>
-            <section style="margin: 2rem 0;">
-                <h3 style="font-size: 14px;">公式サイトでの掲載条件</h3>
+            <h2 style="font-size: 15px;">公式サイトでの掲載条件</h2>
+            <section style="margin: 0;">
                 <p>
                     オープンチャットの検索を許可しているなどの条件において、開設したルームが公式サイトに掲載されます。
                 </p>
@@ -67,8 +68,8 @@
                     参考ページ: <a href="https://openchat-jp.line.me/other/notice_webmain_3gf87gs1" target="_blank">Webブラウザ版メイン画面公開と検索エンジン対応のお知らせ | LINEオープンチャット</a>
                 </p>
             </section>
-            <section style="margin: 2rem 0;">
-                <h3 style="font-size: 14px;">情報更新のスケジュール</h3>
+            <h2 style="font-size: 15px;">情報更新のスケジュール</h2>
+            <section style="margin: 0;">
                 <p>
                     オプチャグラフのクローラーは公式サイトを定期巡回してルームのタイトル、説明文、画像、人数統計、ランキング履歴などを更新します。
                 </p>
@@ -78,20 +79,20 @@
                     <li>ランキング未掲載かつ1週間以上メンバー数に変動がないルーム: 1週間毎</li>
                 </ul>
             </section>
-            <section style="margin: 2rem 0;">
-                <h3 style="font-size: 14px;">キーワード検索機能について</h3>
+            <h2 style="font-size: 15px;">キーワード検索機能について</h2>
+            <section style="margin: 0;">
                 <p>
                     オプチャグラフが提供するキーワード検索機能は公式サイトからインデックスした情報に基づいています。Google・Yahoo・Bingなどの検索サイトが表示する検索結果と同様の内容です。
                 </p>
                 <p>
                     LINE公式のキーワード検索機能とオプチャグラフはリンクしておらず、異なるものです。オプチャグラフが公式の検索機能からデータを取得することはありません。
                 </p>
-               <!--  <p>
+                <!--  <p>
                     <b>オプチャグラフはLINE公式の検索機能について関与していません。公式の検索機能にルームが表示されない理由を調べることはできません。</b>
                 </p> -->
             </section>
-            <section style="margin: 2rem 0;">
-                <h3 style="font-size: 14px;">ランキングの順位グラフについて</h3>
+            <h2 style="font-size: 15px;">ランキングの順位グラフについて</h2>
+            <section style="margin: 0;">
                 <p>
                     オプチャグラフのクローラーは公式サイトのランキング順位を1時間毎に記録します。ルームの並び順から順位を数えて算出しています。
                 </p>
@@ -143,8 +144,8 @@
                 <div id="comment-root"></div>
             </div> -->
 
-            <h2>メールでのお問い合わせ先</h2>
-            <p>オプチャグラフお問い合わせ窓口: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p>
+            <!-- <h2>メールでのお問い合わせ先</h2>
+            <p>オプチャグラフお問い合わせ窓口: <a href="mailto:support@openchat-review.me">support@openchat-review.me</a></p> -->
         </article>
     </main>
     <footer class="footer-elem-outer">
