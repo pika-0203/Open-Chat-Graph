@@ -49,4 +49,8 @@
         <input type="hidden" name="id" value="<?php echo $_adminDto->id ?>">
         <input type="submit" value="コメントを1週間禁止">
     </form>
+    <form onsubmit="return confirm('部屋を削除しますか？')" action="/admin-api/sitebanroom" method="POST" style="margin: 1rem 0;">
+        <input type="hidden" name="id" value="<?php echo $_adminDto->id ?>">
+        <input type="submit" value="部屋を削除">
+    </form>
 </div>

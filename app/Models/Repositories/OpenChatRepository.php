@@ -121,4 +121,39 @@ class OpenChatRepository implements OpenChatRepositoryInterface
 
         return DB::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
     }
+
+    public function getRejectedEmidAll(): array
+    {
+        $query =
+            'SELECT
+                emid
+            FROM
+                reject_room';
+
+        return DB::fetchAll($query, null, [\PDO::FETCH_COLUMN, 0]);
+    }
+
+    public function addRejectedEmidById(string $emid): bool
+    {
+        $query =
+            'SELECT
+                id
+            FROM
+                open_chat
+            WHERE
+                emid = :emid';
+                
+        if (!DB::fetch($query, ['emid' => $emid])) {
+            return false;
+        }
+
+        $query =
+            'INSERT IGNORE INTO
+                reject_room
+            SET
+                emid = :emid';
+
+        DB::execute($query, ['emid' => $emid]);
+        return true;
+    }
 }

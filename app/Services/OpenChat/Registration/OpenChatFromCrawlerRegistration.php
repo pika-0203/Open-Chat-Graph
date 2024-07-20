@@ -12,8 +12,8 @@ use App\Services\OpenChat\Crawler\OpenChatApiFromEmidDownloader;
 use App\Services\OpenChat\Crawler\OpenChatUrlChecker;
 use App\Services\OpenChat\Dto\OpenChatDto;
 use App\Services\OpenChat\Updater\OpenChatImageStoreUpdater;
+use App\Services\OpenChat\Utility\OpenChatRejectUtility;
 use Shared\Exceptions\ThrottleRequestsException;
-use App\Services\OpenChat\Utility\OpenChatServicesUtility;
 
 class OpenChatFromCrawlerRegistration
 {
@@ -24,6 +24,7 @@ class OpenChatFromCrawlerRegistration
         private OpenChatUrlChecker $openChatUrlChecker,
         private LogRepositoryInterface $logRepository,
         private OpenChatImageStoreUpdater $openChatImageStoreUpdater,
+        private OpenChatRejectUtility $openChatRejectUtility,
     ) {
     }
 
@@ -64,9 +65,8 @@ class OpenChatFromCrawlerRegistration
             return $ocDto;
         }
 
-        if (OpenChatServicesUtility::containsHashtagNolog($ocDto)) {
-            $this->logAddOpenChatError('収集拒否: ' . $emid);
-            return $this->returnMessage('収集拒否');
+        if ($this->openChatRejectUtility->isRejectedOpenChat($ocDto)) {
+            return $this->returnMessage('エラーが発生しました');
         }
 
         return $this->registerRecordProcess($ocDto);

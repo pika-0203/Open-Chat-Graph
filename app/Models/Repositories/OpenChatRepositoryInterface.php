@@ -32,4 +32,8 @@ interface OpenChatRepositoryInterface
      * @return int[]
      */
     public function getOpenChatIdAllByCreatedAtDate(string $date): array;
+
+    public function getRejectedEmidAll(): array;
+
+    public function addRejectedEmidById(string $emid): bool;
 }

@@ -8,7 +8,7 @@ use App\Services\OpenChat\Crawler\OpenChatApiFromEmidDownloader;
 use App\Models\Repositories\OpenChatDataForUpdaterWithCacheRepositoryInterface;
 use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Services\OpenChat\Dto\OpenChatDto;
-use App\Services\OpenChat\Utility\OpenChatServicesUtility;
+use App\Services\OpenChat\Utility\OpenChatRejectUtility;
 use Shadow\DB;
 
 class OpenChatApiDbMergerProcess
@@ -18,6 +18,7 @@ class OpenChatApiDbMergerProcess
         private OpenChatDataForUpdaterWithCacheRepositoryInterface $openChatDataWithCache,
         private OpenChatMargeUpdateProcess $openChatMargeUpdateProcess,
         private OpenChatRepositoryInterface $openChatRepository,
+        private OpenChatRejectUtility $openChatRejectUtility,
     ) {
     }
 
@@ -56,7 +57,7 @@ class OpenChatApiDbMergerProcess
     private function add(OpenChatDto $apiDto): void
     {
         // 収集拒否の場合
-        if (OpenChatServicesUtility::containsHashtagNolog($apiDto)) {
+        if ($this->openChatRejectUtility->isRejectedOpenChat($apiDto)) {
             return;
         }
 

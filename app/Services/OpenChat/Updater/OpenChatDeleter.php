@@ -17,7 +17,7 @@ class OpenChatDeleter
     ) {
     }
 
-    function OpenChatDeleter(int $open_chat_id, string $imgUrl): void
+    function deleteOpenChat(int $open_chat_id, string $imgUrl): void
     {
         $updaterDto = $this->openChatUpdaterDtoFactory->mapToDeleteOpenChatDto($open_chat_id);
         $this->updateRepository->updateOpenChatRecord($updaterDto);

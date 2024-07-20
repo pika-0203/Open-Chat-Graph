@@ -3,20 +3,10 @@
 namespace App\Services\OpenChat\Utility;
 
 use App\Config\AppConfig;
-use App\Services\OpenChat\Dto\OpenChatDto;
 
 class OpenChatServicesUtility
 {
     private static ?\DateTime $date = null;
-
-    /**
-     * @return bool 収集を拒否している場合は true
-     */
-    static function containsHashtagNolog(OpenChatDto $dto): bool
-    {
-        //return strpos($desc, '#nolog') !== false;
-        return false;
-    }
 
     /**
      * @return string Y-m-d

@@ -7,7 +7,10 @@ namespace App\Controllers\Api;
 use App\Config\AdminConfig;
 use App\Models\CommentRepositories\CommentPostRepositoryInterface;
 use App\Models\CommentRepositories\DeleteCommentRepositoryInterface;
+use App\Models\Repositories\OpenChatPageRepositoryInterface;
+use App\Models\Repositories\OpenChatRepositoryInterface;
 use App\Services\Admin\AdminAuthService;
+use App\Services\OpenChat\Updater\OpenChatDeleter;
 use App\Services\OpenChatAdmin\AdminEndPoint;
 use Shared\Exceptions\NotFoundException;
 
@@ -89,6 +92,33 @@ class AdminEndPointController
         if (!$result) {
             return view('admin/admin_message_page', ['title' => '存在しない部屋です', 'message' => '存在しない部屋です']);
         }
+
+        return redirect("oc/{$id}/admin");
+    }
+
+    function sitebanroom(
+        int $id,
+        OpenChatRepositoryInterface $openChatRepository,
+        OpenChatPageRepositoryInterface $openChatPageRepository,
+        OpenChatDeleter $openChatDeleter,
+    ) {
+        $oc = $openChatPageRepository->getOpenChatById($id);
+        if (!$oc) {
+            return view('admin/admin_message_page', ['title' => '存在しない部屋です', 'message' => '存在しない部屋です']);
+        }
+
+        $result = $openChatRepository->addRejectedEmidById($oc['emid']);
+        if (!$result) {
+            return view('admin/admin_message_page', ['title' => 'エラー', 'message' => 'エラー']);
+        }
+
+        $openChatDeleter->deleteOpenChat($id, $oc['img_url']);
+
+        purgeCacheCloudFlare(
+            AdminConfig::CloudFlareZoneID,
+            AdminConfig::CloudFlareApiKey,
+            [url(), url("oc/{$id}")]
+        );
 
         return redirect("oc/{$id}/admin");
     }

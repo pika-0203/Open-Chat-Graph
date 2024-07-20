@@ -232,6 +232,12 @@ Route::path(
     ->matchNum('id');
 
 Route::path(
+    'admin-api/sitebanroom@post',
+    [AdminEndPointController::class, 'sitebanroom']
+)
+    ->matchNum('id');
+
+Route::path(
     'oc/{open_chat_id}/admin',
     [OpenChatPageController::class, 'index']
 )
