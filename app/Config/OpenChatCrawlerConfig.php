@@ -23,7 +23,7 @@ class OpenChatCrawlerConfig
     const DOM_CLASS_DESCRIPTION = '.MdMN06Desc';
     const DOM_CLASS_IMG = '.mdMN01Img';
 
-    const STORE_IMG_QUALITY = 50;
+    const STORE_IMG_QUALITY = 40;
 
     const OPEN_CHAT_API_OC_DATA_FROM_EMID_DOWNLOADER_HEADER = [
         "X-Line-Seo-User: x9bfc33ffe50854cf0d446a6013cf1824",
