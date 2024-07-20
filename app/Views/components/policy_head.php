@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="<?php echo fileUrl("style/{$css}.css") ?>">
     <?php endforeach ?>
     <link rel="icon" type="image/png" href="<?php echo url(\App\Config\AppConfig::SITE_ICON_FILE_PATH) ?>">
-    <script type="module" crossorigin src="/<?php echo getFilePath('js/comment', 'index-*.js') ?>"></script>
+    <!-- <script type="module" crossorigin src="/<?php echo getFilePath('js/comment', 'index-*.js') ?>"></script> -->
     <script defer src="<?php echo fileurl("/js/site_header_footer.js") ?>"></script>
     <link rel="canonical" hrefs="<?php echo url('policy') ?>">
     <?php if (isset($noindex)) : ?>
