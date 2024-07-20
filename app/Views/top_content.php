@@ -135,11 +135,8 @@ viewComponent('head', compact('_css', '_meta', '_schema')) ?>
         <?php viewComponent('ads/google-responsive')
         ?>
         <section class="top-ranking top-btns" style="padding-top: 1rem;">
-            <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('accreditation')  ?>">
-                <span class="ranking-readMore">オプチャについて知る<span class="small">オプチャ検定</span></span>
-            </a>
             <a style="margin-bottom: 0;" class="top-ranking-readMore unset ranking-url" href="<?php echo url('official-ranking') ?>">
-                <span class="ranking-readMore">前回(1時間前)の公式急上昇と人数推移<span class="small">βテスト</span></span>
+                <span class="ranking-readMore">前回(1時間前)の公式急上昇と人数推移</span>
             </a>
             <a class="top-ranking-readMore unset" style="margin:0" href="<?php echo url('labs') ?>">
                 <span class="ranking-readMore" style="display: flex; align-items: center;">
