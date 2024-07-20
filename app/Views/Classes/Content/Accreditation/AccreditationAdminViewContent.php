@@ -642,7 +642,7 @@ class AccreditationAdminViewContent
             <?php if (in_array($this->controller->pageType, ['login', 'home'])) : ?>
                 <hr style="margin-top: 0rem;">
                 <p>
-                    <small>このサイトはLINEオープンチャット非公式です。LINEヤフー社はこの内容に関与していません。<br>監修しているのは一部のLINEオープンチャット公認メンターです。</small>
+                    <small>このサイトはLINEオープンチャット非公式です。LINEヤフー社はこの内容に関与していません。</small>
                 </p>
             <?php elseif ($scrollBtn) : ?>
                 <small style="text-decoration: underline; color: #111; cursor:pointer; display:block; margin-left: auto; width:fit-content;" onclick="window.scroll({top: 0,behavior:'smooth'})">↑ 一番上までスクロール</small>
