@@ -509,40 +509,6 @@ function formatDateTime(string $dateTimeStr): string
     }
 }
 
-function timeElapsedString2(string $datetime, int $thresholdMinutes = 15, int $intervalDate = 6): string
-{
-    $now = new DateTimeImmutable();
-    $interval = $now->diff(new DateTimeImmutable($datetime));
-
-    $totalMinutes = $interval->days * 24 * 60 + $interval->h * 60 + $interval->i;
-
-    if ($totalMinutes <= $thresholdMinutes) {
-        return 'たった今';
-    } elseif ($interval->y > 0 || $interval->d > $intervalDate || $interval->m > 0) {
-        return formatDateTime($datetime);
-    } elseif ($interval->d > 0) {
-        return $interval->d . '日前';
-    } elseif ($interval->h > 0) {
-        return $interval->h . '時間前';
-    } elseif ($interval->i > 0) {
-        return $interval->i . '分前';
-    } else {
-        return $interval->s . '秒前';
-    }
-}
-
-function isMobile(): bool
-{
-    $user_agent =  getUA();
-    if ((strpos($user_agent, 'iPhone') !== false)
-        || (strpos($user_agent, 'Android') !== false)
-    ) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 function sessionStart(): bool
 {
     if (isset($_SERVER['HTTP_HOST'])) {
