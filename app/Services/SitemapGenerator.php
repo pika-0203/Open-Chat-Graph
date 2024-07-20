@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Config\AppConfig;
-use App\Models\Accreditation\AccreditationDB;
-use App\Models\Accreditation\AccreditationUserModel;
 use Asika\Sitemap\Sitemap;
 use Asika\Sitemap\ChangeFreq;
 use Asika\Sitemap\SitemapIndex;
@@ -24,14 +22,12 @@ class SitemapGenerator
     function __construct(
         private OpenChatListRepositoryInterface $ocRepo,
         private RecommendUpdater $recommendUpdater,
-        private AccreditationUserModel $accreditationUserModel,
     ) {
     }
 
     function generate()
     {
         DB::$pdo = null;
-        AccreditationDB::$pdo = null;
 
         $index = new SitemapIndex();
         $index->addItem($this->generateSitemap1(), new \DateTime);
@@ -40,10 +36,6 @@ class SitemapGenerator
         foreach (array_chunk($this->ocRepo->getOpenChatSiteMapData(), 25000) as $i => $openChat) {
             $index->addItem($this->genarateOpenChatSitemap($openChat, $i + 2), new \DateTime);
             $currentNum++;
-        }
-
-        foreach (array_chunk($this->accreditationUserModel->getSiteMapData(), 25000) as $i => $question) {
-            $index->addItem($this->genarateAccreditationSitemap($question, $i + $currentNum + 1), new \DateTime);
         }
 
         safeFileRewrite(self::INDEX_SITEMAP, $index->render(), 0755);

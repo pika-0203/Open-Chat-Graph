@@ -297,17 +297,5 @@ Route::path(
         return ['isAdminPage' => '1'];
     });
 
-Route::path('furigana@POST')
-    ->matchStr('json');
-
-Route::path('furigana/guideline')
-    ->match(fn () => handleRequestWithETagAndCache(getHouryUpdateTime() . 'guideline'));
-
-Route::path(
-    'furigana/defamation-guideline',
-    [FuriganaPageController::class, 'defamationGuideline']
-)
-    ->match(fn () => handleRequestWithETagAndCache(getHouryUpdateTime() . 'defamationGuideline'));
-
 cache();
 Route::run();
