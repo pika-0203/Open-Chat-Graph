@@ -2,14 +2,13 @@
     <section class="unset footer-link-box">
         <ul class="footer-link-inner">
             <li><a class="unset" href="<?php echo url('') ?>">トップ</a></il>
+            <li><a class="unset" href="<?php echo url('ranking') ?>">カテゴリから探す</a></li>
+            <li><a class="unset" style="margin-bottom: 0;" href="https://openchat.line.me/jp/explore" target="_blank">LINE公式ランキング<span class="line-link-icon777"></span></a></li>
+        </ul>
+        <ul class="footer-link-inner">
             <li><a class="unset" href="<?php echo url('policy') ?>">オプチャグラフについて</a></il>
             <li><a class="unset" href="<?php echo url('policy/privacy') ?>">プライバシーポリシー</a></il>
             <li><a class="unset" style="margin-bottom: 0;" href="<?php echo url('policy/term') ?>">利用規約</a></il>
-        </ul>
-        <ul class="footer-link-inner">
-            <li><a class="unset" href="<?php echo url('ranking') ?>">カテゴリから探す</a></li>
-            <li><a class="unset" href="<?php echo url('labs') ?>">分析Labs</a></li>
-            <li><a class="unset" style="margin-bottom: 0;" href="https://openchat.line.me/jp/explore" target="_blank">LINE公式ランキング<span class="line-link-icon777"></span></a></li>
         </ul>
     </section>
     <aside class="open-btn2">
