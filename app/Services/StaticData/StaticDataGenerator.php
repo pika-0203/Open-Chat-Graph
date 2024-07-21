@@ -56,7 +56,7 @@ class StaticDataGenerator
         if(isset($_argDto->subCategories[6])) {
             $key = array_search('オプチャ サポート', $_argDto->subCategories[6]);
             if ($key !== false) {
-                unset($_argDto->subCategories[6][$key]);
+                $_argDto->subCategories[6][$key] = '雑談';
             }
         }
 
