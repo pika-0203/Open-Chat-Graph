@@ -31,11 +31,13 @@ abstract class AbstractSqlImporter
 
     protected function getColumKeys(array $array): array|false
     {
-        if (isset($array[0]) && !empty($array[0]) && !array_is_list($array[0])) {
-            return array_keys($array[0]);
-        }
+        $key = array_key_first($array);
 
-        return false;
+        if (is_null($key)) {
+            return false;
+        }   
+        
+        return array_keys($array[$key]);
     }
 
     abstract protected function importProsess(\PDO $pdo, array $keys, array $chunk, string $tableName): int;
