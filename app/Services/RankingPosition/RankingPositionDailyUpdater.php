@@ -34,9 +34,9 @@ class RankingPositionDailyUpdater
         $data = $this->rankingPositionHourRepository->getDailyMemberStats(new \DateTime($this->date));
         $ocDbIdArray = $this->openChatRepository->getOpenChatIdAll();
 
-        $filteredData = array_filter($data, fn ($stats) => in_array($stats['open_chat_id'], $ocDbIdArray));
+        $filteredData = array_values(array_filter($data, fn ($stats) => in_array($stats['open_chat_id'], $ocDbIdArray)));
         unset($ocDbIdArray);
-        
+
         $this->statisticsRepository->insertMember($filteredData);
     }
 }
