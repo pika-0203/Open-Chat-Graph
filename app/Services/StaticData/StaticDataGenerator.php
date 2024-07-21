@@ -53,6 +53,13 @@ class StaticDataGenerator
         $_argDto->modifiedUpdatedAtDate = file_get_contents(AppConfig::DAILY_CRON_UPDATED_AT_DATE);;
         $_argDto->subCategories = json_decode(file_get_contents(AppConfig::OPEN_CHAT_SUB_CATEGORIES_FILE_PATH), true);
 
+        if(isset($_argDto->subCategories[6])) {
+            $key = array_search('オプチャ サポート', $_argDto->subCategories[6]);
+            if ($key !== false) {
+                unset($_argDto->subCategories[6][$key]);
+            }
+        }
+
         return $_argDto;
     }
 
