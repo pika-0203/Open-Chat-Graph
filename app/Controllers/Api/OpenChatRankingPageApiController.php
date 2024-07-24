@@ -9,7 +9,7 @@ use App\Models\ApiRepositories\OpenChatStatsRankingApiRepository;
 use App\Models\ApiRepositories\OpenChatApiArgs;
 use App\Models\ApiRepositories\OpenChatOfficialRankingApiRepository;
 use App\Services\OpenChat\Enum\RankingType;
-use Shared\Exceptions\BadRequestException as HTTP400;
+use Shared\Exceptions\NotFoundException as HTTP404;
 use Shadow\Kernel\Reception as Recp;
 use Shadow\Kernel\Validator as Valid;
 
@@ -24,7 +24,7 @@ class OpenChatRankingPageApiController
 
     private function validateInputs()
     {
-        $error = HTTP400::class;
+        $error = HTTP404::class;
         Recp::$isJson = true;
 
         $this->args->page = Valid::num(Recp::input('page', 0), min: 0, e: $error);
