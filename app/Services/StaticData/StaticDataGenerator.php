@@ -58,6 +58,8 @@ class StaticDataGenerator
             if ($key !== false) {
                 unset($_argDto->subCategories[6][$key]);
             }
+
+            $_argDto->subCategories[6] = array_values($_argDto->subCategories[6]);
         }
 
         return $_argDto;
