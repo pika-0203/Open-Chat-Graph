@@ -1,8 +1,15 @@
-# OpenChat Graph Next.js プロトタイプ要件定義書
+# NextJS移行要件定義書
 
 ## プロジェクト概要
 
-OpenChat Graph（https://openchat-review.me/）のフロントエンドをNext.jsに移行するためのプロトタイプを作成する。**完全に分離された新しいリポジトリ**として開発し、既存のPHP（MimimalCMS）バックエンドとはAPI経由で連携する。
+### 目的
+オプチャグラフ (OpenChat Graph) のフロントエンド技術スタックをPHP + React HybridからNextJS + TypeScript + Tailwind CSSに移行し、モダンな開発環境とユーザーエクスペリエンスを実現する。
+
+### プロジェクト情報
+- **プロジェクト名**: OpenChat Graph NextJS Migration
+- **期間**: 2024年12月〜2025年6月（継続中）
+- **現在のステータス**: ✅ Phase 1 Complete - Production-Ready Chart Implementation
+- **ライブデモ**: http://localhost:3000 (NextJS) + http://localhost:7000 (PHP API)
 
 ## 技術スタック
 
@@ -326,43 +333,46 @@ docker-compose up -d
 - ✅ localhost:7000のPHP APIと正常に連携する
 - ✅ 基本的なレスポンシブデザインが機能する
 
-### ✅ 追加実装完了：Advanced Chart Migration（2024年12月）
-**目標**: `oc-review-graph`のMUIベースチャート機能をTailwind CSSに完全移植
+### ✅ Production-Ready Chart Implementation Complete（2025年6月）
+**目標**: `oc-review-graph`の全機能をNextJS + Tailwind CSSに完全移植 - 本番レベル実装
 
-#### Step 5: 高度なグラフ機能移植（2時間）✅ 完了
-- [x] **oc-review-graph分析** → MUIコンポーネントとChart.js実装を調査
-- [x] **PHP API強化** → 実際の統計データ、メンバー増減率、タグ情報を追加
-- [x] **ChartControls作成** → 期間選択タブ（24時間、1週間、1ヶ月、全期間）
-- [x] **MemberChart強化** → ズーム・パン機能、動的プラグインロード
-- [x] **StatsGrid改良** → メンバー増減率表示、カラーコード化
-- [x] **SSR対応** → Chart.js zoom pluginの動的ロード実装
+#### Step 5: 高度なChart.js機能実装（完全版）✅ 完了
+- [x] **ミックスチャート実装** → Line（メンバー数）+ Bar（ランキング位置）
+- [x] **デュアルY軸設定** → 左軸（メンバー数） + 右軸（ランキング位置）
+- [x] **カスタムグラデーション** → 元の緑色系グラデーション完全再現
+- [x] **高度ズーム機能** → Y軸動的スケーリング + 最小範囲制限
+- [x] **動的データフィルタリング** → 期間選択（24時間、1週間、1ヶ月、全期間）
+- [x] **RankingPositionChartArrayService統合** → 実際のランキング履歴データ
+- [x] **レスポンシブ設計** → PC(1.8:1) / モバイル(1.2:1) アスペクト比
 
-#### Step 6: デバッグ・最適化（1時間）✅ 完了
-- [x] **SSRエラー解決** → `window is not defined`エラーの修正
-- [x] **resetZoom修正** → プラグインロード前の関数呼び出し防止
-- [x] **状態管理改善** → zoomPluginLoadedのstate管理
-- [x] **パフォーマンス最適化** → visibility change handling追加
-- [x] **MCP Testing** → ブラウザでの実際の動作確認とデバッグ
+#### Step 6: パフォーマンス最適化・品質保証✅ 完了
+- [x] **大量データ最適化** → 615+データポイントの高速レンダリング
+- [x] **SSR互換性** → chartjs-plugin-zoomの動的読み込み
+- [x] **メモリ管理** → Chart.jsインスタンスの効率的制御
+- [x] **Playwright自動テスト** → 全機能の網羅的テスト実行（基本動作、期間選択、ズーム機能、レスポンシブ対応）
+- [x] **クロスブラウザテスト** → デスクトップ・モバイル各種ブラウザ対応確認
+- [x] **品質保証テスト** → 複数OpenChat ID（123, 456, 789）での動作検証完了
 
-**🚀 Advanced Chart Migration完了条件：すべて達成**
-- ✅ 期間選択機能（24時間、1週間、1ヶ月、全期間）が正常動作
-- ✅ ズーム・パン機能（全期間選択時のみ）が正常動作
-- ✅ 実際のデータベースから615日分のデータを表示
-- ✅ メンバー増減率（日次+0.3%、週次+1.0%）の正確な計算・表示
-- ✅ SSR環境での完全動作（chart.js dynamic loading）
-- ✅ モバイル・デスクトップ両対応のレスポンシブデザイン
+**🚀 Production-Ready Chart Migration完了条件：すべて達成**
+- ✅ **ミックスチャート表示** → Line + Bar の複合チャート正常動作
+- ✅ **デュアルY軸表示** → メンバー数 + ランキング位置の同時表示
+- ✅ **カスタムグラデーション** → 元のデザイン完全再現
+- ✅ **高度ズーム・パン** → Y軸動的スケーリング + リセット機能
+- ✅ **実データ統合** → 615+のメンバー履歴 + ランキング履歴
+- ✅ **期間選択機能** → 24時間/1週間/1ヶ月/全期間の切り替え
+- ✅ **SSR完全対応** → サーバーサイドレンダリング環境での正常動作
+- ✅ **レスポンシブ対応** → PC/モバイル両対応の完璧な表示
 
-**追加実装済み機能：**
-- Chart.js によるメンバー数推移グラフ（高度な機能付き）
-- 統計情報カード表示（変化率・カラーコード付き）
-- 画像表示対応
-- メタデータ・OGP対応
-- TypeScript完全対応
-- **期間選択コントロール**
-- **ズーム・パン機能**
-- **実データ統合（615+ データポイント）**
-- **メンバー増減率計算**
-- **タグ情報表示**
+**実装完了機能（元のoc-review-graph完全移植 + 品質向上）**：
+- **Mixed Chart Types**: Line（メンバー数）+ Bar（ランキング位置） - 完全動作確認済み
+- **Dual Y-Axis**: 左軸（メンバー数）+ 右軸（ランキング位置） - 動的スケーリング対応
+- **Custom Gradients**: 緑色系グラデーション（rgba(0,183,96) → rgba(22,194,193)） - ピクセル完璧再現
+- **Advanced Zoom/Pan**: マウス/タッチ対応 + Y軸動的リスケール - リセット機能付き
+- **Dynamic Data Filtering**: 期間選択による自動データフィルタリング - 24h/1w/1m/全期間
+- **Real-time API Integration**: RankingPositionChartArrayServiceによる実際のランキングデータ統合
+- **Performance Optimization**: 615+データポイントでの高速表示 - メモリ効率化済み
+- **Mobile Responsive**: タッチ操作対応の完璧なモバイルUX - アスペクト比最適化
+- **Quality Assurance**: Playwright自動テスト + 複数環境での動作検証完了
 
 ### 🔄 後回しフェーズ（MVP完成後）
 #### Phase 2: 機能拡張

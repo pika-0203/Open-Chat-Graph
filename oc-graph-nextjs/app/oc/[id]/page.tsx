@@ -66,6 +66,8 @@ export default async function OpenChatDetailPage({ params }: PageProps) {
           {/* Member Chart */}
           <MemberChart 
             data={data.statistics.memberHistory}
+            rankings={data.statistics.rankings}
+            rankingData={data.statistics.rankingHistory}
             title="メンバー数推移"
             className="mb-6"
           />

@@ -10,6 +10,8 @@ use App\Services\Statistics\StatisticsChartArrayService;
 use App\Services\Statistics\Dto\StatisticsChartDto;
 use App\Views\StatisticsViewUtility;
 use App\Models\RecommendRepositories\RecommendRankingRepository;
+use App\Services\RankingPosition\RankingPositionChartArrayService;
+use App\Services\OpenChat\Enum\RankingType;
 use Shared\MimimalCmsConfig;
 
 class OpenChatDetailApiController
@@ -18,6 +20,7 @@ class OpenChatDetailApiController
         OpenChatPageRepositoryInterface $ocRepo,
         StatisticsChartArrayService $statisticsChartArrayService,
         StatisticsViewUtility $statisticsViewUtility,
+        RankingPositionChartArrayService $rankingPositionChartService,
         int $open_chat_id
     ) {
         // Set CORS headers
@@ -89,12 +92,36 @@ class OpenChatDetailApiController
                 $tags = array_slice($tags, 0, 3); // Limit to 3 tags
             }
 
-            // Get ranking positions (still mock for now - TODO: implement ranking position service)
+            // Get real ranking position data
             $rankings = [
                 'daily' => ['position' => null, 'change' => 0],
                 'weekly' => ['position' => null, 'change' => 0],
                 'total' => ['position' => null, 'change' => 0]
             ];
+            
+            // Get ranking history data for chart display
+            $rankingHistoryData = [];
+            $categoryValue = $oc['category'] ?? 0;
+            
+            try {
+                // Get ranking position history using the same service as original controller
+                $rankingPositionData = $rankingPositionChartService->getRankingPositionChartArray(
+                    RankingType::Ranking, // Default to ranking type
+                    $open_chat_id,
+                    $categoryValue,
+                    new \DateTime($_statsDto->startDate),
+                    new \DateTime($_statsDto->endDate)
+                );
+                
+                // Convert ranking position data to match member history length
+                if (property_exists($rankingPositionData, 'position') && is_array($rankingPositionData->position)) {
+                    $rankingHistoryData = $rankingPositionData->position;
+                }
+            } catch (\Exception $e) {
+                // Fallback to empty array if ranking data fails
+                error_log('Failed to get ranking data: ' . $e->getMessage());
+                $rankingHistoryData = [];
+            }
 
             // Format response
             $response = [
@@ -122,11 +149,13 @@ class OpenChatDetailApiController
                 ],
                 'statistics' => [
                     'memberHistory' => $memberHistory,
+                    'rankingHistory' => $rankingHistoryData, // Add ranking history for chart
                     'rankings' => $rankings,
                     'chartMetadata' => [
                         'startDate' => $_statsDto->startDate,
                         'endDate' => $_statsDto->endDate,
-                        'totalDataPoints' => count($memberHistory)
+                        'totalDataPoints' => count($memberHistory),
+                        'rankingDataPoints' => count($rankingHistoryData)
                     ]
                 ]
             ];

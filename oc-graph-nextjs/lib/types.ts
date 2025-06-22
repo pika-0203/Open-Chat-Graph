@@ -53,10 +53,12 @@ export interface ChartMetadata {
   startDate: string;
   endDate: string;
   totalDataPoints: number;
+  rankingDataPoints: number;
 }
 
 export interface OpenChatStatistics {
   memberHistory: MemberHistoryPoint[];
+  rankingHistory: (number | null)[]; // Ranking positions over time
   rankings: Rankings;
   chartMetadata: ChartMetadata;
 }
