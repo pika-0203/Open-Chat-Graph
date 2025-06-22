@@ -8,14 +8,17 @@ use App\Config\AppConfig;
 use Shared\MimimalCmsConfig;
 use App\Models\Repositories\DB;
 use App\Services\AiTrend\ClaudeCodeLlmService;
+use App\Services\AiTrend\ManagerFocusedDataService;
 
 class AiTrendAnalysisService
 {
     private ClaudeCodeLlmService $llmService;
+    private ManagerFocusedDataService $managerDataService;
 
     public function __construct()
     {
         $this->llmService = new ClaudeCodeLlmService();
+        $this->managerDataService = new ManagerFocusedDataService();
     }
 
     public function getAiTrendData(): AiTrendDataDto
@@ -23,7 +26,10 @@ class AiTrendAnalysisService
         // DB接続
         DB::connect();
 
-        // 基本データを取得
+        // 管理者向け革命的データ取得
+        $managerData = $this->managerDataService->getManagerActionableData();
+        
+        // 従来データ（下位互換性のため）
         $risingChats = $this->getRisingChats();
         $categoryTrends = $this->getCategoryTrends();
         $tagTrends = $this->getTagTrends();
@@ -33,8 +39,8 @@ class AiTrendAnalysisService
         $historicalData = $this->getHistoricalData();
         $realtimeMetrics = $this->getRealtimeMetrics();
 
-        // LLMによる分析を実行
-        $aiAnalysis = $this->generateAiAnalysis($risingChats, $categoryTrends, $tagTrends, $overallStats, $historicalData);
+        // 新しい管理者特化LLM分析を実行
+        $aiAnalysis = $this->generateManagerFocusedAiAnalysis($managerData, $risingChats, $categoryTrends, $tagTrends, $overallStats, $historicalData);
 
         return new AiTrendDataDto(
             $risingChats,
@@ -144,38 +150,42 @@ class AiTrendAnalysisService
     }
 
     /**
-     * LLM分析と統計的分析を組み合わせた高精度分析を生成
+     * 管理者ペルソナに特化した革命的LLM分析
      */
-    private function generateAiAnalysis(array $risingChats, array $categoryTrends, array $tagTrends, array $overallStats, array $historicalData): AiAnalysisDto
+    private function generateManagerFocusedAiAnalysis(ManagerActionableDataDto $managerData, array $risingChats, array $categoryTrends, array $tagTrends, array $overallStats, array $historicalData): AiAnalysisDto
     {
-        // 統計的分析の実行
-        $statisticalAnalysis = $this->performStatisticalAnalysis($risingChats, $categoryTrends, $tagTrends, $overallStats);
-        
-        // LLM分析の実行（新しいペルソナ重視）
+        // 管理者向けLLM分析の実行
         $llmAnalysis = $this->llmService->generateManagerAnalysis([
+            'winningFormulas' => $managerData->winningFormulas,
+            'blueOceanOpportunities' => $managerData->blueOceanOpportunities,
+            'operationalSecrets' => $managerData->operationalSecrets,
+            'targetStrategies' => $managerData->targetStrategies,
+            'immediateOpportunities' => $managerData->immediateOpportunities,
+            'avoidancePatterns' => $managerData->avoidancePatterns,
             'risingChats' => $risingChats,
             'categoryTrends' => $categoryTrends,
             'tagTrends' => $tagTrends,
             'overallStats' => $overallStats,
-            'historicalData' => $historicalData,
-            'statisticalInsights' => $statisticalAnalysis
+            'historicalData' => $historicalData
         ]);
         
-        // 従来の分析（フォールバック用）
-        $summary = $llmAnalysis['summary'] ?? $this->generateSummary($risingChats, $categoryTrends, $overallStats);
-        $insights = $llmAnalysis['insights'] ?? $this->generateInsights($risingChats, $categoryTrends, $tagTrends);
-        $predictions = $this->generatePredictions($risingChats, $categoryTrends);
+        // フォールバック分析（従来手法）
+        $fallbackAnalysis = [
+            'summary' => $this->generateSummary($risingChats, $categoryTrends, $overallStats),
+            'insights' => $this->generateInsights($risingChats, $categoryTrends, $tagTrends),
+            'alerts' => $this->generateAlerts([], $risingChats, $categoryTrends)
+        ];
+        
+        // 管理者向け分析結果をマージ
+        $summary = $llmAnalysis['summary'] ?? $fallbackAnalysis['summary'];
+        $insights = $llmAnalysis['insights'] ?? $fallbackAnalysis['insights'];
         $recommendations = $llmAnalysis['theme_recommendations'] ?? [];
+        $alerts = $llmAnalysis['alerts'] ?? $fallbackAnalysis['alerts'];
         
-        // 異常検知とアラート（統計的手法 + LLM分析）
-        $anomalies = $this->detectAnomalies($risingChats, $categoryTrends, $historicalData);
-        $alerts = array_merge(
-            $llmAnalysis['alerts'] ?? [],
-            $this->generateStatisticalAlerts($statisticalAnalysis, $anomalies)
-        );
-        
-        // 時系列予測
-        $timeSeriesForecasts = $this->generateTimeSeriesForecasts($historicalData);
+        // 管理者向け追加要素
+        $predictions = $this->generateManagerPredictions($managerData);
+        $anomalies = $this->detectManagerRelevantAnomalies($managerData);
+        $timeSeriesForecasts = $this->generateManagerTimeSeriesForecasts($managerData, $historicalData);
 
         return new AiAnalysisDto(
             $summary, 
@@ -187,6 +197,7 @@ class AiTrendAnalysisService
             $timeSeriesForecasts
         );
     }
+
 
     private function generateSummary(array $risingChats, array $categoryTrends, array $overallStats): string
     {
@@ -1407,6 +1418,95 @@ class AiTrendAnalysisService
         }
         
         return array_slice($alerts, 0, 2);
+    }
+
+    /**
+     * 管理者向け予測生成
+     */
+    private function generateManagerPredictions(ManagerActionableDataDto $managerData): array
+    {
+        $predictions = [];
+        
+        // 勝利の方程式に基づく予測
+        if (!empty($managerData->winningFormulas)) {
+            $topFormula = $managerData->winningFormulas[0];
+            $predictions[] = [
+                'timeframe' => '今後24時間',
+                'confidence' => 85,
+                'content' => sprintf('「%s」パターンを模倣したチャットが成功する可能性が高い。成功確率%d%%の実証済み手法。', 
+                    $topFormula['template_name'] ?? 'テンプレート不明', 
+                    $topFormula['success_probability'] ?? 80)
+            ];
+        }
+        
+        // ブルーオーシャンチャンス予測
+        if (!empty($managerData->blueOceanOpportunities)) {
+            $topOpportunity = $managerData->blueOceanOpportunities[0];
+            $predictions[] = [
+                'timeframe' => '今後1週間',
+                'confidence' => 75,
+                'content' => sprintf('「%s」分野は競合%d個と少なく、新規参入で先行者利益を得られる可能性が高い。', 
+                    $topOpportunity['theme'] ?? 'テーマ不明',
+                    $topOpportunity['market_metrics']['existing_chats'] ?? 0)
+            ];
+        }
+        
+        return $predictions;
+    }
+
+    /**
+     * 管理者関連の異常検知
+     */
+    private function detectManagerRelevantAnomalies(ManagerActionableDataDto $managerData): array
+    {
+        $anomalies = [];
+        
+        // 成功パターンの急激な変化
+        if (!empty($managerData->winningFormulas)) {
+            foreach ($managerData->winningFormulas as $formula) {
+                $hourGrowth = $formula['growth_trajectory']['hour'] ?? 0;
+                if ($hourGrowth > 20) {
+                    $anomalies[] = [
+                        'type' => 'extreme_success_pattern',
+                        'severity' => 'high',
+                        'description' => sprintf('「%s」パターンが異常な成長（+%d人/時）を記録。緊急分析・模倣推奨。', 
+                            $formula['template_name'] ?? '不明パターン', $hourGrowth),
+                        'chat_name' => $formula['chat_example']['name'] ?? '',
+                        'growth_rate' => $hourGrowth
+                    ];
+                }
+            }
+        }
+        
+        return $anomalies;
+    }
+
+    /**
+     * 管理者向け時系列予測
+     */
+    private function generateManagerTimeSeriesForecasts(ManagerActionableDataDto $managerData, array $historicalData): array
+    {
+        // ブルーオーシャン分野の成長予測
+        $forecasts = [];
+        
+        if (!empty($managerData->blueOceanOpportunities)) {
+            foreach ($managerData->blueOceanOpportunities as $opportunity) {
+                $forecasts[] = [
+                    'theme' => $opportunity['theme'] ?? '',
+                    'predicted_growth' => 'moderate_increase',
+                    'market_window' => '30-60日',
+                    'action_urgency' => $opportunity['opportunity_score'] > 80 ? 'high' : 'medium'
+                ];
+            }
+        }
+        
+        return [
+            'opportunity_windows' => $forecasts,
+            'summary' => [
+                'most_urgent_action' => !empty($forecasts) ? $forecasts[0]['theme'] : '分析中',
+                'optimal_launch_timing' => '今後2週間以内'
+            ]
+        ];
     }
 
     private function generateRecommendations(array $risingChats, array $tagTrends): array

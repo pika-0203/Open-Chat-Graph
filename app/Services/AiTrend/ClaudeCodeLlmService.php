@@ -29,46 +29,76 @@ class ClaudeCodeLlmService
      */
     private function buildManagerAnalysisPrompt(array $data): string
     {
+        // 新しい管理者特化データの取得
+        $winningFormulas = $data['winningFormulas'] ?? [];
+        $blueOceanOpportunities = $data['blueOceanOpportunities'] ?? [];
+        $operationalSecrets = $data['operationalSecrets'] ?? [];
+        $targetStrategies = $data['targetStrategies'] ?? [];
+        $immediateOpportunities = $data['immediateOpportunities'] ?? [];
+        $avoidancePatterns = $data['avoidancePatterns'] ?? [];
+        
+        // 従来データ（補助として）
         $risingChats = $data['risingChats'] ?? [];
         $categoryTrends = $data['categoryTrends'] ?? [];
         $tagTrends = $data['tagTrends'] ?? [];
         $overallStats = $data['overallStats'] ?? [];
         $timeContext = $this->getTimeContext();
         
-        // データを文字列形式で整理
-        $risingChatsText = $this->formatRisingChatsForPrompt($risingChats);
-        $categoryTrendsText = $this->formatCategoryTrendsForPrompt($categoryTrends);
-        $tagTrendsText = $this->formatTagTrendsForPrompt($tagTrends);
+        // 新しいデータを文字列形式で整理
+        $winningFormulasText = $this->formatWinningFormulasForPrompt($winningFormulas);
+        $blueOceanText = $this->formatBlueOceanForPrompt($blueOceanOpportunities);
+        $operationalSecretsText = $this->formatOperationalSecretsForPrompt($operationalSecrets);
+        $immediateOpportunitiesText = $this->formatImmediateOpportunitiesForPrompt($immediateOpportunities);
+        
+        // 従来データ（簡略化）
+        $risingChatsText = $this->formatRisingChatsForPrompt(array_slice($risingChats, 0, 5));
+        $categoryTrendsText = $this->formatCategoryTrendsForPrompt(array_slice($categoryTrends, 0, 3));
+        $tagTrendsText = $this->formatTagTrendsForPrompt(array_slice($tagTrends, 0, 5));
         $statsText = $this->formatOverallStatsForPrompt($overallStats);
         
         return <<<PROMPT
-# LINE OpenChat管理者向けトレンド分析
+# LINE OpenChat管理者向け戦略的分析レポート
 
 ## ペルソナ
-- **新規管理者候補**: 新しいオープンチャットを作って人数を集めたい人
-- **既存管理者**: 今運営しているオープンチャットをより人気にしたい管理者
-- **共通の関心**: どのようなテーマで作れば・変更すれば人が集まるかを知りたい
+**ミッション**: 明日新しいオープンチャットを作成して確実に人を集めたい管理者
+**課題**: 「どのテーマで」「どんな名前で」「どう運営すれば」成功するかを具体的に知りたい
+**期待**: データに基づいた即実行可能な戦略を求めている
 
-## 分析対象データ
+## 実証済み成功パターン（勝利の方程式）
+```
+{$winningFormulasText}
+```
 
-### 急成長チャット（直近1時間）
+## 未開拓チャンス分野（ブルーオーシャン）
+```
+{$blueOceanText}
+```
+
+## 成功チャットの運営秘訣
+```
+{$operationalSecretsText}
+```
+
+## 今この瞬間のチャンス
+```
+{$immediateOpportunitiesText}
+```
+
+## 補助データ（参考用）
+
+### 最新の急成長事例
 ```
 {$risingChatsText}
 ```
 
-### カテゴリ別成長状況
+### 主要カテゴリ動向
 ```
 {$categoryTrendsText}
 ```
 
-### 注目タグ・キーワード
+### 注目タグ
 ```
 {$tagTrendsText}
-```
-
-### 全体統計
-```
-{$statsText}
 ```
 
 ### 時間コンテキスト
@@ -78,33 +108,35 @@ class ClaudeCodeLlmService
 
 ## 求める分析内容
 
+**ターゲット**: オープンチャット管理者（新規・既存問わず）が「明日から実行できる具体的アクション」を提供
+
 以下のJSON形式で分析結果を出力してください：
 
 ```json
 {
-  "summary": "管理者向けの戦略的サマリー（150文字以内）",
+  "summary": "今すぐ新規作成・改修すべきチャットテーマと理由（120文字以内）",
   "insights": [
     {
       "icon": "絵文字",
-      "title": "洞察のタイトル（50文字以内）",
-      "content": "具体的な分析内容と管理者向けアドバイス（200文字以内）"
+      "title": "成功パターンの核心（40文字以内）",
+      "content": "なぜ伸びているか＋管理者が今すぐ取り入れられる運営手法（180文字以内）"
     }
   ],
   "alerts": [
     {
       "level": "critical/warning/info",
       "icon": "絵文字", 
-      "title": "アラートタイトル（50文字以内）",
-      "message": "具体的なメッセージとアクション案（150文字以内）",
+      "title": "チャンス・リスク（40文字以内）",
+      "message": "今この瞬間のトレンドと管理者がすべき具体的行動（120文字以内）",
       "action_required": true/false
     }
   ],
   "theme_recommendations": [
     {
-      "theme": "おすすめテーマ名",
-      "reason": "なぜこのテーマが今狙い目なのか",
-      "target": "想定ターゲット層",
-      "strategy": "具体的な運営戦略",
+      "theme": "新規作成・改修すべきテーマ名",
+      "reason": "なぜ今このテーマで作れば人が集まるのか（データ根拠込み）",
+      "target": "具体的なターゲット層",
+      "strategy": "開設初日から実行すべき運営手法・コンテンツ・投稿戦略",
       "competition": "競争激しさ（高/中/低）",
       "growth_potential": "成長ポテンシャル（高/中/低）"
     }
@@ -114,24 +146,30 @@ class ClaudeCodeLlmService
 
 ## 重要な分析観点
 
-1. **成功パターンの特徴**
-   - なぜそのチャットが伸びているか（コンテンツ、運営手法、タイミング）
-   - 参加者が求めているもの（情報、交流、娯楽、学習など）
+**目標**: 管理者が「このテーマでチャットを作れば確実に人が集まる」と確信できる情報提供
 
-2. **テーマ選択の戦略**
-   - 需要があるが競争が少ない狙い目分野
-   - 今まさにブームが来ている分野
-   - 安定して人気のある定番分野
+1. **実行可能なチャット作成指南**
+   - 具体的なチャット名の例
+   - 開設初日に投稿すべき内容
+   - 参加者を惹きつける運営ルール・仕組み
+   - 成長軌道に乗せる最初の1週間の戦略
 
-3. **運営改善のヒント**
-   - 既存チャットで取り入れられる成功要素
-   - 時間帯・曜日・季節を活かした運営
+2. **データ根拠付きの勝ちパターン**
+   - 「○○チャットが+△人」という具体的成功事例
+   - なぜその手法が今の時期・時間帯に効くのか
+   - 同じパターンで作れば再現できる理由
 
-4. **具体性重視**
-   - 「○○系が人気」ではなく「具体的に△△というテーマで××の手法で運営」
-   - 実行可能で即座に試せるアドバイス
+3. **ライバル分析と差別化戦略**
+   - 既存の人気チャットに勝つための差別化ポイント
+   - 競争が少ない今が狙い目の穴場テーマ
+   - 「○○はもう飽和、△△に切り替えるべき」という判断材料
 
-必ずデータに基づいた具体的で実践的な分析を行い、管理者が明日から実行できるアクションを提示してください。
+4. **運営者目線の成功確率評価**
+   - 初心者でも成功しやすいテーマ vs 運営スキルが必要なテーマ
+   - 短期間で結果が出るテーマ vs 長期育成型テーマ
+   - 手間をかけずに人が集まるテーマの特徴
+
+**必須要件**: 「明日チャットを作るならこれ」と言い切れる具体性で、管理者の迷いを完全に解消する分析を提供してください。
 PROMPT;
     }
 
@@ -248,6 +286,158 @@ PROMPT;
                 ]
             ]
         ], JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * 勝利の方程式データのフォーマット
+     */
+    private function formatWinningFormulasForPrompt(array $formulas): string
+    {
+        if (empty($formulas)) {
+            return "勝利の方程式データなし";
+        }
+        
+        $formatted = [];
+        foreach (array_slice($formulas, 0, 3) as $i => $formula) {
+            $template = $formula['template_name'] ?? '';
+            $growth = $formula['growth_trajectory']['hour'] ?? 0;
+            $memberScale = $formula['member_scale'] ?? 0;
+            $category = $formula['category'] ?? '';
+            $successProb = $formula['success_probability'] ?? 0;
+            
+            $formatted[] = sprintf(
+                "成功パターン%d: テンプレート「%s」(+%d人/時, 総%d人, %s) 成功確率%d%%",
+                $i + 1,
+                mb_strimwidth($template, 0, 40, '...'),
+                $growth,
+                $memberScale,
+                $category,
+                $successProb
+            );
+            
+            // 運営手法の詳細
+            if (!empty($formula['replication_blueprint'])) {
+                $blueprint = $formula['replication_blueprint'];
+                $formatted[] = "  └ 手法: " . ($blueprint['step1_naming'] ?? 'ネーミング戦略不明');
+            }
+        }
+        
+        return implode("\n", $formatted);
+    }
+
+    /**
+     * ブルーオーシャンデータのフォーマット
+     */
+    private function formatBlueOceanForPrompt(array $opportunities): string
+    {
+        if (empty($opportunities)) {
+            return "ブルーオーシャンデータなし";
+        }
+        
+        $formatted = [];
+        foreach (array_slice($opportunities, 0, 3) as $i => $opp) {
+            $theme = $opp['theme'] ?? '';
+            $existingChats = $opp['market_metrics']['existing_chats'] ?? 0;
+            $avgSize = $opp['market_metrics']['avg_community_size'] ?? 0;
+            $oppScore = $opp['opportunity_score'] ?? 0;
+            $successProb = $opp['success_probability'] ?? 0;
+            
+            $formatted[] = sprintf(
+                "チャンス%d: 「%s」(競合%d個, 平均%d人, チャンススコア%.1f, 成功率%d%%)",
+                $i + 1,
+                $theme,
+                $existingChats,
+                $avgSize,
+                $oppScore,
+                $successProb
+            );
+            
+            if (!empty($opp['recommended_approach'])) {
+                $formatted[] = "  └ 戦略: " . mb_strimwidth($opp['recommended_approach'], 0, 80, '...');
+            }
+        }
+        
+        return implode("\n", $formatted);
+    }
+
+    /**
+     * 運営秘訣データのフォーマット
+     */
+    private function formatOperationalSecretsForPrompt(array $secrets): string
+    {
+        if (empty($secrets)) {
+            return "運営秘訣データなし";
+        }
+        
+        $formatted = [];
+        foreach (array_slice($secrets, 0, 3) as $i => $secret) {
+            $example = $secret['chat_example'] ?? [];
+            $name = $example['name'] ?? '';
+            $growth = $example['recent_growth'] ?? 0;
+            $memberCount = $example['member_count'] ?? 0;
+            
+            $formatted[] = sprintf(
+                "成功事例%d: 「%s」(+%d人, 総%d人)",
+                $i + 1,
+                mb_strimwidth($name, 0, 30, '...'),
+                $growth,
+                $memberCount
+            );
+            
+            // ネーミング秘訣
+            if (!empty($secret['naming_secrets'])) {
+                $namingSecrets = $secret['naming_secrets'];
+                if (is_array($namingSecrets)) {
+                    $formatted[] = "  └ ネーミング: " . implode(', ', array_slice($namingSecrets, 0, 2));
+                }
+            }
+            
+            // エンゲージメント戦略
+            if (!empty($secret['engagement_strategies'])) {
+                $engagementStrategies = $secret['engagement_strategies'];
+                if (is_array($engagementStrategies)) {
+                    $formatted[] = "  └ 運営手法: " . implode(', ', array_slice($engagementStrategies, 0, 2));
+                }
+            }
+        }
+        
+        return implode("\n", $formatted);
+    }
+
+    /**
+     * 即時チャンスデータのフォーマット
+     */
+    private function formatImmediateOpportunitiesForPrompt(array $opportunities): string
+    {
+        if (empty($opportunities)) {
+            return "即時チャンスデータなし";
+        }
+        
+        $formatted = [];
+        
+        // トレンド中のテーマ
+        if (!empty($opportunities['trending_now'])) {
+            $trending = array_slice($opportunities['trending_now'], 0, 3);
+            foreach ($trending as $i => $trend) {
+                $formatted[] = sprintf("急上昇%d: %s", $i + 1, $trend);
+            }
+        }
+        
+        // 時間最適化
+        if (!empty($opportunities['hourly_optimization'])) {
+            $hourlyOpt = $opportunities['hourly_optimization'];
+            $formatted[] = "時間戦略: " . (is_string($hourlyOpt) ? $hourlyOpt : '時間最適化情報あり');
+        }
+        
+        // 緊急アクション
+        if (!empty($opportunities['urgent_actions'])) {
+            $urgentActions = array_slice($opportunities['urgent_actions'], 0, 2);
+            foreach ($urgentActions as $i => $action) {
+                $formatted[] = sprintf("緊急行動%d: %s", $i + 1, $action);
+            }
+        }
+        
+        return empty($formatted) ? "即時チャンス分析中" : implode("\n", $formatted);
     }
 
     /**
