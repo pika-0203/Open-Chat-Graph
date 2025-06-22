@@ -22,6 +22,11 @@ viewComponent('head', compact('_css', '_meta', '_schema') + ['dataOverlays' => '
         <div class="modify-top-padding">
             <?php viewComponent('topic_tag', ['topPageDto' => $dto]) ?>
             <hr style="margin: 1rem 0;">
+            
+            <?php if (isset($aiTrendData)): ?>
+                <?php viewComponent('ai_trend_analysis', ['aiTrendData' => $aiTrendData]) ?>
+                <hr style="margin: 1rem 0;">
+            <?php endif ?>
         </div>
         <?php if ($dto->recentCommentList): ?>
             <?php viewComponent('top_ranking_recent_comments', ['recentCommentList' => $dto->recentCommentList]) ?>

@@ -2,26 +2,38 @@
 
 declare(strict_types=1);
 
-namespace App\Controllers\Pages;
+namespace App\Services\AiTrend;
 
 use App\Config\AppConfig;
 use Shared\MimimalCmsConfig;
-use Shadow\Kernel\Reception;
 use App\Models\Repositories\DB;
 
-class AiTrendPreviewController
+class AiTrendAnalysisService
 {
     public function __construct()
     {
     }
 
-    public function index(Reception $reception)
+    public function getAiTrendData(): array
     {
         // DB接続
         DB::connect();
 
-        // 1. 急上昇中のオープンチャット（1時間で最も増加）
-        $risingChatsQuery = "
+        // 各種データを取得
+        $risingChats = $this->getRisingChats();
+        $categoryTrends = $this->getCategoryTrends();
+        $tagTrends = $this->getTagTrends();
+        $overallStats = $this->getOverallStats();
+
+        // AIトレンド分析（モックデータ）
+        $aiAnalysis = $this->generateAiAnalysis($risingChats, $categoryTrends, $tagTrends);
+
+        return compact('risingChats', 'categoryTrends', 'tagTrends', 'overallStats', 'aiAnalysis');
+    }
+
+    private function getRisingChats(): array
+    {
+        $query = "
             SELECT 
                 oc.id,
                 oc.name,
@@ -37,12 +49,14 @@ class AiTrendPreviewController
             LIMIT 10
         ";
         
-        $stmt = DB::$pdo->prepare($risingChatsQuery);
+        $stmt = DB::$pdo->prepare($query);
         $stmt->execute();
-        $risingChats = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 
-        // 2. カテゴリ別の増減集計
-        $categoryTrendsQuery = "
+    private function getCategoryTrends(): array
+    {
+        $query = "
             SELECT 
                 oc.category,
                 COUNT(DISTINCT oc.id) as chat_count,
@@ -55,7 +69,7 @@ class AiTrendPreviewController
             ORDER BY total_growth DESC
         ";
         
-        $stmt = DB::$pdo->prepare($categoryTrendsQuery);
+        $stmt = DB::$pdo->prepare($query);
         $stmt->execute();
         $categoryTrends = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         
@@ -65,8 +79,12 @@ class AiTrendPreviewController
             $trend['category_name'] = $categoryMap[$trend['category']] ?? 'その他';
         }
 
-        // 3. 人気タグのトレンド
-        $tagTrendsQuery = "
+        return $categoryTrends;
+    }
+
+    private function getTagTrends(): array
+    {
+        $query = "
             SELECT 
                 r.tag,
                 COUNT(DISTINCT oc.id) as room_count,
@@ -83,12 +101,14 @@ class AiTrendPreviewController
             LIMIT 20
         ";
         
-        $stmt = DB::$pdo->prepare($tagTrendsQuery);
+        $stmt = DB::$pdo->prepare($query);
         $stmt->execute();
-        $tagTrends = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 
-        // 4. 全体統計
-        $overallStatsQuery = "
+    private function getOverallStats(): array
+    {
+        $query = "
             SELECT 
                 COUNT(DISTINCT oc.id) as total_chats,
                 SUM(oc.member) as total_members,
@@ -99,42 +119,9 @@ class AiTrendPreviewController
             LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
         ";
         
-        $stmt = DB::$pdo->prepare($overallStatsQuery);
+        $stmt = DB::$pdo->prepare($query);
         $stmt->execute();
-        $overallStats = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        // AIトレンド分析（モックデータ）
-        $aiAnalysis = $this->generateAiAnalysis($risingChats, $categoryTrends, $tagTrends);
-
-        // メタデータ設定
-        $_meta = meta();
-        $_meta->title = 'AIトレンド分析プレビュー | オプチャグラフ';
-        $_meta->description = 'LINEオープンチャットのAIによるトレンド分析';
-
-        // CSS設定
-        $_css = [
-            'room_list',
-            'site_header',
-            'site_footer'
-        ];
-
-        // スキーマ設定
-        $_schema = '';
-
-        // 更新時刻設定
-        $_updatedAt = new \DateTime();
-
-        return view('ai_trend_preview', [
-            'risingChats' => $risingChats,
-            'categoryTrends' => $categoryTrends,
-            'tagTrends' => $tagTrends,
-            'overallStats' => $overallStats,
-            'aiAnalysis' => $aiAnalysis,
-            '_meta' => $_meta,
-            '_css' => $_css,
-            '_schema' => $_schema,
-            '_updatedAt' => $_updatedAt,
-        ]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     private function generateAiAnalysis(array $risingChats, array $categoryTrends, array $tagTrends): array
@@ -148,14 +135,12 @@ class AiTrendPreviewController
         $currentWeekday = $weekdays[$dayOfWeek];
         
         // トレンド分析のモックデータ生成
-        $analysis = [
+        return [
             'summary' => $this->generateSummary($hour, $currentWeekday, $risingChats, $categoryTrends),
             'insights' => $this->generateInsights($risingChats, $categoryTrends, $tagTrends),
             'predictions' => $this->generatePredictions($tagTrends, $categoryTrends),
             'recommendations' => $this->generateRecommendations($risingChats, $tagTrends),
         ];
-        
-        return $analysis;
     }
     
     private function generateSummary(int $hour, string $weekday, array $risingChats, array $categoryTrends): string

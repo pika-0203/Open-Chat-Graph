@@ -61,8 +61,6 @@ Route::path('policy');
 Route::path('/')
     ->match(fn() => handleRequestWithETagAndCache('index'));
 
-Route::path('ai-trend-preview', [\App\Controllers\Pages\AiTrendPreviewController::class, 'index']);
-
 Route::path('oc/{open_chat_id}', [OpenChatPageController::class, 'index'])
     ->matchNum('open_chat_id', min: 1)
     ->match(fn(int $open_chat_id) => handleRequestWithETagAndCache($open_chat_id));
