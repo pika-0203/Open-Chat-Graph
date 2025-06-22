@@ -211,10 +211,37 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
         </div>
     <?php endif ?>
 
+    <!-- アラート -->
+    <?php if (!empty($aiAnalysis->alerts)): ?>
+        <div class="trend-card">
+            <h3 class="section-title">🚨 重要な動向</h3>
+            <?php foreach ($aiAnalysis->alerts as $alert): ?>
+                <div style="background: <?php echo $alert['level'] === 'critical' ? '#fef2f2' : ($alert['level'] === 'warning' ? '#fefbf2' : '#f0f9ff') ?>; 
+                           border: 1px solid <?php echo $alert['level'] === 'critical' ? '#fecaca' : ($alert['level'] === 'warning' ? '#fed7aa' : '#bae6fd') ?>; 
+                           border-radius: 6px; padding: 16px; margin-bottom: 12px;">
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <span style="font-size: 20px;"><?php echo $alert['icon'] ?></span>
+                        <div style="flex: 1;">
+                            <h4 style="font-weight: 600; margin: 0 0 8px 0; color: #1f2937;">
+                                <?php echo htmlspecialchars($alert['title']) ?>
+                            </h4>
+                            <p style="margin: 0; color: #4b5563; line-height: 1.5;">
+                                <?php echo htmlspecialchars($alert['message']) ?>
+                            </p>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">
+                                <?php echo $alert['timestamp'] ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        </div>
+    <?php endif ?>
+
     <!-- 分析サマリー -->
     <?php if (!empty($aiAnalysis->summary)): ?>
         <div class="trend-card">
-            <h3 class="section-title">💡 今の動向</h3>
+            <h3 class="section-title">💡 管理者向け分析</h3>
             <p class="summary-text"><?php echo htmlspecialchars($aiAnalysis->summary) ?></p>
         </div>
     <?php endif ?>
@@ -222,19 +249,65 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
     <!-- 成長中チャット -->
     <?php if (!empty($risingChats)): ?>
         <div class="trend-card">
-            <h3 class="section-title">🚀 注目のチャット</h3>
+            <h3 class="section-title">🚀 参考にしたい成長パターン</h3>
+            <div style="margin-bottom: 16px; padding: 12px; background: #f0f9ff; border-radius: 6px; font-size: 14px; color: #1e40af;">
+                💡 なぜ伸びているのか？運営のヒントを見つけましょう
+            </div>
             <div class="chat-list">
                 <?php foreach (array_slice($risingChats, 0, 6) as $index => $chat): ?>
+                    <?php 
+                    // 成長要因を分析
+                    $growthFactor = '';
+                    $factorIcon = '📈';
+                    $name = $chat['name'] ?? '';
+                    
+                    if (stripos($name, 'シリアル') !== false || stripos($name, '当選') !== false) {
+                        $growthFactor = 'リアルタイム情報共有';
+                        $factorIcon = '⚡';
+                    } elseif (stripos($name, '就活') !== false) {
+                        $growthFactor = '実用的な情報交換';
+                        $factorIcon = '💼';
+                    } elseif (stripos($name, 'なりきり') !== false || stripos($name, '家族ごっこ') !== false) {
+                        $growthFactor = 'ロールプレイ要素';
+                        $factorIcon = '🎭';
+                    } elseif (stripos($name, '歌') !== false || stripos($name, 'ボイメ') !== false) {
+                        $growthFactor = '参加型コンテンツ';
+                        $factorIcon = '🎵';
+                    } elseif (stripos($name, '勉強') !== false || stripos($name, '設備士') !== false) {
+                        $growthFactor = '専門的な学習';
+                        $factorIcon = '📚';
+                    } elseif (stripos($name, '50代') !== false || stripos($name, '大人') !== false) {
+                        $growthFactor = 'ターゲット明確化';
+                        $factorIcon = '🎯';
+                    } else {
+                        $growthFactor = '話題性・注目度';
+                        $factorIcon = '🌟';
+                    }
+                    ?>
                     <div class="chat-item">
                         <div class="chat-rank"><?php echo $index + 1 ?></div>
                         <div class="chat-info">
                             <a href="<?php echo url('oc/' . $chat['id']) ?>" class="chat-name">
-                                <?php echo htmlspecialchars($chat['name']) ?>
+                                <?php echo htmlspecialchars(mb_strimwidth($name, 0, 50, '...')) ?>
                             </a>
-                            <div class="chat-growth">+<?php echo number_format($chat['diff_member']) ?>人</div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                                <div class="chat-growth">+<?php echo number_format($chat['diff_member']) ?>人 (<?php echo number_format($chat['member']) ?>人)</div>
+                                <div style="font-size: 12px; color: #6b7280; display: flex; align-items: center; gap: 4px;">
+                                    <span><?php echo $factorIcon ?></span>
+                                    <span><?php echo $growthFactor ?></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach ?>
+            </div>
+            <div style="margin-top: 12px; padding: 12px; background: #fffbeb; border-radius: 6px; border-left: 4px solid #f59e0b;">
+                <div style="font-size: 14px; font-weight: 600; color: #92400e; margin-bottom: 4px;">運営のコツ</div>
+                <div style="font-size: 13px; color: #78350f; line-height: 1.4;">
+                    • リアルタイム性：最新情報や即時性のある話題<br>
+                    • 参加型：単なる情報発信でなく、メンバーが参加できる仕組み<br>
+                    • 明確なターゲット：年代・趣味・目的を絞った運営
+                </div>
             </div>
         </div>
     <?php endif ?>
@@ -282,15 +355,55 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
     <!-- 注目タグ -->
     <?php if (!empty($tagTrends)): ?>
         <div class="trend-card">
-            <h3 class="section-title">🏷️ 人気キーワード</h3>
+            <h3 class="section-title">🏷️ 今狙い目のキーワード</h3>
+            <div style="margin-bottom: 16px; padding: 12px; background: #f0f9ff; border-radius: 6px; font-size: 14px; color: #1e40af;">
+                💡 このキーワードを含めると集客力アップ！
+            </div>
             <div class="tag-list">
-                <?php foreach (array_slice($tagTrends, 0, 10) as $tag): ?>
+                <?php foreach (array_slice($tagTrends, 0, 12) as $tag): ?>
                     <?php if (($tag['total_1h_growth'] ?? 0) > 0): ?>
-                        <span class="tag-item">
-                            #<?php echo htmlspecialchars($tag['tag']) ?> +<?php echo $tag['total_1h_growth'] ?>
+                        <?php 
+                        $tagName = $tag['tag'];
+                        $marketSize = '';
+                        $recommendation = '';
+                        
+                        // タグ別の市場分析と推奨
+                        if ($tagName === 'なりきり') {
+                            $marketSize = '大市場';
+                            $recommendation = '競争激しいが需要巨大';
+                        } elseif (stripos($tagName, 'Stray Kids') !== false) {
+                            $marketSize = '急成長';
+                            $recommendation = '今が参入チャンス';
+                        } elseif (stripos($tagName, 'ボイメ') !== false || stripos($tagName, 'ライブトーク') !== false) {
+                            $marketSize = '体験型';
+                            $recommendation = '参加型で差別化';
+                        } elseif (stripos($tagName, 'スプラ') !== false || stripos($tagName, 'フォート') !== false) {
+                            $marketSize = 'ゲーム';
+                            $recommendation = '攻略・チーム重視';
+                        } elseif (stripos($tagName, '企業') !== false || stripos($tagName, '大学') !== false) {
+                            $marketSize = '実用性';
+                            $recommendation = '情報価値が重要';
+                        } else {
+                            $marketSize = '注目';
+                            $recommendation = '成長中';
+                        }
+                        ?>
+                        <span class="tag-item" style="position: relative; cursor: help;" 
+                              title="<?php echo $recommendation ?> (<?php echo $tag['room_count'] ?>チャット)">
+                            #<?php echo htmlspecialchars($tagName) ?> 
+                            <strong>+<?php echo $tag['total_1h_growth'] ?></strong>
+                            <small style="opacity: 0.8; font-size: 10px; margin-left: 4px;"><?php echo $marketSize ?></small>
                         </span>
                     <?php endif ?>
                 <?php endforeach ?>
+            </div>
+            <div style="margin-top: 12px; padding: 12px; background: #ecfdf5; border-radius: 6px; border-left: 4px solid #10b981;">
+                <div style="font-size: 14px; font-weight: 600; color: #047857; margin-bottom: 4px;">キーワード戦略</div>
+                <div style="font-size: 13px; color: #065f46; line-height: 1.4;">
+                    • <strong>大市場キーワード</strong>：競争激しいが認知度高い<br>
+                    • <strong>急成長キーワード</strong>：トレンドの波に乗るチャンス<br>
+                    • <strong>ニッチキーワード</strong>：競争少なく確実に集客可能
+                </div>
             </div>
         </div>
     <?php endif ?>

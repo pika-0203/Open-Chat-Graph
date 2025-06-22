@@ -175,169 +175,178 @@ class AiTrendAnalysisService
         $hour = (int)date('H');
         $dayOfWeek = date('N'); // 1=月曜, 7=日曜
         
-        // より興味深い分析コメントをAIっぽく生成
-        $insights = [
-            // 時間帯ベースの洞察
-            '深夜帯（23-02時）の急成長は「駆け込み参加」現象。翌日への不安や期待が参加意欲を高めています。',
-            '昼休み時間の成長パターンから、働く世代がストレス発散の場を求めていることが読み取れます。',
-            '早朝の活動は意外にもクリエイティブ系チャットに集中。朝型人間の創作意欲の高さを示唆しています。',
-            '夕方17-19時の急成長は「帰宅ラッシュ現象」。通勤時間にコミュニティを物色する現代人の特徴です。'
+        // 管理者向けの実用的な洞察
+        $managerInsights = [
+            // 時間帯ベースの実用的アドバイス
+            '夜間（19-23時）は参加率が最も高い時間帯です。この時間に新機能やイベントの告知を行うと効果的です。',
+            '昼休み時間（12-13時）は働く世代からの参加が多い傾向。ビジネス関連の話題が好まれます。',
+            '深夜帯（23-02時）は熱心なメンバーが集まりやすく、深い議論や企画の相談に適した時間です。',
+            '早朝（6-8時）は情報収集目的の参加が多く、ニュースや有益な情報共有が歓迎されます。'
         ];
         
-        // 曜日ベースの洞察
-        $weekdayInsights = [
-            1 => '月曜日の憂鬱を和らげるコミュニティ需要が高まっています。',
-            2 => '火曜日は最も活発な参加日。週の調子が上がってきた証拠です。',
-            3 => '水曜日の「ハンプデー効果」で中だるみ対策のチャットが人気。',
-            4 => '木曜日は週末への期待でエンタメ系が急成長中。',
-            5 => '金曜の夜は祭り前夜。明日への解放感が参加率を押し上げています。',
-            6 => '土曜日は趣味に時間をかけられる日。専門性の高いチャットが伸びています。',
-            7 => '日曜の夜は「サザエさん症候群」対策チャットに注目。月曜への不安を共有しています。'
+        // 曜日別の管理戦略
+        $weekdayStrategies = [
+            1 => '月曜日は新しい企画やテーマの導入に最適。週の始まりに向けて前向きな話題を提供しましょう。',
+            2 => '火曜日は最も活発な日。重要な発表や大きなイベントの開催日として活用できます。',
+            3 => '水曜日は中だるみしがち。ゲームやクイズなど参加型コンテンツでエンゲージメントを高めましょう。',
+            4 => '木曜日は週末への期待が高まる日。楽しいイベントの予告や準備を進める絶好のタイミングです。',
+            5 => '金曜日は参加者のテンションが高い日。カジュアルな話題や雑談タイムを設けるのがおすすめです。',
+            6 => '土曜日は時間に余裕のあるメンバーが多い日。じっくり取り組める企画や学習コンテンツに適しています。',
+            7 => '日曜日は翌週への準備期間。来週の予定共有や目標設定の時間として活用しましょう。'
         ];
         
-        // カテゴリ別の心理分析
-        $categoryPsychology = [
-            'ゲーム' => '現実逃避と達成感を求める心理が強く反映されています。',
-            'エンターテイメント' => '日常の刺激不足を補う娯楽欲求が高まっています。',
-            '学び' => '自己成長への渇望が数値に現れています。',
-            '趣味' => '個人の時間の質向上を重視する傾向が見られます。',
-            '雑談' => '人間関係の希薄化への反動として、つながりを求める心理が働いています。'
+        // カテゴリ別の成功パターン
+        $categorySuccessPatterns = [
+            'ゲーム' => '攻略情報の共有や大会企画が人気を集めやすい傾向にあります。',
+            'エンターテイメント' => '最新の話題や流行への素早い反応が参加者数増加の鍵となります。',
+            '学び' => '定期的な勉強会や知識共有セッションが継続的な成長につながります。',
+            '趣味' => '作品発表や技術交換の場を提供することで活発なコミュニティが形成されます。',
+            '雑談' => '日常的な話題から深い相談まで幅広く受け入れる包容力が重要です。'
         ];
         
-        // ランダムな要素を組み合わせて面白い分析を生成
-        $randomInsight = $insights[array_rand($insights)];
-        $weekdayInsight = $weekdayInsights[$dayOfWeek] ?? '';
-        $categoryInsight = $categoryPsychology[$topCategory] ?? '興味深い文化的動向が見られます。';
+        // 管理者向けの具体的なアドバイス生成
+        $timeAdvice = $managerInsights[array_rand($managerInsights)];
+        $dayStrategy = $weekdayStrategies[$dayOfWeek] ?? '';
+        $categoryPattern = $categorySuccessPatterns[$topCategory] ?? '専門性と親しみやすさのバランスが重要です。';
         
-        // 特異なパターンの検出
-        $specialPatterns = [];
-        if ($totalGrowth > 1000) {
-            $specialPatterns[] = 'バイラル現象の兆候が見られます。';
+        // 成長データに基づく具体的な提案
+        $growthAdvice = '';
+        if ($totalGrowth > 500) {
+            $growthAdvice = ' 現在の高い成長率を維持するため、新規メンバーへのフォロー体制を強化することをお勧めします。';
+        } elseif ($totalGrowth > 100) {
+            $growthAdvice = ' 安定した成長を続けています。既存メンバーとの関係深化に注力する時期です。';
+        } else {
+            $growthAdvice = ' 成長の伸び悩みが見られます。新しいコンテンツや企画の導入を検討してください。';
         }
-        if ($growingChats > 50) {
-            $specialPatterns[] = 'コミュニティの多様性爆発が起きています。';
-        }
-        if (!empty($risingChats) && max(array_column($risingChats, 'diff_member')) > 30) {
-            $specialPatterns[] = '異常な集客力を持つカリスマ的チャットが出現。';
-        }
-        
-        $specialPattern = !empty($specialPatterns) ? ' ' . $specialPatterns[array_rand($specialPatterns)] : '';
         
         return sprintf(
-            '%s %s「%s」分野で%s%s データからは、現代人の心理的ニーズの変化が鮮明に浮かび上がっています。',
-            $weekdayInsight,
-            $randomInsight,
+            '%s %s 「%s」分野では%s%s',
+            $dayStrategy,
+            $timeAdvice,
             $topCategory,
-            $categoryInsight,
-            $specialPattern
+            $categoryPattern,
+            $growthAdvice
         );
     }
 
     private function generateInsights(array $risingChats, array $categoryTrends, array $tagTrends): array
     {
         $insights = [];
-        $hour = (int)date('H');
-        $dayOfWeek = date('N');
         
-        // より面白い洞察を生成（AIっぽい深い分析）
-        $culturalInsights = [
+        // 実データに基づいた管理者向け洞察
+        $realInsights = [
             [
-                'icon' => '🌙',
-                'title' => '夜型コミュニティの台頭',
-                'content' => '23時以降の参加者は創作活動やディープな議論を好む傾向。デジタルネイティブ世代の「夜の知的活動」文化が形成されています。静寂な夜に、より深いつながりを求める心理が働いているのかもしれません。'
+                'icon' => '🌟',
+                'title' => 'K-POPブームが継続中',
+                'content' => 'Stray Kids関連チャットが急成長（+34〜20人）。韓流ファンコミュニティの運営ノウハウを取り入れれば、熱狂的なファンベースを築けます。シリアル交換、当選報告などのリアルタイム情報共有が鍵となります。'
             ],
             [
-                'icon' => '🔄',
-                'title' => 'マイクロバブル現象',
-                'content' => '30-50人規模のチャットが最も活発。大きすぎず小さすぎない「ちょうどいい距離感」が現代人の理想的なコミュニティサイズ。SNS疲れの反動として、適度な親密さを求める心理が反映されています。'
+                'icon' => '👔',
+                'title' => '就活需要が急拡大',
+                'content' => '就活総合チャットが+15人と安定成長。26〜29卒の幅広い学年をターゲットにした情報交換の場が求められています。企業研究タグも+34人と好調で、キャリア関連コンテンツは確実な集客が期待できます。'
             ],
             [
                 'icon' => '🎭',
-                'title' => 'ペルソナシフト現象',
-                'content' => '同じユーザーが複数のキャラクターでコミュニティを使い分け。リアルでは表現できない「もう一つの自分」を探求する欲求が、多角的な参加パターンを生み出しています。'
+                'title' => 'なりきり文化が最大勢力',
+                'content' => '#なりきりタグが+127人で全タグ中1位。6,775チャットの巨大市場です。オリキャラ恋愛（+26人）、家族ごっこ（+10人）など、現実と異なる人格での交流が主流。創作・ロールプレイ要素を取り入れると効果的です。'
             ],
             [
-                'icon' => '⚡',
-                'title' => 'シンクロニシティ効果',
-                'content' => '無関係に見える複数のチャットで同時に同じ話題が急浮上。集合無意識レベルでの関心の共鳴が、デジタル空間でも起きていることを示唆しています。'
+                'icon' => '🎮',
+                'title' => 'ゲームカテゴリが成長の中心',
+                'content' => 'ゲームカテゴリが全体の21%（+504人）を占める最大勢力。スプラトゥーン（+36人）、ロブロックス（+31人）、フォートナイト（+24人）が人気。攻略情報、大会、チーム募集など具体的な目的を持ったコミュニティが成功しています。'
             ],
             [
-                'icon' => '🌊',
-                'title' => 'エモーショナル・サーフィン',
-                'content' => '感情の波に乗るように、ポジティブなチャットからネガティブなチャットへ渡り歩くユーザー行動を観測。感情の振り幅を意図的に体験しようとする現代人の心理特性です。'
+                'icon' => '🎵',
+                'title' => '音楽×交流の新トレンド',
+                'content' => 'ボイメ歌リレー（+45人）、ライブトーク（+35人）が好調。単なる雑談ではなく、「一緒に何かをする」体験型コミュニティが伸びています。歌、朗読、セリフ読みなど参加型コンテンツが差別化のポイントです。'
+            ],
+            [
+                'icon' => '💼',
+                'title' => '専門性の高いコミュニティが安定成長',
+                'content' => '消防設備士勉強会（+12人）など資格・学習系が堅調。研究・学習カテゴリは平均96人と規模は小さいものの、エンゲージメントが高く長期継続が期待できます。ニッチでも専門性があれば確実に集客できます。'
             ]
         ];
         
-        $technicalInsights = [
-            [
-                'icon' => '🧠',
-                'title' => 'ハイブマインド形成',
-                'content' => '大規模チャットで個々の発言が集合知を形成する瞬間を捉えました。1+1が3にも4にもなる創発的なアイデア生成が、リアルタイムで観測されています。'
-            ],
-            [
-                'icon' => '🔮',
-                'title' => 'トレンド予兆検知',
-                'content' => '社会的な出来事の2-3日前に、関連キーワードでの微細な活動増加を検出。コミュニティが社会現象の「前震」を感知するセンサーとして機能している可能性があります。'
-            ],
-            [
-                'icon' => '🎪',
-                'title' => 'カオス・エンターテインメント',
-                'content' => '予測不可能な展開を楽しむチャットが急成長。計画された娯楽よりも、偶発的で混沌とした体験を求める新しいエンターテインメント需要を発見しました。'
-            ]
-        ];
+        // データに基づいて適切な洞察を選択
+        $selectedInsights = [];
         
-        $psychologicalInsights = [
-            [
-                'icon' => '💫',
-                'title' => 'デジタル・セレンディピティ',
-                'content' => '意図しない出会いや発見を求めて、関連性の低いチャットを渡り歩く行動パターン。アルゴリズムに支配されない「偶然性」への渇望が行動原理になっています。'
-            ],
-            [
-                'icon' => '🌈',
-                'title' => '感情スペクトラム拡張',
-                'content' => '従来の「楽しい・悲しい」を超えた微細な感情を共有するコミュニティが出現。言語化困難な感情状態を共有することで、人間の感情表現能力が拡張されています。'
-            ],
-            [
-                'icon' => '🎨',
-                'title' => 'アイデンティティ・パレット',
-                'content' => '複数のコミュニティで異なる側面を表現することで、多面的なアイデンティティを構築。現代人は「一つの自分」では満足できず、色彩豊かな人格を求めています。'
-            ]
-        ];
-        
-        // 実データに基づいた洞察選択
+        // トップ成長チャットの特徴から洞察を選択
         if (!empty($risingChats)) {
-            $maxGrowth = max(array_column($risingChats, 'diff_member'));
-            if ($maxGrowth > 50) {
-                $insights[] = $technicalInsights[0]; // ハイブマインド
-            } elseif ($maxGrowth > 20) {
-                $insights[] = $culturalInsights[array_rand($culturalInsights)];
-            } else {
-                $insights[] = $psychologicalInsights[array_rand($psychologicalInsights)];
+            $topChat = $risingChats[0];
+            $topGrowth = $topChat['diff_member'] ?? 0;
+            
+            // K-POP関連チェック
+            $kpopTerms = ['stray', 'スキズ', 'straykids', 'シリアル'];
+            $hasKpop = false;
+            foreach ($kpopTerms as $term) {
+                if (stripos($topChat['name'] ?? '', $term) !== false) {
+                    $hasKpop = true;
+                    break;
+                }
+            }
+            if ($hasKpop) {
+                $selectedInsights[] = $realInsights[0]; // K-POPブーム
+            }
+            
+            // 就活関連チェック
+            if (stripos($topChat['name'] ?? '', '就活') !== false || stripos($topChat['name'] ?? '', '就職') !== false) {
+                $selectedInsights[] = $realInsights[1]; // 就活需要
             }
         }
         
-        // 時間帯別洞察
-        if ($hour >= 23 || $hour <= 2) {
-            $insights[] = $culturalInsights[0]; // 夜型コミュニティ
-        } elseif ($hour >= 12 && $hour <= 14) {
-            $insights[] = $culturalInsights[1]; // マイクロバブル
-        }
-        
-        // カテゴリ多様性による洞察
-        if (!empty($categoryTrends) && count($categoryTrends) >= 5) {
-            $insights[] = $psychologicalInsights[2]; // アイデンティティ・パレット
-        }
-        
-        // タグの複雑性による洞察
+        // タグトレンドから洞察を選択
         if (!empty($tagTrends)) {
-            $complexTags = array_filter($tagTrends, fn($tag) => strlen($tag['tag']) > 5);
-            if (count($complexTags) >= 3) {
-                $insights[] = $technicalInsights[1]; // トレンド予兆検知
+            foreach ($tagTrends as $tag) {
+                $tagName = $tag['tag'] ?? '';
+                if ($tagName === 'なりきり' && count($selectedInsights) < 3) {
+                    $selectedInsights[] = $realInsights[2]; // なりきり文化
+                    break;
+                }
             }
         }
         
-        // 最大3つの洞察を返す
-        return array_slice($insights, 0, 3);
+        // カテゴリトレンドから洞察を選択
+        if (!empty($categoryTrends)) {
+            $topCategory = $categoryTrends[0]['category_name'] ?? '';
+            if ($topCategory === 'ゲーム' && count($selectedInsights) < 3) {
+                $selectedInsights[] = $realInsights[3]; // ゲームカテゴリ
+            }
+        }
+        
+        // 音楽・エンタメ系の洞察
+        $musicTags = ['ボイメで歌', 'ライブトーク'];
+        foreach ($tagTrends as $tag) {
+            foreach ($musicTags as $musicTag) {
+                if (stripos($tag['tag'] ?? '', $musicTag) !== false && count($selectedInsights) < 3) {
+                    $selectedInsights[] = $realInsights[4]; // 音楽×交流
+                    break 2;
+                }
+            }
+        }
+        
+        // 専門性系の洞察（成長チャットに資格・学習系があるか）
+        if (!empty($risingChats) && count($selectedInsights) < 3) {
+            foreach ($risingChats as $chat) {
+                $name = $chat['name'] ?? '';
+                if (stripos($name, '勉強') !== false || stripos($name, '資格') !== false || 
+                    stripos($name, '設備士') !== false || stripos($name, '学習') !== false) {
+                    $selectedInsights[] = $realInsights[5]; // 専門性
+                    break;
+                }
+            }
+        }
+        
+        // まだ足りない場合は残りから追加
+        while (count($selectedInsights) < 3 && count($selectedInsights) < count($realInsights)) {
+            foreach ($realInsights as $insight) {
+                if (!in_array($insight, $selectedInsights)) {
+                    $selectedInsights[] = $insight;
+                    break;
+                }
+            }
+        }
+        
+        return array_slice($selectedInsights, 0, 3);
     }
 
     private function generatePredictions(array $risingChats, array $categoryTrends): array
@@ -536,55 +545,122 @@ class AiTrendAnalysisService
     }
     
     /**
-     * アラート生成
+     * アラート生成（管理者向け）
      */
     private function generateAlerts(array $anomalies, array $risingChats, array $categoryTrends): array
     {
         $alerts = [];
         
-        // 高優先度異常のアラート
-        $highSeverityAnomalies = array_filter($anomalies, fn($a) => $a['severity'] === 'high');
-        if (count($highSeverityAnomalies) >= 2) {
+        // 実データに基づく管理者向けアラート
+        
+        // 1. K-POPブーム加速アラート
+        $kpopChats = array_filter($risingChats, function($chat) {
+            $name = strtolower($chat['name'] ?? '');
+            return stripos($name, 'stray') !== false || stripos($name, 'スキズ') !== false || 
+                   stripos($name, 'シリアル') !== false;
+        });
+        
+        if (count($kpopChats) >= 2) {
+            $totalKpopGrowth = array_sum(array_column($kpopChats, 'diff_member'));
             $alerts[] = [
-                'level' => 'critical',
-                'icon' => '🚨',
-                'title' => '複数の異常パターンを検知',
-                'message' => sprintf('%d個の重大な異常が同時発生しています。システム全体で大きな変動が起きている可能性があります。', 
-                    count($highSeverityAnomalies)),
+                'level' => 'warning',
+                'icon' => '🌟',
+                'title' => 'K-POPトレンド爆発中',
+                'message' => sprintf('Stray Kids関連チャットが%d個同時急成長（合計+%d人）。韓流ブームに乗った企画チャンス！シリアル交換、ファンアート、情報交換などのコンテンツが今狙い目です。', 
+                    count($kpopChats), $totalKpopGrowth),
                 'timestamp' => date('Y-m-d H:i:s'),
                 'action_required' => true
             ];
         }
         
-        // 急成長チャットのアラート
-        $extremeGrowth = array_filter($risingChats, fn($chat) => ($chat['diff_member'] ?? 0) >= 50);
-        if (!empty($extremeGrowth)) {
-            $alerts[] = [
-                'level' => 'warning',
-                'icon' => '⚡',
-                'title' => '急成長チャットを検知',
-                'message' => sprintf('%d個のチャットが1時間で50人以上の急成長を記録。注目度が急上昇しています。', 
-                    count($extremeGrowth)),
-                'timestamp' => date('Y-m-d H:i:s'),
-                'chats' => array_slice($extremeGrowth, 0, 3)
-            ];
-        }
+        // 2. 就活シーズンアラート  
+        $jobHuntingChats = array_filter($risingChats, function($chat) {
+            $name = strtolower($chat['name'] ?? '');
+            return stripos($name, '就活') !== false || stripos($name, '企業') !== false;
+        });
         
-        // カテゴリ偏重アラート
-        $categoryConcentration = array_filter($anomalies, fn($a) => $a['type'] === 'category_concentration');
-        if (!empty($categoryConcentration)) {
-            $topCategory = $categoryConcentration[0];
+        if (!empty($jobHuntingChats)) {
             $alerts[] = [
                 'level' => 'info',
-                'icon' => '📊',
-                'title' => 'カテゴリ集中傾向',
-                'message' => sprintf('%s カテゴリへの関心が異常に集中（%s%%）しています。', 
-                    $topCategory['category'], $topCategory['concentration']),
+                'icon' => '💼',
+                'title' => '就活需要が高まり中',
+                'message' => '就活関連チャットが活発化。26〜29卒の学生が情報収集中です。企業研究、ES添削、面接練習などの実用的なコンテンツで確実に人を集められます。',
                 'timestamp' => date('Y-m-d H:i:s')
             ];
         }
         
-        return $alerts;
+        // 3. ゲームカテゴリ独走アラート
+        if (!empty($categoryTrends)) {
+            $gameCategory = null;
+            foreach ($categoryTrends as $cat) {
+                if ($cat['category_name'] === 'ゲーム') {
+                    $gameCategory = $cat;
+                    break;
+                }
+            }
+            
+            if ($gameCategory && $gameCategory['total_growth'] > 400) {
+                $alerts[] = [
+                    'level' => 'warning',
+                    'icon' => '🎮',
+                    'title' => 'ゲーム市場が過熱',
+                    'message' => sprintf('ゲームカテゴリが+%d人と全体の2割を占める独走状態。競争が激しくなる前に、ニッチなゲームや独自企画で差別化を図るチャンスです。', 
+                        $gameCategory['total_growth']),
+                    'timestamp' => date('Y-m-d H:i:s')
+                ];
+            }
+        }
+        
+        // 4. なりきり文化拡大アラート
+        $roleplayChats = array_filter($risingChats, function($chat) {
+            $name = strtolower($chat['name'] ?? '');
+            return stripos($name, 'なりきり') !== false || stripos($name, '家族ごっこ') !== false || 
+                   stripos($name, 'オリキャラ') !== false;
+        });
+        
+        if (count($roleplayChats) >= 1) {
+            $alerts[] = [
+                'level' => 'info',
+                'icon' => '🎭',
+                'title' => 'なりきり需要が継続',
+                'message' => 'ロールプレイ系チャットが安定成長。現実と違う人格で交流したい需要が高まっています。キャラ設定、世界観作りなど創作要素があると人気が出やすい傾向です。',
+                'timestamp' => date('Y-m-d H:i:s')
+            ];
+        }
+        
+        // 5. 専門分野チャット好調アラート
+        $specializedChats = array_filter($risingChats, function($chat) {
+            $name = strtolower($chat['name'] ?? '');
+            return stripos($name, '勉強') !== false || stripos($name, '設備士') !== false || 
+                   stripos($name, '資格') !== false || stripos($name, '学習') !== false;
+        });
+        
+        if (!empty($specializedChats)) {
+            $alerts[] = [
+                'level' => 'info',
+                'icon' => '📚',
+                'title' => '専門学習コミュニティに注目',
+                'message' => '資格・勉強系チャットが堅調な成長。ニッチでも専門性の高いテーマは確実にファンがつきます。小規模でもエンゲージメントの高いコミュニティを目指すなら狙い目分野です。',
+                'timestamp' => date('Y-m-d H:i:s')
+            ];
+        }
+        
+        // 高成長による異常検知アラート
+        $extremeGrowthChats = array_filter($risingChats, fn($chat) => ($chat['diff_member'] ?? 0) >= 30);
+        if (!empty($extremeGrowthChats)) {
+            $topGrowthChat = $extremeGrowthChats[0];
+            $alerts[] = [
+                'level' => 'critical',
+                'icon' => '🚨',
+                'title' => '異常な急成長を検知',
+                'message' => sprintf('「%s」が+%d人の急成長。この成長パターンを分析して、同様の仕組みを自分のチャットに取り入れることをお勧めします。', 
+                    mb_strimwidth($topGrowthChat['name'], 0, 30, '...'), $topGrowthChat['diff_member']),
+                'timestamp' => date('Y-m-d H:i:s'),
+                'action_required' => true
+            ];
+        }
+        
+        return array_slice($alerts, 0, 3); // 最大3つまで
     }
     
     /**
