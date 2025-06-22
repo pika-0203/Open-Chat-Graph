@@ -7,160 +7,231 @@ $risingChats = $aiTrendData->risingChats;
 $categoryTrends = $aiTrendData->categoryTrends;
 $tagTrends = $aiTrendData->tagTrends;
 $aiAnalysis = $aiTrendData->aiAnalysis;
+$realtimeMetrics = $aiTrendData->realtimeMetrics;
 
 ?>
 
 <style>
-    .ai-trend-container {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        color: #374151;
-        background: #ffffff;
-        max-width: 1200px;
+    .trend-container {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        max-width: 1000px;
+        margin: 0 auto;
     }
     
     .trend-card {
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 16px;
-        transition: box-shadow 0.2s ease;
         background: #ffffff;
-    }
-    
-    .trend-card:hover {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    
-    .insight-item {
-        padding: 16px;
-        background: #f8fafc;
+        border: 1px solid #e5e7eb;
         border-radius: 8px;
-        margin-bottom: 12px;
-        border-left: 4px solid #3b82f6;
+        padding: 20px;
+        margin-bottom: 20px;
     }
     
-    .tag-badge {
-        display: inline-block;
-        background: #eff6ff;
-        color: #1d4ed8;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 14px;
-        margin: 2px 4px;
-        text-decoration: none;
+    .trend-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 8px;
+        padding: 24px;
+        text-align: center;
+        margin-bottom: 20px;
     }
     
-    .growth-indicator {
-        display: inline-flex;
-        align-items: center;
-        color: #059669;
-        font-weight: 600;
-        font-size: 14px;
+    .trend-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+    }
+    
+    .trend-subtitle {
+        opacity: 0.9;
+        margin: 0;
     }
     
     .section-title {
-        font-size: 20px;
-        font-weight: 700;
-        margin-bottom: 16px;
+        font-size: 18px;
+        font-weight: 600;
         color: #1f2937;
+        margin-bottom: 16px;
         display: flex;
         align-items: center;
         gap: 8px;
     }
     
-    .chat-link {
-        text-decoration: none;
-        color: #1f2937;
-        font-weight: 600;
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
     }
     
-    .chat-link:hover {
+    .metric-item {
+        background: #f8fafc;
+        padding: 16px;
+        border-radius: 6px;
+        text-align: center;
+    }
+    
+    .metric-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 4px;
+    }
+    
+    .metric-label {
+        font-size: 14px;
+        color: #6b7280;
+    }
+    
+    .chat-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 12px;
+    }
+    
+    .chat-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background: #f9fafb;
+        border-radius: 6px;
+    }
+    
+    .chat-rank {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 14px;
+    }
+    
+    .chat-info {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .chat-name {
+        font-weight: 600;
+        color: #1f2937;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 2px;
+    }
+    
+    .chat-name:hover {
         color: #3b82f6;
     }
     
-    .grid-2 {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 16px;
+    .chat-growth {
+        color: #059669;
+        font-weight: 600;
+        font-size: 14px;
+    }
+    
+    .category-list {
+        space-y: 8px;
+    }
+    
+    .category-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px;
+        background: #f9fafb;
+        border-radius: 6px;
+        margin-bottom: 8px;
+    }
+    
+    .category-name {
+        font-weight: 600;
+        color: #1f2937;
+    }
+    
+    .category-growth {
+        color: #059669;
+        font-weight: 600;
+    }
+    
+    .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .tag-item {
+        background: #eff6ff;
+        color: #1d4ed8;
+        padding: 6px 12px;
+        border-radius: 16px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    .summary-text {
+        background: #f8fafc;
+        padding: 16px;
+        border-radius: 6px;
+        border-left: 4px solid #3b82f6;
+        line-height: 1.6;
+        color: #374151;
+        margin: 0;
     }
 </style>
 
-<section class="ai-trend-container">
+<section class="trend-container">
     <!-- ヘッダー -->
-    <div class="trend-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
-        <div style="display: flex; align-items: center; gap: 16px;">
-            <div style="font-size: 32px;">🤖</div>
-            <div>
-                <h2 style="font-size: 24px; font-weight: 700; margin: 0;">AIトレンド分析</h2>
-                <p style="margin: 4px 0 0 0; opacity: 0.9;">データに基づくリアルタイム洞察</p>
-            </div>
-        </div>
+    <div class="trend-header">
+        <h2 class="trend-title">📊 トレンド分析</h2>
+        <p class="trend-subtitle">リアルタイムの成長動向</p>
     </div>
 
-    <!-- AI洞察サマリー -->
-    <?php if (!empty($aiAnalysis->summary)): ?>
+    <!-- リアルタイムメトリクス -->
+    <?php if (!empty($realtimeMetrics)): ?>
         <div class="trend-card">
-            <h3 class="section-title">
-                <span>💡</span>
-                AI分析サマリー
-            </h3>
-            <div class="insight-item">
-                <p style="margin: 0; line-height: 1.6;"><?php echo htmlspecialchars($aiAnalysis->summary) ?></p>
+            <h3 class="section-title">📈 現在の状況</h3>
+            <div class="metrics-grid">
+                <div class="metric-item">
+                    <div class="metric-value"><?php echo number_format($realtimeMetrics['current_hour_growth'] ?? 0) ?></div>
+                    <div class="metric-label">現在の成長数</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value"><?php echo $realtimeMetrics['high_growth_count'] ?? 0 ?></div>
+                    <div class="metric-label">急成長チャット</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value"><?php echo $realtimeMetrics['new_chats_count'] ?? 0 ?></div>
+                    <div class="metric-label">新規チャット</div>
+                </div>
             </div>
         </div>
     <?php endif ?>
 
-    <!-- 重要インサイト -->
-    <?php if (!empty($aiAnalysis->insights)): ?>
+    <!-- 分析サマリー -->
+    <?php if (!empty($aiAnalysis->summary)): ?>
         <div class="trend-card">
-            <h3 class="section-title">
-                <span>🎯</span>
-                重要な発見
-            </h3>
-            <?php foreach (array_slice($aiAnalysis->insights, 0, 3) as $insight): ?>
-                <div class="insight-item">
-                    <div style="display: flex; align-items: flex-start; gap: 12px;">
-                        <span style="font-size: 24px;"><?php echo $insight['icon'] ?? '📊' ?></span>
-                        <div style="flex: 1;">
-                            <h4 style="font-weight: 600; margin: 0 0 8px 0; color: #1f2937;">
-                                <?php echo htmlspecialchars($insight['title']) ?>
-                            </h4>
-                            <p style="margin: 0; color: #4b5563; line-height: 1.5;">
-                                <?php echo htmlspecialchars($insight['content']) ?>
-                            </p>
-                            <?php if (isset($insight['confidence'])): ?>
-                                <div style="margin-top: 8px; font-size: 12px; color: #6b7280;">
-                                    信頼度: <strong><?php echo $insight['confidence'] ?>%</strong>
-                                </div>
-                            <?php endif ?>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach ?>
+            <h3 class="section-title">💡 今の動向</h3>
+            <p class="summary-text"><?php echo htmlspecialchars($aiAnalysis->summary) ?></p>
         </div>
     <?php endif ?>
 
     <!-- 成長中チャット -->
     <?php if (!empty($risingChats)): ?>
         <div class="trend-card">
-            <h3 class="section-title">
-                <span>🚀</span>
-                急成長中のチャットルーム
-            </h3>
-            <div class="grid-2">
+            <h3 class="section-title">🚀 注目のチャット</h3>
+            <div class="chat-list">
                 <?php foreach (array_slice($risingChats, 0, 6) as $index => $chat): ?>
-                    <div style="display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px;">
-                        <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">
-                            <?php echo $index + 1 ?>
-                        </div>
-                        <div style="flex: 1; min-width: 0;">
-                            <a href="<?php echo url('oc/' . $chat['id']) ?>" class="chat-link">
+                    <div class="chat-item">
+                        <div class="chat-rank"><?php echo $index + 1 ?></div>
+                        <div class="chat-info">
+                            <a href="<?php echo url('oc/' . $chat['id']) ?>" class="chat-name">
                                 <?php echo htmlspecialchars($chat['name']) ?>
                             </a>
-                            <div class="growth-indicator">
-                                <span>↗</span>
-                                +<?php echo number_format($chat['diff_member']) ?>人
-                            </div>
+                            <div class="chat-growth">+<?php echo number_format($chat['diff_member']) ?>人</div>
                         </div>
                     </div>
                 <?php endforeach ?>
@@ -171,26 +242,36 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
     <!-- カテゴリ動向 -->
     <?php if (!empty($categoryTrends)): ?>
         <div class="trend-card">
-            <h3 class="section-title">
-                <span>📈</span>
-                カテゴリ別成長動向
-            </h3>
-            <?php foreach (array_slice($categoryTrends, 0, 5) as $trend): ?>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #f3f4f6;">
-                    <div>
-                        <div style="font-weight: 600; color: #1f2937;">
-                            <?php echo htmlspecialchars($trend['category_name'] ?? 'その他') ?>
+            <h3 class="section-title">📊 カテゴリ別動向</h3>
+            <div class="category-list">
+                <?php foreach (array_slice($categoryTrends, 0, 5) as $trend): ?>
+                    <div class="category-item">
+                        <div>
+                            <div class="category-name"><?php echo htmlspecialchars($trend['category_name'] ?? 'その他') ?></div>
+                            <div style="font-size: 14px; color: #6b7280;"><?php echo $trend['chat_count'] ?>個のチャット</div>
                         </div>
-                        <div style="font-size: 14px; color: #6b7280;">
-                            <?php echo $trend['chat_count'] ?>個のチャット
-                        </div>
+                        <div class="category-growth">+<?php echo number_format($trend['total_growth']) ?>人</div>
                     </div>
-                    <div style="text-align: right;">
-                        <div class="growth-indicator">
-                            +<?php echo number_format($trend['total_growth']) ?>人
-                        </div>
-                        <div style="font-size: 12px; color: #6b7280;">
-                            平均 <?php echo number_format($trend['avg_growth'], 1) ?>人/時
+                <?php endforeach ?>
+            </div>
+        </div>
+    <?php endif ?>
+
+    <!-- 重要な発見 -->
+    <?php if (!empty($aiAnalysis->insights)): ?>
+        <div class="trend-card">
+            <h3 class="section-title">🔍 深層分析</h3>
+            <?php foreach (array_slice($aiAnalysis->insights, 0, 2) as $insight): ?>
+                <div style="background: #f8fafc; padding: 16px; border-radius: 6px; border-left: 4px solid #3b82f6; margin-bottom: 12px;">
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <span style="font-size: 24px;"><?php echo $insight['icon'] ?? '🔍' ?></span>
+                        <div style="flex: 1;">
+                            <h4 style="font-weight: 600; margin: 0 0 8px 0; color: #1f2937;">
+                                <?php echo htmlspecialchars($insight['title']) ?>
+                            </h4>
+                            <p style="margin: 0; color: #4b5563; line-height: 1.5;">
+                                <?php echo htmlspecialchars($insight['content']) ?>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -201,42 +282,16 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
     <!-- 注目タグ -->
     <?php if (!empty($tagTrends)): ?>
         <div class="trend-card">
-            <h3 class="section-title">
-                <span>🏷️</span>
-                注目のキーワード
-            </h3>
-            <div>
-                <?php foreach (array_slice($tagTrends, 0, 15) as $tag): ?>
+            <h3 class="section-title">🏷️ 人気キーワード</h3>
+            <div class="tag-list">
+                <?php foreach (array_slice($tagTrends, 0, 10) as $tag): ?>
                     <?php if (($tag['total_1h_growth'] ?? 0) > 0): ?>
-                        <span class="tag-badge">
-                            #<?php echo htmlspecialchars($tag['tag']) ?>
-                            <span style="color: #059669; font-weight: 600;">
-                                +<?php echo $tag['total_1h_growth'] ?>
-                            </span>
+                        <span class="tag-item">
+                            #<?php echo htmlspecialchars($tag['tag']) ?> +<?php echo $tag['total_1h_growth'] ?>
                         </span>
                     <?php endif ?>
                 <?php endforeach ?>
             </div>
-        </div>
-    <?php endif ?>
-
-    <!-- 予測・推奨 -->
-    <?php if (!empty($aiAnalysis->recommendations)): ?>
-        <div class="trend-card">
-            <h3 class="section-title">
-                <span>💡</span>
-                AIからの提案
-            </h3>
-            <?php foreach (array_slice($aiAnalysis->recommendations, 0, 3) as $rec): ?>
-                <div class="insight-item">
-                    <h4 style="font-weight: 600; margin: 0 0 8px 0; color: #1f2937;">
-                        <?php echo htmlspecialchars($rec['title']) ?>
-                    </h4>
-                    <p style="margin: 0; color: #4b5563; line-height: 1.5;">
-                        <?php echo htmlspecialchars($rec['description']) ?>
-                    </p>
-                </div>
-            <?php endforeach ?>
         </div>
     <?php endif ?>
 </section>
