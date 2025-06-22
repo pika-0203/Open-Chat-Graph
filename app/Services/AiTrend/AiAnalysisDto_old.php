@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\AiTrend;
 
 /**
- * シンプルで実用的なAI分析結果の転送オブジェクト
+ * 実用的なAI分析結果の転送オブジェクト
  */
 class AiAnalysisDto
 {
@@ -46,6 +46,20 @@ class AiAnalysisDto
         $this->timePatterns = $timePatterns;
         $this->membershipTrends = $membershipTrends;
         $this->metadata = $metadata;
+        $this->aiComment = $aiComment;
+    }
+}
+    ) {
+        $this->summary = $summary;
+        $this->insights = $insights;
+        $this->predictions = $predictions;
+        $this->recommendations = $recommendations;
+        $this->growthPatterns = $growthPatterns;
+        $this->categoryInsights = $categoryInsights;
+        $this->anomalies = $anomalies;
+        $this->timePatterns = $timePatterns;
+        $this->membershipTrends = $membershipTrends;
+        $this->realTimeVibes = $realTimeVibes;
         $this->aiComment = $aiComment;
     }
 }

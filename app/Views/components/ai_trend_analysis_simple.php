@@ -83,6 +83,33 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 16px;
     }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+    
+    .stat-card {
+        text-align: center;
+        padding: 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #ffffff;
+    }
+    
+    .stat-number {
+        font-size: 24px;
+        font-weight: 700;
+        color: #3b82f6;
+    }
+    
+    .stat-label {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 4px;
+    }
 </style>
 
 <section class="ai-trend-container">
@@ -205,7 +232,7 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                 <span>🏷️</span>
                 注目のキーワード
             </h3>
-            <div>
+            <div style="display: flex; flex-wrap: gap: 8px;">
                 <?php foreach (array_slice($tagTrends, 0, 15) as $tag): ?>
                     <?php if (($tag['total_1h_growth'] ?? 0) > 0): ?>
                         <span class="tag-badge">

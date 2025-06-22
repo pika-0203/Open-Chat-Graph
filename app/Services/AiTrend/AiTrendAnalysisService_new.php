@@ -145,12 +145,7 @@ class AiTrendAnalysisService
         $summary = $this->generateSummary($risingChats, $categoryTrends, $overallStats);
         
         // データから意味のある洞察を抽出
-        $basicInsights = $this->extractMeaningfulInsights($risingChats, $categoryTrends, $tagTrends);
-        
-        // LLMならではの高度な分析を追加
-        $advancedInsights = $this->generateAdvancedLlmInsights($risingChats, $categoryTrends, $tagTrends);
-        
-        $insights = array_merge($basicInsights, $advancedInsights);
+        $insights = $this->extractMeaningfulInsights($risingChats, $categoryTrends, $tagTrends);
         
         // 実用的な予測を生成
         $predictions = $this->generateRealisticPredictions($risingChats, $categoryTrends);
@@ -169,7 +164,7 @@ class AiTrendAnalysisService
             [], // timePatterns
             [], // membershipTrends
             [], // metadata
-            '' // aiComment (削除)
+            '' // aiComment
         );
     }
 
@@ -341,157 +336,5 @@ class AiTrendAnalysisService
         }
         
         return $recommendations;
-    }
-    
-    /**
-     * LLMならではの高度なパターン分析
-     * 複数のデータポイントを組み合わせて人間では気づきにくい洞察を生成
-     */
-    private function generateAdvancedLlmInsights(array $risingChats, array $categoryTrends, array $tagTrends): array
-    {
-        $insights = [];
-        
-        // 複合パターン分析: チャット名とカテゴリの関連性
-        $namePatterns = $this->analyzeNamePatterns($risingChats);
-        if (!empty($namePatterns)) {
-            $insights[] = [
-                'icon' => '🔍',
-                'title' => '命名パターンの発見',
-                'content' => $namePatterns['insight'],
-                'confidence' => $namePatterns['confidence']
-            ];
-        }
-        
-        // 成長速度の異常値検出
-        $speedAnomalies = $this->detectGrowthSpeedAnomalies($risingChats);
-        if (!empty($speedAnomalies)) {
-            $insights[] = [
-                'icon' => '⚡',
-                'title' => '異常な成長速度の検出',
-                'content' => $speedAnomalies['insight'],
-                'confidence' => $speedAnomalies['confidence']
-            ];
-        }
-        
-        // カテゴリ×タグのクロス分析
-        $crossAnalysis = $this->analyzeCategoryTagCorrelation($categoryTrends, $tagTrends);
-        if (!empty($crossAnalysis)) {
-            $insights[] = [
-                'icon' => '🎯',
-                'title' => 'カテゴリ・キーワード連動性',
-                'content' => $crossAnalysis['insight'],
-                'confidence' => $crossAnalysis['confidence']
-            ];
-        }
-        
-        return $insights;
-    }
-    
-    private function analyzeNamePatterns(array $risingChats): array
-    {
-        if (empty($risingChats)) return [];
-        
-        $names = array_column($risingChats, 'name');
-        
-        // 共通キーワードの検出
-        $keywords = [];
-        foreach ($names as $name) {
-            $words = preg_split('/[\s\p{P}]+/u', $name, -1, PREG_SPLIT_NO_EMPTY);
-            foreach ($words as $word) {
-                if (mb_strlen($word) >= 2) {
-                    $keywords[] = mb_strtolower($word);
-                }
-            }
-        }
-        
-        $keywordCounts = array_count_values($keywords);
-        arsort($keywordCounts);
-        $topKeywords = array_slice($keywordCounts, 0, 3, true);
-        
-        // 2回以上出現するキーワードがある場合
-        $frequentKeywords = array_filter($topKeywords, fn($count) => $count >= 2);
-        
-        if (!empty($frequentKeywords)) {
-            $topKeyword = array_key_first($frequentKeywords);
-            $count = $frequentKeywords[$topKeyword];
-            return [
-                'insight' => sprintf('成長中のチャットの%d個で「%s」というキーワードが共通して使われており、このテーマが注目を集めています', 
-                    $count, $topKeyword),
-                'confidence' => min(90, 60 + ($count * 10))
-            ];
-        }
-        
-        return [];
-    }
-    
-    private function detectGrowthSpeedAnomalies(array $risingChats): array
-    {
-        if (count($risingChats) < 3) return [];
-        
-        $growthValues = array_filter(array_column($risingChats, 'diff_member'), fn($val) => $val > 0);
-        if (empty($growthValues)) return [];
-        
-        $mean = array_sum($growthValues) / count($growthValues);
-        $max = max($growthValues);
-        
-        // 平均の3倍以上の成長を異常値として検出
-        if ($max > $mean * 3 && $max >= 20) {
-            $anomalyChat = array_filter($risingChats, fn($chat) => ($chat['diff_member'] ?? 0) == $max)[0] ?? null;
-            
-            if ($anomalyChat) {
-                return [
-                    'insight' => sprintf('「%s」が%d人という異常な成長速度を記録（平均の%.1f倍）。バイラル的な拡散が起きている可能性があります', 
-                        $anomalyChat['name'], $max, $max / $mean),
-                    'confidence' => 85
-                ];
-            }
-        }
-        
-        return [];
-    }
-    
-    private function analyzeCategoryTagCorrelation(array $categoryTrends, array $tagTrends): array
-    {
-        if (empty($categoryTrends) || empty($tagTrends)) return [];
-        
-        $topCategory = $categoryTrends[0]['category_name'] ?? '';
-        $topTags = array_slice(array_column($tagTrends, 'tag'), 0, 5);
-        
-        // ゲームカテゴリと関連タグの分析例
-        if ($topCategory === 'ゲーム') {
-            $gameRelatedTags = array_filter($topTags, fn($tag) => 
-                mb_strpos($tag, 'ゲーム') !== false || 
-                mb_strpos($tag, 'プレイ') !== false ||
-                mb_strpos($tag, 'ソシャゲ') !== false ||
-                mb_strpos($tag, 'RPG') !== false
-            );
-            
-            if (!empty($gameRelatedTags)) {
-                return [
-                    'insight' => sprintf('「%s」カテゴリの成長と「%s」タグの活性化が連動しており、ゲーム分野の特定トレンドが影響しています', 
-                        $topCategory, implode('」「', $gameRelatedTags)),
-                    'confidence' => 80
-                ];
-            }
-        }
-        
-        // エンターテイメント関連の分析
-        if ($topCategory === 'エンターテイメント') {
-            $entertainmentTags = array_filter($topTags, fn($tag) => 
-                mb_strpos($tag, 'アニメ') !== false || 
-                mb_strpos($tag, '映画') !== false ||
-                mb_strpos($tag, 'ドラマ') !== false
-            );
-            
-            if (!empty($entertainmentTags)) {
-                return [
-                    'insight' => sprintf('エンターテイメント成長の背後に「%s」関連のコンテンツトレンドが見えます', 
-                        implode('」「', $entertainmentTags)),
-                    'confidence' => 75
-                ];
-            }
-        }
-        
-        return [];
     }
 }
