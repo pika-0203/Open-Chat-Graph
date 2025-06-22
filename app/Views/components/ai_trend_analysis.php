@@ -204,6 +204,24 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
     }
 </style>
 
+<script>
+function toggleStrategy(button) {
+    const content = button.closest('.strategy-content');
+    const preview = content.querySelector('.strategy-preview');
+    const full = content.querySelector('.strategy-full');
+    
+    if (full.style.display === 'none') {
+        preview.style.display = 'none';
+        full.style.display = 'block';
+        button.textContent = '折りたたむ';
+    } else {
+        preview.style.display = 'block';
+        full.style.display = 'none';
+        button.textContent = '展開';
+    }
+}
+</script>
+
 <section class="trend-container">
     <!-- ヘッダー -->
     <div class="trend-header">
@@ -212,50 +230,60 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
     </div>
 
 
-    <!-- 重要な動向（統合版） -->
+    <!-- 重要な動向（統合版・5件制限） -->
     <div class="trend-card">
         <h3 class="section-title">🚨 重要な動向</h3>
         
-        <?php if (!empty($aiAnalysis->alerts)): ?>
-            <?php foreach ($aiAnalysis->alerts as $alert): ?>
-                <div style="background: <?php echo $alert['level'] === 'critical' ? '#fef2f2' : ($alert['level'] === 'warning' ? '#fefbf2' : '#f0f9ff') ?>; 
-                           border: 1px solid <?php echo $alert['level'] === 'critical' ? '#fecaca' : ($alert['level'] === 'warning' ? '#fed7aa' : '#bae6fd') ?>; 
-                           border-radius: 6px; padding: 16px; margin-bottom: 12px;">
-                    <div style="display: flex; align-items: flex-start; gap: 12px;">
-                        <span style="font-size: 20px;"><?php echo $alert['icon'] ?></span>
-                        <div style="flex: 1;">
-                            <h4 style="font-weight: 600; margin: 0 0 8px 0; color: #1f2937;">
-                                <?php echo htmlspecialchars($alert['title']) ?>
-                            </h4>
-                            <p style="margin: 0; color: #4b5563; line-height: 1.5;">
-                                <?php echo htmlspecialchars($alert['message']) ?>
-                            </p>
-                            <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">
-                                <?php echo $alert['timestamp'] ?>
-                            </div>
+        <?php 
+        // alertsとinsightsを統合して最大5件まで表示
+        $allImportantItems = [];
+        
+        // alertsを追加（timestamp付き）
+        if (!empty($aiAnalysis->alerts)) {
+            foreach ($aiAnalysis->alerts as $alert) {
+                $alert['timestamp'] = date('Y-m-d H:i:s');
+                $allImportantItems[] = $alert;
+            }
+        }
+        
+        // 5件に足りない分だけinsightsから追加
+        $remainingSlots = 5 - count($allImportantItems);
+        if ($remainingSlots > 0 && !empty($aiAnalysis->insights)) {
+            $selectedInsights = array_slice($aiAnalysis->insights, 0, $remainingSlots);
+            foreach ($selectedInsights as $insight) {
+                // insightsをalerts形式に変換
+                $allImportantItems[] = [
+                    'level' => 'info',
+                    'icon' => $insight['icon'] ?? '💡',
+                    'title' => $insight['title'],
+                    'message' => $insight['content'],
+                    'action_required' => false,
+                    'timestamp' => date('Y-m-d H:i:s')
+                ];
+            }
+        }
+        ?>
+        
+        <?php foreach (array_slice($allImportantItems, 0, 5) as $item): ?>
+            <div style="background: <?php echo $item['level'] === 'critical' ? '#fef2f2' : ($item['level'] === 'warning' ? '#fefbf2' : '#f0f9ff') ?>; 
+                       border: 1px solid <?php echo $item['level'] === 'critical' ? '#fecaca' : ($item['level'] === 'warning' ? '#fed7aa' : '#bae6fd') ?>; 
+                       border-radius: 6px; padding: 16px; margin-bottom: 12px;">
+                <div style="display: flex; align-items: flex-start; gap: 12px;">
+                    <span style="font-size: 20px;"><?php echo $item['icon'] ?></span>
+                    <div style="flex: 1;">
+                        <h4 style="font-weight: 600; margin: 0 0 8px 0; color: #1f2937;">
+                            <?php echo htmlspecialchars($item['title']) ?>
+                        </h4>
+                        <p style="margin: 0; color: #4b5563; line-height: 1.5;">
+                            <?php echo htmlspecialchars($item['message']) ?>
+                        </p>
+                        <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">
+                            <?php echo $item['timestamp'] ?>
                         </div>
                     </div>
                 </div>
-            <?php endforeach ?>
-        <?php endif ?>
-
-        <?php if (!empty($aiAnalysis->insights)): ?>
-            <?php foreach (array_slice($aiAnalysis->insights, 0, 5) as $insight): ?>
-                <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 6px; padding: 16px; margin-bottom: 12px;">
-                    <div style="display: flex; align-items: flex-start; gap: 12px;">
-                        <span style="font-size: 20px;"><?php echo $insight['icon'] ?? '💡' ?></span>
-                        <div style="flex: 1;">
-                            <h4 style="font-weight: 600; margin: 0 0 8px 0; color: #1f2937;">
-                                <?php echo htmlspecialchars($insight['title']) ?>
-                            </h4>
-                            <p style="margin: 0; color: #4b5563; line-height: 1.5;">
-                                <?php echo htmlspecialchars($insight['content']) ?>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach ?>
-        <?php endif ?>
+            </div>
+        <?php endforeach ?>
 
         <?php if (!empty($aiAnalysis->summary)): ?>
             <div style="background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 6px; padding: 16px; border-left: 4px solid #3b82f6;">
@@ -307,7 +335,20 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
                     </div>
                     
                     <div style="background: #f8fafc; padding: 10px; border-radius: 6px; border-left: 3px solid #3b82f6; font-size: 13px; color: #374151;">
-                        <strong>運営戦略:</strong> <?php echo htmlspecialchars($rec['strategy']) ?>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <strong>運営戦略:</strong>
+                            <button onclick="toggleStrategy(this)" style="background: none; border: 1px solid #d1d5db; border-radius: 4px; padding: 2px 6px; font-size: 11px; cursor: pointer; color: #6b7280;">
+                                展開
+                            </button>
+                        </div>
+                        <div class="strategy-content" style="margin-top: 6px;">
+                            <div class="strategy-preview">
+                                <?php echo htmlspecialchars(mb_substr($rec['strategy'], 0, 60)) ?>...
+                            </div>
+                            <div class="strategy-full" style="display: none;">
+                                <?php echo htmlspecialchars($rec['strategy']) ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             <?php endforeach ?>
