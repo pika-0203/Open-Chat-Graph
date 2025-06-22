@@ -258,7 +258,8 @@ function toggleStrategy(button) {
                     'title' => $insight['title'],
                     'message' => $insight['content'],
                     'action_required' => false,
-                    'timestamp' => date('Y-m-d H:i:s')
+                    'timestamp' => date('Y-m-d H:i:s'),
+                    'related_chats' => $insight['related_chats'] ?? []
                 ];
             }
         }
@@ -277,6 +278,19 @@ function toggleStrategy(button) {
                         <p style="margin: 0; color: #4b5563; line-height: 1.5;">
                             <?php echo htmlspecialchars($item['message']) ?>
                         </p>
+                        <?php if (!empty($item['related_chats'])): ?>
+                            <div style="margin-top: 8px;">
+                                <span style="font-size: 12px; color: #6b7280;">関連チャット:</span>
+                                <?php foreach ($item['related_chats'] as $chatId): ?>
+                                    <?php if ($chatId && $chatId !== 'null'): ?>
+                                        <a href="<?php echo url('/oc/' . $chatId) ?>" 
+                                           style="font-size: 11px; color: #3b82f6; text-decoration: none; margin-left: 4px; padding: 1px 4px; background: #eff6ff; border-radius: 3px;">
+                                            #<?php echo $chatId ?>
+                                        </a>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            </div>
+                        <?php endif ?>
                         <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">
                             <?php echo $item['timestamp'] ?>
                         </div>
@@ -350,6 +364,24 @@ function toggleStrategy(button) {
                             </div>
                         </div>
                     </div>
+                    
+                    <?php if (!empty($rec['example_chats'])): ?>
+                        <div style="margin-top: 8px; padding: 8px; background: #f0f9ff; border-radius: 4px; border-left: 3px solid #60a5fa;">
+                            <div style="font-size: 12px; color: #1e40af; font-weight: 600; margin-bottom: 4px;">
+                                📊 成功事例チャット:
+                            </div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                <?php foreach ($rec['example_chats'] as $chatId): ?>
+                                    <?php if ($chatId && $chatId !== 'null'): ?>
+                                        <a href="<?php echo url('/oc/' . $chatId) ?>" 
+                                           style="font-size: 11px; color: #1e40af; text-decoration: none; padding: 2px 6px; background: #dbeafe; border-radius: 4px; display: inline-block;">
+                                            チャット #<?php echo $chatId ?>
+                                        </a>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            </div>
+                        </div>
+                    <?php endif ?>
                 </div>
             <?php endforeach ?>
         </div>

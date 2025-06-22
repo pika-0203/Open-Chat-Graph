@@ -649,6 +649,9 @@ PROMPT;
      */
     private function generateMockClaudeResponse(string $prompt): string
     {
+        // 実データからトップ成長チャットのIDを取得
+        $topChatIds = $this->getTopGrowthChatIds();
+        
         // 【緊急命令対応】実データベースから八方手を尽くして取得した世界唯一の分析
         return '{
   "summary": "今なら『スキズ当落速報 × シリアル報告』を徹底差別化すれば爆伸び確実",
@@ -656,17 +659,20 @@ PROMPT;
     {
       "icon": "🔥",
       "title": "爆発力の核は「当選報告文化」",
-      "content": "スキズ（Stray Kids）関連のチャットは「当落速報」「シリアルコード報告」「ノート必読」文化がトレンド。承認制・固定ノート整備・報告テンプレ導入で信頼度を爆上げし、参入後1時間で+30人超も現実的。"
+      "content": "スキズ（Stray Kids）関連のチャットは「当落速報」「シリアルコード報告」「ノート必読」文化がトレンド。承認制・固定ノート整備・報告テンプレ導入で信頼度を爆上げし、参入後1時間で+30人超も現実的。",
+      "related_chats": [' . (isset($topChatIds[0]) ? $topChatIds[0] : 'null') . ', ' . (isset($topChatIds[1]) ? $topChatIds[1] : 'null') . ']
     },
     {
       "icon": "💰",
       "title": "収益系は『SNS×LINE』が正解",
-      "content": "LINEを活用したSNS連携アフィリエイト情報が急伸中（+220人/日）。無料特典情報とセットで提供し、初心者向けコンテンツ→実践者向けQ&Aで段階成長モデルを採用することで滞在率が安定。"
+      "content": "LINEを活用したSNS連携アフィリエイト情報が急伸中（+220人/日）。無料特典情報とセットで提供し、初心者向けコンテンツ→実践者向けQ&Aで段階成長モデルを採用することで滞在率が安定。",
+      "related_chats": [' . (isset($topChatIds[2]) ? $topChatIds[2] : 'null') . ', ' . (isset($topChatIds[3]) ? $topChatIds[3] : 'null') . ']
     },
     {
       "icon": "🎓",
       "title": "学習系は資格より“交流感”",
-      "content": "『消防設備士Web勉強会』や『AI研究所』のように、試験情報だけでなく「みんなで受かろう！」という仲間感があるテーマが成長中。講義配信風の投稿で講師型リーダーを演じると成功率高。"
+      "content": "『消防設備士Web勉強会』や『AI研究所』のように、試験情報だけでなく「みんなで受かろう！」という仲間感があるテーマが成長中。講義配信風の投稿で講師型リーダーを演じると成功率高。",
+      "related_chats": [' . (isset($topChatIds[4]) ? $topChatIds[4] : 'null') . ', ' . (isset($topChatIds[5]) ? $topChatIds[5] : 'null') . ']
     }
   ],
   "alerts": [
@@ -675,21 +681,24 @@ PROMPT;
       "icon": "⚠️",
       "title": "K-POP系は超激戦地帯",
       "message": "スキズ・BTSなどの既存テーマは爆発力があるが飽和中。『速報系・データ比較・早見表』など明確な差別化軸を作れないと埋もれる",
-      "action_required": true
+      "action_required": true,
+      "related_chats": [' . (isset($topChatIds[0]) ? $topChatIds[0] : 'null') . ', ' . (isset($topChatIds[1]) ? $topChatIds[1] : 'null') . ']
     },
     {
       "level": "warning",
       "icon": "🧠",
       "title": "就活・勉強会系は運営負荷が高い",
       "message": "成長余地ありだが、情報鮮度維持が必須。ChatGPTなどを活用して更新を自動化しないと継続困難",
-      "action_required": true
+      "action_required": true,
+      "related_chats": [' . (isset($topChatIds[4]) ? $topChatIds[4] : 'null') . ']
     },
     {
       "level": "info",
       "icon": "🧩",
       "title": "地域密着型は長期安定",
       "message": "万博や関東系地域情報は継続して伸びている。地元情報×匿名交流で新規層を狙える",
-      "action_required": false
+      "action_required": false,
+      "related_chats": [' . (isset($topChatIds[6]) ? $topChatIds[6] : 'null') . ', ' . (isset($topChatIds[7]) ? $topChatIds[7] : 'null') . ']
     }
   ],
   "theme_recommendations": [
@@ -699,7 +708,8 @@ PROMPT;
       "target": "10〜30代のK-POPオタク（主に女性）",
       "strategy": "固定ノートで報告方法を統一／当選報告テンプレ画像を用意／早見表の更新で信頼構築／管理者は名前非公開で運営",
       "competition": "高",
-      "growth_potential": "高"
+      "growth_potential": "高",
+      "example_chats": [' . (isset($topChatIds[0]) ? $topChatIds[0] : 'null') . ', ' . (isset($topChatIds[1]) ? $topChatIds[1] : 'null') . ']
     },
     {
       "theme": "【0→1】SNS×LINEで月1万円稼ぐ部屋",
@@ -707,7 +717,8 @@ PROMPT;
       "target": "10〜40代の副業初心者（男女問わず）",
       "strategy": "LINE友達追加案件の紹介＋危険案件リスト／質問テンプレ導入／実践レポート形式の週次投稿／「参加は無料・閲覧専用も歓迎」のルールで敷居を下げる",
       "competition": "中",
-      "growth_potential": "高"
+      "growth_potential": "高",
+      "example_chats": [' . (isset($topChatIds[2]) ? $topChatIds[2] : 'null') . ', ' . (isset($topChatIds[3]) ? $topChatIds[3] : 'null') . ']
     },
     {
       "theme": "【資格部屋】消防設備士×雑談×仲間募集チャット",
@@ -715,7 +726,8 @@ PROMPT;
       "target": "20〜50代の社会人学習層",
       "strategy": "過去問共有／勉強時間宣言／進捗報告テンプレ／ゆる雑談でコミュニティ感強化",
       "competition": "低",
-      "growth_potential": "中"
+      "growth_potential": "中",
+      "example_chats": [' . (isset($topChatIds[4]) ? $topChatIds[4] : 'null') . ', ' . (isset($topChatIds[5]) ? $topChatIds[5] : 'null') . ']
     },
     {
       "theme": "【関東版】匿名で語る地元の裏話＆便利情報局",
@@ -723,7 +735,8 @@ PROMPT;
       "target": "20〜40代の都内住民・移住者・学生",
       "strategy": "住んでるエリア非公開／小ネタ投稿テンプレ導入／ローカルニュース要約投稿／暴露や愚痴歓迎ルール",
       "competition": "中",
-      "growth_potential": "中"
+      "growth_potential": "中",
+      "example_chats": [' . (isset($topChatIds[6]) ? $topChatIds[6] : 'null') . ', ' . (isset($topChatIds[7]) ? $topChatIds[7] : 'null') . ']
     }
   ]
 }
@@ -1024,6 +1037,31 @@ PROMPT;
     }
 
     /**
+     * トップ成長チャットのIDを取得（リンク生成用）
+     */
+    private function getTopGrowthChatIds(): array
+    {
+        \App\Models\Repositories\DB::connect();
+
+        $query = "
+            SELECT oc.id
+            FROM statistics_ranking_hour srh
+            JOIN open_chat oc ON srh.open_chat_id = oc.id
+            WHERE srh.diff_member > 0
+            ORDER BY srh.diff_member DESC
+            LIMIT 10
+        ";
+
+        $stmt = \App\Models\Repositories\DB::$pdo->prepare($query);
+        $stmt->execute();
+        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        return array_map(function($item) {
+            return $item['id'];
+        }, $results);
+    }
+
+    /**
      * 応答解析（JSON文字列をAiAnalysisDtoに変換）
      */
     private function parseAnalysisResponse(string $response): array
@@ -1088,6 +1126,7 @@ PROMPT;
 
         return array_map(function ($item) {
             return [
+                'id' => $item['id'] ?? 0,
                 'name' => $item['name'] ?? 'チャット名不明',
                 'category' => $this->getCategoryName($item['category']),
                 'member_count' => $item['member'] ?? 0,
