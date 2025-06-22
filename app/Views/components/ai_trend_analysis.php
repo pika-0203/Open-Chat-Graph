@@ -345,6 +345,50 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
         </div>
     <?php endif ?>
 
+    <!-- テーマ推奨（LLM分析結果） -->
+    <?php if (!empty($aiAnalysis->recommendations)): ?>
+        <div class="trend-card">
+            <h3 class="section-title">🎯 おすすめテーマ（AI分析）</h3>
+            <div style="margin-bottom: 16px; padding: 12px; background: #fef7ff; border-radius: 6px; font-size: 14px; color: #7c2d8e;">
+                🤖 実データ分析に基づく、今最も集客力の高いテーマをAIが厳選
+            </div>
+            
+            <?php foreach (array_slice($aiAnalysis->recommendations, 0, 5) as $rec): ?>
+                <div style="background: #fafafa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                        <h4 style="font-weight: 700; color: #1f2937; margin: 0; font-size: 16px;">
+                            <?php echo htmlspecialchars($rec['theme']) ?>
+                        </h4>
+                        <div style="display: flex; gap: 8px;">
+                            <span style="background: <?php echo $rec['competition'] === '低' ? '#dcfce7' : ($rec['competition'] === '中' ? '#fef3c7' : '#fecaca') ?>; 
+                                        color: <?php echo $rec['competition'] === '低' ? '#166534' : ($rec['competition'] === '中' ? '#92400e' : '#dc2626') ?>; 
+                                        padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                                競争<?php echo $rec['competition'] ?>
+                            </span>
+                            <span style="background: <?php echo $rec['growth_potential'] === '高' ? '#dcfce7' : ($rec['growth_potential'] === '中' ? '#fef3c7' : '#f3f4f6') ?>; 
+                                        color: <?php echo $rec['growth_potential'] === '高' ? '#166534' : ($rec['growth_potential'] === '中' ? '#92400e' : '#6b7280') ?>; 
+                                        padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                                成長性<?php echo $rec['growth_potential'] ?>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div style="color: #4b5563; font-size: 14px; line-height: 1.5; margin-bottom: 8px;">
+                        <strong>なぜ今狙い目？</strong> <?php echo htmlspecialchars($rec['reason']) ?>
+                    </div>
+                    
+                    <div style="color: #6b7280; font-size: 13px; margin-bottom: 8px;">
+                        <strong>ターゲット:</strong> <?php echo htmlspecialchars($rec['target']) ?>
+                    </div>
+                    
+                    <div style="background: #f8fafc; padding: 10px; border-radius: 6px; border-left: 3px solid #3b82f6; font-size: 13px; color: #374151;">
+                        <strong>運営戦略:</strong> <?php echo htmlspecialchars($rec['strategy']) ?>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        </div>
+    <?php endif ?>
+
     <!-- 注目タグ -->
     <?php if (!empty($tagTrends)): ?>
         <div class="trend-card">

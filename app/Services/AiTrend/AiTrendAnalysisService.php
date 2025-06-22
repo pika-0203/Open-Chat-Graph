@@ -7,11 +7,15 @@ namespace App\Services\AiTrend;
 use App\Config\AppConfig;
 use Shared\MimimalCmsConfig;
 use App\Models\Repositories\DB;
+use App\Services\AiTrend\ClaudeCodeLlmService;
 
 class AiTrendAnalysisService
 {
+    private ClaudeCodeLlmService $llmService;
+
     public function __construct()
     {
+        $this->llmService = new ClaudeCodeLlmService();
     }
 
     public function getAiTrendData(): AiTrendDataDto
@@ -140,20 +144,37 @@ class AiTrendAnalysisService
     }
 
     /**
-     * LLMならではの価値ある分析を生成
+     * LLM分析と統計的分析を組み合わせた高精度分析を生成
      */
     private function generateAiAnalysis(array $risingChats, array $categoryTrends, array $tagTrends, array $overallStats, array $historicalData): AiAnalysisDto
     {
-        $summary = $this->generateSummary($risingChats, $categoryTrends, $overallStats);
-        $insights = $this->generateInsights($risingChats, $categoryTrends, $tagTrends);
+        // 統計的分析の実行
+        $statisticalAnalysis = $this->performStatisticalAnalysis($risingChats, $categoryTrends, $tagTrends, $overallStats);
+        
+        // LLM分析の実行（新しいペルソナ重視）
+        $llmAnalysis = $this->llmService->generateManagerAnalysis([
+            'risingChats' => $risingChats,
+            'categoryTrends' => $categoryTrends,
+            'tagTrends' => $tagTrends,
+            'overallStats' => $overallStats,
+            'historicalData' => $historicalData,
+            'statisticalInsights' => $statisticalAnalysis
+        ]);
+        
+        // 従来の分析（フォールバック用）
+        $summary = $llmAnalysis['summary'] ?? $this->generateSummary($risingChats, $categoryTrends, $overallStats);
+        $insights = $llmAnalysis['insights'] ?? $this->generateInsights($risingChats, $categoryTrends, $tagTrends);
         $predictions = $this->generatePredictions($risingChats, $categoryTrends);
-        $recommendations = $this->generateRecommendations($risingChats, $tagTrends);
+        $recommendations = $llmAnalysis['theme_recommendations'] ?? [];
         
-        // 異常検知とアラート
+        // 異常検知とアラート（統計的手法 + LLM分析）
         $anomalies = $this->detectAnomalies($risingChats, $categoryTrends, $historicalData);
-        $alerts = $this->generateAlerts($anomalies, $risingChats, $categoryTrends);
+        $alerts = array_merge(
+            $llmAnalysis['alerts'] ?? [],
+            $this->generateStatisticalAlerts($statisticalAnalysis, $anomalies)
+        );
         
-        // 時系列予測（ARIMA/LSTM風の予測）
+        // 時系列予測
         $timeSeriesForecasts = $this->generateTimeSeriesForecasts($historicalData);
 
         return new AiAnalysisDto(
@@ -829,6 +850,563 @@ class AiTrendAnalysisService
         } else {
             return '安定した成長ペースが維持される見込みです。新規チャット開設の促進施策を検討しましょう。';
         }
+    }
+
+    /**
+     * 統計的分析の実行
+     */
+    private function performStatisticalAnalysis(array $risingChats, array $categoryTrends, array $tagTrends, array $overallStats): array
+    {
+        return [
+            'growth_distribution' => $this->analyzeGrowthDistribution($risingChats),
+            'category_competition' => $this->analyzeCategoryCompetition($categoryTrends),
+            'tag_efficiency' => $this->analyzeTagEfficiency($tagTrends),
+            'market_saturation' => $this->analyzeMarketSaturation($overallStats, $categoryTrends),
+            'success_patterns' => $this->identifySuccessPatterns($risingChats),
+            'growth_predictors' => $this->identifyGrowthPredictors($risingChats, $tagTrends)
+        ];
+    }
+
+    /**
+     * 成長分布の分析（正規分布、歪度、外れ値検出）
+     */
+    private function analyzeGrowthDistribution(array $chats): array
+    {
+        if (empty($chats)) {
+            return ['mean' => 0, 'std' => 0, 'skewness' => 0, 'outliers' => []];
+        }
+        
+        $growthValues = array_column($chats, 'diff_member');
+        $n = count($growthValues);
+        
+        // 基本統計量
+        $mean = array_sum($growthValues) / $n;
+        $variance = array_sum(array_map(fn($x) => pow($x - $mean, 2), $growthValues)) / $n;
+        $std = sqrt($variance);
+        
+        // 歪度（skewness）の計算
+        $skewness = 0;
+        if ($std > 0) {
+            $skewness = array_sum(array_map(fn($x) => pow(($x - $mean) / $std, 3), $growthValues)) / $n;
+        }
+        
+        // 外れ値検出（IQR法）
+        sort($growthValues);
+        $q1Index = (int)(($n - 1) * 0.25);
+        $q3Index = (int)(($n - 1) * 0.75);
+        $q1 = $growthValues[$q1Index];
+        $q3 = $growthValues[$q3Index];
+        $iqr = $q3 - $q1;
+        $lowerBound = $q1 - 1.5 * $iqr;
+        $upperBound = $q3 + 1.5 * $iqr;
+        
+        $outliers = array_filter($chats, fn($chat) => 
+            ($chat['diff_member'] ?? 0) < $lowerBound || ($chat['diff_member'] ?? 0) > $upperBound
+        );
+        
+        return [
+            'mean' => round($mean, 2),
+            'std' => round($std, 2),
+            'skewness' => round($skewness, 2),
+            'outliers' => array_slice($outliers, 0, 5),
+            'interpretation' => $this->interpretGrowthDistribution($mean, $std, $skewness, count($outliers))
+        ];
+    }
+
+    /**
+     * 成長分布の解釈
+     */
+    private function interpretGrowthDistribution(float $mean, float $std, float $skewness, int $outlierCount): string
+    {
+        $patterns = [];
+        
+        if ($skewness > 1) {
+            $patterns[] = '少数のチャットが圧倒的な成長を示す寡占状態';
+        } elseif ($skewness > 0.5) {
+            $patterns[] = '一部のチャットが突出して成長';
+        } else {
+            $patterns[] = '比較的均等な成長分布';
+        }
+        
+        if ($std / $mean > 1 && $mean > 0) {
+            $patterns[] = '成長のばらつきが大きく、予測困難';
+        } elseif ($std / $mean < 0.5 && $mean > 0) {
+            $patterns[] = '安定した成長パターン';
+        }
+        
+        if ($outlierCount > 3) {
+            $patterns[] = '異常成長チャットが多数存在';
+        }
+        
+        return implode('、', $patterns);
+    }
+
+    /**
+     * カテゴリ競争度の分析
+     */
+    private function analyzeCategoryCompetition(array $categoryTrends): array
+    {
+        if (empty($categoryTrends)) {
+            return [];
+        }
+        
+        $totalGrowth = array_sum(array_column($categoryTrends, 'total_growth'));
+        $analysis = [];
+        
+        foreach ($categoryTrends as $category) {
+            $marketShare = $totalGrowth > 0 ? ($category['total_growth'] / $totalGrowth) * 100 : 0;
+            $avgGrowthPerChat = $category['chat_count'] > 0 ? $category['total_growth'] / $category['chat_count'] : 0;
+            
+            $competitionLevel = '低';
+            if ($category['chat_count'] > 100) {
+                $competitionLevel = '高';
+            } elseif ($category['chat_count'] > 50) {
+                $competitionLevel = '中';
+            }
+            
+            $analysis[$category['category_name']] = [
+                'market_share' => round($marketShare, 1),
+                'avg_growth_per_chat' => round($avgGrowthPerChat, 2),
+                'competition_level' => $competitionLevel,
+                'chat_density' => $category['chat_count'],
+                'recommendation' => $this->generateCategoryRecommendation($marketShare, $avgGrowthPerChat, $category['chat_count'])
+            ];
+        }
+        
+        return $analysis;
+    }
+
+    /**
+     * カテゴリ別推奨戦略
+     */
+    private function generateCategoryRecommendation(float $marketShare, float $avgGrowth, int $chatCount): string
+    {
+        if ($marketShare > 20 && $avgGrowth > 5) {
+            return '大市場で高成長。差別化が重要だが参入価値は高い';
+        } elseif ($marketShare < 5 && $avgGrowth > 3) {
+            return 'ニッチ市場で高効率。狙い目の分野';
+        } elseif ($marketShare > 15 && $avgGrowth < 2) {
+            return '飽和市場。独自性なしでは成長困難';
+        } elseif ($chatCount < 20) {
+            return '未開拓分野。先行者利益が期待できる';
+        } else {
+            return '安定市場。確実だが爆発的成長は期待薄';
+        }
+    }
+
+    /**
+     * タグ効率性の分析
+     */
+    private function analyzeTagEfficiency(array $tagTrends): array
+    {
+        if (empty($tagTrends)) {
+            return [];
+        }
+        
+        $analysis = [];
+        foreach ($tagTrends as $tag) {
+            $growthPerRoom = $tag['room_count'] > 0 ? $tag['total_1h_growth'] / $tag['room_count'] : 0;
+            $avgMemberSize = (float)($tag['avg_member_count'] ?? 0);
+            
+            $efficiency = '低';
+            if ($growthPerRoom > 5) {
+                $efficiency = '高';
+            } elseif ($growthPerRoom > 2) {
+                $efficiency = '中';
+            }
+            
+            $analysis[] = [
+                'tag' => $tag['tag'],
+                'growth_per_room' => round($growthPerRoom, 2),
+                'room_count' => (int)$tag['room_count'],
+                'efficiency' => $efficiency,
+                'market_size' => $this->categorizeMarketSize((int)$tag['room_count'], $avgMemberSize),
+                'recommendation' => $this->generateTagRecommendation($growthPerRoom, (int)$tag['room_count'], $avgMemberSize)
+            ];
+        }
+        
+        // 効率順にソート
+        usort($analysis, fn($a, $b) => $b['growth_per_room'] <=> $a['growth_per_room']);
+        
+        return array_slice($analysis, 0, 10);
+    }
+
+    /**
+     * 市場規模の分類
+     */
+    private function categorizeMarketSize(int $roomCount, float $avgMembers): string
+    {
+        $totalMarket = $roomCount * $avgMembers;
+        
+        if ($totalMarket > 10000) {
+            return '大市場';
+        } elseif ($totalMarket > 1000) {
+            return '中市場';
+        } else {
+            return 'ニッチ市場';
+        }
+    }
+
+    /**
+     * タグ別推奨戦略
+     */
+    private function generateTagRecommendation(float $growthPerRoom, int $roomCount, float $avgMembers): string
+    {
+        if ($growthPerRoom > 5 && $roomCount < 50) {
+            return '高効率ニッチ。今が参入チャンス';
+        } elseif ($growthPerRoom > 3 && $roomCount > 100) {
+            return '大市場で高成長。競争激しいが需要確実';
+        } elseif ($growthPerRoom < 1 && $roomCount > 200) {
+            return '飽和市場。避けるべき分野';
+        } elseif ($roomCount < 10) {
+            return '未開拓分野。リスクあるが先行者利益期待';
+        } else {
+            return '安定分野。確実だが成長性は限定的';
+        }
+    }
+
+    /**
+     * 市場飽和度の分析
+     */
+    private function analyzeMarketSaturation(array $overallStats, array $categoryTrends): array
+    {
+        $totalChats = $overallStats['total_chats'] ?? 0;
+        $growingChats = $overallStats['growing_chats'] ?? 0;
+        $growthRate = $totalChats > 0 ? ($growingChats / $totalChats) * 100 : 0;
+        
+        $saturationLevel = '低';
+        if ($growthRate < 20) {
+            $saturationLevel = '高';
+        } elseif ($growthRate < 40) {
+            $saturationLevel = '中';
+        }
+        
+        return [
+            'overall_growth_rate' => round($growthRate, 1),
+            'saturation_level' => $saturationLevel,
+            'total_market_size' => $totalChats,
+            'active_market_size' => $growingChats,
+            'interpretation' => $this->interpretMarketSaturation($growthRate, $saturationLevel)
+        ];
+    }
+
+    /**
+     * 市場飽和度の解釈
+     */
+    private function interpretMarketSaturation(float $growthRate, string $saturationLevel): string
+    {
+        switch ($saturationLevel) {
+            case '高':
+                return '市場は成熟期。既存チャットの改善や未開拓ニッチ分野を狙うべき';
+            case '中':
+                return '市場は安定期。定番分野での確実な運営が有効';
+            case '低':
+                return '市場は成長期。新規参入や積極的な拡張戦略が有効';
+            default:
+                return '市場状況を分析中';
+        }
+    }
+
+    /**
+     * 成功パターンの特定
+     */
+    private function identifySuccessPatterns(array $risingChats): array
+    {
+        if (empty($risingChats)) {
+            return [];
+        }
+        
+        $patterns = [];
+        
+        // 名前パターン分析
+        $namePatterns = $this->analyzeNamingPatterns($risingChats);
+        $patterns['naming'] = $namePatterns;
+        
+        // 規模別成功率
+        $sizePatterns = $this->analyzeSizePatterns($risingChats);
+        $patterns['size'] = $sizePatterns;
+        
+        // 成長速度パターン
+        $speedPatterns = $this->analyzeGrowthSpeedPatterns($risingChats);
+        $patterns['speed'] = $speedPatterns;
+        
+        return $patterns;
+    }
+
+    /**
+     * ネーミングパターンの分析
+     */
+    private function analyzeNamingPatterns(array $chats): array
+    {
+        $keywords = [];
+        $totalGrowth = 0;
+        
+        foreach ($chats as $chat) {
+            $name = strtolower($chat['name'] ?? '');
+            $growth = $chat['diff_member'] ?? 0;
+            $totalGrowth += $growth;
+            
+            // キーワード抽出（簡易版）
+            $detectedKeywords = [];
+            $keywordPatterns = [
+                'シリアル' => ['シリアル', 'serial'],
+                '就活' => ['就活', '就職'],
+                'なりきり' => ['なりきり', 'roleplay'],
+                'ゲーム' => ['スプラ', 'フォート', 'ロブロ', 'ゲーム'],
+                'K-POP' => ['stray', 'スキズ', 'kpop', 'k-pop'],
+                '勉強' => ['勉強', '学習', '資格'],
+                'ボイス' => ['ボイメ', 'ライブトーク', '歌']
+            ];
+            
+            foreach ($keywordPatterns as $category => $patterns) {
+                foreach ($patterns as $pattern) {
+                    if (stripos($name, $pattern) !== false) {
+                        $detectedKeywords[] = $category;
+                        break;
+                    }
+                }
+            }
+            
+            foreach ($detectedKeywords as $keyword) {
+                if (!isset($keywords[$keyword])) {
+                    $keywords[$keyword] = ['count' => 0, 'total_growth' => 0];
+                }
+                $keywords[$keyword]['count']++;
+                $keywords[$keyword]['total_growth'] += $growth;
+            }
+        }
+        
+        // 効率順にソート
+        foreach ($keywords as $keyword => &$data) {
+            $data['avg_growth'] = $data['count'] > 0 ? $data['total_growth'] / $data['count'] : 0;
+            $data['share'] = $totalGrowth > 0 ? ($data['total_growth'] / $totalGrowth) * 100 : 0;
+        }
+        
+        uasort($keywords, fn($a, $b) => $b['avg_growth'] <=> $a['avg_growth']);
+        
+        return array_slice($keywords, 0, 5, true);
+    }
+
+    /**
+     * 規模別成功パターン
+     */
+    private function analyzeSizePatterns(array $chats): array
+    {
+        $sizeCategories = [
+            'small' => ['min' => 0, 'max' => 100, 'chats' => [], 'growth' => 0],
+            'medium' => ['min' => 101, 'max' => 500, 'chats' => [], 'growth' => 0],
+            'large' => ['min' => 501, 'max' => 2000, 'chats' => [], 'growth' => 0],
+            'mega' => ['min' => 2001, 'max' => PHP_INT_MAX, 'chats' => [], 'growth' => 0]
+        ];
+        
+        foreach ($chats as $chat) {
+            $member = $chat['member'] ?? 0;
+            $growth = $chat['diff_member'] ?? 0;
+            
+            foreach ($sizeCategories as $size => &$category) {
+                if ($member >= $category['min'] && $member <= $category['max']) {
+                    $category['chats'][] = $chat;
+                    $category['growth'] += $growth;
+                    break;
+                }
+            }
+        }
+        
+        $analysis = [];
+        foreach ($sizeCategories as $size => $category) {
+            $count = count($category['chats']);
+            $analysis[$size] = [
+                'count' => $count,
+                'total_growth' => $category['growth'],
+                'avg_growth' => $count > 0 ? round($category['growth'] / $count, 2) : 0,
+                'success_rate' => round(($count / count($chats)) * 100, 1)
+            ];
+        }
+        
+        return $analysis;
+    }
+
+    /**
+     * 成長速度パターンの分析
+     */
+    private function analyzeGrowthSpeedPatterns(array $chats): array
+    {
+        if (empty($chats)) {
+            return [];
+        }
+        
+        $growthValues = array_column($chats, 'diff_member');
+        sort($growthValues);
+        $n = count($growthValues);
+        
+        return [
+            'explosive' => ['min' => $growthValues[(int)($n * 0.9)], 'count' => (int)($n * 0.1)],
+            'high' => ['min' => $growthValues[(int)($n * 0.7)], 'count' => (int)($n * 0.2)],
+            'moderate' => ['min' => $growthValues[(int)($n * 0.3)], 'count' => (int)($n * 0.4)],
+            'slow' => ['min' => 0, 'count' => (int)($n * 0.3)]
+        ];
+    }
+
+    /**
+     * 成長予測因子の特定
+     */
+    private function identifyGrowthPredictors(array $risingChats, array $tagTrends): array
+    {
+        return [
+            'top_growth_factors' => $this->findTopGrowthFactors($risingChats),
+            'emerging_trends' => $this->findEmergingTrends($tagTrends),
+            'correlation_analysis' => $this->analyzeGrowthCorrelations($risingChats)
+        ];
+    }
+
+    /**
+     * 主要成長要因の特定
+     */
+    private function findTopGrowthFactors(array $chats): array
+    {
+        // 成長上位チャットの共通要素を分析
+        $topChats = array_slice($chats, 0, 5);
+        $factors = [];
+        
+        foreach ($topChats as $chat) {
+            $name = strtolower($chat['name'] ?? '');
+            
+            // 要因の特定（簡易版）
+            if (stripos($name, 'シリアル') !== false || stripos($name, '当選') !== false) {
+                $factors['real_time_info'][] = $chat;
+            }
+            if (stripos($name, '参加') !== false || stripos($name, 'みんな') !== false) {
+                $factors['participation'][] = $chat;
+            }
+            if (preg_match('/\d+[歳代]/', $name) || stripos($name, '大人') !== false) {
+                $factors['target_specific'][] = $chat;
+            }
+        }
+        
+        return $factors;
+    }
+
+    /**
+     * 新興トレンドの発見
+     */
+    private function findEmergingTrends(array $tagTrends): array
+    {
+        // 急成長しているが、まだ規模が小さいタグを特定
+        $emerging = [];
+        
+        foreach ($tagTrends as $tag) {
+            $growthRate = $tag['room_count'] > 0 ? $tag['total_1h_growth'] / $tag['room_count'] : 0;
+            
+            if ($growthRate > 2 && $tag['room_count'] < 100) {
+                $emerging[] = [
+                    'tag' => $tag['tag'],
+                    'growth_rate' => round($growthRate, 2),
+                    'room_count' => $tag['room_count'],
+                    'potential' => 'high'
+                ];
+            }
+        }
+        
+        return array_slice($emerging, 0, 5);
+    }
+
+    /**
+     * 成長相関の分析
+     */
+    private function analyzeGrowthCorrelations(array $chats): array
+    {
+        // 簡易相関分析
+        $memberSizes = array_column($chats, 'member');
+        $growthValues = array_column($chats, 'diff_member');
+        
+        $correlation = $this->calculateCorrelation($memberSizes, $growthValues);
+        
+        return [
+            'size_growth_correlation' => round($correlation, 3),
+            'interpretation' => $this->interpretCorrelation($correlation)
+        ];
+    }
+
+    /**
+     * 相関係数の計算
+     */
+    private function calculateCorrelation(array $x, array $y): float
+    {
+        $n = count($x);
+        if ($n === 0 || count($y) !== $n) {
+            return 0;
+        }
+        
+        $meanX = array_sum($x) / $n;
+        $meanY = array_sum($y) / $n;
+        
+        $numerator = 0;
+        $sumSqX = 0;
+        $sumSqY = 0;
+        
+        for ($i = 0; $i < $n; $i++) {
+            $diffX = $x[$i] - $meanX;
+            $diffY = $y[$i] - $meanY;
+            $numerator += $diffX * $diffY;
+            $sumSqX += $diffX * $diffX;
+            $sumSqY += $diffY * $diffY;
+        }
+        
+        $denominator = sqrt($sumSqX * $sumSqY);
+        
+        return $denominator != 0 ? $numerator / $denominator : 0;
+    }
+
+    /**
+     * 相関の解釈
+     */
+    private function interpretCorrelation(float $correlation): string
+    {
+        if ($correlation > 0.7) {
+            return '大規模チャットほど成長しやすい強い傾向';
+        } elseif ($correlation > 0.3) {
+            return '規模と成長に中程度の正の関係';
+        } elseif ($correlation < -0.3) {
+            return '小規模チャットの方が成長しやすい傾向';
+        } else {
+            return '規模と成長に明確な関係は見られない';
+        }
+    }
+
+    /**
+     * 統計的アラートの生成
+     */
+    private function generateStatisticalAlerts(array $statisticalAnalysis, array $anomalies): array
+    {
+        $alerts = [];
+        
+        // 市場飽和アラート
+        $saturation = $statisticalAnalysis['market_saturation'] ?? [];
+        if (($saturation['saturation_level'] ?? '') === '高') {
+            $alerts[] = [
+                'level' => 'warning',
+                'icon' => '📊',
+                'title' => '市場飽和度が高い状態',
+                'message' => sprintf('成長率%s%%。新規参入より既存改善や未開拓分野を狙うべき。', $saturation['overall_growth_rate'] ?? 0),
+                'timestamp' => date('Y-m-d H:i:s'),
+                'action_required' => true
+            ];
+        }
+        
+        // 成長異常アラート
+        $distribution = $statisticalAnalysis['growth_distribution'] ?? [];
+        if (($distribution['skewness'] ?? 0) > 2) {
+            $alerts[] = [
+                'level' => 'info',
+                'icon' => '📈',
+                'title' => '成長の偏りが顕著',
+                'message' => '少数チャットが成長を独占。成功パターンの分析が重要。',
+                'timestamp' => date('Y-m-d H:i:s'),
+                'action_required' => false
+            ];
+        }
+        
+        return array_slice($alerts, 0, 2);
     }
 
     private function generateRecommendations(array $risingChats, array $tagTrends): array
