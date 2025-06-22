@@ -19,19 +19,19 @@ class ClaudeCodeLlmService
         try {
             // DB接続
             \App\Models\Repositories\DB::connect();
-            
+
             // 3期間のデータを統合して分析
             $threePeriodData = $this->integrateThreePeriodData($analysisData);
             $prompt = $this->buildManagerAnalysisPrompt($threePeriodData);
-            
+
             // ローカル環境ではClaudeCodeを呼び出し
             $response = $this->callLLM($prompt);
-            
+
             // 旧AiTrendAnalysisServiceと同じデータ構造を生成
             $risingChats = $this->getRisingChats();
             $tagTrends = $this->getTagTrends();
             $overallStats = $this->getOverallStats();
-            
+
             // 3期間データを統合したAI分析
             $aiAnalysisData = $this->parseAnalysisResponse($response);
             $aiAnalysis = new AiAnalysisDto(
@@ -42,7 +42,7 @@ class ClaudeCodeLlmService
                 [], // anomalies
                 $aiAnalysisData['alerts']
             );
-            
+
             return new AiTrendDataDto(
                 $risingChats,
                 $tagTrends,
@@ -54,7 +54,7 @@ class ClaudeCodeLlmService
         } catch (\Exception $e) {
             // エラー時は空のデータで返す
             error_log("ClaudeCodeLlmService Error: " . $e->getMessage());
-            
+
             $emptyAnalysis = new AiAnalysisDto(
                 "システムエラーにより分析を実行できませんでした。",
                 [],
@@ -63,7 +63,7 @@ class ClaudeCodeLlmService
                 [],
                 []
             );
-            
+
             return new AiTrendDataDto(
                 [],
                 [],
@@ -83,24 +83,24 @@ class ClaudeCodeLlmService
     {
         // 実際のデータベースから3期間のデータを取得
         $hourData = $this->getHourPeriodData();
-        $day24Data = $this->getDay24PeriodData(); 
+        $day24Data = $this->getDay24PeriodData();
         $weekData = $this->getWeekPeriodData();
-        
+
         // 3期間の成長傾向から最重要トレンドを特定（実データ基準）
         $criticalTrends = $this->identifyCriticalTrends($hourData, $day24Data, $weekData);
-        
+
         // カテゴリ別の3期間成長パターンを分析（実データ基準）
         $categoryInsights = $this->analyzeCategoryGrowthPatterns($hourData, $day24Data, $weekData);
-        
+
         // テーマ別の3期間一貫性チェック（安定成長vs一時的ブーム）
         $themeStability = $this->evaluateThemeStability($hourData, $day24Data, $weekData);
-        
+
         // 世界唯一データの価値を最大化した戦略的洞察
         $strategicInsights = $this->generateStrategicInsights($criticalTrends, $categoryInsights, $themeStability);
-        
+
         return array_merge($analysisData, [
             'hour_data' => $hourData,
-            'day24_data' => $day24Data, 
+            'day24_data' => $day24Data,
             'week_data' => $weekData,
             'critical_trends' => $criticalTrends,
             'category_insights' => $categoryInsights,
@@ -175,7 +175,7 @@ class ClaudeCodeLlmService
             WHERE srh.diff_member > 0
             ORDER BY srh.diff_member DESC
         ";
-        
+
         $stmt = \App\Models\Repositories\DB::$pdo->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -303,7 +303,7 @@ class ClaudeCodeLlmService
             WHERE sr24.diff_member > 0
             ORDER BY sr24.diff_member DESC
         ";
-        
+
         $stmt = \App\Models\Repositories\DB::$pdo->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -494,7 +494,7 @@ class ClaudeCodeLlmService
             WHERE srw.diff_member > 0
             ORDER BY srw.diff_member DESC
         ";
-        
+
         $stmt = \App\Models\Repositories\DB::$pdo->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -511,12 +511,12 @@ class ClaudeCodeLlmService
         $day24Data = $data['day24_data'] ?? [];
         $weekData = $data['week_data'] ?? [];
         $timeContext = $this->getTimeContext();
-        
+
         // 実データを文字列形式で整理
         $hourDataText = $this->formatHourDataForPrompt(array_slice($hourData, 0, 10));
         $day24DataText = $this->formatDay24DataForPrompt(array_slice($day24Data, 0, 10));
         $weekDataText = $this->formatWeekDataForPrompt(array_slice($weekData, 0, 10));
-        
+
         return <<<PROMPT
 # 【緊急指令】ガチ勢オープンチャット管理者への命がけ戦略分析
 
@@ -650,101 +650,84 @@ PROMPT;
     private function generateMockClaudeResponse(string $prompt): string
     {
         // 【緊急命令対応】実データベースから八方手を尽くして取得した世界唯一の分析
-        return json_encode([
-            "summary" => "【実データ3期間統合】スキズ関連: 1時間79人成長→24時間1416人成長→1週間10091人成長の爆発的加速。ゲームカテゴリ: 1時間384チャット・504人成長で絶対的支配。芸能人・有名人カテゴリ: 1週間15715人成長で持続力最強。アフィリエイト: 1週間2003人で収益直結確定。",
-            "insights" => [
-                [
-                    "icon" => "👑",
-                    "title" => "スキズ関連が全期間で絶対王者",
-                    "content" => "【実データ3期間統合】スキズ関連: 1時間79人→24時間1416人→1週間10091人の爆発的加速成長。「スキズ　波　当落報告」が1週間+4769人で史上最大。シリアル交換・当選報告が管理者必勝パターン確定。"
-                ],
-                [
-                    "icon" => "🔥", 
-                    "title" => "ゲームカテゴリが全市場を制圧",
-                    "content" => "【実測統計】1時間384チャット・504人成長、24時間1954チャット・4554人成長、1週間4259チャット・17733人成長。全期間でトップの絶対的支配力。管理者が最も確実に成功できるカテゴリ。"
-                ],
-                [
-                    "icon" => "💰",
-                    "title" => "アフィリエイト・物販の収益直結効果を実証",
-                    "content" => "【実データ検証】アフィリエイト関連: 1時間22人→24時間284人→1週間2003人成長。「SNS×LINE最新アフィリエイト」24時間220人、「物販ONE終了セミナー」1週間1828人の確実な収益系需要。"
-                ],
-                [
-                    "icon" => "🎯",
-                    "title" => "芸能人・有名人カテゴリの持続力が最強レベル",
-                    "content" => "【効率性実証】1時間135チャット・234人、1週間1725チャット・15715人の驚異的成長量。ゲームに次ぐ巨大市場で、エンタメ系管理者には最適解。K-POP・音楽系で確実な成果。"
-                ],
-                [
-                    "icon" => "🚀",
-                    "title" => "無料特典配布が最強集客法と実証",
-                    "content" => "【実測結果】スタバ・無料・クーポン関連: 1時間17人→24時間230人→1週間2120人成長。「スタバ無料クーポン配布」1週間786人実績。無料価値提供は即効性・持続性・再現性の三拍子完備。"
-                ]
-            ],
-            "alerts" => [
-                [
-                    "level" => "critical",
-                    "icon" => "🔥",
-                    "title" => "スキズシリアル交換市場の爆発的チャンス",
-                    "message" => "スキズ関連が1週間10091人成長で史上最大。シリアル交換・当選報告テーマで今すぐ参入すれば確実に月間1000人以上獲得可能。",
-                    "action_required" => true
-                ],
-                [
-                    "level" => "warning", 
-                    "icon" => "⚡",
-                    "title" => "ゲームカテゴリの競争激化警報",
-                    "message" => "ゲーム系は1時間384チャット存在で競争激化。差別化必須だが市場規模最大。攻略・初心者特化で勝負すべき。",
-                    "action_required" => true
-                ],
-                [
-                    "level" => "info",
-                    "icon" => "💡", 
-                    "title" => "アフィリエイト収益系の安定需要確認",
-                    "message" => "アフィリエイト関連1週間2003人成長で確実な需要。物販・副業系テーマは競合少なく確実集客可能。",
-                    "action_required" => false
-                ]
-            ],
-            "theme_recommendations" => [
-                [
-                    "theme" => "Stray Kids 波 当落報告 シリアル交換",
-                    "reason" => "実データ1週間+4769人の史上最大成長。スキズ関連は全期間で絶対王者の地位確立。シリアル交換需要は継続的で再現性100%。",
-                    "target" => "スキズファンのシリアル交換希望者・当選報告を見たいファン・グッズ交換希望者",
-                    "strategy" => "開設初日：シリアルコード交換ルール明記→当選報告専用スレッド作成→交換成功事例を積極投稿→ファン同士の情報共有促進→定期的な当選者お祝い企画",
-                    "competition" => "中",
-                    "growth_potential" => "高"
-                ],
-                [
-                    "theme" => "ゲーム攻略 初心者向け 基礎解説",
-                    "reason" => "ゲームカテゴリは1時間504人・1週間17733人の圧倒的成長。384チャット中でも初心者特化は差別化可能で確実需要。",
-                    "target" => "ゲーム初心者・攻略情報を求める新規プレイヤー・効率的な成長を望む中級者",
-                    "strategy" => "開設初日：基礎攻略ガイド投稿→質問歓迎雰囲気作り→上級者による初心者サポート体制→定期的な攻略イベント開催→成長記録シェア企画",
-                    "competition" => "高",
-                    "growth_potential" => "高"
-                ],
-                [
-                    "theme" => "SNS最新アフィリエイト 物販ONE 副業セミナー",
-                    "reason" => "アフィリエイト系1週間2003人成長で確実需要。物販ONEセミナー1828人実績あり。収益直結テーマで継続参加率高い。",
-                    "target" => "副業希望者・アフィリエイト初心者・物販ビジネス学習者・収入増加を目指す会社員",
-                    "strategy" => "開設初日：成功事例シェア→無料ノウハウ提供→質問サポート体制→定期勉強会開催→収益報告会で継続モチベーション維持",
-                    "competition" => "低",
-                    "growth_potential" => "中"
-                ],
-                [
-                    "theme" => "スタバ無料クーポン配布 限定プレゼント企画",
-                    "reason" => "無料特典系1週間2120人成長でクーポン配布786人実績。無料価値提供は即効性・持続性・再現性の完璧な三拍子。",
-                    "target" => "お得情報好き・無料特典愛用者・学生・主婦・節約志向の若年層",
-                    "strategy" => "開設初日：限定クーポン先着配布→お得情報定期更新→参加者限定特典→紹介特典制度→感謝企画で定期的な価値提供",
-                    "competition" => "中",
-                    "growth_potential" => "中"
-                ],
-                [
-                    "theme" => "芸能人・K-POP最新情報 推し活サポート",
-                    "reason" => "芸能人カテゴリ1週間15715人の驚異的成長量。K-POP・音楽系は安定需要でエンタメ管理者には最適解。",
-                    "target" => "K-POPファン・推し活中のファン・最新芸能情報を求める層・ファン同士の交流希望者",
-                    "strategy" => "開設初日：最新情報速報体制→推し活相談コーナー→ファン同士の情報交換→イベント情報共有→推しへの応援企画定期開催",
-                    "competition" => "中",
-                    "growth_potential" => "高"
-                ]
-            ]
-        ], JSON_UNESCAPED_UNICODE);
+        return '{
+  "summary": "今なら『スキズ当落速報 × シリアル報告』を徹底差別化すれば爆伸び確実",
+  "insights": [
+    {
+      "icon": "🔥",
+      "title": "爆発力の核は「当選報告文化」",
+      "content": "スキズ（Stray Kids）関連のチャットは「当落速報」「シリアルコード報告」「ノート必読」文化がトレンド。承認制・固定ノート整備・報告テンプレ導入で信頼度を爆上げし、参入後1時間で+30人超も現実的。"
+    },
+    {
+      "icon": "💰",
+      "title": "収益系は『SNS×LINE』が正解",
+      "content": "LINEを活用したSNS連携アフィリエイト情報が急伸中（+220人/日）。無料特典情報とセットで提供し、初心者向けコンテンツ→実践者向けQ&Aで段階成長モデルを採用することで滞在率が安定。"
+    },
+    {
+      "icon": "🎓",
+      "title": "学習系は資格より“交流感”",
+      "content": "『消防設備士Web勉強会』や『AI研究所』のように、試験情報だけでなく「みんなで受かろう！」という仲間感があるテーマが成長中。講義配信風の投稿で講師型リーダーを演じると成功率高。"
+    }
+  ],
+  "alerts": [
+    {
+      "level": "critical",
+      "icon": "⚠️",
+      "title": "K-POP系は超激戦地帯",
+      "message": "スキズ・BTSなどの既存テーマは爆発力があるが飽和中。『速報系・データ比較・早見表』など明確な差別化軸を作れないと埋もれる",
+      "action_required": true
+    },
+    {
+      "level": "warning",
+      "icon": "🧠",
+      "title": "就活・勉強会系は運営負荷が高い",
+      "message": "成長余地ありだが、情報鮮度維持が必須。ChatGPTなどを活用して更新を自動化しないと継続困難",
+      "action_required": true
+    },
+    {
+      "level": "info",
+      "icon": "🧩",
+      "title": "地域密着型は長期安定",
+      "message": "万博や関東系地域情報は継続して伸びている。地元情報×匿名交流で新規層を狙える",
+      "action_required": false
+    }
+  ],
+  "theme_recommendations": [
+    {
+      "theme": "【当落速報】StrayKids シリアル報告＆分析室",
+      "reason": "過去24時間で+459人のチャットが複数存在。速報性と報告テンプレで差別化可能。",
+      "target": "10〜30代のK-POPオタク（主に女性）",
+      "strategy": "固定ノートで報告方法を統一／当選報告テンプレ画像を用意／早見表の更新で信頼構築／管理者は名前非公開で運営",
+      "competition": "高",
+      "growth_potential": "高"
+    },
+    {
+      "theme": "【0→1】SNS×LINEで月1万円稼ぐ部屋",
+      "reason": "アフィリエイト系で+220人/日成長中、かつ運営スキル次第で差別化可能",
+      "target": "10〜40代の副業初心者（男女問わず）",
+      "strategy": "LINE友達追加案件の紹介＋危険案件リスト／質問テンプレ導入／実践レポート形式の週次投稿／「参加は無料・閲覧専用も歓迎」のルールで敷居を下げる",
+      "competition": "中",
+      "growth_potential": "高"
+    },
+    {
+      "theme": "【資格部屋】消防設備士×雑談×仲間募集チャット",
+      "reason": "ニッチ資格の勉強会が+98人/日で安定成長中。競争も少ない",
+      "target": "20〜50代の社会人学習層",
+      "strategy": "過去問共有／勉強時間宣言／進捗報告テンプレ／ゆる雑談でコミュニティ感強化",
+      "competition": "低",
+      "growth_potential": "中"
+    },
+    {
+      "theme": "【関東版】匿名で語る地元の裏話＆便利情報局",
+      "reason": "『皇帝の真実』などの匿名地域系が安定成長。情報性と暴露性のバランスが鍵。",
+      "target": "20〜40代の都内住民・移住者・学生",
+      "strategy": "住んでるエリア非公開／小ネタ投稿テンプレ導入／ローカルニュース要約投稿／暴露や愚痴歓迎ルール",
+      "competition": "中",
+      "growth_potential": "中"
+    }
+  ]
+}
+';
     }
 
     /**
@@ -788,15 +771,15 @@ PROMPT;
     private function identifyCriticalTrends(array $hourData, array $day24Data, array $weekData): array
     {
         $criticalTrends = [];
-        
+
         // 1時間→24時間→1週間の成長加速度分析
         foreach (array_slice($weekData, 0, 20) as $weekItem) {
             $openChatId = $weekItem['id'];
-            
+
             // 同じオープンチャットの他期間データを検索
             $hourGrowth = $this->findGrowthByOpenChatId($hourData, $openChatId);
             $day24Growth = $this->findGrowthByOpenChatId($day24Data, $openChatId);
-            
+
             if ($hourGrowth && $day24Growth && $weekItem['diff_member'] > 1000) {
                 $criticalTrends[] = [
                     'name' => $weekItem['name'],
@@ -807,7 +790,7 @@ PROMPT;
                 ];
             }
         }
-        
+
         return $criticalTrends;
     }
 
@@ -838,7 +821,7 @@ PROMPT;
     private function analyzeCategoryGrowthPatterns(array $hourData, array $day24Data, array $weekData): array
     {
         $patterns = [];
-        
+
         // カテゴリ別集計
         $categoryStats = [];
         foreach (['hour' => $hourData, 'day24' => $day24Data, 'week' => $weekData] as $period => $data) {
@@ -851,7 +834,7 @@ PROMPT;
                 $categoryStats[$category]['count'][$period]++;
             }
         }
-        
+
         foreach ($categoryStats as $category => $stats) {
             $patterns[$category] = [
                 'growth_efficiency' => $stats['week'] / ($stats['count']['week'] ?: 1),
@@ -860,7 +843,7 @@ PROMPT;
                 'recommendation' => $this->generateCategoryRecommendation($category, $stats)
             ];
         }
-        
+
         return $patterns;
     }
 
@@ -877,7 +860,7 @@ PROMPT;
     {
         $efficiency = $stats['week'] / ($stats['count']['week'] ?: 1);
         $marketSize = $stats['count']['week'];
-        
+
         if ($efficiency > 500 && $marketSize < 100) {
             return "ブルーオーシャン - 高効率×低競争";
         } elseif ($efficiency > 300) {
@@ -895,17 +878,17 @@ PROMPT;
     private function evaluateThemeStability(array $hourData, array $day24Data, array $weekData): array
     {
         $stability = [];
-        
+
         // 各期間のトップ50を安定性評価対象とする
         $topHour = array_slice($hourData, 0, 50);
         $topDay24 = array_slice($day24Data, 0, 50);
         $topWeek = array_slice($weekData, 0, 50);
-        
+
         foreach ($topWeek as $weekItem) {
             $openChatId = $weekItem['id'];
             $hourRank = $this->findRankByOpenChatId($topHour, $openChatId);
             $day24Rank = $this->findRankByOpenChatId($topDay24, $openChatId);
-            
+
             if ($hourRank && $day24Rank) {
                 $stability[$weekItem['name']] = [
                     'consistency_score' => $this->calculateConsistencyScore($hourRank, $day24Rank, 1),
@@ -914,7 +897,7 @@ PROMPT;
                 ];
             }
         }
-        
+
         return $stability;
     }
 
@@ -1006,7 +989,7 @@ PROMPT;
     private function calculateTimingAdvantages(array $criticalTrends): array
     {
         return [
-            'immediate_opportunities' => count(array_filter($criticalTrends, function($trend) {
+            'immediate_opportunities' => count(array_filter($criticalTrends, function ($trend) {
                 return $trend['priority'] === 'critical';
             })),
             'optimal_entry_timing' => '今すぐ',
@@ -1049,7 +1032,7 @@ PROMPT;
         if (!$data) {
             throw new \RuntimeException('Claude分析応答の解析に失敗: ' . $response);
         }
-        
+
         return [
             'summary' => $data['summary'] ?? '',
             'insights' => $data['insights'] ?? [],
@@ -1066,7 +1049,7 @@ PROMPT;
         if ($categoryId === null) {
             return 'カテゴリ不明';
         }
-        
+
         $categories = \App\Config\AppConfig::OPEN_CHAT_CATEGORY[''];
         foreach ($categories as $name => $id) {
             if ($id === $categoryId) {
@@ -1082,7 +1065,7 @@ PROMPT;
     private function getRisingChats(): array
     {
         \App\Models\Repositories\DB::connect();
-        
+
         $query = "
             SELECT 
                 oc.id,
@@ -1098,12 +1081,12 @@ PROMPT;
             ORDER BY srh.diff_member DESC
             LIMIT 10
         ";
-        
+
         $stmt = \App\Models\Repositories\DB::$pdo->prepare($query);
         $stmt->execute();
         $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        
-        return array_map(function($item) {
+
+        return array_map(function ($item) {
             return [
                 'name' => $item['name'] ?? 'チャット名不明',
                 'category' => $this->getCategoryName($item['category']),
@@ -1121,7 +1104,7 @@ PROMPT;
     private function getTagTrends(): array
     {
         \App\Models\Repositories\DB::connect();
-        
+
         // recommendテーブルから基本的なタグ情報のみ取得
         $query = "
             SELECT 
@@ -1130,12 +1113,12 @@ PROMPT;
             FROM recommend
             LIMIT 20
         ";
-        
+
         $stmt = \App\Models\Repositories\DB::$pdo->prepare($query);
         $stmt->execute();
         $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        
-        return array_map(function($item, $index) {
+
+        return array_map(function ($item, $index) {
             return [
                 'tag' => $item['tag'] ?? 'タグ不明',
                 'room_count' => $item['room_count'] ?? 1,
@@ -1151,14 +1134,14 @@ PROMPT;
     private function getOverallStats(): array
     {
         \App\Models\Repositories\DB::connect();
-        
+
         // 簡単な統計情報を返す
         return [
             'total_growing_chats_hour' => 384,
             'total_member_growth_hour' => 504,
             'average_growth_hour' => 1.3,
             'max_growth_hour' => 79,
-            'total_growing_chats_day' => 1954, 
+            'total_growing_chats_day' => 1954,
             'total_member_growth_day' => 4554,
             'average_growth_day' => 2.3,
             'max_growth_day' => 1416,
