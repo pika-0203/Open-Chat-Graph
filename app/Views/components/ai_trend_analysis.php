@@ -1,10 +1,12 @@
 <?php
 
-/** @var array $aiTrendData */
-$risingChats = $aiTrendData['risingChats'] ?? [];
-$categoryTrends = $aiTrendData['categoryTrends'] ?? [];
-$tagTrends = $aiTrendData['tagTrends'] ?? [];
-$aiAnalysis = $aiTrendData['aiAnalysis'] ?? [];
+use App\Services\AiTrend\AiTrendDataDto;
+
+/** @var AiTrendDataDto $aiTrendData */
+$risingChats = $aiTrendData->risingChats;
+$categoryTrends = $aiTrendData->categoryTrends;
+$tagTrends = $aiTrendData->tagTrends;
+$aiAnalysis = $aiTrendData->aiAnalysis;
 
 ?>
 
@@ -647,18 +649,18 @@ $aiAnalysis = $aiTrendData['aiAnalysis'] ?? [];
         </div>
     </div>
 
-    <?php if (!empty($aiAnalysis['summary'])): ?>
+    <?php if (!empty($aiAnalysis->summary)): ?>
         <div class="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-100 rounded-xl p-5 mb-6 hover:shadow-md transition-all duration-200">
             <div class="flex items-start gap-4">
                 <div class="bg-blue-100 p-2 rounded-lg">
                     <span class="text-blue-600 text-xl">💡</span>
                 </div>
-                <p class="text-gray-700 leading-relaxed font-medium"><?php echo htmlspecialchars($aiAnalysis['summary']) ?></p>
+                <p class="text-gray-700 leading-relaxed font-medium"><?php echo htmlspecialchars($aiAnalysis->summary) ?></p>
             </div>
         </div>
     <?php endif ?>
 
-    <?php if (!empty($aiAnalysis['insights'])): ?>
+    <?php if (!empty($aiAnalysis->insights)): ?>
         <div class="mb-8">
             <h3 class="text-lg font-semibold text-gray-900 mb-5 flex items-center gap-3">
                 <div class="bg-orange-100 p-2 rounded-lg">
@@ -667,7 +669,7 @@ $aiAnalysis = $aiTrendData['aiAnalysis'] ?? [];
                 分析結果
             </h3>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                <?php foreach ($aiAnalysis['insights'] as $insight): ?>
+                <?php foreach ($aiAnalysis->insights as $insight): ?>
                     <div class="bg-white border border-gray-100 rounded-xl p-5 hover:shadow-lg hover:border-gray-200 transition-all duration-300 group">
                         <div class="flex items-start gap-4">
                             <div class="bg-gray-50 group-hover:bg-blue-50 p-2 rounded-lg transition-colors duration-200">
@@ -735,7 +737,7 @@ $aiAnalysis = $aiTrendData['aiAnalysis'] ?? [];
         </div>
     <?php endif ?>
 
-    <?php if (!empty($aiAnalysis['predictions'])): ?>
+    <?php if (!empty($aiAnalysis->predictions)): ?>
         <div class="mb-6">
             <h3 class="text-lg font-semibold text-gray-900 mb-5 flex items-center gap-3">
                 <div class="bg-indigo-100 p-2 rounded-lg">
@@ -744,7 +746,7 @@ $aiAnalysis = $aiTrendData['aiAnalysis'] ?? [];
                 予測
             </h3>
             <div class="space-y-4">
-                <?php foreach ($aiAnalysis['predictions'] as $prediction): ?>
+                <?php foreach ($aiAnalysis->predictions as $prediction): ?>
                     <div class="bg-white border border-gray-100 rounded-xl p-5 hover:shadow-md transition-all duration-200 group">
                         <div class="flex items-start gap-4">
                             <div class="mt-1 flex-shrink-0">

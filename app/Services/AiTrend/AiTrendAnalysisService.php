@@ -14,7 +14,7 @@ class AiTrendAnalysisService
     {
     }
 
-    public function getAiTrendData(): array
+    public function getAiTrendData(): AiTrendDataDto
     {
         // DB接続
         DB::connect();
@@ -26,9 +26,21 @@ class AiTrendAnalysisService
         $overallStats = $this->getOverallStats();
 
         // AIトレンド分析（モックデータ）
-        $aiAnalysis = $this->generateAiAnalysis($risingChats, $categoryTrends, $tagTrends);
+        $aiAnalysisData = $this->generateAiAnalysis($risingChats, $categoryTrends, $tagTrends);
+        $aiAnalysis = new AiAnalysisDto(
+            $aiAnalysisData['summary'],
+            $aiAnalysisData['insights'],
+            $aiAnalysisData['predictions'],
+            $aiAnalysisData['recommendations']
+        );
 
-        return compact('risingChats', 'categoryTrends', 'tagTrends', 'overallStats', 'aiAnalysis');
+        return new AiTrendDataDto(
+            $risingChats,
+            $categoryTrends,
+            $tagTrends,
+            $overallStats,
+            $aiAnalysis
+        );
     }
 
     private function getRisingChats(): array
