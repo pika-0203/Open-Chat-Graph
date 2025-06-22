@@ -1,0 +1,11 @@
+{
+    "mcp.servers": {
+        "playwright": {
+            "command": "npx",
+            "args": [
+                "@playwright/mcp",
+                "--isolated"
+            ]
+        }
+    }
+}
