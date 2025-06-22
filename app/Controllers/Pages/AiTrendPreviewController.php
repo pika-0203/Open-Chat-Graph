@@ -111,6 +111,19 @@ class AiTrendPreviewController
         $_meta->title = 'AIトレンド分析プレビュー | オプチャグラフ';
         $_meta->description = 'LINEオープンチャットのAIによるトレンド分析';
 
+        // CSS設定
+        $_css = [
+            'room_list',
+            'site_header',
+            'site_footer'
+        ];
+
+        // スキーマ設定
+        $_schema = '';
+
+        // 更新時刻設定
+        $_updatedAt = new \DateTime();
+
         return view('ai_trend_preview', [
             'risingChats' => $risingChats,
             'categoryTrends' => $categoryTrends,
@@ -118,6 +131,9 @@ class AiTrendPreviewController
             'overallStats' => $overallStats,
             'aiAnalysis' => $aiAnalysis,
             '_meta' => $_meta,
+            '_css' => $_css,
+            '_schema' => $_schema,
+            '_updatedAt' => $_updatedAt,
         ]);
     }
 
