@@ -240,7 +240,7 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
         <?php endif ?>
 
         <?php if (!empty($aiAnalysis->insights)): ?>
-            <?php foreach (array_slice($aiAnalysis->insights, 0, 3) as $insight): ?>
+            <?php foreach (array_slice($aiAnalysis->insights, 0, 5) as $insight): ?>
                 <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 6px; padding: 16px; margin-bottom: 12px;">
                     <div style="display: flex; align-items: flex-start; gap: 12px;">
                         <span style="font-size: 20px;"><?php echo $insight['icon'] ?? '💡' ?></span>
