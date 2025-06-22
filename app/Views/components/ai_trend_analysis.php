@@ -134,27 +134,40 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
     }
     
     .category-list {
-        space-y: 8px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
     }
     
     .category-item {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
         align-items: center;
-        padding: 12px;
+        gap: 16px;
+        padding: 16px;
         background: #f9fafb;
-        border-radius: 6px;
-        margin-bottom: 8px;
+        border-radius: 8px;
+        border-left: 4px solid #e5e7eb;
+        transition: all 0.2s ease;
+    }
+    
+    .category-item:hover {
+        background: #f3f4f6;
+        border-left-color: #667eea;
+        transform: translateX(2px);
     }
     
     .category-name {
         font-weight: 600;
         color: #1f2937;
+        font-size: 16px;
     }
     
     .category-growth {
         color: #059669;
-        font-weight: 600;
+        font-weight: 700;
+        font-size: 18px;
+        text-align: right;
     }
     
     .tag-list {
@@ -190,26 +203,6 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
         <p class="trend-subtitle">リアルタイムの成長動向</p>
     </div>
 
-    <!-- リアルタイムメトリクス -->
-    <?php if (!empty($realtimeMetrics)): ?>
-        <div class="trend-card">
-            <h3 class="section-title">📈 現在の状況</h3>
-            <div class="metrics-grid">
-                <div class="metric-item">
-                    <div class="metric-value"><?php echo number_format($realtimeMetrics['current_hour_growth'] ?? 0) ?></div>
-                    <div class="metric-label">現在の成長数</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-value"><?php echo $realtimeMetrics['high_growth_count'] ?? 0 ?></div>
-                    <div class="metric-label">急成長チャット</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-value"><?php echo $realtimeMetrics['new_chats_count'] ?? 0 ?></div>
-                    <div class="metric-label">新規チャット</div>
-                </div>
-            </div>
-        </div>
-    <?php endif ?>
 
     <!-- アラート -->
     <?php if (!empty($aiAnalysis->alerts)): ?>

@@ -660,7 +660,7 @@ class AiTrendAnalysisService
             ];
         }
         
-        return array_slice($alerts, 0, 3); // 最大3つまで
+        return array_slice($alerts, 0, 5); // 最大5つまで
     }
     
     /**
