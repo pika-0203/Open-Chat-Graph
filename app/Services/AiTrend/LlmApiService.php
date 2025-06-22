@@ -67,14 +67,12 @@ class LlmApiService
     private function buildManagerAnalysisPrompt(array $data): string
     {
         $risingChats = $data['risingChats'] ?? [];
-        $categoryTrends = $data['categoryTrends'] ?? [];
         $tagTrends = $data['tagTrends'] ?? [];
         $overallStats = $data['overallStats'] ?? [];
         $historicalData = $data['historicalData'] ?? [];
         
         // データを文字列形式で整理
         $risingChatsText = $this->formatRisingChatsForPrompt($risingChats);
-        $categoryTrendsText = $this->formatCategoryTrendsForPrompt($categoryTrends);
         $tagTrendsText = $this->formatTagTrendsForPrompt($tagTrends);
         $statsText = $this->formatOverallStatsForPrompt($overallStats);
         $timeContext = $this->getTimeContext();
@@ -92,8 +90,6 @@ class LlmApiService
 ■ 現在の急成長チャット（直近1時間の成長数）：
 {$risingChatsText}
 
-■ カテゴリ別成長状況：
-{$categoryTrendsText}
 
 ■ 注目タグ（キーワード）の成長：
 {$tagTrendsText}
@@ -181,36 +177,6 @@ PROMPT;
         return implode("\n", $formatted);
     }
 
-    /**
-     * カテゴリトレンドデータのフォーマット
-     */
-    private function formatCategoryTrendsForPrompt(array $trends): string
-    {
-        if (empty($trends)) {
-            return "データなし";
-        }
-        
-        $formatted = [];
-        foreach ($trends as $i => $trend) {
-            $categoryName = $trend['category_name'] ?? 'その他';
-            $totalGrowth = $trend['total_growth'] ?? 0;
-            $chatCount = $trend['chat_count'] ?? 0;
-            $avgGrowth = $trend['avg_growth'] ?? 0;
-            $totalMembers = $trend['total_members'] ?? 0;
-            
-            $formatted[] = sprintf(
-                "%d位: %s (+%d人, %d個のチャット, 平均+%.1f人/チャット, 総メンバー%d人)",
-                $i + 1,
-                $categoryName,
-                $totalGrowth,
-                $chatCount,
-                $avgGrowth,
-                $totalMembers
-            );
-        }
-        
-        return implode("\n", $formatted);
-    }
 
     /**
      * タグトレンドデータのフォーマット

@@ -19,6 +19,7 @@ class ClaudeCodeLlmService
         
         // ローカル環境ではClaudeCodeを呼び出し
         $response = $this->callLLM($prompt);
+        var_dump($prompt);
         
         return $this->parseAnalysisResponse($response);
     }
@@ -39,7 +40,6 @@ class ClaudeCodeLlmService
         
         // 従来データ（補助として）
         $risingChats = $data['risingChats'] ?? [];
-        $categoryTrends = $data['categoryTrends'] ?? [];
         $tagTrends = $data['tagTrends'] ?? [];
         $overallStats = $data['overallStats'] ?? [];
         $timeContext = $this->getTimeContext();
@@ -52,7 +52,6 @@ class ClaudeCodeLlmService
         
         // 従来データ（簡略化）
         $risingChatsText = $this->formatRisingChatsForPrompt(array_slice($risingChats, 0, 5));
-        $categoryTrendsText = $this->formatCategoryTrendsForPrompt(array_slice($categoryTrends, 0, 3));
         $tagTrendsText = $this->formatTagTrendsForPrompt(array_slice($tagTrends, 0, 5));
         $statsText = $this->formatOverallStatsForPrompt($overallStats);
         
@@ -91,10 +90,6 @@ class ClaudeCodeLlmService
 {$risingChatsText}
 ```
 
-### 主要カテゴリ動向
-```
-{$categoryTrendsText}
-```
 
 ### 注目タグ
 ```
@@ -469,34 +464,6 @@ PROMPT;
         return implode("\n", $formatted);
     }
 
-    /**
-     * カテゴリトレンドデータのフォーマット
-     */
-    private function formatCategoryTrendsForPrompt(array $trends): string
-    {
-        if (empty($trends)) {
-            return "データなし";
-        }
-        
-        $formatted = [];
-        foreach ($trends as $i => $trend) {
-            $categoryName = $trend['category_name'] ?? 'その他';
-            $totalGrowth = $trend['total_growth'] ?? 0;
-            $chatCount = $trend['chat_count'] ?? 0;
-            $avgGrowth = $trend['avg_growth'] ?? 0;
-            
-            $formatted[] = sprintf(
-                "%d位: %s (+%d人, %d個のチャット, 平均+%.1f人/チャット)",
-                $i + 1,
-                $categoryName,
-                $totalGrowth,
-                $chatCount,
-                $avgGrowth
-            );
-        }
-        
-        return implode("\n", $formatted);
-    }
 
     /**
      * タグトレンドデータのフォーマット

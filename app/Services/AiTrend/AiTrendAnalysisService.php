@@ -16,16 +16,14 @@ class AiTrendAnalysisService
 
         // 基本データ取得
         $risingChats = $this->getRisingChats();
-        $categoryTrends = $this->getCategoryTrends();
         $tagTrends = $this->getTagTrends();
         $overallStats = $this->getOverallStats();
         
         // 管理者向けAI分析を実行
-        $aiAnalysis = $this->generateAdminFocusedAnalysis($risingChats, $categoryTrends, $tagTrends, $overallStats);
+        $aiAnalysis = $this->generateAdminFocusedAnalysis($risingChats, $tagTrends, $overallStats);
 
         return new AiTrendDataDto(
             $risingChats,
-            $categoryTrends,
             $tagTrends,
             $overallStats,
             $aiAnalysis,
@@ -58,35 +56,6 @@ class AiTrendAnalysisService
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    private function getCategoryTrends(): array
-    {
-        $query = "
-            SELECT 
-                oc.category,
-                COUNT(DISTINCT oc.id) as chat_count,
-                SUM(srh.diff_member) as total_growth,
-                AVG(srh.diff_member) as avg_growth,
-                SUM(oc.member) as total_members
-            FROM statistics_ranking_hour srh
-            JOIN open_chat oc ON srh.open_chat_id = oc.id
-            WHERE oc.category IS NOT NULL AND srh.diff_member > 0
-            GROUP BY oc.category
-            ORDER BY total_growth DESC
-            LIMIT 10
-        ";
-        
-        $stmt = DB::$pdo->prepare($query);
-        $stmt->execute();
-        $categoryTrends = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        
-        // カテゴリ名をマッピング
-        $categoryMap = array_flip(AppConfig::OPEN_CHAT_CATEGORY[MimimalCmsConfig::$urlRoot]);
-        foreach ($categoryTrends as &$trend) {
-            $trend['category_name'] = $categoryMap[$trend['category']] ?? 'その他';
-        }
-
-        return $categoryTrends;
-    }
 
     private function getTagTrends(): array
     {
@@ -154,19 +123,19 @@ class AiTrendAnalysisService
      * オープンチャット管理者向け分析
      * 「どのテーマで作れば人が集まるか」「どう変更すれば人が集まるか」に特化
      */
-    private function generateAdminFocusedAnalysis(array $risingChats, array $categoryTrends, array $tagTrends, array $overallStats): AiAnalysisDto
+    private function generateAdminFocusedAnalysis(array $risingChats, array $tagTrends, array $overallStats): AiAnalysisDto
     {
         // 管理者向けサマリー生成
-        $summary = $this->generateAdminSummary($risingChats, $categoryTrends, $overallStats);
+        $summary = $this->generateAdminSummary($risingChats, $overallStats);
         
         // 管理者向けインサイト（成功パターン分析）
-        $insights = $this->generateAdminInsights($risingChats, $categoryTrends, $tagTrends);
+        $insights = $this->generateAdminInsights($risingChats, $tagTrends);
         
         // 管理者向けアラート（今すぐ行動すべき情報）
-        $alerts = $this->generateAdminAlerts($risingChats, $categoryTrends, $tagTrends);
+        $alerts = $this->generateAdminAlerts($risingChats, $tagTrends);
         
         // テーマ推奨（新規作成・変更提案）
-        $recommendations = $this->generateThemeRecommendations($risingChats, $categoryTrends, $tagTrends);
+        $recommendations = $this->generateThemeRecommendations($risingChats, $tagTrends);
 
         return new AiAnalysisDto(
             $summary, 
@@ -182,9 +151,8 @@ class AiTrendAnalysisService
     /**
      * 管理者向けサマリー：今すぐ作るべきテーマの提案
      */
-    private function generateAdminSummary(array $risingChats, array $categoryTrends, array $overallStats): string
+    private function generateAdminSummary(array $risingChats, array $overallStats): string
     {
-        $topCategory = $categoryTrends[0]['category_name'] ?? 'ゲーム';
         $totalGrowth = $overallStats['total_growth'] ?? 0;
         
         // トップ成長チャットから成功パターンを抽出
@@ -205,9 +173,8 @@ class AiTrendAnalysisService
         }
         
         return sprintf(
-            '今最も効果的なのは%s。「%s」カテゴリが好調で、%sが実証済みの成功パターンです。',
+            '今最も効果的なのは%s。この%sが実証済みの成功パターンです。',
             $successPattern,
-            $topCategory,
             $successPattern
         );
     }
@@ -215,7 +182,7 @@ class AiTrendAnalysisService
     /**
      * 管理者向けインサイト：なぜ伸びているのかの具体的分析
      */
-    private function generateAdminInsights(array $risingChats, array $categoryTrends, array $tagTrends): array
+    private function generateAdminInsights(array $risingChats, array $tagTrends): array
     {
         $insights = [];
         
@@ -236,23 +203,6 @@ class AiTrendAnalysisService
             ];
         }
         
-        // ゲームカテゴリ分析
-        $gameCategory = null;
-        foreach ($categoryTrends as $cat) {
-            if ($cat['category_name'] === 'ゲーム') {
-                $gameCategory = $cat;
-                break;
-            }
-        }
-        
-        if ($gameCategory && $gameCategory['total_growth'] > 400) {
-            $insights[] = [
-                'icon' => '🎮',
-                'title' => 'ゲーム系が全体の21%を独占',
-                'content' => sprintf('スプラトゥーン、ロブロックス、フォートナイトが好調（+%d人）。単なる雑談ではなく「攻略情報共有」「チーム募集」「大会企画」など具体的な目的があるコミュニティが成功している。', 
-                    $gameCategory['total_growth'])
-            ];
-        }
         
         // 参加型コンテンツ分析
         $participatoryTags = ['ボイメで歌', 'ライブトーク', '歌リレー'];
@@ -279,30 +229,10 @@ class AiTrendAnalysisService
     /**
      * 管理者向けアラート：今すぐ行動すべき情報
      */
-    private function generateAdminAlerts(array $risingChats, array $categoryTrends, array $tagTrends): array
+    private function generateAdminAlerts(array $risingChats, array $tagTrends): array
     {
         $alerts = [];
         
-        // ゲームカテゴリ過熱アラート
-        $gameCategory = null;
-        foreach ($categoryTrends as $cat) {
-            if ($cat['category_name'] === 'ゲーム') {
-                $gameCategory = $cat;
-                break;
-            }
-        }
-        
-        if ($gameCategory && $gameCategory['total_growth'] > 400) {
-            $gameSharePercentage = round(($gameCategory['total_growth'] / array_sum(array_column($categoryTrends, 'total_growth'))) * 100, 1);
-            $alerts[] = [
-                'level' => 'warning',
-                'icon' => '🎮',
-                'title' => 'ゲームカテゴリが過熱状態',
-                'message' => sprintf('ゲーム系が全体成長の%s%%を占める独走状態。競争激化前に、マイナーゲームや独自企画で差別化を図るチャンス。', $gameSharePercentage),
-                'timestamp' => date('Y-m-d H:i:s'),
-                'action_required' => false
-            ];
-        }
         
         // K-POPブーム継続アラート
         $kpopGrowth = 0;
@@ -350,7 +280,7 @@ class AiTrendAnalysisService
     /**
      * テーマ推奨：新規作成・変更提案
      */
-    private function generateThemeRecommendations(array $risingChats, array $categoryTrends, array $tagTrends): array
+    private function generateThemeRecommendations(array $risingChats, array $tagTrends): array
     {
         $recommendations = [];
         
@@ -371,25 +301,6 @@ class AiTrendAnalysisService
             ];
         }
         
-        // マイナーゲーム攻略
-        $gameCategory = null;
-        foreach ($categoryTrends as $cat) {
-            if ($cat['category_name'] === 'ゲーム') {
-                $gameCategory = $cat;
-                break;
-            }
-        }
-        
-        if ($gameCategory) {
-            $recommendations[] = [
-                'theme' => 'マイナーゲーム攻略・チーム募集',
-                'reason' => 'ゲーム系は成長率高いが大手タイトルは競争激化。マイナータイトルは狙い目。',
-                'target' => 'そのゲームの熱心なプレイヤー',
-                'strategy' => '攻略情報の体系化、定期イベント開催、初心者サポート',
-                'competition' => '低',
-                'growth_potential' => '中'
-            ];
-        }
         
         // 就活情報交換
         $hasJobHunting = false;
@@ -455,11 +366,11 @@ class AiTrendAnalysisService
         return array_slice($recommendations, 0, 5);
     }
 
-    private function generateSummary(array $risingChats, array $categoryTrends, array $overallStats): string
+    private function generateSummary(array $risingChats, array $overallStats): string
     {
         $totalGrowth = $overallStats['total_growth'] ?? 0;
         $growingChats = $overallStats['growing_chats'] ?? 0;
-        $topCategory = $categoryTrends[0]['category_name'] ?? 'ゲーム';
+        $topCategory = 'ゲーム'; // デフォルトカテゴリ
         $hour = (int)date('H');
         $dayOfWeek = date('N'); // 1=月曜, 7=日曜
         
@@ -517,7 +428,7 @@ class AiTrendAnalysisService
         );
     }
 
-    private function generateInsights(array $risingChats, array $categoryTrends, array $tagTrends): array
+    private function generateInsights(array $risingChats, array $tagTrends): array
     {
         $insights = [];
         
@@ -593,13 +504,6 @@ class AiTrendAnalysisService
             }
         }
         
-        // カテゴリトレンドから洞察を選択
-        if (!empty($categoryTrends)) {
-            $topCategory = $categoryTrends[0]['category_name'] ?? '';
-            if ($topCategory === 'ゲーム' && count($selectedInsights) < 3) {
-                $selectedInsights[] = $realInsights[3]; // ゲームカテゴリ
-            }
-        }
         
         // 音楽・エンタメ系の洞察
         $musicTags = ['ボイメで歌', 'ライブトーク'];
@@ -637,7 +541,7 @@ class AiTrendAnalysisService
         return array_slice($selectedInsights, 0, 3);
     }
 
-    private function generatePredictions(array $risingChats, array $categoryTrends): array
+    private function generatePredictions(array $risingChats): array
     {
         $predictions = [];
         
@@ -655,21 +559,6 @@ class AiTrendAnalysisService
             ];
         }
         
-        // カテゴリ予測
-        if (!empty($categoryTrends)) {
-            $topCategory = $categoryTrends[0]['category_name'] ?? '';
-            if ($topCategory) {
-                $hour = (int)date('H');
-                if (($topCategory === 'ゲーム' && $hour >= 19) || 
-                    ($topCategory === 'エンターテイメント' && $hour >= 20)) {
-                    $predictions[] = [
-                        'timeframe' => '今夜',
-                        'confidence' => 80,
-                        'content' => sprintf('「%s」カテゴリは夜間の活動ピーク時間に入るため、さらなる成長が期待される', $topCategory)
-                    ];
-                }
-            }
-        }
         
         return $predictions;
     }
@@ -758,7 +647,7 @@ class AiTrendAnalysisService
     /**
      * 異常検知アルゴリズム（統計的外れ値検出）
      */
-    private function detectAnomalies(array $risingChats, array $categoryTrends, array $historicalData): array
+    private function detectAnomalies(array $risingChats, array $historicalData): array
     {
         $anomalies = [];
         
@@ -789,24 +678,6 @@ class AiTrendAnalysisService
             }
         }
         
-        // 2. カテゴリの異常な集中度検知
-        if (!empty($categoryTrends)) {
-            $totalGrowth = array_sum(array_column($categoryTrends, 'total_growth'));
-            foreach ($categoryTrends as $trend) {
-                $concentration = $totalGrowth > 0 ? ($trend['total_growth'] / $totalGrowth) * 100 : 0;
-                if ($concentration > 60) {
-                    $anomalies[] = [
-                        'type' => 'category_concentration',
-                        'severity' => 'medium',
-                        'category' => $trend['category_name'],
-                        'value' => $trend['total_growth'],
-                        'concentration' => round($concentration, 1),
-                        'description' => sprintf('%s カテゴリが全体成長の%s%%を独占', 
-                            $trend['category_name'], round($concentration, 1))
-                    ];
-                }
-            }
-        }
         
         // 3. 時系列の異常パターン検知（前日比）
         if (count($historicalData) >= 2) { // 2日分以上のデータがある場合
@@ -835,7 +706,7 @@ class AiTrendAnalysisService
     /**
      * アラート生成（管理者向け）
      */
-    private function generateAlerts(array $anomalies, array $risingChats, array $categoryTrends): array
+    private function generateAlerts(array $anomalies, array $risingChats): array
     {
         $alerts = [];
         
@@ -877,27 +748,6 @@ class AiTrendAnalysisService
             ];
         }
         
-        // 3. ゲームカテゴリ独走アラート
-        if (!empty($categoryTrends)) {
-            $gameCategory = null;
-            foreach ($categoryTrends as $cat) {
-                if ($cat['category_name'] === 'ゲーム') {
-                    $gameCategory = $cat;
-                    break;
-                }
-            }
-            
-            if ($gameCategory && $gameCategory['total_growth'] > 400) {
-                $alerts[] = [
-                    'level' => 'warning',
-                    'icon' => '🎮',
-                    'title' => 'ゲーム市場が過熱',
-                    'message' => sprintf('ゲームカテゴリが+%d人と全体の2割を占める独走状態。競争が激しくなる前に、ニッチなゲームや独自企画で差別化を図るチャンスです。', 
-                        $gameCategory['total_growth']),
-                    'timestamp' => date('Y-m-d H:i:s')
-                ];
-            }
-        }
         
         // 4. なりきり文化拡大アラート
         $roleplayChats = array_filter($risingChats, function($chat) {
@@ -1122,13 +972,12 @@ class AiTrendAnalysisService
     /**
      * 統計的分析の実行
      */
-    private function performStatisticalAnalysis(array $risingChats, array $categoryTrends, array $tagTrends, array $overallStats): array
+    private function performStatisticalAnalysis(array $risingChats, array $tagTrends, array $overallStats): array
     {
         return [
             'growth_distribution' => $this->analyzeGrowthDistribution($risingChats),
-            'category_competition' => $this->analyzeCategoryCompetition($categoryTrends),
             'tag_efficiency' => $this->analyzeTagEfficiency($tagTrends),
-            'market_saturation' => $this->analyzeMarketSaturation($overallStats, $categoryTrends),
+            'market_saturation' => $this->analyzeMarketSaturation($overallStats),
             'success_patterns' => $this->identifySuccessPatterns($risingChats),
             'growth_predictors' => $this->identifyGrowthPredictors($risingChats, $tagTrends)
         ];
@@ -1208,40 +1057,6 @@ class AiTrendAnalysisService
         return implode('、', $patterns);
     }
 
-    /**
-     * カテゴリ競争度の分析
-     */
-    private function analyzeCategoryCompetition(array $categoryTrends): array
-    {
-        if (empty($categoryTrends)) {
-            return [];
-        }
-        
-        $totalGrowth = array_sum(array_column($categoryTrends, 'total_growth'));
-        $analysis = [];
-        
-        foreach ($categoryTrends as $category) {
-            $marketShare = $totalGrowth > 0 ? ($category['total_growth'] / $totalGrowth) * 100 : 0;
-            $avgGrowthPerChat = $category['chat_count'] > 0 ? $category['total_growth'] / $category['chat_count'] : 0;
-            
-            $competitionLevel = '低';
-            if ($category['chat_count'] > 100) {
-                $competitionLevel = '高';
-            } elseif ($category['chat_count'] > 50) {
-                $competitionLevel = '中';
-            }
-            
-            $analysis[$category['category_name']] = [
-                'market_share' => round($marketShare, 1),
-                'avg_growth_per_chat' => round($avgGrowthPerChat, 2),
-                'competition_level' => $competitionLevel,
-                'chat_density' => $category['chat_count'],
-                'recommendation' => $this->generateCategoryRecommendation($marketShare, $avgGrowthPerChat, $category['chat_count'])
-            ];
-        }
-        
-        return $analysis;
-    }
 
     /**
      * カテゴリ別推奨戦略
@@ -1335,7 +1150,7 @@ class AiTrendAnalysisService
     /**
      * 市場飽和度の分析
      */
-    private function analyzeMarketSaturation(array $overallStats, array $categoryTrends): array
+    private function analyzeMarketSaturation(array $overallStats): array
     {
         $totalChats = $overallStats['total_chats'] ?? 0;
         $growingChats = $overallStats['growing_chats'] ?? 0;

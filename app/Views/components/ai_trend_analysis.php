@@ -4,7 +4,6 @@ use App\Services\AiTrend\AiTrendDataDto;
 
 /** @var AiTrendDataDto $aiTrendData */
 $risingChats = $aiTrendData->risingChats;
-$categoryTrends = $aiTrendData->categoryTrends;
 $tagTrends = $aiTrendData->tagTrends;
 $aiAnalysis = $aiTrendData->aiAnalysis;
 $realtimeMetrics = $aiTrendData->realtimeMetrics;
@@ -183,6 +182,15 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
         border-radius: 16px;
         font-size: 14px;
         font-weight: 500;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.2s ease;
+    }
+    
+    .tag-item:hover {
+        background: #dbeafe;
+        color: #1e40af;
+        text-decoration: none;
     }
     
     .summary-text {
@@ -260,23 +268,6 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
     </div>
 
 
-    <!-- カテゴリ動向 -->
-    <?php if (!empty($categoryTrends)): ?>
-        <div class="trend-card">
-            <h3 class="section-title">📊 カテゴリ別動向</h3>
-            <div class="category-list">
-                <?php foreach (array_slice($categoryTrends, 0, 5) as $trend): ?>
-                    <div class="category-item">
-                        <div>
-                            <div class="category-name"><?php echo htmlspecialchars($trend['category_name'] ?? 'その他') ?></div>
-                            <div style="font-size: 14px; color: #6b7280;"><?php echo $trend['chat_count'] ?>個のチャット</div>
-                        </div>
-                        <div class="category-growth">+<?php echo number_format($trend['total_growth']) ?>人</div>
-                    </div>
-                <?php endforeach ?>
-            </div>
-        </div>
-    <?php endif ?>
 
 
     <!-- テーマ推奨（LLM分析結果） -->
@@ -363,12 +354,13 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
                             $recommendation = 'K-POP人気継続中';
                         }
                         ?>
-                        <span class="tag-item" style="position: relative; cursor: help;" 
-                              title="<?php echo $recommendation ?> (<?php echo $tag['room_count'] ?>チャット, 週間成長率<?php echo $growthRate ?>%)">
+                        <a href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($tagName))) ?>" 
+                           class="tag-item" style="position: relative;" 
+                           title="<?php echo $recommendation ?> (<?php echo $tag['room_count'] ?>チャット, 週間成長率<?php echo $growthRate ?>%)">
                             #<?php echo htmlspecialchars($tagName) ?> 
                             <strong><?php echo $growthRate ?>%</strong>
                             <small style="opacity: 0.8; font-size: 10px; margin-left: 4px;"><?php echo $marketSize ?></small>
-                        </span>
+                        </a>
                     <?php endif ?>
                 <?php endforeach ?>
             </div>
