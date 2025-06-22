@@ -18,8 +18,7 @@ viewComponent('head', compact('_css', '_meta', '_schema') + ['dataOverlays' => '
         <div class="modify-top-padding">
             <?php viewComponent('ai_trend_analysis', ['aiTrendData' => $aiTrendData]) ?>
             <hr style="margin: 1rem 0;">
-            <?php 
-            // AIトレンド分析がある場合は他のランキングを5件に制限
+            <?php
             AppConfig::$listLimitTopRanking = 5;
             ?>
         </div>

@@ -14,17 +14,42 @@ class ClaudeCodeLlmService
      * オープンチャット管理者向け分析を生成
      * 3期間（1時間、24時間、1週間）のデータから重要な動向を判断
      */
-    public function generateManagerAnalysis(array $analysisData): array
+    public function generateManagerAnalysis(array $analysisData): AiTrendDataDto
     {
+        // DB接続
+        \App\Models\Repositories\DB::connect();
+        
         // 3期間のデータを統合して分析
         $threePeriodData = $this->integrateThreePeriodData($analysisData);
         $prompt = $this->buildManagerAnalysisPrompt($threePeriodData);
         
         // ローカル環境ではClaudeCodeを呼び出し
         $response = $this->callLLM($prompt);
-        var_dump($prompt);
         
-        return $this->parseAnalysisResponse($response);
+        // 旧AiTrendAnalysisServiceと同じデータ構造を生成
+        $risingChats = $this->getRisingChats();
+        $tagTrends = $this->getTagTrends();
+        $overallStats = $this->getOverallStats();
+        
+        // 3期間データを統合したAI分析
+        $aiAnalysisData = $this->parseAnalysisResponse($response);
+        $aiAnalysis = new AiAnalysisDto(
+            $aiAnalysisData['summary'],
+            $aiAnalysisData['insights'],
+            [], // predictions
+            $aiAnalysisData['theme_recommendations'],
+            [], // anomalies
+            $aiAnalysisData['alerts']
+        );
+        
+        return new AiTrendDataDto(
+            $risingChats,
+            $tagTrends,
+            $overallStats,
+            $aiAnalysis,
+            [], // historicalData
+            []  // realtimeMetrics
+        );
     }
 
     /**
@@ -304,7 +329,6 @@ PROMPT;
     {
         // ローカル環境でのClaudeCode呼び出しシミュレーション
         // 実際にはClaude APIまたはローカルLLMを呼び出し
-        var_dump( $prompt );
         // 暫定的にモック分析を返す（実際の実装時にClaude APIに置き換え）
         return $this->generateMockClaudeResponse($prompt);
     }
@@ -862,7 +886,7 @@ PROMPT;
     {
         $grouped = [];
         foreach ($data as $chat) {
-            $category = $chat['category'] ?? 'unknown';
+            $category = $chat['category'] ?? 0;
             if (!isset($grouped[$category])) {
                 $grouped[$category] = [];
             }
@@ -965,7 +989,7 @@ PROMPT;
     /**
      * カテゴリ別管理者向け推奨
      */
-    private function generateCategoryRecommendation(string $category, int $hourGrowth, int $day24Growth, int $weekGrowth): string
+    private function generateCategoryRecommendation(int $category, int $hourGrowth, int $day24Growth, int $weekGrowth): string
     {
         $totalGrowth = $hourGrowth + $day24Growth + $weekGrowth;
         
@@ -1276,5 +1300,96 @@ PROMPT;
             'alerts' => [],
             'theme_recommendations' => []
         ];
+    }
+
+    /**
+     * 急成長チャットデータの取得
+     */
+    private function getRisingChats(): array
+    {
+        $query = "
+            SELECT 
+                oc.id,
+                oc.name,
+                oc.member,
+                oc.description,
+                oc.local_img_url as img_url,
+                srh.diff_member,
+                oc.category,
+                oc.created_at
+            FROM statistics_ranking_hour srh
+            JOIN open_chat oc ON srh.open_chat_id = oc.id
+            WHERE srh.diff_member > 0
+            ORDER BY srh.diff_member DESC
+            LIMIT 15
+        ";
+        
+        $stmt = \App\Models\Repositories\DB::$pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * タグトレンドデータの取得
+     */
+    private function getTagTrends(): array
+    {
+        $query = "
+            SELECT 
+                r.tag,
+                COUNT(DISTINCT oc.id) as room_count,
+                SUM(CASE WHEN srh.diff_member > 0 THEN srh.diff_member ELSE 0 END) as current_1h_growth,
+                SUM(CASE WHEN srw.diff_member > 0 THEN srw.diff_member ELSE 0 END) as week_growth,
+                SUM(oc.member) as current_total_members,
+                (SUM(oc.member) - SUM(CASE WHEN srw.diff_member > 0 THEN srw.diff_member ELSE 0 END)) as prev_week_members,
+                CASE 
+                    WHEN (SUM(oc.member) - SUM(CASE WHEN srw.diff_member > 0 THEN srw.diff_member ELSE 0 END)) > 0 
+                    THEN (SUM(CASE WHEN srw.diff_member > 0 THEN srw.diff_member ELSE 0 END) / 
+                          (SUM(oc.member) - SUM(CASE WHEN srw.diff_member > 0 THEN srw.diff_member ELSE 0 END))) * 100
+                    ELSE 0 
+                END as growth_rate_percentage
+            FROM recommend r
+            JOIN open_chat oc ON r.id = oc.id
+            LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
+            LEFT JOIN statistics_ranking_week srw ON oc.id = srw.open_chat_id
+            WHERE r.tag != '' AND r.tag IS NOT NULL
+            GROUP BY r.tag
+            HAVING room_count >= 3 AND (current_1h_growth > 0 OR week_growth > 0)
+            ORDER BY growth_rate_percentage DESC, current_1h_growth DESC
+            LIMIT 20
+        ";
+        
+        $stmt = \App\Models\Repositories\DB::$pdo->prepare($query);
+        $stmt->execute();
+        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        
+        foreach ($results as &$result) {
+            $result['growth_rate_percentage'] = round((float)$result['growth_rate_percentage'], 1);
+            $result['total_1h_growth'] = $result['current_1h_growth'];
+        }
+        
+        return $results;
+    }
+
+    /**
+     * 全体統計データの取得
+     */
+    private function getOverallStats(): array
+    {
+        $query = "
+            SELECT 
+                COUNT(DISTINCT oc.id) as total_chats,
+                SUM(oc.member) as total_members,
+                SUM(CASE WHEN srh.diff_member > 0 THEN 1 ELSE 0 END) as growing_chats,
+                SUM(CASE WHEN srh.diff_member < 0 THEN 1 ELSE 0 END) as declining_chats,
+                SUM(CASE WHEN srh.diff_member > 0 THEN srh.diff_member ELSE 0 END) as total_growth,
+                AVG(CASE WHEN srh.diff_member > 0 THEN srh.diff_member ELSE NULL END) as avg_growth_positive
+            FROM open_chat oc
+            LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
+        ";
+        
+        $stmt = \App\Models\Repositories\DB::$pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 }
