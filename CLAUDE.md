@@ -14,13 +14,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Docker Setup
 ```bash
-# Start development environment (PHP 8.3 + MySQL + phpMyAdmin)
+# Start PHP development environment (PHP 8.3 + MySQL + phpMyAdmin)
 docker-compose up
 
 # Default ports:
-# - Web: http://localhost:8000
-# - MySQL: localhost:3306
-# - phpMyAdmin: http://localhost:8080
+# - PHP Web: http://localhost:7000
+# - MySQL: localhost:3307
+# - phpMyAdmin: http://localhost:7070
+
+# Start NextJS development environment (separate container)
+cd oc-graph-nextjs
+docker-compose up
+
+# NextJS ports:
+# - NextJS Web: http://localhost:3000
 ```
 
 ### Initial Setup
@@ -173,15 +180,153 @@ Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) 
 
 ## Frontend Components
 
-### Separate Repositories
-- Ranking pages: https://github.com/mimimiku778/Open-Chat-Graph-Frontend
-- Graph display: https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph  
-- Comments: https://github.com/mimimiku778/Open-Chat-Graph-Comments
+### Production System (Current)
+- **Hybrid approach**: Server-side PHP templating + embedded React components
+- **Ranking pages**: https://github.com/mimimiku778/Open-Chat-Graph-Frontend
+- **Graph display**: https://github.com/mimimiku778/Open-Chat-Graph-Frontend-Stats-Graph  
+- **Comments**: https://github.com/mimimiku778/Open-Chat-Graph-Comments
+- **Integration**: React components embedded in PHP templates, pre-built bundles
 
-### Integration
-- React components embedded in PHP templates
-- Pre-built JavaScript bundles (no build process in main repo)
-- Client-side rendering for interactive features
+### NextJS Migration Prototype (Advanced Chart Implementation Complete) 🚀
+**Location**: `/oc-graph-nextjs/` (separate project within repository)
+
+#### Status: ✅ Advanced MVP Completed - Enhanced Graph Migration
+- **Live Demo**: http://localhost:3000 (NextJS) + http://localhost:7000 (PHP API)
+- **Implemented**: OpenChat detail page (`/oc/[id]`) with full SSR support + Advanced Chart Migration
+- **API**: Enhanced JSON endpoint `/api/nextjs/openchat/{id}` with real statistics data
+- **Migration**: Complete MUI → Tailwind CSS chart migration from `oc-review-graph`
+
+#### Architecture
+```
+┌─────────────────┐    HTTP API    ┌─────────────────┐
+│   NextJS App    │ ←─────────────→ │   PHP Backend   │
+│   (Port 3000)   │   JSON/CORS    │   (Port 7000)   │
+│                 │                │                 │
+│ - SSR/SSG       │                │ - Existing DB   │
+│ - TypeScript    │                │ - New API Route │
+│ - Tailwind CSS  │                │ - Repository    │
+│ - Chart.js      │                │   Pattern       │
+└─────────────────┘                └─────────────────┘
+```
+
+#### Tech Stack
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + Headless UI
+- **Charts**: Chart.js with react-chartjs-2
+- **HTTP Client**: Axios
+- **Development**: Docker + hot reload
+
+#### Key Features Implemented
+1. **Server-Side Rendering**: Full SSR with PHP API integration
+2. **OpenChat Detail Page**: Complete `/oc/[id]` page implementation
+3. **Advanced Chart Migration**: Complete migration from `oc-review-graph` MUI implementation
+4. **Enhanced API**: Real statistics data with member differences and chart metadata
+5. **Interactive Charts**: Period selection, zoom/pan functionality, responsive design
+6. **Components**: Header, Footer, OpenChatHeader, StatsGrid, MemberChart, ChartControls
+7. **API Integration**: TypeScript types, error handling, CORS support
+8. **Responsive Design**: Mobile-first Tailwind CSS design
+9. **Docker Environment**: Production-ready containerization
+
+#### File Structure
+```
+/oc-graph-nextjs/
+├── app/
+│   ├── layout.tsx                 # Root layout with Header/Footer
+│   ├── page.tsx                   # Home page with MVP demo
+│   └── oc/[id]/page.tsx          # OpenChat detail page (SSR)
+├── components/
+│   ├── ui/                        # Header, Footer, LoadingSpinner
+│   ├── charts/                    # Chart.js components
+│   └── openchat/                  # OpenChat-specific components
+├── lib/
+│   ├── api.ts                     # API client with axios
+│   ├── types.ts                   # TypeScript interfaces
+│   └── utils.ts                   # Utility functions
+├── Dockerfile                     # Production container
+├── Dockerfile.dev                 # Development container
+└── docker-compose.yml             # Docker setup
+```
+
+#### API Integration
+**PHP Side** (Enhanced):
+```php
+// Route: /api/nextjs/openchat/{id}
+namespace App\Controllers\Api\NextJs;
+class OpenChatDetailApiController {
+    public function detail(
+        OpenChatPageRepositoryInterface $ocRepo,
+        StatisticsChartArrayService $statisticsChartArrayService,
+        StatisticsViewUtility $statisticsViewUtility,
+        int $open_chat_id
+    ) {
+        // Returns real statistics data with:
+        // - Member history (615+ data points)
+        // - Member difference calculations (daily/weekly)
+        // - Tag information extraction
+        // - Chart metadata
+        // - CORS headers for NextJS integration
+    }
+}
+```
+
+**NextJS Side**:
+```typescript
+// Server-side: host.docker.internal:7000
+// Client-side: localhost:7000
+const api = {
+  async getOpenChatDetail(id: number): Promise<OpenChatDetailResponse>
+}
+```
+
+#### Development Workflow
+```bash
+# Start PHP backend (existing)
+docker-compose up  # http://localhost:7000
+
+# Start NextJS frontend (new)
+cd oc-graph-nextjs
+docker-compose up  # http://localhost:3000
+
+# Test integration
+curl http://localhost:7000/api/nextjs/openchat/123  # PHP API
+curl http://localhost:3000/oc/123                  # NextJS page
+```
+
+#### ✅ Chart Migration Achievement (December 2024)
+**Successfully migrated advanced chart functionality from `oc-review-graph` to NextJS + Tailwind CSS:**
+
+**Original Implementation** (`oc-review-graph`):
+- MUI-based UI components
+- Complex Chart.js integration with zoom plugin
+- Period selection controls (24h, 1w, 1m, all)
+- Zoom/pan functionality with reset controls
+
+**NextJS Migration Result**:
+- ✅ **Complete MUI → Tailwind CSS conversion**
+- ✅ **Enhanced Chart.js implementation** with `chartjs-plugin-zoom`
+- ✅ **Period Selection Controls**: 24時間, 1週間, 1ヶ月, 全期間
+- ✅ **Advanced Zoom/Pan Features**: Mouse wheel, pinch, drag support
+- ✅ **Real Data Integration**: 615+ historical data points from database
+- ✅ **Member Statistics**: Daily/Weekly change calculations
+- ✅ **SSR Compatibility**: Dynamic plugin loading for server-side rendering
+- ✅ **Performance Optimizations**: Visibility change handling, chart updates
+- ✅ **Mobile Responsive**: Touch-friendly controls and responsive design
+
+**Technical Challenges Solved**:
+- SSR compatibility with client-side Chart.js plugins
+- Dynamic zoom plugin loading without window reference errors
+- State management for chart controls and period selection
+- Data filtering and display optimization for different time periods
+- Memory management for large datasets (600+ data points)
+
+#### Next Phase (Future)
+- Home page API + implementation
+- Search functionality
+- Ranking pages
+- Performance optimization
+- CI/CD pipeline
+- Production deployment strategy
 
 ## Deployment
 
@@ -201,6 +346,14 @@ Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) 
 In `/app/Config/routing.php`:
 ```php
 Route::path('your-path', [\App\Controllers\Pages\YourController::class, 'method']);
+```
+
+### For NextJS API Routes
+Add JSON API routes for NextJS integration:
+```php
+// NextJS API routes in /app/Config/routing.php
+Route::path('api/nextjs/openchat/{open_chat_id}', [OpenChatDetailApiController::class, 'detail'])
+    ->matchNum('open_chat_id', min: 1);
 ```
 
 ### 2. Create Controller

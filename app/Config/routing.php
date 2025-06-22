@@ -15,6 +15,7 @@ use App\Controllers\Api\OpenChatRegistrationApiController;
 use App\Controllers\Api\RankingPositionApiController;
 use App\Controllers\Api\MyListApiController;
 use App\Controllers\Api\RecentCommentApiController;
+use App\Controllers\Api\NextJs\OpenChatDetailApiController;
 use App\Controllers\Pages\AdsRegistrationPageController;
 use App\Controllers\Pages\FuriganaPageController;
 use App\Controllers\Pages\OpenChatPageController;
@@ -344,6 +345,10 @@ Route::path(
     ->match(function () {
         return ['isAdminPage' => '1'];
     }); */
+
+// NextJS API routes
+Route::path('api/nextjs/openchat/{open_chat_id}', [OpenChatDetailApiController::class, 'detail'])
+    ->matchNum('open_chat_id', min: 1);
 
 Route::path('furigana@POST')
         ->match(fn() => MimimalCmsConfig::$urlRoot === '')
