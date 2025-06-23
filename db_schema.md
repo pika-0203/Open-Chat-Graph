@@ -147,7 +147,7 @@ CREATE TABLE `statistics_ranking_week` (
 
 #### recommend（推薦タグ）
 
-**用途**: OpenChatに関連付けられた推薦タグの管理（各ルームに関連付けられ唯一のタグ）
+**用途**: OpenChatに関連付けられた推薦タグの管理（各ルームに関連付けられる唯一のタグ）
 
 ```sql
 CREATE TABLE `recommend` (
