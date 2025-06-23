@@ -10,8 +10,8 @@
 
 プロジェクトは多言語対応のため、URL Root（`''`, `'/tw'`, `'/th'`）に基づいて異なるデータベースに自動接続されます。
 
-**データベース接続設定:**
-- **ホスト**: `mysql` (Docker環境)
+**データベース接続設定:** (Docker環境)
+- **ホスト**: `mysql`
 - **認証情報**: `root` / `test_root_pass`
 
 **データベース名一覧:**
@@ -186,9 +186,9 @@ CREATE TABLE `oc_tag` (
 
 ### 1.4 管理・制御テーブル
 
-#### ranking_ban（ランキングBANリスト）
+#### ranking_ban（ランキングBANリスト）（現在は使われていない）
 
-**用途**: 不正な成長をしているチャットをランキングから除外
+**用途**: オープンチャット公式サイトでランキングから除外されたルームのリスト（現在は使われていない）
 
 ```sql
 CREATE TABLE `ranking_ban` (
@@ -205,7 +205,7 @@ CREATE TABLE `ranking_ban` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 ```
 
-#### reject_room（拒否ルーム）
+#### reject_room（拒否ルーム）（現在は使われていない）
 
 **用途**: クロール対象から除外するチャットのリスト
 
@@ -217,7 +217,7 @@ CREATE TABLE `reject_room` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 ```
 
-#### open_chat_deleted（削除OpenChat履歴）
+#### open_chat_deleted（削除OpenChat履歴）（現在は使われていない）
 
 **用途**: 削除されたOpenChatの記録を保持
 
@@ -245,7 +245,7 @@ CREATE TABLE `api_data_download_state` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
 
-### 1.6 広告関連テーブル
+### 1.6 広告関連テーブル（現在は使われていない）
 
 #### ads（広告データ）
 
@@ -266,7 +266,7 @@ CREATE TABLE `ads` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
 
-#### ads_tag_map（広告とタグのマッピング）
+#### ads_tag_map（広告とタグのマッピング）（現在は使われていない）
 
 **用途**: 特定のタグに関連する広告の表示制御
 
@@ -279,13 +279,17 @@ CREATE TABLE `ads_tag_map` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
 
-## 2. MySQL 専用データベース
+## 2. 時系列履歴データベース（ocgraph_ranking）
 
-### 2.1 ランキングデータベース（ocgraph_ranking）
+**データ管理方式**: 過去24時間の統計を1時間毎に記録
+**更新パターン**: 1時間毎に新規レコード追加（24時間分のローリングデータ）
+**SQLiteとの関係**: MySQLは時間単位の詳細データ、SQLiteは日別集約データで用途が異なる
+
+### 2.1 メンバー数時系列テーブル
 
 #### member（メンバー履歴）
 
-**用途**: OpenChatのメンバー数の時系列データ
+**用途**: OpenChatのメンバー数の1時間毎変動記録 **→ 詳細な成長パターン分析**
 
 ```sql
 CREATE TABLE `member` (
@@ -296,9 +300,13 @@ CREATE TABLE `member` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
 
+**データ保持期間**: 過去24時間分（24レコード/チャット）
+**更新頻度**: 毎時00分に全チャットの最新メンバー数を記録
+**分析用途**: 時間帯別成長パターン、最適投稿タイミング分析
+
 #### ranking（ランキング位置履歴）
 
-**用途**: カテゴリ別のランキング位置の履歴
+**用途**: カテゴリ別のランキング位置の1時間毎記録 **→ 競合ポジション分析と市場シェア追跡**
 
 ```sql
 CREATE TABLE `ranking` (
@@ -312,7 +320,7 @@ CREATE TABLE `ranking` (
 
 #### rising（急上昇ランキング履歴）
 
-**用途**: 急上昇ランキングの位置履歴
+**用途**: 急上昇ランキングの位置の1時間毎記録 **→ バイラル成長パターンと最適タイミング分析**
 
 ```sql
 CREATE TABLE `rising` (
@@ -326,7 +334,7 @@ CREATE TABLE `rising` (
 
 #### total_count（総数情報）
 
-**用途**: カテゴリ別の総チャット数の履歴
+**用途**: カテゴリ別の総ルーム数の1時間毎記録 **→ 市場拡大・収縮トレンドと参入機会分析**
 
 ```sql
 CREATE TABLE `total_count` (
@@ -342,7 +350,7 @@ CREATE TABLE `total_count` (
 
 #### oc_list_user（ユーザーリスト）
 
-**用途**: ユーザーが作成したOpenChatリストの管理
+**用途**: ユーザーが手動で登録したOpenChatのログ
 
 ```sql
 CREATE TABLE `oc_list_user` (
@@ -357,9 +365,9 @@ CREATE TABLE `oc_list_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
 
-#### oc_list_user_list_show_log（ユーザーリスト表示ログ）
+#### oc_list_user_list_show_log（ユーザーのトップピン留めリストログ）
 
-**用途**: ユーザーリストの表示回数のログ
+**用途**: ユーザーのトップピン留めリストのログ
 
 ```sql
 CREATE TABLE `oc_list_user_list_show_log` (
@@ -380,7 +388,7 @@ CREATE TABLE `oc_list_user_list_show_log` (
 
 #### statistics（統計履歴）
 
-**用途**: メンバー数の日別履歴データ（読み取り専用最適化）
+**用途**: メンバー数の日別履歴データ
 
 ```sql
 CREATE TABLE IF NOT EXISTS "statistics" (
@@ -392,13 +400,11 @@ CREATE TABLE IF NOT EXISTS "statistics" (
 CREATE UNIQUE INDEX statistics2_open_chat_id_IDX ON "statistics" (open_chat_id,date);
 ```
 
-**重要**: MySQLより高速な読み取りパフォーマンスを提供
-
 ### 3.2 ランキング位置データ（/storage/{lang}/SQLite/ranking_position/ranking_position.db）
 
 #### rising（急上昇ランキング位置）
 
-**用途**: 急上昇ランキングの位置履歴（SQLite最適化版）
+**用途**: 急上昇ランキングの位置履歴
 
 ```sql
 CREATE TABLE rising (
@@ -414,7 +420,7 @@ CREATE UNIQUE INDEX rising_open_chat_id_IDX ON rising (open_chat_id,category,dat
 
 #### ranking（通常ランキング位置）
 
-**用途**: 通常ランキングの位置履歴（SQLite最適化版）
+**用途**: 通常ランキングの位置履歴
 
 ```sql
 CREATE TABLE ranking (
@@ -610,30 +616,17 @@ LIMIT 30;
 
 ### 6.2 重要な制約
 
-1. **statistics_ranking_* テーブルは時刻情報なし**
-   - 時刻は `open_chat.updated_at` を参照
-   - データは毎時間完全再構築
+1. ***statistics_ranking_*** **テーブル群の特殊な設計**
+   - `statistics_ranking_hour`, `statistics_ranking_hour24`, `statistics_ranking_day`, `statistics_ranking_week` の4テーブル
+   - これらのテーブルには`created_at`カラムが存在しない
+   - 時刻情報は `open_chat.updated_at` を参照する必要がある
+   - データは毎時間完全再構築される（TRUNCATE → INSERT）
+   - **`id`カラムは自動採番ではなくランキング順位を表す**（1=1位、2=2位...）
+   - ORDER BY id でランキング順に取得可能
 
-2. **idカラムはランキング順位**
-   - ORDER BY id でランキング順
-   - 1位、2位、3位...の順序
-
-3. **open_chat_idが全関係の中心**
-   - 全てのJOINの基準となるキー
-
-### 6.3 バッチ処理パターン
-
-```php
-// 統計ランキング更新の処理フロー例
-// 1. 既存データ削除
-DB::execute("TRUNCATE TABLE statistics_ranking_hour");
-
-// 2. 新しいランキングデータ一括挿入
-$this->inserter->import(DB::connect(), 'statistics_ranking_hour', $calculatedData);
-
-// 3. SQLite履歴データ更新
-$this->sqliteRepository->updateStatistics($historicalData);
-```
+2. **open_chat_idが全関係の中心**
+   - 全てのテーブル間JOINの基準キー
+   - 外部キー制約は明示的に定義されていない（パフォーマンス優先）
 
 ## 7. 注意事項とベストプラクティス
 
@@ -641,7 +634,6 @@ $this->sqliteRepository->updateStatistics($historicalData);
 
 - `open_chat.emid` は LINE の内部ID（ユニーク）
 - `open_chat.url` は招待リンク（ユニーク、NULL可能）
-- 削除されたチャットは `open_chat_deleted` に記録
 
 ### 7.2 文字エンコーディング
 
@@ -653,5 +645,3 @@ $this->sqliteRepository->updateStatistics($historicalData);
 - 検索頻度の高いカラム（`member`, `updated_at`, `emid`）
 - 複合インデックス（SQLiteで多用）
 - JOINパフォーマンス最適化
-
-このドキュメントにより、LLMと開発者の両方が、オプチャグラフのデータ構造を正確に理解し、効率的なデータ分析と開発が可能になります。
