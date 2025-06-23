@@ -160,7 +160,7 @@ CREATE TABLE `recommend` (
 
 **関係性**: `recommend.id = open_chat.id`（1対1関係）
 
-#### modify_recommend（推薦データ変更履歴）
+#### modify_recommend（推薦タグをオーバーライドするリスト）
 
 ```sql
 CREATE TABLE `modify_recommend` (
