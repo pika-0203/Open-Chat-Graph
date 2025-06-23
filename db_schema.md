@@ -147,7 +147,7 @@ CREATE TABLE `statistics_ranking_week` (
 
 #### recommend（推薦タグ）
 
-**用途**: OpenChatに関連付けられた推薦タグの管理
+**用途**: OpenChatに関連付けられた推薦タグの管理（各ルームに関連付けられ唯一のタグ）
 
 ```sql
 CREATE TABLE `recommend` (
@@ -173,7 +173,7 @@ CREATE TABLE `modify_recommend` (
 
 #### oc_tag、oc_tag2（OpenChatタグ）
 
-**用途**: OpenChatに関連付けられたタグ情報
+**用途**: OpenChatに関連付けられたタグ情報（関連のタグを表示するために利用）
 
 ```sql
 CREATE TABLE `oc_tag` (
