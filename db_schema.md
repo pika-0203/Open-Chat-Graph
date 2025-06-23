@@ -303,20 +303,6 @@ CREATE TABLE `member` (
 **データ保持期間**: 過去24時間分（24レコード/チャット）  
 **更新頻度**: 毎時30分頃に全チャットの最新データを記録  
 
-#### ranking（ランキング位置履歴）
-
-**用途**: カテゴリ別のランキング位置の1時間毎記録
-
-```sql
-CREATE TABLE `ranking` (
-  `open_chat_id` int(11) NOT NULL,
-  `position` int(11) NOT NULL,
-  `category` int(11) NOT NULL,
-  `time` datetime NOT NULL,
-  UNIQUE KEY `open_chat_id` (`open_chat_id`,`category`,`time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-```
-
 #### rising（急上昇ランキング履歴）
 
 **用途**: 急上昇ランキングの位置の1時間毎記録
@@ -328,6 +314,20 @@ CREATE TABLE `rising` (
   `category` int(11) NOT NULL,
   `time` datetime NOT NULL,
   UNIQUE KEY `open_chat_id` (`open_chat_id`,`category`,`time`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
+
+#### ranking（通常ランキング位置履歴）
+
+**用途**: カテゴリ別のランキング位置の1時間毎記録
+
+```sql
+CREATE TABLE `ranking` (
+  `open_chat_id` int(11) NOT NULL,
+  `position` int(11) NOT NULL,
+  `category` int(11) NOT NULL,
+  `time` datetime NOT NULL,
+  UNIQUE KEY `open_chat_id` (`open_chat_id`,`category`,`time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
 
