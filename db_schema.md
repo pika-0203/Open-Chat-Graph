@@ -388,7 +388,7 @@ CREATE TABLE `oc_list_user_list_show_log` (
 
 #### statistics（統計履歴）
 
-**用途**: メンバー数の日別履歴データ
+**用途**: メンバー数の日別履歴データ（日別にその日の更新実行時の値を記録）
 
 ```sql
 CREATE TABLE IF NOT EXISTS "statistics" (
@@ -404,7 +404,7 @@ CREATE UNIQUE INDEX statistics2_open_chat_id_IDX ON "statistics" (open_chat_id,d
 
 #### rising（急上昇ランキング位置）
 
-**用途**: 急上昇ランキングの位置履歴
+**用途**: 急上昇ランキングの位置履歴（日別にその日ごとの最大値を記録）
 
 ```sql
 CREATE TABLE rising (
@@ -420,7 +420,7 @@ CREATE UNIQUE INDEX rising_open_chat_id_IDX ON rising (open_chat_id,category,dat
 
 #### ranking（通常ランキング位置）
 
-**用途**: 通常ランキングの位置履歴
+**用途**: 通常ランキングの位置履歴（日別にその日ごとの中央値を記録）
 
 ```sql
 CREATE TABLE ranking (

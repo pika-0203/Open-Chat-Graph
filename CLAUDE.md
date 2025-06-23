@@ -60,6 +60,12 @@ composer install
 
 ## Database Architecture
 
+For comprehensive database schema information, see `/db_schema.md` which contains:
+- Complete table structures for all MySQL and SQLite databases
+- Detailed column specifications, indexes, and relationships
+- Sample queries and usage patterns
+- Data flow between different database systems
+
 ### MySQL/MariaDB
 - Primary storage for OpenChat data
 - Complex queries using raw SQL (no ORM)
@@ -104,146 +110,11 @@ Note: The database configuration is automatically loaded from `local-secrets.php
 
 ## Database Schema Reference
 
-### MySQL Database (Primary Data)
-
-#### Core Tables
-
-**open_chat** - Main OpenChat data
-```sql
-CREATE TABLE `open_chat` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text NOT NULL,
-  `description` text NOT NULL,
-  `member` int(11) NOT NULL,
-  `img_url` text NOT NULL,
-  `url` text NOT NULL,
-  `category` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `local_img_url` text DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `url` (`url`(191)),
-  KEY `category` (`category`),
-  KEY `member` (`member`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-```
-
-**statistics_ranking_hour** - Hourly growth statistics (NO created_at column)
-```sql
-CREATE TABLE `statistics_ranking_hour` (
-  `id` int(11) NOT NULL,
-  `open_chat_id` int(11) NOT NULL,
-  `diff_member` int(11) NOT NULL,
-  `percent_increase` float NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `open_chat_id` (`open_chat_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-```
-
-**statistics_ranking_hour24** - 24-hour growth statistics
-```sql
-CREATE TABLE `statistics_ranking_hour24` (
-  `id` int(11) NOT NULL,
-  `open_chat_id` int(11) NOT NULL,
-  `diff_member` int(11) NOT NULL,
-  `percent_increase` float NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `open_chat_id` (`open_chat_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-```
-
-**statistics_ranking_week** - Weekly growth statistics
-```sql
-CREATE TABLE `statistics_ranking_week` (
-  `id` int(11) NOT NULL,
-  `open_chat_id` int(11) NOT NULL,
-  `diff_member` int(11) NOT NULL,
-  `percent_increase` float NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `open_chat_id` (`open_chat_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-```
-
-**recommend** - Tag and recommendation data
-```sql
-CREATE TABLE `recommend` (
-  `id` int(11) NOT NULL,
-  `category` int(11) NOT NULL,
-  `tag` text NOT NULL,
-  `description_comment` text NOT NULL,
-  `description_rating` float NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `category` (`category`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-```
-
-#### Important Notes:
-- **statistics_ranking_hour tables DO NOT have created_at columns**
-- Use `id` for ordering (sequential ranking)
-- Join with `open_chat` table for timestamps: `open_chat.created_at`, `open_chat.updated_at`
-- For historical data queries, use SQLite statistics table instead
-
-### SQLite Databases (Performance-Optimized)
-
-#### Statistics Database (`/storage/ja/SQLite/statistics/statistics.db`)
-```sql
-CREATE TABLE IF NOT EXISTS "statistics" (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  open_chat_id INTEGER NOT NULL,
-  "member" INTEGER NOT NULL,
-  date TEXT NOT NULL
-);
-CREATE UNIQUE INDEX statistics2_open_chat_id_IDX ON "statistics" (open_chat_id,date);
-```
-
-#### Ranking Position Database (`/storage/ja/SQLite/ranking_position/ranking_position.db`)
-```sql
-CREATE TABLE rising (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  open_chat_id INTEGER NOT NULL,
-  category INTEGER NOT NULL,
-  "position" INTEGER NOT NULL,
-  time TEXT NOT NULL,
-  date INTEGER DEFAULT ('2024-01-01') NOT NULL
-);
-
-CREATE TABLE ranking (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  open_chat_id INTEGER NOT NULL,
-  category INTEGER NOT NULL,
-  "position" INTEGER NOT NULL,
-  time TEXT NOT NULL,
-  date INTEGER DEFAULT ('2024-01-01') NOT NULL
-);
-```
-
-### Query Examples
-
-**Get current hour growth with chat details:**
-```sql
-SELECT 
-    oc.id,
-    oc.name,
-    oc.member,
-    oc.created_at,
-    srh.diff_member,
-    srh.percent_increase
-FROM statistics_ranking_hour srh
-JOIN open_chat oc ON srh.open_chat_id = oc.id
-WHERE srh.diff_member > 0
-ORDER BY srh.diff_member DESC;
-```
-
-**Get historical data from SQLite:**
-```sql
-SELECT 
-    open_chat_id,
-    member,
-    date
-FROM statistics
-WHERE date >= date('now', '-7 days')
-ORDER BY date ASC;
-```
+Please refer to `/db_schema.md` for complete database schema documentation, including:
+- All table structures with detailed column specifications
+- Indexes and foreign key relationships
+- Query examples and best practices
+- Data migration and synchronization patterns
 
 ## Testing
 
