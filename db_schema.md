@@ -68,6 +68,7 @@ CREATE TABLE `open_chat` (
 - `emblem`: 公式バッジ（0=なし、1=スペシャル、2=公式認証）
 - `join_method_type`: 参加方法タイプ
 - `url`: 招待リンク（ユニーク）
+- `update_items`: 更新項目の記録（現在は使用されていない）
 
 ### 1.2 統計・ランキングテーブル群
 
