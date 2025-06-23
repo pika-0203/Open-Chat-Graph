@@ -186,49 +186,6 @@ CREATE TABLE `oc_tag` (
 
 ### 1.4 管理・制御テーブル
 
-#### ranking_ban（ランキングBANリスト）（現在は使われていない）
-
-**用途**: オープンチャット公式サイトでランキングから除外されたルームのリスト（現在は使われていない）
-
-```sql
-CREATE TABLE `ranking_ban` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `open_chat_id` int(11) NOT NULL,
-  `datetime` datetime NOT NULL,
-  `percentage` int(11) NOT NULL,
-  `member` int(11) NOT NULL,
-  `flag` int(11) NOT NULL DEFAULT 0,
-  `updated_at` int(11) NOT NULL,
-  `update_items` text DEFAULT NULL,
-  `end_datetime` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-```
-
-#### reject_room（拒否ルーム）（現在は使われていない）
-
-**用途**: クロール対象から除外するチャットのリスト
-
-```sql
-CREATE TABLE `reject_room` (
-  `emid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`emid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-```
-
-#### open_chat_deleted（削除OpenChat履歴）（現在は使われていない）
-
-**用途**: 削除されたOpenChatの記録を保持
-
-```sql
-CREATE TABLE `open_chat_deleted` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `emid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `deleted_at` datetime NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-```
 
 ### 1.5 システム管理テーブル
 
@@ -276,39 +233,6 @@ CREATE TABLE `api_data_download_state` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
 
-### 1.6 広告関連テーブル（現在は使われていない）
-
-#### ads（広告データ）
-
-**用途**: 表示する広告の管理
-
-```sql
-CREATE TABLE `ads` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ads_title` text NOT NULL,
-  `ads_sponsor_name` text NOT NULL,
-  `ads_paragraph` text NOT NULL,
-  `ads_href` text NOT NULL,
-  `ads_img_url` text NOT NULL,
-  `ads_tracking_url` text NOT NULL,
-  `ads_title_button` text NOT NULL,
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-```
-
-#### ads_tag_map（広告とタグのマッピング）（現在は使われていない）
-
-**用途**: 特定のタグに関連する広告の表示制御
-
-```sql
-CREATE TABLE `ads_tag_map` (
-  `tag` varchar(255) NOT NULL,
-  `ads_id` int(11) NOT NULL,
-  UNIQUE KEY `tag` (`tag`),
-  KEY `ads_tag` (`ads_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-```
 
 ## 2. 時系列履歴データベース（ocgraph_ranking）
 
@@ -793,3 +717,87 @@ LIMIT 30;
 - 検索頻度の高いカラム（`member`, `updated_at`, `emid`）
 - 複合インデックス（SQLiteで多用）
 - JOINパフォーマンス最適化
+
+## 8. 現在稼働していないテーブル
+
+以下のテーブルは機能が無効になっているため稼働していません。
+
+### 8.1 管理・制御テーブル
+
+#### ocgraph_ocreview.ranking_ban（ランキングBANリスト）
+
+**用途**: オープンチャット公式サイトでランキングから除外されたルームのリスト
+
+```sql
+CREATE TABLE `ranking_ban` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `open_chat_id` int(11) NOT NULL,
+  `datetime` datetime NOT NULL,
+  `percentage` int(11) NOT NULL,
+  `member` int(11) NOT NULL,
+  `flag` int(11) NOT NULL DEFAULT 0,
+  `updated_at` int(11) NOT NULL,
+  `update_items` text DEFAULT NULL,
+  `end_datetime` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+```
+
+#### ocgraph_ocreview.reject_room（拒否ルーム）
+
+**用途**: クロール対象から除外するチャットのリスト
+
+```sql
+CREATE TABLE `reject_room` (
+  `emid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`emid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+```
+
+#### ocgraph_ocreview.open_chat_deleted（削除OpenChat履歴）
+
+**用途**: 削除されたOpenChatの記録を保持
+
+```sql
+CREATE TABLE `open_chat_deleted` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `emid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `deleted_at` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+### 8.2 広告関連テーブル
+
+#### ocgraph_ocreview.ads（広告データ）
+
+**用途**: 表示する広告の管理
+
+```sql
+CREATE TABLE `ads` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ads_title` text NOT NULL,
+  `ads_sponsor_name` text NOT NULL,
+  `ads_paragraph` text NOT NULL,
+  `ads_href` text NOT NULL,
+  `ads_img_url` text NOT NULL,
+  `ads_tracking_url` text NOT NULL,
+  `ads_title_button` text NOT NULL,
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+#### ocgraph_ocreview.ads_tag_map（広告とタグのマッピング）
+
+**用途**: 特定のタグに関連する広告の表示制御
+
+```sql
+CREATE TABLE `ads_tag_map` (
+  `tag` varchar(255) NOT NULL,
+  `ads_id` int(11) NOT NULL,
+  UNIQUE KEY `tag` (`tag`),
+  KEY `ads_tag` (`ads_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
