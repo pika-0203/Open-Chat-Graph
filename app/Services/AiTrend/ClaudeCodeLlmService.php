@@ -26,6 +26,8 @@ class ClaudeCodeLlmService
 
             // ローカル環境ではClaudeCodeを呼び出し
             $response = $this->callLLM($prompt);
+
+            // デバッグ用にプロンプトを出力（実際の運用では削除）
             var_dump($prompt);
 
             // 旧AiTrendAnalysisServiceと同じデータ構造を生成
