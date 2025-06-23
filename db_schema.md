@@ -464,7 +464,7 @@ CREATE TABLE `like` (
 - `id`: いいねの一意識別子
 - `comment_id`: 対象コメントID
 - `user_id`: いいねしたユーザーID
-- `type`: いいねの種類（将来の拡張用）
+- `type`: いいねの種類（like/bad）
 - `time`: いいね日時
 - **UNIQUE制約**: 同一ユーザーは同一コメントに1回のみいいね可能
 
