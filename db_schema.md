@@ -412,6 +412,124 @@ CREATE TABLE `oc_list_user_list_show_log` (
 
 **⚠️ 注意**: このテーブルのみ明示的な外部キー制約が設定されています。
 
+### 2.3 コメントデータベース（ocgraph_comment）
+
+**用途**: オプチャグラフに登録されているLINEオープンチャットの紹介ページにユーザーが投稿したコメントを保存・管理
+
+#### comment（コメント）
+
+**用途**: ユーザーが投稿したコメントの保存
+
+```sql
+CREATE TABLE `comment` (
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `open_chat_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `user_id` varchar(64) NOT NULL,
+  `name` text NOT NULL,
+  `text` text NOT NULL,
+  `time` datetime NOT NULL DEFAULT current_timestamp(),
+  `flag` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`comment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+**カラム解説:**
+- `comment_id`: コメントの一意識別子
+- `open_chat_id`: コメント対象のOpenChat ID（ocgraph_ocreview.open_chat.idへの参照）
+- `id`: 表示順序用のID
+- `user_id`: 投稿者のユーザーID（Cookie等で生成）
+- `name`: 投稿者の表示名
+- `text`: コメント本文
+- `time`: 投稿日時
+- `flag`: ステータスフラグ（0=通常、その他=削除済みなど）
+
+#### like（いいね）
+
+**用途**: コメントへの「いいね」反応を記録
+
+```sql
+CREATE TABLE `like` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comment_id` int(11) NOT NULL,
+  `user_id` varchar(64) NOT NULL,
+  `type` varchar(8) NOT NULL,
+  `time` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `comment_id` (`comment_id`,`user_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+**カラム解説:**
+- `id`: いいねの一意識別子
+- `comment_id`: 対象コメントID
+- `user_id`: いいねしたユーザーID
+- `type`: いいねの種類（将来の拡張用）
+- `time`: いいね日時
+- **UNIQUE制約**: 同一ユーザーは同一コメントに1回のみいいね可能
+
+#### ban_room（禁止ルーム）
+
+**用途**: 1週間コメントの投稿を禁止するOpenChatを格納
+
+```sql
+CREATE TABLE `ban_room` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `open_chat_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `type` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+**カラム解説:**
+- `open_chat_id`: コメント投稿を1週間禁止するOpenChat ID
+- `created_at`: 禁止開始日時（1週間後に自動解除）
+- `type`: 禁止タイプ（0=通常禁止、その他は将来の拡張用）
+
+#### ban_user（禁止ユーザー）
+
+**用途**: コメントを投稿しても他者にコメントが表示されなくなるユーザーを格納（シャドウバン）
+
+```sql
+CREATE TABLE `ban_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(64) NOT NULL,
+  `ip` varchar(128) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `type` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+**カラム解説:**
+- `user_id`: シャドウバン対象ユーザーID（コメントは投稿者本人のみ表示）
+- `ip`: 禁止時のIPアドレス（参考情報）
+- `type`: 禁止タイプ（0=通常シャドウバン）
+
+#### log（操作ログ）
+
+**用途**: コメント関連の操作履歴を記録
+
+```sql
+CREATE TABLE `log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `entity_id` int(11) NOT NULL,
+  `type` text NOT NULL,
+  `data` text NOT NULL,
+  `ip` text NOT NULL,
+  `ua` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+**カラム解説:**
+- `entity_id`: 関連エンティティID（comment_id等）
+- `type`: ログタイプ（投稿、削除、いいね等）
+- `data`: 詳細データ（JSON形式等）
+- `ip`: 操作者のIPアドレス
+- `ua`: 操作者のユーザーエージェント
+
 ## 3. SQLiteデータベース  
 
 ### 3.1 統計データ（/storage/{lang}/SQLite/statistics/statistics.db）
