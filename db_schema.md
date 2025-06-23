@@ -72,7 +72,7 @@ CREATE TABLE `open_chat` (
 ### 1.2 統計・ランキングテーブル群
 
 #### ⚠️ 重要な制約事項
-**statistics_ranking_* テーブルには `created_at` カラムが存在しません**
+***statistics_ranking_*** **テーブルには `created_at` カラムが存在しません**
 - 時刻情報は `open_chat.updated_at` を使用
 - `id` カラムは**ランキング順位**を表す（id=1が1位）
 - データは毎時間完全再構築される
