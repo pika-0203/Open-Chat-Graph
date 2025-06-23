@@ -204,13 +204,29 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
     }
 </style>
 
-<script>
-function toggleStrategy(button) {
-    const content = button.closest('.strategy-content');
-    const preview = content.querySelector('.strategy-preview');
-    const full = content.querySelector('.strategy-full');
+<style>
+    .strategy-container {
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
     
-    if (full.style.display === 'none') {
+    .strategy-container:hover {
+        background-color: #f1f5f9 !important;
+    }
+</style>
+
+<script>
+function toggleStrategy(container, event) {
+    // Prevent link clicks from toggling
+    if (event && event.target.tagName === 'A') {
+        return;
+    }
+    
+    const preview = container.querySelector('.strategy-preview');
+    const full = container.querySelector('.strategy-full');
+    const button = container.querySelector('.strategy-toggle-btn');
+    
+    if (full.style.display === 'none' || !full.style.display) {
         preview.style.display = 'none';
         full.style.display = 'block';
         button.textContent = '折りたたむ';
@@ -348,14 +364,14 @@ function toggleStrategy(button) {
                         <strong>ターゲット:</strong> <?php echo htmlspecialchars($rec['target']) ?>
                     </div>
                     
-                    <div style="background: #f8fafc; padding: 10px; border-radius: 6px; border-left: 3px solid #3b82f6; font-size: 13px; color: #374151;">
+                    <div class="strategy-container" onclick="toggleStrategy(this, event)" style="background: #f8fafc; padding: 10px; border-radius: 6px; border-left: 3px solid #3b82f6; font-size: 13px; color: #374151;">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                             <strong>運営戦略:</strong>
-                            <button onclick="toggleStrategy(this)" style="background: none; border: 1px solid #d1d5db; border-radius: 4px; padding: 2px 6px; font-size: 11px; cursor: pointer; color: #6b7280;">
+                            <button class="strategy-toggle-btn" onclick="event.stopPropagation(); toggleStrategy(this.closest('.strategy-container'), event)" style="background: none; border: 1px solid #d1d5db; border-radius: 4px; padding: 2px 6px; font-size: 11px; cursor: pointer; color: #6b7280;">
                                 展開
                             </button>
                         </div>
-                        <div class="strategy-content" style="margin-top: 6px;">
+                        <div style="margin-top: 6px;">
                             <div class="strategy-preview">
                                 <?php echo htmlspecialchars(mb_substr($rec['strategy'], 0, 60)) ?>...
                             </div>
