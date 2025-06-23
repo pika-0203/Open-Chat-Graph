@@ -289,7 +289,7 @@ CREATE TABLE `ads_tag_map` (
 
 #### member（メンバー履歴）
 
-**用途**: OpenChatのメンバー数の1時間毎変動記録 **→ 詳細な成長パターン分析**
+**用途**: OpenChatのメンバー数の1時間毎変動記録
 
 ```sql
 CREATE TABLE `member` (
