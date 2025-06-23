@@ -108,6 +108,41 @@ $stmt->execute([$value1, $value2]);
 
 Note: The database configuration is automatically loaded from `local-secrets.php` for development environment.
 
+### Direct MySQL Access via Docker
+
+When Claude Code is running outside the Docker container and needs to execute MySQL commands directly (e.g., for schema inspection or database administration), use the following pattern:
+
+```bash
+# Execute MySQL commands through Docker
+docker exec oc-review-dev-mysql-1 mysql -u root -ptest_root_pass DATABASE_NAME -e "SQL_COMMAND"
+
+# Examples:
+# Show table structure
+docker exec oc-review-dev-mysql-1 mysql -u root -ptest_root_pass ocgraph_ocreview -e "SHOW CREATE TABLE table_name\G"
+
+# List all tables
+docker exec oc-review-dev-mysql-1 mysql -u root -ptest_root_pass ocgraph_ocreview -e "SHOW TABLES"
+
+# Execute SELECT query
+docker exec oc-review-dev-mysql-1 mysql -u root -ptest_root_pass ocgraph_ocreview -e "SELECT * FROM table_name LIMIT 10"
+
+# For multi-line queries, use heredoc
+docker exec -i oc-review-dev-mysql-1 mysql -u root -ptest_root_pass ocgraph_ocreview << 'EOF'
+SELECT 
+    column1,
+    column2
+FROM table_name
+WHERE condition = 'value'
+LIMIT 10;
+EOF
+```
+
+**Important Notes:**
+- The container name is `oc-review-dev-mysql-1` (not just `mysql`)
+- Password is specified immediately after `-p` without space: `-ptest_root_pass`
+- Use `\G` instead of `;` for vertical output format (useful for SHOW CREATE TABLE)
+- Database names follow the pattern in `/db_schema.md`
+
 ## Database Schema Reference
 
 Please refer to `/db_schema.md` for complete database schema documentation, including:

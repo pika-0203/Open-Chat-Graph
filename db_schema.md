@@ -232,6 +232,37 @@ CREATE TABLE `open_chat_deleted` (
 
 ### 1.5 システム管理テーブル
 
+#### user_log（ユーザーログ）
+
+**用途**: ユーザー操作ログの記録（手動でOpenChat追加、エラー、画像保存エラーなど）
+
+```sql
+CREATE TABLE `user_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `type` varchar(100) NOT NULL,
+  `message` text DEFAULT NULL,
+  `user_id` int(11) NOT NULL DEFAULT 0,
+  `ip` varchar(50) NOT NULL,
+  `ua` varchar(512) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+**カラム解説:**
+- `id`: 自動採番のプライマリキー
+- `time`: ログ記録時刻（自動設定）
+- `type`: ログタイプ（'AddOpenChat', 'AddOpenChatError', 'UpdateOpenChat', 'OpenChatImageStoreError' など）
+- `message`: ログの詳細メッセージ（エラー内容やOpenChat IDなど）
+- `user_id`: ユーザーID（デフォルト0、現在未使用）
+- `ip`: ユーザーのIPアドレス
+- `ua`: ユーザーエージェント文字列
+
+**主な用途:**
+- OpenChat追加操作の記録と制限（1分間の追加回数制限）
+- エラーログの記録（追加エラー、更新エラー、画像保存エラー）
+- 不正アクセスの検知とブロック
+
 #### api_data_download_state（API データダウンロード状態）
 
 **用途**: カテゴリ別のAPI データダウンロード進行状況を管理
@@ -349,7 +380,7 @@ CREATE TABLE `total_count` (
 
 #### oc_list_user（ユーザーリスト）
 
-**用途**: ユーザーが手動で登録したOpenChatのログ
+**用途**: ユーザーのトップピン留めリストを保持
 
 ```sql
 CREATE TABLE `oc_list_user` (
@@ -366,7 +397,7 @@ CREATE TABLE `oc_list_user` (
 
 #### oc_list_user_list_show_log（ユーザーのトップピン留めリストログ）
 
-**用途**: ユーザーのトップピン留めリストのログ
+**用途**: トップピン留めリストの表示履歴
 
 ```sql
 CREATE TABLE `oc_list_user_list_show_log` (
