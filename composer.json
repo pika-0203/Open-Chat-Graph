@@ -10,7 +10,9 @@
     "require": {
         "fabpot/goutte": "^4.0.3",
         "spatie/schema-org": "^3.14",
-        "asika/sitemap": "^2.0"
+        "asika/sitemap": "^2.0",
+        "openai-php/client": "^0.14.0",
+        "guzzlehttp/guzzle": "^7.9"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.6"
