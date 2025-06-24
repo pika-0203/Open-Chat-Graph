@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Pages;
 
 use App\Models\CommentRepositories\RecentCommentListRepositoryInterface;
-use App\Services\AiTrend\ClaudeCodeLlmService;
+use App\Services\AiTrend\OpenAiLlmService;
 use App\Services\Recommend\OfficialPageList;
 use App\Services\StaticData\StaticDataFile;
 use App\Views\Schema\PageBreadcrumbsListSchema;
@@ -18,12 +18,12 @@ class IndexPageController
         RecentCommentListRepositoryInterface $recentCommentListRepository,
         PageBreadcrumbsListSchema $pageBreadcrumbsListSchema,
         OfficialPageList $officialPageList,
-        ClaudeCodeLlmService $claudeCodeLlmService,
+        OpenAiLlmService $openAiLlmService,
     ) {
         $dto = $staticDataGeneration->getTopPageData();
 
         // 3期間データによるマネージャー向け分析を取得
-        $aiTrendData = $claudeCodeLlmService->generateManagerAnalysis([]);
+        $aiTrendData = $openAiLlmService->generateManagerAnalysis();
 
         $_css = ['room_list', 'site_header', 'site_footer', 'search_form', 'recommend_list'];
         $_meta = meta();

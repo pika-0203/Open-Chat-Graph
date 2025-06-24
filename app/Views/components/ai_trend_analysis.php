@@ -2,11 +2,13 @@
 
 use App\Services\AiTrend\AiTrendDataDto;
 
+// ヘルパー関数を読み込み
+require_once __DIR__ . '/../../Services/AiTrend/Helpers/ai_trend_insight_helper.php';
+
 /** @var AiTrendDataDto $aiTrendData */
 $risingChats = $aiTrendData->risingChats;
 $tagTrends = $aiTrendData->tagTrends;
 $aiAnalysis = $aiTrendData->aiAnalysis;
-$realtimeMetrics = $aiTrendData->realtimeMetrics;
 
 ?>
 
@@ -40,11 +42,6 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
         margin: 0 0 8px 0;
     }
     
-    .trend-subtitle {
-        opacity: 0.9;
-        margin: 0;
-    }
-    
     .section-title {
         font-size: 18px;
         font-weight: 600;
@@ -53,32 +50,6 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
         display: flex;
         align-items: center;
         gap: 8px;
-    }
-    
-    .metrics-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 16px;
-        margin-bottom: 24px;
-    }
-    
-    .metric-item {
-        background: #f8fafc;
-        padding: 16px;
-        border-radius: 6px;
-        text-align: center;
-    }
-    
-    .metric-value {
-        font-size: 28px;
-        font-weight: 700;
-        color: #1f2937;
-        margin-bottom: 4px;
-    }
-    
-    .metric-label {
-        font-size: 14px;
-        color: #6b7280;
     }
     
     .chat-list {
@@ -132,43 +103,6 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
         font-size: 14px;
     }
     
-    .category-list {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 8px;
-    }
-    
-    .category-item {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        align-items: center;
-        gap: 16px;
-        padding: 16px;
-        background: #f9fafb;
-        border-radius: 8px;
-        border-left: 4px solid #e5e7eb;
-        transition: all 0.2s ease;
-    }
-    
-    .category-item:hover {
-        background: #f3f4f6;
-        border-left-color: #667eea;
-        transform: translateX(2px);
-    }
-    
-    .category-name {
-        font-weight: 600;
-        color: #1f2937;
-        font-size: 16px;
-    }
-    
-    .category-growth {
-        color: #059669;
-        font-weight: 700;
-        font-size: 18px;
-        text-align: right;
-    }
-    
     .tag-list {
         display: flex;
         flex-wrap: wrap;
@@ -193,273 +127,216 @@ $realtimeMetrics = $aiTrendData->realtimeMetrics;
         text-decoration: none;
     }
     
-    .summary-text {
-        background: #f8fafc;
+    .alert-item {
         padding: 16px;
+        margin-bottom: 12px;
         border-radius: 6px;
-        border-left: 4px solid #3b82f6;
-        line-height: 1.6;
-        color: #374151;
-        margin: 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
     }
-</style>
+    
+    .alert-info { background: #f0f9ff; border-left: 4px solid #3b82f6; }
+    .alert-warning { background: #fefbf2; border-left: 4px solid #f59e0b; }
+    .alert-critical { background: #fef2f2; border-left: 4px solid #ef4444; }
+    
+    .recommendation-item {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+    
+    .recommendation-theme {
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 8px;
+    }
+    
+    .recommendation-detail {
+        color: #4b5563;
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
 
-<style>
-    .strategy-container {
-        cursor: pointer;
-        transition: background-color 0.2s ease;
+    .ai-insight {
+        background: #f0f9ff;
+        color: #1e40af;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 13px;
+        margin-top: 8px;
+        border-left: 3px solid #3b82f6;
+        line-height: 1.4;
     }
-    
-    .strategy-container:hover {
-        background-color: #f1f5f9 !important;
-    }
-</style>
 
-<script>
-function toggleStrategy(container, event) {
-    // Prevent link clicks from toggling
-    if (event && event.target.tagName === 'A') {
-        return;
+    .ai-score {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 6px;
+        padding: 4px 8px;
+        background: #f9fafb;
+        border-radius: 4px;
     }
-    
-    const preview = container.querySelector('.strategy-preview');
-    const full = container.querySelector('.strategy-full');
-    const button = container.querySelector('.strategy-toggle-btn');
-    
-    if (full.style.display === 'none' || !full.style.display) {
-        preview.style.display = 'none';
-        full.style.display = 'block';
-        button.textContent = '折りたたむ';
-    } else {
-        preview.style.display = 'block';
-        full.style.display = 'none';
-        button.textContent = '展開';
-    }
-}
-</script>
+
+    .potential-high { color: #dc2626; font-weight: 600; }
+    .potential-medium { color: #ea580c; font-weight: 600; }
+    .potential-low { color: #65a30d; font-weight: 600; }
+    .potential-breakthrough { color: #dc2626; font-weight: 700; }
+    .potential-disruptive { color: #c2410c; font-weight: 700; }
+    .potential-innovative { color: #2563eb; font-weight: 600; }
+    .potential-emerging { color: #059669; font-weight: 600; }
+</style>
 
 <section class="trend-container">
     <!-- ヘッダー -->
     <div class="trend-header">
-        <h2 class="trend-title">📊 トレンド分析</h2>
-        <p class="trend-subtitle">リアルタイムの成長動向</p>
+        <h2 class="trend-title">AI分析ダッシュボード</h2>
+        <p>オープンチャット成長トレンド分析</p>
     </div>
 
-
-    <!-- 重要な動向（統合版・5件制限） -->
-    <div class="trend-card">
-        <h3 class="section-title">🚨 重要な動向</h3>
-        
-        <?php 
-        // alertsとinsightsを統合して最大5件まで表示
-        $allImportantItems = [];
-        
-        // alertsを追加（timestamp付き）
-        if (!empty($aiAnalysis->alerts)) {
-            foreach ($aiAnalysis->alerts as $alert) {
-                $alert['timestamp'] = date('Y-m-d H:i:s');
-                $allImportantItems[] = $alert;
-            }
-        }
-        
-        // 5件に足りない分だけinsightsから追加
-        $remainingSlots = 5 - count($allImportantItems);
-        if ($remainingSlots > 0 && !empty($aiAnalysis->insights)) {
-            $selectedInsights = array_slice($aiAnalysis->insights, 0, $remainingSlots);
-            foreach ($selectedInsights as $insight) {
-                // insightsをalerts形式に変換
-                $allImportantItems[] = [
-                    'level' => 'info',
-                    'icon' => $insight['icon'] ?? '💡',
-                    'title' => $insight['title'],
-                    'message' => $insight['content'],
-                    'action_required' => false,
-                    'timestamp' => date('Y-m-d H:i:s'),
-                    'related_chats' => $insight['related_chats'] ?? []
-                ];
-            }
-        }
-        ?>
-        
-        <?php foreach (array_slice($allImportantItems, 0, 5) as $item): ?>
-            <div style="background: <?php echo $item['level'] === 'critical' ? '#fef2f2' : ($item['level'] === 'warning' ? '#fefbf2' : '#f0f9ff') ?>; 
-                       border: 1px solid <?php echo $item['level'] === 'critical' ? '#fecaca' : ($item['level'] === 'warning' ? '#fed7aa' : '#bae6fd') ?>; 
-                       border-radius: 6px; padding: 16px; margin-bottom: 12px;">
-                <div style="display: flex; align-items: flex-start; gap: 12px;">
-                    <span style="font-size: 20px;"><?php echo $item['icon'] ?></span>
-                    <div style="flex: 1;">
-                        <h4 style="font-weight: 600; margin: 0 0 8px 0; color: #1f2937;">
-                            <?php echo htmlspecialchars($item['title']) ?>
-                        </h4>
-                        <p style="margin: 0; color: #4b5563; line-height: 1.5;">
-                            <?php echo htmlspecialchars($item['message']) ?>
-                        </p>
-                        <?php if (!empty($item['related_chats'])): ?>
-                            <div style="margin-top: 8px;">
-                                <span style="font-size: 12px; color: #6b7280;">関連チャット:</span>
-                                <?php foreach ($item['related_chats'] as $chatId): ?>
-                                    <?php if ($chatId && $chatId !== 'null'): ?>
-                                        <a href="<?php echo url('/oc/' . $chatId) ?>" 
-                                           style="font-size: 11px; color: #3b82f6; text-decoration: none; margin-left: 4px; padding: 1px 4px; background: #eff6ff; border-radius: 3px;">
-                                            #<?php echo $chatId ?>
-                                        </a>
-                                    <?php endif ?>
-                                <?php endforeach ?>
+    <!-- AI分析注目トピックチャット -->
+    <?php if (!empty($risingChats)): ?>
+        <div class="trend-card">
+            <h3 class="section-title">🧠 AI分析注目トピックチャット</h3>
+            <p style="color: #6b7280; font-size: 14px; margin-bottom: 16px;">
+                人智を超えたAI分析により選出された、実際に成長可能性が高い注目トピック
+            </p>
+            <div class="chat-list">
+                <?php foreach (array_slice($risingChats, 0, 10) as $index => $chat): ?>
+                    <?php if (!isset($chat['id']) || !isset($chat['name'])) continue; ?>
+                    <div class="chat-item">
+                        <div class="chat-rank"><?php echo (int)$index + 1 ?></div>
+                        <div class="chat-info">
+                            <a href="<?php echo url('/oc/' . $chat['id']) ?>" class="chat-name">
+                                <?php echo htmlspecialchars($chat['name']) ?>
+                            </a>
+                            <div class="chat-growth">
+                                +<?php echo number_format((int)($chat['growth_amount'] ?? $chat['week_growth_amount'] ?? 0)) ?>人 
+                                (<?php echo htmlspecialchars($chat['category'] ?? 'その他') ?>)
                             </div>
-                        <?php endif ?>
-                        <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">
-                            <?php echo $item['timestamp'] ?>
+                            
+                            <!-- AI考察コメント -->
+                            <?php if (!empty($chat['selection_rationale']) || !empty($chat['attention_magnetism'])): ?>
+                                <div class="ai-insight">
+                                    💡 <?php echo htmlspecialchars($chat['selection_rationale'] ?? $chat['attention_magnetism'] ?? 'AI分析により選出') ?>
+                                </div>
+                            <?php else: ?>
+                                <div class="ai-insight">
+                                    🔥 <?php echo getAiInsightText($chat) ?>
+                                </div>
+                            <?php endif ?>
+                            
+                            <!-- AI分析スコア表示 -->
+                            <?php if (!empty($chat['ai_insight_score'])): ?>
+                                <div class="ai-score">
+                                    AI分析スコア: <strong><?php echo $chat['ai_insight_score'] ?>点</strong>
+                                    <?php if (!empty($chat['growth_potential']) || !empty($chat['revolutionary_potential'])): ?>
+                                        | 成長性: <span class="potential-<?php echo $chat['growth_potential'] ?? $chat['revolutionary_potential'] ?>">
+                                            <?php echo getPotentialLabel($chat['growth_potential'] ?? $chat['revolutionary_potential'] ?? '') ?>
+                                        </span>
+                                    <?php endif ?>
+                                </div>
+                            <?php endif ?>
                         </div>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </div>
+    <?php endif ?>
+
+    <!-- AI分析結果 -->
+    <?php if (!empty($aiAnalysis->alerts)): ?>
+        <div class="trend-card">
+            <h3 class="section-title">🤖 AI分析結果</h3>
+            
+            <?php foreach ($aiAnalysis->alerts as $alert): ?>
+                <?php 
+                $alertClass = 'alert-info';
+                if (isset($alert['level'])) {
+                    $alertClass = 'alert-' . $alert['level'];
+                }
+                ?>
+                <div class="alert-item <?php echo $alertClass ?>">
+                    <span style="font-size: 20px;"><?php echo $alert['icon'] ?? '💡' ?></span>
+                    <div>
+                        <h4 style="font-weight: 600; margin: 0 0 8px 0;">
+                            <?php echo htmlspecialchars($alert['title'] ?? '') ?>
+                        </h4>
+                        <p style="margin: 0; line-height: 1.5;">
+                            <?php echo htmlspecialchars($alert['message'] ?? '') ?>
+                        </p>
                     </div>
                 </div>
-            </div>
-        <?php endforeach ?>
+            <?php endforeach ?>
+        </div>
+    <?php endif ?>
 
-        <?php if (!empty($aiAnalysis->summary)): ?>
-            <div style="background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 6px; padding: 16px; border-left: 4px solid #3b82f6;">
-                <h4 style="font-weight: 600; margin: 0 0 8px 0; color: #1f2937; display: flex; align-items: center; gap: 8px;">
-                    <span>💡</span> 分析サマリー
-                </h4>
-                <p style="margin: 0; color: #4b5563; line-height: 1.6;"><?php echo htmlspecialchars($aiAnalysis->summary) ?></p>
-            </div>
-        <?php endif ?>
-    </div>
-
-
-
-
-    <!-- テーマ推奨（LLM分析結果） -->
+    <!-- AI推奨テーマ -->
     <?php if (!empty($aiAnalysis->recommendations)): ?>
         <div class="trend-card">
-            <h3 class="section-title">🎯 おすすめテーマ（AI分析）</h3>
-            <div style="margin-bottom: 16px; padding: 12px; background: #fef7ff; border-radius: 6px; font-size: 14px; color: #7c2d8e;">
-                🤖 実データ分析に基づく、今最も集客力の高いテーマをAIが厳選
-            </div>
+            <h3 class="section-title">🎯 AI推奨テーマ</h3>
             
             <?php foreach (array_slice($aiAnalysis->recommendations, 0, 5) as $rec): ?>
-                <div style="background: #fafafa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-bottom: 12px;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                        <h4 style="font-weight: 700; color: #1f2937; margin: 0; font-size: 16px;">
-                            <?php echo htmlspecialchars($rec['theme']) ?>
-                        </h4>
-                        <div style="display: flex; gap: 8px;">
-                            <span style="background: <?php echo $rec['competition'] === '低' ? '#dcfce7' : ($rec['competition'] === '中' ? '#fef3c7' : '#fecaca') ?>; 
-                                        color: <?php echo $rec['competition'] === '低' ? '#166534' : ($rec['competition'] === '中' ? '#92400e' : '#dc2626') ?>; 
-                                        padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">
-                                競争<?php echo $rec['competition'] ?>
-                            </span>
-                            <span style="background: <?php echo $rec['growth_potential'] === '高' ? '#dcfce7' : ($rec['growth_potential'] === '中' ? '#fef3c7' : '#f3f4f6') ?>; 
-                                        color: <?php echo $rec['growth_potential'] === '高' ? '#166534' : ($rec['growth_potential'] === '中' ? '#92400e' : '#6b7280') ?>; 
-                                        padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">
-                                成長性<?php echo $rec['growth_potential'] ?>
-                            </span>
-                        </div>
+                <div class="recommendation-item">
+                    <div class="recommendation-theme">
+                        <?php echo htmlspecialchars($rec['theme'] ?? '') ?>
                     </div>
                     
-                    <div style="color: #4b5563; font-size: 14px; line-height: 1.5; margin-bottom: 8px;">
-                        <strong>なぜ今狙い目？</strong> <?php echo htmlspecialchars($rec['reason']) ?>
-                    </div>
-                    
-                    <div style="color: #6b7280; font-size: 13px; margin-bottom: 8px;">
+                    <?php if (isset($rec['target'])): ?>
+                    <div class="recommendation-detail">
                         <strong>ターゲット:</strong> <?php echo htmlspecialchars($rec['target']) ?>
                     </div>
+                    <?php endif ?>
                     
-                    <div class="strategy-container" onclick="toggleStrategy(this, event)" style="background: #f8fafc; padding: 10px; border-radius: 6px; border-left: 3px solid #3b82f6; font-size: 13px; color: #374151;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                            <strong>運営戦略:</strong>
-                            <button class="strategy-toggle-btn" onclick="event.stopPropagation(); toggleStrategy(this.closest('.strategy-container'), event)" style="background: none; border: 1px solid #d1d5db; border-radius: 4px; padding: 2px 6px; font-size: 11px; cursor: pointer; color: #6b7280;">
-                                展開
-                            </button>
-                        </div>
-                        <div style="margin-top: 6px;">
-                            <div class="strategy-preview">
-                                <?php echo htmlspecialchars(mb_substr($rec['strategy'], 0, 60)) ?>...
-                            </div>
-                            <div class="strategy-full" style="display: none;">
-                                <?php echo htmlspecialchars($rec['strategy']) ?>
-                            </div>
-                        </div>
+                    <?php if (isset($rec['strategy'])): ?>
+                    <div class="recommendation-detail">
+                        <strong>戦略:</strong> <?php echo htmlspecialchars($rec['strategy']) ?>
                     </div>
-                    
-                    <?php if (!empty($rec['example_chats'])): ?>
-                        <div style="margin-top: 8px; padding: 8px; background: #f0f9ff; border-radius: 4px; border-left: 3px solid #60a5fa;">
-                            <div style="font-size: 12px; color: #1e40af; font-weight: 600; margin-bottom: 4px;">
-                                📊 成功事例チャット:
-                            </div>
-                            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-                                <?php foreach ($rec['example_chats'] as $chatId): ?>
-                                    <?php if ($chatId && $chatId !== 'null'): ?>
-                                        <a href="<?php echo url('/oc/' . $chatId) ?>" 
-                                           style="font-size: 11px; color: #1e40af; text-decoration: none; padding: 2px 6px; background: #dbeafe; border-radius: 4px; display: inline-block;">
-                                            チャット #<?php echo $chatId ?>
-                                        </a>
-                                    <?php endif ?>
-                                <?php endforeach ?>
-                            </div>
-                        </div>
                     <?php endif ?>
                 </div>
             <?php endforeach ?>
         </div>
     <?php endif ?>
 
-    <!-- 注目タグ -->
+    <!-- トレンドタグ -->
     <?php if (!empty($tagTrends)): ?>
         <div class="trend-card">
-            <h3 class="section-title">🏷️ 今狙い目のキーワード</h3>
-            <div style="margin-bottom: 16px; padding: 12px; background: #f0f9ff; border-radius: 6px; font-size: 14px; color: #1e40af;">
-                📈 1週間前と比較した成長率でランキング！伸び率の高いキーワードを狙おう
-            </div>
+            <h3 class="section-title">🏷️ トレンドタグ</h3>
             <div class="tag-list">
-                <?php foreach (array_slice($tagTrends, 0, 12) as $tag): ?>
+                <?php foreach (array_slice($tagTrends, 0, 15) as $tag): ?>
                     <?php if (($tag['growth_rate_percentage'] ?? 0) > 0): ?>
-                        <?php 
-                        $tagName = $tag['tag'];
-                        $growthRate = $tag['growth_rate_percentage'] ?? 0;
-                        $marketSize = '';
-                        $recommendation = '';
-                        
-                        // 成長率による分類
-                        if ($growthRate >= 20) {
-                            $marketSize = '急伸中';
-                            $recommendation = '今すぐ参入チャンス';
-                        } elseif ($growthRate >= 10) {
-                            $marketSize = '高成長';
-                            $recommendation = '成長トレンドに乗るチャンス';
-                        } elseif ($growthRate >= 5) {
-                            $marketSize = '成長中';
-                            $recommendation = '安定成長が期待できる';
-                        } else {
-                            $marketSize = '微増';
-                            $recommendation = '安定分野';
-                        }
-                        
-                        // タグ別の特殊分析
-                        if ($tagName === 'なりきり') {
-                            $marketSize = '大市場';
-                            $recommendation = '競争激しいが需要巨大';
-                        } elseif (stripos($tagName, 'Stray Kids') !== false || stripos($tagName, 'スキズ') !== false) {
-                            $marketSize = '韓流ブーム';
-                            $recommendation = 'K-POP人気継続中';
-                        }
-                        ?>
-                        <a href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($tagName))) ?>" 
-                           class="tag-item" style="position: relative;" 
-                           title="<?php echo $recommendation ?> (<?php echo $tag['room_count'] ?>チャット, 週間成長率<?php echo $growthRate ?>%)">
-                            #<?php echo htmlspecialchars($tagName) ?> 
-                            <strong><?php echo $growthRate ?>%</strong>
-                            <small style="opacity: 0.8; font-size: 10px; margin-left: 4px;"><?php echo $marketSize ?></small>
+                        <a href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($tag['tag']))) ?>" 
+                           class="tag-item">
+                            #<?php echo htmlspecialchars($tag['tag']) ?> 
+                            <strong>+<?php echo round((float)$tag['growth_rate_percentage'], 1) ?>%</strong>
                         </a>
                     <?php endif ?>
                 <?php endforeach ?>
             </div>
-            <div style="margin-top: 12px; padding: 12px; background: #ecfdf5; border-radius: 6px; border-left: 4px solid #10b981;">
-                <div style="font-size: 14px; font-weight: 600; color: #047857; margin-bottom: 4px;">キーワード戦略</div>
-                <div style="font-size: 13px; color: #065f46; line-height: 1.4;">
-                    • <strong>大市場キーワード</strong>：競争激しいが認知度高い<br>
-                    • <strong>急成長キーワード</strong>：トレンドの波に乗るチャンス<br>
-                    • <strong>ニッチキーワード</strong>：競争少なく確実に集客可能
+        </div>
+    <?php endif ?>
+
+    <!-- AI洞察 -->
+    <?php if (!empty($aiAnalysis->insights)): ?>
+        <div class="trend-card">
+            <h3 class="section-title">💡 AI洞察</h3>
+            
+            <?php foreach ($aiAnalysis->insights as $insight): ?>
+                <div style="background: #f8fafc; padding: 12px; border-radius: 6px; border-left: 4px solid #3b82f6; margin-bottom: 8px;">
+                    <?php echo htmlspecialchars($insight) ?>
                 </div>
+            <?php endforeach ?>
+        </div>
+    <?php endif ?>
+
+    <!-- 分析サマリー -->
+    <?php if (!empty($aiAnalysis->summary)): ?>
+        <div class="trend-card">
+            <h3 class="section-title">📊 分析サマリー</h3>
+            <div style="background: #f8fafc; padding: 16px; border-radius: 6px; border-left: 4px solid #3b82f6; line-height: 1.6;">
+                <?php echo htmlspecialchars($aiAnalysis->summary) ?>
             </div>
         </div>
     <?php endif ?>
