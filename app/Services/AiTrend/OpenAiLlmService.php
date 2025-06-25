@@ -57,18 +57,6 @@ class OpenAiLlmService
     }
 
     /**
-     * 高度なAI分析プロセス（多角的データ解析）
-     */
-    private function performAiAnalysis(array $trendData): array
-    {
-        $prompt = $this->buildSimpleAnalysisPrompt($trendData);
-        $response = $this->callOpenAiWithRetry($prompt);
-        $analysis = $this->parseAiResponse($response);
-
-        return $analysis;
-    }
-
-    /**
      * 候補選出を含む高度なAI分析プロセス
      */
     private function performAiAnalysisWithSelection(array $trendData, array $candidates): array
@@ -81,87 +69,13 @@ class OpenAiLlmService
     }
 
     /**
-     * 高度な分析プロンプト構築（独自解析アルゴリズムの説明含む）
-     */
-    private function buildSimpleAnalysisPrompt(array $trendData): string
-    {
-        $dataJson = json_encode($trendData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-
-        return "
-# 🚀 オープンチャット高度トレンド分析システム
-
-## 🔬 提供される解析データ
-以下は独自の高度解析アルゴリズムにより生成されたデータです：
-
-### 📊 解析データの詳細
-{$dataJson}
-
-## 🧠 解析アルゴリズムの説明
-- **隠れたバイラルパターン**: 成長加速度、持続性、異常検出を組み合わせた独自スコア
-- **低競争セグメント**: 市場集中度（HHI指数）、成長機会指数、新規参入容易性を算出
-- **成長加速度**: モメンタム、一貫性、相対強度、ブレイクアウト指標の複合評価
-- **バイラル前兆**: 早期警告システム、臨界点接近度、成長の質指標
-- **新規参入機会**: 参入障壁、成功確率、競争密度の戦略的分析
-- **トレンド予測**: 機械学習的アプローチでの成長パターン分類
-- **異常検出**: 統計的外れ値と異常成長パターンの特定
-
-## 📋 必要な分析結果
-以下の JSON フォーマットで高度な分析結果を提供してください：
-
-```json
-{
-  \"strategic_insights\": [
-    {
-      \"category\": \"カテゴリ名\",
-      \"insight_type\": \"viral_potential|market_opportunity|growth_acceleration|anomaly_detection\",
-      \"title\": \"洞察のタイトル\",
-      \"description\": \"詳細な分析結果\",
-      \"confidence_score\": 0-100の信頼度,
-      \"impact_level\": \"high|medium|low\",
-      \"time_horizon\": \"immediate|short_term|medium_term|long_term\",
-      \"action_items\": [\"具体的なアクション項目\"]
-    }
-  ],
-  \"rising_chats\": [
-    {
-      \"id\": \"ID\",
-      \"name\": \"名前\",
-      \"category\": \"カテゴリ\",
-      \"member_count\": 数値,
-      \"growth_amount\": 数値,
-      \"growth_rate\": 数値,
-      \"ai_insight_score\": 0-100のスコア,
-      \"trend_analysis\": \"成長要因の詳細分析\",
-      \"future_prediction\": \"3段階の予測シナリオ\",
-      \"recommendation\": \"戦略的推奨事項\",
-      \"url\": \"\"
-    }
-  ],
-  \"insights\": [\"分析による洞察の配列\"],
-  \"recommendations\": [\"推奨事項の配列\"],
-  \"summary\": \"分析結果のエグゼクティブサマリー\"
-}
-```
-
-## 🎯 分析のポイント
-1. 単純なランキングではなく、独自の解析アルゴリズムの結果を重視
-2. 成長の「質」と「持続性」を評価
-3. 市場機会と競争環境を戦略的に分析
-4. 異常パターンから新たなトレンドを発見
-5. 予測的分析によるアクショナブルな洞察を提供
-
-特に独自の解析指標（バイラル可能性スコア、成長加速度、市場集中度など）を活用した深い洞察を重視してください。
-";
-    }
-
-    /**
      * 厳選チャット選出用プロンプト構築
      */
     private function buildSelectionAnalysisPrompt(array $trendData, array $candidates): string
     {
         $dataJson = json_encode($trendData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         $candidatesJson = json_encode($candidates, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        
+
         // トレンドタグ選出用の参考データを取得
         $tagTrendsData = $this->getTagTrendsFromDatabase();
         $tagTrendsJson = json_encode($tagTrendsData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
@@ -413,16 +327,6 @@ class OpenAiLlmService
         }, $results);
     }
 
-    /**
-     * AIベースでトレンドタグを生成
-     */
-    private function getTagTrends(): array
-    {
-        // AIが生成したトレンドタグを返す（generateManagerAnalysisで生成済み）
-        // この時点では空配列を返し、実際のタグはAI分析結果から取得
-        return [];
-    }
-
     private function getOverallStats(): array
     {
         $query = "
@@ -552,7 +456,7 @@ class OpenAiLlmService
                 }
             }
         }
-        
+
         $aiAnalysisDto = new AiAnalysisDto(
             $aiAnalysis['summary'] ?? $aiAnalysis['executive_summary'] ?? '高度AI分析結果',
             $insights,
@@ -580,7 +484,7 @@ class OpenAiLlmService
 
         // AIが生成したトレンドタグを使用、なければデータベースから取得したタグを使用
         $tagTrends = $basicData['tag_trends'];
-        
+
         if (isset($aiAnalysis['trend_tags']) && is_array($aiAnalysis['trend_tags'])) {
             $validTrendTags = [];
             foreach ($aiAnalysis['trend_tags'] as $tag) {
