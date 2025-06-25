@@ -27,7 +27,7 @@ class OpenAiLlmService
     }
 
     /**
-     * AI分析を実行（高度な解析アルゴリズム使用）
+     * AI分析を実行（分割API呼び出しによる高精度化）
      */
     public function generateManagerAnalysis(): AiTrendDataDto
     {
@@ -47,38 +47,73 @@ class OpenAiLlmService
 
         // AI選出用の統合候補データ取得
         $integratedCandidates = $this->aiTrendRepo->getIntegratedCandidatesForAiSelection(30);
-
         $basicData = $this->getBasicRealData();
 
-        // 高度なAI分析実行（候補からの厳選）
-        $aiAnalysis = $this->performAiAnalysisWithSelection($trendData, $integratedCandidates);
+        // 分割API呼び出しによる高精度分析
+        $risingChats = $this->analyzeRisingChats($trendData, $integratedCandidates);
+        $trendTags = $this->analyzeTrendTags($basicData['tag_trends']);
+        $insights = $this->generateInsights($trendData, $risingChats, $trendTags);
+        $summary = $this->generateSummary($trendData, $risingChats, $trendTags, $insights);
 
-        return $this->buildResult($basicData, $aiAnalysis, $trendData);
+        return $this->buildResultFromSeparateAnalysis($basicData, $risingChats, $trendTags, $insights, $summary, $trendData);
     }
 
     /**
-     * 候補選出を含む高度なAI分析プロセス
+     * AI分析注目トピックチャット専用分析
      */
-    private function performAiAnalysisWithSelection(array $trendData, array $candidates): array
+    private function analyzeRisingChats(array $trendData, array $candidates): array
     {
-        $prompt = $this->buildSelectionAnalysisPrompt($trendData, $candidates);
+        $prompt = $this->buildRisingChatsPrompt($trendData, $candidates);
         $response = $this->callOpenAiWithRetry($prompt);
         $analysis = $this->parseAiResponse($response);
-
-        return $analysis;
+        
+        return $analysis['rising_chats'] ?? [];
     }
 
     /**
-     * 厳選チャット選出用プロンプト構築
+     * AI選出トレンドタグ専用分析
      */
-    private function buildSelectionAnalysisPrompt(array $trendData, array $candidates): string
+    private function analyzeTrendTags(array $tagTrendsData): array
+    {
+        $prompt = $this->buildTrendTagsPrompt($tagTrendsData);
+        $response = $this->callOpenAiWithRetry($prompt);
+        $analysis = $this->parseAiResponse($response);
+        
+        return $analysis['trend_tags'] ?? [];
+    }
+
+    /**
+     * AI洞察専用分析
+     */
+    private function generateInsights(array $trendData, array $risingChats, array $trendTags): array
+    {
+        $prompt = $this->buildInsightsPrompt($trendData, $risingChats, $trendTags);
+        $response = $this->callOpenAiWithRetry($prompt);
+        $analysis = $this->parseAiResponse($response);
+        
+        return $analysis['insights'] ?? [];
+    }
+
+    /**
+     * 分析サマリー専用分析
+     */
+    private function generateSummary(array $trendData, array $risingChats, array $trendTags, array $insights): string
+    {
+        $prompt = $this->buildSummaryPrompt($trendData, $risingChats, $trendTags, $insights);
+        $response = $this->callOpenAiWithRetry($prompt);
+        $analysis = $this->parseAiResponse($response);
+        
+        return $analysis['summary'] ?? '';
+    }
+
+    /**
+     * AI分析注目トピックチャット専用プロンプト構築
+     */
+    private function buildRisingChatsPrompt(array $trendData, array $candidates): string
     {
         $dataJson = json_encode($trendData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         $candidatesJson = json_encode($candidates, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-        // トレンドタグ選出用の参考データを取得
-        $tagTrendsData = $this->getTagTrendsFromDatabase();
-        $tagTrendsJson = json_encode($tagTrendsData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
         return "
 # 🧠 AI分析注目トピックチャット厳選システム
@@ -101,13 +136,8 @@ class OpenAiLlmService
 以下は6つの異なる高度分析手法から抽出された候補チャットです：
 {$candidatesJson}
 
-### 🏷️ 現在のタグトレンドデータ（参考情報）
-以下は現在のタグトレンドの統計データです：
-{$tagTrendsJson}
-
 ## 📋 あなたのミッション
-1. 上記の候補チャットから、**既存のランキングでは発見できない真に価値ある3件**を厳選してください。
-2. タグトレンドデータを分析し、**AIが戦略的に選出した真のトレンドタグ10-15個**を厳選してください。
+上記の候補チャットから、**既存のランキングでは発見できない真に価値ある3件**を厳選してください。
 
 ### 🎯 チャット選出基準（優先順位順）
 1. **独自性**: 単純な人数増加ランキングでは上位に来ない隠れた価値
@@ -116,18 +146,11 @@ class OpenAiLlmService
 4. **異常性**: 統計的に特異で分析価値の高いパターン
 5. **ニッチ機会**: 競争が少なく成長余地の大きいセグメント
 
-### 🏷️ トレンドタグ選出基準
-1. **成長性**: 単純な統計数値だけでなく、成長の質と持続性
-2. **独自性**: 誰でも思いつく一般的なタグではなく、特殊な価値を持つタグ
-3. **戦略性**: マーケティングやコミュニティ運営の観点で重要なタグ
-4. **将来性**: 現在は小さくても将来的に大きくなる可能性が高いタグ
-5. **多様性**: 様々なカテゴリやジャンルから均等に選出
 
 ### 🚫 避けるべき選出
 - 既に大規模（10,000人以上）で誰でも注目するチャット
-- 単純に週間成長数が多いだけのチャット・タグ
-- 明らかにランキング上位に来るチャット・タグ
-- 「雑談」「友達」「恋人」などの一般的すぎるタグ
+- 単純に週間成長数が多いだけのチャット
+- 明らかにランキング上位に来るチャット
 
 ## 📄 必要な出力フォーマット
 
@@ -149,23 +172,7 @@ class OpenAiLlmService
       \"selection_source\": \"元の分析手法名\",
       \"url\": \"\"
     }
-  ],
-  \"trend_tags\": [
-    {
-      \"tag\": \"タグ名\",
-      \"room_count\": 関連チャット数,
-      \"ai_rationale\": \"AIがこのタグを選んだ理由（50文字以内）\",
-      \"growth_potential\": \"high|medium|emerging\",
-      \"strategic_value\": \"このタグの戦略的価値の説明\"
-    }
-  ],
-  \"strategic_insights\": [
-    \"選出の戦略的根拠1\",
-    \"選出の戦略的根拠2\",
-    \"選出の戦略的根拠3\"
-  ],
-  \"insights\": [\"分析による洞察の配列\"],
-  \"summary\": \"厳選の論理的根拠と総合分析\"
+  ]
 }
 ```
 
@@ -177,7 +184,197 @@ class OpenAiLlmService
 5. **ネット情報を活用**：可能な限りインターネット上の最新情報や関連する外部要因を検索・分析して判断に活用してください
 
 特に「selection_source」フィールドで元の分析手法を明記し、「selection_rationale」で既存ランキングとは異なる価値を明確に説明してください。
-トレンドタグについても「ai_rationale」で単純な統計ランキングとは異なるAI独自の選出理由を説明してください。
+分析時は必要に応じてインターネット検索を実行し、外部の最新情報やトレンド、話題性などを考慮に入れて戦略的価値を判断してください。
+";
+    }
+
+    /**
+     * AI選出トレンドタグ専用プロンプト構築
+     */
+    private function buildTrendTagsPrompt(array $tagTrendsData): string
+    {
+        $tagTrendsJson = json_encode($tagTrendsData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+        return "
+# 🏷️ AI選出トレンドタグ厳選システム
+
+## 🎯 重要な背景情報
+このサイトには既に以下の標準機能が実装されています：
+- タグ別チャット数ランキング
+- タグ別成長順ランキング
+- 一般的なタグ検索機能
+
+**重要：単純な統計ランキング上位のタグを選出するのは無意味です。**
+
+## 🔬 提供されるタグトレンドデータ
+{$tagTrendsJson}
+
+## 📋 あなたのミッション
+上記のタグトレンドデータを分析し、**AIが戦略的に選出した真のトレンドタグ10-15個**を厳選してください。
+
+### 🏷️ トレンドタグ選出基準（優先順位順）
+1. **成長性**: 単純な統計数値だけでなく、成長の質と持続性
+2. **独自性**: 誰でも思いつく一般的なタグではなく、特殊な価値を持つタグ
+3. **戦略性**: マーケティングやコミュニティ運営の観点で重要なタグ
+4. **将来性**: 現在は小さくても将来的に大きくなる可能性が高いタグ
+5. **多様性**: 様々なカテゴリやジャンルから均等に選出
+
+### 🚫 避けるべき選出
+- 「雑談」「友達」「恋人」などの一般的すぎるタグ
+- 単純に関連チャット数が多いだけのタグ
+- 明らかに統計ランキング上位に来るタグ
+
+## 📄 必要な出力フォーマット
+
+```json
+{
+  \"trend_tags\": [
+    {
+      \"tag\": \"タグ名\",
+      \"room_count\": 関連チャット数,
+      \"ai_rationale\": \"AIがこのタグを選んだ理由（50文字以内）\",
+      \"growth_potential\": \"high|medium|emerging\",
+      \"strategic_value\": \"このタグの戦略的価値の説明\"
+    }
+  ]
+}
+```
+
+## 🧠 分析指針
+1. **質を重視**：単純な数量より成長の質と持続性
+2. **独自性を重視**：他では見つからない特殊な価値を持つタグ
+3. **戦略的価値を重視**：マーケティングやトレンド分析の観点での価値
+4. **将来性を重視**：現在の規模より将来のポテンシャル
+5. **ネット情報を活用**：可能な限りインターネット上の最新情報や関連する外部要因を検索・分析して判断に活用してください
+
+「ai_rationale」で単純な統計ランキングとは異なるAI独自の選出理由を説明してください。
+分析時は必要に応じてインターネット検索を実行し、外部の最新情報やトレンド、話題性などを考慮に入れて戦略的価値を判断してください。
+";
+    }
+
+    /**
+     * AI洞察専用プロンプト構築
+     */
+    private function buildInsightsPrompt(array $trendData, array $risingChats, array $trendTags): string
+    {
+        $trendDataJson = json_encode($trendData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $risingChatsJson = json_encode($risingChats, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $trendTagsJson = json_encode($trendTags, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+        return "
+# 💡 AI洞察生成システム
+
+## 🔬 提供される分析データ
+
+### 📊 高度分析アルゴリズムの結果
+{$trendDataJson}
+
+### 🏆 AI選出注目チャット
+{$risingChatsJson}
+
+### 🏷️ AI選出トレンドタグ
+{$trendTagsJson}
+
+## 📋 あなたのミッション
+上記の分析データを総合的に分析し、**戦略的洞察を3-5個**生成してください。
+
+### 💡 洞察生成基準
+1. **横断的分析**: チャット、タグ、統計データを横断した複合的な洞察
+2. **将来予測**: 現在のトレンドから読み取れる将来の動向
+3. **戦略的価値**: マーケティングやビジネス戦略に活用できる知見
+4. **隠れたパターン**: 表面的には見えない深層の成長パターン
+5. **市場機会**: 新しいビジネスチャンスや参入機会の示唆
+
+### 🎯 洞察の種類
+- 成長パターンの変化に関する洞察
+- 新興セグメントの発見に関する洞察
+- マーケット機会に関する洞察
+- ユーザー行動変化に関する洞察
+- 競争環境変化に関する洞察
+
+## 📄 必要な出力フォーマット
+
+```json
+{
+  \"insights\": [
+    \"洞察1: 具体的で実用的な洞察内容\",
+    \"洞察2: 具体的で実用的な洞察内容\",
+    \"洞察3: 具体的で実用的な洞察内容\"
+  ]
+}
+```
+
+## 🧠 分析指針
+1. **具体性を重視**：抽象的ではなく具体的で実用的な洞察
+2. **データ根拠を重視**：提供されたデータに基づいた論理的な洞察
+3. **戦略性を重視**：ビジネスやマーケティングに活用できる実用的な知見
+4. **独自性を重視**：一般的ではない独特の視点からの洞察
+5. **ネット情報を活用**：可能な限りインターネット上の最新情報や関連する外部要因を検索・分析して判断に活用してください
+
+各洞察は50-100文字程度で、簡潔かつ具体的に記述してください。
+分析時は必要に応じてインターネット検索を実行し、外部の最新情報やトレンド、話題性などを考慮に入れて戦略的価値を判断してください。
+";
+    }
+
+    /**
+     * 分析サマリー専用プロンプト構築
+     */
+    private function buildSummaryPrompt(array $trendData, array $risingChats, array $trendTags, array $insights): string
+    {
+        $trendDataJson = json_encode($trendData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $risingChatsJson = json_encode($risingChats, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $trendTagsJson = json_encode($trendTags, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $insightsJson = json_encode($insights, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+        return "
+# 📊 AI分析サマリー生成システム
+
+## 🔬 分析済みデータ
+
+### 📊 高度分析アルゴリズムの結果
+{$trendDataJson}
+
+### 🏆 AI選出注目チャット
+{$risingChatsJson}
+
+### 🏷️ AI選出トレンドタグ
+{$trendTagsJson}
+
+### 💡 生成済み洞察
+{$insightsJson}
+
+## 📋 あなたのミッション
+上記の全ての分析結果を統合し、**包括的な分析サマリー**を生成してください。
+
+### 📊 サマリー構成要素
+1. **選出の論理的根拠**: なぜこれらのチャット・タグが選ばれたのか
+2. **トレンドの全体像**: 現在のオープンチャット市場の動向
+3. **戦略的意義**: この分析結果の戦略的価値
+4. **将来展望**: 予測される市場の変化
+5. **実用的示唆**: 具体的な活用方法の提案
+
+### 🎯 サマリーの特徴
+- 150-200文字程度の簡潔な内容
+- 専門的でありながら分かりやすい表現
+- 具体的な数値や事実に基づいた説明
+- 戦略的価値を明確に示す内容
+
+## 📄 必要な出力フォーマット
+
+```json
+{
+  \"summary\": \"厳選の論理的根拠と総合分析の包括的サマリー\"
+}
+```
+
+## 🧠 分析指針
+1. **統合性を重視**：全ての分析結果を統合した包括的な視点
+2. **論理性を重視**：選出基準と結果の論理的な整合性
+3. **戦略性を重視**：ビジネス戦略に活用できる実用的な総括
+4. **具体性を重視**：抽象的ではなく具体的で実用的な内容
+5. **ネット情報を活用**：可能な限りインターネット上の最新情報や関連する外部要因を検索・分析して判断に活用してください
+
+サマリーは分析の価値と意義を明確に示し、読者が一目で全体像を把握できる内容にしてください。
 分析時は必要に応じてインターネット検索を実行し、外部の最新情報やトレンド、話題性などを考慮に入れて戦略的価値を判断してください。
 ";
     }
@@ -433,77 +630,36 @@ class OpenAiLlmService
     }
 
     /**
-     * 高度な結果構築
+     * 分割API分析結果から統合結果を構築
      */
-    private function buildResult(array $basicData, array $aiAnalysis, array $trendData): AiTrendDataDto
-    {
-        // strategic_insights を insights に変換（または両方を使用）
-        $insights = $aiAnalysis['insights'] ?? [];
-        if (isset($aiAnalysis['strategic_insights']) && is_array($aiAnalysis['strategic_insights'])) {
-            // strategic_insights からタイトルや説明を抽出して insights 形式に変換
-            foreach ($aiAnalysis['strategic_insights'] as $strategicInsight) {
-                if (is_string($strategicInsight)) {
-                    $insights[] = $strategicInsight;
-                } elseif (isset($strategicInsight['title']) && isset($strategicInsight['description'])) {
-                    $insights[] = $strategicInsight['title'] . ': ' . $strategicInsight['description'];
-                }
-            }
-        }
-
+    private function buildResultFromSeparateAnalysis(
+        array $basicData, 
+        array $risingChats, 
+        array $trendTags, 
+        array $insights, 
+        string $summary, 
+        array $trendData
+    ): AiTrendDataDto {
+        // AI分析結果をAiAnalysisDtoに変換
         $aiAnalysisDto = new AiAnalysisDto(
-            $aiAnalysis['summary'] ?? $aiAnalysis['executive_summary'] ?? '高度AI分析結果',
-            $insights,
-            $aiAnalysis['predictive_analytics'] ?? [],
-            $aiAnalysis['recommendations'] ?? $aiAnalysis['key_recommendations'] ?? [],
-            $aiAnalysis['anomaly_detection_results'] ?? [],
-            [], // alerts
-            [] // timeSeriesForecasts
+            $summary,
+            $insights
         );
 
-        // AI分析結果の rising_chats を使用、なければ基本データを使用
-        $risingChats = $basicData['rising_chats'];
-
-        if (isset($aiAnalysis['rising_chats']) && is_array($aiAnalysis['rising_chats'])) {
-            $validRisingChats = [];
-            foreach ($aiAnalysis['rising_chats'] as $chat) {
-                if (isset($chat['id']) && isset($chat['name'])) {
-                    $validRisingChats[] = $chat;
-                }
-            }
-            if (!empty($validRisingChats)) {
-                $risingChats = $validRisingChats;
-            }
-        }
-
-        // AIが生成したトレンドタグを使用、なければデータベースから取得したタグを使用
-        $tagTrends = $basicData['tag_trends'];
-
-        if (isset($aiAnalysis['trend_tags']) && is_array($aiAnalysis['trend_tags'])) {
-            $validTrendTags = [];
-            foreach ($aiAnalysis['trend_tags'] as $tag) {
-                if (isset($tag['tag']) && !empty($tag['tag'])) {
-                    // AIが生成したタグをView用のフォーマットに変換
-                    $validTrendTags[] = [
-                        'tag' => $tag['tag'],
-                        'room_count' => $tag['room_count'] ?? 0,
-                        'ai_rationale' => $tag['ai_rationale'] ?? '',
-                        'growth_potential' => $tag['growth_potential'] ?? 'medium',
-                        'strategic_value' => $tag['strategic_value'] ?? ''
-                    ];
-                }
-            }
-            if (!empty($validTrendTags)) {
-                $tagTrends = $validTrendTags;
-            }
-        }
+        // rising_chatsが空の場合は基本データを使用
+        $finalRisingChats = !empty($risingChats) ? $risingChats : $basicData['rising_chats'];
+        
+        // trend_tagsが空の場合は基本データを使用
+        $finalTrendTags = !empty($trendTags) ? $trendTags : $basicData['tag_trends'];
 
         return new AiTrendDataDto(
-            $risingChats,
-            $tagTrends,
+            $finalRisingChats,
+            $finalTrendTags,
             $basicData['overall_stats'],
             $aiAnalysisDto,
             $trendData, // 解析データを履歴として保存
-            $aiAnalysis['market_intelligence'] ?? [] // リアルタイム指標として市場情報を保存
+            [] // リアルタイム指標として空配列
         );
     }
+
 }
