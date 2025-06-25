@@ -16,7 +16,7 @@ viewComponent('head', compact('_css', '_meta', '_schema') + ['dataOverlays' => '
 
         <hr style="margin: 1rem 0;">
         <div class="modify-top-padding">
-            <?php viewComponent('ai_trend_analysis', ['aiTrendData' => $aiTrendData]) ?>
+            <?php viewComponent('../../Services/AiTrend/Views/ai_trend_analysis', ['aiTrendData' => $aiTrendData]) ?>
             <hr style="margin: 1rem 0;">
             <?php
             AppConfig::$listLimitTopRanking = 5;

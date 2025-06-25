@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\AiTrend\test;
 
+use App\Services\AiTrend\Helpers\AiTrendInsightHelper;
 use PHPUnit\Framework\TestCase;
 
 // ヘルパー関数を読み込み
@@ -21,7 +22,7 @@ class AiTrendInsightHelperTest extends TestCase
     {
         $chat = ['revolutionary_potential' => 'breakthrough'];
         
-        $result = getAiInsightText($chat);
+        $result = AiTrendInsightHelper::generateInsightText($chat);
         
         $this->assertStringContainsString('業界を変革する可能性', $result);
         $this->assertStringContainsString('突破口的コミュニティ', $result);
@@ -34,7 +35,7 @@ class AiTrendInsightHelperTest extends TestCase
     {
         $chat = ['revolutionary_potential' => 'disruptive'];
         
-        $result = getAiInsightText($chat);
+        $result = AiTrendInsightHelper::generateInsightText($chat);
         
         $this->assertStringContainsString('破壊的革新', $result);
     }
@@ -46,7 +47,7 @@ class AiTrendInsightHelperTest extends TestCase
     {
         $chat = ['revolutionary_potential' => 'innovative'];
         
-        $result = getAiInsightText($chat);
+        $result = AiTrendInsightHelper::generateInsightText($chat);
         
         $this->assertStringContainsString('革新的トピック', $result);
     }
@@ -58,7 +59,7 @@ class AiTrendInsightHelperTest extends TestCase
     {
         $chat = ['revolutionary_potential' => 'emerging'];
         
-        $result = getAiInsightText($chat);
+        $result = AiTrendInsightHelper::generateInsightText($chat);
         
         $this->assertStringContainsString('急成長が期待', $result);
     }
@@ -70,7 +71,7 @@ class AiTrendInsightHelperTest extends TestCase
     {
         $chat = ['growth_acceleration_pattern' => 'hyper_acceleration'];
         
-        $result = getAiInsightText($chat);
+        $result = AiTrendInsightHelper::generateInsightText($chat);
         
         $this->assertStringContainsString('異常な成長加速度', $result);
     }
@@ -82,7 +83,7 @@ class AiTrendInsightHelperTest extends TestCase
     {
         $chat = ['growth_acceleration_pattern' => 'strong_acceleration'];
         
-        $result = getAiInsightText($chat);
+        $result = AiTrendInsightHelper::generateInsightText($chat);
         
         $this->assertStringContainsString('強い成長加速傾向', $result);
     }
@@ -94,7 +95,7 @@ class AiTrendInsightHelperTest extends TestCase
     {
         $chat = ['growth_acceleration_pattern' => 'steady'];
         
-        $result = getAiInsightText($chat);
+        $result = AiTrendInsightHelper::generateInsightText($chat);
         
         $this->assertStringContainsString('安定した成長パターン', $result);
     }
@@ -113,7 +114,7 @@ class AiTrendInsightHelperTest extends TestCase
         
         foreach ($testCases as $stage => $expectedText) {
             $chat = ['lifecycle_stage' => $stage];
-            $result = getAiInsightText($chat);
+            $result = AiTrendInsightHelper::generateInsightText($chat);
             $this->assertStringContainsString($expectedText, $result);
         }
     }
@@ -133,7 +134,7 @@ class AiTrendInsightHelperTest extends TestCase
         
         foreach ($testCases as $trend => $expectedText) {
             $chat = ['topic_trend_classification' => $trend];
-            $result = getAiInsightText($chat);
+            $result = AiTrendInsightHelper::generateInsightText($chat);
             $this->assertStringContainsString($expectedText, $result);
         }
     }
@@ -145,7 +146,7 @@ class AiTrendInsightHelperTest extends TestCase
     {
         $chat = ['uniqueness_quotient' => 0.8];
         
-        $result = getAiInsightText($chat);
+        $result = AiTrendInsightHelper::generateInsightText($chat);
         
         $this->assertStringContainsString('独自性の高い', $result);
     }
@@ -164,7 +165,7 @@ class AiTrendInsightHelperTest extends TestCase
         
         foreach ($testCases as $testCase) {
             $chat = ['growth_amount' => $testCase['growth_amount']];
-            $result = getAiInsightText($chat);
+            $result = AiTrendInsightHelper::generateInsightText($chat);
             $this->assertStringContainsString($testCase['expected'], $result);
         }
     }
@@ -176,7 +177,7 @@ class AiTrendInsightHelperTest extends TestCase
     {
         $chat = ['week_growth_amount' => 1200];
         
-        $result = getAiInsightText($chat);
+        $result = AiTrendInsightHelper::generateInsightText($chat);
         
         $this->assertStringContainsString('急激な成長により', $result);
     }
@@ -188,7 +189,7 @@ class AiTrendInsightHelperTest extends TestCase
     {
         $chat = [];
         
-        $result = getAiInsightText($chat);
+        $result = AiTrendInsightHelper::generateInsightText($chat);
         
         $this->assertEquals('AI分析により特別な価値を持つと判定', $result);
     }
@@ -210,7 +211,7 @@ class AiTrendInsightHelperTest extends TestCase
         ];
         
         foreach ($testCases as $input => $expected) {
-            $this->assertEquals($expected, getPotentialLabel($input));
+            $this->assertEquals($expected, AiTrendInsightHelper::getPotentialLabel($input));
         }
     }
     
@@ -226,7 +227,7 @@ class AiTrendInsightHelperTest extends TestCase
             'lifecycle_stage' => 'viral_birth'
         ];
         
-        $result = getAiInsightText($chat);
+        $result = AiTrendInsightHelper::generateInsightText($chat);
         
         // breakthrough が最優先で選ばれることを確認
         $this->assertStringContainsString('業界を変革する可能性', $result);
@@ -247,7 +248,7 @@ class AiTrendInsightHelperTest extends TestCase
             'growth_amount' => 1000
         ];
         
-        $result = getAiInsightText($chat);
+        $result = AiTrendInsightHelper::generateInsightText($chat);
         
         // 最初に該当する insight（revolutionary_potential）が使用されることを確認
         $this->assertStringContainsString('革新的トピック', $result);

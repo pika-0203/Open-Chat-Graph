@@ -1,9 +1,7 @@
 <?php
 
 use App\Services\AiTrend\AiTrendDataDto;
-
-// ヘルパー関数を読み込み
-require_once __DIR__ . '/../../Services/AiTrend/Helpers/ai_trend_insight_helper.php';
+use App\Services\AiTrend\Helpers\AiTrendInsightHelper;
 
 /** @var AiTrendDataDto $aiTrendData */
 $risingChats = $aiTrendData->risingChats;
@@ -224,7 +222,7 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                                 </div>
                             <?php else: ?>
                                 <div class="ai-insight">
-                                    🔥 <?php echo getAiInsightText($chat) ?>
+                                    🔥 <?php echo AiTrendInsightHelper::generateInsightText($chat) ?>
                                 </div>
                             <?php endif ?>
                             
@@ -234,7 +232,7 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                                     AI分析スコア: <strong><?php echo $chat['ai_insight_score'] ?>点</strong>
                                     <?php if (!empty($chat['growth_potential']) || !empty($chat['revolutionary_potential'])): ?>
                                         | 成長性: <span class="potential-<?php echo $chat['growth_potential'] ?? $chat['revolutionary_potential'] ?>">
-                                            <?php echo getPotentialLabel($chat['growth_potential'] ?? $chat['revolutionary_potential'] ?? '') ?>
+                                            <?php echo AiTrendInsightHelper::generateInsightText($chat['growth_potential'] ?? $chat['revolutionary_potential'] ?? '') ?>
                                         </span>
                                     <?php endif ?>
                                 </div>
