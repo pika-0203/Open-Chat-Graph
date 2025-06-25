@@ -278,34 +278,6 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
         </div>
     <?php endif ?>
 
-    <!-- AI分析結果 -->
-    <?php if (!empty($aiAnalysis->alerts)): ?>
-        <div class="trend-card">
-            <h3 class="section-title">🤖 AI分析結果</h3>
-            
-            <?php foreach ($aiAnalysis->alerts as $alert): ?>
-                <?php 
-                $alertClass = 'alert-info';
-                if (isset($alert['level'])) {
-                    $alertClass = 'alert-' . $alert['level'];
-                }
-                ?>
-                <div class="alert-item <?php echo $alertClass ?>">
-                    <span style="font-size: 20px;"><?php echo $alert['icon'] ?? '💡' ?></span>
-                    <div>
-                        <h4 style="font-weight: 600; margin: 0 0 8px 0;">
-                            <?php echo htmlspecialchars($alert['title'] ?? '') ?>
-                        </h4>
-                        <p style="margin: 0; line-height: 1.5;">
-                            <?php echo htmlspecialchars($alert['message'] ?? '') ?>
-                        </p>
-                    </div>
-                </div>
-            <?php endforeach ?>
-        </div>
-    <?php endif ?>
-
-
     <!-- トレンドタグ -->
     <?php if (!empty($tagTrends)): ?>
         <div class="trend-card">
