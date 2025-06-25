@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\AiTrend;
 
+use App\Config\AppConfig;
 use App\Config\SecretsConfig;
 use App\Services\AiTrend\Repository\AiTrendAnalysisRepository;
 use OpenAI;
@@ -65,7 +66,7 @@ class OpenAiLlmService
         $prompt = $this->buildRisingChatsPrompt($trendData, $candidates);
         $response = $this->callOpenAiWithRetry($prompt);
         $analysis = $this->parseAiResponse($response);
-        
+
         return $analysis['rising_chats'] ?? [];
     }
 
@@ -77,7 +78,7 @@ class OpenAiLlmService
         $prompt = $this->buildTrendTagsPrompt($tagTrendsData);
         $response = $this->callOpenAiWithRetry($prompt);
         $analysis = $this->parseAiResponse($response);
-        
+
         return $analysis['trend_tags'] ?? [];
     }
 
@@ -90,7 +91,7 @@ class OpenAiLlmService
         $prompt = $this->buildSummaryPrompt($trendData, $risingChats, $trendTags);
         $response = $this->callOpenAiWithRetry($prompt);
         $analysis = $this->parseAiResponse($response);
-        
+
         return $analysis['summary'] ?? '';
     }
 
@@ -125,7 +126,7 @@ class OpenAiLlmService
 {$candidatesJson}
 
 ## 📋 あなたのミッション
-上記の候補チャットから、**既存のランキングでは発見できない真に価値ある3件**を厳選してください。
+上記の候補チャットから、**既存のランキングでは発見できない真に価値ある5件**を厳選してください。
 
 ### 🎯 チャット選出基準（優先順位順）
 1. **独自性**: 単純な人数増加ランキングでは上位に来ない隠れた価値
@@ -399,28 +400,8 @@ class OpenAiLlmService
 
     private function getCategoryName($categoryId): string
     {
-        $categories = [
-            1 => '学校',
-            2 => '社会人',
-            3 => '大学生',
-            7 => '同世代',
-            8 => '地域',
-            16 => 'スポーツ',
-            17 => 'ゲーム',
-            22 => 'アニメ・漫画',
-            23 => 'ホビー',
-            24 => 'ライフスタイル',
-            25 => 'エンタメ',
-            26 => '芸能人・有名人',
-            28 => '勉強・読書',
-            29 => '音楽',
-            30 => 'ファン',
-            34 => 'キャラクター',
-            35 => 'コミュニティ',
-            40 => 'アプリ・ウェブサービス',
-            45 => 'その他'
-        ];
-        return $categories[$categoryId] ?? 'その他';
+        $categories = array_flip(AppConfig::OPEN_CHAT_CATEGORY['']);
+        return $categoryId ? ($categories[$categoryId] ?? 'その他') : '未分類';
     }
 
     /**
@@ -582,11 +563,11 @@ class OpenAiLlmService
      * 分割API分析結果から統合結果を構築
      */
     private function buildResultFromSeparateAnalysis(
-        array $basicData, 
-        array $risingChats, 
-        array $trendTags, 
-        array $unused, 
-        string $summary, 
+        array $basicData,
+        array $risingChats,
+        array $trendTags,
+        array $unused,
+        string $summary,
         array $trendData
     ): AiTrendDataDto {
         // AI分析結果をAiAnalysisDtoに変換
@@ -594,7 +575,7 @@ class OpenAiLlmService
 
         // rising_chatsが空の場合は基本データを使用
         $finalRisingChats = !empty($risingChats) ? $risingChats : $basicData['rising_chats'];
-        
+
         // trend_tagsが空の場合は基本データを使用
         $finalTrendTags = !empty($trendTags) ? $trendTags : $basicData['tag_trends'];
 
@@ -604,5 +585,4 @@ class OpenAiLlmService
             $aiAnalysisDto
         );
     }
-
 }

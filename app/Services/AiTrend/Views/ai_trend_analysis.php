@@ -199,10 +199,10 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
         <div class="trend-card">
             <h3 class="section-title">🧠 AI分析注目トピックチャット</h3>
             <p style="color: #6b7280; font-size: 14px; margin-bottom: 16px;">
-                既存ランキングでは発見できない、6つの高度分析手法とAI戦略判断により厳選された3つの隠れた成長機会
+                既存ランキングでは発見できない、6つの高度分析手法とAI戦略判断により厳選された5つの隠れた成長機会
             </p>
             <div class="chat-list">
-                <?php foreach (array_slice($risingChats, 0, 3) as $index => $chat): ?>
+                <?php foreach (array_slice($risingChats, 0, 5) as $index => $chat): ?>
                     <?php if (!isset($chat['id']) || !isset($chat['name'])) continue; ?>
                     <div class="chat-item">
                         <div class="chat-rank"><?php echo (int)$index + 1 ?></div>
@@ -233,7 +233,18 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                             <!-- 分析ソース表示 -->
                             <?php if (!empty($chat['selection_source'])): ?>
                                 <div class="ai-insight" style="background: #f3f4f6; color: #4b5563; margin-top: 4px;">
-                                    📊 分析手法: <?php echo htmlspecialchars($chat['analysis_reason'] ?? $chat['selection_source']) ?>
+                                    📊 分析手法: <?php 
+                                        $source = $chat['analysis_reason'] ?? $chat['selection_source'];
+                                        $sourceMap = [
+                                            'viral_pattern' => 'バイラルパターン',
+                                            'pre_viral' => 'プレバイラル',
+                                            'real_time_acceleration' => 'リアルタイムアクセル',
+                                            'anomaly' => 'アノマリー検出',
+                                            'trend_prediction' => 'トレンドプレディクション',
+                                            'low_competition_segment' => 'ローコンペティションセグメント'
+                                        ];
+                                        echo htmlspecialchars($sourceMap[$source] ?? $source);
+                                    ?>
                                 </div>
                             <?php endif ?>
                             
