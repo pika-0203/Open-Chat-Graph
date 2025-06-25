@@ -315,15 +315,11 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
             </p>
             <div class="tag-list">
                 <?php foreach (array_slice($tagTrends, 0, 15) as $tag): ?>
-                    <?php if (($tag['growth_rate_percentage'] ?? 0) >= 0): ?>
                         <div style="position: relative; display: inline-block;">
                             <a href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($tag['tag']))) ?>" 
                                class="tag-item" 
                                title="<?php echo htmlspecialchars($tag['ai_rationale'] ?? $tag['strategic_value'] ?? '') ?>">
-                                #<?php echo htmlspecialchars($tag['tag']) ?> 
-                                <?php if (($tag['growth_rate_percentage'] ?? 0) > 0): ?>
-                                    <strong>+<?php echo round((float)$tag['growth_rate_percentage'], 1) ?>%</strong>
-                                <?php endif ?>
+                                #<?php echo htmlspecialchars($tag['tag']) ?>
                                 <?php if (!empty($tag['growth_potential']) && $tag['growth_potential'] === 'high'): ?>
                                     <span style="color: #dc2626;">🔥</span>
                                 <?php elseif (!empty($tag['growth_potential']) && $tag['growth_potential'] === 'emerging'): ?>
@@ -336,7 +332,6 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                                 </div>
                             <?php endif ?>
                         </div>
-                    <?php endif ?>
                 <?php endforeach ?>
             </div>
         </div>

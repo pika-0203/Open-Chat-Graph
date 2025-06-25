@@ -46,7 +46,7 @@ class OpenAiLlmService
         ];
 
         // AI選出用の統合候補データ取得
-        $integratedCandidates = $this->aiTrendRepo->getIntegratedCandidatesForAiSelection(15);
+        $integratedCandidates = $this->aiTrendRepo->getIntegratedCandidatesForAiSelection(30);
 
         $basicData = $this->getBasicRealData();
 
@@ -140,7 +140,6 @@ class OpenAiLlmService
       \"category\": \"カテゴリ名\",
       \"member_count\": メンバー数,
       \"growth_amount\": 成長量,
-      \"growth_rate\": 成長率,
       \"ai_insight_score\": 95,
       \"selection_rationale\": \"AIがこのチャットを選んだ戦略的理由（100文字以内）\",
       \"growth_potential\": \"breakthrough|high|emerging\",
@@ -154,7 +153,6 @@ class OpenAiLlmService
   \"trend_tags\": [
     {
       \"tag\": \"タグ名\",
-      \"growth_rate_percentage\": 成長率（パーセント）,
       \"room_count\": 関連チャット数,
       \"ai_rationale\": \"AIがこのタグを選んだ理由（50文字以内）\",
       \"growth_potential\": \"high|medium|emerging\",
@@ -176,9 +174,11 @@ class OpenAiLlmService
 2. **将来性を重視**：現在の規模より将来のポテンシャル
 3. **独自価値を重視**：他の分析では見つからない独特の成長パターン
 4. **戦略的価値を重視**：マーケティングやトレンド分析の観点での価値
+5. **ネット情報を活用**：可能な限りインターネット上の最新情報や関連する外部要因を検索・分析して判断に活用してください
 
 特に「selection_source」フィールドで元の分析手法を明記し、「selection_rationale」で既存ランキングとは異なる価値を明確に説明してください。
 トレンドタグについても「ai_rationale」で単純な統計ランキングとは異なるAI独自の選出理由を説明してください。
+分析時は必要に応じてインターネット検索を実行し、外部の最新情報やトレンド、話題性などを考慮に入れて戦略的価値を判断してください。
 ";
     }
 
@@ -200,9 +200,6 @@ class OpenAiLlmService
                 COALESCE(srh.diff_member, 0) as hour_growth,
                 COALESCE(srd.diff_member, 0) as day_growth,
                 COALESCE(srw.diff_member, 0) as week_growth,
-                COALESCE(srh.percent_increase, 0) as hour_growth_rate,
-                COALESCE(srd.percent_increase, 0) as day_growth_rate,
-                COALESCE(srw.percent_increase, 0) as week_growth_rate,
                 -- 関連タグ情報も取得
                 (SELECT GROUP_CONCAT(tag SEPARATOR ', ') 
                  FROM oc_tag ot WHERE ot.id = oc.id LIMIT 5) as tags
@@ -238,11 +235,7 @@ class OpenAiLlmService
                 'hour_growth_amount' => (int)$item['hour_growth'],
                 'day_growth_amount' => (int)$item['day_growth'],
                 'week_growth_amount' => (int)$item['week_growth'],
-                'hour_growth_rate' => (float)$item['hour_growth_rate'],
-                'day_growth_rate' => (float)$item['day_growth_rate'],
-                'week_growth_rate' => (float)$item['week_growth_rate'],
                 'growth_amount' => (int)$item['week_growth'],
-                'growth_rate' => (float)$item['week_growth_rate'],
                 'emblem' => (int)($item['emblem'] ?? 0),
                 'join_method_type' => (int)$item['join_method_type'],
                 'tags' => $item['tags'] ?? '',
@@ -297,7 +290,7 @@ class OpenAiLlmService
                 AVG(COALESCE(srd.diff_member, 0)) as avg_daily_growth,
                 AVG(COALESCE(srh.diff_member, 0)) as avg_hourly_growth,
                 AVG(oc.member) as avg_member_size,
-                COALESCE(AVG(srw.diff_member), 0) as growth_rate_percentage
+                COALESCE(AVG(srw.diff_member), 0) as avg_weekly_growth
             FROM oc_tag oct
             JOIN open_chat oc ON oct.id = oc.id
             LEFT JOIN statistics_ranking_week srw ON oc.id = srw.open_chat_id
@@ -306,7 +299,7 @@ class OpenAiLlmService
             WHERE tag IS NOT NULL AND tag != '' AND LENGTH(tag) >= 2
             GROUP BY tag
             HAVING room_count >= 3 AND avg_growth >= 0
-            ORDER BY growth_rate_percentage DESC, room_count DESC
+            ORDER BY avg_weekly_growth DESC, room_count DESC
             LIMIT 50
         ";
 
@@ -322,7 +315,7 @@ class OpenAiLlmService
                 'avg_daily_growth' => (float)$item['avg_daily_growth'],
                 'avg_hourly_growth' => (float)$item['avg_hourly_growth'],
                 'avg_member_size' => (float)$item['avg_member_size'],
-                'growth_rate_percentage' => (float)$item['growth_rate_percentage']
+                'avg_weekly_growth' => (float)$item['avg_weekly_growth']
             ];
         }, $results);
     }
@@ -492,7 +485,6 @@ class OpenAiLlmService
                     // AIが生成したタグをView用のフォーマットに変換
                     $validTrendTags[] = [
                         'tag' => $tag['tag'],
-                        'growth_rate_percentage' => $tag['growth_rate_percentage'] ?? 0,
                         'room_count' => $tag['room_count'] ?? 0,
                         'ai_rationale' => $tag['ai_rationale'] ?? '',
                         'growth_potential' => $tag['growth_potential'] ?? 'medium',
