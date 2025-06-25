@@ -13,7 +13,7 @@
         <h3 class="unset">
           <a class="openchat-item-title unset" href="<?php echo url('/oc/' . $oc['id'] . "?bar=ranking&limit={$timeFrame}") ?>"><?php if (($oc['emblem'] ?? 0) === 1) : ?><span class="super-icon sp"></span><?php elseif (($oc['emblem'] ?? 0) === 2) : ?><span class="super-icon official"></span><?php endif ?><?php if (($oc['join_method_type'] ?? 0) === 2) : ?><span class="lock-icon"></span><?php endif ?><span><?php echo $oc['name'] ?></span></a>
         </h3>
-        <p class="openchat-item-desc unset" style="color: #777;"><?php echo $oc['description'] ?></p>
+        <p class="openchat-item-desc unset" style="color: #777;"><?php echo cleanDescription($oc['description']) ?></p>
         <footer class="openchat-item-lower-outer" style="gap: 0;">
           <div class="openchat-item-lower unset" style="color: #777; margin-top: 1px;">
             <span class="member-count">

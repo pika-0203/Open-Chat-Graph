@@ -620,3 +620,14 @@ function sprintfT(string $format, string|int ...$values): string
     $text = t($format);
     return sprintf($text, ...$values);
 }
+
+/**
+ * Remove hashtags and extra spaces from description text.
+ *
+ * @param string $description The input description string.
+ * @return string The cleaned description string.
+ */
+function cleanDescription(string $description): string
+{
+    return preg_replace(['/\s*#\S*\s*/', '/\s{2,}/'], ['', ' '], trim($description));
+}

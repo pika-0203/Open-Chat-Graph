@@ -10,7 +10,7 @@ class OcPageMeta
     {
         $name = $oc['name'];
 
-        $desc = $oc['description'];
+        $desc = cleanDescription($oc['description']);
 
         return meta()
             ->setTitle($name)
