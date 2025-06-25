@@ -601,6 +601,39 @@ class AiTrendAnalysisRepository
             }
         }
 
+        // 7. 長期トレンド分析（SQLite統計データ活用）
+        $longTermTrends = $this->getLongTermTrendAnalysis($limit);
+        foreach ($longTermTrends as $ltData) {
+            if (!isset($seenIds[$ltData['id']])) {
+                $ltData['selection_source'] = 'long_term_trend';
+                $ltData['analysis_reason'] = '6ヶ月間の継続的な成長と高い一貫性を持つ長期安定成長株';
+                $candidates[] = $ltData;
+                $seenIds[$ltData['id']] = true;
+            }
+        }
+
+        // 8. 季節性・周期性パターン分析
+        $seasonalPatterns = $this->getSeasonalPatternAnalysis($limit);
+        foreach ($seasonalPatterns as $spData) {
+            if (!isset($seenIds[$spData['id']])) {
+                $spData['selection_source'] = 'seasonal_pattern';
+                $spData['analysis_reason'] = '規則的な成長パターンと予測可能な季節性を持つ安定成長株';
+                $candidates[] = $spData;
+                $seenIds[$spData['id']] = true;
+            }
+        }
+
+        // 9. 復活・回復パターン分析
+        $recoveryPatterns = $this->getRecoveryPatternAnalysis($limit);
+        foreach ($recoveryPatterns as $rpData) {
+            if (!isset($seenIds[$rpData['id']])) {
+                $rpData['selection_source'] = 'recovery_pattern';
+                $rpData['analysis_reason'] = '停滞期を経て再び成長に転じた復活・回復パターンの注目株';
+                $candidates[] = $rpData;
+                $seenIds[$rpData['id']] = true;
+            }
+        }
+
         // スコアリングして並び替え
         foreach ($candidates as &$candidate) {
             // 総合スコアを計算（各指標を正規化して加重平均）
@@ -613,6 +646,366 @@ class AiTrendAnalysisRepository
         });
 
         return $candidates;
+    }
+
+    /**
+     * 長期トレンド分析（SQLite統計データ活用）
+     * 数年分の日別人数データを分析して長期的な成長パターンを発見
+     */
+    public function getLongTermTrendAnalysis(int $limit = 10): array
+    {
+        \App\Models\SQLite\SQLiteStatistics::connect();
+        
+        $query = "
+            WITH monthly_growth AS (
+                SELECT 
+                    open_chat_id,
+                    strftime('%Y-%m', date) as month,
+                    MIN(member) as month_start_members,
+                    MAX(member) as month_end_members,
+                    MAX(member) - MIN(member) as monthly_growth,
+                    COUNT(*) as days_recorded
+                FROM statistics 
+                WHERE date >= date('now', '-6 months')
+                GROUP BY open_chat_id, strftime('%Y-%m', date)
+                HAVING days_recorded >= 5
+            ),
+            chat_trend_metrics AS (
+                SELECT 
+                    open_chat_id,
+                    COUNT(*) as months_active,
+                    AVG(monthly_growth) as avg_monthly_growth,
+                    SUM(monthly_growth) as total_6month_growth,
+                    MAX(monthly_growth) as peak_monthly_growth,
+                    MIN(monthly_growth) as min_monthly_growth,
+                    -- 成長の一貫性（変動係数の逆数）
+                    CASE 
+                        WHEN AVG(monthly_growth) > 0
+                        THEN (AVG(monthly_growth) / (
+                            SQRT(AVG(monthly_growth * monthly_growth) - AVG(monthly_growth) * AVG(monthly_growth)) + 1
+                        ))
+                        ELSE 0 
+                    END as growth_consistency_score,
+                    -- 成長加速度（直近3か月 vs 前3か月）
+                    (SELECT AVG(mg.monthly_growth) 
+                     FROM monthly_growth mg 
+                     WHERE mg.open_chat_id = monthly_growth.open_chat_id 
+                       AND mg.month >= date('now', '-3 months', 'start of month')
+                    ) - 
+                    (SELECT AVG(mg.monthly_growth) 
+                     FROM monthly_growth mg 
+                     WHERE mg.open_chat_id = monthly_growth.open_chat_id 
+                       AND mg.month < date('now', '-3 months', 'start of month')
+                       AND mg.month >= date('now', '-6 months', 'start of month')
+                    ) as acceleration_trend
+                FROM monthly_growth
+                GROUP BY open_chat_id
+                HAVING months_active >= 3 AND avg_monthly_growth > 0
+            )
+            SELECT 
+                ctm.open_chat_id,
+                ctm.months_active,
+                ROUND(ctm.avg_monthly_growth, 2) as avg_monthly_growth,
+                ctm.total_6month_growth,
+                ctm.peak_monthly_growth,
+                ctm.min_monthly_growth,
+                ROUND(ctm.growth_consistency_score, 3) as consistency_score,
+                ROUND(COALESCE(ctm.acceleration_trend, 0), 2) as acceleration_trend,
+                -- 最新データ取得
+                (SELECT member FROM statistics s WHERE s.open_chat_id = ctm.open_chat_id ORDER BY date DESC LIMIT 1) as current_members,
+                (SELECT date FROM statistics s WHERE s.open_chat_id = ctm.open_chat_id ORDER BY date DESC LIMIT 1) as latest_date,
+                -- 長期成長スコア計算
+                ROUND(
+                    (ctm.avg_monthly_growth * 0.4 + 
+                     ctm.growth_consistency_score * 30 + 
+                     CASE WHEN ctm.acceleration_trend > 0 THEN ctm.acceleration_trend ELSE 0 END * 0.3 +
+                     (ctm.total_6month_growth / 6.0) * 0.2) / 
+                    LOG(CASE WHEN (SELECT member FROM statistics s WHERE s.open_chat_id = ctm.open_chat_id ORDER BY date DESC LIMIT 1) > 10 THEN (SELECT member FROM statistics s WHERE s.open_chat_id = ctm.open_chat_id ORDER BY date DESC LIMIT 1) ELSE 10 END), 2
+                ) as long_term_potential_score
+            FROM chat_trend_metrics ctm
+            WHERE ctm.avg_monthly_growth > 5 
+              AND ctm.growth_consistency_score > 0.5
+              AND (SELECT member FROM statistics s WHERE s.open_chat_id = ctm.open_chat_id ORDER BY date DESC LIMIT 1) BETWEEN 50 AND 100000
+            ORDER BY long_term_potential_score DESC, acceleration_trend DESC
+            LIMIT :limit
+        ";
+
+        $stmt = \App\Models\SQLite\SQLiteStatistics::$pdo->prepare($query);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+        $sqliteResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        // SQLiteの結果をMySQLデータと統合
+        $finalResults = [];
+        foreach ($sqliteResults as $sqliteData) {
+            // MySQLから詳細データを取得
+            $mysqlQuery = "
+                SELECT 
+                    oc.id,
+                    oc.name,
+                    oc.member,
+                    oc.category,
+                    LEFT(oc.description, 30) as description,
+                    COALESCE(srw.diff_member, 0) as week_growth,
+                    COALESCE(srd.diff_member, 0) as day_growth,
+                    COALESCE(srh.diff_member, 0) as hour_growth
+                FROM open_chat oc
+                LEFT JOIN statistics_ranking_week srw ON oc.id = srw.open_chat_id
+                LEFT JOIN statistics_ranking_day srd ON oc.id = srd.open_chat_id
+                LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
+                WHERE oc.id = :id
+            ";
+            
+            $mysqlData = DB::fetchAll($mysqlQuery, ['id' => $sqliteData['open_chat_id']]);
+            
+            if (!empty($mysqlData)) {
+                $merged = array_merge($mysqlData[0], $sqliteData);
+                $merged['id'] = $merged['open_chat_id']; // IDフィールドの統一
+                $finalResults[] = $merged;
+            }
+        }
+
+        return $finalResults;
+    }
+
+    /**
+     * 季節性・周期性パターン分析（SQLite統計データ活用）
+     * 年間を通じた成長パターンの発見
+     */
+    public function getSeasonalPatternAnalysis(int $limit = 8): array
+    {
+        \App\Models\SQLite\SQLiteStatistics::connect();
+        
+        $query = "
+            WITH weekly_stats AS (
+                SELECT 
+                    open_chat_id,
+                    strftime('%Y-%W', date) as year_week,
+                    strftime('%w', date) as day_of_week,
+                    AVG(member) as avg_weekly_members,
+                    MAX(member) - MIN(member) as weekly_growth
+                FROM statistics 
+                WHERE date >= date('now', '-12 months')
+                GROUP BY open_chat_id, strftime('%Y-%W', date)
+                HAVING COUNT(*) >= 3
+            ),
+            seasonal_metrics AS (
+                SELECT 
+                    open_chat_id,
+                    COUNT(*) as weeks_recorded,
+                    AVG(weekly_growth) as avg_weekly_growth,
+                    -- 季節性指標（週単位の変動パターン）
+                    MAX(weekly_growth) - MIN(weekly_growth) as growth_volatility,
+                    -- 成長の規則性（標準偏差）
+                    CASE 
+                        WHEN COUNT(*) > 10
+                        THEN SQRT(AVG(weekly_growth * weekly_growth) - AVG(weekly_growth) * AVG(weekly_growth))
+                        ELSE 999 
+                    END as growth_volatility_stddev,
+                    -- 直近の勢い
+                    (SELECT AVG(ws.weekly_growth) 
+                     FROM weekly_stats ws 
+                     WHERE ws.open_chat_id = weekly_stats.open_chat_id 
+                       AND ws.year_week >= strftime('%Y-%W', date('now', '-4 weeks'))
+                    ) as recent_4week_avg_growth
+                FROM weekly_stats
+                GROUP BY open_chat_id
+                HAVING weeks_recorded >= 8 AND avg_weekly_growth > 1
+            )
+            SELECT 
+                sm.open_chat_id,
+                sm.weeks_recorded,
+                ROUND(sm.avg_weekly_growth, 2) as avg_weekly_growth,
+                ROUND(sm.growth_volatility, 2) as growth_volatility,
+                ROUND(sm.growth_volatility_stddev, 2) as volatility_stddev,
+                ROUND(COALESCE(sm.recent_4week_avg_growth, 0), 2) as recent_momentum,
+                -- 現在の状況取得
+                (SELECT member FROM statistics s WHERE s.open_chat_id = sm.open_chat_id ORDER BY date DESC LIMIT 1) as current_members,
+                -- 季節性パターンスコア
+                ROUND(
+                    (sm.avg_weekly_growth * 2.0 + 
+                     GREATEST(sm.recent_4week_avg_growth, 0) * 1.5 +
+                     (CASE WHEN sm.growth_volatility_stddev < 10 THEN 15 ELSE 5 END)) / 
+                    LOG(GREATEST((SELECT member FROM statistics s WHERE s.open_chat_id = sm.open_chat_id ORDER BY date DESC LIMIT 1), 10)), 2
+                ) as seasonal_pattern_score,
+                -- パターン分類
+                CASE 
+                    WHEN sm.recent_4week_avg_growth > sm.avg_weekly_growth * 1.5 THEN 'accelerating'
+                    WHEN sm.growth_volatility_stddev < 5 THEN 'stable_growth'
+                    WHEN sm.growth_volatility > 50 THEN 'volatile_seasonal'
+                    ELSE 'regular_pattern'
+                END as pattern_type
+            FROM seasonal_metrics sm
+            WHERE sm.avg_weekly_growth > 2
+              AND sm.growth_volatility_stddev < 50
+              AND (SELECT member FROM statistics s WHERE s.open_chat_id = sm.open_chat_id ORDER BY date DESC LIMIT 1) BETWEEN 30 AND 50000
+            ORDER BY seasonal_pattern_score DESC, recent_momentum DESC
+            LIMIT :limit
+        ";
+
+        $stmt = \App\Models\SQLite\SQLiteStatistics::$pdo->prepare($query);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+        $sqliteResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        // SQLiteの結果をMySQLデータと統合
+        $finalResults = [];
+        foreach ($sqliteResults as $sqliteData) {
+            // MySQLから詳細データを取得
+            $mysqlQuery = "
+                SELECT 
+                    oc.id,
+                    oc.name,
+                    oc.member,
+                    oc.category,
+                    LEFT(oc.description, 30) as description,
+                    COALESCE(srw.diff_member, 0) as week_growth,
+                    COALESCE(srd.diff_member, 0) as day_growth,
+                    COALESCE(srh.diff_member, 0) as hour_growth
+                FROM open_chat oc
+                LEFT JOIN statistics_ranking_week srw ON oc.id = srw.open_chat_id
+                LEFT JOIN statistics_ranking_day srd ON oc.id = srd.open_chat_id
+                LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
+                WHERE oc.id = :id
+            ";
+            
+            $mysqlData = DB::fetchAll($mysqlQuery, ['id' => $sqliteData['open_chat_id']]);
+            
+            if (!empty($mysqlData)) {
+                $merged = array_merge($mysqlData[0], $sqliteData);
+                $merged['id'] = $merged['open_chat_id']; // IDフィールドの統一
+                $finalResults[] = $merged;
+            }
+        }
+
+        return $finalResults;
+    }
+
+    /**
+     * 復活・回復パターン分析（SQLite統計データ活用）
+     * 一時的に停滞したが再び成長に転じたチャットの発見
+     */
+    public function getRecoveryPatternAnalysis(int $limit = 6): array
+    {
+        \App\Models\SQLite\SQLiteStatistics::connect();
+        
+        $query = "
+            WITH daily_changes AS (
+                SELECT 
+                    open_chat_id,
+                    date,
+                    member,
+                    LAG(member, 1) OVER (PARTITION BY open_chat_id ORDER BY date) as prev_member,
+                    member - LAG(member, 1) OVER (PARTITION BY open_chat_id ORDER BY date) as daily_change
+                FROM statistics 
+                WHERE date >= date('now', '-90 days')
+                ORDER BY open_chat_id, date
+            ),
+            recovery_analysis AS (
+                SELECT 
+                    open_chat_id,
+                    COUNT(*) as total_days,
+                    COUNT(CASE WHEN daily_change > 0 THEN 1 END) as growth_days,
+                    COUNT(CASE WHEN daily_change < 0 THEN 1 END) as decline_days,
+                    COUNT(CASE WHEN daily_change = 0 THEN 1 END) as stable_days,
+                    AVG(daily_change) as avg_daily_change,
+                    SUM(CASE WHEN daily_change > 0 THEN daily_change ELSE 0 END) as total_growth,
+                    SUM(CASE WHEN daily_change < 0 THEN ABS(daily_change) ELSE 0 END) as total_decline,
+                    MAX(member) as peak_members,
+                    MIN(member) as lowest_members,
+                    -- 直近2週間の動向
+                    (SELECT AVG(daily_change) 
+                     FROM daily_changes dc2 
+                     WHERE dc2.open_chat_id = daily_changes.open_chat_id 
+                       AND dc2.date >= date('now', '-14 days')
+                       AND dc2.daily_change IS NOT NULL
+                    ) as recent_2week_avg_change,
+                    -- 停滞期間の特定
+                    (SELECT COUNT(*)
+                     FROM daily_changes dc3
+                     WHERE dc3.open_chat_id = daily_changes.open_chat_id
+                       AND dc3.date BETWEEN date('now', '-60 days') AND date('now', '-30 days')
+                       AND ABS(dc3.daily_change) <= 1
+                    ) as stagnation_period_days
+                FROM daily_changes
+                WHERE daily_change IS NOT NULL
+                GROUP BY open_chat_id
+                HAVING total_days >= 30
+            )
+            SELECT 
+                ra.open_chat_id,
+                ra.total_days,
+                ra.growth_days,
+                ra.decline_days,
+                ra.stable_days,
+                ROUND(ra.avg_daily_change, 2) as avg_daily_change,
+                ra.total_growth,
+                ra.total_decline,
+                ra.peak_members,
+                ra.lowest_members,
+                ROUND(COALESCE(ra.recent_2week_avg_change, 0), 2) as recent_momentum,
+                ra.stagnation_period_days,
+                -- 現在のメンバー数
+                (SELECT member FROM statistics s WHERE s.open_chat_id = ra.open_chat_id ORDER BY date DESC LIMIT 1) as current_members,
+                -- 回復パターンスコア
+                ROUND(
+                    (GREATEST(ra.recent_2week_avg_change, 0) * 5.0 +
+                     (ra.growth_days / CAST(ra.total_days AS FLOAT)) * 20.0 +
+                     (ra.total_growth / (ra.total_decline + 1)) * 10.0 +
+                     (CASE WHEN ra.stagnation_period_days > 10 AND ra.recent_2week_avg_change > 1 THEN 25 ELSE 0 END)) / 
+                    LOG(GREATEST((SELECT member FROM statistics s WHERE s.open_chat_id = ra.open_chat_id ORDER BY date DESC LIMIT 1), 10)), 2
+                ) as recovery_potential_score,
+                -- 回復パターンの種類
+                CASE 
+                    WHEN ra.recent_2week_avg_change > 2 AND ra.stagnation_period_days > 15 THEN 'strong_recovery'
+                    WHEN ra.recent_2week_avg_change > 0.5 AND ra.total_growth > ra.total_decline * 2 THEN 'steady_recovery' 
+                    WHEN ra.growth_days > ra.decline_days * 1.5 THEN 'consistent_grower'
+                    ELSE 'potential_recovery'
+                END as recovery_pattern_type
+            FROM recovery_analysis ra
+            WHERE ra.avg_daily_change > -0.5  -- 大幅な衰退は除外
+              AND ra.recent_2week_avg_change > 0  -- 直近は成長している
+              AND (SELECT member FROM statistics s WHERE s.open_chat_id = ra.open_chat_id ORDER BY date DESC LIMIT 1) BETWEEN 50 AND 20000
+            ORDER BY recovery_potential_score DESC, recent_momentum DESC
+            LIMIT :limit
+        ";
+
+        $stmt = \App\Models\SQLite\SQLiteStatistics::$pdo->prepare($query);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+        $sqliteResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        // SQLiteの結果をMySQLデータと統合
+        $finalResults = [];
+        foreach ($sqliteResults as $sqliteData) {
+            // MySQLから詳細データを取得
+            $mysqlQuery = "
+                SELECT 
+                    oc.id,
+                    oc.name,
+                    oc.member,
+                    oc.category,
+                    LEFT(oc.description, 30) as description,
+                    COALESCE(srw.diff_member, 0) as week_growth,
+                    COALESCE(srd.diff_member, 0) as day_growth,
+                    COALESCE(srh.diff_member, 0) as hour_growth
+                FROM open_chat oc
+                LEFT JOIN statistics_ranking_week srw ON oc.id = srw.open_chat_id
+                LEFT JOIN statistics_ranking_day srd ON oc.id = srd.open_chat_id
+                LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
+                WHERE oc.id = :id
+            ";
+            
+            $mysqlData = DB::fetchAll($mysqlQuery, ['id' => $sqliteData['open_chat_id']]);
+            
+            if (!empty($mysqlData)) {
+                $merged = array_merge($mysqlData[0], $sqliteData);
+                $merged['id'] = $merged['open_chat_id']; // IDフィールドの統一
+                $finalResults[] = $merged;
+            }
+        }
+
+        return $finalResults;
     }
 
     /**
@@ -645,6 +1038,9 @@ class AiTrendAnalysisRepository
             'anomaly' => 2.0,
             'trend_prediction' => 1.4,
             'low_competition_segment' => 1.3,
+            'long_term_trend' => 1.7,
+            'seasonal_pattern' => 1.4,
+            'recovery_pattern' => 1.6,
             default => 1.0
         };
 
@@ -661,6 +1057,15 @@ class AiTrendAnalysisRepository
         }
         if (isset($chat['acceleration_score'])) {
             $specialScore += (float)$chat['acceleration_score'] * 0.6;
+        }
+        if (isset($chat['long_term_potential_score'])) {
+            $specialScore += (float)$chat['long_term_potential_score'] * 0.7;
+        }
+        if (isset($chat['seasonal_pattern_score'])) {
+            $specialScore += (float)$chat['seasonal_pattern_score'] * 0.5;
+        }
+        if (isset($chat['recovery_potential_score'])) {
+            $specialScore += (float)$chat['recovery_potential_score'] * 0.6;
         }
 
         // 最終スコア計算
