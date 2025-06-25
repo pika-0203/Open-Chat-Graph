@@ -337,18 +337,6 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
         </div>
     <?php endif ?>
 
-    <!-- AI洞察 -->
-    <?php if (!empty($aiAnalysis->insights)): ?>
-        <div class="trend-card">
-            <h3 class="section-title">💡 AI洞察</h3>
-            
-            <?php foreach ($aiAnalysis->insights as $insight): ?>
-                <div style="background: #f8fafc; padding: 12px; border-radius: 6px; border-left: 4px solid #3b82f6; margin-bottom: 8px;">
-                    <?php echo htmlspecialchars($insight) ?>
-                </div>
-            <?php endforeach ?>
-        </div>
-    <?php endif ?>
 
     <!-- 分析サマリー -->
     <?php if (!empty($aiAnalysis->summary)): ?>
