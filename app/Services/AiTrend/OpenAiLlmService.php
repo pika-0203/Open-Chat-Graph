@@ -161,6 +161,10 @@ class OpenAiLlmService
     {
         $dataJson = json_encode($trendData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         $candidatesJson = json_encode($candidates, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        
+        // トレンドタグ選出用の参考データを取得
+        $tagTrendsData = $this->getTagTrendsFromDatabase();
+        $tagTrendsJson = json_encode($tagTrendsData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
         return "
 # 🧠 AI分析注目トピックチャット厳選システム
@@ -183,20 +187,33 @@ class OpenAiLlmService
 以下は6つの異なる高度分析手法から抽出された候補チャットです：
 {$candidatesJson}
 
-## 📋 あなたのミッション
-上記の候補チャットから、**既存のランキングでは発見できない真に価値ある3件**を厳選してください。
+### 🏷️ 現在のタグトレンドデータ（参考情報）
+以下は現在のタグトレンドの統計データです：
+{$tagTrendsJson}
 
-### 🎯 選出基準（優先順位順）
+## 📋 あなたのミッション
+1. 上記の候補チャットから、**既存のランキングでは発見できない真に価値ある3件**を厳選してください。
+2. タグトレンドデータを分析し、**AIが戦略的に選出した真のトレンドタグ10-15個**を厳選してください。
+
+### 🎯 チャット選出基準（優先順位順）
 1. **独自性**: 単純な人数増加ランキングでは上位に来ない隠れた価値
 2. **将来性**: 現在は小規模でも爆発的成長の可能性が高い
 3. **戦略的価値**: 新規参入やマーケティングの観点で注目すべき
 4. **異常性**: 統計的に特異で分析価値の高いパターン
 5. **ニッチ機会**: 競争が少なく成長余地の大きいセグメント
 
+### 🏷️ トレンドタグ選出基準
+1. **成長性**: 単純な統計数値だけでなく、成長の質と持続性
+2. **独自性**: 誰でも思いつく一般的なタグではなく、特殊な価値を持つタグ
+3. **戦略性**: マーケティングやコミュニティ運営の観点で重要なタグ
+4. **将来性**: 現在は小さくても将来的に大きくなる可能性が高いタグ
+5. **多様性**: 様々なカテゴリやジャンルから均等に選出
+
 ### 🚫 避けるべき選出
 - 既に大規模（10,000人以上）で誰でも注目するチャット
-- 単純に週間成長数が多いだけのチャット
-- 明らかにランキング上位に来るチャット
+- 単純に週間成長数が多いだけのチャット・タグ
+- 明らかにランキング上位に来るチャット・タグ
+- 「雑談」「友達」「恋人」などの一般的すぎるタグ
 
 ## 📄 必要な出力フォーマット
 
@@ -220,13 +237,22 @@ class OpenAiLlmService
       \"url\": \"\"
     }
   ],
+  \"trend_tags\": [
+    {
+      \"tag\": \"タグ名\",
+      \"growth_rate_percentage\": 成長率（パーセント）,
+      \"room_count\": 関連チャット数,
+      \"ai_rationale\": \"AIがこのタグを選んだ理由（50文字以内）\",
+      \"growth_potential\": \"high|medium|emerging\",
+      \"strategic_value\": \"このタグの戦略的価値の説明\"
+    }
+  ],
   \"strategic_insights\": [
     \"選出の戦略的根拠1\",
     \"選出の戦略的根拠2\",
     \"選出の戦略的根拠3\"
   ],
   \"insights\": [\"分析による洞察の配列\"],
-  \"recommendations\": [\"推奨事項の配列\"],
   \"summary\": \"厳選の論理的根拠と総合分析\"
 }
 ```
@@ -238,6 +264,7 @@ class OpenAiLlmService
 4. **戦略的価値を重視**：マーケティングやトレンド分析の観点での価値
 
 特に「selection_source」フィールドで元の分析手法を明記し、「selection_rationale」で既存ランキングとは異なる価値を明確に説明してください。
+トレンドタグについても「ai_rationale」で単純な統計ランキングとは異なるAI独自の選出理由を説明してください。
 ";
     }
 
@@ -311,7 +338,7 @@ class OpenAiLlmService
 
         return [
             'rising_chats' => $risingChats,
-            'tag_trends' => $this->getTagTrends(),
+            'tag_trends' => $this->getTagTrendsFromDatabase(),
             'overall_stats' => $this->getOverallStats(),
             'category_analytics' => $this->getCategoryAnalytics()
         ];
@@ -343,7 +370,10 @@ class OpenAiLlmService
         return $categories[$categoryId] ?? 'その他';
     }
 
-    private function getTagTrends(): array
+    /**
+     * データベースからトレンドタグを取得（参考データ用）
+     */
+    private function getTagTrendsFromDatabase(): array
     {
         $query = "
             SELECT 
@@ -363,7 +393,7 @@ class OpenAiLlmService
             GROUP BY tag
             HAVING room_count >= 3 AND avg_growth >= 0
             ORDER BY growth_rate_percentage DESC, room_count DESC
-            LIMIT 30
+            LIMIT 50
         ";
 
         $stmt = \App\Models\Repositories\DB::$pdo->prepare($query);
@@ -381,6 +411,16 @@ class OpenAiLlmService
                 'growth_rate_percentage' => (float)$item['growth_rate_percentage']
             ];
         }, $results);
+    }
+
+    /**
+     * AIベースでトレンドタグを生成
+     */
+    private function getTagTrends(): array
+    {
+        // AIが生成したトレンドタグを返す（generateManagerAnalysisで生成済み）
+        // この時点では空配列を返し、実際のタグはAI分析結果から取得
+        return [];
     }
 
     private function getOverallStats(): array
@@ -505,7 +545,9 @@ class OpenAiLlmService
         if (isset($aiAnalysis['strategic_insights']) && is_array($aiAnalysis['strategic_insights'])) {
             // strategic_insights からタイトルや説明を抽出して insights 形式に変換
             foreach ($aiAnalysis['strategic_insights'] as $strategicInsight) {
-                if (isset($strategicInsight['title']) && isset($strategicInsight['description'])) {
+                if (is_string($strategicInsight)) {
+                    $insights[] = $strategicInsight;
+                } elseif (isset($strategicInsight['title']) && isset($strategicInsight['description'])) {
                     $insights[] = $strategicInsight['title'] . ': ' . $strategicInsight['description'];
                 }
             }
@@ -536,9 +578,32 @@ class OpenAiLlmService
             }
         }
 
+        // AIが生成したトレンドタグを使用、なければデータベースから取得したタグを使用
+        $tagTrends = $basicData['tag_trends'];
+        
+        if (isset($aiAnalysis['trend_tags']) && is_array($aiAnalysis['trend_tags'])) {
+            $validTrendTags = [];
+            foreach ($aiAnalysis['trend_tags'] as $tag) {
+                if (isset($tag['tag']) && !empty($tag['tag'])) {
+                    // AIが生成したタグをView用のフォーマットに変換
+                    $validTrendTags[] = [
+                        'tag' => $tag['tag'],
+                        'growth_rate_percentage' => $tag['growth_rate_percentage'] ?? 0,
+                        'room_count' => $tag['room_count'] ?? 0,
+                        'ai_rationale' => $tag['ai_rationale'] ?? '',
+                        'growth_potential' => $tag['growth_potential'] ?? 'medium',
+                        'strategic_value' => $tag['strategic_value'] ?? ''
+                    ];
+                }
+            }
+            if (!empty($validTrendTags)) {
+                $tagTrends = $validTrendTags;
+            }
+        }
+
         return new AiTrendDataDto(
             $risingChats,
-            $basicData['tag_trends'],
+            $tagTrends,
             $basicData['overall_stats'],
             $aiAnalysisDto,
             $trendData, // 解析データを履歴として保存

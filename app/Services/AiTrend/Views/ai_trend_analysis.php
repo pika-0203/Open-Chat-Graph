@@ -305,45 +305,37 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
         </div>
     <?php endif ?>
 
-    <!-- AI推奨テーマ -->
-    <?php if (!empty($aiAnalysis->recommendations)): ?>
-        <div class="trend-card">
-            <h3 class="section-title">🎯 AI推奨テーマ</h3>
-            
-            <?php foreach (array_slice($aiAnalysis->recommendations, 0, 5) as $rec): ?>
-                <div class="recommendation-item">
-                    <div class="recommendation-theme">
-                        <?php echo htmlspecialchars($rec['theme'] ?? '') ?>
-                    </div>
-                    
-                    <?php if (isset($rec['target'])): ?>
-                    <div class="recommendation-detail">
-                        <strong>ターゲット:</strong> <?php echo htmlspecialchars($rec['target']) ?>
-                    </div>
-                    <?php endif ?>
-                    
-                    <?php if (isset($rec['strategy'])): ?>
-                    <div class="recommendation-detail">
-                        <strong>戦略:</strong> <?php echo htmlspecialchars($rec['strategy']) ?>
-                    </div>
-                    <?php endif ?>
-                </div>
-            <?php endforeach ?>
-        </div>
-    <?php endif ?>
 
     <!-- トレンドタグ -->
     <?php if (!empty($tagTrends)): ?>
         <div class="trend-card">
-            <h3 class="section-title">🏷️ トレンドタグ</h3>
+            <h3 class="section-title">🏷️ AI選出トレンドタグ</h3>
+            <p style="color: #6b7280; font-size: 14px; margin-bottom: 16px;">
+                単純な統計ランキングではなく、AIが戦略的価値と将来性を分析して厳選したトレンドタグ
+            </p>
             <div class="tag-list">
                 <?php foreach (array_slice($tagTrends, 0, 15) as $tag): ?>
-                    <?php if (($tag['growth_rate_percentage'] ?? 0) > 0): ?>
-                        <a href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($tag['tag']))) ?>" 
-                           class="tag-item">
-                            #<?php echo htmlspecialchars($tag['tag']) ?> 
-                            <strong>+<?php echo round((float)$tag['growth_rate_percentage'], 1) ?>%</strong>
-                        </a>
+                    <?php if (($tag['growth_rate_percentage'] ?? 0) >= 0): ?>
+                        <div style="position: relative; display: inline-block;">
+                            <a href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($tag['tag']))) ?>" 
+                               class="tag-item" 
+                               title="<?php echo htmlspecialchars($tag['ai_rationale'] ?? $tag['strategic_value'] ?? '') ?>">
+                                #<?php echo htmlspecialchars($tag['tag']) ?> 
+                                <?php if (($tag['growth_rate_percentage'] ?? 0) > 0): ?>
+                                    <strong>+<?php echo round((float)$tag['growth_rate_percentage'], 1) ?>%</strong>
+                                <?php endif ?>
+                                <?php if (!empty($tag['growth_potential']) && $tag['growth_potential'] === 'high'): ?>
+                                    <span style="color: #dc2626;">🔥</span>
+                                <?php elseif (!empty($tag['growth_potential']) && $tag['growth_potential'] === 'emerging'): ?>
+                                    <span style="color: #059669;">💎</span>
+                                <?php endif ?>
+                            </a>
+                            <?php if (!empty($tag['ai_rationale'])): ?>
+                                <div class="ai-insight" style="position: absolute; top: 100%; left: 0; z-index: 10; width: 200px; margin-top: 4px; display: none; font-size: 12px; padding: 6px;">
+                                    🤖 <?php echo htmlspecialchars($tag['ai_rationale']) ?>
+                                </div>
+                            <?php endif ?>
+                        </div>
                     <?php endif ?>
                 <?php endforeach ?>
             </div>
