@@ -7,9 +7,6 @@ namespace App\Services\AiTrend\test;
 use App\Services\AiTrend\Helpers\AiTrendInsightHelper;
 use PHPUnit\Framework\TestCase;
 
-// ヘルパー関数を読み込み
-require_once __DIR__ . '/../Helpers/ai_trend_insight_helper.php';
-
 /**
  * AiTrendInsightHelper の単体テスト
  */

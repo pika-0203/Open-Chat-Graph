@@ -45,10 +45,13 @@ class OpenAiLlmService
             'anomalous_patterns' => $this->aiTrendRepo->getAnomalousGrowthPatterns(4)
         ];
 
+        // AI選出用の統合候補データ取得
+        $integratedCandidates = $this->aiTrendRepo->getIntegratedCandidatesForAiSelection(15);
+
         $basicData = $this->getBasicRealData();
 
-        // 高度なAI分析実行
-        $aiAnalysis = $this->performAiAnalysis($trendData);
+        // 高度なAI分析実行（候補からの厳選）
+        $aiAnalysis = $this->performAiAnalysisWithSelection($trendData, $integratedCandidates);
 
         return $this->buildResult($basicData, $aiAnalysis, $trendData);
     }
@@ -59,6 +62,18 @@ class OpenAiLlmService
     private function performAiAnalysis(array $trendData): array
     {
         $prompt = $this->buildSimpleAnalysisPrompt($trendData);
+        $response = $this->callOpenAiWithRetry($prompt);
+        $analysis = $this->parseAiResponse($response);
+
+        return $analysis;
+    }
+
+    /**
+     * 候補選出を含む高度なAI分析プロセス
+     */
+    private function performAiAnalysisWithSelection(array $trendData, array $candidates): array
+    {
+        $prompt = $this->buildSelectionAnalysisPrompt($trendData, $candidates);
         $response = $this->callOpenAiWithRetry($prompt);
         $analysis = $this->parseAiResponse($response);
 
@@ -136,6 +151,93 @@ class OpenAiLlmService
 5. 予測的分析によるアクショナブルな洞察を提供
 
 特に独自の解析指標（バイラル可能性スコア、成長加速度、市場集中度など）を活用した深い洞察を重視してください。
+";
+    }
+
+    /**
+     * 厳選チャット選出用プロンプト構築
+     */
+    private function buildSelectionAnalysisPrompt(array $trendData, array $candidates): string
+    {
+        $dataJson = json_encode($trendData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $candidatesJson = json_encode($candidates, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+        return "
+# 🧠 AI分析注目トピックチャット厳選システム
+
+## 🎯 重要な背景情報
+このサイトには既に以下の標準機能が実装されています：
+- 1時間・24時間・1週間の期間別人数増加順ランキング
+- 増加率順ランキング
+- キーワード絞り込み機能
+- 高度な表示機能とフィルタリング
+
+**重要：これらの既存機能で把握できる上位3件を表示するのは無意味です。**
+
+## 🔬 提供される解析データ
+
+### 📊 独自解析アルゴリズムの結果
+{$dataJson}
+
+### 🏆 AI選出候補チャット一覧
+以下は6つの異なる高度分析手法から抽出された候補チャットです：
+{$candidatesJson}
+
+## 📋 あなたのミッション
+上記の候補チャットから、**既存のランキングでは発見できない真に価値ある3件**を厳選してください。
+
+### 🎯 選出基準（優先順位順）
+1. **独自性**: 単純な人数増加ランキングでは上位に来ない隠れた価値
+2. **将来性**: 現在は小規模でも爆発的成長の可能性が高い
+3. **戦略的価値**: 新規参入やマーケティングの観点で注目すべき
+4. **異常性**: 統計的に特異で分析価値の高いパターン
+5. **ニッチ機会**: 競争が少なく成長余地の大きいセグメント
+
+### 🚫 避けるべき選出
+- 既に大規模（10,000人以上）で誰でも注目するチャット
+- 単純に週間成長数が多いだけのチャット
+- 明らかにランキング上位に来るチャット
+
+## 📄 必要な出力フォーマット
+
+```json
+{
+  \"rising_chats\": [
+    {
+      \"id\": \"チャットID\",
+      \"name\": \"チャット名\",
+      \"category\": \"カテゴリ名\",
+      \"member_count\": メンバー数,
+      \"growth_amount\": 成長量,
+      \"growth_rate\": 成長率,
+      \"ai_insight_score\": 95,
+      \"selection_rationale\": \"AIがこのチャットを選んだ戦略的理由（100文字以内）\",
+      \"growth_potential\": \"breakthrough|high|emerging\",
+      \"competitive_advantage\": \"このチャットの競争優位性\",
+      \"hidden_value_analysis\": \"隠れた価値の詳細分析\",
+      \"future_prediction\": \"3ヶ月後の予測シナリオ\",
+      \"selection_source\": \"元の分析手法名\",
+      \"url\": \"\"
+    }
+  ],
+  \"strategic_insights\": [
+    \"選出の戦略的根拠1\",
+    \"選出の戦略的根拠2\",
+    \"選出の戦略的根拠3\"
+  ],
+  \"insights\": [\"分析による洞察の配列\"],
+  \"recommendations\": [\"推奨事項の配列\"],
+  \"summary\": \"厳選の論理的根拠と総合分析\"
+}
+```
+
+## 🧠 分析指針
+1. **数値だけでなく質を重視**：成長の持続性、メンバーの質、コミュニティの健全性
+2. **将来性を重視**：現在の規模より将来のポテンシャル
+3. **独自価値を重視**：他の分析では見つからない独特の成長パターン
+4. **戦略的価値を重視**：マーケティングやトレンド分析の観点での価値
+
+特に「selection_source」フィールドで元の分析手法を明記し、「selection_rationale」で既存ランキングとは異なる価値を明確に説明してください。
 ";
     }
 

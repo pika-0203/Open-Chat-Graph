@@ -199,10 +199,10 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
         <div class="trend-card">
             <h3 class="section-title">🧠 AI分析注目トピックチャット</h3>
             <p style="color: #6b7280; font-size: 14px; margin-bottom: 16px;">
-                人智を超えたAI分析により選出された、実際に成長可能性が高い注目トピック
+                既存ランキングでは発見できない、6つの高度分析手法とAI戦略判断により厳選された3つの隠れた成長機会
             </p>
             <div class="chat-list">
-                <?php foreach (array_slice($risingChats, 0, 10) as $index => $chat): ?>
+                <?php foreach (array_slice($risingChats, 0, 3) as $index => $chat): ?>
                     <?php if (!isset($chat['id']) || !isset($chat['name'])) continue; ?>
                     <div class="chat-item">
                         <div class="chat-rank"><?php echo (int)$index + 1 ?></div>
@@ -215,14 +215,25 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                                 (<?php echo htmlspecialchars($chat['category'] ?? 'その他') ?>)
                             </div>
                             
-                            <!-- AI考察コメント -->
-                            <?php if (!empty($chat['selection_rationale']) || !empty($chat['attention_magnetism'])): ?>
+                            <!-- AI選出理由 -->
+                            <?php if (!empty($chat['selection_rationale'])): ?>
                                 <div class="ai-insight">
-                                    💡 <?php echo htmlspecialchars($chat['selection_rationale'] ?? $chat['attention_magnetism'] ?? 'AI分析により選出') ?>
+                                    🎯 <strong>AI選出理由:</strong> <?php echo htmlspecialchars($chat['selection_rationale']) ?>
+                                </div>
+                            <?php elseif (!empty($chat['attention_magnetism'])): ?>
+                                <div class="ai-insight">
+                                    💡 <?php echo htmlspecialchars($chat['attention_magnetism']) ?>
                                 </div>
                             <?php else: ?>
                                 <div class="ai-insight">
                                     🔥 <?php echo AiTrendInsightHelper::generateInsightText($chat) ?>
+                                </div>
+                            <?php endif ?>
+
+                            <!-- 分析ソース表示 -->
+                            <?php if (!empty($chat['selection_source'])): ?>
+                                <div class="ai-insight" style="background: #f3f4f6; color: #4b5563; margin-top: 4px;">
+                                    📊 分析手法: <?php echo htmlspecialchars($chat['analysis_reason'] ?? $chat['selection_source']) ?>
                                 </div>
                             <?php endif ?>
                             
@@ -230,11 +241,34 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                             <?php if (!empty($chat['ai_insight_score'])): ?>
                                 <div class="ai-score">
                                     AI分析スコア: <strong><?php echo $chat['ai_insight_score'] ?>点</strong>
-                                    <?php if (!empty($chat['growth_potential']) || !empty($chat['revolutionary_potential'])): ?>
-                                        | 成長性: <span class="potential-<?php echo $chat['growth_potential'] ?? $chat['revolutionary_potential'] ?>">
-                                            <?php echo AiTrendInsightHelper::generateInsightText($chat['growth_potential'] ?? $chat['revolutionary_potential'] ?? '') ?>
+                                    <?php if (!empty($chat['growth_potential'])): ?>
+                                        | 成長性: <span class="potential-<?php echo $chat['growth_potential'] ?>">
+                                            <?php
+                                            $potentialLabels = [
+                                                'breakthrough' => '突破的成長',
+                                                'high' => '高成長',
+                                                'emerging' => '新興成長',
+                                                'disruptive' => '破壊的革新',
+                                                'innovative' => '革新的成長'
+                                            ];
+                                            echo $potentialLabels[$chat['growth_potential']] ?? $chat['growth_potential'];
+                                            ?>
                                         </span>
                                     <?php endif ?>
+                                </div>
+                            <?php endif ?>
+
+                            <!-- 隠れた価値分析 -->
+                            <?php if (!empty($chat['hidden_value_analysis'])): ?>
+                                <div class="ai-insight" style="background: #ecfdf5; border-left-color: #10b981; margin-top: 4px;">
+                                    💎 <strong>隠れた価値:</strong> <?php echo htmlspecialchars($chat['hidden_value_analysis']) ?>
+                                </div>
+                            <?php endif ?>
+
+                            <!-- 将来予測 -->
+                            <?php if (!empty($chat['future_prediction'])): ?>
+                                <div class="ai-insight" style="background: #fef3c7; border-left-color: #f59e0b; margin-top: 4px;">
+                                    🔮 <strong>3ヶ月予測:</strong> <?php echo htmlspecialchars($chat['future_prediction']) ?>
                                 </div>
                             <?php endif ?>
                         </div>

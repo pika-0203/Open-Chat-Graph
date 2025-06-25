@@ -492,4 +492,180 @@ class AiTrendAnalysisRepository
 
         return DB::fetchAll($query, ['limit' => $limit]);
     }
+
+    /**
+     * AI選出用の統合候補チャット取得
+     * 複数の高度な分析結果を統合し、重複を排除して多様な候補を返す
+     * 
+     * @param int $limit 各分析手法から取得する候補数
+     * @return array
+     */
+    public function getIntegratedCandidatesForAiSelection(int $limit = 15): array
+    {
+        // 複数の分析手法から候補を収集
+        $candidates = [];
+        $seenIds = [];
+
+        // 1. 隠れたバイラルパターン分析
+        $viralPatterns = $this->getHiddenViralPatterns($limit);
+        foreach ($viralPatterns as $chat) {
+            if (!isset($seenIds[$chat['id']])) {
+                $chat['selection_source'] = 'viral_pattern';
+                $chat['analysis_reason'] = '急速な成長加速度と高い持続性を持つ隠れたバイラル候補';
+                $candidates[] = $chat;
+                $seenIds[$chat['id']] = true;
+            }
+        }
+
+        // 2. 成長爆発直前指標
+        $preViralChats = $this->getPreViralIndicators($limit);
+        foreach ($preViralChats as $chat) {
+            if (!isset($seenIds[$chat['id']])) {
+                $chat['selection_source'] = 'pre_viral';
+                $chat['analysis_reason'] = '成長の兆候が強く、バイラル爆発の臨界点に接近中';
+                $candidates[] = $chat;
+                $seenIds[$chat['id']] = true;
+            }
+        }
+
+        // 3. リアルタイム成長加速
+        $acceleratingChats = $this->getCurrentGrowthAcceleration($limit);
+        foreach ($acceleratingChats as $chat) {
+            if (!isset($seenIds[$chat['id']])) {
+                $chat['selection_source'] = 'real_time_acceleration';
+                $chat['analysis_reason'] = 'リアルタイムで急激な成長加速を記録中';
+                $candidates[] = $chat;
+                $seenIds[$chat['id']] = true;
+            }
+        }
+
+        // 4. 異常成長パターン
+        $anomalousChats = $this->getAnomalousGrowthPatterns($limit);
+        foreach ($anomalousChats as $chat) {
+            if (!isset($seenIds[$chat['id']])) {
+                $chat['selection_source'] = 'anomaly';
+                $chat['analysis_reason'] = '統計的に異常な成長パターンを示す特異なケース';
+                $candidates[] = $chat;
+                $seenIds[$chat['id']] = true;
+            }
+        }
+
+        // 5. トレンド予測分析（高スコア）
+        $trendPredictions = $this->getTrendPredictionAnalysis($limit);
+        foreach ($trendPredictions as $chat) {
+            if (!isset($seenIds[$chat['id']])) {
+                $chat['selection_source'] = 'trend_prediction';
+                $chat['analysis_reason'] = '機械学習的アプローチで高い成長予測スコアを記録';
+                $candidates[] = $chat;
+                $seenIds[$chat['id']] = true;
+            }
+        }
+
+        // 6. ニッチ市場の成長機会（カテゴリ単位）
+        $lowCompetitionSegments = $this->getLowCompetitionHighGrowthSegments(10);
+        foreach ($lowCompetitionSegments as $segment) {
+            // 該当カテゴリの上位チャットを取得
+            $categoryChatsQuery = "
+                SELECT 
+                    oc.id,
+                    oc.name,
+                    oc.member,
+                    oc.category,
+                    oc.description,
+                    COALESCE(srw.diff_member, 0) as week_growth,
+                    COALESCE(srd.diff_member, 0) as day_growth,
+                    COALESCE(srh.diff_member, 0) as hour_growth
+                FROM open_chat oc
+                LEFT JOIN statistics_ranking_week srw ON oc.id = srw.open_chat_id
+                LEFT JOIN statistics_ranking_day srd ON oc.id = srd.open_chat_id
+                LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
+                WHERE oc.category = :category
+                    AND oc.member < 5000
+                    AND (COALESCE(srw.diff_member, 0) > 0 OR COALESCE(srd.diff_member, 0) > 0)
+                ORDER BY 
+                    (COALESCE(srw.diff_member, 0) * 0.5 + 
+                     COALESCE(srd.diff_member, 0) * 1.5 + 
+                     COALESCE(srh.diff_member, 0) * 2.0) DESC
+                LIMIT 3
+            ";
+            
+            $categoryChats = DB::fetchAll($categoryChatsQuery, ['category' => $segment['category']]);
+            foreach ($categoryChats as $chat) {
+                if (!isset($seenIds[$chat['id']])) {
+                    $chat['selection_source'] = 'low_competition_segment';
+                    $chat['analysis_reason'] = '低競争・高成長セグメントでの有望株';
+                    $chat['market_opportunity_score'] = $segment['growth_opportunity_index'] ?? 0;
+                    $candidates[] = $chat;
+                    $seenIds[$chat['id']] = true;
+                }
+            }
+        }
+
+        // スコアリングして並び替え
+        foreach ($candidates as &$candidate) {
+            // 総合スコアを計算（各指標を正規化して加重平均）
+            $candidate['ai_composite_score'] = $this->calculateCompositeScore($candidate);
+        }
+
+        // スコア順でソート
+        usort($candidates, function($a, $b) {
+            return $b['ai_composite_score'] <=> $a['ai_composite_score'];
+        });
+
+        return $candidates;
+    }
+
+    /**
+     * 複合スコア計算（AI選出用）
+     */
+    private function calculateCompositeScore(array $chat): float
+    {
+        $score = 0;
+
+        // 成長量スコア（正規化）
+        $growthScore = ($chat['hour_growth'] ?? 0) * 3 + 
+                      ($chat['day_growth'] ?? 0) * 2 + 
+                      ($chat['week_growth'] ?? 0) * 1;
+        
+        // メンバー数による調整（小規模ほど高評価）
+        $sizeAdjustment = 1.0;
+        if (($chat['member'] ?? 0) < 500) {
+            $sizeAdjustment = 2.0;
+        } elseif (($chat['member'] ?? 0) < 2000) {
+            $sizeAdjustment = 1.5;
+        } elseif (($chat['member'] ?? 0) > 10000) {
+            $sizeAdjustment = 0.7;
+        }
+
+        // 分析ソース別の重み付け
+        $sourceWeight = match($chat['selection_source'] ?? '') {
+            'viral_pattern' => 1.5,
+            'pre_viral' => 1.8,
+            'real_time_acceleration' => 1.6,
+            'anomaly' => 2.0,
+            'trend_prediction' => 1.4,
+            'low_competition_segment' => 1.3,
+            default => 1.0
+        };
+
+        // 特別なスコアがある場合は考慮
+        $specialScore = 0;
+        if (isset($chat['viral_potential_score'])) {
+            $specialScore += (float)$chat['viral_potential_score'] * 0.5;
+        }
+        if (isset($chat['anomaly_score'])) {
+            $specialScore += (float)$chat['anomaly_score'] * 0.8;
+        }
+        if (isset($chat['trend_prediction_score'])) {
+            $specialScore += (float)$chat['trend_prediction_score'] * 0.4;
+        }
+        if (isset($chat['acceleration_score'])) {
+            $specialScore += (float)$chat['acceleration_score'] * 0.6;
+        }
+
+        // 最終スコア計算
+        $score = ($growthScore * $sizeAdjustment * $sourceWeight) + $specialScore;
+
+        return round($score, 2);
+    }
 }

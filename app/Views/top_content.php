@@ -28,12 +28,16 @@ viewComponent('head', compact('_css', '_meta', '_schema') + ['dataOverlays' => '
             <div id="myListDiv" style="transition: all 0.3s; opacity: 0;"></div>
             <hr style="margin: 1rem 0;">
         <?php endif ?>
+        <?php viewComponent('top_ranking_comment_list_hour', compact('dto')) ?>
+        <hr style="margin: 1rem 0;">
         <?php viewComponent('top_ranking_comment_list_hour24', compact('dto')) ?>
         <hr style="margin: 1rem 0;">
         <?php viewComponent('top_ranking_comment_list_week', compact('dto')) ?>
         <hr style="margin: 1rem 0;">
+        <?php if ($dto->recentCommentList): ?>
+            <?php viewComponent('top_ranking_recent_comments', ['recentCommentList' => $dto->recentCommentList]) ?>
+        <?php endif ?>
         <?php viewComponent('footer_inner') ?>
-
         <div class="refresh-time" style="width: fit-content; margin: auto; padding-bottom: 0.5rem; margin-top: -9px;">
             <div class="refresh-icon"></div><time style="font-size: 11px; color: #b7b7b7; margin-left:3px" datetime="<?php echo $_updatedAt->format(\DateTime::ATOM) ?>"><?php echo $_updatedAt->format('Y/n/j G:i') ?></time>
         </div>
