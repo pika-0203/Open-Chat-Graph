@@ -494,6 +494,209 @@ class AiTrendAnalysisRepository
     }
 
     /**
+     * 成長勢い急上昇分析（新規追加）
+     * 短期間で急激に成長勢いが増している実例を発見
+     */
+    public function getMomentumSurgeAnalysis(int $limit = 8): array
+    {
+        $query = "
+            SELECT 
+                oc.id,
+                oc.name,
+                oc.member,
+                oc.category,
+                LEFT(oc.description, 30) as description,
+                COALESCE(srh.diff_member, 0) as hour_growth,
+                COALESCE(srd.diff_member, 0) as day_growth,
+                COALESCE(srw.diff_member, 0) as week_growth,
+                COALESCE(srh.percent_increase, 0) as hour_growth_rate,
+                -- 勢い急上昇指標（時間軸での加速度変化）
+                CASE 
+                    WHEN COALESCE(srd.diff_member, 0) > 0 AND COALESCE(srw.diff_member, 0) > 0
+                    THEN ROUND(
+                        (COALESCE(srh.diff_member, 0) * 24.0 / COALESCE(srd.diff_member, 1)) /
+                        (COALESCE(srd.diff_member, 0) * 7.0 / COALESCE(srw.diff_member, 1)), 3
+                    )
+                    ELSE 0 
+                END as momentum_acceleration_ratio,
+                -- 勢い持続性指標
+                CASE 
+                    WHEN COALESCE(srh.diff_member, 0) > 0 AND COALESCE(srd.diff_member, 0) > 0
+                    THEN ROUND(COALESCE(srh.diff_member, 0) / (COALESCE(srd.diff_member, 0) / 24.0), 2)
+                    ELSE 0 
+                END as momentum_sustainability,
+                -- 勢い急上昇スコア
+                ROUND(
+                    (COALESCE(srh.diff_member, 0) * 4.0 +
+                     COALESCE(srd.diff_member, 0) * 2.0 +
+                     COALESCE(srh.percent_increase, 0) * 6.0) *
+                    CASE 
+                        WHEN oc.member < 1000 THEN 2.5
+                        WHEN oc.member < 5000 THEN 1.8
+                        ELSE 1.2 
+                    END, 2
+                ) as momentum_surge_score
+            FROM open_chat oc
+            LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
+            LEFT JOIN statistics_ranking_day srd ON oc.id = srd.open_chat_id
+            LEFT JOIN statistics_ranking_week srw ON oc.id = srw.open_chat_id
+            WHERE 
+                oc.member BETWEEN 20 AND 30000
+                AND COALESCE(srh.diff_member, 0) > 1
+                AND COALESCE(srd.diff_member, 0) > 2
+                AND (
+                    -- 急激な勢い増加
+                    COALESCE(srh.diff_member, 0) > COALESCE(srd.diff_member, 0) / 12 OR
+                    -- 高い成長率
+                    COALESCE(srh.percent_increase, 0) > 5.0 OR
+                    -- 小規模チャットの急成長
+                    (oc.member < 2000 AND COALESCE(srh.diff_member, 0) > 3)
+                )
+            ORDER BY momentum_surge_score DESC, momentum_acceleration_ratio DESC
+            LIMIT :limit
+        ";
+
+        return DB::fetchAll($query, ['limit' => $limit]);
+    }
+
+    /**
+     * 隠れた優良株発見（新規追加）
+     * ランキング外だが高い潜在能力を持つチャットを発見
+     */
+    public function getHiddenGemAnalysis(int $limit = 10): array
+    {
+        $query = "
+            SELECT 
+                oc.id,
+                oc.name,
+                oc.member,
+                oc.category,
+                LEFT(oc.description, 30) as description,
+                COALESCE(srh.diff_member, 0) as hour_growth,
+                COALESCE(srd.diff_member, 0) as day_growth,
+                COALESCE(srw.diff_member, 0) as week_growth,
+                COALESCE(srh.percent_increase, 0) as hour_growth_rate,
+                -- 隠れた価値指標（規模対比での成長力）
+                ROUND(
+                    (COALESCE(srw.diff_member, 0) * 7.0 + 
+                     COALESCE(srd.diff_member, 0) * 3.0 + 
+                     COALESCE(srh.diff_member, 0) * 2.0) / 
+                    (oc.member * 0.01 + 1), 2
+                ) as relative_growth_power,
+                -- 将来性指標（小規模での高成長）
+                CASE 
+                    WHEN oc.member < 500 AND COALESCE(srw.diff_member, 0) > 5
+                    THEN ROUND(COALESCE(srw.diff_member, 0) * 100.0 / oc.member, 2)
+                    WHEN oc.member < 2000 AND COALESCE(srw.diff_member, 0) > 10
+                    THEN ROUND(COALESCE(srw.diff_member, 0) * 50.0 / oc.member, 2)
+                    ELSE 0 
+                END as future_potential_ratio,
+                -- 隠れた優良株スコア
+                ROUND(
+                    (COALESCE(srw.diff_member, 0) * 2.0 +
+                     COALESCE(srd.diff_member, 0) * 1.5 +
+                     COALESCE(srh.diff_member, 0) * 1.0) *
+                    (CASE 
+                        WHEN oc.member < 100 THEN 10.0
+                        WHEN oc.member < 500 THEN 5.0
+                        WHEN oc.member < 2000 THEN 2.5
+                        ELSE 1.0 
+                    END) +
+                    COALESCE(srh.percent_increase, 0), 2
+                ) as hidden_gem_score
+            FROM open_chat oc
+            LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
+            LEFT JOIN statistics_ranking_day srd ON oc.id = srd.open_chat_id
+            LEFT JOIN statistics_ranking_week srw ON oc.id = srw.open_chat_id
+            WHERE 
+                oc.member BETWEEN 10 AND 3000  -- 小規模～中規模
+                AND (
+                    -- 安定した成長
+                    (COALESCE(srw.diff_member, 0) > 3 AND COALESCE(srd.diff_member, 0) > 0) OR
+                    -- 高い成長率
+                    COALESCE(srh.percent_increase, 0) > 3.0 OR
+                    -- 継続的な増加
+                    (COALESCE(srh.diff_member, 0) > 0 AND COALESCE(srd.diff_member, 0) > 1)
+                )
+            ORDER BY hidden_gem_score DESC, relative_growth_power DESC
+            LIMIT :limit
+        ";
+
+        return DB::fetchAll($query, ['limit' => $limit]);
+    }
+
+    /**
+     * ブレイクタイミング分析（新規追加）
+     * 成長の臨界点に到達しつつあるチャットを特定
+     */
+    public function getBreakthroughTimingAnalysis(int $limit = 12): array
+    {
+        $query = "
+            SELECT 
+                oc.id,
+                oc.name,
+                oc.member,
+                oc.category,
+                LEFT(oc.description, 30) as description,
+                COALESCE(srh.diff_member, 0) as hour_growth,
+                COALESCE(srd.diff_member, 0) as day_growth,
+                COALESCE(srw.diff_member, 0) as week_growth,
+                COALESCE(srh.percent_increase, 0) as hour_growth_rate,
+                -- 臨界点接近度（特定の規模での急成長）
+                CASE 
+                    WHEN oc.member BETWEEN 800 AND 1200 THEN 'approaching_1k'
+                    WHEN oc.member BETWEEN 4000 AND 6000 THEN 'approaching_5k'
+                    WHEN oc.member BETWEEN 9000 AND 11000 THEN 'approaching_10k'
+                    WHEN oc.member BETWEEN 45000 AND 55000 THEN 'approaching_50k'
+                    ELSE 'other'
+                END as critical_threshold_status,
+                -- ブレイクタイミング指標
+                ROUND(
+                    (COALESCE(srh.diff_member, 0) * 3.0 +
+                     COALESCE(srd.diff_member, 0) * 2.0 +
+                     COALESCE(srw.diff_member, 0) * 1.0) *
+                    CASE 
+                        WHEN oc.member BETWEEN 800 AND 1200 THEN 3.0
+                        WHEN oc.member BETWEEN 4000 AND 6000 THEN 2.5
+                        WHEN oc.member BETWEEN 9000 AND 11000 THEN 2.0
+                        WHEN oc.member BETWEEN 45000 AND 55000 THEN 1.5
+                        ELSE 1.0 
+                    END, 2
+                ) as breakthrough_timing_score,
+                -- 成長の一貫性
+                CASE 
+                    WHEN COALESCE(srh.diff_member, 0) > 0 AND 
+                         COALESCE(srd.diff_member, 0) > 0 AND 
+                         COALESCE(srw.diff_member, 0) > 0
+                    THEN 'consistent_growth'
+                    WHEN COALESCE(srh.diff_member, 0) > COALESCE(srd.diff_member, 0) / 12
+                    THEN 'accelerating'
+                    ELSE 'irregular'
+                END as growth_consistency_pattern
+            FROM open_chat oc
+            LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
+            LEFT JOIN statistics_ranking_day srd ON oc.id = srd.open_chat_id
+            LEFT JOIN statistics_ranking_week srw ON oc.id = srw.open_chat_id
+            WHERE 
+                (
+                    -- 1k突破間近
+                    (oc.member BETWEEN 800 AND 1200 AND COALESCE(srd.diff_member, 0) > 1) OR
+                    -- 5k突破間近
+                    (oc.member BETWEEN 4000 AND 6000 AND COALESCE(srd.diff_member, 0) > 3) OR
+                    -- 10k突破間近
+                    (oc.member BETWEEN 9000 AND 11000 AND COALESCE(srd.diff_member, 0) > 5) OR
+                    -- 50k突破間近
+                    (oc.member BETWEEN 45000 AND 55000 AND COALESCE(srd.diff_member, 0) > 10)
+                )
+                AND COALESCE(srh.diff_member, 0) >= 0  -- 現在減少していない
+            ORDER BY breakthrough_timing_score DESC, hour_growth DESC
+            LIMIT :limit
+        ";
+
+        return DB::fetchAll($query, ['limit' => $limit]);
+    }
+
+    /**
      * AI選出用の統合候補チャット取得
      * 複数の高度な分析結果を統合し、重複を排除して多様な候補を返す
      * 
@@ -601,11 +804,45 @@ class AiTrendAnalysisRepository
             }
         }
 
-        // 7-9. SQLite分析用のフィルター作成（既に収集済みの候補IDを使用）
+        // 新規追加分析手法
+        // 7. 成長勢い急上昇分析
+        $momentumSurgeChats = $this->getMomentumSurgeAnalysis($limit);
+        foreach ($momentumSurgeChats as $chat) {
+            if (!isset($seenIds[$chat['id']])) {
+                $chat['selection_source'] = 'momentum_surge';
+                $chat['analysis_reason'] = '短期間で急激に成長勢いが加速している注目株';
+                $candidates[] = $chat;
+                $seenIds[$chat['id']] = true;
+            }
+        }
+
+        // 8. 隠れた優良株発見
+        $hiddenGemChats = $this->getHiddenGemAnalysis($limit);
+        foreach ($hiddenGemChats as $chat) {
+            if (!isset($seenIds[$chat['id']])) {
+                $chat['selection_source'] = 'hidden_gem';
+                $chat['analysis_reason'] = 'ランキング外だが高い潜在能力を持つ隠れた優良株';
+                $candidates[] = $chat;
+                $seenIds[$chat['id']] = true;
+            }
+        }
+
+        // 9. ブレイクタイミング分析
+        $breakthroughChats = $this->getBreakthroughTimingAnalysis($limit);
+        foreach ($breakthroughChats as $chat) {
+            if (!isset($seenIds[$chat['id']])) {
+                $chat['selection_source'] = 'breakthrough_timing';
+                $chat['analysis_reason'] = '重要な成長の臨界点に到達しつつある絶好のタイミング';
+                $candidates[] = $chat;
+                $seenIds[$chat['id']] = true;
+            }
+        }
+
+        // SQLite分析用のフィルター作成（既に収集済みの候補IDを使用）
         $candidateIds = array_keys($seenIds);
         
         if (!empty($candidateIds)) {
-            // 7. 長期トレンド分析（SQLite統計データ活用）
+            // 10. 長期トレンド分析（SQLite統計データ活用）
             $longTermTrends = $this->getLongTermTrendAnalysis($candidateIds, $limit);
             foreach ($longTermTrends as $ltData) {
                 if (!isset($seenIds[$ltData['id']])) {
@@ -616,7 +853,7 @@ class AiTrendAnalysisRepository
                 }
             }
 
-            // 8. 季節性・周期性パターン分析
+            // 11. 季節性・周期性パターン分析
             $seasonalPatterns = $this->getSeasonalPatternAnalysis($candidateIds, $limit);
             foreach ($seasonalPatterns as $spData) {
                 if (!isset($seenIds[$spData['id']])) {
@@ -627,7 +864,7 @@ class AiTrendAnalysisRepository
                 }
             }
 
-            // 9. 復活・回復パターン分析
+            // 12. 復活・回復パターン分析
             $recoveryPatterns = $this->getRecoveryPatternAnalysis($candidateIds, $limit);
             foreach ($recoveryPatterns as $rpData) {
                 if (!isset($seenIds[$rpData['id']])) {
@@ -1039,6 +1276,13 @@ class AiTrendAnalysisRepository
             'long_term_trend' => 1.7,
             'seasonal_pattern' => 1.4,
             'recovery_pattern' => 1.6,
+            // 新規追加分析手法
+            'momentum_surge' => 1.9,
+            'hidden_gem' => 1.7,
+            'breakthrough_timing' => 2.1,
+            'market_disruption' => 2.2,
+            'community_magnetism' => 1.6,
+            'exponential_curve' => 1.8,
             default => 1.0
         };
 
@@ -1064,6 +1308,16 @@ class AiTrendAnalysisRepository
         }
         if (isset($chat['recovery_potential_score'])) {
             $specialScore += (float)$chat['recovery_potential_score'] * 0.6;
+        }
+        // 新規追加分析手法のスコア
+        if (isset($chat['momentum_surge_score'])) {
+            $specialScore += (float)$chat['momentum_surge_score'] * 0.7;
+        }
+        if (isset($chat['hidden_gem_score'])) {
+            $specialScore += (float)$chat['hidden_gem_score'] * 0.6;
+        }
+        if (isset($chat['breakthrough_timing_score'])) {
+            $specialScore += (float)$chat['breakthrough_timing_score'] * 0.8;
         }
 
         // 最終スコア計算
