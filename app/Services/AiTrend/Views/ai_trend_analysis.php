@@ -214,12 +214,6 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                                 <?php echo htmlspecialchars($chat['name']) ?>
                             </a>
                             <div class="chat-growth">
-                                <?php 
-                                $growthAmount = (int)($chat['week_growth'] ?? $chat['day_growth'] ?? $chat['hour_growth'] ?? 0);
-                                if ($growthAmount > 0) {
-                                    echo '+' . number_format($growthAmount) . '人 ';
-                                }
-                                ?>
                                 (<?php echo htmlspecialchars($chat['category'] ?? 'その他') ?>)
                             </div>
                             
