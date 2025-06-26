@@ -213,10 +213,22 @@ class AiTrendAnalysisRepositoryTest extends TestCase
      */
     public function testGetLongTermTrendAnalysis(): void
     {
-        $result = $this->repository->getLongTermTrendAnalysis(3);
+        // テスト用のサンプルチャットIDを準備
+        $sampleChatIds = [100, 200, 300]; // 実際のIDに置き換える
+        
+        $result = $this->repository->getLongTermTrendAnalysis($sampleChatIds, 3);
 
         $this->assertIsArray($result);
-        var_dump($result);
+        $this->assertLessThanOrEqual(3, count($result));
+
+        if (!empty($result)) {
+            $firstItem = $result[0];
+            $this->assertArrayHasKey('id', $firstItem);
+            $this->assertArrayHasKey('name', $firstItem);
+            // SQLite分析特有のフィールドをチェック
+            $this->assertArrayHasKey('weeks_recorded', $firstItem);
+            $this->assertArrayHasKey('avg_weekly_growth', $firstItem);
+        }
     }
 
     /**
@@ -230,10 +242,23 @@ class AiTrendAnalysisRepositoryTest extends TestCase
      */
     public function testGetSeasonalPatternAnalysis(): void
     {
-        $result = $this->repository->getSeasonalPatternAnalysis(3);
+        // テスト用のサンプルチャットIDを準備
+        $sampleChatIds = [100, 200, 300]; // 実際のIDに置き換える
+        
+        $result = $this->repository->getSeasonalPatternAnalysis($sampleChatIds, 3);
 
         $this->assertIsArray($result);
-        var_dump($result);
+        $this->assertLessThanOrEqual(3, count($result));
+
+        if (!empty($result)) {
+            $firstItem = $result[0];
+            $this->assertArrayHasKey('id', $firstItem);
+            $this->assertArrayHasKey('name', $firstItem);
+            // SQLite分析特有のフィールドをチェック
+            $this->assertArrayHasKey('weeks_recorded', $firstItem);
+            $this->assertArrayHasKey('growth_stability', $firstItem);
+            $this->assertArrayHasKey('seasonal_pattern_score', $firstItem);
+        }
     }
 
     /**
@@ -247,10 +272,24 @@ class AiTrendAnalysisRepositoryTest extends TestCase
      */
     public function testGetRecoveryPatternAnalysis(): void
     {
-        $result = $this->repository->getRecoveryPatternAnalysis(3);
+        // テスト用のサンプルチャットIDを準備
+        $sampleChatIds = [100, 200, 300]; // 実際のIDに置き換える
+        
+        $result = $this->repository->getRecoveryPatternAnalysis($sampleChatIds, 3);
 
         $this->assertIsArray($result);
-        var_dump($result);
+        $this->assertLessThanOrEqual(3, count($result));
+
+        if (!empty($result)) {
+            $firstItem = $result[0];
+            $this->assertArrayHasKey('id', $firstItem);
+            $this->assertArrayHasKey('name', $firstItem);
+            // SQLite分析特有のフィールドをチェック
+            $this->assertArrayHasKey('total_days', $firstItem);
+            $this->assertArrayHasKey('growth_days', $firstItem);
+            $this->assertArrayHasKey('recent_momentum', $firstItem);
+            $this->assertArrayHasKey('recovery_potential_score', $firstItem);
+        }
     }
 
     public function testBasicFunctionality(): void
