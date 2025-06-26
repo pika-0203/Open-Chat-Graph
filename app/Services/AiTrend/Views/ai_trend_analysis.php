@@ -199,9 +199,10 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
         <div class="trend-card">
             <h3 class="section-title">🧠 AI分析注目トピックチャット</h3>
             <p style="color: #6b7280; font-size: 14px; margin-bottom: 16px;">
-                既存ランキングでは発見できない、<strong>12の高度分析手法</strong>とAI戦略判断により厳選された隠れた成長機会：<br>
+                既存ランキングでは発見できない、<strong>14の高度分析手法</strong>とAI戦略判断により厳選された隠れた成長機会：<br>
                 🚀爆発的成長 🌱ブレイクアウト直前 ⚡急加速成長 🔍異常成長検出 🎯AI成長予測 💎穴場市場<br>
-                📈長期安定成長 🔄周期的パターン 💥勢い急上昇 ✨隠れた優良株 ⏰ブレイクタイミング 他
+                📈長期安定成長 🔄周期的パターン 💥勢い急上昇 ✨隠れた優良株 ⏰ブレイクタイミング<br>
+                🔮将来成長ポテンシャル 🌟新興トレンドトピック
             </p>
             <div class="chat-list">
                 <?php foreach (array_slice($risingChats, 0, 5) as $index => $chat): ?>
@@ -213,7 +214,12 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                                 <?php echo htmlspecialchars($chat['name']) ?>
                             </a>
                             <div class="chat-growth">
-                                +<?php echo number_format((int)($chat['growth_amount'] ?? $chat['week_growth_amount'] ?? 0)) ?>人 
+                                <?php 
+                                $growthAmount = (int)($chat['week_growth'] ?? $chat['day_growth'] ?? $chat['hour_growth'] ?? 0);
+                                if ($growthAmount > 0) {
+                                    echo '+' . number_format($growthAmount) . '人 ';
+                                }
+                                ?>
                                 (<?php echo htmlspecialchars($chat['category'] ?? 'その他') ?>)
                             </div>
                             
@@ -259,7 +265,11 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                                             'breakthrough_timing' => '⏰ ブレイクタイミング',
                                             'market_disruption' => '🌊 市場破壊的成長',
                                             'community_magnetism' => '🧲 コミュニティ磁力',
-                                            'exponential_curve' => '📊 指数関数的成長'
+                                            'exponential_curve' => '📊 指数関数的成長',
+                                            
+                                            // 新規追加の将来性分析手法
+                                            'future_growth_potential' => '🔮 将来成長ポテンシャル',
+                                            'emerging_trend_topic' => '🌟 新興トレンドトピック'
                                         ];
                                         echo htmlspecialchars($sourceMap[$source] ?? $source);
                                     ?>
@@ -269,7 +279,7 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                             <!-- AI分析スコア表示 -->
                             <?php if (!empty($chat['ai_insight_score'])): ?>
                                 <div class="ai-score">
-                                    AI分析スコア: <strong><?php echo $chat['ai_insight_score'] ?>点</strong>
+                                    <div>AI分析スコア: <strong><?php echo $chat['ai_insight_score'] ?>点</strong>
                                     <?php if (!empty($chat['growth_potential'])): ?>
                                         | 成長性: <span class="potential-<?php echo $chat['growth_potential'] ?>">
                                             <?php
@@ -278,11 +288,39 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                                                 'high' => '高成長',
                                                 'emerging' => '新興成長',
                                                 'disruptive' => '破壊的革新',
-                                                'innovative' => '革新的成長'
+                                                'innovative' => '革新的成長',
+                                                'stable_long_term' => '長期安定',
+                                                'recovery_momentum' => '回復成長'
                                             ];
                                             echo $potentialLabels[$chat['growth_potential']] ?? $chat['growth_potential'];
                                             ?>
                                         </span>
+                                    <?php endif ?>
+                                    </div>
+                                    
+                                    <!-- スコア内訳表示 -->
+                                    <?php if (!empty($chat['score_breakdown'])): ?>
+                                        <div style="font-size: 11px; color: #6b7280; margin-top: 4px;">
+                                            📊 スコア内訳：
+                                            <?php 
+                                            $breakdown = is_string($chat['score_breakdown']) ? json_decode($chat['score_breakdown'], true) : $chat['score_breakdown'];
+                                            if (is_array($breakdown)): 
+                                                $breakdownLabels = [
+                                                    'growth_momentum' => '成長勢い',
+                                                    'market_opportunity' => '市場機会',
+                                                    'uniqueness_factor' => '独自性',
+                                                    'timing_value' => 'タイミング',
+                                                    'sustainability' => '持続性'
+                                                ];
+                                                $parts = [];
+                                                foreach ($breakdown as $key => $value) {
+                                                    $label = $breakdownLabels[$key] ?? $key;
+                                                    $parts[] = $label . ':' . $value;
+                                                }
+                                                echo implode(' | ', $parts);
+                                            endif;
+                                            ?>
+                                        </div>
                                     <?php endif ?>
                                 </div>
                             <?php endif ?>

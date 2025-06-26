@@ -838,6 +838,30 @@ class AiTrendAnalysisRepository
             }
         }
 
+        // 新規追加: 将来成長性分析
+        $futureGrowthChats = $this->getFutureGrowthPotentialAnalysis($limit);
+        foreach ($futureGrowthChats as $chat) {
+            if (!isset($seenIds[$chat['id']])) {
+                $chat['selection_source'] = 'future_growth_potential';
+                $chat['analysis_reason'] = '現在は安定しているが将来の成長ポテンシャルが極めて高い';
+                $chat['future_potential_score'] = $chat['future_potential_score'] ?? 0;
+                $candidates[] = $chat;
+                $seenIds[$chat['id']] = true;
+            }
+        }
+
+        // 新規追加: 新興トレンドトピック分析
+        $emergingTrendChats = $this->getEmergingTrendTopicsAnalysis($limit);
+        foreach ($emergingTrendChats as $chat) {
+            if (!isset($seenIds[$chat['id']])) {
+                $chat['selection_source'] = 'emerging_trend_topic';
+                $chat['analysis_reason'] = '新興トレンドを扱う将来性の高いトピック';
+                $chat['emerging_trend_score'] = $chat['emerging_trend_score'] ?? 0;
+                $candidates[] = $chat;
+                $seenIds[$chat['id']] = true;
+            }
+        }
+
         // SQLite分析用のフィルター作成（既に収集済みの候補IDを使用）
         $candidateIds = array_keys($seenIds);
         
@@ -875,6 +899,11 @@ class AiTrendAnalysisRepository
                 }
             }
         }
+
+        // フィルタリング：真にオープンなチャットのみを選出
+        $candidates = array_filter($candidates, function($candidate) {
+            return $this->isGenuinelyOpenChat($candidate);
+        });
 
         // スコアリングして並び替え
         foreach ($candidates as &$candidate) {
@@ -1244,85 +1273,303 @@ class AiTrendAnalysisRepository
     }
 
     /**
-     * 複合スコア計算（AI選出用）
+     * 潜在的将来成長性分析（現在は成長していないが将来性の高いチャット発見）
+     */
+    public function getFutureGrowthPotentialAnalysis(int $limit = 10): array
+    {
+        $query = "
+            SELECT 
+                oc.id,
+                oc.name,
+                oc.member,
+                oc.category,
+                oc.description,
+                COALESCE(srh.diff_member, 0) as hour_growth,
+                COALESCE(srd.diff_member, 0) as day_growth,
+                COALESCE(srw.diff_member, 0) as week_growth,
+                -- 潜在性指標1: 説明文の充実度とキーワード豊富さ
+                ROUND(
+                    LENGTH(oc.description) / 10.0 +
+                    (LENGTH(oc.description) - LENGTH(REPLACE(oc.description, ' ', ''))) / 2.0 +
+                    (CASE WHEN oc.description REGEXP '募集|歓迎|初心者|質問|相談|情報|共有|交流' THEN 15 ELSE 0 END)
+                , 2) as content_richness_score,
+                -- 潜在性指標2: カテゴリ内での適正規模（大きすぎず小さすぎない）
+                ROUND(
+                    CASE 
+                        WHEN oc.member BETWEEN 50 AND 500 THEN 20
+                        WHEN oc.member BETWEEN 20 AND 50 THEN 15  
+                        WHEN oc.member BETWEEN 500 AND 2000 THEN 10
+                        ELSE 5
+                    END
+                , 2) as optimal_size_score,
+                -- 潜在性指標3: トピックの将来性（新技術、トレンド関連）
+                ROUND(
+                    (CASE WHEN oc.name REGEXP 'AI|人工知能|ChatGPT|副業|投資|NFT|仮想通貨|Web3|メタバース|VR' THEN 20 ELSE 0 END) +
+                    (CASE WHEN oc.name REGEXP '起業|スタートアップ|フリーランス|在宅|リモート|オンライン' THEN 15 ELSE 0 END) +
+                    (CASE WHEN oc.name REGEXP '学習|勉強|スキル|資格|転職|キャリア' THEN 12 ELSE 0 END) +
+                    (CASE WHEN oc.name REGEXP '健康|ダイエット|筋トレ|美容|メンタル' THEN 10 ELSE 0 END)
+                , 2) as trend_topic_score,
+                -- 潜在性指標4: 安定性（急激な増減がない）
+                ROUND(
+                    CASE 
+                        WHEN ABS(COALESCE(srh.diff_member, 0)) <= 2 
+                             AND ABS(COALESCE(srd.diff_member, 0)) <= 5 
+                             AND ABS(COALESCE(srw.diff_member, 0)) <= 20 
+                        THEN 15
+                        WHEN ABS(COALESCE(srh.diff_member, 0)) <= 5 
+                             AND ABS(COALESCE(srd.diff_member, 0)) <= 10 
+                        THEN 10
+                        ELSE 5
+                    END
+                , 2) as stability_score,
+                -- 総合将来性スコア
+                ROUND(
+                    (LENGTH(oc.description) / 10.0 +
+                     (LENGTH(oc.description) - LENGTH(REPLACE(oc.description, ' ', ''))) / 2.0 +
+                     (CASE WHEN oc.description REGEXP '募集|歓迎|初心者|質問|相談|情報|共有|交流' THEN 15 ELSE 0 END)) +
+                    (CASE 
+                        WHEN oc.member BETWEEN 50 AND 500 THEN 20
+                        WHEN oc.member BETWEEN 20 AND 50 THEN 15  
+                        WHEN oc.member BETWEEN 500 AND 2000 THEN 10
+                        ELSE 5
+                    END) +
+                    ((CASE WHEN oc.name REGEXP 'AI|人工知能|ChatGPT|副業|投資|NFT|仮想通貨|Web3|メタバース|VR' THEN 20 ELSE 0 END) +
+                     (CASE WHEN oc.name REGEXP '起業|スタートアップ|フリーランス|在宅|リモート|オンライン' THEN 15 ELSE 0 END) +
+                     (CASE WHEN oc.name REGEXP '学習|勉強|スキル|資格|転職|キャリア' THEN 12 ELSE 0 END) +
+                     (CASE WHEN oc.name REGEXP '健康|ダイエット|筋トレ|美容|メンタル' THEN 10 ELSE 0 END)) +
+                    (CASE 
+                        WHEN ABS(COALESCE(srh.diff_member, 0)) <= 2 
+                             AND ABS(COALESCE(srd.diff_member, 0)) <= 5 
+                             AND ABS(COALESCE(srw.diff_member, 0)) <= 20 
+                        THEN 15
+                        WHEN ABS(COALESCE(srh.diff_member, 0)) <= 5 
+                             AND ABS(COALESCE(srd.diff_member, 0)) <= 10 
+                        THEN 10
+                        ELSE 5
+                    END)
+                , 2) as future_potential_score
+            FROM open_chat oc
+            LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
+            LEFT JOIN statistics_ranking_day srd ON oc.id = srd.open_chat_id
+            LEFT JOIN statistics_ranking_week srw ON oc.id = srw.open_chat_id
+            WHERE 
+                oc.member BETWEEN 10 AND 5000
+                AND LENGTH(oc.description) >= 20
+                AND oc.name IS NOT NULL
+                AND oc.description IS NOT NULL
+                -- 現在は大きな成長をしていない（将来性重視）
+                AND COALESCE(srw.diff_member, 0) BETWEEN -10 AND 50
+                AND COALESCE(srd.diff_member, 0) BETWEEN -5 AND 20
+                AND COALESCE(srh.diff_member, 0) BETWEEN -2 AND 10
+            ORDER BY future_potential_score DESC, content_richness_score DESC
+            LIMIT :limit
+        ";
+
+        return DB::fetchAll($query, ['limit' => $limit]);
+    }
+
+    /**
+     * 新興トレンドトピック発見（話題性と将来性の複合分析）
+     */
+    public function getEmergingTrendTopicsAnalysis(int $limit = 8): array
+    {
+        $query = "
+            SELECT 
+                oc.id,
+                oc.name,
+                oc.member,
+                oc.category,
+                oc.description,
+                COALESCE(srh.diff_member, 0) as hour_growth,
+                COALESCE(srd.diff_member, 0) as day_growth,
+                COALESCE(srw.diff_member, 0) as week_growth,
+                -- 新興トレンド度合い
+                ROUND(
+                    -- 最新技術・サービス関連
+                    (CASE WHEN oc.name REGEXP '2024|2025|最新|新着|New|ニュー' THEN 10 ELSE 0 END) +
+                    (CASE WHEN oc.name REGEXP 'ChatGPT|Claude|Gemini|AI|人工知能|生成AI|機械学習' THEN 25 ELSE 0 END) +
+                    (CASE WHEN oc.name REGEXP 'TikTok|Instagram|YouTube|SNS|インフルエンサー|バズ' THEN 20 ELSE 0 END) +
+                    (CASE WHEN oc.name REGEXP 'サブスク|サブスクリプション|定額|月額' THEN 15 ELSE 0 END) +
+                    (CASE WHEN oc.name REGEXP 'ソロ活|おひとり様|一人|個人|パーソナル' THEN 18 ELSE 0 END) +
+                    (CASE WHEN oc.name REGEXP 'SDGs|持続可能|エコ|環境|サステナブル' THEN 22 ELSE 0 END) +
+                    (CASE WHEN oc.name REGEXP 'コスパ|タイパ|効率|時短|節約|お得' THEN 16 ELSE 0 END) +
+                    -- ライフスタイル変化
+                    (CASE WHEN oc.name REGEXP 'ワーケーション|二拠点|移住|田舎|地方' THEN 20 ELSE 0 END) +
+                    (CASE WHEN oc.name REGEXP 'ミニマリスト|断捨離|整理|片付け|シンプル' THEN 14 ELSE 0 END)
+                , 2) as emerging_trend_score,
+                -- コミュニティ活性度
+                ROUND(
+                    (CASE WHEN oc.member > 100 THEN LOG10(oc.member) * 5 ELSE oc.member * 0.3 END) +
+                    (CASE WHEN LENGTH(oc.description) > 100 THEN 10 ELSE LENGTH(oc.description) * 0.1 END)
+                , 2) as community_vitality_score
+            FROM open_chat oc
+            LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
+            LEFT JOIN statistics_ranking_day srd ON oc.id = srd.open_chat_id
+            LEFT JOIN statistics_ranking_week srw ON oc.id = srw.open_chat_id
+            WHERE 
+                oc.member BETWEEN 20 AND 3000
+                AND LENGTH(oc.description) >= 15
+                AND (
+                    oc.name REGEXP 'AI|ChatGPT|2024|2025|最新|TikTok|Instagram|サブスク|ソロ活|SDGs|コスパ|タイパ|ワーケーション|ミニマリスト' OR
+                    oc.description REGEXP '新しい|最新|トレンド|流行|話題|注目|人気|今|現在'
+                )
+            HAVING emerging_trend_score > 10
+            ORDER BY emerging_trend_score DESC, community_vitality_score DESC
+            LIMIT :limit
+        ";
+
+        return DB::fetchAll($query, ['limit' => $limit]);
+    }
+
+    /**
+     * 真にオープンなチャットかどうかを判定（ノイズ除去）
+     */
+    private function isGenuinelyOpenChat(array $chat): bool
+    {
+        $name = $chat['name'] ?? '';
+        $description = $chat['description'] ?? '';
+        
+        // 1. 説明文が空または極端に短い場合は除外
+        if (empty(trim($description)) || mb_strlen(trim($description)) < 10) {
+            return false;
+        }
+        
+        // 2. ファンルーム・公式アカウント系のパターンを除外
+        $excludePatterns = [
+            // ファンルーム系
+            '/ファン/', '/ファンクラブ/', '/fc\s/', '/FC\s/', '/応援/', 
+            '/推し/', '/オタク/', '/好きな人/', '/すきな人/',
+            // 公式系
+            '/公式/', '/official/', '/運営/', '/事務所/', 
+            // 排他的・プライベート系
+            '/招待/', '/限定/', '/メンバー限定/', '/プライベート/', '/private/',
+            '/発言禁止/', '/観覧/', '/観戦/', '/見学/', '/閲覧のみ/',
+            // 有名人・著名人系（名前のみのタイトル）
+            '/^[あ-んア-ンa-zA-Z\s]+$/', // 単純な名前のみ
+        ];
+        
+        foreach ($excludePatterns as $pattern) {
+            if (preg_match($pattern, $name) || preg_match($pattern, $description)) {
+                return false;
+            }
+        }
+        
+        // 3. 参加を促すキーワードがあるかチェック（積極的評価）
+        $positivePatterns = [
+            '/参加/', '/入会/', '/仲間/', '/一緒/', '/みんな/', '/みなさん/',
+            '/初心者/', '/歓迎/', '/募集/', '/集まれ/', '/話そう/', '/語ろう/',
+            '/交流/', '/共有/', '/情報/', '/雑談/', '/おしゃべり/', '/チャット/',
+            '/質問/', '/相談/', '/アドバイス/'
+        ];
+        
+        $hasPositiveSignal = false;
+        foreach ($positivePatterns as $pattern) {
+            if (preg_match($pattern, $name) || preg_match($pattern, $description)) {
+                $hasPositiveSignal = true;
+                break;
+            }
+        }
+        
+        // 4. メンバー数による判定（あまりに排他的でないか）
+        $memberCount = $chat['member'] ?? 0;
+        if ($memberCount > 10000 && !$hasPositiveSignal) {
+            // 大規模だが参加を促すサインがない = 公式系の可能性
+            return false;
+        }
+        
+        if ($memberCount < 10 && !$hasPositiveSignal) {
+            // 小規模すぎて排他的な可能性
+            return false;
+        }
+        
+        return true;
+    }
+
+    /**
+     * 複合スコア計算（AI選出用・多様性改善版）
      */
     private function calculateCompositeScore(array $chat): float
     {
-        $score = 0;
-
-        // 成長量スコア（正規化）
-        $growthScore = ($chat['hour_growth'] ?? 0) * 3 +
-            ($chat['day_growth'] ?? 0) * 2 +
-            ($chat['week_growth'] ?? 0) * 1;
-
-        // メンバー数による調整（小規模ほど高評価）
-        $sizeAdjustment = 1.0;
-        if (($chat['member'] ?? 0) < 500) {
-            $sizeAdjustment = 2.0;
-        } elseif (($chat['member'] ?? 0) < 2000) {
-            $sizeAdjustment = 1.5;
-        } elseif (($chat['member'] ?? 0) > 10000) {
-            $sizeAdjustment = 0.7;
+        // 1. 正規化された成長スコア（加法式でバランス改善）
+        $hourGrowth = min(($chat['hour_growth'] ?? 0), 100); // 上限設定
+        $dayGrowth = min(($chat['day_growth'] ?? 0), 500);
+        $weekGrowth = min(($chat['week_growth'] ?? 0), 2000);
+        
+        // 成長スコア：短期・中期・長期のバランス調整
+        $growthScore = ($hourGrowth * 2) + ($dayGrowth * 1.5) + ($weekGrowth * 1);
+        
+        // メンバー数に基づく正規化（極端な偏りを軽減）
+        $memberCount = $chat['member'] ?? 0;
+        if ($memberCount > 0) {
+            $growthScore = $growthScore / log10($memberCount + 10); // 対数正規化
         }
 
-        // 分析ソース別の重み付け
-        $sourceWeight = match ($chat['selection_source'] ?? '') {
-            'viral_pattern' => 1.5,
-            'pre_viral' => 1.8,
-            'real_time_acceleration' => 1.6,
-            'anomaly' => 2.0,
-            'trend_prediction' => 1.4,
-            'low_competition_segment' => 1.3,
-            'long_term_trend' => 1.7,
-            'seasonal_pattern' => 1.4,
-            'recovery_pattern' => 1.6,
-            // 新規追加分析手法
-            'momentum_surge' => 1.9,
-            'hidden_gem' => 1.7,
-            'breakthrough_timing' => 2.1,
-            'market_disruption' => 2.2,
-            'community_magnetism' => 1.6,
-            'exponential_curve' => 1.8,
-            default => 1.0
+        // 2. サイズ調整（極端な偏りを軽減、加法式）
+        $sizeBonus = 0;
+        if ($memberCount < 300) {
+            $sizeBonus = 15; // 小規模ボーナス
+        } elseif ($memberCount < 1000) {
+            $sizeBonus = 10; // 中小規模ボーナス
+        } elseif ($memberCount < 5000) {
+            $sizeBonus = 5;  // 中規模ボーナス
+        } elseif ($memberCount > 10000) {
+            $sizeBonus = -5; // 大規模ペナルティ（軽微）
+        }
+
+        // 3. 分析ソース別スコア（乗算から加算に変更で極端な変動を抑制）
+        $sourceBonus = match ($chat['selection_source'] ?? '') {
+            'viral_pattern' => 20,
+            'pre_viral' => 25,
+            'real_time_acceleration' => 22,
+            'anomaly' => 30,
+            'trend_prediction' => 18,
+            'low_competition_segment' => 16,
+            'long_term_trend' => 24,
+            'seasonal_pattern' => 18,
+            'recovery_pattern' => 22,
+            // 新規追加分析手法（バランス調整）
+            'momentum_surge' => 26,
+            'hidden_gem' => 24,
+            'breakthrough_timing' => 28,
+            'market_disruption' => 30,
+            'community_magnetism' => 22,
+            'exponential_curve' => 25,
+            // 将来性分析手法
+            'future_growth_potential' => 32,
+            'emerging_trend_topic' => 28,
+            default => 10
         };
 
-        // 特別なスコアがある場合は考慮
+        // 4. 特別スコア（正規化して加算）
         $specialScore = 0;
-        if (isset($chat['viral_potential_score'])) {
-            $specialScore += (float)$chat['viral_potential_score'] * 0.5;
-        }
-        if (isset($chat['anomaly_score'])) {
-            $specialScore += (float)$chat['anomaly_score'] * 0.8;
-        }
-        if (isset($chat['trend_prediction_score'])) {
-            $specialScore += (float)$chat['trend_prediction_score'] * 0.4;
-        }
-        if (isset($chat['acceleration_score'])) {
-            $specialScore += (float)$chat['acceleration_score'] * 0.6;
-        }
-        if (isset($chat['long_term_potential_score'])) {
-            $specialScore += (float)$chat['long_term_potential_score'] * 0.7;
-        }
-        if (isset($chat['seasonal_pattern_score'])) {
-            $specialScore += (float)$chat['seasonal_pattern_score'] * 0.5;
-        }
-        if (isset($chat['recovery_potential_score'])) {
-            $specialScore += (float)$chat['recovery_potential_score'] * 0.6;
-        }
-        // 新規追加分析手法のスコア
-        if (isset($chat['momentum_surge_score'])) {
-            $specialScore += (float)$chat['momentum_surge_score'] * 0.7;
-        }
-        if (isset($chat['hidden_gem_score'])) {
-            $specialScore += (float)$chat['hidden_gem_score'] * 0.6;
-        }
-        if (isset($chat['breakthrough_timing_score'])) {
-            $specialScore += (float)$chat['breakthrough_timing_score'] * 0.8;
+        $specialScores = [
+            'viral_potential_score' => 0.3,
+            'anomaly_score' => 0.4,
+            'trend_prediction_score' => 0.25,
+            'acceleration_score' => 0.35,
+            'long_term_potential_score' => 0.4,
+            'seasonal_pattern_score' => 0.3,
+            'recovery_potential_score' => 0.35,
+            'momentum_surge_score' => 0.4,
+            'hidden_gem_score' => 0.35,
+            'breakthrough_timing_score' => 0.45,
+            // 新規追加の将来性スコア
+            'future_potential_score' => 0.5,
+            'emerging_trend_score' => 0.45
+        ];
+        
+        foreach ($specialScores as $key => $weight) {
+            if (isset($chat[$key])) {
+                $specialScore += min((float)$chat[$key] * $weight, 50); // 上限設定
+            }
         }
 
-        // 最終スコア計算
-        $score = ($growthScore * $sizeAdjustment * $sourceWeight) + $specialScore;
-
-        return round($score, 2);
+        // 5. 最終スコア計算（加法式で安定性向上）
+        $finalScore = $growthScore + $sizeBonus + $sourceBonus + $specialScore;
+        
+        // 6. スコア範囲の正規化（0-100点範囲）
+        $finalScore = max(0, min(100, $finalScore));
+        
+        return round($finalScore, 2);
     }
 }

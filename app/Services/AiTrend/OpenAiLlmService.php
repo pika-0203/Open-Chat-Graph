@@ -152,14 +152,20 @@ class OpenAiLlmService
 11. **✨ 隠れた優良株** (`hidden_gem`): ランキング外だが高い潜在能力を持つ隠れた優良株
 12. **⏰ ブレイクタイミング** (`breakthrough_timing`): 重要な成長の臨界点に到達しつつある絶好のタイミング
 
+#### 🔮 将来性・先見性分析手法（NEW）
+13. **🔮 将来成長ポテンシャル** (`future_growth_potential`): 現在は成長していないが将来性の極めて高いチャット
+14. **🌟 新興トレンドトピック** (`emerging_trend_topic`): 話題性と将来性を兼ね備えた新興トピック
+
 {$candidatesJson}
 
 ## 📋 あなたのミッション（強化版）
 上記の候補チャットから、**既存のランキングでは発見できない真に価値ある5件**を厳選してください。
 
-### 🎯 チャット選出基準（優先順位順・12手法対応版）
+### 🎯 チャット選出基準（多様性重視・12手法対応版）
+**重要：必ず異なる分析手法（selection_source）から5件を選出し、偏りを避けること**
+
 1. **🚀 爆発的独自性**: 単純な人数増加ランキングでは発見できない隠れたバイラル価値
-2. **🌱 ブレイクアウト将来性**: 現在は小規模でも臨界点突破の可能性が高い
+2. **🌱 ブレイクアウト将来性**: 現在は小規模でも臨界点突破の可能性が高い  
 3. **⚡ 急加速戦略価値**: リアルタイム成長加速による新規参入・マーケティング機会
 4. **🔍 異常性発見価値**: 統計的に特異で分析価値の高いパターン
 5. **💎 穴場ニッチ機会**: 競争が少なく成長余地の大きいセグメント
@@ -169,7 +175,14 @@ class OpenAiLlmService
 9. **✨ 隠れた優良価値**: ランキング外での高い潜在能力
 10. **⏰ タイミング価値**: 成長の臨界点に到達する絶好のタイミング
 11. **🔄 回復力価値**: 逆境からの復活・回復能力を示すレジリエンス
-12. **多次元統合価値**: 複数の分析手法を横断した統合的な成長ポテンシャル
+12. **🌐 カテゴリ多様性**: 異なるカテゴリから選出し、特定ジャンルに偏らない
+
+### ⚖️ 多様性確保要件
+- **必須**: 5件のうち最低4つは異なる分析手法（selection_source）から選出
+- **必須**: 3つ以上の異なるカテゴリから選出
+- **推奨**: 規模のバランス（大・中・小規模チャットをミックス）
+- **避ける**: 同一カテゴリから3件以上の選出
+- **避ける**: 同一分析手法から2件以上の選出
 
 ### 🚫 避けるべき選出
 - 既に大規模（10,000人以上）で誰でも注目するチャット
@@ -189,6 +202,13 @@ class OpenAiLlmService
       \"member_count\": メンバー数,
       \"growth_amount\": 成長量,
       \"ai_insight_score\": 95,
+      \"score_breakdown\": {
+        \"growth_momentum\": 25,
+        \"market_opportunity\": 20,
+        \"uniqueness_factor\": 25,
+        \"timing_value\": 15,
+        \"sustainability\": 10
+      },
       \"selection_rationale\": \"AIがこのチャットを選んだ戦略的理由（120文字以内）\",
       \"growth_potential\": \"breakthrough|high|emerging|stable_long_term|recovery_momentum\",
       \"competitive_advantage\": \"このチャットの競争優位性\",
@@ -659,6 +679,15 @@ class OpenAiLlmService
 
         // rising_chatsが空の場合は基本データを使用
         $finalRisingChats = !empty($risingChats) ? $risingChats : $basicData['rising_chats'];
+        
+        // AI分析スコア順でソート（降順）
+        if (!empty($finalRisingChats) && is_array($finalRisingChats)) {
+            usort($finalRisingChats, function($a, $b) {
+                $scoreA = isset($a['ai_insight_score']) ? (int)$a['ai_insight_score'] : 0;
+                $scoreB = isset($b['ai_insight_score']) ? (int)$b['ai_insight_score'] : 0;
+                return $scoreB <=> $scoreA; // 降順
+            });
+        }
 
         // trend_tagsが空の場合は基本データを使用
         $finalTrendTags = !empty($trendTags) ? $trendTags : $basicData['tag_trends'];
