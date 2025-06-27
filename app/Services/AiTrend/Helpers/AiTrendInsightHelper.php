@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\AiTrend\Helpers;
 
+use App\Config\AppConfig;
+use Shared\MimimalCmsConfig;
+
 /**
  * AI分析結果表示用のヘルパー関数（簡素化版）
  */
@@ -34,13 +37,13 @@ class AiTrendInsightHelper
     {
         switch ($potential) {
             case 'breakthrough':
-                return '突破口';
+                return '躍進';
             case 'disruptive':
-                return '破壊的';
+                return '画期的';
             case 'innovative':
-                return '革新的';
+                return '新しい';
             case 'emerging':
-                return '新興';
+                return '注目';
             case 'high':
                 return '高';
             case 'medium':
@@ -50,5 +53,30 @@ class AiTrendInsightHelper
             default:
                 return $potential;
         }
+    }
+
+    /**
+     * カテゴリIDをカテゴリ名に変換
+     */
+    public static function getCategoryName($categoryId): string
+    {
+        if ($categoryId === null || $categoryId === '') {
+            return 'その他';
+        }
+
+        // 現在の言語/地域を取得
+        $urlRoot = MimimalCmsConfig::$urlRoot ?? '';
+        
+        // カテゴリマップを取得
+        $categoryMap = AppConfig::OPEN_CHAT_CATEGORY[$urlRoot] ?? AppConfig::OPEN_CHAT_CATEGORY[''];
+        
+        // カテゴリIDでカテゴリ名を検索
+        foreach ($categoryMap as $categoryName => $id) {
+            if ($id == $categoryId) {
+                return $categoryName;
+            }
+        }
+        
+        return 'その他';
     }
 }

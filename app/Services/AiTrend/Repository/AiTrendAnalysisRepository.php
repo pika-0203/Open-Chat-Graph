@@ -13,15 +13,15 @@ use App\Models\Repositories\DB;
 class AiTrendAnalysisRepository
 {
     /**
-     * 隠れたバイラル成長パターン分析（高度アルゴリズム）
+     * 隠れた急成長パターン分析（独自アルゴリズム）
      * 
      * 分析要素:
      * - 成長加速度パターン（時間軸での変化率）
      * - 成長の持続性指標
      * - カテゴリ内での相対的成長
-     * - 異常成長検出（通常パターンからの逸脱）
+     * - 特異成長検出（通常パターンからの違い）
      */
-    public function getHiddenViralPatterns(int $limit = 20): array
+    public function getHiddenRapidGrowthPatterns(int $limit = 20): array
     {
         $query = "
             SELECT 
@@ -48,13 +48,13 @@ class AiTrendAnalysisRepository
                     THEN COALESCE(srd.diff_member, 0) / (COALESCE(srw.diff_member, 0) / 7.0)
                     ELSE 0 
                 END as growth_sustainability,
-                -- バイラル可能性スコア（独自計算）
+                -- 急成長可能性スコア（独自計算）
                 (
                     COALESCE(srh.diff_member, 0) * 0.5 +
                     COALESCE(srd.diff_member, 0) * 0.3 +
                     COALESCE(srw.diff_member, 0) * 0.2 +
                     COALESCE(srh.percent_increase, 0) * 2
-                ) as viral_potential_score
+                ) as rapid_growth_potential_score
             FROM open_chat oc
             LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
             LEFT JOIN statistics_ranking_day srd ON oc.id = srd.open_chat_id  
@@ -62,14 +62,14 @@ class AiTrendAnalysisRepository
             WHERE 
                 oc.member BETWEEN 50 AND 100000
                 AND (
-                    -- 異常成長パターン検出
+                    -- 特異成長パターン検出
                     COALESCE(srh.diff_member, 0) > (oc.member * 0.05) OR
                     -- 加速成長パターン
                     (COALESCE(srh.diff_member, 0) > 2 AND COALESCE(srd.diff_member, 0) > 5) OR
                     -- 持続成長パターン
                     (COALESCE(srw.diff_member, 0) > 10 AND COALESCE(srd.diff_member, 0) > 2)
                 )
-            ORDER BY viral_potential_score DESC, growth_acceleration DESC
+            ORDER BY rapid_growth_potential_score DESC, growth_acceleration DESC
             LIMIT :limit
         ";
 
@@ -172,12 +172,12 @@ class AiTrendAnalysisRepository
                 END as growth_consistency,
                 -- 相対的成長強度（サイズ対比）
                 ROUND(COALESCE(srh.diff_member, 0) / (oc.member * 0.01), 2) as relative_growth_strength,
-                -- ブレイクアウト指標（急激な変化）
+                -- 躍進指標（急激な変化）
                 CASE 
                     WHEN COALESCE(srh.diff_member, 0) > 0 AND COALESCE(srd.diff_member, 0) > 0 
                     THEN ROUND(COALESCE(srh.diff_member, 0) / (COALESCE(srd.diff_member, 0) / 24.0), 2)
                     ELSE 0 
-                END as breakout_indicator,
+                END as breakthrough_indicator,
                 -- 総合加速度スコア
                 ROUND(
                     (COALESCE(srh.diff_member, 0) * 2.0 +
@@ -208,15 +208,15 @@ class AiTrendAnalysisRepository
     }
 
     /**
-     * 成長爆発直前指標（高度予測分析）
+     * 成長前兆指標（予測分析）
      * 
      * 分析要素:
      * - 成長の兆候パターン認識
      * - 臨界点接近指標
      * - 成長の質と持続性
-     * - バイラル予備軍の特定
+     * - 急成長前段階の特定
      */
-    public function getPreViralIndicators(int $limit = 15): array
+    public function getGrowthSignalIndicators(int $limit = 15): array
     {
         $query = "
             SELECT 
@@ -240,7 +240,7 @@ class AiTrendAnalysisRepository
                         (COALESCE(srh.percent_increase, 0) / 10.0), 2)
                     ELSE 0 
                 END as early_signal_strength,
-                -- 臨界サイズ接近度（バイラル閾値）
+                -- 臨界サイズ接近度（急成長閾値）
                 CASE 
                     WHEN oc.member < 5000 
                     THEN ROUND((oc.member + COALESCE(srw.diff_member, 0)) / 5000.0 * 100, 2)
@@ -254,7 +254,7 @@ class AiTrendAnalysisRepository
                         (COALESCE(srh.diff_member, 0) * 24.0 / COALESCE(srd.diff_member, 1)) * 0.5, 2)
                     ELSE 0 
                 END as growth_quality_index,
-                -- バイラル可能性予測スコア
+                -- 急成長可能性予測スコア
                 ROUND(
                     (COALESCE(srh.diff_member, 0) * 3.0 +
                      COALESCE(srd.diff_member, 0) * 2.0 +
@@ -262,7 +262,7 @@ class AiTrendAnalysisRepository
                      COALESCE(srh.percent_increase, 0) * 8.0 +
                      (CASE WHEN oc.member < 3000 THEN 20 ELSE 0 END)) / 
                     (CASE WHEN oc.member > 0 THEN LOG(oc.member + 1) ELSE 1 END), 2
-                ) as viral_potential_score,
+                ) as rapid_growth_potential_score,
                 -- タイミング指標（成長の勢い）
                 CASE 
                     WHEN COALESCE(srh.diff_member, 0) > COALESCE(srd.diff_member, 0) / 24.0 
@@ -287,7 +287,7 @@ class AiTrendAnalysisRepository
                     -- 小規模での急成長
                     (oc.member < 1000 AND COALESCE(srd.diff_member, 0) > oc.member * 0.1)
                 )
-            ORDER BY viral_potential_score DESC, early_signal_strength DESC
+            ORDER BY rapid_growth_potential_score DESC, early_signal_strength DESC
             LIMIT :limit
         ";
 
@@ -433,10 +433,10 @@ class AiTrendAnalysisRepository
     }
 
     /**
-     * 異常成長パターン検出
-     * 通常の成長パターンから逸脱した特異なケースを発見
+     * 特異成長パターン検出
+     * 通常の成長パターンから違う特異なケースを発見
      */
-    public function getAnomalousGrowthPatterns(int $limit = 8): array
+    public function getUniqueGrowthPatterns(int $limit = 8): array
     {
         $query = "
             SELECT 
@@ -449,7 +449,7 @@ class AiTrendAnalysisRepository
                 COALESCE(srd.diff_member, 0) as day_growth,
                 COALESCE(srw.diff_member, 0) as week_growth,
                 COALESCE(srh.percent_increase, 0) as hour_growth_rate,
-                -- 異常度スコア（統計的異常検出）
+                -- 特異度スコア（統計的特異検出）
                 ROUND(
                     ABS(COALESCE(srh.diff_member, 0) - 
                         (SELECT AVG(COALESCE(srh2.diff_member, 0)) 
@@ -460,16 +460,16 @@ class AiTrendAnalysisRepository
                      FROM statistics_ranking_hour srh3 
                      JOIN open_chat oc3 ON srh3.open_chat_id = oc3.id 
                      WHERE oc3.category = oc.category), 2
-                ) as anomaly_score,
+                ) as uniqueness_score,
                 -- 異常パターンの種類
                 CASE 
                     WHEN COALESCE(srh.diff_member, 0) > oc.member * 0.2 
-                    THEN 'massive_spike'
+                    THEN '大幅増加'
                     WHEN COALESCE(srh.diff_member, 0) > 50 AND oc.member < 500 
-                    THEN 'small_chat_explosion'
+                    THEN '小規模チャットの急伸長'
                     WHEN COALESCE(srh.percent_increase, 0) > 50 
-                    THEN 'extreme_percentage_growth'
-                    ELSE 'statistical_outlier'
+                    THEN '極高成長率'
+                    ELSE '特異ケース'
                 END as anomaly_type
             FROM open_chat oc
             LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
@@ -479,14 +479,14 @@ class AiTrendAnalysisRepository
                 oc.member BETWEEN 5 AND 100000
                 AND oc.category IS NOT NULL
                 AND (
-                    -- 異常な時間成長
+                    -- 特異な時間成長
                     COALESCE(srh.diff_member, 0) > oc.member * 0.1 OR
-                    -- 異常な成長率
+                    -- 特異な成長率
                     COALESCE(srh.percent_increase, 0) > 30 OR
-                    -- 小規模チャットの爆発的成長
+                    -- 小規模チャットの急伸長
                     (oc.member < 1000 AND COALESCE(srh.diff_member, 0) > 20)
                 )
-            ORDER BY anomaly_score DESC, hour_growth DESC
+            ORDER BY uniqueness_score DESC, hour_growth DESC
             LIMIT :limit
         ";
 
@@ -626,8 +626,8 @@ class AiTrendAnalysisRepository
     }
 
     /**
-     * ブレイクタイミング分析（新規追加）
-     * 成長の臨界点に到達しつつあるチャットを特定
+     * 躍進タイミング分析（新規追加）
+     * 成長の重要なタイミングに到達しつつあるチャットを特定
      */
     public function getBreakthroughTimingAnalysis(int $limit = 12): array
     {
@@ -642,15 +642,15 @@ class AiTrendAnalysisRepository
                 COALESCE(srd.diff_member, 0) as day_growth,
                 COALESCE(srw.diff_member, 0) as week_growth,
                 COALESCE(srh.percent_increase, 0) as hour_growth_rate,
-                -- 臨界点接近度（特定の規模での急成長）
+                -- 重要ポイント接近度（特定の規模での急成長）
                 CASE 
-                    WHEN oc.member BETWEEN 800 AND 1200 THEN 'approaching_1k'
-                    WHEN oc.member BETWEEN 4000 AND 6000 THEN 'approaching_5k'
-                    WHEN oc.member BETWEEN 9000 AND 11000 THEN 'approaching_10k'
-                    WHEN oc.member BETWEEN 45000 AND 55000 THEN 'approaching_50k'
-                    ELSE 'other'
+                    WHEN oc.member BETWEEN 800 AND 1200 THEN '1000人間近'
+                    WHEN oc.member BETWEEN 4000 AND 6000 THEN '5000人間近'
+                    WHEN oc.member BETWEEN 9000 AND 11000 THEN '1万人間近'
+                    WHEN oc.member BETWEEN 45000 AND 55000 THEN '5万人間近'
+                    ELSE 'その他'
                 END as critical_threshold_status,
-                -- ブレイクタイミング指標
+                -- 躍進タイミング指標
                 ROUND(
                     (COALESCE(srh.diff_member, 0) * 3.0 +
                      COALESCE(srd.diff_member, 0) * 2.0 +
@@ -668,10 +668,10 @@ class AiTrendAnalysisRepository
                     WHEN COALESCE(srh.diff_member, 0) > 0 AND 
                          COALESCE(srd.diff_member, 0) > 0 AND 
                          COALESCE(srw.diff_member, 0) > 0
-                    THEN 'consistent_growth'
+                    THEN '安定成長'
                     WHEN COALESCE(srh.diff_member, 0) > COALESCE(srd.diff_member, 0) / 12
-                    THEN 'accelerating'
-                    ELSE 'irregular'
+                    THEN '加速中'
+                    ELSE '不規則'
                 END as growth_consistency_pattern
             FROM open_chat oc
             LEFT JOIN statistics_ranking_hour srh ON oc.id = srh.open_chat_id
@@ -709,8 +709,8 @@ class AiTrendAnalysisRepository
         $candidates = [];
         $seenIds = [];
 
-        // 1. 隠れたバイラルパターン分析
-        $viralPatterns = $this->getHiddenViralPatterns($limit);
+        // 1. 隠れた急成長パターン分析
+        $viralPatterns = $this->getHiddenRapidGrowthPatterns($limit);
         foreach ($viralPatterns as $chat) {
             if (!isset($seenIds[$chat['id']])) {
                 $chat['selection_source'] = 'viral_pattern';
@@ -720,8 +720,8 @@ class AiTrendAnalysisRepository
             }
         }
 
-        // 2. 成長爆発直前指標
-        $preViralChats = $this->getPreViralIndicators($limit);
+        // 2. 成長前兆指標
+        $preViralChats = $this->getGrowthSignalIndicators($limit);
         foreach ($preViralChats as $chat) {
             if (!isset($seenIds[$chat['id']])) {
                 $chat['selection_source'] = 'pre_viral';
@@ -742,8 +742,8 @@ class AiTrendAnalysisRepository
             }
         }
 
-        // 4. 異常成長パターン
-        $anomalousChats = $this->getAnomalousGrowthPatterns($limit);
+        // 4. 特異成長パターン
+        $anomalousChats = $this->getUniqueGrowthPatterns($limit);
         foreach ($anomalousChats as $chat) {
             if (!isset($seenIds[$chat['id']])) {
                 $chat['selection_source'] = 'anomaly';
@@ -1572,4 +1572,5 @@ class AiTrendAnalysisRepository
         
         return round($finalScore, 2);
     }
+
 }

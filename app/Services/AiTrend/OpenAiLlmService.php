@@ -43,13 +43,13 @@ class OpenAiLlmService
         // 14つの高度な分析データ取得（getIntegratedCandidatesForAiSelectionで統合済み）
         $trendData = [
             // 既存の分析手法
-            'hidden_viral_patterns' => $this->aiTrendRepo->getHiddenViralPatterns(8),
+            'hidden_rapid_growth_patterns' => $this->aiTrendRepo->getHiddenRapidGrowthPatterns(8),
             'low_competition_segments' => $this->aiTrendRepo->getLowCompetitionHighGrowthSegments(5),
             'current_acceleration' => $this->aiTrendRepo->getCurrentGrowthAcceleration(5),
-            'pre_viral_indicators' => $this->aiTrendRepo->getPreViralIndicators(6),
+            'growth_signal_indicators' => $this->aiTrendRepo->getGrowthSignalIndicators(6),
             'new_entrant_opportunities' => $this->aiTrendRepo->getNewEntrantOpportunities(5),
             'trend_predictions' => $this->aiTrendRepo->getTrendPredictionAnalysis(5),
-            'anomalous_patterns' => $this->aiTrendRepo->getAnomalousGrowthPatterns(4),
+            'unique_patterns' => $this->aiTrendRepo->getUniqueGrowthPatterns(4),
             // 新規追加の分析手法
             'momentum_surge_analysis' => $this->aiTrendRepo->getMomentumSurgeAnalysis(6),
             'hidden_gem_analysis' => $this->aiTrendRepo->getHiddenGemAnalysis(6),
@@ -419,7 +419,7 @@ PROMPT;
                     'messages' => [
                         [
                             'role' => 'system',
-                            'content' => '🧠 あなたは世界最高のLINEオープンチャット市場分析専門AIです。独自の解析アルゴリズムの結果を基に、戦略的で実用的な分析結果を提供してください。単純なランキングではなく、深い洞察と予測的分析を重視してください。**必ず日本語で回答してください。** 全ての応答、分析内容、説明は日本語で記述してください。'
+                            'content' => '🧠 あなたは世界最高のLINEオープンチャット市場分析専門AIです。独自の分析結果を基に、戦略的で実用的な分析結果を提供してください。単純なランキングではなく、深い洞察と予測的分析を重視してください。**必ず日本語で回答してください。** 全ての応答、分析内容、説明は中学生でも理解できる分かりやすい日本語で記述してください。専門用語は避けて、簡単な言葉で説明してください。'
                         ],
                         ['role' => 'user', 'content' => $prompt]
                     ],

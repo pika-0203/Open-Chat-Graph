@@ -104,7 +104,7 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
     .tag-list {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 16px;
     }
     
     .tag-item {
@@ -211,7 +211,7 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                                 <?php echo htmlspecialchars($chat['name']) ?>
                             </a>
                             <div class="chat-growth">
-                                (<?php echo htmlspecialchars($chat['category'] ?? 'その他') ?>)
+                                (<?php echo htmlspecialchars(AiTrendInsightHelper::getCategoryName($chat['category'] ?? null)) ?>)
                             </div>
                             
                             <!-- AI選出理由 -->
@@ -239,8 +239,8 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                 単純な統計ランキングではなく、AIが戦略的価値と将来性を分析して厳選したトレンドタグ
             </p>
             <div class="tag-list">
-                <?php foreach (array_slice($tagTrends, 0, 15) as $tag): ?>
-                        <div style="position: relative; display: inline-block;">
+                <?php foreach (array_slice($tagTrends, 0, 15) as $index => $tag): ?>
+                        <div style="position: relative; display: inline-block; <?php echo $index < 3 ? 'margin-bottom: 20px;' : '' ?>">
                             <a href="<?php echo url('recommend?tag=' . urlencode(htmlspecialchars_decode($tag['tag']))) ?>" 
                                class="tag-item" 
                                title="<?php echo htmlspecialchars($tag['ai_rationale'] ?? $tag['strategic_value'] ?? '') ?>">
@@ -251,7 +251,13 @@ $aiAnalysis = $aiTrendData->aiAnalysis;
                                     <span style="color: #059669;">💎</span>
                                 <?php endif ?>
                             </a>
-                            <?php if (!empty($tag['ai_rationale'])): ?>
+                            
+                            <!-- 上位3つのタグに選出理由を表示 -->
+                            <?php if ($index < 3 && !empty($tag['ai_rationale'])): ?>
+                                <div class="ai-insight" style="margin-top: 8px; position: static; width: auto; max-width: 300px; display: block; font-size: 12px; padding: 8px; background: #f0f9ff; border-left: 3px solid #3b82f6; border-radius: 4px; line-height: 1.4;">
+                                    🎯 <strong>選出理由:</strong> <?php echo htmlspecialchars($tag['ai_rationale']) ?>
+                                </div>
+                            <?php elseif (!empty($tag['ai_rationale'])): ?>
                                 <div class="ai-insight" style="position: absolute; top: 100%; left: 0; z-index: 10; width: 200px; margin-top: 4px; display: none; font-size: 12px; padding: 6px;">
                                     🤖 <?php echo htmlspecialchars($tag['ai_rationale']) ?>
                                 </div>

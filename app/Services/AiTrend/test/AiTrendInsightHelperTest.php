@@ -21,8 +21,7 @@ class AiTrendInsightHelperTest extends TestCase
         
         $result = AiTrendInsightHelper::generateInsightText($chat);
         
-        $this->assertStringContainsString('業界を変革する可能性', $result);
-        $this->assertStringContainsString('突破口的コミュニティ', $result);
+        $this->assertStringContainsString('躍進', $result);
     }
     
     /**
@@ -34,7 +33,7 @@ class AiTrendInsightHelperTest extends TestCase
         
         $result = AiTrendInsightHelper::generateInsightText($chat);
         
-        $this->assertStringContainsString('破壊的革新', $result);
+        $this->assertStringContainsString('画期的', $result);
     }
     
     /**
@@ -46,7 +45,7 @@ class AiTrendInsightHelperTest extends TestCase
         
         $result = AiTrendInsightHelper::generateInsightText($chat);
         
-        $this->assertStringContainsString('革新的トピック', $result);
+        $this->assertStringContainsString('新しい', $result);
     }
     
     /**
@@ -197,10 +196,10 @@ class AiTrendInsightHelperTest extends TestCase
     public function testGetPotentialLabel(): void
     {
         $testCases = [
-            'breakthrough' => '突破口',
-            'disruptive' => '破壊的',
-            'innovative' => '革新的',
-            'emerging' => '新興',
+            'breakthrough' => '躍進',
+            'disruptive' => '画期的',
+            'innovative' => '新しい',
+            'emerging' => '注目',
             'high' => '高',
             'medium' => '中',
             'low' => '低',
@@ -227,7 +226,7 @@ class AiTrendInsightHelperTest extends TestCase
         $result = AiTrendInsightHelper::generateInsightText($chat);
         
         // breakthrough が最優先で選ばれることを確認
-        $this->assertStringContainsString('業界を変革する可能性', $result);
+        $this->assertStringContainsString('躍進', $result);
         $this->assertStringNotContainsString('安定した成長', $result);
     }
     
@@ -248,7 +247,7 @@ class AiTrendInsightHelperTest extends TestCase
         $result = AiTrendInsightHelper::generateInsightText($chat);
         
         // 最初に該当する insight（revolutionary_potential）が使用されることを確認
-        $this->assertStringContainsString('革新的トピック', $result);
+        $this->assertStringContainsString('新しい', $result);
         $this->assertIsString($result);
         $this->assertNotEmpty($result);
     }
