@@ -46,7 +46,13 @@
       "Bash(sudo apt:*)",
       "Bash(sudo apt install:*)",
       "Bash(apt:*)",
-      "Bash(apt install:*)"
+      "Bash(apt install:*)",
+      "Bash(python3:*)",
+      "Bash(chmod:*)",
+      "Bash(python:*)",
+      "Bash(echo $SHELL)",
+      "Bash(alias python=python3)",
+      "Bash(sudo ln:*)"
     ],
     "deny": []
   },

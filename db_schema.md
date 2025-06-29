@@ -509,7 +509,7 @@ CREATE UNIQUE INDEX ranking_open_chat_id_IDX2 ON ranking (open_chat_id,category,
 
 #### total_count（総数情報）
 
-**用途**: カテゴリ別総数の履歴（SQLite最適化版）
+**用途**: カテゴリ別総数の履歴（日別にその日ごとのを記録）
 
 ```sql
 CREATE TABLE total_count (

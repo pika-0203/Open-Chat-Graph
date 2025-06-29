@@ -34,15 +34,15 @@ done
 # ダンプ元とインポート先テーブルの対応を配列で定義
 declare -A TABLE_MAP=(
   [ocgraph_ocreview]="ocgraph_ocreview"
-  [ocgraph_ocreviewtw]="ocgraph_ocreviewtw"
-  [ocgraph_ocreviewth]="ocgraph_ocreviewth"
+  # [ocgraph_ocreviewtw]="ocgraph_ocreviewtw"
+  # [ocgraph_ocreviewth]="ocgraph_ocreviewth"
   [ocgraph_ranking]="ocgraph_ranking"
-  [ocgraph_rankingtw]="ocgraph_rankingtw"
-  [ocgraph_rankingth]="ocgraph_rankingth"
+  # [ocgraph_rankingtw]="ocgraph_rankingtw"
+  # [ocgraph_rankingth]="ocgraph_rankingth"
   [ocgraph_userlog]="ocgraph_userlog"
   [ocgraph_comment]="ocgraph_comment"
-  [ocgraph_commenttw]="ocgraph_commenttw"
-  [ocgraph_commentth]="ocgraph_commentth"
+  # [ocgraph_commenttw]="ocgraph_commenttw"
+  # [ocgraph_commentth]="ocgraph_commentth"
 )
 
 # 配列をリモートサーバーに渡すために、キーと値をそれぞれエクスポート

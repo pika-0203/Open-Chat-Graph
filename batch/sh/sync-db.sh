@@ -30,8 +30,8 @@ done
 
 declare -a LANG_CODE=(
     "ja"
-    "tw"
-    "th"
+    # "tw"
+    # "th"
 )
 
 for code in "${LANG_CODE[@]}"; do
